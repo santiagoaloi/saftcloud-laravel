@@ -12,7 +12,7 @@
                 style="padding-top: 100px; padding-bottom: 100px"
             >
                 <h1 class="text-h4 text-sm-h3 text-md-h2 text-lg-h1">
-                    SaftCloud<span class="primary--text"> POS PENE</span>
+                    SaftCloud<span class="primary--text"> POS </span>
                 </h1>
                 <h2
                     class="text-h6 text-sm-h5 mt-4 w-full w-md-8-12 w-xl-half mx-auto"
@@ -69,11 +69,11 @@ export default {
         Pricing,
         Feature1,
         Feature2,
-        CallToAction,
+        CallToAction
     },
 
     methods: {
-        onIntersect(entries, observer, isIntersecting) {},
-    },
+        onIntersect(entries, observer, isIntersecting) {}
+    }
 };
 </script>

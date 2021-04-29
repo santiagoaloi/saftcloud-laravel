@@ -3,7 +3,6 @@ const path = require("path");
 const fs = require("fs-extra");
 const mix = require("laravel-mix");
 const { VuetifyLoaderPlugin } = require("vuetify-loader");
-
 const publicDir = path.resolve(__dirname, "./public");
 
 /*
@@ -53,11 +52,11 @@ mix.extend(
 
 mix.vuetify();
 
-if (mix.inProduction()) {
-    mix.version();
-} else {
-    mix.sourceMaps();
-}
+// if (mix.inProduction()) {
+//     mix.version();
+// } else {
+//     mix.sourceMaps();
+// }
 
 /*
 |---------------------------------------------------------------------
@@ -109,3 +108,8 @@ function publishAssets() {
     if (fs.existsSync(path.join(publicDir, "build")))
         fs.removeSync(path.join(publicDir, "build"));
 }
+
+mix.browserSync({
+    proxy: "http://localhost:8000/",
+    injectChanges: true
+});

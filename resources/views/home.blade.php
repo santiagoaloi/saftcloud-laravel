@@ -10,7 +10,6 @@
 
         <!-- Quicksand Font -->
         <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
         <link href="{{ mix('dist/css/app.css') }}" rel="stylesheet">
     </head>
     <body>
@@ -21,6 +20,5 @@
         <script src="{{ mix('dist/js/app.js') }}"></script>
         <script src="{{ mix('dist/js/manifest.js') }}"></script>
         <script src="{{ mix('dist/js/vendor.js') }}"></script>
-
     </body>
 </html>
