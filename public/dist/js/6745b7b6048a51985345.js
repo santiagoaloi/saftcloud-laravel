@@ -679,14 +679,9 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
-    this.postTest(); // this.getCountryPhoneCodes();
+    this.getCountries();
   },
   methods: {
-    postTest: function postTest() {
-      axios__WEBPACK_IMPORTED_MODULE_2___default().get("/formSubmit").then(function (response) {
-        console.log(response);
-      });
-    },
     nextStep: function nextStep(_nextStep) {
       var _this = this;
 
@@ -729,10 +724,10 @@ __webpack_require__.r(__webpack_exports__);
       });
       return "".concat(countryObject[0].name);
     },
-    getCountryPhoneCodes: function getCountryPhoneCodes() {
+    getCountries: function getCountries() {
       var _this2 = this;
 
-      axios__WEBPACK_IMPORTED_MODULE_2___default().get("".concat(this.controller, "/getCountryPhoneCodes")).then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_2___default().get("/countries").then(function (response) {
         if (response.data.status) {
           _this2.countryCodes = response.data.data;
         }

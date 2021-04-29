@@ -106,7 +106,7 @@
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames based on template
-/******/ 			return "dist/js/" + {"resources_js_layouts_publicLayout_Index_vue":"36e99d9dd832b50f8417","DefaultHomepage":"dedbada44049865e8fb6","Signup":"f88d6d50a178680c783a","public-appbar":"fb0d11d985bd31b597ff","public-view":"5a3c12e76dab69a7cc75","public-footer":"15b14419120e4a0faa6c"}[chunkId] + ".js";
+/******/ 			return "dist/js/" + {"resources_js_layouts_publicLayout_Index_vue":"36e99d9dd832b50f8417","DefaultHomepage":"dedbada44049865e8fb6","Signup":"6745b7b6048a51985345","public-appbar":"fb0d11d985bd31b597ff","public-view":"5a3c12e76dab69a7cc75","public-footer":"15b14419120e4a0faa6c"}[chunkId] + ".js";
 /******/ 		};
 /******/ 	})();
 /******/ 	

@@ -17,6 +17,6 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 
-Route::get('/{any}', 'App\Http\Controllers\HomeController@index')->where('any', '.*');
+Route::get('/', 'App\Http\Controllers\HomeController@index');
 
-Route::post('formSubmit','PostController@formSubmit');
+Route::get('/countries', [App\Http\Controllers\Public\Countries::class, 'getCountries']);

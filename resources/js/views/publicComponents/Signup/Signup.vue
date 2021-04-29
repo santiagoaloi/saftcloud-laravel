@@ -666,7 +666,7 @@ export default {
     },
 
     mounted() {
-        this.getCountryPhoneCodes();
+        this.getCountries();
     },
 
     methods: {
@@ -716,14 +716,12 @@ export default {
             return `${countryObject[0].name}`;
         },
 
-        getCountryPhoneCodes() {
-            axios
-                .get(`${this.controller}/getCountryPhoneCodes`)
-                .then(response => {
-                    if (response.data.status) {
-                        this.countryCodes = response.data.data;
-                    }
-                });
+        getCountries() {
+            axios.get("/countries").then(response => {
+                if (response.data.status) {
+                    this.countryCodes = response.data.data;
+                }
+            });
         },
 
         accountCreation() {

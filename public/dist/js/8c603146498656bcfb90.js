@@ -4,798 +4,9 @@
 /*!********************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/publicComponents/Signup/Signup.vue?vue&type=script&lang=js& ***!
   \********************************************************************************************************************************************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+/***/ (() => {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _mixins_globalMixin__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/mixins/globalMixin */ "./resources/js/mixins/globalMixin.js");
-/* harmony import */ var _mixins_filterFunctions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/mixins/filterFunctions */ "./resources/js/mixins/filterFunctions.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  name: "Signup",
-  mixins: [_mixins_globalMixin__WEBPACK_IMPORTED_MODULE_0__.default, _mixins_filterFunctions__WEBPACK_IMPORTED_MODULE_1__.default],
-  props: {
-    value: {
-      type: [Boolean],
-      "default": false
-    }
-  },
-  data: function data() {
-    return {
-      loading: false,
-      controller: "Signup",
-      terms: false,
-      countryCodes: [],
-      states: [],
-      cities: [],
-      step: 0,
-      signupForm: {
-        name: "",
-        lastname: "",
-        email: "",
-        phoneCode: null,
-        phoneNumber: "",
-        companyNameAlias: "",
-        companyName: "",
-        state: "",
-        city: "",
-        country: null,
-        zipcode: "",
-        address: ""
-      }
-    };
-  },
-  mounted: function mounted() {
-    this.getCountryPhoneCodes();
-  },
-  methods: {
-    nextStep: function nextStep(_nextStep) {
-      var _this = this;
-
-      //Fist step
-      if (this.step == 0) {
-        this.$refs.step0.validate().then(function (success) {
-          if (success) {
-            _this.step = _nextStep;
-          }
-        }); //Second step
-      } else if (this.step == 1) {
-        this.$refs.step1.validate().then(function (success) {
-          if (success) {
-            _this.step = _nextStep;
-          }
-        }); //Third step
-      } else if (this.step == 2) {
-        this.$refs.step2.validate().then(function (success) {
-          if (success) {
-            _this.step = _nextStep;
-          }
-        }); //fourth step
-      } else if (this.step == 3) {
-        this.$refs.step3.validate().then(function (success) {
-          if (success) {
-            _this.step = _nextStep;
-          }
-        });
-      }
-    },
-    getCountryNameAndCode: function getCountryNameAndCode(phoneCode) {
-      var countryObject = this.countryCodes.filter(function (item) {
-        return item.phone_code === phoneCode;
-      });
-      return "".concat(countryObject[0].name, " +").concat(countryObject[0].phone_code, " ");
-    },
-    getCountryName: function getCountryName(countryId) {
-      var countryObject = this.countryCodes.filter(function (item) {
-        return item.id === countryId;
-      });
-      return "".concat(countryObject[0].name);
-    },
-    getCountryPhoneCodes: function getCountryPhoneCodes() {
-      var _this2 = this;
-
-      axios__WEBPACK_IMPORTED_MODULE_2___default().get("".concat(this.controller, "/getCountryPhoneCodes")).then(function (response) {
-        if (response.data.status) {
-          _this2.countryCodes = response.data.data;
-        }
-      });
-    },
-    accountCreation: function accountCreation() {
-      var _this3 = this;
-
-      this.loading = true;
-      var post = {
-        newAccount: this.signupForm
-      };
-      axios__WEBPACK_IMPORTED_MODULE_2___default().post("".concat(this.controller, "/accountCreation"), post).then(function (response) {
-        if (response.data.status) {
-          _this3.$router.push("/VerifyAccount");
-        } else {
-          _this3.loading = false;
-        }
-      });
-    }
-  }
-});
-
-/***/ }),
-
-/***/ "./resources/js/mixins/filterFunctions.js":
-/*!************************************************!*\
-  !*** ./resources/js/mixins/filterFunctions.js ***!
-  \************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  methods: {
-    redondeoTest: function redondeoTest(value) {
-      value = parseFloat(value).toFixed(2);
-      return value;
-    },
-    calculateImport: function calculateImport(value) {
-      return value.price * value.qty;
-    },
-    getStock: function getStock(id) {
-      var index = this.dropdownProducts.findIndex(function (product) {
-        return product.product_id === id;
-      });
-
-      if (index > 0) {
-        return parseFloat(this.dropdownProducts[index].stock);
-      } else {
-        return 0;
-      }
-    },
-    iconSelectedWeb: function iconSelectedWeb(item) {
-      var result = this.selected.filter(function (p) {
-        return p.transaction_id === item.transaction_id;
-      });
-
-      if (result.length === 1) {
-        return true;
-      } else {
-        return false;
-      }
-    },
-    iconSelectedMobile: function iconSelectedMobile(item) {
-      var result = this.selected.filter(function (p) {
-        return p.transaction_id === item.transaction_id;
-      });
-
-      if (result.length === 1) {
-        return "mdi-check-circle";
-      } else {
-        return "mdi-circle-outline";
-      }
-    },
-    iconSelectedMobileColor: function iconSelectedMobileColor(item) {
-      var result = this.selected.filter(function (p) {
-        return p.transaction_id === item.transaction_id;
-      });
-
-      if (result.length === 1) {
-        return "green";
-      } else {
-        return "grey";
-      }
-    },
-    // Filtro para el dropdown que limita la busqueda por nombre y codigo de barra de producto.
-    filterProductsAll: function filterProductsAll(item, queryText) {
-      var searchText = queryText.toLowerCase();
-      var fields = [item.product_name, item.bar_code, item.sku, item.product_brand];
-      return fields.some(function (f) {
-        return f != null && f.toLowerCase().includes(searchText);
-      });
-    },
-    // Filtro para el dropdown que limita la busqueda por nombre y codigo de barra de producto.
-    filterCountries: function filterCountries(item, queryText) {
-      var searchText = queryText.toLowerCase();
-      var fields = [item.name, item.phone_code];
-      return fields.some(function (f) {
-        return f != null && f.toLowerCase().includes(searchText);
-      });
-    }
-  }
-});
-
-/***/ }),
-
-/***/ "./resources/js/mixins/globalMixin.js":
-/*!********************************************!*\
-  !*** ./resources/js/mixins/globalMixin.js ***!
-  \********************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/store */ "./resources/js/store.js");
-// import findKey from "lodash/findKey";
-// import isEqual from "lodash/isEqual";
- //Data Exporting capabilities
-
- // import JsonExcel from "vue-json-excel";
-// Vue.component("downloadExcel", JsonExcel);
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  data: function data() {
-    return {
-      scrollButton: false,
-      screenHeight: 0
-    };
-  },
-  created: function created() {
-    this.screenHeight = window.innerHeight;
-    window.addEventListener("resize", this.getWindowSize);
-  },
-  beforeDestroy: function beforeDestroy() {
-    // VERY IMPORTANT -- otherwise the listeners will stuck up in every component loaded.
-    window.removeEventListener("resize", this.getWindowSize, {
-      passive: true
-    });
-  },
-  methods: {
-    getWindowSize: function getWindowSize() {
-      this.screenHeight = window.innerHeight;
-    },
-    onScroll: function onScroll(e) {
-      if (typeof window === "undefined") return;
-      var top = window.pageYOffset || e.target.scrollTop || 0;
-      this.scrollButton = top > 40;
-    },
-    toTop: function toTop() {
-      this.$vuetify.goTo(0);
-    },
-    // debugUpdated() {
-    //   // Usage by calling this function from the updated hook.
-    //   // This function will tell you what has changed in the data object.
-    //   if (!this._priorState) {
-    //     this._priorState = this.$options.data();
-    //   }
-    //   const self = this;
-    //   const changedProp = findKey(this._data, (val, key) => {
-    //     return !isEqual(val, self._priorState[key]);
-    //   });
-    //   this._priorState = { ...this._data };
-    //   console.log(changedProp);
-    // },
-    getComponentMethods: function getComponentMethods() {
-      var provide = {};
-      var componentFileName = Object.entries(this); // Build an object with all the methods of the current component that only contains alpha characters.
-
-      for (var _i = 0, _componentFileName = componentFileName; _i < _componentFileName.length; _i++) {
-        var method = _componentFileName[_i];
-
-        if (typeof method[1] === "function" && method[0].match(/^[a-zA-Z]/)) {
-          provide[method[0]] = this[method[0]];
-        }
-      }
-
-      return provide;
-    }
-  } // computed: {
-  //   uploadPath() {
-  //     return `${store.state.baseUrl}/uploads/`;
-  //   },
-  //   siteInfo() {
-  //     return store.state.appData.siteInfo;
-  //   },
-  //   appConfig() {
-  //     return store.state.appData.appConfig;
-  //   },
-  //   groupId() {
-  //     return store.state.sessionData.login.group_id;
-  //   },
-  //   sessionEmail() {
-  //     return store.state.sessionData.userProfile.email;
-  //   },
-  //   profile() {
-  //     return store.state.publicData.moderating
-  //       ? store.state.publicData.publicProfile
-  //       : store.state.sessionData.userProfile;
-  //   },
-  //   publicPortfolio() {
-  //     return store.state.publicData.publicPortfolio;
-  //   },
-  //   publicProfile() {
-  //     return store.state.publicData.publicProfile;
-  //   },
-  //   baseUrl() {
-  //     return store.state.baseUrl;
-  //   },
-  //   isLoggedIn() {
-  //     if (Object.keys(store.state.sessionData.login).length > 0) {
-  //       return true;
-  //     } else {
-  //       return false;
-  //     }
-  //   },
-  // },
-
-});
+throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nSyntaxError: C:\\xampp\\htdocs\\saftcloud-laravel\\resources\\js\\views\\publicComponents\\Signup\\Signup.vue: Missing semicolon (642:3)\n\n\u001b[0m \u001b[90m 640 |\u001b[39m         }\u001b[0m\n\u001b[0m \u001b[90m 641 |\u001b[39m     }\u001b[33m,\u001b[39m\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 642 |\u001b[39m   }\u001b[33m,\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m     |\u001b[39m    \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 643 |\u001b[39m   data() {\u001b[0m\n\u001b[0m \u001b[90m 644 |\u001b[39m     \u001b[36mreturn\u001b[39m {\u001b[0m\n\u001b[0m \u001b[90m 645 |\u001b[39m       loading\u001b[33m:\u001b[39m \u001b[36mfalse\u001b[39m\u001b[33m,\u001b[39m\u001b[0m\n    at Parser._raise (C:\\xampp\\htdocs\\saftcloud-laravel\\node_modules\\@babel\\parser\\lib\\index.js:776:17)\n    at Parser.raiseWithData (C:\\xampp\\htdocs\\saftcloud-laravel\\node_modules\\@babel\\parser\\lib\\index.js:769:17)\n    at Parser.raise (C:\\xampp\\htdocs\\saftcloud-laravel\\node_modules\\@babel\\parser\\lib\\index.js:737:17)\n    at Parser.semicolon (C:\\xampp\\htdocs\\saftcloud-laravel\\node_modules\\@babel\\parser\\lib\\index.js:9718:10)\n    at Parser.parseExportDefaultExpression (C:\\xampp\\htdocs\\saftcloud-laravel\\node_modules\\@babel\\parser\\lib\\index.js:13465:12)\n    at Parser.parseExport (C:\\xampp\\htdocs\\saftcloud-laravel\\node_modules\\@babel\\parser\\lib\\index.js:13374:31)\n    at Parser.parseStatementContent (C:\\xampp\\htdocs\\saftcloud-laravel\\node_modules\\@babel\\parser\\lib\\index.js:12366:27)\n    at Parser.parseStatement (C:\\xampp\\htdocs\\saftcloud-laravel\\node_modules\\@babel\\parser\\lib\\index.js:12260:17)\n    at Parser.parseBlockOrModuleBlockBody (C:\\xampp\\htdocs\\saftcloud-laravel\\node_modules\\@babel\\parser\\lib\\index.js:12846:25)\n    at Parser.parseBlockBody (C:\\xampp\\htdocs\\saftcloud-laravel\\node_modules\\@babel\\parser\\lib\\index.js:12837:10)\n    at Parser.parseProgram (C:\\xampp\\htdocs\\saftcloud-laravel\\node_modules\\@babel\\parser\\lib\\index.js:12191:10)\n    at Parser.parseTopLevel (C:\\xampp\\htdocs\\saftcloud-laravel\\node_modules\\@babel\\parser\\lib\\index.js:12182:25)\n    at Parser.parse (C:\\xampp\\htdocs\\saftcloud-laravel\\node_modules\\@babel\\parser\\lib\\index.js:13893:10)\n    at parse (C:\\xampp\\htdocs\\saftcloud-laravel\\node_modules\\@babel\\parser\\lib\\index.js:13945:38)\n    at parser (C:\\xampp\\htdocs\\saftcloud-laravel\\node_modules\\@babel\\core\\lib\\parser\\index.js:54:34)\n    at parser.next (<anonymous>)");
 
 /***/ }),
 
@@ -1576,7 +787,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Signup_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Signup.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/views/publicComponents/Signup/Signup.vue?vue&type=script&lang=js&");
- /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Signup_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Signup_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Signup_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ var __WEBPACK_REEXPORT_OBJECT__ = {};
+/* harmony reexport (unknown) */ for(const __WEBPACK_IMPORT_KEY__ in _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Signup_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== "default") __WEBPACK_REEXPORT_OBJECT__[__WEBPACK_IMPORT_KEY__] = () => _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Signup_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__[__WEBPACK_IMPORT_KEY__]
+/* harmony reexport (unknown) */ __webpack_require__.d(__webpack_exports__, __WEBPACK_REEXPORT_OBJECT__);
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Signup_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0___default())); 
 
 /***/ }),
 
@@ -1668,9 +883,9 @@ var render = function() {
                                         },
                                         [
                                           _vm._v(
-                                            "\n                  Hi " +
+                                            "\n                                    Hi " +
                                               _vm._s(_vm.signupForm.name) +
-                                              ", nice to meet you!\n                "
+                                              ", nice to meet\n                                    you!\n                                "
                                           )
                                         ]
                                       ),
@@ -1756,7 +971,7 @@ var render = function() {
                                                                       )
                                                                     },
                                                                     expression:
-                                                                      "signupForm.name"
+                                                                      "\n                                                        signupForm.name\n                                                    "
                                                                   }
                                                                 }
                                                               )
@@ -1766,7 +981,7 @@ var render = function() {
                                                       ],
                                                       null,
                                                       false,
-                                                      2176102400
+                                                      2744351840
                                                     )
                                                   })
                                                 ],
@@ -1846,7 +1061,7 @@ var render = function() {
                                                                       )
                                                                     },
                                                                     expression:
-                                                                      "signupForm.lastname"
+                                                                      "\n                                                        signupForm.lastname\n                                                    "
                                                                   }
                                                                 }
                                                               )
@@ -1856,7 +1071,7 @@ var render = function() {
                                                       ],
                                                       null,
                                                       false,
-                                                      90962623
+                                                      452305887
                                                     )
                                                   })
                                                 ],
@@ -1909,7 +1124,7 @@ var render = function() {
                                         },
                                         [
                                           _vm._v(
-                                            "\n                  How should we contact you?\n                "
+                                            "\n                                    How should we contact you?\n                                "
                                           )
                                         ]
                                       ),
@@ -1997,7 +1212,7 @@ var render = function() {
                                                                       )
                                                                     },
                                                                     expression:
-                                                                      "signupForm.email"
+                                                                      "\n                                                        signupForm.email\n                                                    "
                                                                   }
                                                                 }
                                                               )
@@ -2007,7 +1222,7 @@ var render = function() {
                                                       ],
                                                       null,
                                                       false,
-                                                      1537142666
+                                                      1218451082
                                                     )
                                                   })
                                                 ],
@@ -2118,7 +1333,7 @@ var render = function() {
                                                                                         .item
                                                                                         .phone_code
                                                                                     ) +
-                                                                                    "\n                            "
+                                                                                    "\n                                                        "
                                                                                 )
                                                                               ]
                                                                             )
@@ -2159,14 +1374,14 @@ var render = function() {
                                                                                           "v-list-item-title",
                                                                                           [
                                                                                             _vm._v(
-                                                                                              "\n                                    +" +
+                                                                                              "\n                                                                        +" +
                                                                                                 _vm._s(
                                                                                                   "" +
                                                                                                     data
                                                                                                       .item
                                                                                                       .phone_code
                                                                                                 ) +
-                                                                                                "\n                                  "
+                                                                                                "\n                                                                    "
                                                                                             )
                                                                                           ]
                                                                                         )
@@ -2189,14 +1404,14 @@ var render = function() {
                                                                                           "v-list-item-title",
                                                                                           [
                                                                                             _vm._v(
-                                                                                              "\n                                    " +
+                                                                                              "\n                                                                        " +
                                                                                                 _vm._s(
                                                                                                   "" +
                                                                                                     data
                                                                                                       .item
                                                                                                       .name
                                                                                                 ) +
-                                                                                                "\n                                  "
+                                                                                                "\n                                                                    "
                                                                                             )
                                                                                           ]
                                                                                         )
@@ -2231,7 +1446,7 @@ var render = function() {
                                                                       )
                                                                     },
                                                                     expression:
-                                                                      "signupForm.phoneCode"
+                                                                      "\n                                                        signupForm.phoneCode\n                                                    "
                                                                   }
                                                                 }
                                                               )
@@ -2241,7 +1456,7 @@ var render = function() {
                                                       ],
                                                       null,
                                                       false,
-                                                      3639218600
+                                                      1663700200
                                                     )
                                                   })
                                                 ],
@@ -2323,7 +1538,7 @@ var render = function() {
                                                                       )
                                                                     },
                                                                     expression:
-                                                                      "signupForm.phoneNumber"
+                                                                      "\n                                                        signupForm.phoneNumber\n                                                    "
                                                                   }
                                                                 }
                                                               )
@@ -2333,7 +1548,7 @@ var render = function() {
                                                       ],
                                                       null,
                                                       false,
-                                                      3901622915
+                                                      2301003107
                                                     )
                                                   })
                                                 ],
@@ -2404,7 +1619,7 @@ var render = function() {
                                         },
                                         [
                                           _vm._v(
-                                            "\n                  Where is your bussiness headquartered?\n                "
+                                            "\n                                    Where is your bussiness headquartered?\n                                "
                                           )
                                         ]
                                       ),
@@ -2522,7 +1737,7 @@ var render = function() {
                                                                                       .item
                                                                                       .name
                                                                                   ) +
-                                                                                    " "
+                                                                                    "\n                                                        "
                                                                                 )
                                                                               ]
                                                                             )
@@ -2548,7 +1763,7 @@ var render = function() {
                                                                       )
                                                                     },
                                                                     expression:
-                                                                      "signupForm.country"
+                                                                      "\n                                                        signupForm.country\n                                                    "
                                                                   }
                                                                 }
                                                               )
@@ -2558,7 +1773,7 @@ var render = function() {
                                                       ],
                                                       null,
                                                       false,
-                                                      4215458614
+                                                      2571362724
                                                     )
                                                   })
                                                 ],
@@ -2571,7 +1786,7 @@ var render = function() {
                                                 [
                                                   _c("span", [
                                                     _vm._v(
-                                                      "State, Province, or Region "
+                                                      "State, Province, or Region\n                                            "
                                                     )
                                                   ]),
                                                   _vm._v(" "),
@@ -2640,7 +1855,7 @@ var render = function() {
                                                                       )
                                                                     },
                                                                     expression:
-                                                                      "signupForm.state"
+                                                                      "\n                                                        signupForm.state\n                                                    "
                                                                   }
                                                                 }
                                                               )
@@ -2650,7 +1865,7 @@ var render = function() {
                                                       ],
                                                       null,
                                                       false,
-                                                      2906433127
+                                                      3630490503
                                                     )
                                                   })
                                                 ],
@@ -2728,7 +1943,7 @@ var render = function() {
                                                                       )
                                                                     },
                                                                     expression:
-                                                                      "signupForm.city"
+                                                                      "\n                                                        signupForm.city\n                                                    "
                                                                   }
                                                                 }
                                                               )
@@ -2738,7 +1953,7 @@ var render = function() {
                                                       ],
                                                       null,
                                                       false,
-                                                      2681850455
+                                                      1823632503
                                                     )
                                                   })
                                                 ],
@@ -2818,7 +2033,7 @@ var render = function() {
                                                                       )
                                                                     },
                                                                     expression:
-                                                                      "signupForm.address"
+                                                                      "\n                                                        signupForm.address\n                                                    "
                                                                   }
                                                                 }
                                                               )
@@ -2828,7 +2043,7 @@ var render = function() {
                                                       ],
                                                       null,
                                                       false,
-                                                      4256834470
+                                                      1745511718
                                                     )
                                                   })
                                                 ],
@@ -2908,7 +2123,7 @@ var render = function() {
                                                                       )
                                                                     },
                                                                     expression:
-                                                                      "signupForm.zipcode"
+                                                                      "\n                                                        signupForm.zipcode\n                                                    "
                                                                   }
                                                                 }
                                                               )
@@ -2918,7 +2133,7 @@ var render = function() {
                                                       ],
                                                       null,
                                                       false,
-                                                      3232653214
+                                                      1193780190
                                                     )
                                                   })
                                                 ],
@@ -2989,7 +2204,7 @@ var render = function() {
                                         },
                                         [
                                           _vm._v(
-                                            "\n                  Define your parent account\n                "
+                                            "\n                                    Define your parent account\n                                "
                                           )
                                         ]
                                       ),
@@ -3081,7 +2296,7 @@ var render = function() {
                                                                       )
                                                                     },
                                                                     expression:
-                                                                      "signupForm.companyName"
+                                                                      "\n                                                        signupForm.companyName\n                                                    "
                                                                   }
                                                                 }
                                                               )
@@ -3091,7 +2306,7 @@ var render = function() {
                                                       ],
                                                       null,
                                                       false,
-                                                      250400778
+                                                      1740145866
                                                     )
                                                   })
                                                 ],
@@ -3104,7 +2319,7 @@ var render = function() {
                                                 [
                                                   _c("span", [
                                                     _vm._v(
-                                                      "Parent company name alias"
+                                                      "Parent company name\n                                                alias"
                                                     )
                                                   ]),
                                                   _vm._v(" "),
@@ -3176,7 +2391,7 @@ var render = function() {
                                                                       )
                                                                     },
                                                                     expression:
-                                                                      "signupForm.companyNameAlias"
+                                                                      "\n                                                        signupForm.companyNameAlias\n                                                    "
                                                                   }
                                                                 }
                                                               )
@@ -3186,7 +2401,7 @@ var render = function() {
                                                       ],
                                                       null,
                                                       false,
-                                                      3867913883
+                                                      960206875
                                                     )
                                                   })
                                                 ],
@@ -3257,9 +2472,9 @@ var render = function() {
                                         },
                                         [
                                           _vm._v(
-                                            "\n                  Welcome on board " +
+                                            "\n                                    Welcome on board " +
                                               _vm._s(_vm.signupForm.name) +
-                                              "!\n                "
+                                              "!\n                                "
                                           )
                                         ]
                                       ),
@@ -3269,89 +2484,93 @@ var render = function() {
                                         { staticClass: "mt-5 mb-5 text-h5" },
                                         [
                                           _vm._v(
-                                            "\n                  let's double check the information your provided before we\n                  can move forward with the registration of your shiny new\n                  account \""
+                                            "\n                                    let's double check the information your\n                                    provided before we can move forward with\n                                    the registration of your shiny new\n                                    account \""
                                           ),
                                           _c("b", [
                                             _vm._v(
                                               _vm._s(_vm.signupForm.companyName)
                                             )
                                           ]),
-                                          _vm._v('"\n                ')
+                                          _vm._v(
+                                            '"\n                                '
+                                          )
                                         ]
                                       ),
                                       _vm._v(" "),
                                       _c("div", { staticClass: "mt-10" }, [
                                         _vm._v(
-                                          "\n                  We can reach you on your number from\n                  "
+                                          "\n                                    We can reach you on your number from\n                                    "
                                         ),
                                         _c("span", [
                                           _c("b", [
                                             _vm._v(
-                                              "\n                      " +
+                                              "\n                                            " +
                                                 _vm._s(
                                                   _vm.getCountryNameAndCode(
                                                     _vm.signupForm.phoneCode
                                                   )
                                                 ) +
-                                                "\n                      " +
+                                                "\n                                            " +
                                                 _vm._s(
                                                   _vm.signupForm.phoneNumber
                                                 ) +
-                                                "\n                    "
+                                                "\n                                        "
                                             )
                                           ]),
                                           _vm._v(
-                                            "\n                    and on your email "
+                                            "\n                                        and on your email\n                                        "
                                           ),
                                           _c("b", [
                                             _vm._v(
                                               " " + _vm._s(_vm.signupForm.email)
                                             )
                                           ]),
-                                          _vm._v(".\n                  ")
+                                          _vm._v(
+                                            ".\n                                    "
+                                          )
                                         ])
                                       ]),
                                       _vm._v(" "),
                                       _c("div", [
                                         _vm._v(
-                                          "\n                  Your business "
+                                          "\n                                    Your business\n                                    "
                                         ),
                                         _c("b", [
                                           _vm._v(
-                                            " " +
+                                            "\n                                        " +
                                               _vm._s(
                                                 _vm.signupForm.companyNameAlias
                                               )
                                           )
                                         ]),
                                         _vm._v(
-                                          " is\n                  registered in\n                  "
+                                          "\n                                    is registered in\n                                    "
                                         ),
                                         _c("b", [
                                           _vm._v(
-                                            " " +
+                                            "\n                                        " +
                                               _vm._s(
                                                 _vm.getCountryName(
                                                   _vm.signupForm.country
                                                 )
                                               ) +
-                                              " "
+                                              "\n                                    "
                                           )
                                         ]),
                                         _vm._v(
-                                          " on the\n                  address\n                  "
+                                          "\n                                    on the address\n                                    "
                                         ),
                                         _c("b", [
                                           _vm._v(
-                                            "\n                    " +
+                                            "\n                                        " +
                                               _vm._s(_vm.signupForm.address) +
                                               " (" +
                                               _vm._s(_vm.signupForm.zipcode) +
-                                              "),\n                    " +
+                                              "), " +
                                               _vm._s(_vm.signupForm.state) +
-                                              ", " +
+                                              ",\n                                        " +
                                               _vm._s(_vm.signupForm.city) +
-                                              ".\n                  "
+                                              ".\n                                    "
                                           )
                                         ])
                                       ]),
@@ -3367,7 +2586,7 @@ var render = function() {
                                                 return [
                                                   _c("div", [
                                                     _vm._v(
-                                                      "\n                      I confirm that my information is genuine and that I\n                      represent the business I'm creating the account for, as\n                      well as reading and accepting\n\n                      "
+                                                      "\n                                            I confirm that my information is\n                                            genuine and that I represent the\n                                            business I'm creating the\n                                            account for, as well as reading\n                                            and accepting\n\n                                            "
                                                     ),
                                                     _c(
                                                       "a",
@@ -3387,12 +2606,12 @@ var render = function() {
                                                       },
                                                       [
                                                         _vm._v(
-                                                          "\n                        our terms and conditions\n                      "
+                                                          "\n                                                our terms and conditions\n                                            "
                                                         )
                                                       ]
                                                     ),
                                                     _vm._v(
-                                                      "\n                      thoroughly.\n                    "
+                                                      "\n                                            thoroughly.\n                                        "
                                                     )
                                                   ])
                                                 ]
@@ -3402,7 +2621,7 @@ var render = function() {
                                           ],
                                           null,
                                           false,
-                                          2828413897
+                                          2745067945
                                         ),
                                         model: {
                                           value: _vm.terms,
@@ -4137,6 +3356,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _Signup_vue_vue_type_template_id_02f2477e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Signup.vue?vue&type=template&id=02f2477e& */ "./resources/js/views/publicComponents/Signup/Signup.vue?vue&type=template&id=02f2477e&");
 /* harmony import */ var _Signup_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Signup.vue?vue&type=script&lang=js& */ "./resources/js/views/publicComponents/Signup/Signup.vue?vue&type=script&lang=js&");
+/* harmony reexport (unknown) */ var __WEBPACK_REEXPORT_OBJECT__ = {};
+/* harmony reexport (unknown) */ for(const __WEBPACK_IMPORT_KEY__ in _Signup_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== "default") __WEBPACK_REEXPORT_OBJECT__[__WEBPACK_IMPORT_KEY__] = () => _Signup_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[__WEBPACK_IMPORT_KEY__]
+/* harmony reexport (unknown) */ __webpack_require__.d(__webpack_exports__, __WEBPACK_REEXPORT_OBJECT__);
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 /* harmony import */ var _node_modules_vuetify_loader_lib_runtime_installComponents_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../../../../node_modules/vuetify-loader/lib/runtime/installComponents.js */ "./node_modules/vuetify-loader/lib/runtime/installComponents.js");
 /* harmony import */ var _node_modules_vuetify_loader_lib_runtime_installComponents_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vuetify_loader_lib_runtime_installComponents_js__WEBPACK_IMPORTED_MODULE_3__);
