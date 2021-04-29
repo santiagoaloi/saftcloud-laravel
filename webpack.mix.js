@@ -81,7 +81,8 @@ mix.js("resources/js/app.js", "public/dist/js")
             path: path.resolve(__dirname, "./public/build"),
             publicPath: process.env.APP_URL
         }
-    });
+    })
+    .extract(["vue"]);
 
 mix.then(() => {
     process.nextTick(publishAssets);

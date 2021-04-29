@@ -19,5 +19,8 @@
         </noscript>
         <div id="app"></div>
         <script src="{{ mix('dist/js/app.js') }}"></script>
+        <script src="{{ mix('dist/js/manifest.js') }}"></script>
+        <script src="{{ mix('dist/js/vendor.js') }}"></script>
+
     </body>
 </html>

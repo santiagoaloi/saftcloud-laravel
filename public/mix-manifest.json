@@ -1,9 +1,11 @@
 {
-    "/dist/js/app.js": "/dist/js/app.js",
-    "/dist/js/313e3d4c6d6b3be8baab.js": "/dist/js/313e3d4c6d6b3be8baab.js",
-    "/dist/js/ada60397475f60493ad7.js": "/dist/js/ada60397475f60493ad7.js",
-    "/dist/js/d9daee7d9c886e2e2f0a.js": "/dist/js/d9daee7d9c886e2e2f0a.js",
-    "/dist/js/c5e41a483654178a6b70.js": "/dist/js/c5e41a483654178a6b70.js",
-    "/dist/js/d7bbf659c9564f363a1c.js": "/dist/js/d7bbf659c9564f363a1c.js",
-    "/dist/css/app.css": "/dist/css/app.css"
+    "/dist/js/app.js": "/dist/js/app.js?id=573977c2bb65aab2c222",
+    "/dist/js/manifest.js": "/dist/js/manifest.js?id=6ac065b28f6d35516eb5",
+    "/dist/js/6b41aebbd5b14867d2d2.js": "/dist/js/6b41aebbd5b14867d2d2.js?id=42c512fc5e2f08fe4460",
+    "/dist/js/1cb1694bae415fa2dbba.js": "/dist/js/1cb1694bae415fa2dbba.js?id=089fe87e9b2a647298c1",
+    "/dist/js/41460c04b1f88c46caf9.js": "/dist/js/41460c04b1f88c46caf9.js?id=992994f3d1475b90a0b3",
+    "/dist/js/35469cd32f40db30c746.js": "/dist/js/35469cd32f40db30c746.js?id=544bf25811f071e0d465",
+    "/dist/js/150e9f51801558c60636.js": "/dist/js/150e9f51801558c60636.js?id=a356ec9fdab7c36d8186",
+    "/dist/css/app.css": "/dist/css/app.css?id=68b329da9893e34099c7",
+    "/dist/js/vendor.js": "/dist/js/vendor.js?id=1475ab4478bd8e402405"
 }
