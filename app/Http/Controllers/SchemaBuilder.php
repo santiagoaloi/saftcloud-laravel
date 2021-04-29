@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\DB;
 
 class SchemaBuilder extends Controller {
