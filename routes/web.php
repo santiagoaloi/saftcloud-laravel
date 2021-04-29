@@ -17,4 +17,4 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 
-Route::get('/{any}', 'App\Http\Controllers\SpaController@index')->where('any', '.*');
+Route::get('/{any}', 'App\Http\Controllers\HomeController@index')->where('any', '.*');
