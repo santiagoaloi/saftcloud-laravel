@@ -1,17 +1,17 @@
 <?php
 
-namespace Database\Factories;
+namespace Database\Factories\Public;
 
-use App\Models\Articulo;
+use App\Models\Public\Account;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class ArticuloFactory extends Factory {
+class AccountFactory extends Factory {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Articulo::class;
+    protected $model = Account::class;
 
     /**
      * Define the model's default state.
@@ -20,9 +20,7 @@ class ArticuloFactory extends Factory {
      */
     public function definition() {
         return [
-            'nombre' => $this->faker->name(),
-            'descripcion' => $this->faker->paragraph(),
-            'stock' => $this->faker->numberBetween(1,999),
+            //
         ];
     }
 }
