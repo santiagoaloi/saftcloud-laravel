@@ -4,9 +4,9 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-require('./bootstrap');
+require("./bootstrap");
 
-window.Vue = require('vue').default;
+window.Vue = require("vue").default;
 
 // import vuetify from './vuetify';
 
@@ -24,7 +24,6 @@ import "aos/dist/aos.css";
 import "./assets/css/style.css";
 
 Vue.component("public_layout", () => import("@/layouts/publicLayout/Index"));
-
 
 /**
  * The following block of code may be used to automatically register your
@@ -47,10 +46,10 @@ Vue.component("public_layout", () => import("@/layouts/publicLayout/Index"));
 
 const app = new Vue({
     created() {
-      AOS.init({});
+        AOS.init({});
     },
     store,
     router,
     vuetify,
-    render: (h) => h(App),
-  }).$mount("#app");
+    render: h => h(App)
+}).$mount("#app");

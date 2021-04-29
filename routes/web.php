@@ -18,3 +18,5 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::get('/{any}', 'App\Http\Controllers\HomeController@index')->where('any', '.*');
+
+Route::post('formSubmit','PostController@formSubmit');
