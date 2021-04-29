@@ -8,6 +8,10 @@ use Illuminate\Http\Request;
 
 class Countries extends Controller {
     public function getCountries() {
-        return Country::get();
+        $query = Country::get();
+
+        header('Content-Type: application/json');
+        echo json_encode(['status' => true, 'data' => $query]);
+        exit();
     }
 }
