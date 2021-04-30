@@ -13,12 +13,14 @@ class CreateAccountsTable extends Migration {
     public function up() {
         Schema::create('accounts', function (Blueprint $table) {
             $table->id();
+            $table->integer('client_type');
+            $table->string('account_name', 100);
             $table->integer('license');
+            $table->string('owner_first_name', 100);
+            $table->string('owner_last_name', 100);
+            $table->integer('telephone_code');
+            $table->string('telephone', 25);
             $table->string('email', 100);
-            $table->string('owner_name', 100);
-            $table->string('owner_surname', 100);
-            $table->text('descripcion');
-            $table->string('account_telephone', 25);
             $table->timestamps();
         });
     }

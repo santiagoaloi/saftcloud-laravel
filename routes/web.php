@@ -20,3 +20,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', 'App\Http\Controllers\HomeController@index');
 
 Route::get('/countries', [App\Http\Controllers\Public\Countries::class, 'getCountries']);
+
+Route::post('/account', [App\Http\Controllers\Public\MakeNewAccount::class, 'accountCreation']);
+Route::get('/account', [App\Http\Controllers\Public\MakeNewAccount::class, 'test']);

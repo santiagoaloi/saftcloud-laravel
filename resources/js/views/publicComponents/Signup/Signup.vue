@@ -484,6 +484,7 @@ export default {
   },
   data() {
     return {
+      test: {},
       loading: false,
       controller: "Signup",
       terms: false,
@@ -510,6 +511,7 @@ export default {
 
   mounted() {
     this.getCountries();
+    this.getTest()
   },
 
   methods: {
@@ -573,7 +575,7 @@ export default {
         newAccount: this.signupForm,
       };
       axios
-        .post(`${this.controller}/accountCreation`, post)
+        .post(`account`, post)
         .then((response) => {
           if (response.data.status) {
             this.$router.push("/VerifyAccount");
@@ -582,6 +584,15 @@ export default {
           }
         });
     },
+
+    getTest() {
+      axios.get('/account').then((response) => {
+        if (response.data.status) {
+          this.test = response.data.rows;
+        }
+      });
+    },
+
   },
 };
 </script>
