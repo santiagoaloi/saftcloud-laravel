@@ -1,26 +1,10 @@
 {
     "/dist/js/app.js": "/dist/js/app.js",
     "/dist/js/manifest.js": "/dist/js/manifest.js",
-    "/dist/js/dedbada44049865e8fb6.js": "/dist/js/dedbada44049865e8fb6.js",
-    "/dist/js/8c603146498656bcfb90.js": "/dist/js/8c603146498656bcfb90.js",
-    "/dist/js/fb0d11d985bd31b597ff.js": "/dist/js/fb0d11d985bd31b597ff.js",
-    "/dist/js/5a3c12e76dab69a7cc75.js": "/dist/js/5a3c12e76dab69a7cc75.js",
-    "/dist/js/15b14419120e4a0faa6c.js": "/dist/js/15b14419120e4a0faa6c.js",
+    "/dist/js/Public-Layout.js": "/dist/js/Public-Layout.js",
+    "/dist/js/DefaultHomepage.js": "/dist/js/DefaultHomepage.js",
+    "/dist/js/Signup.js": "/dist/js/Signup.js",
+    "/dist/js/public-appbar-view-footer-combined.js": "/dist/js/public-appbar-view-footer-combined.js",
     "/dist/css/app.css": "/dist/css/app.css",
-    "/dist/js/vendor.js": "/dist/js/vendor.js",
-<<<<<<< HEAD
-    "/dist/js/6745b7b6048a51985345.js": "/dist/js/6745b7b6048a51985345.js"
-=======
-    "/dist/js/fa819664e12d586879dd.js": "/dist/js/fa819664e12d586879dd.js",
-    "/dist/js/379ec45f669a03f67e25.js": "/dist/js/379ec45f669a03f67e25.js",
-    "/dist/js/6fca2461466c9da82321.js": "/dist/js/6fca2461466c9da82321.js",
-    "/dist/js/d00abf049c5054dac40f.js": "/dist/js/d00abf049c5054dac40f.js",
-    "/dist/js/4e2344181cb320ac93f9.js": "/dist/js/4e2344181cb320ac93f9.js",
-    "/dist/js/20f6901915eed34dc26e.js": "/dist/js/20f6901915eed34dc26e.js",
-    "/dist/js/2c6b4cc5cd82eb02840d.js": "/dist/js/2c6b4cc5cd82eb02840d.js",
-    "/dist/js/0d0bb586d45a6b9c45c6.js": "/dist/js/0d0bb586d45a6b9c45c6.js",
-    "/dist/js/1e8dd1970716effdace7.js": "/dist/js/1e8dd1970716effdace7.js",
-    "/dist/js/16235da46c691db54aba.js": "/dist/js/16235da46c691db54aba.js",
-    "/dist/js/9d8451fb8c08f207158c.js": "/dist/js/9d8451fb8c08f207158c.js"
->>>>>>> 0a043c9ded12644b1de518e23262bbddb8fb1a50
+    "/dist/js/vendor.js": "/dist/js/vendor.js"
 }

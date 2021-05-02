@@ -4,14 +4,14 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-require("./bootstrap");
+// require("./bootstrap");
 
-window.Vue = require("vue").default;
+// window.Vue = require("vue").default;
 
-// import vuetify from './vuetify';
+import Vue from "vue";
+import App from "./App.vue";
 
 import "@/plugins";
-import App from "@/App.vue";
 import router from "@/router";
 import { store } from "@/store";
 import vuetify from "@/plugins/vuetify";
@@ -21,9 +21,11 @@ import "aos/dist/aos.css";
 
 // Main Theme SCSS
 // import "./assets/scss/theme.scss";
-import "./assets/css/style.css";
+// import "./assets/css/style.css";
 
-Vue.component("public_layout", () => import("@/layouts/publicLayout/Index"));
+Vue.component("public_layout", () =>
+ import(/* webpackChunkName: 'Public-Layout' */ "@/layouts/publicLayout/Index")
+);
 
 /**
  * The following block of code may be used to automatically register your
@@ -45,11 +47,11 @@ Vue.component("public_layout", () => import("@/layouts/publicLayout/Index"));
  */
 
 const app = new Vue({
-    created() {
-        AOS.init({});
-    },
-    store,
-    router,
-    vuetify,
-    render: h => h(App)
+ created() {
+  AOS.init({});
+ },
+ store,
+ router,
+ vuetify,
+ render: h => h(App)
 }).$mount("#app");

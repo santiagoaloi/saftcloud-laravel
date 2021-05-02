@@ -1,10 +1,10 @@
 <template>
-  <div>
-    <!-- <vue-progress-bar /> -->
+ <div>
+  <!-- <vue-progress-bar /> -->
 
-    <v-fade-transition hide-on-leave>
-      <component :is="layout">
-        <!-- <baseDialog
+  <v-fade-transition hide-on-leave>
+   <component :is="layout">
+    <!-- <baseDialog
         v-if="sessionExpirationDialog"
         v-model="sessionExpirationDialog"
         title="Session Timeout"
@@ -51,194 +51,196 @@
           </v-card-actions>
         </v-card>
       </baseDialog> -->
-      </component>
-    </v-fade-transition>
-  </div>
+   </component>
+  </v-fade-transition>
+ </div>
 </template>
 <script>
+import config from "./configs";
 import { store } from "@/store";
 import { mapActions } from "vuex";
 // import routesBuilder from "@/mixins/routesBuilder";
 // import appActivity from '@/util/appActivity'
 
 export default {
-  name: "AppVue",
-  // mixins: [routesBuilder],
-  metaInfo: {
-    title: "SaftCloud",
-    titleTemplate: "%s | Homepage",
-    htmlAttrs: { lang: "en" },
-    meta: [
-      { charset: "utf-8" },
-      { name: "viewport", content: "width=device-width, initial-scale=1" },
-    ],
+ name: "AppVue",
+ // mixins: [routesBuilder],
+ //  metaInfo: {
+ //   title: "SaftCloud",
+ //   titleTemplate: "%s | Homepage",
+ //   htmlAttrs: { lang: "en" },
+ //   meta: [
+ //    { charset: "utf-8" },
+ //    { name: "viewport", content: "width=device-width, initial-scale=1" }
+ //   ]
+ //  },
+
+ data() {
+  return {
+   test: "test",
+   sessionExpirationDialog: false,
+   hide: true,
+   loading: false,
+   idleText: "unknown",
+   idleTime: 0,
+   active: false,
+   timeoutThreshold: 15,
+   revertCount: 10,
+   countDownInterval: null
+  };
+ },
+
+ computed: {
+  upload() {
+   return store.state.baseUrl;
   },
 
-  data() {
-    return {
-      test: "test",
-      sessionExpirationDialog: false,
-      hide: true,
-      loading: false,
-      idleText: "unknown",
-      idleTime: 0,
-      active: false,
-      timeoutThreshold: 15,
-      revertCount: 10,
-      countDownInterval: null,
-    };
+  vuetify() {
+   return this.$vuetify;
   },
 
-  computed: {
-    upload() {
-      return store.state.baseUrl;
-    },
-
-    vuetify() {
-      return this.$vuetify;
-    },
-
-    isLoggedIn: function () {
-      if (Object.keys(store.state.sessionData.login).length == 0) {
-        return null;
-      }
-      return true;
-    },
-
-    isRouterLoaded: function () {
-      if (this.$route.name !== null) return true;
-      return false;
-    },
-
-    layout() {
-      return this.$route.meta.layout;
-    },
+  isLoggedIn: function() {
+   if (Object.keys(store.state.sessionData.login).length == 0) {
+    return null;
+   }
+   return true;
   },
 
-  watch: {
-    // sessionExpirationDialog (val) {
-    //   if (!val) return
-    //     this.startTimeoutCountdown()
-    //   },
-    // revertCount (val) {
-    //     if (val === 0) {
-    //       this.sessionExpirationDialog = false
-    //       clearInterval(this.countDownInterval)
-    //       this.revertCount = 10
-    //       this.logoutVuex()
-    //     }
-    //   },
+  isRouterLoaded: function() {
+   if (this.$route.name !== null) return true;
+   return false;
   },
 
-  created() {
-    // this.$vuetify.theme.primary = "#78909C";
+  layout() {
+   return this.$route.meta.layout;
+  }
+ },
 
-    // appActivity.hook(this.onActivity)
-    // this.fastInterval = setInterval(this.fastCheckActivity, 1300)
+ head: {
+  link: [
+   // adds config/icons into the html head tag
+   ...config.icons.map(href => ({ rel: "stylesheet", href }))
+  ]
+ },
 
-    window.getApp = this;
+ watch: {
+  // sessionExpirationDialog (val) {
+  //   if (!val) return
+  //     this.startTimeoutCountdown()
+  //   },
+  // revertCount (val) {
+  //     if (val === 0) {
+  //       this.sessionExpirationDialog = false
+  //       clearInterval(this.countDownInterval)
+  //       this.revertCount = 10
+  //       this.logoutVuex()
+  //     }
+  //   },
+ },
 
-    //  hook the progress bar to start before we move router-view
-    // this.$router.beforeEach((to, from, next) => {
-    //   this.$Progress.start();
-    //   if (to.name != "elementsPreview" && from.name == "Formbuilder") {
-    //     this.$swal({
-    //       title: "Spara eventuella förändringar",
-    //       text:
-    //         "Om du lämnar sidan så försvinner eventuellt osparade ändringar.",
-    //       showCancelButton: true,
-    //       confirmButtonText: "Fortsätt",
-    //       cancelButtonText: "Stanna",
-    //       confirmButtonColor: "#33967b",
-    //       backdrop: "rgba(108, 122, 137, 0.8)",
-    //       imageUrl: `${this.upload}uploads/images/draft.svg`,
-    //       imageHeight: 200,
-    //       width: 600,
-    //     }).then((result) => {
-    //       if (result.value) {
-    //         // this.$Progress.start()
-    //         next();
-    //       }
-    //     });
-    //   } else {
-    //     next();
-    //     // this.$Progress.start()
-    //   }
-    // });
+ created() {
+  // this.$vuetify.theme.primary = "#78909C";
 
-    // this.$router.afterEach((to, from) => {
-    //   this.$Progress.finish();
-    // });
-  },
+  // appActivity.hook(this.onActivity)
+  // this.fastInterval = setInterval(this.fastCheckActivity, 1300)
 
-  mounted() {
-    // console.log(this.$vuetify);
+  window.getApp = this;
 
-    //this brings the whole object to the front.
+  //  hook the progress bar to start before we move router-view
+  // this.$router.beforeEach((to, from, next) => {
+  //   this.$Progress.start();
+  //   if (to.name != "elementsPreview" && from.name == "Formbuilder") {
+  //     this.$swal({
+  //       title: "Spara eventuella förändringar",
+  //       text:
+  //         "Om du lämnar sidan så försvinner eventuellt osparade ändringar.",
+  //       showCancelButton: true,
+  //       confirmButtonText: "Fortsätt",
+  //       cancelButtonText: "Stanna",
+  //       confirmButtonColor: "#33967b",
+  //       backdrop: "rgba(108, 122, 137, 0.8)",
+  //       imageUrl: `${this.upload}uploads/images/draft.svg`,
+  //       imageHeight: 200,
+  //       width: 600,
+  //     }).then((result) => {
+  //       if (result.value) {
+  //         // this.$Progress.start()
+  //         next();
+  //       }
+  //     });
+  //   } else {
+  //     next();
+  //     // this.$Progress.start()
+  //   }
+  // });
 
-    // console.log();
-    // const axiosDefaults = require("axios/lib/defaults");
+  // this.$router.afterEach((to, from) => {
+  //   this.$Progress.finish();
+  // });
+ },
 
-    // axiosDefaults.baseURL = store.state.baseUrl;
+ mounted() {
+  console.log(config);
+  //this brings the whole object to the front.
+  // console.log();
+  // const axiosDefaults = require("axios/lib/defaults");
+  // axiosDefaults.baseURL = store.state.baseUrl;
+  // if (Object.keys(store.state.sessionData.login).length !== 0) {
+  //   axiosDefaults.headers = {
+  //     // 'Content-Type': 'application/json',
+  //     Authorization: "Bearer " + store.state.sessionData.login.token,
+  //   };
+  // } else {
+  //   axiosDefaults.headers = {
+  //     "Content-Type": "application/json",
+  //     Authorization: "Bearer",
+  //   };
+  // }
+  // this.loadSiteInfo();
+  // this.loadAppConfig();
+  // this.buildDynamicRoutes();
+  // this.buildGlobalRoutes();
+ },
 
-    // if (Object.keys(store.state.sessionData.login).length !== 0) {
-    //   axiosDefaults.headers = {
-    //     // 'Content-Type': 'application/json',
-    //     Authorization: "Bearer " + store.state.sessionData.login.token,
-    //   };
-    // } else {
-    //   axiosDefaults.headers = {
-    //     "Content-Type": "application/json",
-    //     Authorization: "Bearer",
-    //   };
-    // }
+ methods: {
+  ...mapActions(["loadSiteInfo", "loadAppConfig", "logoutVuex"])
 
-    // this.loadSiteInfo();
-    // this.loadAppConfig();
-    // this.buildDynamicRoutes();
-    // this.buildGlobalRoutes();
-  },
+  // minusOne () {
+  //   this.revertCount--
+  // },
 
-  methods: {
-    ...mapActions(["loadSiteInfo", "loadAppConfig", "logoutVuex"]),
+  // startTimeoutCountdown () {
+  //   this.countDownInterval = setInterval(this.minusOne, 1300)
+  // },
 
-    // minusOne () {
-    //   this.revertCount--
-    // },
+  // closeSessionTimeoutDialog () {
 
-    // startTimeoutCountdown () {
-    //   this.countDownInterval = setInterval(this.minusOne, 1300)
-    // },
+  //   this.sessionExpirationDialog = false
+  //   this.revertCount = 10
+  //   this.logoutVuex()
 
-    // closeSessionTimeoutDialog () {
+  // },
 
-    //   this.sessionExpirationDialog = false
-    //   this.revertCount = 10
-    //   this.logoutVuex()
+  //   fastCheckActivity () {
 
-    // },
+  //     this.idleText = appActivity.getIdleText()
+  //     this.idleTime = appActivity.getIdleSeconds()
 
-    //   fastCheckActivity () {
+  //     if (this.idleTime === 0) {
+  //       this.revertCount = 10
+  //     }
 
-    //     this.idleText = appActivity.getIdleText()
-    //     this.idleTime = appActivity.getIdleSeconds()
+  //     if (this.isLoggedIn) {
+  //       if (this.idleTime > this.timeoutThreshold) {
+  //         this.sessionExpirationDialog = true
 
-    //     if (this.idleTime === 0) {
-    //       this.revertCount = 10
-    //     }
+  //         }
+  //     }
+  //  },
 
-    //     if (this.isLoggedIn) {
-    //       if (this.idleTime > this.timeoutThreshold) {
-    //         this.sessionExpirationDialog = true
-
-    //         }
-    //     }
-    //  },
-
-    // onActivity () {
-    //   this.active = true
-    // },
-  },
+  // onActivity () {
+  //   this.active = true
+  // },
+ }
 };
 </script>
-    

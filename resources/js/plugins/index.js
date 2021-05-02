@@ -2,11 +2,14 @@
 
 // import "./base";
 // import './meta'
+
 import "./preventContextMenu";
 // import "./swal2";
 // import "./lazyImput";
 // import "./progressBar";
 import "./validation";
+import "./vue-head";
+
 // import "./globalFilters";
 // import "./vue-youTube";
 // import "./vue-masonry";

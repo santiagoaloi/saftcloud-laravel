@@ -1,8 +1,8 @@
-require("mix-env-file");
 const path = require("path");
 const fs = require("fs-extra");
 const mix = require("laravel-mix");
 const { VuetifyLoaderPlugin } = require("vuetify-loader");
+
 const publicDir = path.resolve(__dirname, "./public");
 
 /*
@@ -52,11 +52,11 @@ mix.extend(
 
 mix.vuetify();
 
-// if (mix.inProduction()) {
-//     mix.version();
-// } else {
-//     mix.sourceMaps();
-// }
+if (mix.inProduction()) {
+    mix.version();
+} else {
+    mix.sourceMaps();
+}
 
 /*
 |---------------------------------------------------------------------
@@ -64,6 +64,7 @@ mix.vuetify();
 |---------------------------------------------------------------------
 */
 mix.js("resources/js/app.js", "public/dist/js")
+    .extract()
     .vue()
     .sass("resources/sass/app.scss", "public/dist/css")
     .webpackConfig({
@@ -76,12 +77,11 @@ mix.js("resources/js/app.js", "public/dist/js")
             }
         },
         output: {
-            chunkFilename: "dist/js/[chunkhash].js",
+            chunkFilename: "dist/js/[name].js",
             path: path.resolve(__dirname, "./public/build"),
             publicPath: process.env.APP_URL
         }
-    })
-    .extract(["vue"]);
+    });
 
 mix.then(() => {
     process.nextTick(publishAssets);
@@ -92,7 +92,7 @@ function publishAssets() {
         const dist = path.join(publicDir, "dist");
 
         // clean dist folder
-        if (fs.existsSync(dist)) fs.removeSync(dist);
+        //   if (fs.existsSync(dist)) fs.removeSync(dist);
     }
 
     if (fs.existsSync(path.join(publicDir, "build", "dist")))
@@ -108,8 +108,3 @@ function publishAssets() {
     if (fs.existsSync(path.join(publicDir, "build")))
         fs.removeSync(path.join(publicDir, "build"));
 }
-
-mix.browserSync({
-    proxy: "http://localhost:8000/",
-    injectChanges: true
-});
