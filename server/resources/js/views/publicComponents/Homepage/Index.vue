@@ -12,13 +12,13 @@
                 style="padding-top: 100px; padding-bottom: 100px"
             >
                 <h1 class="text-h4 text-sm-h3 text-md-h2 text-lg-h1">
-                    SaftCloud<span class="primary--text"> POS </span>
+                    SaftCloud<span class="primary--text"> xxxxxxxxxx</span>
                 </h1>
                 <h2
                     class="text-h6 text-sm-h5 mt-4 w-full w-md-8-12 w-xl-half mx-auto"
                 >
-                    Upgrade your business to the next-generation point of sales
-                    in the cloud.
+                    Upgrade yoursss dbusiness to the next-generation point of
+                    sales in the cloud.
                 </h2>
                 <div class="mt-8">
                     <router-link to="/signup">

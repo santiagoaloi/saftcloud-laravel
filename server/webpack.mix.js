@@ -2,7 +2,7 @@ const path = require("path");
 const fs = require("fs-extra");
 const mix = require("laravel-mix");
 const { VuetifyLoaderPlugin } = require("vuetify-loader");
-const publicDir = path.resolve(__dirname, "../public");
+const publicDir = "C:/xampp/htdocs/saftcloud-laravel/public";
 
 /*
 |---------------------------------------------------------------------
@@ -62,9 +62,12 @@ if (mix.inProduction()) {
 | Build and copy Vue application assets to 'public/dist' folder
 |---------------------------------------------------------------------
 */
-mix.js("resources/js/app.js", "../public/dist/js")
+
+mix.setPublicPath("../public/");
+mix.js("resources/js/app.js", "public/dist/js")
+    .extract()
     .vue()
-    .sass("resources/sass/app.scss", "../public/dist/css")
+    .sass("resources/sass/app.scss", "public/dist/css")
     .webpackConfig({
         resolve: {
             extensions: [".js", ".vue", ".json"],
@@ -75,11 +78,14 @@ mix.js("resources/js/app.js", "../public/dist/js")
             }
         },
         output: {
-            chunkFilename: "dist/js/[chunkhash].js",
-            path: path.resolve(__dirname, "/../public/build"),
-            publicPath: process.env.APP_URL
+            chunkFilename: "dist/js/[name].js",
+            path: "C:/xampp/htdocs/saftcloud-laravel/public/build",
+            // publicPath: process.env.APP_URL
+            publicPath: mix.inProduction() ? process.env.APP_URL : undefined
         }
     });
+
+// console.log("test");
 
 mix.then(() => {
     process.nextTick(publishAssets);
@@ -90,7 +96,7 @@ function publishAssets() {
         const dist = path.join(publicDir, "dist");
 
         // clean dist folder
-        //   if (fs.existsSync(dist)) fs.removeSync(dist);
+        if (fs.existsSync(dist)) fs.removeSync(dist);
     }
 
     if (fs.existsSync(path.join(publicDir, "build", "dist")))

@@ -14,11 +14,7 @@
                     to="/"
                     class="d-flex align-center text-decoration-none"
                 >
-                    <img
-                        class="mr-4"
-                        :src="require('@/assets/images/logo2.png')"
-                        height="40"
-                    />
+                    <img class="mr-4" src="storage/logo2.png" height="40" />
                     <span class="headline grey--text"> SaftCloud</span>
                 </router-link>
             </div>
