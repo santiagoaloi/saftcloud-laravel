@@ -2,7 +2,7 @@ const path = require("path");
 const fs = require("fs-extra");
 const mix = require("laravel-mix");
 const { VuetifyLoaderPlugin } = require("vuetify-loader");
-const publicDir = "C:/xampp/htdocs/saftcloud-laravel/public";
+const publicDir = "C:/xampp/htdocs/laravel-vue-test/public";
 
 /*
 |---------------------------------------------------------------------
@@ -79,7 +79,7 @@ mix.js("resources/js/app.js", "public/dist/js")
         },
         output: {
             chunkFilename: "dist/js/[name].js",
-            path: "C:/xampp/htdocs/saftcloud-laravel/public/build",
+            path: "C:/xampp/htdocs/laravel-vue-test/public/build",
             // publicPath: process.env.APP_URL
             publicPath: mix.inProduction() ? process.env.APP_URL : undefined
         }
