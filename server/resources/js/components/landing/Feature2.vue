@@ -1,64 +1,165 @@
 <template>
-  <v-container
-    data-aos="fade"
-    data-aos-anchor-placement="center-bottom"
-    data-aos-delay="300"
-    data-aos-once="true"
-    data-aos-easing="linear"
-    data-aos-duration="400"
-    style="padding-top: 200px; padding-bottom: 200px"
-  >
-    <v-row>
-      <v-col v-for="(item, i) in features" :key="i" cols="12" md="6">
-        <div class="d-flex">
-          <div class="mr-2">
-            <v-sheet outlined rounded class="pa-2 elevation-1">
-              <v-icon>{{ item.icon }}</v-icon>
-            </v-sheet>
-          </div>
-          <div>
-            <div class="text-h5">{{ item.title }}</div>
-            <div class="text-h6 font-weight-light mt-1">
-              {{ item.description }}
-            </div>
-          </div>
-        </div>
-      </v-col>
-    </v-row>
-  </v-container>
+  <v-responsive class="mx-auto text-left mb-10 test mt-n10">
+    <v-container>
+      <div class="d-flex justify-center py-10">
+        <v-card
+          color="white"
+          data-aos="zoom-in"
+          data-aos-delay="40"
+          data-aos-once="false"
+          data-aos-easing="linear"
+          data-aos-duration="350"
+          data-aos-anchor-placement="top"
+          width="80vw"
+        >
+          <v-row align="center" justify="start">
+            <v-col cols="12" lg="4">
+              <v-img eager src="storage/team.jpg" height="280"></v-img>
+            </v-col>
+
+            <v-col lg="7">
+              <v-container fluid>
+                <h2 class="text-h3 mb-2 black--text mb-5">
+                  We want to talk to you
+                </h2>
+                <div class="text-h6 text-lg-h5 black--text">
+                  We will hire hundreds of people who read these words. We
+                  cannot possibly succeed in our goals without doing so. We
+                  would be
+                </div>
+                <v-btn
+                  x-large
+                  class="mt-6 white--text"
+                  color="blue-grey darken-2"
+                  >Write to us</v-btn
+                >
+              </v-container>
+            </v-col>
+          </v-row>
+        </v-card>
+      </div>
+
+      <div class="d-flex justify-center">
+        <v-card
+          color="white"
+          data-aos="zoom-in"
+          data-aos-delay="40"
+          data-aos-once="false"
+          data-aos-easing="linear"
+          data-aos-duration="350"
+          data-aos-anchor-placement="top"
+          class="pa-10"
+          width="80vw"
+        >
+          <v-row align="center" justify="center">
+            <v-col cols="12" lg="6">
+              <div
+                class="text-uppercase font-weight-bold body-2 primary--text mb-2 mt-0 mt-xl-10"
+              >
+                Organize your products and sale workflows
+              </div>
+              <h2 class="text-h3">
+                Get your startup ready for business
+              </h2>
+              <div class="text-h6 text-lg-h5 mt-5">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus
+                impedit error labore doloremque fugit! Dolor fugit molestiae
+                vero quos quisquam nobis, eos debitis magni omnis ea incidunt
+                amet voluptate dignissimos!
+              </div>
+            </v-col>
+            <v-col cols="12" lg="6">
+              <v-img
+                contain
+                eager
+                src="storage/image1.png"
+                max-height="400"
+              ></v-img>
+            </v-col>
+          </v-row>
+        </v-card>
+      </div>
+
+      <div class="d-flex justify-center">
+        <v-card flat color="transparent" width="80vw">
+          <v-row>
+            <v-col sm="6">
+              <div class="d-flex justify-center py-10">
+                <v-card
+                  color="white"
+                  data-aos="zoom-in"
+                  data-aos-delay="40"
+                  data-aos-once="false"
+                  data-aos-easing="linear"
+                  data-aos-duration="350"
+                  data-aos-anchor-placement="top"
+                  width="80vw"
+                >
+                  <v-row align="center" justify="start">
+                    <v-col cols="12" lg="5">
+                      <v-img eager src="storage/team.jpg" height="280"></v-img>
+                    </v-col>
+
+                    <v-col lg="7">
+                      <v-container fluid>
+                        <h2 class="text-h3 mb-2 black--text mb-5">
+                          Security
+                        </h2>
+                        <div class="text-h6 text-lg-h5 black--text">
+                          We will hire hundreds of people who read these words.
+                          We cannot possibly succeed i
+                        </div>
+                      </v-container>
+                    </v-col>
+                  </v-row>
+                </v-card>
+              </div>
+            </v-col>
+            <v-col sm="6">
+              <div class="d-flex justify-center py-10">
+                <v-card
+                  color="white"
+                  data-aos="zoom-in"
+                  data-aos-delay="40"
+                  data-aos-once="false"
+                  data-aos-easing="linear"
+                  data-aos-duration="350"
+                  data-aos-anchor-placement="top"
+                  width="80vw"
+                >
+                  <v-row align="center" justify="start">
+                    <v-col cols="12" lg="5">
+                      <v-img eager src="storage/team.jpg" height="280"></v-img>
+                    </v-col>
+
+                    <v-col lg="7">
+                      <v-container fluid>
+                        <h2 class="text-h3 mb-2 black--text mb-5">
+                          24/7 Support
+                        </h2>
+                        <div class="text-h6 text-lg-h5 black--text">
+                          We will hire hundreds of people who read these words.
+                          We cannot possib would be
+                        </div>
+                      </v-container>
+                    </v-col>
+                  </v-row>
+                </v-card>
+              </div>
+            </v-col>
+          </v-row>
+        </v-card>
+      </div>
+    </v-container>
+  </v-responsive>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      features: [
-        {
-          icon: "mdi-account-check-outline",
-          title: "Account Verification",
-          description:
-            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse expedita fugit quam aliquam. Autem assumenda",
-        },
-        {
-          icon: "mdi-lifebuoy",
-          title: "Dedicated Support",
-          description:
-            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse expedita fugit quam aliquam. Autem assumenda",
-        },
-        {
-          icon: "mdi-email-open-multiple-outline",
-          title: "Email Integration",
-          description:
-            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse expedita fugit quam aliquam. Autem assumenda",
-        },
-        {
-          icon: "mdi-clock-outline",
-          title: "Save Time",
-          description:
-            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse expedita fugit quam aliquam. Autem assumenda",
-        },
-      ],
-    };
-  },
-};
-</script>
+<style scoped lang="scss">
+.test {
+  background: linear-gradient(
+    555deg,
+    rgb(230, 20, 100) 60%,
+    rgb(242, 245, 248) 60%
+  );
+}
+</style>
