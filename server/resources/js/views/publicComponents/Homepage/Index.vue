@@ -13,11 +13,11 @@
           class="text-center"
           style="padding-top: 10%; padding-bottom: 100px"
         >
-          <h1 class="white--text text-h4 text-sm-h3 text-md-h2 text-lg-h1">
-            SaftCloud<span class="white--text"> POS</span>
+          <h1 class=" text-h4 text-sm-h3 text-md-h2 text-lg-h1">
+            SaftCloud<span class="primary--text"> POS</span>
           </h1>
           <h2
-            class="white--text text-h6 text-sm-h5 mt-4 w-full w-md-8-12 w-xl-half mx-auto"
+            class=" text-h6 text-sm-h5 mt-4 w-full w-md-8-12 w-xl-half mx-auto"
           >
             Upgrade your business to the next-generation Point of Sales in the
             cloud.
