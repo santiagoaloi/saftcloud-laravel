@@ -1,22 +1,10 @@
 {
     "/dist/js/app.js": "/dist/js/app.js",
     "/dist/js/manifest.js": "/dist/js/manifest.js",
-<<<<<<< HEAD
     "/dist/js/Public-Layout.js": "/dist/js/Public-Layout.js",
     "/dist/js/DefaultHomepage.js": "/dist/js/DefaultHomepage.js",
     "/dist/js/Signup.js": "/dist/js/Signup.js",
     "/dist/js/public-appbar-view-footer-combined.js": "/dist/js/public-appbar-view-footer-combined.js",
     "/dist/css/app.css": "/dist/css/app.css",
     "/dist/js/vendor.js": "/dist/js/vendor.js"
-=======
-    "/dist/js/cfde0e51a36b5bfea304.js": "/dist/js/cfde0e51a36b5bfea304.js",
-    "/dist/js/0c2b35bd64009d5a62d8.js": "/dist/js/0c2b35bd64009d5a62d8.js",
-    "/dist/js/1774a91c9297384f4ff2.js": "/dist/js/1774a91c9297384f4ff2.js",
-    "/dist/js/24211dc54f99d911bc7b.js": "/dist/js/24211dc54f99d911bc7b.js",
-    "/dist/js/22f3d6fd942378b1dae2.js": "/dist/js/22f3d6fd942378b1dae2.js",
-    "/dist/css/app.css": "/dist/css/app.css",
-    "/dist/js/vendor.js": "/dist/js/vendor.js",
-    "/dist/js/349fad55aa7ed72fe484.js": "/dist/js/349fad55aa7ed72fe484.js",
-    "/dist/js/f97e5338490a723a93da.js": "/dist/js/f97e5338490a723a93da.js"
->>>>>>> 906f029ea2f509256cf1f9b12b514ff78dead8e7
 }

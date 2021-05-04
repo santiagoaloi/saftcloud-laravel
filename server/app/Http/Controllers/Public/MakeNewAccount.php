@@ -19,29 +19,35 @@ class MakeNewAccount extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function accountCreation(Request $request) {
+
+        $postdata = json_decode($request->getContent(), true);
+
         // $account = new Account;
         // $account->create($request->all());
-
+        // exit;
+        // return $postdata['companyName']; exit;   
         $account = Account::create([
             'client_type'       => 3,
-            'account_name'      => $request->input('companyName'),
-            'owner_name'        => $request->input('name'),
-            'owner_lastname'    => $request->input('lastname'),
-            'owner_email'       => $request->input('email'),
-            'phone_code'        => $request->input('phoneCode'),
-            'telephone'         => $request->input('phoneNumber'),
+            'account_name'      => $postdata['companyName'],
+            'license'           => 1,
+            'owner_first_name'  => $postdata['name'],
+            'owner_last_name'   => 'poop',
+            'email'             => 'pepe@la.com',
+            'phone_code'        => $postdata['phone_code'],
+            'phone_number'      => $postdata['phoneNumber'],
+            'created_at'        => '',
         ]);
 
         $account_id = $account->id;
 
         $company = Company::create([
             'account_id'    => $account_id,
-            'name'          => $request->input('companyName'),
-            'alias'         => $request->input('companyNameAlias'),
-            'country_id'    => $request->input('country'),
-            'state'         => $request->input('state'),
-            'city'          => $request->input('city'),
-            'address'       => $request->input('address'),
+            'name'          => $request['companyName'],
+            'alias'         => $request['companyNameAlias'],
+            'country_id'    => $request['country'],
+            'state'         => $request['state'],
+            'city'          => $request['city'],
+            'address'       => $request['address'],
         ]);
 
         $company_id = $company->id;

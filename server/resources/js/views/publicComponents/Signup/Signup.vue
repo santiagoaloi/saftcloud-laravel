@@ -113,7 +113,7 @@
                       >
                         <v-autocomplete
                           :items="countryCodes"
-                          v-model="signupForm.phoneCode"
+                          v-model="signupForm.phone_code"
                           solo
                           attach
                           item-text="phone_code"
@@ -392,7 +392,7 @@
                   We can reach you on your number from
                   <span>
                     <b>
-                      {{ getCountryNameAndCode(signupForm.phoneCode) }}
+                      {{ getCountryNameAndCode(signupForm.phone_code) }}
                       {{ signupForm.phoneNumber }}
                     </b>
                     and on your email
@@ -498,7 +498,7 @@ export default {
         name: "",
         lastname: "",
         email: "",
-        phoneCode: null,
+        phone_code: null,
         phoneNumber: "",
         companyNameAlias: "",
         companyName: "",
@@ -548,9 +548,9 @@ export default {
       }
     },
 
-    getCountryNameAndCode(phoneCode) {
+    getCountryNameAndCode(phone_code) {
       let countryObject = this.countryCodes.filter(item => {
-        return item.phone_code === phoneCode;
+        return item.phone_code === phone_code;
       });
       return `${countryObject[0].name} +${countryObject[0].phone_code} `;
     },
@@ -564,14 +564,19 @@ export default {
 
     accountCreation() {
       this.loading = true;
-      let post = {
-        newAccount: this.signupForm
-      };
-      axios.post(`account`, post).then(response => {
+      axios.post(`account`, this.signupForm).then(response => {
         if (response.data.status) {
           this.$router.push("/VerifyAccount");
         } else {
           this.loading = false;
+        }
+      });
+    },
+
+    getCountries() {
+      axios.get("/countries").then(response => {
+        if (response.data.status) {
+          this.countryCodes = response.data.rows;
         }
       });
     },
