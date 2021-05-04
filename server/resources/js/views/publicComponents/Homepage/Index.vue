@@ -164,7 +164,7 @@ export default {
   computed: {
     headerBackground() {
       return {
-        "background-image": `url(storage/xx1.jpg)`,
+        "background-image": `url(storage/k1.jpg)`,
         "background-repeat": "no-repeat",
         "background-size": "cover"
       };
