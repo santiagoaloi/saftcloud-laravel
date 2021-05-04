@@ -7,5 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Account extends Model {
     use HasFactory;
-    protected $fillable = ['email', 'owner_name', 'owner_surname', 'descripcion', 'account_telephone'];
+    protected $connection = 'mysql';
+    protected $fillable = ['license', 'client_type', 'account_name', 'owner_first_name', 'owner_last_name', 'email', 'phone_code', 'phone_number'];
 }
