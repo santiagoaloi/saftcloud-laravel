@@ -42,7 +42,7 @@
                       <validation-provider
                         v-slot="{ errors }"
                         name="First name"
-                        rules="required"
+                        
                       >
                         <v-text-field
                           autofocus
@@ -59,7 +59,7 @@
                       <validation-provider
                         v-slot="{ errors }"
                         name="Last name"
-                        rules="required"
+                        
                       >
                         <v-text-field
                           v-model="signupForm.lastname"
@@ -73,7 +73,9 @@
                   </v-row>
                 </ValidationObserver>
               </v-card-text>
-              <v-btn @click="nextStep(1)" large color="primary">Continue</v-btn>
+              <v-btn @click="loginUser()" large color="primary">login</v-btn>
+              <v-btn @click="showuser()" large color="primary">Consultar usuario</v-btn>
+              <v-btn @click="logOut()" large color="primary">Salir</v-btn>
             </div>
           </v-scroll-x-transition>
 
@@ -581,13 +583,42 @@ export default {
       });
     },
 
-    getTest2() {
-      axios.get("/getTest").then(response => {
-        if (response.data.status) {
-          this.test = response.data.rows;
-        }
+    loginUser() {
+      let post = {
+        name: 'carlo',
+        email: 'juan@pepe.com',
+        password: 'password'
+      }
+      axios.get("/sanctum/csrf-cookie").then(() => {
+        axios.post("api/login", post).then(response => {
+          if (response.data.status) {
+            this.test = response.data.rows;
+
+            const axiosDefaults = require("axios/lib/defaults");
+            axiosDefaults.headers = {
+              'Content-Type': 'application/json',
+              Authorization: "Bearer " + response.data.access_token,
+            };
+
+          }
+        });
       });
+    },
+
+    showuser() {
+      axios.post("api/showuser").then(response => {
+        console.log(response)
+      })
+    },
+
+    logOut(){
+      const axiosDefaults = require("axios/lib/defaults");
+      axiosDefaults.headers = {
+        'Content-Type': 'application/json',
+        Authorization: "Bearer ",
+      };
     }
+
   }
 };
 </script>

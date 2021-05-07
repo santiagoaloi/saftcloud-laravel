@@ -17,8 +17,6 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 
- 
-
 Route::get('/', 'App\Http\Controllers\HomeController@index');
 
 Route::get('/countries', [App\Http\Controllers\Public\Countries::class, 'getCountries']);
