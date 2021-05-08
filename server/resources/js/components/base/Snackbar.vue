@@ -1,0 +1,39 @@
+<template>
+  <v-snackbar
+    v-model="snack"
+    :timeout="6000"
+    app
+    :color="snackbar.color"
+    transition="slide-y-reverse-transition"
+    multi-line
+  >
+    <v-icon class="mr-2"> {{ snackbar.icon }} </v-icon>{{ snackbar.text }}
+
+    <template v-slot:action="{ attrs }">
+      <v-btn dark text fab small v-bind="attrs" @click="snack = false">
+        <v-icon>mdi-close</v-icon>
+      </v-btn>
+    </template>
+  </v-snackbar>
+</template>
+
+<script>
+// Utilities
+import { get, sync } from "vuex-pathify";
+
+export default {
+  name: "DefaultSnackbar",
+
+  computed: {
+    snack: sync("snackbar/value"),
+    snackbar: sync("snackbar/snackbar")
+  },
+
+  watch: {
+    snack(val) {
+      if (val) return;
+      this.snack = false;
+    }
+  }
+};
+</script>
