@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Public\CountryController;
+use App\Http\Controllers\Public\AccountController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,14 +15,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+Route::get('/', function () { return view('home'); });
 
-Route::get('/', 'App\Http\Controllers\HomeController@index');
+Route::resource('/country', CountryController::class);
+Route::get('/countries', [CountryController::class, 'showAll']);
 
-Route::get('/countries', [App\Http\Controllers\Public\Countries::class, 'getCountries']);
-
-Route::post('/account', [App\Http\Controllers\Public\MakeNewAccount::class, 'accountCreation']);
-Route::get('/account', [App\Http\Controllers\Public\MakeNewAccount::class, 'test']);
-Route::get('/getTest', [App\Http\Controllers\Public\MakeNewAccount::class, 'test2']);
+Route::resource('/account', AccountController::class);
