@@ -1,0 +1,8 @@
+{
+  "devDependencies": {
+    "vuex-pathify": "^1.4.5"
+  },
+  "dependencies": {
+    "vue-typer": "^1.2.0"
+  }
+}
