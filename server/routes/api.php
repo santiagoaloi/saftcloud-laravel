@@ -2,6 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Public\CountryController;
+use App\Http\Controllers\Public\AccountController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,3 +19,8 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::resource('/country', CountryController::class);
+Route::get('/countries', [CountryController::class, 'showAll']);
+
+Route::resource('/account', AccountController::class);
