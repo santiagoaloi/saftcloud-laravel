@@ -2,7 +2,7 @@ const path = require("path");
 const fs = require("fs-extra");
 const mix = require("laravel-mix");
 const { VuetifyLoaderPlugin } = require("vuetify-loader");
-const publicDir = "C:/xampp/htdocs/saftcloud/public";
+const publicDir = "http://saftcloud.net/saftcloud/public";
 
 /*
 |---------------------------------------------------------------------

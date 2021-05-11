@@ -205,7 +205,13 @@ export default {
   },
 
   methods: {
-    ...mapActions(["loadSiteInfo", "loadAppConfig", "logoutVuex"])
+    ...mapActions(["loadSiteInfo", "loadAppConfig", "logoutVuex"]),
+
+    getRegion(){
+      axios.get("/region").then(response => {
+        console.log('it works')
+      })
+    }
 
     // csrfInit() {
     //   axios.get("/sanctum/csrf-cookie").then(response => {

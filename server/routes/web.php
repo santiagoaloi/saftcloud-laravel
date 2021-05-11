@@ -1,8 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Public\CountryController;
-use App\Http\Controllers\Public\AccountController;
+use App\Http\Controllers\RegionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,7 +16,4 @@ use App\Http\Controllers\Public\AccountController;
 
 Route::get('/', function () { return view('home'); });
 
-Route::resource('/country', CountryController::class);
-Route::get('/countries', [CountryController::class, 'showAll']);
-
-Route::resource('/account', AccountController::class);
+Route::get('/region', [RegionController::class, 'ip_info']);

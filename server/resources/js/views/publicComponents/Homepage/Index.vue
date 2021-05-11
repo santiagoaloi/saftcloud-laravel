@@ -183,6 +183,7 @@ export default {
     mounted() {
         // store.set("snackbar/value", true);
         // store.set("snackbar/snackbar@text", "hello");
+        this.getRegion()
     },
 
     computed: {
@@ -213,7 +214,7 @@ export default {
     },
 
     methods: {
-        onIntersect(entries, observer, isIntersecting) {}
+        onIntersect(entries, observer, isIntersecting) {},
     }
 };
 </script>
