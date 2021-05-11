@@ -69,9 +69,9 @@
                             <div class="text-h6 text-lg-h5 mt-5">
                                 Start selling your products online with a
                                 dedicated shopping cart site for your business.
-                                Customize the layouts, themes, banners using
-                                straight forward drag and drop elements out of
-                                the box. Integrate third åarty payment vendores
+                                Customize the layouts, themes, banners using a
+                                straight forward drag-and-drop elements out of
+                                the box. Integrate third party payment vendors
                                 like stripe or paypal.
                             </div>
                         </v-col>
@@ -181,6 +181,6 @@
 
 <style scoped lang="scss">
 .test {
-    background: linear-gradient(555deg, #cedaec 60%, rgb(248, 243, 252) 60%);
+    background: linear-gradient(555deg, #ffffff 60%, rgb(248, 243, 252) 60%);
 }
 </style>

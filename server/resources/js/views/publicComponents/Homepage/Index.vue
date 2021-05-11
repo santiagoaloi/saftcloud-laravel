@@ -1,60 +1,53 @@
 <template>
     <div>
-        <div :style="headerBackground">
-            <div style="position:absolute;width:100%">
-                <v-container
-                    fluid
-                    data-aos="fade"
-                    data-aos-anchor-placement="center-bottom"
-                    data-aos-delay="300"
-                    data-aos-once="true"
-                    data-aos-easing="linear"
-                    data-aos-duration="400"
-                    class="text-center"
-                    style="padding-top: 10%; padding-bottom: 100px"
+        <div style="margin-top:-80px;" :style="headerBackground">
+            <v-container
+                fluid
+                data-aos="fade"
+                data-aos-anchor-placement="center-bottom"
+                data-aos-delay="300"
+                data-aos-once="true"
+                data-aos-easing="linear"
+                data-aos-duration="400"
+                class="text-center"
+                style="padding-top: 10%; padding-bottom: 100px"
+            >
+                <v-img
+                    eager
+                    style="position:fixed;left:60%;top:-10%"
+                    contain
+                    height="900"
+                    :src="imageRightHeader"
+                />
+
+                <h1
+                    class="font-weight-black text-h4 text-sm-h3 text-md-h2 text-lg-h1"
                 >
-                    <v-img
-                        eager
-                        style="position:fixed;left:60%;top:-10%"
-                        contain
-                        height="900"
-                        :src="imageRightHeader"
-                    />
-
-                    <h1
-                        class="font-weight-black text-h4 text-sm-h3 text-md-h2 text-lg-h1"
+                    <vue-typer
+                        pre-type-delay="1000"
+                        type-delay="90"
+                        :repeat="false"
+                        caret-animation="smooth"
+                        text="SaftCloud POS"
+                    ></vue-typer>
+                </h1>
+                <h2
+                    class=" white--text text-h6 text-sm-h5 mt-4 w-full w-md-8-12 w-xl-half mx-auto"
+                >
+                    Upgrade your business to the next-generation Point of Sales
+                    in the cloud.
+                </h2>
+                <div class="mt-8">
+                    <v-btn to="/signup" x-large color="teal accent-1"
+                        >Try it for free</v-btn
                     >
-                        <vue-typer
-                            pre-type-delay="1000"
-                            type-delay="90"
-                            :repeat="false"
-                            caret-animation="smooth"
-                            text="SaftCloud POS"
-                        ></vue-typer>
-                    </h1>
-                    <h2
-                        class=" text-h6 text-sm-h5 mt-4 w-full w-md-8-12 w-xl-half mx-auto"
+                    <v-btn x-large class="my-1 mx-sm-1 w-full w-sm-auto"
+                        >Contact Sales</v-btn
                     >
-                        Upgrade your business to the next-generation Point of
-                        Sales in the cloud.
-                    </h2>
-                    <div class="mt-8">
-                        <router-link to="/signup">
-                            <v-btn
-                                x-large
-                                class="my-1 mx-sm-1 w-full w-sm-auto"
-                                color="primary"
-                                >Try it for free</v-btn
-                            >
-                        </router-link>
-                        <v-btn x-large class="my-1 mx-sm-1 w-full w-sm-auto"
-                            >Contact Sales</v-btn
-                        >
-                    </div>
-                </v-container>
-            </div>
+                </div>
+            </v-container>
 
-            <svg
+            <!-- <svg
                 width="100%"
                 height="100%"
                 viewBox="0 0 1366 1366"
@@ -142,7 +135,7 @@
                         </animateMotion>
                     </g>
                 </g>
-            </svg>
+            </svg> -->
         </div>
 
         <!-- <Partners /> -->
@@ -195,13 +188,13 @@ export default {
     computed: {
         headerBackground() {
             return {
-                "background-image": `url(storage/transparentHeader.png)`,
+                "background-image": `url(storage/header-bg.svg)`,
                 "background-repeat": "no-repeat",
                 "background-size": "cover",
                 height:
                     this.$vuetify.breakpoint.height -
                     this.$vuetify.application.top +
-                    5 +
+                    80 +
                     "px"
             };
         },
@@ -225,11 +218,27 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 .reflect {
     transform: scaleX(-1);
 }
 .translate {
     transform: translateX(-200%);
+}
+
+.vue-typer {
+    font-family: monospace;
+}
+
+.vue-typer .custom.char {
+    color: white;
+}
+.vue-typer .custom.char.selected {
+    background-color: #264f78;
+}
+
+.vue-typer .custom.caret {
+    width: 10px;
+    background-color: #3f51b5;
 }
 </style>

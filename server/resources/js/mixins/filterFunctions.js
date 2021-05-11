@@ -11,7 +11,7 @@ export default {
 
     getStock(id) {
       const index = this.dropdownProducts.findIndex(
-        (product) => product.product_id === id
+        product => product.product_id === id
       );
       if (index > 0) {
         return parseFloat(this.dropdownProducts[index].stock);
@@ -22,7 +22,7 @@ export default {
 
     iconSelectedWeb(item) {
       let result = this.selected.filter(
-        (p) => p.transaction_id === item.transaction_id
+        p => p.transaction_id === item.transaction_id
       );
       if (result.length === 1) {
         return true;
@@ -33,7 +33,7 @@ export default {
 
     iconSelectedMobile(item) {
       let result = this.selected.filter(
-        (p) => p.transaction_id === item.transaction_id
+        p => p.transaction_id === item.transaction_id
       );
       if (result.length === 1) {
         return "mdi-check-circle";
@@ -44,7 +44,7 @@ export default {
 
     iconSelectedMobileColor(item) {
       let result = this.selected.filter(
-        (p) => p.transaction_id === item.transaction_id
+        p => p.transaction_id === item.transaction_id
       );
       if (result.length === 1) {
         return "green";
@@ -60,23 +60,19 @@ export default {
         item.product_name,
         item.bar_code,
         item.sku,
-        item.product_brand,
+        item.product_brand
       ];
       return fields.some(
-        (f) => f != null && f.toLowerCase().includes(searchText)
+        f => f != null && f.toLowerCase().includes(searchText)
       );
     },
 
-    // Filtro para el dropdown que limita la busqueda por nombre y codigo de barra de producto.
     filterCountries(item, queryText) {
       const searchText = queryText.toLowerCase();
-      const fields = [
-        item.name,
-        item.phone_code,
-      ];
+      const fields = [item.name, item.phone_code];
       return fields.some(
-        (f) => f != null && f.toLowerCase().includes(searchText)
+        f => f != null && f.toLowerCase().includes(searchText)
       );
-    },
-  },
+    }
+  }
 };
