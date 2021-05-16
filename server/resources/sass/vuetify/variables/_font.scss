@@ -1,6 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap");
 
-$body-font-family: 'Quicksand', sans-serif;
+$body-font-family: "Quicksand", sans-serif;
 .v-application {
   .display-1,
   .display-2,
@@ -17,47 +17,52 @@ $body-font-family: 'Quicksand', sans-serif;
     font-family: $body-font-family !important;
   }
 }
-$font-size-root: 13px;
-$line-height-root: 1;
+
+$font-size-root: 12px;
+$line-height-root: 1.4;
 
 $font-weights: (
-  'thin': 300,
-  'light': 300,
-  'regular': 400,
-  'medium': 500,
-  'bold': 600,
-  'black': 700,
+  "thin": 300,
+  "light": 300,
+  "regular": 400,
+  "medium": 500,
+  "bold": 600,
+  "black": 700
 );
 
 $heading-font-family: $body-font-family;
 
 $headings: (
-  'h6': (
-    'size': 1.16rem,
-    'weight': 800,
-    'line-height': 2rem,
-    'letter-spacing': 0.0125em,
-    'font-family': $heading-font-family,
+  "h3": (
+    "weight": 300,
+    "font-family": $heading-font-family
   ),
-  'subtitle-1': (
-    'size': 1rem,
-    'weight': 600,
-    'line-height': 1.75rem,
-    'letter-spacing': 0.009375em,
-    'font-family': $body-font-family,
+  "h6": (
+    "size": 1.16rem,
+    "weight": 800,
+    "line-height": 2rem,
+    "letter-spacing": 0.0125em,
+    "font-family": $heading-font-family
   ),
-  'caption': (
-    'size': 0.75rem,
-    'weight': 400,
-    'letter-spacing': 0.0333333333em,
-    'line-height': 1.25rem,
-    'font-family': $body-font-family,
+  "subtitle-1": (
+    "size": 1rem,
+    "weight": 600,
+    "line-height": 1.75rem,
+    "letter-spacing": 0.009375em,
+    "font-family": $body-font-family
   ),
-  'overline': (
-    'size': 0.625rem,
-    'weight': 400,
-    'letter-spacing': 0.1666666667em,
-    'line-height': 1rem,
-    'font-family': $body-font-family,
+  "caption": (
+    "size": 0.75rem,
+    "weight": 300,
+    "letter-spacing": 0.0333333333em,
+    "line-height": 1.3rem,
+    "font-family": $body-font-family
   ),
+  "overline": (
+    "size": 0.625rem,
+    "weight": 400,
+    "letter-spacing": 0.1666666667em,
+    "line-height": 1rem,
+    "font-family": $body-font-family
+  )
 );

@@ -1,6 +1,7 @@
 <template>
   <v-app>
-    <log-view />
+    <log-bar />
+    <login-view />
   </v-app>
 </template>
 
@@ -8,7 +9,11 @@
 export default {
   name: "Loginlayout",
   components: {
-    LogView: () => import(/* webpackChunkName: 'login-view' */ "./View")
+    LoginView: () => import(/* webpackChunkName: 'login-view' */ "./View"),
+    LogBar: () =>
+      import(
+        /* webpackChunkName: 'public-appbar-view-footer-combined' */ "./AppBar"
+      )
   }
 };
 </script>

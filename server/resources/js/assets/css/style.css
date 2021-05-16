@@ -25,9 +25,9 @@
   font-weight: 100;
 }
 
-/* .swal2-popup {
-  font-family: 'Open Sans', Sans-serif !important;
-} */
+.swal2-popup {
+  font-family: "Open Sans", Sans-serif !important;
+}
 
 /* Change Autocomplete styles in Chrome*/
 input:-webkit-autofill,
@@ -54,7 +54,7 @@ select:-webkit-autofill:focus {
 
 /* HIDE INPUT TYPE NUMBER INNER ARROWS
   /* Firefox */
-input[type='number'] {
+input[type="number"] {
   -moz-appearance: textfield;
 }
 ::selection {
@@ -139,4 +139,10 @@ input::-webkit-inner-spin-button {
 .theme--light.v-data-table {
   background-color: rgb(255, 255, 255, 0.9);
   color: rgba(0, 0, 0, 0.87);
+}
+
+@media (min-width: 1904px) {
+  .container {
+    max-width: 1561px !important;
+  }
 }

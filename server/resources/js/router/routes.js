@@ -1,4 +1,4 @@
-// import staticRoutes from "@/router/static";
+import staticRoutes from "@/router/static";
 import publicRoutes from "@/router/public";
 
 export default [
@@ -9,12 +9,12 @@ export default [
     redirect: {
       path: "/homepage",
       meta: {
-        layout: "public_layout",
-      },
+        layout: "public_layout"
+      }
       // component: () => import(/* webpackChunkName: 'DefaultHomepage' */ '@/views/publicComponents/homepage/Index.vue'),
-    },
+    }
   },
 
-  // ...staticRoutes,
-  ...publicRoutes,
+  ...staticRoutes,
+  ...publicRoutes
 ];

@@ -8,8 +8,9 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <title>Lux Laravel Starter</title>
 
-        <!-- Quicksand Font -->
-        <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+        <!-- Quicksand Font
+        <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet"> -->
 
             <link href="{{ mix('dist/css/app.css') }}" rel="stylesheet">
     </head>
