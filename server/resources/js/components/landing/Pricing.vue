@@ -1,8 +1,8 @@
 <template>
   <v-container style="padding-top: 60px; padding-bottom: 200px">
     <v-responsive max-width="1200" class="mx-auto text-center">
-      <h2 class="text-h3 mb-2">Pricing</h2>
-      <div class="text-h6 text-lg-h5">
+      <h2 class="text-h3 mb-2 white--text">Pricing</h2>
+      <div class="text-h6 text-lg-h5 white--text">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus impedit
         error labore doloremque fugit.
       </div>
