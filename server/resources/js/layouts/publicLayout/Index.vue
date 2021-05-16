@@ -1,10 +1,10 @@
 <template>
-  <div>
+  <v-app>
     <pub-bar />
     <pub-view />
     <snackbar />
     <pub-footer />
-  </div>
+  </v-app>
 </template>
 
 <script>

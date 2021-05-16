@@ -1,53 +1,59 @@
 <template>
-    <div>
-        <div style="margin-top:-80px;" :style="headerBackground">
-            <v-container
-                fluid
-                data-aos="fade"
-                data-aos-anchor-placement="center-bottom"
-                data-aos-delay="300"
-                data-aos-once="true"
-                data-aos-easing="linear"
-                data-aos-duration="400"
-                class="text-center"
-                style="padding-top: 10%; padding-bottom: 100px"
-            >
-                <v-img
-                    eager
-                    style="position:fixed;left:60%;top:-10%"
-                    contain
-                    height="900"
-                    :src="imageRightHeader"
-                />
+  <div>
+    <!-- <div style="margin-top:-80px;" :style="headerBackground"> -->
+    <v-img
+      height="101vh"
+      eager
+      style="margin-top:-80px"
+      gradient="to top right, rgba(0,0,0,.1), rgba(0,0,0,.5)"
+      src="storage/11.png"
+    >
+      <v-container class="fill-height text-left pa-10">
+        <v-img
+          eager
+          style="position:absolute;left:70%;top:5%"
+          contain
+          height="900"
+          :src="imageRightHeader"
+        />
+        <v-row class="d-flex flex-column">
+          <div
+            class="font-weight-black text-h4 text-sm-h3 text-md-h2 text-lg-h1"
+          >
+            <vue-typer
+              :pre-type-delay="1000"
+              :type-delay="90"
+              :repeat="0"
+              caret-animation="smooth"
+              text="SaftCloud POS"
+            ></vue-typer>
+          </div>
 
-                <h1
-                    class="font-weight-black text-h4 text-sm-h3 text-md-h2 text-lg-h1"
-                >
-                    <vue-typer
-                        pre-type-delay="1000"
-                        type-delay="90"
-                        :repeat="false"
-                        caret-animation="smooth"
-                        text="SaftCloud POS"
-                    ></vue-typer>
-                </h1>
-                <h2
-                    class=" white--text text-h6 text-sm-h5 mt-4 w-full w-md-8-12 w-xl-half mx-auto"
-                >
-                    Upgrade your business to the next-generation Point of Sales
-                    in the cloud.
-                </h2>
-                <div class="mt-8">
-                    <v-btn to="/signup" x-large color="teal accent-1"
-                        >Try it for free</v-btn
-                    >
-                    <v-btn x-large class="my-1 mx-sm-1 w-full w-sm-auto"
-                        >Contact Sales</v-btn
-                    >
-                </div>
-            </v-container>
+          <v-card flat color="transparent" width="600">
+            <h1 class=" white--text ">
+              Upgrade your business to the next-generation Point of Sales in the
+              cloud.
+            </h1>
 
-            <!-- <svg
+            <h3 class=" white--text mt-10" style="font-weight:100">
+              Upgrade your business to the next-generation Point of Sales in the
+              cloud. Upgrade your business to the next-generation Point of Sales
+              in the cloud. Upgrade your business to the next-generation Point
+              of Sales in the cloud. Upgrade your business to the
+              next-generation Point of Sales in the cloud.
+            </h3>
+            <div class="mt-8">
+              <v-btn to="/signup" x-large color="teal accent-1"
+                >Try it for free</v-btn
+              >
+              <v-btn x-large class="my-1 mx-sm-1">Contact Sales</v-btn>
+            </div>
+          </v-card>
+        </v-row>
+      </v-container>
+    </v-img>
+
+    <!-- <svg
                 width="100%"
                 height="100%"
                 viewBox="0 0 1366 1366"
@@ -136,21 +142,21 @@
                     </g>
                 </g>
             </svg> -->
-        </div>
+    <!-- </div> -->
 
-        <!-- <Partners /> -->
-        <!-- <Stats /> -->
+    <!-- <Partners /> -->
+    <!-- <Stats /> -->
 
-        <Feature1 />
-        <Feature2 />
+    <Feature1 />
+    <Feature2 />
 
-        <!-- <Feature2 /> -->
+    <!-- <Feature2 /> -->
 
-        <!-- <Partners />
+    <!-- <Partners />
 
     <Pricing /> -->
-        <CallToAction />
-    </div>
+    <CallToAction />
+  </div>
 </template>
 
 <script>
@@ -165,81 +171,86 @@ import CallToAction from "@/components/landing/CallToAction.vue";
 import Feature2 from "@/components/landing/Feature2.vue";
 
 export default {
-    name: "Homepage",
-    components: {
-        VueTyper,
-        Partners,
-        Stats,
-        Pricing,
-        Feature1,
-        Feature2,
-        CallToAction
-    },
+  name: "Homepage",
+  components: {
+    VueTyper,
+    Partners,
+    Stats,
+    Pricing,
+    Feature1,
+    Feature2,
+    CallToAction
+  },
 
-    data() {
-        return {};
-    },
+  data() {
+    return {
+      loaded: false
+    };
+  },
 
-    mounted() {
-        // store.set("snackbar/value", true);
-        // store.set("snackbar/snackbar@text", "hello");
-        this.getRegion()
-    },
+  mounted() {
+    this.$nextTick(function() {
+      this.loaded = true;
+    });
+    // store.set("snackbar/value", true);
+    // store.set("snackbar/snackbar@text", "hello");
+    // this.getRegion()
+  },
 
-    computed: {
-        headerBackground() {
-            return {
-                "background-image": `url(storage/header-bg.svg)`,
-                "background-repeat": "no-repeat",
-                "background-size": "cover",
-                height:
-                    this.$vuetify.breakpoint.height -
-                    this.$vuetify.application.top +
-                    80 +
-                    "px"
-            };
-        },
-        svgBackground() {
-            return {
-                "background-image": `url(storage/login.jpg)`,
-                "background-repeat": "no-repeat",
-                "background-size": "cover",
-                opacity: "0.2",
-                filter: "grayscale(100%)"
-            };
-        },
-        imageRightHeader() {
-            return "storage/right2.png";
-        }
+  computed: {
+    headerBackground() {
+      return {
+        "background-image": `url(storage/header-bg.svg)`,
+        "background-repeat": "no-repeat",
+        "background-size": "cover",
+        height:
+          this.$vuetify.breakpoint.height -
+          this.$vuetify.application.top +
+          80 +
+          "px"
+      };
     },
-
-    methods: {
-        onIntersect(entries, observer, isIntersecting) {},
+    svgBackground() {
+      return {
+        "background-image": `url(storage/login.jpg)`,
+        "background-repeat": "no-repeat",
+        "background-size": "cover",
+        opacity: "0.2",
+        filter: "grayscale(100%)"
+      };
+    },
+    imageRightHeader() {
+      return "storage/right2.png";
     }
+  },
+
+  methods: {
+    onIntersect(entries, observer, isIntersecting) {}
+  }
 };
 </script>
 
 <style>
 .reflect {
-    transform: scaleX(-1);
+  transform: scaleX(-1);
 }
 .translate {
-    transform: translateX(-200%);
+  transform: translateX(-200%);
 }
 
 .vue-typer {
-    font-family: monospace;
+  font-family: monospace;
 }
 
 .vue-typer .custom.char {
-    color: white;
+  color: white;
 }
 .vue-typer .custom.char.selected {
-    background-color: #264f78;
+  background-color: #264f78;
 }
 
 .vue-typer .custom.caret {
-    width: 10px;
-    background-color: #3f51b5;
+  width: 10px;
+  background-color: #3f51b5;
 }
 </style>

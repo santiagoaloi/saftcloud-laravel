@@ -1,13 +1,5 @@
 <template>
-  <v-container
-    data-aos="fade"
-    data-aos-anchor-placement="center-bottom"
-    data-aos-delay="300"
-    data-aos-once="true"
-    data-aos-easing="linear"
-    data-aos-duration="400"
-    style="padding-top: 60px; padding-bottom: 200px"
-  >
+  <v-container style="padding-top: 60px; padding-bottom: 200px">
     <v-responsive max-width="1200" class="mx-auto text-center">
       <h2 class="text-h3 mb-2">Pricing</h2>
       <div class="text-h6 text-lg-h5">

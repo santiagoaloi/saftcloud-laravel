@@ -7,6 +7,10 @@
     "/dist/js/Signup.js": "/dist/js/Signup.js",
     "/dist/js/public-appbar-view-footer-combined.js": "/dist/js/public-appbar-view-footer-combined.js",
     "/dist/js/public-snackbar.js": "/dist/js/public-snackbar.js",
+    "/dist/js/secure-appbar.js": "/dist/js/secure-appbar.js",
+    "/dist/js/secure-drawer.js": "/dist/js/secure-drawer.js",
+    "/dist/js/secure-element-drawer.js": "/dist/js/secure-element-drawer.js",
+    "/dist/js/secure-view.js": "/dist/js/secure-view.js",
     "/dist/js/login-view.js": "/dist/js/login-view.js",
     "/dist/css/app.css": "/dist/css/app.css",
     "/dist/js/vendor.js": "/dist/js/vendor.js"

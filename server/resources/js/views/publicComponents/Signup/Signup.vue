@@ -1,485 +1,459 @@
 <template>
-  <div>
-    <v-img
-      class="align-center justify-center"
-      height="200"
-      src="https://cdn.vuetifyjs.com/images/parallax/material.jpg"
-      gradient="to top right, rgba(239,61,180,.9), rgba(0,0,0,.7)"
+  <v-container class="fill-height mt-6">
+    <v-row
+      data-aos="fade"
+      data-aos-anchor-placement="center-bottom"
+      data-aos-delay="300"
+      data-aos-once="true"
+      data-aos-easing="linear"
+      data-aos-duration="400"
+      class="text-center align-center justify-center"
     >
-      <v-row>
-        <v-col class="text-center" cols="12">
-          <h1 class="display-1 font-weight-thin mb-4 white--text">
-            Join the gang!
-          </h1>
-          <h4 class="subheading white--text">
-            May SaftCloud be with you, start getting value from managing your
-            store like a boss.
-          </h4>
-        </v-col>
-      </v-row>
-    </v-img>
-
-    <v-container class="fill-height">
-      <v-row
-        data-aos="fade"
-        data-aos-anchor-placement="center-bottom"
-        data-aos-delay="300"
-        data-aos-once="true"
-        data-aos-easing="linear"
-        data-aos-duration="400"
-        class="text-center align-center justify-center"
-      >
-        <v-col cols="12" lg="6">
-          <v-alert
-            border="left"
-            colored-border
-            color="deep-purple accent-4"
-            elevation="2"
-            class="text-left "
-          >
-            All new accounts are free of charge for the first 14 days since the
-            day of registration, no payment information is required until the
-            trial ends. The information uploaded to SaftCloud is confidential
-            and only available to you. We don't comercialice any data uploaded
-            to our databases. Once the trial ends, we will retain the data one
-            week, to provide you with backups or exporting capabilities.
-          </v-alert>
-
-          <v-scroll-x-transition hide-on-leave>
-            <div v-if="step === 0">
-              <v-card-text>
-                <p class="display-1 text--primary">
-                  Hi {{ signupForm.name }}, nice to meet you!
-                </p>
-                <ValidationObserver ref="step0" slim>
-                  <v-row justify="center">
-                    <v-col sm="6">
-                      <span>Name</span>
-                      <validation-provider
-                        v-slot="{ errors }"
-                        name="First name"
-                        rules="required"
-                      >
-                        <v-text-field
-                          autofocus
-                          v-model="signupForm.name"
-                          solo
-                          hide-details
-                          @keydown.enter.prevent="nextStep(1)"
-                          :background-color="errors.length > 0 ? '#faebeb' : ''"
-                        ></v-text-field>
-                      </validation-provider>
-                    </v-col>
-                    <v-col sm="6">
-                      <span>Last name </span>
-                      <validation-provider
-                        v-slot="{ errors }"
-                        name="Last name"
-                        rules="required"
-                      >
-                        <v-text-field
-                          v-model="signupForm.lastname"
-                          solo
-                          hide-details
-                          @keydown.enter.prevent="nextStep(1)"
-                          :background-color="errors.length > 0 ? '#faebeb' : ''"
-                        ></v-text-field>
-                      </validation-provider>
-                    </v-col>
-                  </v-row>
-                </ValidationObserver>
-              </v-card-text>
-              <v-btn @click="nextStep(1)" large color="primary">Continue</v-btn>
-            </div>
-          </v-scroll-x-transition>
-
-          <!-- STEP 1 -->
-          <v-scroll-x-transition hide-on-leave>
-            <div v-if="step === 1">
-              <v-card-text>
-                <p class="display-1 text--primary">
-                  How should we contact you?
-                </p>
-                <ValidationObserver ref="step1" slim>
-                  <v-row justify="center">
-                    <v-col sm="12">
-                      <span>Email</span>
-                      <validation-provider
-                        v-slot="{ errors }"
-                        name="Email"
-                        rules="required|email"
-                      >
-                        <v-text-field
-                          autofocus
-                          type="email"
-                          v-model="signupForm.email"
-                          solo
-                          hide-details
-                          @keydown.enter.prevent="nextStep(2)"
-                          :background-color="errors.length > 0 ? '#faebeb' : ''"
-                        ></v-text-field>
-                      </validation-provider>
-                    </v-col>
-                    <v-col sm="6">
-                      <span>Country Code</span>
-                      <validation-provider
-                        v-slot="{ errors }"
-                        name="CountryCode"
-                        rules="required"
-                      >
-                        <v-autocomplete
-                          :items="countryCodes"
-                          v-model="signupForm.phone_code"
-                          solo
-                          attach
-                          item-text="phone_code"
-                          :filter="filterCountries"
-                          hide-details
-                          @keydown.enter.prevent="nextStep(2)"
-                          :background-color="errors.length > 0 ? '#faebeb' : ''"
-                        >
-                          <template slot="selection" slot-scope="data">
-                            <v-row no-gutters dense>
-                              <v-col cols="4">
-                                <v-list-item-content>
-                                  <country-flag
-                                    class="mr-2"
-                                    :country="data.item.iso2"
-                                  />
-                                </v-list-item-content>
-                              </v-col>
-
-                              <v-col cols="8">
-                                <v-list-item-content class="pt-4">
-                                  <v-list-item-title>
-                                    +{{ `${data.item.phone_code}` }}
-
-                                    {{ `${data.item.name}` }}
-                                  </v-list-item-title>
-                                </v-list-item-content>
-                              </v-col>
-                            </v-row>
-                          </template>
-
-                          <template v-slot:item="data">
-                            <v-row no-gutters dense>
-                              <v-col cols="3">
-                                <v-list-item-content>
-                                  <country-flag
-                                    class="mr-2"
-                                    :country="data.item.iso2"
-                                  />
-                                </v-list-item-content>
-                              </v-col>
-
-                              <v-col cols="6">
-                                <v-list-item-content>
-                                  <v-list-item-title>
-                                    +{{ `${data.item.phone_code}` }}
-
-                                    {{ `${data.item.name}` }}
-                                  </v-list-item-title>
-                                </v-list-item-content>
-                              </v-col>
-                            </v-row>
-                          </template>
-                        </v-autocomplete>
-                      </validation-provider>
-                    </v-col>
-                    <v-col sm="6">
-                      <span>Phone number</span>
-                      <validation-provider
-                        v-slot="{ errors }"
-                        name="Phone mumber"
-                        rules="required"
-                      >
-                        <v-text-field
-                          type="number"
-                          v-model="signupForm.phoneNumber"
-                          solo
-                          hide-details
-                          @keydown.enter.prevent="nextStep(2)"
-                          :background-color="errors.length > 0 ? '#faebeb' : ''"
-                        ></v-text-field>
-                      </validation-provider>
-                    </v-col>
-                  </v-row>
-                </ValidationObserver>
-              </v-card-text>
-              <v-btn class="mx-1" @click="step = 0" large color="grey lighten-2"
-                >Back</v-btn
-              >
-              <v-btn class="mx-1" @click="nextStep(2)" large color="primary"
-                >Continue</v-btn
-              >
-            </div>
-          </v-scroll-x-transition>
-
-          <!-- STEP 2 -->
-          <v-scroll-x-transition hide-on-leave>
-            <div v-if="step === 2">
-              <v-card-text>
-                <p class="display-1 text--primary">
-                  Where is your bussiness headquartered?
-                </p>
-
-                <ValidationObserver ref="step2" slim>
-                  <v-row justify="center">
-                    <v-col sm="12">
-                      <span>Country</span>
-                      <validation-provider
-                        v-slot="{ errors }"
-                        name="Country"
-                        rules="required"
-                      >
-                        <v-autocomplete
-                          autofocus
-                          :items="countryCodes"
-                          v-model="signupForm.country"
-                          solo
-                          attach
-                          item-text="name"
-                          item-value="id"
-                          hide-details
-                          @keydown.enter.prevent="nextStep(3)"
-                          :background-color="errors.length > 0 ? '#faebeb' : ''"
-                        >
-                          <template slot="selection" slot-scope="data">
-                            <country-flag
-                              class="mr-2"
-                              :country="data.item.iso2"
-                            />
-                            <span class="mr-2">{{ data.item.name }} </span>
-                          </template>
-                        </v-autocomplete>
-                      </validation-provider>
-                    </v-col>
-
-                    <v-col sm="6">
-                      <span>State, Province, or Region </span>
-                      <validation-provider
-                        v-slot="{ errors }"
-                        name="State"
-                        rules="required"
-                      >
-                        <v-text-field
-                          v-model="signupForm.state"
-                          solo
-                          hide-details
-                          @keydown.enter.prevent="nextStep(3)"
-                          :background-color="errors.length > 0 ? '#faebeb' : ''"
-                        ></v-text-field>
-                      </validation-provider>
-                    </v-col>
-
-                    <v-col sm="6">
-                      <span>City </span>
-                      <validation-provider
-                        v-slot="{ errors }"
-                        name="City"
-                        rules="required"
-                      >
-                        <v-text-field
-                          v-model="signupForm.city"
-                          solo
-                          hide-details
-                          @keydown.enter.prevent="nextStep(3)"
-                          :background-color="errors.length > 0 ? '#faebeb' : ''"
-                        ></v-text-field>
-                      </validation-provider>
-                    </v-col>
-
-                    <v-col sm="8">
-                      <span>Address</span>
-                      <validation-provider
-                        v-slot="{ errors }"
-                        name="Address"
-                        rules="required"
-                      >
-                        <v-text-field
-                          v-model="signupForm.address"
-                          solo
-                          hide-details
-                          @keydown.enter.prevent="nextStep(3)"
-                          :background-color="errors.length > 0 ? '#faebeb' : ''"
-                        ></v-text-field>
-                      </validation-provider>
-                    </v-col>
-
-                    <v-col sm="4">
-                      <span>Postal code</span>
-                      <validation-provider
-                        v-slot="{ errors }"
-                        name="Zipcode"
-                        rules="required"
-                      >
-                        <v-text-field
-                          v-model="signupForm.zipcode"
-                          solo
-                          hide-details
-                          @keydown.enter.prevent="nextStep(3)"
-                          :background-color="errors.length > 0 ? '#faebeb' : ''"
-                        ></v-text-field>
-                      </validation-provider>
-                    </v-col>
-                  </v-row>
-                </ValidationObserver>
-              </v-card-text>
-              <v-btn class="mx-1" @click="step = 1" large color="grey lighten-2"
-                >Back</v-btn
-              >
-              <v-btn class="mx-1" @click="nextStep(3)" large color="primary"
-                >Continue</v-btn
-              >
-            </div>
-          </v-scroll-x-transition>
-
-          <!-- STEP 3 -->
-          <v-scroll-x-transition hide-on-leave>
-            <div v-if="step === 3">
-              <v-card-text>
-                <p class="display-1 text--primary">
-                  Define your parent account
-                </p>
-                <ValidationObserver ref="step3" slim>
-                  <v-row justify="center">
-                    <v-col sm="6">
-                      <validation-provider
-                        v-slot="{ errors }"
-                        name="Company name"
-                        rules="required"
-                      >
-                        <span>Account name</span>
-                        <!-- V-MODEL companyName SHOULD CHANGE TO accountName -->
-                        <v-text-field
-                          autofocus
-                          v-model="signupForm.companyName"
-                          hint="Oficial registed company name"
-                          solo
-                          hide-details
-                          :background-color="errors.length > 0 ? '#faebeb' : ''"
-                          @keydown.enter.prevent="nextStep(4)"
-                        ></v-text-field>
-                      </validation-provider>
-                    </v-col>
-                    <v-col sm="6">
-                      <span>Parent company name alias</span>
-                      <validation-provider
-                        v-slot="{ errors }"
-                        name="Company name alias"
-                        rules="required"
-                      >
-                        <v-text-field
-                          v-model="signupForm.companyNameAlias"
-                          hint="Public company name alias"
-                          solo
-                          hide-details
-                          :background-color="errors.length > 0 ? '#faebeb' : ''"
-                          @keydown.enter.prevent="nextStep(4)"
-                        ></v-text-field>
-                      </validation-provider>
-                    </v-col>
-                  </v-row>
-                </ValidationObserver>
-              </v-card-text>
-              <v-btn class="mx-1" @click="step = 2" large color="grey lighten-2"
-                >Back</v-btn
-              >
-              <v-btn @click="nextStep(4)" class="mx-1" large color="primary"
-                >Review application</v-btn
-              >
-            </div>
-          </v-scroll-x-transition>
-          <!-- STEP 4 -->
-          <v-scroll-x-transition hide-on-leave>
-            <div v-if="step === 4">
-              <v-card>
-                <v-card-text class="text-left ">
-                  <div class="mt-5 mb-5 text-h5">
-                    let's double check the information your provided before we
-                    can move forward with the registration of your shiny new
-                    account "<b>{{ signupForm.companyName }}</b
-                    >"
-                  </div>
-                  <div class="mt-10 text-h5">
-                    We can reach you on your number from
-                    <span>
-                      <b>
-                        {{ getCountryNameAndCode(signupForm.phone_code) }}
-                        {{ signupForm.phoneNumber }}
-                      </b>
-                      and on your email
-                      <b> {{ signupForm.email }}</b
-                      >.
-                    </span>
-                  </div>
-                  <div class="text-h5 mt-5">
-                    Your business
-                    <b> {{ signupForm.companyNameAlias }}</b>
-                    is registered in
-                    <b>
-                      {{ getCountryName(signupForm.country) }}
-                    </b>
-                    on the address
-                    <b>
-                      {{ signupForm.address }} ({{ signupForm.zipcode }}),
-                      {{ signupForm.state }}, {{ signupForm.city }}.
-                    </b>
-                  </div></v-card-text
-                ></v-card
-              >
-
-              <v-card-text>
-                <v-checkbox :ripple="false" class="mt-10" v-model="terms">
-                  <template v-slot:label>
-                    <div>
-                      I confirm that my information is genuine and that I
-                      represent the business I'm creating the account for, as
-                      well as reading and accepting
-
-                      <a
-                        target="_blank"
-                        href="https://vuetifyjs.com"
-                        @click.stop
-                      >
-                        our terms and conditions
-                      </a>
-                      thoroughly.
-                    </div>
-                  </template>
-                </v-checkbox>
-              </v-card-text>
-              <v-btn class="mx-1" @click="step = 3" large color="grey lighten-2"
-                >Back</v-btn
-              >
-              <v-btn
-                :disabled="!terms"
-                @click="accountCreation()"
-                class="mx-1"
-                large
-                color="primary"
-                :loading="loading"
-                >Sign up</v-btn
-              >
-            </div>
-          </v-scroll-x-transition>
-        </v-col>
-
-        <v-col
-          :order="$vuetify.breakpoint.smAndDown ? 'first' : null"
-          cols="12"
-          lg="6"
+      <v-col cols="12" lg="6">
+        <v-alert
+          border="left"
+          colored-border
+          color="deep-purple accent-4"
+          elevation="2"
+          class="text-left "
         >
-          <v-img
-            :src="require('@/assets/images/signup.svg')"
-            max-height="480"
-            contain
-          ></v-img>
-        </v-col>
-      </v-row>
-    </v-container>
+          All new accounts are free of charge for the first 14 days since the
+          day of registration, no payment information is required until the
+          trial ends. The information uploaded to SaftCloud is confidential and
+          only available to you. We don't comercialice any data uploaded to our
+          databases. Once the trial ends, we will retain the data one week, to
+          provide you with backups or exporting capabilities.
+        </v-alert>
+
+        <v-scroll-x-transition hide-on-leave>
+          <div v-if="step === 0">
+            <v-card-text>
+              <p class="display-1 text--primary">
+                Hi {{ signupForm.name }}, nice to meet you!
+              </p>
+              <ValidationObserver ref="step0" slim>
+                <v-row justify="center">
+                  <v-col sm="6">
+                    <span>Name</span>
+                    <validation-provider
+                      v-slot="{ errors }"
+                      name="First name"
+                      rules="required"
+                    >
+                      <v-text-field
+                        autofocus
+                        v-model="signupForm.name"
+                        solo
+                        hide-details
+                        @keydown.enter.prevent="nextStep(1)"
+                        :background-color="errors.length > 0 ? '#faebeb' : ''"
+                      ></v-text-field>
+                    </validation-provider>
+                  </v-col>
+                  <v-col sm="6">
+                    <span>Last name </span>
+                    <validation-provider
+                      v-slot="{ errors }"
+                      name="Last name"
+                      rules="required"
+                    >
+                      <v-text-field
+                        v-model="signupForm.lastname"
+                        solo
+                        hide-details
+                        @keydown.enter.prevent="nextStep(1)"
+                        :background-color="errors.length > 0 ? '#faebeb' : ''"
+                      ></v-text-field>
+                    </validation-provider>
+                  </v-col>
+                </v-row>
+              </ValidationObserver>
+            </v-card-text>
+            <v-btn @click="nextStep(1)" large color="primary">Continue</v-btn>
+          </div>
+        </v-scroll-x-transition>
+
+        <!-- STEP 1 -->
+        <v-scroll-x-transition hide-on-leave>
+          <div v-if="step === 1">
+            <v-card-text>
+              <p class="display-1 text--primary">
+                How should we contact you?
+              </p>
+              <ValidationObserver ref="step1" slim>
+                <v-row justify="center">
+                  <v-col sm="12">
+                    <span>Email</span>
+                    <validation-provider
+                      v-slot="{ errors }"
+                      name="Email"
+                      rules="required|email"
+                    >
+                      <v-text-field
+                        autofocus
+                        type="email"
+                        v-model="signupForm.email"
+                        solo
+                        hide-details
+                        @keydown.enter.prevent="nextStep(2)"
+                        :background-color="errors.length > 0 ? '#faebeb' : ''"
+                      ></v-text-field>
+                    </validation-provider>
+                  </v-col>
+                  <v-col sm="6">
+                    <span>Country Code</span>
+                    <validation-provider
+                      v-slot="{ errors }"
+                      name="CountryCode"
+                      rules="required"
+                    >
+                      <v-autocomplete
+                        :items="countryCodes"
+                        v-model="signupForm.phone_code"
+                        solo
+                        item-text="phone_code"
+                        :filter="filterCountries"
+                        hide-details
+                        @keydown.enter.prevent="nextStep(2)"
+                        :background-color="errors.length > 0 ? '#faebeb' : ''"
+                      >
+                        <template slot="selection" slot-scope="data">
+                          <v-row no-gutters dense>
+                            <v-col cols="4">
+                              <v-list-item-content>
+                                <country-flag
+                                  class="mr-2"
+                                  :country="data.item.iso2"
+                                />
+                              </v-list-item-content>
+                            </v-col>
+
+                            <v-col cols="8">
+                              <v-list-item-content class="pt-4">
+                                <v-list-item-title>
+                                  +{{ `${data.item.phone_code}` }}
+
+                                  {{ `${data.item.name}` }}
+                                </v-list-item-title>
+                              </v-list-item-content>
+                            </v-col>
+                          </v-row>
+                        </template>
+
+                        <template v-slot:item="data">
+                          <v-row no-gutters dense>
+                            <v-col cols="3">
+                              <v-list-item-content>
+                                <country-flag
+                                  class="mr-2"
+                                  :country="data.item.iso2"
+                                />
+                              </v-list-item-content>
+                            </v-col>
+
+                            <v-col cols="6">
+                              <v-list-item-content>
+                                <v-list-item-title>
+                                  +{{ `${data.item.phone_code}` }}
+
+                                  {{ `${data.item.name}` }}
+                                </v-list-item-title>
+                              </v-list-item-content>
+                            </v-col>
+                          </v-row>
+                        </template>
+                      </v-autocomplete>
+                    </validation-provider>
+                  </v-col>
+                  <v-col sm="6">
+                    <span>Phone number</span>
+                    <validation-provider
+                      v-slot="{ errors }"
+                      name="Phone mumber"
+                      rules="required"
+                    >
+                      <v-text-field
+                        type="number"
+                        v-model="signupForm.phoneNumber"
+                        solo
+                        hide-details
+                        @keydown.enter.prevent="nextStep(2)"
+                        :background-color="errors.length > 0 ? '#faebeb' : ''"
+                      ></v-text-field>
+                    </validation-provider>
+                  </v-col>
+                </v-row>
+              </ValidationObserver>
+            </v-card-text>
+            <v-btn class="mx-1" @click="step = 0" large color="grey lighten-2"
+              >Back</v-btn
+            >
+            <v-btn class="mx-1" @click="nextStep(2)" large color="primary"
+              >Continue</v-btn
+            >
+          </div>
+        </v-scroll-x-transition>
+
+        <!-- STEP 2 -->
+        <v-scroll-x-transition hide-on-leave>
+          <div v-if="step === 2">
+            <v-card-text>
+              <p class="display-1 text--primary">
+                Where is your bussiness headquartered?
+              </p>
+
+              <ValidationObserver ref="step2" slim>
+                <v-row justify="center">
+                  <v-col sm="12">
+                    <span>Country</span>
+                    <validation-provider
+                      v-slot="{ errors }"
+                      name="Country"
+                      rules="required"
+                    >
+                      <v-autocomplete
+                        autofocus
+                        :items="countryCodes"
+                        v-model="signupForm.country"
+                        solo
+                        attach
+                        item-text="name"
+                        item-value="id"
+                        hide-details
+                        @keydown.enter.prevent="nextStep(3)"
+                        :background-color="errors.length > 0 ? '#faebeb' : ''"
+                      >
+                        <template slot="selection" slot-scope="data">
+                          <country-flag
+                            class="mr-2"
+                            :country="data.item.iso2"
+                          />
+                          <span class="mr-2">{{ data.item.name }} </span>
+                        </template>
+                      </v-autocomplete>
+                    </validation-provider>
+                  </v-col>
+
+                  <v-col sm="6">
+                    <span>State, Province, or Region </span>
+                    <validation-provider
+                      v-slot="{ errors }"
+                      name="State"
+                      rules="required"
+                    >
+                      <v-text-field
+                        v-model="signupForm.state"
+                        solo
+                        hide-details
+                        @keydown.enter.prevent="nextStep(3)"
+                        :background-color="errors.length > 0 ? '#faebeb' : ''"
+                      ></v-text-field>
+                    </validation-provider>
+                  </v-col>
+
+                  <v-col sm="6">
+                    <span>City </span>
+                    <validation-provider
+                      v-slot="{ errors }"
+                      name="City"
+                      rules="required"
+                    >
+                      <v-text-field
+                        v-model="signupForm.city"
+                        solo
+                        hide-details
+                        @keydown.enter.prevent="nextStep(3)"
+                        :background-color="errors.length > 0 ? '#faebeb' : ''"
+                      ></v-text-field>
+                    </validation-provider>
+                  </v-col>
+
+                  <v-col sm="8">
+                    <span>Address</span>
+                    <validation-provider
+                      v-slot="{ errors }"
+                      name="Address"
+                      rules="required"
+                    >
+                      <v-text-field
+                        v-model="signupForm.address"
+                        solo
+                        hide-details
+                        @keydown.enter.prevent="nextStep(3)"
+                        :background-color="errors.length > 0 ? '#faebeb' : ''"
+                      ></v-text-field>
+                    </validation-provider>
+                  </v-col>
+
+                  <v-col sm="4">
+                    <span>Postal code</span>
+                    <validation-provider
+                      v-slot="{ errors }"
+                      name="Zipcode"
+                      rules="required"
+                    >
+                      <v-text-field
+                        v-model="signupForm.zipcode"
+                        solo
+                        hide-details
+                        @keydown.enter.prevent="nextStep(3)"
+                        :background-color="errors.length > 0 ? '#faebeb' : ''"
+                      ></v-text-field>
+                    </validation-provider>
+                  </v-col>
+                </v-row>
+              </ValidationObserver>
+            </v-card-text>
+            <v-btn class="mx-1" @click="step = 1" large color="grey lighten-2"
+              >Back</v-btn
+            >
+            <v-btn class="mx-1" @click="nextStep(3)" large color="primary"
+              >Continue</v-btn
+            >
+          </div>
+        </v-scroll-x-transition>
+
+        <!-- STEP 3 -->
+        <v-scroll-x-transition hide-on-leave>
+          <div v-if="step === 3">
+            <v-card-text>
+              <p class="display-1 text--primary">
+                Define your parent account
+              </p>
+              <ValidationObserver ref="step3" slim>
+                <v-row justify="center">
+                  <v-col sm="6">
+                    <validation-provider
+                      v-slot="{ errors }"
+                      name="Company name"
+                      rules="required"
+                    >
+                      <span>Account name</span>
+                      <!-- V-MODEL companyName SHOULD CHANGE TO accountName -->
+                      <v-text-field
+                        autofocus
+                        v-model="signupForm.companyName"
+                        hint="Oficial registed company name"
+                        solo
+                        hide-details
+                        :background-color="errors.length > 0 ? '#faebeb' : ''"
+                        @keydown.enter.prevent="nextStep(4)"
+                      ></v-text-field>
+                    </validation-provider>
+                  </v-col>
+                  <v-col sm="6">
+                    <span>Parent company name alias</span>
+                    <validation-provider
+                      v-slot="{ errors }"
+                      name="Company name alias"
+                      rules="required"
+                    >
+                      <v-text-field
+                        v-model="signupForm.companyNameAlias"
+                        hint="Public company name alias"
+                        solo
+                        hide-details
+                        :background-color="errors.length > 0 ? '#faebeb' : ''"
+                        @keydown.enter.prevent="nextStep(4)"
+                      ></v-text-field>
+                    </validation-provider>
+                  </v-col>
+                </v-row>
+              </ValidationObserver>
+            </v-card-text>
+            <v-btn class="mx-1" @click="step = 2" large color="grey lighten-2"
+              >Back</v-btn
+            >
+            <v-btn @click="nextStep(4)" class="mx-1" large color="primary"
+              >Review application</v-btn
+            >
+          </div>
+        </v-scroll-x-transition>
+        <!-- STEP 4 -->
+        <v-scroll-x-transition hide-on-leave>
+          <div v-if="step === 4">
+            <v-card>
+              <v-card-text class="text-left ">
+                <div class="mt-5 mb-5 text-h5">
+                  let's double check the information your provided before we can
+                  move forward with the registration of your shiny new account
+                  "<b>{{ signupForm.companyName }}</b
+                  >"
+                </div>
+                <div class="mt-10 text-h5">
+                  We can reach you on your number from
+                  <span>
+                    <b>
+                      {{ getCountryNameAndCode(signupForm.phone_code) }}
+                      {{ signupForm.phoneNumber }}
+                    </b>
+                    and on your email
+                    <b> {{ signupForm.email }}</b
+                    >.
+                  </span>
+                </div>
+                <div class="text-h5 mt-5">
+                  Your business
+                  <b> {{ signupForm.companyNameAlias }}</b>
+                  is registered in
+                  <b>
+                    {{ getCountryName(signupForm.country) }}
+                  </b>
+                  on the address
+                  <b>
+                    {{ signupForm.address }} ({{ signupForm.zipcode }}),
+                    {{ signupForm.state }}, {{ signupForm.city }}.
+                  </b>
+                </div></v-card-text
+              ></v-card
+            >
+
+            <v-card-text>
+              <v-checkbox :ripple="false" class="mt-10" v-model="terms">
+                <template v-slot:label>
+                  <div>
+                    I confirm that my information is genuine and that I
+                    represent the business I'm creating the account for, as well
+                    as reading and accepting
+
+                    <a target="_blank" href="https://vuetifyjs.com" @click.stop>
+                      our terms and conditions
+                    </a>
+                    thoroughly.
+                  </div>
+                </template>
+              </v-checkbox>
+            </v-card-text>
+            <v-btn class="mx-1" @click="step = 3" large color="grey lighten-2"
+              >Back</v-btn
+            >
+            <v-btn
+              :disabled="!terms"
+              @click="accountCreation()"
+              class="mx-1"
+              large
+              color="primary"
+              :loading="loading"
+              >Sign up</v-btn
+            >
+          </div>
+        </v-scroll-x-transition>
+      </v-col>
+
+      <v-col
+        :order="$vuetify.breakpoint.smAndDown ? 'first' : null"
+        cols="12"
+        lg="6"
+      >
+        <v-img
+          :src="require('@/assets/images/signup.svg')"
+          max-height="480"
+          contain
+        ></v-img>
+      </v-col>
+    </v-row>
     <Pricing />
-  </div>
+  </v-container>
 </template>
 
 <script>
@@ -611,3 +585,8 @@ export default {
   }
 };
 </script>
+<style scoped>
+::v-deep .v-alert__content {
+  line-height: 1.3;
+}
+</style>

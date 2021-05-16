@@ -5,6 +5,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Public\CountryController;
 use App\Http\Controllers\Public\AccountController;
 
+//Authentication Controller
+use App\Http\Controllers\AuthController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -16,11 +19,21 @@ use App\Http\Controllers\Public\AccountController;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Public routes
 
 Route::resource('/country', CountryController::class);
 Route::get('/countries', [CountryController::class, 'showAll']);
-
 Route::resource('/account', AccountController::class);
+
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
+
+
+// Protected routes
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::post('/logout', [AuthController::class, 'logout']);
+});
+
+Route::middleware('auth:api')->get('/user', function (Request $request) {
+    return $request->user();
+});
