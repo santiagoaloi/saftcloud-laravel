@@ -5,7 +5,7 @@ namespace App\Models\Public;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class PtoVta extends Model {
+class PointOfSale extends Model {
     use HasFactory;
 
     protected $connection = 'system';

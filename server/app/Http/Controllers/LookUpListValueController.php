@@ -5,15 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\GeneralConfig\LookUpListValue;
 use Illuminate\Http\Request;
 
-class LookUpListValueController extends Controller
-{
+class LookUpListValueController extends Controller {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
+    public function index() {
         //
     }
 
@@ -22,8 +20,7 @@ class LookUpListValueController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
+    public function create() {
         //
     }
 
@@ -33,8 +30,7 @@ class LookUpListValueController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
+    public function store(Request $request) {
         //
     }
 
@@ -44,9 +40,26 @@ class LookUpListValueController extends Controller
      * @param  \App\Models\GeneralConfig\LookUpListValue  $lookUpListValue
      * @return \Illuminate\Http\Response
      */
-    public function show(LookUpListValue $lookUpListValue)
-    {
-        //
+    public function show($lookUpListValue) {
+        $query = LookUpListValue::get();
+
+        header('Content-Type: application/json');
+        echo json_encode(['status' => true, 'rows' => $query]);
+        exit();
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\GeneralConfig\LookUpListValue  $lookUpListValue
+     * @return \Illuminate\Http\Response
+     */
+    public function showAll() {
+        $query = LookUpListValue::get();
+
+        header('Content-Type: application/json');
+        echo json_encode(['status' => true, 'rows' => $query]);
+        exit();
     }
 
     /**
@@ -55,8 +68,7 @@ class LookUpListValueController extends Controller
      * @param  \App\Models\GeneralConfig\LookUpListValue  $lookUpListValue
      * @return \Illuminate\Http\Response
      */
-    public function edit(LookUpListValue $lookUpListValue)
-    {
+    public function edit(LookUpListValue $lookUpListValue) {
         //
     }
 
@@ -67,8 +79,7 @@ class LookUpListValueController extends Controller
      * @param  \App\Models\GeneralConfig\LookUpListValue  $lookUpListValue
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, LookUpListValue $lookUpListValue)
-    {
+    public function update(Request $request, LookUpListValue $lookUpListValue) {
         //
     }
 
@@ -78,8 +89,7 @@ class LookUpListValueController extends Controller
      * @param  \App\Models\GeneralConfig\LookUpListValue  $lookUpListValue
      * @return \Illuminate\Http\Response
      */
-    public function destroy(LookUpListValue $lookUpListValue)
-    {
+    public function destroy(LookUpListValue $lookUpListValue) {
         //
     }
 }

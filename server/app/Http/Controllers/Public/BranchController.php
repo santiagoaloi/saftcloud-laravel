@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Public;
 
 use App\Http\Controllers\Controller;
+use App\Models\Public\Branch;
 use Illuminate\Http\Request;
 
 class BranchController extends Controller {
@@ -37,20 +38,37 @@ class BranchController extends Controller {
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Public\Branch  $branch
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Branch $branch) {
-        //
+    public function show($id) {
+        $query = Branch::get();
+
+        header('Content-Type: application/json');
+        echo json_encode(['status' => true, 'rows' => $query]);
+        exit();
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showAll() {
+        $query = Branch::get();
+
+        header('Content-Type: application/json');
+        echo json_encode(['status' => true, 'rows' => $query]);
+        exit();
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Public\Branch  $branch
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Branch $branch) {
+    public function edit($id) {
         //
     }
 

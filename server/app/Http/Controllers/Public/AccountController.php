@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Public;
 
 use App\Http\Controllers\Controller;
+use App\Models\Public\Account;
 use Illuminate\Http\Request;
 
 class AccountController extends Controller {
@@ -41,13 +42,30 @@ class AccountController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function show($id) {
-        //
+        $query = Account::find($id);
+
+        header('Content-Type: application/json');
+        echo json_encode(['status' => true, 'rows' => $query]);
+        exit();
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showAll() {
+        $query = Account::all();
+
+        header('Content-Type: application/json');
+        echo json_encode(['status' => true, 'rows' => $query]);
+        exit();
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id) {

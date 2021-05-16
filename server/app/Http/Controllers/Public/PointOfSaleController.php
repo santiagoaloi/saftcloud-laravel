@@ -1,19 +1,18 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Public;
 
+use App\Http\Controllers\Controller;
 use App\Models\Public\PointOfSale;
 use Illuminate\Http\Request;
 
-class PointOfSaleController extends Controller
-{
+class PointOfSaleController extends Controller {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
+    public function index() {
         //
     }
 
@@ -22,8 +21,7 @@ class PointOfSaleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
+    public function create() {
         //
     }
 
@@ -33,30 +31,44 @@ class PointOfSaleController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
+    public function store(Request $request) {
         //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Public\PointOfSale  $pointOfSale
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show(PointOfSale $pointOfSale)
-    {
-        //
+    public function show($id) {
+        $query = PointOfSale::find($id);
+
+        header('Content-Type: application/json');
+        echo json_encode(['status' => true, 'rows' => $query]);
+        exit();
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showAll() {
+        $query = PointOfSale::all();
+
+        header('Content-Type: application/json');
+        echo json_encode(['status' => true, 'rows' => $query]);
+        exit();
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Public\PointOfSale  $pointOfSale
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(PointOfSale $pointOfSale)
-    {
+    public function edit($id) {
         //
     }
 
@@ -67,19 +79,17 @@ class PointOfSaleController extends Controller
      * @param  \App\Models\Public\PointOfSale  $pointOfSale
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, PointOfSale $pointOfSale)
-    {
+    public function update(Request $request, PointOfSale $pointOfSale) {
         //
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Public\PointOfSale  $pointOfSale
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(PointOfSale $pointOfSale)
-    {
+    public function destroy($id) {
         //
     }
 }

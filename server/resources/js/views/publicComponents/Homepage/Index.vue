@@ -183,7 +183,6 @@ export default {
     mounted() {
         // store.set("snackbar/value", true);
         // store.set("snackbar/snackbar@text", "hello");
-        this.getRegion()
     },
 
     computed: {

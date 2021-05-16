@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Public;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\Public\Country;
+use Illuminate\Http\Request;
 
 class CountryController extends Controller {
     /**
@@ -38,20 +38,23 @@ class CountryController extends Controller {
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Public\Country  $country
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id) {
+        $query = Country::get();
 
+        header('Content-Type: application/json');
+        echo json_encode(['status' => true, 'rows' => $query]);
+        exit();
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Public\Country  $country
      * @return \Illuminate\Http\Response
      */
-    public function showAll(Country $country) {
+    public function showAll() {
         $query = Country::get();
 
         header('Content-Type: application/json');
@@ -62,7 +65,7 @@ class CountryController extends Controller {
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Public\Country  $country
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id) {
@@ -83,7 +86,7 @@ class CountryController extends Controller {
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Public\Country  $country
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id) {

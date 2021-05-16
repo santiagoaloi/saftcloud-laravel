@@ -181,6 +181,7 @@ export default {
   },
 
   mounted() {
+    this.getRegion()
     // this.csrfInit();
     // console.log(config);
     //this brings the whole object to the front.

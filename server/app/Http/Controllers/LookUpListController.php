@@ -5,15 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\GeneralConfig\LookUpList;
 use Illuminate\Http\Request;
 
-class LookUpListController extends Controller
-{
+class LookUpListController extends Controller {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
+    public function index() {
         //
     }
 
@@ -22,8 +20,7 @@ class LookUpListController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
+    public function create() {
         //
     }
 
@@ -33,8 +30,7 @@ class LookUpListController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
+    public function store(Request $request) {
         //
     }
 
@@ -44,8 +40,7 @@ class LookUpListController extends Controller
      * @param  \App\Models\GeneralConfig\LookUpList  $lookUpList
      * @return \Illuminate\Http\Response
      */
-    public function show(LookUpList $lookUpList)
-    {
+    public function show(LookUpList $lookUpList) {
         //
     }
 
@@ -55,8 +50,7 @@ class LookUpListController extends Controller
      * @param  \App\Models\GeneralConfig\LookUpList  $lookUpList
      * @return \Illuminate\Http\Response
      */
-    public function edit(LookUpList $lookUpList)
-    {
+    public function edit(LookUpList $lookUpList) {
         //
     }
 
@@ -67,8 +61,7 @@ class LookUpListController extends Controller
      * @param  \App\Models\GeneralConfig\LookUpList  $lookUpList
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, LookUpList $lookUpList)
-    {
+    public function update(Request $request, LookUpList $lookUpList) {
         //
     }
 
@@ -78,8 +71,7 @@ class LookUpListController extends Controller
      * @param  \App\Models\GeneralConfig\LookUpList  $lookUpList
      * @return \Illuminate\Http\Response
      */
-    public function destroy(LookUpList $lookUpList)
-    {
+    public function destroy(LookUpList $lookUpList) {
         //
     }
 }
