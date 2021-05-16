@@ -1,58 +1,92 @@
 <template>
-  <v-sheet color="transparent">
-    <v-container class="py-4 py-lg-10">
-      <div class="text-center">
-        <div class="text-overline mb-3">Support</div>
-        <h2 class="text-h3 text-lg-h2">Frequently Asked Questions</h2>
-        <v-responsive max-width="1200" class="mx-auto">
-          <div class="text-h6 text-lg-h5 mt-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus impedit error labore doloremque fugit! Dolor fugit molestiae vero quos quisquam nobis, eos debitis magni omnis ea incidunt amet voluptate dignissimos!</div>
-        </v-responsive>
-      </div>
-      <v-row class="mt-6">
-        <v-col
-          v-for="(item, i) in faq"
-          :key="i"
-          cols="12"
-          lg="6"
-        >
-          <v-card class="pa-3">
-            <div class="text-h5">
-              {{ item.question }}
-            </div>
-            <div class="mt-2">
-              {{ item.answer }}
-            </div>
-          </v-card>
-        </v-col>
-      </v-row>
-    </v-container>
-  </v-sheet>
+  <div>
+    <div v-for="faq in faqs" :id="faq.id" :key="faq.id">
+      <div id="#general" class="title pl-2 pb-2 mt-15">{{ faq.title }}</div>
+      <v-expansion-panels class="mb-4" multiple>
+        <v-expansion-panel v-for="(item, i) in faq.items" :key="i">
+          <v-expansion-panel-header class="font-weight-black">{{
+            item.title
+          }}</v-expansion-panel-header>
+          <v-expansion-panel-content>
+            {{ item.content }}
+          </v-expansion-panel-content>
+        </v-expansion-panel>
+      </v-expansion-panels>
+    </div>
+  </div>
 </template>
 
 <script>
+/*
+|---------------------------------------------------------------------
+| Help Page Component
+|---------------------------------------------------------------------
+|
+| Template to show frequently asked questions to your users
+|
+*/
 export default {
   data() {
     return {
-      faq: [{
-        question: 'What happened to the developer who couldn\'t access git?',
-        answer: 'He now has commitement issues.'
-      }, {
-        question: 'What do computers and air conditioners have in common?',
-        answer: 'They both become useless when you open window.'
-      }, {
-        question: 'How do you tell an introvert developer from and extrovert developer?',
-        answer: 'An extrovert developer looks at your shoes when he talks to you.'
-      }, {
-        question: 'What is the programmers\'s favourite hangout place?',
-        answer: 'Foo Bar'
-      }, {
-        question: 'Why do Python developers need glasses?',
-        answer: 'Because they don\'t C#.'
-      }, {
-        question: 'What\'s the object-oriented way to become wealthy?',
-        answer: 'Inheritance'
-      }]
-    }
+      search: "",
+
+      breadcrumbs: [
+        {
+          text: "Pages",
+          disabled: false,
+          href: "#"
+        },
+        {
+          text: "FAQ"
+        }
+      ],
+
+      faqs: [
+        {
+          id: "general",
+          title: "General Resources",
+          items: [
+            {
+              title:
+                "Can I use a purchased item in a freelance project or contract work for a client?",
+              content:
+                "Yes. However, if the client intends to charge End Users in any way from the End Product you create, you will need to purchase an Extended License. If you create the End Product for a client, your rights to purchased Items are transferred from you to your client."
+            },
+            {
+              title: "What is an End Product?",
+              content:
+                "An End Product is work that is designed or developed for a single, paid client. This website can not be resold as a product to multiple users. For more information on selling products to multiple users."
+            },
+            {
+              title: "What are the End Product requirements?",
+              content:
+                "An End Product must be a unique implementation of the Item, often requiring limited copy and content changes. For example, if you purchase a resume template, you may use the Item for yourself or a client after having input personal information (you may not resell it as stock)."
+            },
+            {
+              title:
+                "What is Personal Use, Commerical Work, Contracted Work, Client Work, etc.?",
+              content:
+                "If the created site can not charge users in any way, it is considered for Personal Use and a Regular License can be used. For End Products that can charge users, such as a Software as a Service application, or an e-commerce site, you should use an Extended License. For any End Products that will be sold in its entirety, such as creating software that is distributed digitally, use an Unlimited License."
+            },
+            {
+              title: "What is Personal Use?",
+              content:
+                "A Personal Use License can only be used for 1 End Product that does not charge users in any way."
+            },
+            {
+              title: "What is Commerical Use?",
+              content:
+                "A Commercial Use License can only be used for 1 End Product that charges or will charge users."
+            },
+            {
+              title: "What is Unlimited Use?",
+              content:
+                "An Extended Use License can be used for any number of Personal and Commercial projects."
+            }
+          ]
+        }
+      ]
+    };
   }
-}
+};
 </script>

@@ -19,8 +19,11 @@
           data-aos-easing="linear"
           data-aos-duration="400"
         >
-          <router-link to="/" class="d-flex align-center text-decoration-none">
-            <img class="mr-4" src="storage/logo2.png" height="40" />
+          <router-link
+            to="/"
+            class="d-flex align-center text-decoration-none ml-3"
+          >
+            <img class="mr-4" src="storage/logo2.png" height="60" />
             <span class="font-weight-black headline white--text">
               SaftCloud</span
             >
@@ -38,6 +41,7 @@
           text
           dark
           x-large
+          plain
         >
           About</v-btn
         >
@@ -51,6 +55,7 @@
           text
           dark
           x-large
+          plain
         >
           Team</v-btn
         >
@@ -64,18 +69,12 @@
           text
           dark
           x-large
+          plain
         >
           Company</v-btn
         >
 
-        <v-btn
-          rounded
-          to="/signup"
-          height="36"
-          class="mr-3"
-          dark
-          color="pink darken-1"
-        >
+        <v-btn rounded to="/signup" height="36" class="mr-3" dark x-large plain>
           <v-icon left> mdi-account-plus</v-icon>Sign up</v-btn
         >
         <template>
@@ -87,6 +86,7 @@
             rounded
             dark
             color="pink darken-1"
+            x-large
           >
             <v-avatar class="ml-n4 mr-3" size="28" left>
               <v-img src="storage/avatars/avatar.png"></v-img>

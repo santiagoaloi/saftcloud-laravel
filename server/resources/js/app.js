@@ -11,6 +11,9 @@ import vuetify from "@/plugins/vuetify";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
+import VueDiagonal from "vue-diagonal";
+Vue.component("vue-diagonal", VueDiagonal);
+
 // Main Theme SCSS
 import "./assets/css/style.css";
 

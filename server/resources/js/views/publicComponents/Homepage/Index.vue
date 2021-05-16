@@ -9,13 +9,13 @@
       src="storage/11.png"
     >
       <v-container class="fill-height text-left pa-10">
-        <v-img
+        <!-- <v-img
           eager
           style="position:absolute;left:70%;top:-8%"
           contain
           height="900"
           :src="imageRightHeader"
-        />
+        /> -->
         <v-row class="d-flex flex-column">
           <div
             class="font-weight-black text-h4 text-sm-h3 text-md-h2 text-lg-h1"
@@ -50,7 +50,7 @@
             </div>
           </v-card>
           <div
-            style="position:absolute;top:90%;right:10%"
+            style="position:absolute;top:85%;right:10%"
             class=" text-right align-end justify-end"
           >
             <v-btn outlined fab small color="white" class="ml-2">
@@ -161,8 +161,8 @@
     <!-- <Partners /> -->
     <!-- <Stats /> -->
 
-    <Feature1 />
     <Feature2 />
+    <Feature1 />
 
     <!-- <Feature2 /> -->
 
