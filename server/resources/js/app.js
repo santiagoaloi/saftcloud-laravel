@@ -29,7 +29,7 @@ Vue.component("login_layout", () =>
   import(/* webpackChunkName: 'Login-Layout' */ "@/layouts/loginLayout/Index")
 );
 
-const app = new Vue({
+new Vue({
   created() {
     AOS.init({});
   },
