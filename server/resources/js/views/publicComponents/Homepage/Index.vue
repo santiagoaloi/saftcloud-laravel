@@ -5,13 +5,13 @@
       height="101vh"
       eager
       style="margin-top:-80px"
-      gradient="to top right, rgba(0,0,0,.1), rgba(0,0,0,.5)"
+      gradient="to top right, rgba(0,0,0,.1), rgba(0,0,0,.2)"
       src="storage/11.png"
     >
       <v-container class="fill-height text-left pa-10">
         <v-img
           eager
-          style="position:absolute;left:70%;top:5%"
+          style="position:absolute;left:70%;top:-8%"
           contain
           height="900"
           :src="imageRightHeader"
@@ -49,6 +49,20 @@
               <v-btn x-large class="my-1 mx-sm-1">Contact Sales</v-btn>
             </div>
           </v-card>
+          <div
+            style="position:absolute;top:90%;right:10%"
+            class=" text-right align-end justify-end"
+          >
+            <v-btn outlined fab small color="white" class="ml-2">
+              <v-icon>mdi-twitter</v-icon>
+            </v-btn>
+            <v-btn outlined fab small color="white" class="ml-2">
+              <v-icon>mdi-linkedin</v-icon>
+            </v-btn>
+            <v-btn outlined fab small color="white" class="ml-2">
+              <v-icon>mdi-instagram</v-icon>
+            </v-btn>
+          </div>
         </v-row>
       </v-container>
     </v-img>

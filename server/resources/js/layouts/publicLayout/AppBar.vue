@@ -34,8 +34,47 @@
           to="/signup"
           height="36"
           class="mr-3"
+          color="white"
+          text
           dark
-          color="pink accent-5"
+          x-large
+        >
+          About</v-btn
+        >
+
+        <v-btn
+          rounded
+          to="/signup"
+          height="36"
+          class="mr-3"
+          color="white"
+          text
+          dark
+          x-large
+        >
+          Team</v-btn
+        >
+
+        <v-btn
+          rounded
+          to="/signup"
+          height="36"
+          class="mr-3"
+          color="white"
+          text
+          dark
+          x-large
+        >
+          Company</v-btn
+        >
+
+        <v-btn
+          rounded
+          to="/signup"
+          height="36"
+          class="mr-3"
+          dark
+          color="pink darken-1"
         >
           <v-icon left> mdi-account-plus</v-icon>Sign up</v-btn
         >
@@ -47,7 +86,7 @@
             class="mr-3"
             rounded
             dark
-            color="pink accent-5"
+            color="pink darken-1"
           >
             <v-avatar class="ml-n4 mr-3" size="28" left>
               <v-img src="storage/avatars/avatar.png"></v-img>
