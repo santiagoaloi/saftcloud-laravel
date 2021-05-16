@@ -496,7 +496,6 @@ export default {
 
   data() {
     return {
-      test: {},
       loading: false,
       controller: "Signup",
       terms: false,
@@ -591,13 +590,6 @@ export default {
       });
     },
 
-    getTest2() {
-      axios.get("/getTest").then(response => {
-        if (response.data.status) {
-          this.test = response.data.rows;
-        }
-      });
-    }
   }
 };
 </script>
