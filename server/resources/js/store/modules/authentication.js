@@ -1,19 +1,25 @@
 // Utilities
-import { make } from "vuex-pathify";
 import axios from "axios";
+import router from "@/router";
+import { make } from "vuex-pathify";
 
-const state = {};
+const state = {
+  session: {}
+};
+
 const mutations = make.mutations(state);
 
 const actions = {
   ...make.actions(state),
 
-  login({ state }, data) {
+  login({ commit }, data) {
     axios.post("api/login", data).then(response => {
-      console.log(response);
+      commit("session", response.data);
+      router.push("/desktop");
     });
   }
 };
+
 const getters = {};
 
 export default {
