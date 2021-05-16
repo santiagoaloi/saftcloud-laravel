@@ -42,8 +42,9 @@
           dark
           x-large
           plain
+          @click="testFunction()"
         >
-          About</v-btn
+          Test</v-btn
         >
 
         <v-btn
@@ -235,7 +236,16 @@ export default {
       } else {
         return `${this.uploadPath}/cms/avatar.png`;
       }
+    },
+
+    testFunction() {
+      axios.get("/api/testFunction").then(response => {
+        if (response.data.status) {
+          console.log(response.data.rows)
+        }
+      });
     }
+
   }
 };
 </script>
