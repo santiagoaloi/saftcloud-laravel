@@ -17,14 +17,9 @@ const actions = {
       .post("api/login", data)
       .then(response => {
         if (response.data.status) {
-          // const axiosDefaults = require("axios/lib/defaults");
-          // axiosDefaults.headers = {
-          //   Authorization: "Bearer " + response.data.data.token
-          // };
           axios.defaults.headers.common[
             "authorization"
           ] = `Bearer ${response.data.data.token}`;
-
           commit("session", response.data.data);
           router.push("/desktop");
           return true;

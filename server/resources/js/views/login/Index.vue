@@ -63,6 +63,7 @@
                   small
                   @click="signup = !signup"
                   class="ml-3"
+                  to="/signup"
                 >
                   Sign up
                 </v-btn>
@@ -135,7 +136,13 @@
                     <v-card-actions class="mt-n2">
                       <div class="flex-grow-1" />
 
-                      <v-btn class="mt-3" text small @click="forgot = true">
+                      <v-btn
+                        disabled
+                        class="mt-3"
+                        text
+                        small
+                        @click="forgot = true"
+                      >
                         I forgot my password.
                       </v-btn>
                     </v-card-actions>
