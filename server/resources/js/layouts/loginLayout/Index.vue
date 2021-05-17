@@ -2,6 +2,7 @@
   <v-app>
     <log-bar />
     <login-view />
+    <snackbar />
   </v-app>
 </template>
 
@@ -13,6 +14,11 @@ export default {
     LogBar: () =>
       import(
         /* webpackChunkName: 'public-appbar-view-footer-combined' */ "./AppBar"
+      ),
+    Snackbar: () =>
+      import(
+        /* webpackChunkName: 'public-snackbar' */
+        "@/components/base/Snackbar"
       )
   }
 };

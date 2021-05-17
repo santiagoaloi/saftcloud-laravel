@@ -242,8 +242,7 @@ export default {
           }
         })
         .catch(error => {
-          console.log(error.response);
-          this.logoutVuex();
+          console.log({ ...error });
         });
     },
 

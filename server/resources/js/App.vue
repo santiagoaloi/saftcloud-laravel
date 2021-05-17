@@ -7,7 +7,8 @@
 <script>
 import config from "./configs";
 import { store } from "@/store";
-import { mapActions } from "vuex";
+import { get } from "vuex-pathify";
+
 import axios from "axios";
 
 export default {
@@ -33,8 +34,6 @@ export default {
   created() {
     window.getApp = this;
   },
-
-  mounted() {},
 
   methods: {}
 };

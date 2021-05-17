@@ -1,5 +1,3 @@
-// import maps from './maps'
-// import time from './time'
 import icons from "./icons";
 import theme from "./theme";
 // import toolbar from './toolbar'
@@ -9,36 +7,30 @@ import theme from "./theme";
 // import navigation from './navigation'
 
 export default {
- // product display information
- product: {
-  name: "SaftCloud",
-  version: "5"
- },
+  // product display information
+  product: {
+    name: "SaftCloud",
+    version: "5"
+  },
 
- // // google maps
- // maps,
+  // icon libraries
+  icons,
 
- // // time configs
- // time,
+  // // theme configs
+  theme
 
- // icon libraries
- icons,
+  // // toolbar configs
+  // toolbar,
 
- // // theme configs
- theme
+  // // locales configs
+  // locales,
 
- // // toolbar configs
- // toolbar,
+  // // analytics configs
+  // analytics,
 
- // // locales configs
- // locales,
+  // // currencies configs
+  // currencies,
 
- // // analytics configs
- // analytics,
-
- // // currencies configs
- // currencies,
-
- // // navigation configs
- // navigation
+  // // navigation configs
+  // navigation
 };

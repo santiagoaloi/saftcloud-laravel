@@ -10,11 +10,8 @@
         <v-card
           color="white"
           data-aos="zoom-in"
-          data-aos-delay="40"
-          data-aos-once="false"
-          data-aos-easing="linear"
-          data-aos-duration="350"
-          data-aos-anchor-placement="top"
+          data-aos-mirror="true"
+          data-aos-offset="400"
           width="80vw"
         >
           <v-row align="center" justify="start">
@@ -39,6 +36,7 @@
                   >Write to us</v-btn
                 >
               </v-container>
+              <div id="example-anchor" />
             </v-col>
           </v-row>
         </v-card>
@@ -48,11 +46,8 @@
         <v-card
           color="white"
           data-aos="zoom-in"
-          data-aos-delay="40"
-          data-aos-once="false"
-          data-aos-easing="linear"
-          data-aos-duration="350"
-          data-aos-anchor-placement="top"
+          data-aos-mirror="true"
+          data-aos-offset="400"
           class="pa-10"
           width="80vw"
         >
@@ -94,11 +89,8 @@
                 <v-card
                   color="white"
                   data-aos="zoom-in"
-                  data-aos-delay="40"
-                  data-aos-once="false"
-                  data-aos-easing="linear"
-                  data-aos-duration="350"
-                  data-aos-anchor-placement="top"
+                  data-aos-mirror="true"
+                  data-aos-offset="400"
                   width="80vw"
                 >
                   <v-row align="center" justify="start">
@@ -126,11 +118,8 @@
                 <v-card
                   color="white"
                   data-aos="zoom-in"
-                  data-aos-delay="40"
-                  data-aos-once="false"
-                  data-aos-easing="linear"
-                  data-aos-duration="350"
-                  data-aos-anchor-placement="top"
+                  data-aos-mirror="true"
+                  data-aos-offset="400"
                   width="80vw"
                 >
                   <v-row align="center" justify="start">
@@ -159,9 +148,3 @@
     </v-container>
   </vue-diagonal>
 </template>
-
-<style scoped lang="scss">
-// .test {
-//   background: linear-gradient(-555deg, #cedaec 60%, rgb(71, 60, 114) 60%);
-// }
-</style>

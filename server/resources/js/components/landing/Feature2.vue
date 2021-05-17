@@ -4,11 +4,8 @@
       <v-card
         color="white"
         data-aos="zoom-in"
-        data-aos-delay="40"
-        data-aos-once="false"
-        data-aos-easing="linear"
-        data-aos-duration="350"
-        data-aos-anchor-placement="top"
+        data-aos-mirror="true"
+        data-aos-offset="220"
         width="80vw"
       >
         <v-row align="center" justify="start">
@@ -38,11 +35,8 @@
       <v-card
         color="white"
         data-aos="zoom-in"
-        data-aos-delay="40"
-        data-aos-once="false"
-        data-aos-easing="linear"
-        data-aos-duration="350"
-        data-aos-anchor-placement="top"
+        data-aos-mirror="true"
+        data-aos-offset="220"
         class="pa-10"
         width="80vw"
       >

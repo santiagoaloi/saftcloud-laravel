@@ -226,7 +226,7 @@
             </v-list-item-content>
           </v-list-item>
 
-          <v-list-item @click="logout">
+          <v-list-item @click="logoutSanctum">
             <v-list-item-action>
               <v-icon>mdi-logout</v-icon>
             </v-list-item-action>
@@ -241,8 +241,9 @@
 </template>
 
 <script>
-import { store } from "@/store";
 import axios from "axios";
+import { store } from "@/store";
+import { call } from "vuex-pathify";
 
 export default {
   name: "DefaultBar",
@@ -339,6 +340,8 @@ export default {
   },
 
   methods: {
+    logoutSanctum: call("authentication/logout"),
+
     setDarkMode() {
       this.$vuetify.theme.dark = !this.$vuetify.theme.dark;
     },
@@ -354,21 +357,12 @@ export default {
       this.$router.push("/profile/info");
     },
 
-    pushHomepage() {
-      this.$router.push("/");
-    },
-
     pushNotifications() {
       this.$router.push("/notifications");
     },
     pushDesktop() {
       this.disableModeration();
       this.$router.push("/desktop");
-    },
-
-    logout() {
-      this.clearPublicData();
-      this.logoutVuex();
     },
 
     handleDrawerToggle() {

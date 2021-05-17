@@ -1,7 +1,7 @@
 <template>
   <v-snackbar
     v-model="snack"
-    :timeout="6000"
+    :timeout="2000"
     app
     :color="snackbar.color"
     transition="slide-y-reverse-transition"
@@ -25,14 +25,14 @@ export default {
   name: "DefaultSnackbar",
 
   computed: {
-    snack: sync("snackbar/value"),
-    snackbar: sync("snackbar/snackbar")
+    snackbar: sync("snackbar"),
+    snack: sync("snackbar/value")
   },
 
   watch: {
     snack(val) {
-      if (val) return;
-      this.snack = false;
+      if (!val) return;
+      val = false;
     }
   }
 };

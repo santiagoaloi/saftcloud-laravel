@@ -33,6 +33,7 @@ class AuthController extends Controller
     }
 
     public function login(Request $request) {
+        
         $fields = $request->validate([
             'email' => 'required|string',
             'password' => 'required|string'
@@ -44,16 +45,22 @@ class AuthController extends Controller
         // Check password
         if(!$user || !Hash::check($fields['password'], $user->password)) {
             return response([
-                'message' => 'Invalid Credentials'
+                'message' => 'Invalid Credentials',
+                'status' => false
             ], 401);
         }
 
-        $token = $user->createToken('myapptoken')->plainTextToken;
+        $token = $user->createToken($fields['email'])->plainTextToken;
 
         $response = [
             'user' => $user,
             'token' => $token
         ];
+
+        return response([
+            'data' =>  $response,
+            'status' => true
+        ], 201);
 
         return response($response, 201);
     }
@@ -62,7 +69,8 @@ class AuthController extends Controller
         auth()->user()->tokens()->delete();
 
         return [
-            'message' => 'Logged out'
+            'message' => 'Logged out',
+            'status' => true
         ];
     }
 }

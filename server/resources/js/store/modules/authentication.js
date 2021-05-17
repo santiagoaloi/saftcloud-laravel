@@ -12,17 +12,49 @@ const mutations = make.mutations(state);
 const actions = {
   ...make.actions(state),
 
-  login({ commit }, data) {
-    axios.post("api/login", data).then(response => {
-      commit("session", response.data);
+  login({ commit, state }, data) {
+    return axios
+      .post("api/login", data)
+      .then(response => {
+        if (response.data.status) {
+          // const axiosDefaults = require("axios/lib/defaults");
+          // axiosDefaults.headers = {
+          //   Authorization: "Bearer " + response.data.data.token
+          // };
+          axios.defaults.headers.common[
+            "authorization"
+          ] = `Bearer ${response.data.data.token}`;
 
-      const axiosDefaults = require("axios/lib/defaults");
-      axiosDefaults.headers = {
-        Authorization: "Bearer " + state.session.token
-      };
+          commit("session", response.data.data);
+          router.push("/desktop");
+          return true;
+        } else {
+          return false;
+        }
+      })
+      .catch(error => {
+        console.log({ ...error });
+        return false;
+      });
+  },
 
-      router.push("/desktop");
-    });
+  logout({ commit, state }, data) {
+    return axios
+      .post("api/logout", data)
+      .then(response => {
+        if (response.data.status) {
+          commit("session", {});
+          router.push("/login");
+          axios.defaults.headers.common["authorization"] = "";
+          return true;
+        } else {
+          return false;
+        }
+      })
+      .catch(error => {
+        console.log({ ...error });
+        return false;
+      });
   }
 };
 

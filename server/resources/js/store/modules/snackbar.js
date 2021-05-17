@@ -2,8 +2,6 @@
 import { make } from "vuex-pathify";
 
 const state = {
-  action_text: "Close",
-  action: "",
   color: "success",
   text: "",
   value: false

@@ -52,24 +52,15 @@
             lg="6"
             xl="4"
           >
-            <v-card
-              elevation="10"
-              :color="
-                $vuetify.breakpoint.mdAndUp
-                  ? 'rgba(50, 50, 50,  0.2)'
-                  : 'transparent'
-              "
-            >
-              <v-card-title class="white--text py-10">
+            <v-card elevation="10" color="white">
+              <v-card-title class=" py-10">
                 <h1>Login</h1>
               </v-card-title>
-              <v-card-subtitle class="white--text mb-n10">
+              <v-card-subtitle class=" mb-n10">
                 Don't have an account?
                 <v-btn
                   style="margin-top: -2.9px"
-                  text
                   small
-                  color="white"
                   @click="signup = !signup"
                   class="ml-3"
                 >
@@ -94,7 +85,7 @@
                         solo
                         autofocus
                         placeholder="Username"
-                        color="teal accent-3"
+                        color="black"
                         prepend-inner-icon="mdi-account"
                         name="User"
                         type="text"
@@ -103,7 +94,7 @@
                           errors.length > 0 ? '#faebeb' : 'white'
                         "
                         :error-messages="errors[0]"
-                        @keydown.enter.prevent="loginSanctum(auth)"
+                        @keydown.enter.prevent="login()"
                         @keydown.space.prevent
                       />
                     </validation-provider>
@@ -120,7 +111,7 @@
                           v-model.trim="auth.password"
                           hide-details
                           solo
-                          color="teal accent-3"
+                          color="black"
                           prepend-inner-icon="mdi-shield-key-outline"
                           placeholder="Password"
                           :type="password_visible ? 'text' : 'password'"
@@ -135,7 +126,7 @@
                           "
                           :error-messages="errors[0]"
                           @click:append="password_visible = !password_visible"
-                          @keydown.enter.prevent="loginSanctum(auth)"
+                          @keydown.enter.prevent="login()"
                           @keydown.space.prevent
                         />
                       </validation-provider>
@@ -144,28 +135,24 @@
                     <v-card-actions class="mt-n2">
                       <div class="flex-grow-1" />
 
-                      <v-btn
-                        class="mt-3"
-                        text
-                        small
-                        color="white"
-                        @click="forgot = true"
-                      >
+                      <v-btn class="mt-3" text small @click="forgot = true">
                         I forgot my password.
                       </v-btn>
                     </v-card-actions>
                   </v-col>
 
                   <v-col cols="12" sm="12" md="12">
-                    <v-card-actions class="mt-n2">
+                    <v-card-actions class="mt-n7">
                       <!-- <div class="flex-grow-1" /> -->
 
                       <v-btn
-                        color="teal accent-1"
-                        class="mr-n2"
+                        width="40%"
+                        color="pink accent-5"
+                        class="mr-n2 white--text"
                         large
                         :loading="loading"
-                        @click.prevent="loginSanctum(auth)"
+                        @click.prevent="login()"
+                        :disabled="auth.email === '' || auth.password === ''"
                       >
                         Login
                       </v-btn>
@@ -407,6 +394,7 @@
 import axios from "axios";
 import { call } from "vuex-pathify";
 import globalMixin from "@/mixins/globalMixin";
+import { store } from "@/store";
 
 export default {
   name: "Login",
@@ -426,7 +414,19 @@ export default {
   },
 
   methods: {
-    loginSanctum: call("authentication/login")
+    loginSanctum: call("authentication/login"),
+
+    login() {
+      this.loading = true;
+      this.loginSanctum(this.auth).then(response => {
+        if (!response) {
+          this.loading = false;
+          store.set("snackbar/value", true);
+          store.set("snackbar/text", "Invalid credentials, please try again.");
+          store.set("snackbar/color", "pink darken-1");
+        }
+      });
+    }
   }
 };
 </script>

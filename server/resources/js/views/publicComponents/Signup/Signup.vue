@@ -8,7 +8,7 @@
         data-aos-once="true"
         data-aos-easing="linear"
         data-aos-duration="400"
-        class="text-center align-center justify-center"
+        class="text-center justify-center"
       >
         <v-col cols="12" lg="6">
           <v-alert
@@ -588,8 +588,7 @@ export default {
           this.countryCodes = response.data.rows;
         }
       });
-    },
-
+    }
   }
 };
 </script>
