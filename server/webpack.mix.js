@@ -104,11 +104,11 @@ function publishAssets() {
       path.join(publicDir, "build", "dist"),
       path.join(publicDir, "dist")
     );
-  if (fs.existsSync(path.join(publicDir, "build", "images")))
-    fs.copySync(
-      path.join(publicDir, "build", "images"),
-      path.join(publicDir, "images")
-    );
+  // if (fs.existsSync(path.join(publicDir, "build", "images")))
+  //   fs.copySync(
+  //     path.join(publicDir, "build", "images"),
+  //     path.join(publicDir, "images")
+  //   );
   if (fs.existsSync(path.join(publicDir, "build")))
     fs.removeSync(path.join(publicDir, "build"));
 }

@@ -2,7 +2,6 @@
   <div>
     <v-img
       height="101vh"
-      eager
       style="margin-top:-80px"
       gradient="to top right, rgba(0,0,0,.1), rgba(0,0,0,.2)"
       src="storage/11.png"

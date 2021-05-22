@@ -12,7 +12,7 @@ const mutations = make.mutations(state);
 const actions = {
   ...make.actions(state),
 
-  login({ commit, state }, data) {
+  login({ commit }, data) {
     return axios
       .post("api/login", data)
       .then(response => {
@@ -33,7 +33,7 @@ const actions = {
       });
   },
 
-  logout({ commit, state }, data) {
+  logout({ commit }, data) {
     return axios
       .post("api/logout", data)
       .then(response => {

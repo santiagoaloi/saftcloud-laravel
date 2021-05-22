@@ -1,15 +1,7 @@
 <template>
   <div>
     <v-container class="fill-height my-15">
-      <v-row
-        data-aos="fade"
-        data-aos-anchor-placement="center-bottom"
-        data-aos-delay="300"
-        data-aos-once="true"
-        data-aos-easing="linear"
-        data-aos-duration="400"
-        class="text-center justify-center"
-      >
+      <v-row class="text-center justify-center">
         <v-col cols="12" lg="6">
           <v-alert
             border="left"
@@ -450,11 +442,7 @@
           cols="12"
           lg="6"
         >
-          <v-img
-            :src="require('@/assets/images/signup.svg')"
-            max-height="280"
-            contain
-          ></v-img>
+          <v-img src="storage/signup.svg" max-height="280" contain></v-img>
         </v-col>
       </v-row>
       <Faq />

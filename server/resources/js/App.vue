@@ -1,15 +1,13 @@
 <template>
-  <v-fade-transition mode="out-in">
+  <!-- <v-fade-transition mode="out-in"> -->
+  <keep-alive>
     <component :is="layout"> </component>
-  </v-fade-transition>
+  </keep-alive>
+  <!-- </v-fade-transition> -->
 </template>
 
 <script>
 import config from "./configs";
-import { store } from "@/store";
-import { get } from "vuex-pathify";
-
-import axios from "axios";
 
 export default {
   name: "AppVue",

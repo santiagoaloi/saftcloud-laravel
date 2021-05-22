@@ -22,7 +22,8 @@ export default [
       layout: "login_layout"
     },
     transition: "fade",
-    component: () => import("@/views/login/Index.vue")
+    component: () =>
+      import(/* webpackChunkName: 'login-page' */ "@/views/login/Index.vue")
   },
   {
     path: "/homepage",

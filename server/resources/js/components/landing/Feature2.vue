@@ -10,7 +10,7 @@
       >
         <v-row align="center" justify="start">
           <v-col cols="12" lg="4">
-            <v-img eager src="storage/team.jpg" height="280"></v-img>
+            <v-img src="storage/team.jpg" height="280"></v-img>
           </v-col>
 
           <v-col lg="7">
@@ -58,12 +58,7 @@
             </div>
           </v-col>
           <v-col cols="12" lg="6">
-            <v-img
-              contain
-              eager
-              src="storage/image1.png"
-              max-height="400"
-            ></v-img>
+            <v-img contain src="storage/image1.png" max-height="400"></v-img>
           </v-col>
         </v-row>
       </v-card>

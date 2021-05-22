@@ -8,22 +8,12 @@
 </template>
 
 <script>
-import App from "../../App.vue";
 export default {
   name: "Publiclayout",
   components: {
-    PubBar: () =>
-      import(
-        /* webpackChunkName: 'public-appbar-view-footer-combined' */ "./AppBar"
-      ),
-    PubView: () =>
-      import(
-        /* webpackChunkName: 'public-appbar-view-footer-combined' */ "./View"
-      ),
-    PubFooter: () =>
-      import(
-        /* webpackChunkName: 'public-appbar-view-footer-combined' */ "./Footer"
-      ),
+    PubBar: () => import(/* webpackChunkName: 'public-appbar' */ "./AppBar"),
+    PubView: () => import(/* webpackChunkName: 'pubblic-view' */ "./View"),
+    PubFooter: () => import(/* webpackChunkName: 'public-footer' */ "./Footer"),
     Snackbar: () =>
       import(
         /* webpackChunkName: 'public-snackbar' */

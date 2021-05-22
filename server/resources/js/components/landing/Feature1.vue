@@ -16,7 +16,7 @@
         >
           <v-row align="center" justify="start">
             <v-col cols="12" lg="4">
-              <v-img eager src="storage/team.jpg" height="280"></v-img>
+              <v-img src="storage/team.jpg" height="280"></v-img>
             </v-col>
 
             <v-col lg="7">
@@ -72,7 +72,6 @@
             <v-col cols="12" lg="6">
               <v-img
                 contain
-                eager
                 src="storage/ecomerce.png"
                 max-height="400"
               ></v-img>
@@ -95,7 +94,7 @@
                 >
                   <v-row align="center" justify="start">
                     <v-col cols="12" lg="5">
-                      <v-img eager src="storage/team.jpg" height="280"></v-img>
+                      <v-img src="storage/team.jpg" height="280"></v-img>
                     </v-col>
 
                     <v-col lg="7">
@@ -124,7 +123,7 @@
                 >
                   <v-row align="center" justify="start">
                     <v-col cols="12" lg="5">
-                      <v-img eager src="storage/team.jpg" height="280"></v-img>
+                      <v-img src="storage/team.jpg" height="280"></v-img>
                     </v-col>
 
                     <v-col lg="7">

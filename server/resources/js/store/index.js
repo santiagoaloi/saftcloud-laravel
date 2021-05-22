@@ -13,7 +13,6 @@ import * as modules from "./modules";
 Vue.use(Vuex);
 
 export const store = new Vuex.Store({
-  // ...
   plugins: [
     createPersistedState({
       storage: {

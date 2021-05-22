@@ -11,7 +11,6 @@ export default [
       meta: {
         layout: "public_layout"
       }
-      // component: () => import(/* webpackChunkName: 'DefaultHomepage' */ '@/views/publicComponents/homepage/Index.vue'),
     }
   },
 

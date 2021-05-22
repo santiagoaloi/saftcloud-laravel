@@ -23,8 +23,14 @@ use App\Http\Controllers\AuthController;
 Route::post('/login', [AuthController::class, 'login']);
 
 
-Route::resource('/country', CountryController::class);
-Route::get('/countries', [CountryController::class, 'showAll']);
+// Guest only
+Route::middleware(['guest:sanctum'])->group(function () {
+    Route::resource('/country', CountryController::class);
+    Route::get('/countries', [CountryController::class, 'showAll']);
+});
+
+// Route::resource('/country', CountryController::class);
+// Route::get('/countries', [CountryController::class, 'showAll']);
 Route::resource('/account', AccountController::class);
 
 Route::post('/register', [AuthController::class, 'register']);
@@ -32,9 +38,5 @@ Route::post('/register', [AuthController::class, 'register']);
 // Protected routes
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/logout', [AuthController::class, 'logout']);
-    Route::get('/testFunction', [AccountController::class, 'showAll']);
 });
 
-// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//     return $request->user();
-// });

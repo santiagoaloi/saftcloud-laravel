@@ -23,8 +23,14 @@
 
         <v-spacer></v-spacer>
 
-        <v-btn to="/" height="36" class="mr-3" color="pink accent-5" dark
-          >Back to homepage</v-btn
+        <v-btn
+          rounded
+          to="/"
+          height="36"
+          class="mr-3"
+          color="pink accent-5"
+          dark
+          ><v-icon left> mdi-home</v-icon>Back to homepage</v-btn
         >
       </v-container>
     </v-app-bar>

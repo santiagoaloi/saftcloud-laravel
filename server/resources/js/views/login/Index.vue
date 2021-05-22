@@ -1,14 +1,16 @@
 <template>
-  <v-container data-aos="fade" data-aos-delay="300" class="fill-height">
+  <v-container
+    class="fill-height mb-8 mb-md-8 mb-lg-0 mb-xl-0 px-8 px-md-0 px-lg-0 px-xl-0"
+  >
     <v-row align="center" justify="center">
       <v-col cols="12" lg="6">
         <v-row no-gutters align="center" justify="center">
           <div>
-            <v-avatar size="18em">
+            <v-avatar :size="$vuetify.breakpoint.smAndDown ? '8em' : '18em'">
               <v-img
                 eager
                 class="rounded"
-                aspect-ratio="1.7"
+                aspect-ratio="2"
                 src="storage/logo2.png"
               >
                 <!-- Spinner loader -->
@@ -34,7 +36,10 @@
         </v-row>
 
         <v-row class="mt-2" no-gutters align="center" justify="center">
-          <div class="subFont topSlide shadows mx-10" style="color: white">
+          <div
+            class="subFont topSlide shadows mx-10 text-center"
+            style="color: white"
+          >
             <h2>Point of sales made easy for everyone.</h2>
 
             <!-- {{ siteInfo.companySlogan }} -->
@@ -57,12 +62,14 @@
                 <h1>Login</h1>
               </v-card-title>
               <v-card-subtitle class=" mb-n10">
-                Don't have an account?
+                <span v-if="$vuetify.breakpoint.mdAndUp"
+                  >Don't have an account?</span
+                >
                 <v-btn
                   style="margin-top: -2.9px"
                   small
                   @click="signup = !signup"
-                  class="ml-3"
+                  :class="$vuetify.breakpoint.smAndDown ? '' : 'ml-3'"
                   to="/signup"
                 >
                   Sign up
@@ -163,16 +170,6 @@
                       >
                         Login
                       </v-btn>
-                      <!-- <v-btn
-                          class="mr-n2 white--text"
-                          :input-value="true"
-                          text
-                          large
-                          :loading="loading"
-                          @click.prevent="checkUser()"
-                        >
-                          check user
-                        </v-btn> -->
                     </v-card-actions>
                   </v-col>
                 </v-row>
@@ -422,7 +419,6 @@ export default {
 
   methods: {
     loginSanctum: call("authentication/login"),
-
     login() {
       this.loading = true;
       this.loginSanctum(this.auth).then(response => {
