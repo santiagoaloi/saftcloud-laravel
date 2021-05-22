@@ -20,16 +20,16 @@ class CreateCompaniesTable extends Migration {
             $table->string('state', 100);
             $table->string('city', 100);
             $table->string('address', 100);
-            $table->integer('iva_cond_id');
-            $table->integer('document_id');
-            $table->bigInteger('document_number');
-            $table->bigInteger('ing_brutos_number');
-            $table->date('start_activity');
-            $table->string('email', 100);
-            $table->string('web', 100);
-            $table->string('twitter', 100);
-            $table->string('instagram', 100);
-            $table->string('facebook', 100);
+            $table->integer('iva_cond_id')->nullable();
+            $table->integer('document_id')->nullable();
+            $table->bigInteger('document_number')->nullable();
+            $table->bigInteger('ing_brutos_number')->nullable();
+            $table->date('start_activity')->nullable();
+            $table->string('email', 100)->nullable();
+            $table->string('web', 100)->nullable();
+            $table->string('twitter', 100)->nullable();
+            $table->string('instagram', 100)->nullable();
+            $table->string('facebook', 100)->nullable();
             $table->timestamps();
         });
     }

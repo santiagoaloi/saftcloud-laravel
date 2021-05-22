@@ -14,14 +14,14 @@ class CreateBranchesTable extends Migration {
         Schema::connection('system')->create('branches', function (Blueprint $table) {
             $table->id();
             $table->integer('company_id');
-            $table->string('email', 100);
+            $table->string('email', 100)->nullable();
             $table->integer('country_id');
             $table->string('state', 100);
             $table->string('city', 100);
             $table->string('address', 100);
-            $table->integer('concept_id');
-            $table->string('telephone1', 25);
-            $table->string('telephone2', 25);
+            $table->integer('concept_id')->nullable();
+            $table->string('telephone1', 25)->nullable();
+            $table->string('telephone2', 25)->nullable();
             $table->timestamps();
         });
     }

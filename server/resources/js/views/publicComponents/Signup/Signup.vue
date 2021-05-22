@@ -561,7 +561,7 @@ export default {
 
     accountCreation() {
       this.loading = true;
-      axios.post(`account`, this.signupForm).then(response => {
+      axios.post("api/makeAccount", this.signupForm).then(response => {
         if (response.data.status) {
           this.$router.push("/VerifyAccount");
         } else {
@@ -571,7 +571,7 @@ export default {
     },
 
     getCountries() {
-      axios.get("/api/countries").then(response => {
+      axios.get("api/countries").then(response => {
         if (response.data.status) {
           this.countryCodes = response.data.rows;
         }

@@ -17,8 +17,8 @@ class CreatePointOfSalesTable extends Migration {
             $table->integer('ptoVta');
             $table->string('name', 100);
             $table->string('address', 100);
-            $table->string('detail', 100);
-            $table->smallInteger('status');
+            $table->string('detail', 100)->nullable();
+            $table->smallInteger('status')->nullable();
             $table->timestamps();
         });
     }
