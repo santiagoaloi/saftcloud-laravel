@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Public\CountryController;
 use App\Http\Controllers\Public\AccountController;
+use App\Http\Controllers\Public\MakeAccountController;
 
 //Authentication Controller
 use App\Http\Controllers\AuthController;
@@ -28,6 +29,8 @@ Route::get('/countries', [CountryController::class, 'showAll']);
 Route::resource('/account', AccountController::class);
 
 Route::post('/register', [AuthController::class, 'register']);
+
+Route::post('/makeAccount', [MakeAccountController::class, 'accountCreation']);
 
 // Protected routes
 Route::group(['middleware' => ['auth:sanctum']], function () {
