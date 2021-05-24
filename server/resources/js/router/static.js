@@ -34,6 +34,14 @@ export default [
     meta: { layout: "secure_layout" },
     transition: "fade",
     component: () => import("@/views/systemComponents/Desktop/Desktop.vue")
+  },
+
+  {
+    path: "/components",
+    name: "components",
+    meta: { layout: "secure_layout" },
+    transition: "fade",
+    component: () => import(/* webpackChunkName: 'components' */ "@/views/systemComponents/Components/Components.vue")
   }
 
   // {
@@ -66,17 +74,6 @@ export default [
   //   component: () =>
   //     import(
   //       /* webpackChunkName: 'previewprofile' */ "@/views/systemComponents/Users/PreviewProfile.vue"
-  //     )
-  // },
-
-  // {
-  //   path: "/components",
-  //   name: "components",
-  //   meta: { layout: "secure_layout" },
-  //   transition: "fade",
-  //   component: () =>
-  //     import(
-  //       /* webpackChunkName: 'components' */ "@/views/systemComponents/Components/Components.vue"
   //     )
   // },
 

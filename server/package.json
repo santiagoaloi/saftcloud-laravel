@@ -12,9 +12,10 @@
     "production": "mix --production"
   },
   "dependencies": {
-    "axios": "^0.21",
     "aos": "^2.3.4",
+    "axios": "^0.21",
     "lodash": "^4.17.15",
+    "moment": "^2.29.1",
     "secure-ls": "^1.2.6",
     "tiptap": "^1.27.1",
     "tiptap-extensions": "^1.29.1",

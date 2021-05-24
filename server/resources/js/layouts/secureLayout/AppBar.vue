@@ -1,181 +1,97 @@
 <template>
-  <v-app-bar
-    :key="appBarKey"
-    app
-    clipped-left
-    clipped-right
-    color="rgba(45, 45, 45, 0.7)"
-    dark
-    dense
-  >
-    <v-app-bar-nav-icon
-      class="ml-0"
-      text
-      xSmall
-      fab
-      @click="handleDrawerToggle()"
-    />
+    <v-app-bar dense absolute app >
 
-    <span v-if="!$vuetify.breakpoint.smAndDown" class="title ml-4 mr-5"
-      >Saftcloud</span
-    >
+      <v-container fluid class="py-0 px-0 px-sm-2 fill-height">
 
-    <div class="flex-grow-1" />
+      
+      <v-app-bar-nav-icon  class="ml-0" text xSmall fab @click="handleDrawerToggle()" />
 
-    <v-btn class="mr-2 white--text" text x-small fab to="/">
-      <v-icon>mdi-home-variant</v-icon>
-    </v-btn>
+      <h3 class="ml-3">SaftCloud</h3>
 
-    <v-btn class="mr-2 white--text" text x-small fab @click="pushDesktop">
-      <v-icon>mdi-desktop-mac</v-icon>
-    </v-btn>
+      <div class="flex-grow-1" />
 
-    <v-menu
-      rounded="xl"
-      origin="center center"
-      transition="scale-transition"
-      :nudge-bottom="10"
-      offset-y
-    >
-      <template v-slot:activator="{ on, attrs }">
-        <v-btn
-          v-if="groupId == 1"
-          class="mr-2 white--text"
-          text
-          x-small
-          fab
-          v-bind="attrs"
-          v-on="on"
-        >
-          <v-icon>mdi-auto-fix</v-icon>
-        </v-btn>
+      <v-btn class="mr-2 " text x-small fab to="/">
+        <v-icon>mdi-home-variant</v-icon>
+      </v-btn>
+
+      <v-btn class="mr-2 " text x-small fab @click="pushDesktop">
+        <v-icon>mdi-desktop-mac</v-icon>
+      </v-btn>
+
+      <v-menu rounded="xl" origin="center center" transition="scale-transition" :nudge-bottom="10" offset-y>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn class="mr-2" text x-small fab v-bind="attrs" v-on="on">
+            <v-icon>mdi-auto-fix</v-icon>
+          </v-btn>
+        </template>
+        <v-card color="rgba(250, 250, 250, 1)" class="mx-auto pa-2" max-width="300" rounded="xl">
+          <v-list rounded="xl" color="rgba(250, 250, 250, 1)" outlined>
+            <v-list-item v-for="(item, i) in cmsMenu" :key="i" :to="item.href">
+              <v-icon class="mr-5">
+                {{ item.icon }}
+              </v-icon>
+              <v-list-item-title class="mr-5">
+                {{ item.title }}
+              </v-list-item-title>
+            </v-list-item>
+          </v-list>
+        </v-card>
+      </v-menu>
+
+      <v-menu rounded="xl" origin="center center" transition="scale-transition" :nudge-bottom="10" offset-y>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn class="mr-3  " text x-small fab v-bind="attrs" v-on="on">
+            <v-icon>mdi-dots-vertical</v-icon>
+          </v-btn>
+        </template>
+        <v-card color="rgba(250, 250, 250, 1)" class="mx-auto pa-2" max-width="300" rounded="xl">
+          <v-list rounded="xl" color="rgba(250, 250, 250, 1)" outlined>
+            <v-list-item v-for="(item, i) in settingsMenu" :key="i" :to="item.href">
+              <v-icon class="mr-5">
+                {{ item.icon }}
+              </v-icon>
+              <v-list-item-title class="mr-5">
+                {{ item.title }}
+              </v-list-item-title>
+            </v-list-item>
+          </v-list>
+        </v-card>
+      </v-menu>
+
+      <template>
+        <v-badge :color="notificationCount > 0 ? 'teal accent-4' : 'transparent'" :content="notificationCount" overlap offset-x="20" offset-y="18">
+          <v-btn class="mr-2 " text x-small fab @click="pushNotifications()">
+            <v-icon>mdi-bell-ring-outline</v-icon>
+          </v-btn>
+        </v-badge>
       </template>
-      <v-card
-        color="rgba(250, 250, 250, 1)"
-        class="mx-auto pa-2"
-        max-width="300"
-        rounded="xl"
-      >
-        <v-list rounded="xl" color="rgba(250, 250, 250, 1)" outlined>
-          <v-list-item v-for="(item, i) in cmsMenu" :key="i" :to="item.href">
-            <v-icon class="mr-5">
-              {{ item.icon }}
-            </v-icon>
-            <v-list-item-title class="mr-5">
-              {{ item.title }}
-            </v-list-item-title>
-          </v-list-item>
-        </v-list>
-      </v-card>
-    </v-menu>
 
-    <v-menu
-      rounded="xl"
-      origin="center center"
-      transition="scale-transition"
-      :nudge-bottom="10"
-      offset-y
-    >
-      <template v-slot:activator="{ on, attrs }">
-        <v-btn
-          v-if="groupId == 1"
-          class="mr-3 white--text"
-          text
-          x-small
-          fab
-          v-bind="attrs"
-          v-on="on"
-        >
+      <v-divider inset vertical class="mx-3 grey" />
+
+      <template v-slot:activator="{ attrs }">
+        <v-btn class="mr-3" text x-small fab v-bind="attrs">
           <v-icon>mdi-dots-vertical</v-icon>
         </v-btn>
       </template>
-      <v-card
-        color="rgba(250, 250, 250, 1)"
-        class="mx-auto pa-2"
-        max-width="300"
-        rounded="xl"
-      >
-        <v-list rounded="xl" color="rgba(250, 250, 250, 1)" outlined>
-          <v-list-item
-            v-for="(item, i) in settingsMenu"
-            :key="i"
-            :to="item.href"
-          >
-            <v-icon class="mr-5">
-              {{ item.icon }}
-            </v-icon>
-            <v-list-item-title class="mr-5">
-              {{ item.title }}
-            </v-list-item-title>
-          </v-list-item>
-        </v-list>
-      </v-card>
-    </v-menu>
 
-    <template v-if="groupId == 1">
-      <v-badge
-        :color="notificationCount > 0 ? 'teal accent-4' : 'transparent'"
-        :content="notificationCount"
-        overlap
-        offset-x="20"
-        offset-y="18"
-      >
-        <v-btn
-          class="mr-2 white--text"
-          text
-          x-small
-          fab
-          @click="pushNotifications()"
-        >
-          <v-icon>mdi-bell-ring-outline</v-icon>
-        </v-btn>
-      </v-badge>
-    </template>
+      <v-menu rounded="xl" origin="center center" transition="scale-transition" :nudge-bottom="10" offset-y>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn v-bind="attrs" x-small fab icon class="mr-2" v-on="on">
+            <v-avatar size="33px">
+              <v-img src="storage/defaults/avatar.png">
+                <template v-slot:placeholder>
+                  <v-row class="fill-height ma-0" align="center" justify="center">
+                    <v-progress-circular indeterminate color="grey lighten-5" />
+                  </v-row>
+                </template>
+              </v-img>
+            </v-avatar>
+          </v-btn>
+        </template>
 
-    <v-divider inset vertical class="mx-3 grey" />
-
-    <template v-slot:activator="{ attrs }">
-      <v-btn
-        v-if="groupId == 1"
-        class="mr-3 white--text"
-        text
-        x-small
-        fab
-        v-bind="attrs"
-      >
-        <v-icon>mdi-dots-vertical</v-icon>
-      </v-btn>
-    </template>
-
-    <v-menu
-      rounded="xl"
-      origin="center center"
-      transition="scale-transition"
-      :nudge-bottom="10"
-      offset-y
-    >
-      <template v-slot:activator="{ on, attrs }">
-        <v-btn v-bind="attrs" x-small fab icon class="mr-2" v-on="on">
-          <v-avatar size="33px">
-            <v-img src="storage/defaults/avatar.png">
-              <template v-slot:placeholder>
-                <v-row class="fill-height ma-0" align="center" justify="center">
-                  <v-progress-circular indeterminate color="grey lighten-5" />
-                </v-row>
-              </template>
-            </v-img>
-          </v-avatar>
-        </v-btn>
-      </template>
-
-      <v-card
-        color="rgba(250, 250, 250, 1)"
-        class="mx-auto pa-2"
-        max-width="300"
-        rounded="xl"
-      >
-        <v-list rounded="xl" color="rgba(250, 250, 250, 1)" outlined>
-          <!-- <v-list-item style="cursor: pointer">
+        <v-card color="rgba(250, 250, 250, 1)" class="mx-auto pa-2" max-width="300" rounded="xl">
+          <v-list rounded="xl" color="rgba(250, 250, 250, 1)" outlined>
+            <!-- <v-list-item style="cursor: pointer">
             <v-list-item-content>
               <v-list-item-title style="font-size: 130%; font-weight: 600">
                 {{ profile.first_name }} {{ profile.last_name }}
@@ -183,61 +99,63 @@
             </v-list-item-content>
           </v-list-item> -->
 
-          <v-list-item style="cursor: pointer">
-            <v-list-item-content>
-              <v-list-item-title style="font-size: 130%; font-weight: 600">
-                firstname lastname
-              </v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
+            <v-list-item style="cursor: pointer">
+              <v-list-item-content>
+                <v-list-item-title style="font-size: 130%; font-weight: 600">
+                  firstname lastname
+                </v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
 
-          <!-- <v-list-item style="cursor: pointer; margin-top: -20px">
+            <!-- <v-list-item style="cursor: pointer; margin-top: -20px">
             <v-list-item-content>
               <v-list-item-title>{{ profile.email }}</v-list-item-title>
             </v-list-item-content>
           </v-list-item> -->
 
-          <v-list-item style="cursor: pointer; margin-top: -20px">
-            <v-list-item-content>
-              <v-list-item-title>email</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
+            <v-list-item style="cursor: pointer; margin-top: -20px">
+              <v-list-item-content>
+                <v-list-item-title>email</v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
 
-          <v-divider />
+            <v-divider />
 
-          <v-list-item>
-            <v-list-item-action>
-              <v-icon>mdi-tune-vertical</v-icon>
-            </v-list-item-action>
-            <v-list-item-content>
-              <v-list-item-title>Mörkt läge</v-list-item-title>
-            </v-list-item-content>
-            <v-list-item-action>
-              <v-switch inset @click.stop="setDarkMode()" />
-            </v-list-item-action>
-          </v-list-item>
+            <v-list-item>
+              <v-list-item-action>
+                <v-icon>mdi-tune-vertical</v-icon>
+              </v-list-item-action>
+              <v-list-item-content>
+                <v-list-item-title>Mörkt läge</v-list-item-title>
+              </v-list-item-content>
+              <v-list-item-action>
+                <v-switch inset @click.stop="setDarkMode()" />
+              </v-list-item-action>
+            </v-list-item>
 
-          <v-list-item rel="noopener" @click="pushprofile">
-            <v-list-item-action>
-              <v-icon>mdi-tune-vertical</v-icon>
-            </v-list-item-action>
-            <v-list-item-content>
-              <v-list-item-title>Profilinställngar</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
+            <v-list-item rel="noopener" @click="pushprofile">
+              <v-list-item-action>
+                <v-icon>mdi-tune-vertical</v-icon>
+              </v-list-item-action>
+              <v-list-item-content>
+                <v-list-item-title>Profilinställngar</v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
 
-          <v-list-item @click="logoutSanctum">
-            <v-list-item-action>
-              <v-icon>mdi-logout</v-icon>
-            </v-list-item-action>
-            <v-list-item-content>
-              <v-list-item-title>Logga ut</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-        </v-list>
-      </v-card>
-    </v-menu>
-  </v-app-bar>
+            <v-list-item @click="logoutSanctum">
+              <v-list-item-action>
+                <v-icon>mdi-logout</v-icon>
+              </v-list-item-action>
+              <v-list-item-content>
+                <v-list-item-title>Logga ut</v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+          </v-list>
+        </v-card>
+      </v-menu>
+      </v-container>
+    </v-app-bar>
+  </v-container>
 </template>
 
 <script>
@@ -325,6 +243,10 @@ export default {
     // }
   },
 
+  destroyed() {
+    window.getApp.$off("APP_SIDEBAR_HAMBURGER");
+  },
+
   mounted() {
     // this.fetchNotificationCount();
     // window.getApp.$on("APP_SIDEBAR_HAMBURGER", () => {
@@ -333,10 +255,6 @@ export default {
     // window.getApp.$on("APP_REFRESH_NOTIFICATIONS", () => {
     //   this.fetchNotificationCount();
     // });
-  },
-
-  destroyed() {
-    window.getApp.$off("APP_SIDEBAR_HAMBURGER");
   },
 
   methods: {

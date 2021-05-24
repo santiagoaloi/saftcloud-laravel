@@ -141,8 +141,8 @@ input::-webkit-inner-spin-button {
   color: rgba(0, 0, 0, 0.87);
 }
 
-@media (min-width: 1904px) {
+/* @media (min-width: 1904px) {
   .container {
     max-width: 1561px !important;
   }
-}
+} */

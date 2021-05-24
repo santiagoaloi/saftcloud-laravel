@@ -1,13 +1,7 @@
 <template>
-  <v-img
-    max-height="100vh"
-    src="storage/defaultbg.jpg"
-    gradient="to top right, rgba(200,200,200,.33), rgba(25,32,72,.7)"
-  >
-    <v-main>
-      <router-view />
-    </v-main>
-  </v-img>
+  <v-main>
+    <router-view />
+  </v-main>
 </template>
 
 <script>

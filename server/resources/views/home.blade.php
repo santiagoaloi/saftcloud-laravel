@@ -7,8 +7,7 @@
         <link rel="icon" href="/favicon.ico">
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <title>SaftCloud</title>
-   
-            <link href="{{ mix('dist/css/app.css') }}" rel="stylesheet">
+        <link href="{{ mix('dist/css/app.css') }}" rel="stylesheet">
     </head>
     <body>
         <noscript>

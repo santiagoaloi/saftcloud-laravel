@@ -13,10 +13,8 @@ export default {
 
   components: {
     AuthBar: () => import(/* webpackChunkName: 'secure-appbar' */ "./AppBar"),
-    AuthDrawer: () =>
-      import(/* webpackChunkName: 'secure-drawer' */ "./Drawer"),
-    AuthElementDrawer: () =>
-      import(/* webpackChunkName: 'secure-element-drawer' */ "./elementDrawer"),
+    AuthDrawer: () => import(/* webpackChunkName: 'secure-drawer' */ "./Drawer"),
+    AuthElementDrawer: () => import(/* webpackChunkName: 'secure-element-drawer' */ "./elementDrawer"),
     AuthView: () => import(/* webpackChunkName: 'secure-view' */ "./View")
   }
 };

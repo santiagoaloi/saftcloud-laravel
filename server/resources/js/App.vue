@@ -1,8 +1,6 @@
 <template>
-  <v-fade-transition mode="out-in">
-    <!-- <keep-alive> -->
+  <v-fade-transition hide-on-leave>
     <component :is="layout"> </component>
-    <!-- </keep-alive> -->
   </v-fade-transition>
 </template>
 
@@ -36,3 +34,9 @@ export default {
   methods: {}
 };
 </script>
+<style>
+.v-toolbar__content,
+.v-toolbar__extension {
+  padding: 0px 0px !important;
+}
+</style>

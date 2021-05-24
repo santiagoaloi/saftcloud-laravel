@@ -16,15 +16,15 @@ const router = new Router({
   mode: "hash",
   linkActiveClass: "active",
 
-  routes: routes,
+  routes: routes
 
-  scrollBehavior() {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve({ x: 0, y: 0 });
-      }, 200);
-    });
-  }
+  // scrollBehavior() {
+  //   return new Promise((resolve, reject) => {
+  //     setTimeout(() => {
+  //       resolve({ x: 0, y: 0 });
+  //     }, 200);
+  //   });
+  // }
 });
 
 router.beforeEach((to, from, next) => {
