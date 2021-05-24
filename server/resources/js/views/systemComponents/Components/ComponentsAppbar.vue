@@ -24,13 +24,15 @@
         @blur="expand = false"
       />
 
-      <v-btn class="mx-2 " color="white" @click.stop="parentData.dialogSystemOperations = true"> <v-icon class="mr-2" small> mdi-filter </v-icon>Filter </v-btn>
+      <v-btn class="mx-2 " color="white" @click.stop="parentData.dialogSystemOperations = true">
+        <v-icon class="mr-2" small> mdi-filter </v-icon>Filter
+      </v-btn>
 
       <v-btn class="mx-2 " color="white" @click.stop="parentData.dialogSystemOperations = true">
         <v-icon class="mr-2" small> mdi-arrow-top-right </v-icon>Export
       </v-btn>
 
-      <v-btn class="ml-2 " color="primary" @click.stop="parentData.dialogSystemOperations = true">
+      <v-btn class="ml-2 " color="primary" @click.stop="add()">
         <v-icon class="mr-2" small> mdi-plus </v-icon>Create component
       </v-btn>
       <!-- <v-btn class="mx-2 white--text" color="primary" @click.stop="parentData.dialogSystemOperations = true">
@@ -58,7 +60,8 @@ export default {
     "disableProtectionBulk",
     "sidebarBulkVisible",
     "sidebarBulkHidden",
-    "showDesktop"
+    "showDesktop",
+    "add"
   ],
 
   props: {

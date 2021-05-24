@@ -44,6 +44,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 });
 
 Route::get('/getDbTables', [MysqlController::class, 'showAll']);
-Route::get('/getTableColumns', [MysqlController::class, 'showColumns']);
+Route::post('/getTableColumns', [MysqlController::class, 'showColumns']);
 
 

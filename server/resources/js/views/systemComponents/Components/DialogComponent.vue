@@ -9,18 +9,11 @@
   >
     <ValidationObserver ref="newComponentForm" slim>
       <template>
-        <v-banner
-          v-if="parentData.val_errors_component.length !== 0"
-          single-line
-        >
+        <v-banner v-if="parentData.val_errors_component.length !== 0" single-line>
           <v-icon slot="icon" color="warning" size="36">
             mdi-information-variant
           </v-icon>
-          <p
-            v-for="(item, index) in parentData.val_errors_component"
-            :key="index"
-            class="pa-0 mt-3"
-          >
+          <p v-for="(item, index) in parentData.val_errors_component" :key="index" class="pa-0 mt-3">
             {{ item }}
           </p>
         </v-banner>
@@ -30,11 +23,7 @@
         <v-row dense>
           <v-col cols="12" sm="12" lg="6">
             <span>Group</span>
-            <validation-provider
-              v-slot="{ errors }"
-              name="component group"
-              rules="required"
-            >
+            <validation-provider v-slot="{ errors }" name="component group" rules="required">
               <v-select
                 v-model="parentData.componentSettings.group_id"
                 :background-color="errors.length > 0 ? '#faebeb' : 'white'"
@@ -50,20 +39,18 @@
                 :menu-props="{
                   transition: 'slide-y-transition',
                   closeOnClick: false,
-                  closeOnContentClick: true,
+                  closeOnContentClick: true
                 }"
                 @contextmenu="handler($event)"
                 @change="getComponentByGroup"
               >
                 <template v-slot:selection="{ item }">
                   <span v-if="item.name === 'All'">
-                    <v-icon class="mr-2" small>{{ item.icon }} </v-icon>Select
-                    group...
+                    <v-icon class="mr-2" small>{{ item.icon }} </v-icon>Select group...
                   </span>
                   <span v-if="item.name !== 'All'">
                     <v-chip
-                      ><v-icon class="mr-2" small>{{ item.icon }}</v-icon>
-                      {{ item.name }}</v-chip
+                      ><v-icon class="mr-2" small>{{ item.icon }}</v-icon> {{ item.name }}</v-chip
                     >
                   </span>
                 </template>
@@ -77,19 +64,10 @@
                     </v-list-item-avatar>
 
                     <v-list-item-content>
-                      <v-list-item-title
-                        v-if="data.item.name === 'All'"
-                        v-html="'Select Group...'"
-                      />
-                      <v-list-item-title
-                        v-if="data.item.name !== 'All'"
-                        v-html="data.item.name"
-                      />
+                      <v-list-item-title v-if="data.item.name === 'All'" v-html="'Select Group...'" />
+                      <v-list-item-title v-if="data.item.name !== 'All'" v-html="data.item.name" />
 
-                      <v-list-item-subtitle
-                        v-if="data.item.name !== 'All'"
-                        v-html="data.item.total + ' components'"
-                      />
+                      <v-list-item-subtitle v-if="data.item.name !== 'All'" v-html="data.item.total + ' components'" />
                     </v-list-item-content>
                   </template>
                 </template>
@@ -115,11 +93,7 @@
 
           <v-col cols="12" sm="12" lg="6">
             <span>Component title</span>
-            <validation-provider
-              v-slot="{ errors }"
-              name="component title"
-              rules="required"
-            >
+            <validation-provider v-slot="{ errors }" name="component title" rules="required">
               <v-text-field
                 ref="componentTitle"
                 v-model="parentData.componentSettings.title"
@@ -136,11 +110,7 @@
 
           <v-col cols="12" sm="12" lg="6">
             <span>Component description</span>
-            <validation-provider
-              v-slot="{ errors }"
-              name="component desc"
-              rules="required"
-            >
+            <validation-provider v-slot="{ errors }" name="component desc" rules="required">
               <v-text-field
                 v-model="parentData.componentSettings.note"
                 solo
@@ -158,17 +128,13 @@
 
           <v-col cols="12" sm="12" lg="6">
             <span>Component / controller name</span>
-            <validation-provider
-              v-slot="{ errors }"
-              name="component description"
-              rules="required"
-            >
+            <validation-provider v-slot="{ errors }" name="component description" rules="required">
               <v-text-field
                 v-model="parentData.componentSettings.controller"
-                solo
                 prepend-inner-icon="mdi-file"
                 counter
                 maxlength="35"
+                solo
                 color="primary"
                 label
                 :background-color="errors.length > 0 ? '#faebeb' : 'white'"
@@ -196,30 +162,26 @@
         <v-row>
           <v-col cols="12" sm="12" lg="6">
             <span>DB Table</span>
-            <validation-provider
-              v-slot="{ errors }"
-              name="component table"
-              rules="required"
-            >
+            <validation-provider v-slot="{ errors }" name="component table" rules="required">
               <v-autocomplete
-                v-model="parentData.componentSettings.table"
+                v-model="selectedTable"
                 :background-color="errors.length > 0 ? '#faebeb' : 'white'"
                 :error-messages="errors[0]"
-                solo
                 :menu-props="{
                   transition: 'slide-y-transition',
                   closeOnClick: false,
-                  closeOnContentClick: true,
+                  closeOnContentClick: true
                 }"
                 clearable
+                solo
                 label=" "
                 prepend-inner-icon="mdi-table"
                 hint="Table in your DB."
                 item-color="primary"
                 color="primary"
                 :disabled="parentData.componentSettings.type !== 'crud'"
-                :items="parentData.tables"
-                @change="get_tables(), getField()"
+                :items="dbTables"
+                @change="getColumns()"
               >
                 <template v-slot:item="data">
                   <template>
@@ -238,11 +200,7 @@
 
           <v-col cols="12" sm="12" lg="6">
             <span>Table key</span>
-            <validation-provider
-              v-slot="{ errors }"
-              name="component table key"
-              rules="required"
-            >
+            <validation-provider v-slot="{ errors }" name="component table key" rules="required">
               <v-autocomplete
                 v-model="parentData.componentSettings.table_key"
                 :background-color="errors.length > 0 ? '#faebeb' : 'white'"
@@ -256,8 +214,8 @@
                 label="Database table key"
                 :disabled="
                   parentData.componentSettings.type !== 'crud' ||
-                  parentData.componentSettings.table == '' ||
-                  parentData.componentSettings.table == null
+                    parentData.componentSettings.table == '' ||
+                    parentData.componentSettings.table == null
                 "
                 :items="parentData.field"
                 @change="getField()"
@@ -289,13 +247,33 @@ export default {
 
   props: {
     value: Boolean,
-    parentData: Object,
+    parentData: Object
   },
 
   data() {
     return {
       internalValue: this.value,
+      dbTables: [],
+      selectedTable: ""
     };
+  },
+
+  mounted() {
+    this.getDbTables();
+  },
+
+  methods: {
+    getDbTables() {
+      axios.get("api/getDbTables").then(response => {
+        this.dbTables = response.data;
+      });
+    },
+
+    getColumns() {
+      axios.post("api/getTableColumns", { table: this.selectedTable }).then(response => {
+        this.tableColumns = response.data;
+      });
+    }
   },
 
   watch: {
@@ -308,7 +286,7 @@ export default {
       if (val === oldVal) return;
 
       this.internalValue = val;
-    },
-  },
+    }
+  }
 };
 </script>
