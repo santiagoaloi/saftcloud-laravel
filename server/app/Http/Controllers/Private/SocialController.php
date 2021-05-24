@@ -1,18 +1,19 @@
 <?php
 
-namespace App\Http\Controllers\Public;
+namespace App\Http\Controllers\Private;
 
 use App\Http\Controllers\Controller;
-use App\Models\Public\Branch;
 use Illuminate\Http\Request;
 
-class BranchController extends Controller {
+class SocialController extends Controller
+{
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index() {
+    public function index()
+    {
         //
     }
 
@@ -21,7 +22,8 @@ class BranchController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public function create() {
+    public function create()
+    {
         //
     }
 
@@ -31,44 +33,30 @@ class BranchController extends Controller {
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int $id
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id) {
-        $query = Branch::get();
-
-        header('Content-Type: application/json');
-        echo json_encode(['status' => true, 'rows' => $query]);
-        exit();
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function showAll() {
-        $query = Branch::get();
-
-        header('Content-Type: application/json');
-        echo json_encode(['status' => true, 'rows' => $query]);
-        exit();
+    public function show($id)
+    {
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int $id
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id) {
+    public function edit($id)
+    {
         //
     }
 
@@ -76,20 +64,22 @@ class BranchController extends Controller {
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Public\Branch  $branch
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Branch $branch) {
+    public function update(Request $request, $id)
+    {
         //
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Public\Branch  $branch
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Branch $branch) {
+    public function destroy($id)
+    {
         //
     }
 }

@@ -1,18 +1,19 @@
 <?php
 
-namespace App\Http\Controllers\Public;
+namespace App\Http\Controllers\Root;
 
 use App\Http\Controllers\Controller;
-use App\Models\Public\Account;
 use Illuminate\Http\Request;
 
-class AccountController extends Controller {
+class ComponentController extends Controller
+{
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index() {
+    public function index()
+    {
         //
     }
 
@@ -21,7 +22,8 @@ class AccountController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public function create() {
+    public function create()
+    {
         //
     }
 
@@ -31,7 +33,8 @@ class AccountController extends Controller {
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         //
     }
 
@@ -41,34 +44,19 @@ class AccountController extends Controller {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id) {
-        $query = Account::find($id);
-
-        header('Content-Type: application/json');
-        echo json_encode(['status' => true, 'rows' => $query]);
-        exit();
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function showAll() {
-        $query = Account::all();
-
-        header('Content-Type: application/json');
-        echo json_encode(['status' => true, 'rows' => $query]);
-        exit();
+    public function show($id)
+    {
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int $id
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id) {
+    public function edit($id)
+    {
         //
     }
 
@@ -79,7 +67,8 @@ class AccountController extends Controller {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id) {
+    public function update(Request $request, $id)
+    {
         //
     }
 
@@ -89,7 +78,8 @@ class AccountController extends Controller {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id) {
+    public function destroy($id)
+    {
         //
     }
 }

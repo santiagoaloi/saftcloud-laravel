@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Public;
+namespace App\Models\Private;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -8,6 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class PointOfSale extends Model {
     use HasFactory;
 
-    protected $connection = 'system';
+    protected $connection = 'mysql';
     protected $fillable = ['branch_id', 'ptoVta', 'name', 'address'];
 }

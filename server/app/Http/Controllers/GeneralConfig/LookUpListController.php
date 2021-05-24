@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\GeneralConfig;
 
+use App\Http\Controllers\Controller;
 use App\Models\GeneralConfig\LookUpList;
 use Illuminate\Http\Request;
 

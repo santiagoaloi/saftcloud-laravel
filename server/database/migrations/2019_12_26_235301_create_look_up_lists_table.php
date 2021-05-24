@@ -11,7 +11,7 @@ class CreateLookUpListsTable extends Migration {
      * @return void
      */
     public function up() {
-        Schema::connection('system')->create('u_look_up_list', function (Blueprint $table) {
+        Schema::create('u_look_up_list', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->timestamps();

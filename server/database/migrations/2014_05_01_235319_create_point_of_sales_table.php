@@ -11,13 +11,12 @@ class CreatePointOfSalesTable extends Migration {
      * @return void
      */
     public function up() {
-        Schema::connection('system')->create('point_of_sales', function (Blueprint $table) {
+        Schema::create('point_of_sales', function (Blueprint $table) {
             $table->id();
-            $table->integer('branch_id');
+            $table->foreignId('branch_id')->constrained();
             $table->integer('ptoVta');
+            $table->foreignId('concept_id');
             $table->string('name', 100);
-            $table->string('address', 100);
-            $table->string('detail', 100)->nullable();
             $table->smallInteger('status')->nullable();
             $table->timestamps();
         });
