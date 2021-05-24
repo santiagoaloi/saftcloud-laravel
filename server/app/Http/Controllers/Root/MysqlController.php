@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Root;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\DB;
 
 class MysqlController extends Controller {
@@ -50,6 +52,10 @@ class MysqlController extends Controller {
         $tables = array_map('current',$tables);
 
         return $tables;
+    }
+
+    public function showColumns($table) {
+        return DB::getSchemaBuilder()->getColumnListing($table);
     }
 
     /**
