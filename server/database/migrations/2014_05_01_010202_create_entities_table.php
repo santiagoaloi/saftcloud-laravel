@@ -21,7 +21,7 @@ class CreateEntitiesTable extends Migration {
             $table->integer('doc_type_id')->nullable();
             $table->bigInteger('doc_number')->nullable();
             $table->bigInteger('ing_brutos_number')->nullable();
-            $table->date('birthday');
+            $table->date('birthday')->nullable();;
             $table->timestamps();
         });
     }

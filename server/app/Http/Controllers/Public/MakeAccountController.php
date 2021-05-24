@@ -23,52 +23,49 @@ class MakeAccountController extends Controller {
         $postdata = json_decode($request->getContent(), true);
 
         $account = Account::create([
-            'client_type'       => 3,
-            'account_name'      => $postdata['companyName'],
             'license'           => 1,
+            'plane'             => 3,
+            'name'              => $postdata['companyName'],
+            'email'             => 'pepe@la.com',
+            'payment_status'    => 1,
             'owner_first_name'  => $postdata['name'],
             'owner_last_name'   => 'poop',
-            'email'             => 'pepe@la.com',
             'phone_code'        => $postdata['phone_code'],
             'phone_number'      => $postdata['phoneNumber'],
-            'created_at'        => '',
         ]);
 
         $account_id = $account->id;
 
-        $company = Entity::create([
+        $entity = Entity::create([
             'account_id'    => $account_id,
-            'first_name'  => $request['companyName'],
-            'last_alias' => $request['companyNameAlias'],
+            'entity_type_id'=> 1,
+            'first_name'    => $request['companyName'],
+            'last_name'     => $request['companyNameAlias'],
             'state'         => $request['state'],
             'city'          => $request['city'],
             'address'       => $request['address'],
         ]);
 
-        $company_id = $company->id;
+        $entity_id = $entity->id;
 
         $company_branch = Branch::create([
-            'company_id'  =>  $company_id,
-            'country_id'  =>  $request['country'],
-            'state'       =>  $request['state'],
-            'city'        =>  $request['city'],
-            'address'     =>  $request['address'],
+            'entity_id'   =>  $entity_id,
         ]);
 
         $branch_id = $company_branch->id;
 
         PointOfSale::create([
-            'branch_id' => $branch_id,
-            'ptoVta'    => 1,
-            'name'      => "caja 1",
-            'address'   => $request['address'],
+            'branch_id'             => $branch_id,
+            'ptoVta'                => 1,
+            'look_up_list_value_id' => 39,
+            'name'                  => 'caja 1',
         ]);
 
         User::create([
-            'first_name'               =>  $request['name'],
-            'first_name'               =>  $request['name'],
-            'last_name'                =>  $request['lastname'],
-            'email'                    =>  $request['email'],
+            'entity_id'             =>  $entity_id,
+            'role_id'               =>  2,
+            'email'                 =>  $request['email'],
+            'password'              =>  $request['password'],
         ]);
 
         header('Content-Type: application/json');
