@@ -5,6 +5,7 @@
       style="margin-top:-80px"
       gradient="to top right, rgba(0,0,0,.1), rgba(0,0,0,.2)"
       src="storage/11.png"
+      :transition="false"
     >
       <v-container class="fill-height text-left pa-10">
         <v-row class="d-flex flex-column">

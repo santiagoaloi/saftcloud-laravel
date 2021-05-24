@@ -1,9 +1,9 @@
 <template>
-  <!-- <v-fade-transition mode="out-in"> -->
-  <keep-alive>
+  <v-fade-transition mode="out-in">
+    <!-- <keep-alive> -->
     <component :is="layout"> </component>
-  </keep-alive>
-  <!-- </v-fade-transition> -->
+    <!-- </keep-alive> -->
+  </v-fade-transition>
 </template>
 
 <script>
