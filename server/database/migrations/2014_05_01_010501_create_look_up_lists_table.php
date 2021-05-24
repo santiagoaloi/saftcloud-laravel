@@ -11,7 +11,7 @@ class CreateLookUpListsTable extends Migration {
      * @return void
      */
     public function up() {
-        Schema::create('u_look_up_list', function (Blueprint $table) {
+        Schema::create('look_up_lists', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->timestamps();
@@ -23,8 +23,7 @@ class CreateLookUpListsTable extends Migration {
      *
      * @return void
      */
-    public function down()
-    {
-        Schema::dropIfExists('u_look_up_list');
+    public function down() {
+        Schema::dropIfExists('look_up_lists');
     }
 }

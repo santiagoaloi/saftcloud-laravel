@@ -23,7 +23,6 @@ use App\Http\Controllers\AuthController;
 // Public routes
 Route::post('/login', [AuthController::class, 'login']);
 
-
 // Guest only
 Route::middleware(['guest:sanctum'])->group(function () {
     Route::resource('/country', CountryController::class);
@@ -42,4 +41,3 @@ Route::post('/makeAccount', [MakeAccountController::class, 'accountCreation']);
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/logout', [AuthController::class, 'logout']);
 });
-

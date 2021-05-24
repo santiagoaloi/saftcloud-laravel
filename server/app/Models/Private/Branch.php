@@ -8,6 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Branch extends Model {
     use HasFactory;
 
-    protected $connection = 'mysql';
-    protected $fillable = ['company_id', 'email', 'country_id', 'state', 'city', 'address'];
+    protected $fillable = ['entity_id', 'address_id', 'phone_id', 'email', 'description', 'appBar', 'config', 'access', 'menu', 'itemOrder'];
 }

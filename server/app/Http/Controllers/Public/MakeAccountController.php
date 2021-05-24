@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Public;
-use App\Models\Public\Account;
-use App\Models\Public\Company;
-use App\Models\Public\Branch;
-use App\Models\Public\PointOfSale;
+namespace App\Http\Controllers\Private;
+use App\Models\Private\Account;
+use App\Models\Private\Entity;
+use App\Models\Private\Branch;
+use App\Models\Private\PointOfSale;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 
@@ -36,11 +36,10 @@ class MakeAccountController extends Controller {
 
         $account_id = $account->id;
 
-        $company = Company::create([
+        $company = Entity::create([
             'account_id'    => $account_id,
-            'company_name'  => $request['companyName'],
-            'company_alias' => $request['companyNameAlias'],
-            'country_id'    => $request['country'],
+            'first_name'  => $request['companyName'],
+            'last_alias' => $request['companyNameAlias'],
             'state'         => $request['state'],
             'city'          => $request['city'],
             'address'       => $request['address'],

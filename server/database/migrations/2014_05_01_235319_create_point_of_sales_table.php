@@ -15,7 +15,7 @@ class CreatePointOfSalesTable extends Migration {
             $table->id();
             $table->foreignId('branch_id')->constrained();
             $table->integer('ptoVta');
-            $table->foreignId('concept_id');
+            $table->foreignId('look_up_list_value_id')->constrained();
             $table->string('name', 100);
             $table->smallInteger('status')->nullable();
             $table->timestamps();

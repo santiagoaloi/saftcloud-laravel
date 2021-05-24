@@ -4,19 +4,16 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePhonesTable extends Migration {
+class CreateEntityTypesTable extends Migration {
     /**
      * Run the migrations.
      *
      * @return void
      */
     public function up() {
-        Schema::create('phones', function (Blueprint $table) {
+        Schema::create('entity_types', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('person_id')->constrained();
-            $table->string('description')->nullable();
-            $table->integer('phone_code')->nullable();
-            $table->integer('phone_number')->nullable();
+            $table->string('description', 50);
             $table->timestamps();
         });
     }
@@ -27,6 +24,6 @@ class CreatePhonesTable extends Migration {
      * @return void
      */
     public function down() {
-        Schema::dropIfExists('phones');
+        Schema::dropIfExists('entity_types');
     }
 }

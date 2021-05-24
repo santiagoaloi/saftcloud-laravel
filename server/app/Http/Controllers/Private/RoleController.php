@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Private;
 
 use App\Http\Controllers\Controller;
-use App\Models\Private\Rol;
+use App\Models\Private\Role;
 use Illuminate\Http\Request;
 
-class RolController extends Controller {
+class RoleController extends Controller {
     /**
      * Display a listing of the resource.
      *

@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Country extends Model {
     use HasFactory;
 
-    protected $connection = 'mysql';
+    protected $fillable = ['nombre', 'name', 'iso2', 'iso3', 'phone_code'];
 }

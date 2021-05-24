@@ -4,16 +4,18 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePersonTypesTable extends Migration {
+class CreateLookUpListValuesTable extends Migration {
     /**
      * Run the migrations.
      *
      * @return void
      */
     public function up() {
-        Schema::create('person_types', function (Blueprint $table) {
+        Schema::create('look_up_list_values', function (Blueprint $table) {
             $table->id();
-            $table->string('description', 50);
+            $table->foreignId('look_up_list_id')->constrained();
+            $table->string('name', 100);
+            $table->integer('value');
             $table->timestamps();
         });
     }
@@ -24,6 +26,6 @@ class CreatePersonTypesTable extends Migration {
      * @return void
      */
     public function down() {
-        Schema::dropIfExists('person_types');
+        Schema::dropIfExists('look_up_list_values');
     }
 }

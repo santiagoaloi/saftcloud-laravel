@@ -4,17 +4,17 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAccountPaymentsTable extends Migration {
+class CreateStatesTable extends Migration {
     /**
      * Run the migrations.
      *
      * @return void
      */
     public function up() {
-        Schema::create('account_payments', function (Blueprint $table) {
+        Schema::create('states', function (Blueprint $table) {
             $table->id();
-            $table->integer('account_id');
-            $table->decimal('amount', 8, 2);
+            $table->foreignId('country_id')->constrained();
+            $table->string('name');
             $table->timestamps();
         });
     }
@@ -25,6 +25,6 @@ class CreateAccountPaymentsTable extends Migration {
      * @return void
      */
     public function down() {
-        Schema::dropIfExists('account_payments');
+        Schema::dropIfExists('states');
     }
 }

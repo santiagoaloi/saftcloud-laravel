@@ -13,7 +13,7 @@ class CreateBranchesTable extends Migration {
     public function up() {
         Schema::create('branches', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('person_id')->constrained();
+            $table->foreignId('entity_id')->constrained();
             $table->string('email', 100)->nullable();
             $table->string('description', 100)->nullable();
             $table->timestamps();
