@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Public\CountryController;
 use App\Http\Controllers\Public\AccountController;
 use App\Http\Controllers\Public\MakeAccountController;
+use App\Http\Controllers\Root\MysqlController;
 
 //Authentication Controller
 use App\Http\Controllers\AuthController;
@@ -41,3 +42,5 @@ Route::post('/makeAccount', [MakeAccountController::class, 'accountCreation']);
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/logout', [AuthController::class, 'logout']);
 });
+
+Route::get('/getDbTables', [MysqlController::class, 'showAll']);
