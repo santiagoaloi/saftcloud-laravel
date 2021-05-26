@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Private;
+namespace App\Http\Controllers\Public;
 use App\Models\Private\Account;
 use App\Models\Private\Entity;
 use App\Models\Private\Branch;
@@ -17,16 +17,16 @@ class MakeAccountController extends Controller {
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
-     */
+    */
     public function accountCreation(Request $request) {
 
         $postdata = json_decode($request->getContent(), true);
 
         $account = Account::create([
-            'license'           => 1,
-            'plane'             => 3,
+            'license'           => rand(0,300),
+            'plan'              => 3,
             'name'              => $postdata['companyName'],
-            'email'             => 'pepe@la.com',
+            'email'             => 'pepe@'.rand(1,1000).'.com',
             'payment_status'    => 1,
             'owner_first_name'  => $postdata['name'],
             'owner_last_name'   => 'poop',
@@ -65,7 +65,7 @@ class MakeAccountController extends Controller {
             'entity_id'             =>  $entity_id,
             'role_id'               =>  2,
             'email'                 =>  $request['email'],
-            'password'              =>  $request['password'],
+            'password'              =>  bcrypt('password')
         ]);
 
         header('Content-Type: application/json');

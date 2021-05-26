@@ -17,7 +17,7 @@ class CreateAccountsTable extends Migration {
             $table->integer('plan');
             $table->string('name', 100)->unique();
             $table->string('email', 100)->unique();
-            $table->integer('pyament_status');
+            $table->integer('payment_status');
             $table->string('owner_first_name', 100)->nullable();
             $table->string('owner_last_name', 100)->nullable();
             $table->integer('phone_code')->nullable();

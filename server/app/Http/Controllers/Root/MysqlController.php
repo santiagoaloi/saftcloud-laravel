@@ -54,7 +54,7 @@ class MysqlController extends Controller {
         return $tables;
     }
 
-    public function showColumns(Request $request) {
+    public function showColumns($request) {
         return DB::getSchemaBuilder()->getColumnListing( $request['table']);
     }
 
