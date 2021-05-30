@@ -39,8 +39,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::resource('/ComponentGroup', ComponentGroupController::class);
     Route::resource('/ComponentAdministration', ComponentController::class);
     Route::resource('/MysqlResource', MysqlController::class);
-    Route::get('/showAll', MysqlController::class, 'showAll');
-    Route::get('/showColumns', MysqlController::class, 'showColumns');
+    Route::get('/showAllTables', [MysqlController::class, 'showAllTables']);
+    Route::get('/showColumns', [MysqlController::class, 'showColumns']);
     
     
     Route::post('/logout', [AuthController::class, 'logout']);

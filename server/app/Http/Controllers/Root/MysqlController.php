@@ -47,7 +47,7 @@ class MysqlController extends Controller {
         //
     }
 
-    public function showAll(){
+    public function showAllTables(){
         $tables = DB::select('SHOW TABLES');
         $tables = array_map('current',$tables);
 
