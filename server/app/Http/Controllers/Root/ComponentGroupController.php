@@ -53,7 +53,12 @@ class ComponentGroupController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function show($id) {
-        
+        $query = ComponentGroup::find($id);
+
+        return response([
+            'rows' =>  $query,
+            'status' => true
+        ], 200);
     }
 
     /**
