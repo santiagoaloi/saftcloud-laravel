@@ -6,7 +6,15 @@
       <v-row align="center">
         <v-col cols="12" sm="3">
           <span>Group</span>
-          <v-autocomplete solo v-model="selectedFruits" :items="fruits" label="Favorite Fruits" multiple>
+          <v-autocomplete
+            @update:search-input="catchGroupInputValue($event)"
+            solo
+            v-model="selectedFruits"
+            :items="fruits"
+            label="Favorite Fruits"
+            multiple
+            :maxlength="25"
+          >
             <template v-slot:prepend-item>
               <v-list-item ripple @click="toggle">
                 <v-list-item-action>
@@ -22,16 +30,6 @@
               </v-list-item>
               <v-divider></v-divider>
             </template>
-            <template v-slot:append-item>
-              <v-divider class="mb-2"></v-divider>
-              <v-list-item disabled>
-                <v-list-item-avatar color="grey lighten-3">
-                  <v-icon>
-                    mdi-food-apple
-                  </v-icon>
-                </v-list-item-avatar>
-              </v-list-item>
-            </template>
 
             <template v-slot:selection="data">
               <template>
@@ -44,7 +42,13 @@
             </template>
 
             <template v-slot:no-data>
-              <v-container> add ss</v-container>
+              <v-list-item class="ml-1">
+                <v-list-item-content>
+                  <v-list-item-title>
+                    <a @click="dialogGroup = !dialogGroup">+ Create group </a> {{ groupInputValue }}
+                  </v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
             </template>
           </v-autocomplete>
         </v-col>
@@ -501,7 +505,8 @@ export default {
       //NEW VARS
       isTableLayout: false,
       multipleSelect: false,
-      componentCardGroup: 0
+      componentCardGroup: 0,
+      groupInputValue: ""
     };
   },
 
@@ -557,6 +562,9 @@ export default {
   },
 
   methods: {
+    catchGroupInputValue(e) {
+      this.groupInputValue = e;
+    },
     toggle() {
       this.$nextTick(() => {
         if (this.likesAllFruit) {
@@ -784,34 +792,7 @@ export default {
 
     // Saves group data
     saveGroup() {
-      if (
-        this.group_settings.icon === "" ||
-        this.group_settings.icon === null ||
-        this.group_settings.icon === undefined
-      ) {
-        this.group_settings.icon = "mdi-folder";
-      }
-
-      this.loading = true;
-      const post = this.group_settings;
-
-      axios.post("sximo/components/saveGroup", post).then(response => {
-        if (response.data.status == "success") {
-          this.snackbar = true;
-          this.is_status = "primary ";
-          this.is_icon = "done";
-          this.is_message = "Group settings saved.";
-          this.dialogGroup = false;
-          this.val_errors_group = [];
-          this.dialogGroup = false;
-          this.loading = false;
-          window.getApp.$emit("APP_RELOAD_MENU");
-          this.getComponents("new_group");
-        } else {
-          this.val_errors_group = response.data.Validation_Errors;
-          this.loading = false;
-        }
-      });
+      let post = axios.post("api/ComponentGroup", { name: this.group_settings.name }).then(response => {});
     },
 
     // **** Component group dragging functions **** //

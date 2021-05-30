@@ -24,6 +24,7 @@ class ComponentGroupController extends Controller {
      */
     public function create()
     {
+        
         //
     }
 
@@ -34,7 +35,10 @@ class ComponentGroupController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request) {
-        ComponentGroup::create($request);
+
+        $postdata = json_decode($request->getContent(), true);
+        ComponentGroup::create($postdata);
+
     }
 
     /**

@@ -26,8 +26,7 @@ use App\Http\Controllers\AuthController;
 // Public routes
 Route::post('/login', [AuthController::class, 'login']);
 
-// Guest only
-Route::resource('/country', CountryController::class);
+ Route::resource('/country', CountryController::class);
 Route::get('/countries', [CountryController::class, 'showAll']);
 
 // Route::resource('/country', CountryController::class);
@@ -38,6 +37,10 @@ Route::post('/makeAccount', [MakeAccountController::class, 'accountCreation']);
 
 // Protected routes
 Route::group(['middleware' => ['auth:sanctum']], function () {
+
+    Route::get('/getDbTables', [MysqlController::class, 'showAll']);
+    Route::post('/getTableColumns', [MysqlController::class, 'showColumns']);
+
     Route::resource('/ComponentGroup', ComponentGroupController::class);
     Route::resource('/ComponentAdministration', ComponentController::class);
     Route::post('/logout', [AuthController::class, 'logout']);

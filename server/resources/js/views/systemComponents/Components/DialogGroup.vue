@@ -8,11 +8,7 @@
     @save="saveGroup()"
     @close="() => (internalValue = false)"
     @remove="
-      deleteGroup(
-        parentData.group_settings.total,
-        parentData.group_settings.group_id,
-        parentData.group_settings.name
-      )
+      deleteGroup(parentData.group_settings.total, parentData.group_settings.group_id, parentData.group_settings.name)
     "
   >
     <template>
@@ -20,38 +16,33 @@
         <v-icon slot="icon" color="warning" size="36">
           mdi-information-variant
         </v-icon>
-        <p
-          v-for="(item, index) in parentData.val_errors_group"
-          :key="index"
-          class="pa-0"
-        >
+        <p v-for="(item, index) in parentData.val_errors_group" :key="index" class="pa-0">
           {{ item }}
         </p>
       </v-banner>
     </template>
 
-    <v-card color="#f8f9fa">
-      <v-card-text>
-        <v-container>
-          <v-row>
-            <v-col cols="12" sm="12" md="6">
-              <span>Group name</span>
-              <v-text-field
-                ref="groupTitle"
-                v-model.lazy="parentData.group_settings.name"
-                v-lazy-input:debounce="500"
-                counter
-                maxlength="35"
-                autofocus
-                solo
-                prepend-inner-icon="mdi-comment"
-                placeholder=" "
-                color="primary"
-                label="  "
-                hint=" "
-              />
-            </v-col>
-
+    <v-card-text>
+      <v-container>
+        <v-row>
+          <v-col cols="12" sm="12" md="6">
+            <span>Group name</span>
+            <v-text-field
+              ref="groupTitle"
+              v-model.lazy="parentData.group_settings.name"
+              v-lazy-input:debounce="500"
+              counter
+              maxlength="35"
+              autofocus
+              solo
+              prepend-inner-icon="mdi-comment"
+              placeholder=" "
+              color="primary"
+              label="  "
+              hint=" "
+            />
+          </v-col>
+          <!-- 
             <v-col cols="12" sm="12" md="6">
               <span>Directory name</span>
               <v-text-field
@@ -68,9 +59,9 @@
                 hint="Backend directory and file names.  "
                 @keydown.space.prevent
               />
-            </v-col>
+            </v-col> -->
 
-            <!-- <v-col
+          <!-- <v-col
               cols="12"
               sm="12"
               md="6"
@@ -128,10 +119,9 @@
               </v-autocomplete>
           </v-row>
             </v-col>-->
-          </v-row>
-        </v-container>
-      </v-card-text>
-    </v-card>
+        </v-row>
+      </v-container>
+    </v-card-text>
   </baseDialog>
 </template>
 <script>
@@ -142,13 +132,17 @@ export default {
 
   props: {
     value: Boolean,
-    parentData: Object,
+    parentData: Object
   },
 
   data() {
     return {
-      internalValue: this.value,
+      internalValue: this.value
     };
+  },
+
+  mounted() {
+    this.parentData.group_settings.name = this.parentData.groupInputValue;
   },
 
   watch: {
@@ -161,7 +155,7 @@ export default {
       if (val === oldVal) return;
 
       this.internalValue = val;
-    },
-  },
+    }
+  }
 };
 </script>
