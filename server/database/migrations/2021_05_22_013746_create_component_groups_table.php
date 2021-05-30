@@ -13,7 +13,7 @@ class CreateComponentGroupsTable extends Migration {
     public function up() {
         Schema::create('component_groups', function (Blueprint $table) {
             $table->id();
-            $table->string('title')->nullable();
+            $table->string('name')->nullable();
             $table->string('icon');
             $table->smallInteger('ordering');
             $table->timestamps();

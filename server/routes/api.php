@@ -4,6 +4,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Public\CountryController;
 use App\Http\Controllers\Private\AccountController;
+use App\Http\Controllers\Root\ComponentGroupController;
+use App\Http\Controllers\Root\ComponentController;
 use App\Http\Controllers\Public\MakeAccountController;
 use App\Http\Controllers\Root\MysqlController;
 
@@ -25,10 +27,8 @@ use App\Http\Controllers\AuthController;
 Route::post('/login', [AuthController::class, 'login']);
 
 // Guest only
-Route::middleware(['guest:sanctum'])->group(function () {
-    Route::resource('/country', CountryController::class);
-    Route::get('/countries', [CountryController::class, 'showAll']);
-});
+Route::resource('/country', CountryController::class);
+Route::get('/countries', [CountryController::class, 'showAll']);
 
 // Route::resource('/country', CountryController::class);
 // Route::get('/countries', [CountryController::class, 'showAll']);
@@ -40,6 +40,8 @@ Route::post('/makeAccount', [MakeAccountController::class, 'accountCreation']);
 
 // Protected routes
 Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::resource('/ComponentGroup', ComponentGroupController::class);
+    Route::resource('/ComponentAdministration', ComponentController::class);
     Route::post('/logout', [AuthController::class, 'logout']);
 });
 

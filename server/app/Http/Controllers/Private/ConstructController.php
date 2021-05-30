@@ -20,4 +20,5 @@ class ConstructController extends Controller {
         echo json_encode(['status' => true, 'rows' => $query]);
         exit();;
     }
+
 }
