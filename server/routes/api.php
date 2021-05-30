@@ -45,7 +45,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::resource('/Component', ComponentController::class);
     Route::get('/showAllComponents', [ComponentController::class, 'showAll']);
-    Route::resource('/ComponentAdministration', ComponentController::class);
+    Route::post('/testFunction', [ComponentController::class, 'store']);
 
     Route::resource('/MysqlResource', MysqlController::class);
     Route::get('/showAllTables', [MysqlController::class, 'showAll']);

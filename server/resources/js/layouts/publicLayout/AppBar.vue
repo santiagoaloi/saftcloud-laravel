@@ -253,7 +253,8 @@ export default {
     },
 
     testFunction() {
-      axios.get("/api/testFunction").then(response => {
+      let post = {table: 'products'}
+      axios.post("/api/testFunction", post).then(response => {
         if (response.data.status) {
           console.log(response.data.rows);
         }
