@@ -14,8 +14,6 @@ class CreateComponentGroupsTable extends Migration {
         Schema::create('component_groups', function (Blueprint $table) {
             $table->id();
             $table->string('name')->nullable();
-            $table->string('icon');
-            $table->smallInteger('ordering');
             $table->timestamps();
         });
     }

@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class ComponentGroup extends Model {
     use HasFactory;
 
-    protected $fillable = ['name', 'icon', 'ordering'];
+    protected $fillable = ['name'];
 }
