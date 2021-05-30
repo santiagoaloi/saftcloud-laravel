@@ -25,14 +25,14 @@
             <span>Group</span>
             <validation-provider v-slot="{ errors }" name="component group" rules="required">
               <v-select
-                v-model="parentData.componentSettings.group_id"
+                v-model="parentData.componentSettings.component_group_id"
                 :background-color="errors.length > 0 ? '#faebeb' : 'white'"
                 :error-messages="errors[0]"
                 color="primary"
                 label="Select group"
                 solo
-                :items="parentData.groups"
-                item-value="group_id"
+                :items="parentData.componentGroups"
+                item-value="id"
                 item-text="name"
                 placeholder=" "
                 item-color="primary"
@@ -44,33 +44,6 @@
                 @contextmenu="handler($event)"
                 @change="getComponentByGroup"
               >
-                <template v-slot:selection="{ item }">
-                  <span v-if="item.name === 'All'">
-                    <v-icon class="mr-2" small>{{ item.icon }} </v-icon>Select group...
-                  </span>
-                  <span v-if="item.name !== 'All'">
-                    <v-chip
-                      ><v-icon class="mr-2" small>{{ item.icon }}</v-icon> {{ item.name }}</v-chip
-                    >
-                  </span>
-                </template>
-
-                <template v-slot:item="data">
-                  <template>
-                    <v-list-item-avatar>
-                      <v-icon small>
-                        {{ data.item.icon }}
-                      </v-icon>
-                    </v-list-item-avatar>
-
-                    <v-list-item-content>
-                      <v-list-item-title v-if="data.item.name === 'All'" v-html="'Select Group...'" />
-                      <v-list-item-title v-if="data.item.name !== 'All'" v-html="data.item.name" />
-
-                      <v-list-item-subtitle v-if="data.item.name !== 'All'" v-html="data.item.total + ' components'" />
-                    </v-list-item-content>
-                  </template>
-                </template>
               </v-select>
             </validation-provider>
           </v-col>
@@ -97,6 +70,23 @@
               <v-text-field
                 ref="componentTitle"
                 v-model="parentData.componentSettings.title"
+                autofocus
+                solo
+                prepend-inner-icon="mdi-comment"
+                counter
+                maxlength="35"
+                :background-color="errors.length > 0 ? '#faebeb' : 'white'"
+                :error-messages="errors[0]"
+              />
+            </validation-provider>
+          </v-col>
+
+          <v-col cols="12" sm="12" lg="6">
+            <span>Component name</span>
+            <validation-provider v-slot="{ errors }" name="component title" rules="required">
+              <v-text-field
+                ref="componentTitle"
+                v-model="parentData.componentSettings.name"
                 autofocus
                 solo
                 prepend-inner-icon="mdi-comment"
@@ -144,27 +134,27 @@
             </validation-provider>
           </v-col> -->
 
-          <v-col cols="12" sm="12" lg="6">
-            <span>Template type</span>
-            <v-select
-              v-model="parentData.componentSettings.type"
-              item-color="primary"
-              color="primary"
-              placehold="Folder and files name"
-              solo
-              prepend-inner-icon="mdi-application"
-              :menu-props="{ transition: 'slide-y-transition' }"
-              label
-              :items="parentData.items_type"
-            />
-          </v-col>
+          <!-- <v-col cols="12" sm="12" lg="6">
+              <span>Template type</span>
+              <v-select
+                v-model="parentData.componentSettings.type_id"
+                item-color="primary"
+                color="primary"
+                placehold="Folder and files name"
+                solo
+                prepend-inner-icon="mdi-application"
+                :menu-props="{ transition: 'slide-y-transition' }"
+                label
+                :items="parentData.items_type"
+              />
+            </v-col> -->
         </v-row>
         <v-row>
           <v-col cols="12" sm="12" lg="6">
             <span>DB Table</span>
             <validation-provider v-slot="{ errors }" name="component table" rules="required">
               <v-autocomplete
-                v-model="selectedTable"
+                v-model="parentData.componentSettings.table"
                 :background-color="errors.length > 0 ? '#faebeb' : 'white'"
                 :error-messages="errors[0]"
                 :menu-props="{
@@ -180,7 +170,6 @@
                 item-color="primary"
                 color="primary"
                 :items="dbTables"
-                @change="getColumns()"
               >
                 <template v-slot:item="data">
                   <template>
@@ -196,7 +185,7 @@
               </v-autocomplete>
             </validation-provider>
           </v-col>
-
+          <!-- 
           <v-col cols="12" sm="12" lg="6">
             <span>Table key</span>
             <validation-provider v-slot="{ errors }" name="component table key" rules="required">
@@ -211,7 +200,7 @@
                 item-color="primary"
                 color="primary"
                 label="Database table key"
-                :disabled="selectedTable === ''"
+                :disabled="parentData.componentSettings.table === ''"
                 :items="tableColumns"
               >
                 <template v-slot:item="data">
@@ -227,7 +216,7 @@
                 </template>
               </v-autocomplete>
             </validation-provider>
-          </v-col>
+          </v-col> -->
         </v-row>
       </v-container>
     </ValidationObserver>
@@ -259,13 +248,13 @@ export default {
 
   methods: {
     getDbTables() {
-      axios.get("api/getDbTables").then(response => {
+      axios.get("api/showAllTables").then(response => {
         this.dbTables = response.data;
       });
     },
 
     getColumns() {
-      axios.post("api/getTableColumns", { table: this.selectedTable }).then(response => {
+      axios.post("api/getTableColumns", { table: this.parentData.componentSettings.table }).then(response => {
         this.tableColumns = response.data;
       });
     }

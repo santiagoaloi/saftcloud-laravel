@@ -10,10 +10,13 @@
             @update:search-input="catchGroupInputValue($event)"
             solo
             v-model="selectedFruits"
-            :items="fruits"
+            :items="componentGroups"
             label="Favorite Fruits"
             multiple
             :maxlength="25"
+            item-value="id"
+            item-text="name"
+            return-object
           >
             <template v-slot:prepend-item>
               <v-list-item ripple @click="toggle">
@@ -56,7 +59,7 @@
           <div>
             <v-chip-group showArrows centerActive>
               <v-chip :ripple="false" close @click:close="" v-for="item in selectedFruits" :key="item">
-                {{ item }}
+                {{ item.name }}
               </v-chip>
             </v-chip-group>
           </div>
@@ -93,7 +96,7 @@
             item-key="name"
             show-select
             :headers="headers"
-            :items="desserts"
+            :items="components"
             :items-per-page="5"
             class="elevation-0"
           ></v-data-table>
@@ -105,7 +108,7 @@
       <template v-if="!isTableLayout">
         <v-item-group v-model="componentCardGroup" :multiple="multipleSelect">
           <div class="gallery-card-container py-2">
-            <v-item :key="card" v-for="card in 40" v-slot="{ active, toggle }">
+            <v-item :key="card" v-for="card in allComponents" v-slot="{ active, toggle }">
               <v-card
                 hover
                 :color="active ? 'indigo lighten-5' : 'white'"
@@ -116,7 +119,7 @@
                 class="d-flex flex-column justify-space-between pa-4 "
                 @click="toggle"
               >
-                <v-card-actions class="px-0">
+                <v-card-actions class="px-0 ">
                   <v-avatar rounded color="indigo">
                     <v-icon dark>
                       mdi-alarm
@@ -124,22 +127,19 @@
                   </v-avatar>
                   <v-spacer />
 
-                  <v-chip text-color="blue" outlined label class="col-7"
+                  <v-chip text-color="blue" outlined label class="col-6"
                     ><div class="col-12 text-truncate">
-                      Products and orders
+                      {{ mapComponentGroup(card) }}
                     </div></v-chip
                   >
                 </v-card-actions>
 
-                <span class="gallery-card-title">
-                  90-day plan
-                </span>
+                <span class="gallery-card-title"> {{ card.title }} </span>
 
                 <div class="gallery-card-subtitle-container">
                   <div class="gallery-card-subtitle-wrapper">
                     <h5 class="gallery-card-subtitle">
-                      subtitle is me subtitle is me subtitle is me subtitle is me subtitle is me subtitle is me subtitle
-                      is me subtitle is me subtitle is me
+                      {{ card.note }}
                     </h5>
                   </div>
                 </div>
@@ -459,19 +459,13 @@ export default {
       searchGroups: "",
 
       componentSettings: {
-        prev_group_id: "",
-        group_id: "1",
-        parent_id: 0,
-        controller: "",
+        component_group_id: 0,
+        prev_group_id: 0,
         title: "",
+        name: "",
         table: "",
-        table_key: "",
         note: "",
-        type: "",
-        menu: false,
-        owner: "",
-        created: "",
-        updated: ""
+        config: {}
       },
 
       group_settings: {
@@ -506,7 +500,9 @@ export default {
       isTableLayout: false,
       multipleSelect: false,
       componentCardGroup: 0,
-      groupInputValue: ""
+      groupInputValue: "",
+      componentGroups: [],
+      allComponents: []
     };
   },
 
@@ -561,7 +557,17 @@ export default {
     }
   },
 
+  mounted() {
+    this.getGroups();
+    this.getComponents();
+  },
+
   methods: {
+    mapComponentGroup(item) {
+      // return item;
+      return this.componentGroups.filter(cg => cg.id === item.component_group_id)[0].name;
+    },
+
     catchGroupInputValue(e) {
       this.groupInputValue = e;
     },
@@ -571,6 +577,33 @@ export default {
           this.selectedFruits = [];
         } else {
           this.selectedFruits = this.fruits.slice();
+        }
+      });
+    },
+
+    // Saves group data
+    saveGroup() {
+      axios.post("api/ComponentGroup", { name: this.group_settings.name }).then(response => {
+        if (response.data.status) {
+          this.dialogGroup = false;
+          this.componentGroups = response.data.rows;
+        }
+      });
+    },
+
+    // get groups
+    getGroups() {
+      axios.get("api/showAllGroups").then(response => {
+        if (response.data.status) {
+          this.componentGroups = response.data.rows;
+        }
+      });
+    },
+
+    getComponents() {
+      axios.get("api/showAllComponents").then(response => {
+        if (response.data.status) {
+          this.allComponents = response.data.rows;
         }
       });
     },
@@ -677,65 +710,6 @@ export default {
       this.menu_folders = JSON.parse(sessionStorage.getItem("sitemenu_folder"));
     },
 
-    // loads groups, tables and component count.
-    getComponents(options, group_id) {
-      this.loadingRows = true;
-
-      if (this.first_boot) {
-        this.loading_boot = true;
-      }
-
-      const searchfilter = "sximo/components/searchfilter/" + this.GET_COMPONENTS_activeGroupFolder;
-      axios.get(searchfilter).then(response => {
-        if (response.data.status == "success") {
-          if (options === "refresh") {
-            this.tables = response.data.tables;
-            this.count = response.data.count;
-          }
-
-          if (options === "boot") {
-            this.rows = response.data.data;
-            this.groups = response.data.groups;
-            this.tables = response.data.tables;
-            this.count = response.data.count;
-            this.loading_boot = false;
-            this.first_boot = false;
-          }
-
-          if (options === "new_group") {
-            this.groups = response.data.groups;
-            this.count = response.data.count;
-
-            this.$store.commit("SET_COMPONENTS_activeGroupId", this.groups[this.groups.length - 1].group_id);
-            this.$store.commit("SET_COMPONENTS_activeGroupItem", this.groups.length - 1);
-
-            this.activeGroupItem = this.groups.length - 1;
-          }
-
-          if (options === "reset") {
-            this.rows = response.data.data;
-            this.count = response.data.count;
-
-            this.$store.commit("SET_COMPONENTS_activeGroupId", group_id);
-            this.$store.commit("SET_COMPONENTS_activeGroupItem", this.activeGroupItem);
-
-            this.componentSettings.group_id = group_id;
-          }
-
-          if (options === "created") {
-            this.rows = response.data.data;
-            this.count = response.data.count;
-            this.carouselActiveIndex = this.rows.length - 1;
-            this.componentSettings.group_id = group_id;
-          }
-
-          setTimeout(() => {
-            this.loadingRows = false;
-          }, 700);
-        }
-      });
-    },
-
     get_tables() {
       const searchfilter = "sximo/components/searchfilter/" + "All";
       axios.get(searchfilter).then(response => {
@@ -788,11 +762,6 @@ export default {
           }, 3000);
         }
       });
-    },
-
-    // Saves group data
-    saveGroup() {
-      let post = axios.post("api/ComponentGroup", { name: this.group_settings.name }).then(response => {});
     },
 
     // **** Component group dragging functions **** //
@@ -879,15 +848,6 @@ export default {
 
     add() {
       this.dialogComponent = true;
-      this.componentSettings.controller = "";
-      this.componentSettings.note = "";
-      this.componentSettings.title = "";
-      this.componentSettings.table_key = "";
-      this.componentSettings.table = "";
-
-      if (this.GET_COMPONENTS_activeGroupId) {
-        this.componentSettings.group_id = this.activeGroupId;
-      } else this.componentSettings.group_id = 1;
     },
 
     addGroup() {
@@ -974,53 +934,9 @@ export default {
     },
 
     generate() {
-      this.$refs.dialogNewComponent.$refs.newComponentForm.validate().then(success => {
-        if (success) {
-          this.loading = true;
-
-          this.componentSettings.prev_group_id = this.componentSettings.group_id;
-          this.componentSettings.created = moment().format("YYYY-MM-DD HH:mm:ss");
-          this.componentSettings.updated = moment().format("YYYY-MM-DD HH:mm:ss");
-          this.componentSettings.owner = "Default";
-
-          const post = this.componentSettings;
-
-          axios
-            .post("sximo/components/saveCreate", post)
-            .then(response => {
-              if (response.data.status == "success") {
-                this.buildDynamicRoutes();
-                this.val_errors_component = [];
-                this.dialogComponent = false;
-
-                this.$swal({
-                  title: "Crafting component",
-                  text: "Building... give it a few seconds.",
-                  showCancelButton: false, // There won't be any cancel button
-                  showConfirmButton: false, // There won't be any confirm button
-                  allowOutsideClick: false,
-                  backdrop: "rgba(108, 122, 137, 0.8)",
-                  timer: 3000,
-                  timerProgressBar: true,
-                  imageUrl: `${this.uploadPath}/images/building.svg`,
-                  imageHeight: 150
-                });
-
-                this.loading = false;
-                this.close();
-                this.refreshGroupItems("created");
-              } else {
-                this.val_errors_component = response.data.Validation_Errors;
-                this.loading = false;
-                setTimeout(() => {
-                  this.val_errors_component = [];
-                }, 3000);
-              }
-            })
-            .catch(() => {
-              this.close();
-              this.dialogComponent = false;
-            });
+      axios.post("api/Component", this.componentSettings).then(response => {
+        if (response.data.status) {
+          this.allComponents = response.data.rows;
         }
       });
     },
