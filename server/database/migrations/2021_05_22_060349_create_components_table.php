@@ -11,6 +11,11 @@ class CreateComponentsTable extends Migration {
      * @return void
      */
     public function up() {
+
+
+        //Original Structure
+
+        if (!Schema::hasTable('components')) {
         Schema::create('components', function (Blueprint $table) {
             $table->id();
             $table->foreignId('component_group_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
@@ -24,8 +29,28 @@ class CreateComponentsTable extends Migration {
             $table->smallInteger('protected');
             $table->longText('config');
             $table->timestamps();
-        });
+
+                });
+            };
+            
+            //Added columns 
+            if (!Schema::hasColumn('components', 'config')){
+                    Schema::table('components', function (Blueprint $table) {
+                    $table->longText('config');
+                });
+            };
+
+            //Removed columns 
+            if (Schema::hasColumn('components', 'config2')){
+                Schema::table('components', function (Blueprint $table){
+                    $table->dropColumn('config2');
+                });
+            }
+
+        
+
     }
+
 
     /**
      * Reverse the migrations.
@@ -34,5 +59,12 @@ class CreateComponentsTable extends Migration {
      */
     public function down() {
         Schema::dropIfExists('components');
+
+
+
     }
+
+
+
+   
 }

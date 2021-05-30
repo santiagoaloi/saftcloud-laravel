@@ -33,9 +33,7 @@ Route::get('/countries', [CountryController::class, 'showAll']);
 // Route::resource('/country', CountryController::class);
 // Route::get('/countries', [CountryController::class, 'showAll']);
 Route::resource('/account', AccountController::class);
-
 Route::post('/register', [AuthController::class, 'register']);
-
 Route::post('/makeAccount', [MakeAccountController::class, 'accountCreation']);
 
 // Protected routes
@@ -44,8 +42,5 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::resource('/ComponentAdministration', ComponentController::class);
     Route::post('/logout', [AuthController::class, 'logout']);
 });
-
-Route::get('/getDbTables', [MysqlController::class, 'showAll']);
-Route::post('/getTableColumns', [MysqlController::class, 'showColumns']);
 
 

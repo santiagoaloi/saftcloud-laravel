@@ -1,5 +1,5 @@
 <template>
-    <v-app-bar dense absolute app >
+    <v-app-bar dense app >
 
       <v-container fluid class="py-0 px-0 px-sm-2 fill-height">
 

@@ -4,9 +4,10 @@
       <v-row justify="center">
         <v-col cols="12">
           <v-alert dismissible border="left" colored-border color="grey darken-2" elevation="2" class="text-left ">
-            All new accounts are free of charge for the first 14 days since the day of registration, no payment information is required until the trial ends.
-            The information uploaded to SaftCloud is confidential and only available to you. We don't comercialice any data uploaded to our databases. Once the
-            trial ends, we will retain the data one week, to provide you with backups or exporting capabilities.
+            All new accounts are free of charge for the first 14 days since the day of registration, no payment
+            information is required until the trial ends. The information uploaded to SaftCloud is confidential and only
+            available to you. We don't comercialice any data uploaded to our databases. Once the trial ends, we will
+            retain the data one week, to provide you with backups or exporting capabilities.
           </v-alert>
         </v-col>
       </v-row>
@@ -294,9 +295,8 @@
                   <v-card-text class="text-left ">
                     <h2>Let's review those details</h2>
                     <div class="mt-5 mb-5 text-h5">
-                      let's double check the information your provided before we can move forward with the registration of your shiny new account "<b>{{
-                        signupForm.companyName
-                      }}</b
+                      let's double check the information your provided before we can move forward with the registration
+                      of your shiny new account "<b>{{ signupForm.companyName }}</b
                       >"
                     </div>
                     <div class="mt-10 text-h5">
@@ -319,7 +319,10 @@
                         {{ getCountryName(signupForm.country) }}
                       </b>
                       on the address
-                      <b> {{ signupForm.address }} ({{ signupForm.zipcode }}), {{ signupForm.state }}, {{ signupForm.city }}. </b>
+                      <b>
+                        {{ signupForm.address }} ({{ signupForm.zipcode }}), {{ signupForm.state }},
+                        {{ signupForm.city }}.
+                      </b>
                     </div></v-card-text
                   ></v-card
                 >
@@ -328,8 +331,8 @@
                   <v-checkbox :ripple="false" class="mt-10" v-model="terms">
                     <template v-slot:label>
                       <div>
-                        I confirm that my information is genuine and that I represent the business I'm creating the account for, as well as reading and
-                        accepting
+                        I confirm that my information is genuine and that I represent the business I'm creating the
+                        account for, as well as reading and accepting
 
                         <a target="_blank" href="https://vuetifyjs.com" @click.stop>
                           our terms and conditions
@@ -340,7 +343,15 @@
                   </v-checkbox>
                 </v-card-text>
                 <v-btn class="mx-1" @click="step = 3" large color="grey lighten-2">Back</v-btn>
-                <v-btn :disabled="!terms" @click="accountCreation()" class="mx-1" large color="primary" :loading="loading">Sign up</v-btn>
+                <v-btn
+                  :disabled="!terms"
+                  @click="accountCreation()"
+                  class="mx-1"
+                  large
+                  color="primary"
+                  :loading="loading"
+                  >Sign up</v-btn
+                >
               </div>
             </v-scroll-x-transition>
           </v-col>
@@ -380,7 +391,12 @@
       <Faq />
     </v-container>
 
-    <vue-diagonal :deg="-7" background="linear-gradient(331deg, rgba(101, 235, 235, 1) 0%, rgba(54, 49, 125, 1) 50%)" space-after space-before>
+    <vue-diagonal
+      :deg="-7"
+      background="linear-gradient(331deg, rgba(101, 235, 235, 1) 0%, rgba(54, 49, 125, 1) 50%)"
+      space-after
+      space-before
+    >
       <Pricing />
     </vue-diagonal>
   </div>

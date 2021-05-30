@@ -1,91 +1,87 @@
 <template>
   <div>
-    <baseLayoutCard level="1">
-      <v-alert dismissible border="left" colored-border color="grey darken-2" elevation="2" class="text-left ">
-        All new accounts are free of charge for the first 14 days since the day of registration, no payment information is required until the trial ends. The
-        information uploaded to SaftCloud is confidential and only available to you. We don't comercialice any data uploaded to our databases. Once the trial
-        ends, we will retain the data one week, to provide you with backups or exporting capabilities.
-      </v-alert>
+    <components-appbar :parent-data="$data" />
 
-      <components-appbar :parent-data="$data" />
+    <v-card color="transparent" flat class="mt-8">
+      <v-row align="center">
+        <v-col cols="12" sm="3">
+          <span>Group</span>
+          <v-autocomplete solo v-model="selectedFruits" :items="fruits" label="Favorite Fruits" multiple>
+            <template v-slot:prepend-item>
+              <v-list-item ripple @click="toggle">
+                <v-list-item-action>
+                  <v-icon :color="selectedFruits.length > 0 ? 'indigo darken-4' : 'grey darken-3'">
+                    {{ icon }}
+                  </v-icon>
+                </v-list-item-action>
+                <v-list-item-content>
+                  <v-list-item-title>
+                    Select All
+                  </v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+              <v-divider></v-divider>
+            </template>
+            <template v-slot:append-item>
+              <v-divider class="mb-2"></v-divider>
+              <v-list-item disabled>
+                <v-list-item-avatar color="grey lighten-3">
+                  <v-icon>
+                    mdi-food-apple
+                  </v-icon>
+                </v-list-item-avatar>
+              </v-list-item>
+            </template>
 
-      <v-divider class="mt-3"></v-divider>
-
-      <v-card color="transparent" flat class="mt-8">
-        <v-row align="center">
-          <v-col cols="3">
-            <span>Group</span>
-            <v-select solo v-model="selectedFruits" :items="fruits" label="Favorite Fruits" multiple>
-              <template v-slot:prepend-item>
-                <v-list-item ripple @click="toggle">
-                  <v-list-item-action>
-                    <v-icon :color="selectedFruits.length > 0 ? 'indigo darken-4' : 'grey darken-3'">
-                      {{ icon }}
-                    </v-icon>
-                  </v-list-item-action>
-                  <v-list-item-content>
-                    <v-list-item-title>
-                      Select All
-                    </v-list-item-title>
-                  </v-list-item-content>
-                </v-list-item>
-                <v-divider></v-divider>
+            <template v-slot:selection="data">
+              <template>
+                <span v-if="data.index === 0" class="grey--text caption"
+                  ><v-chip labal style="color: black" small label color="blue-grey lighten-4">
+                    {{ selectedFruits.length }} groups selected.</v-chip
+                  ></span
+                >
               </template>
-              <template v-slot:append-item>
-                <v-divider class="mb-2"></v-divider>
-                <v-list-item disabled>
-                  <v-list-item-avatar color="grey lighten-3">
-                    <v-icon>
-                      mdi-food-apple
-                    </v-icon>
-                  </v-list-item-avatar>
+            </template>
 
-                  <v-list-item-content v-if="likesAllFruit">
-                    <v-list-item-title>
-                      Holy smokes, someone call the fruit police!
-                    </v-list-item-title>
-                  </v-list-item-content>
-
-                  <v-list-item-content v-else-if="likesSomeFruit">
-                    <v-list-item-title>
-                      Fruit Count
-                    </v-list-item-title>
-                    <v-list-item-subtitle>
-                      {{ selectedFruits.length }}
-                    </v-list-item-subtitle>
-                  </v-list-item-content>
-
-                  <v-list-item-content v-else>
-                    <v-list-item-title>
-                      How could you not like fruit?
-                    </v-list-item-title>
-                    <v-list-item-subtitle>
-                      Go ahead, make a selection above!
-                    </v-list-item-subtitle>
-                  </v-list-item-content>
-                </v-list-item>
-              </template>
-            </v-select>
-          </v-col>
-        </v-row>
-      </v-card>
-
-      <v-row>
-        <v-col cols="6">
-          <v-tabs background-color="transparent" sliderSize="1">
-            <v-tab>All (32)</v-tab>
-            <v-tab>Active (20)</v-tab>
-            <v-tab>Archived (12)</v-tab>
-          </v-tabs>
+            <template v-slot:no-data>
+              <v-container> add ss</v-container>
+            </template>
+          </v-autocomplete>
         </v-col>
-        <v-col class="text-end">
-          <v-btn @click="isTableLayout = !isTableLayout" class="mt-n1 justify-end"><v-icon left> mdi-view-grid-outline</v-icon> Switch to grid view</v-btn>
+        <v-col cols="12" sm="9">
+          <div>
+            <v-chip-group showArrows centerActive>
+              <v-chip :ripple="false" close @click:close="" v-for="item in selectedFruits" :key="item">
+                {{ item }}
+              </v-chip>
+            </v-chip-group>
+          </div>
         </v-col>
       </v-row>
-      <v-divider></v-divider>
+    </v-card>
 
+    <div class="d-flex justify-space-between align-center">
+      <v-tabs showArrows class="col-6 mt-n3" background-color="transparent" sliderSize="1">
+        <v-tab :ripple="false">All (32)</v-tab>
+        <v-tab :ripple="false">Active (20)</v-tab>
+        <v-tab :ripple="false">Inactive (4)</v-tab>
+        <v-tab :ripple="false">Modular (4)</v-tab>
+        <v-tab :ripple="false">Archived (12)</v-tab>
+      </v-tabs>
+
+      <div class="d-flex">
+        <v-switch v-model="multipleSelect" label="Multiple selection" class="mt-1 mx-4"> </v-switch>
+        <v-btn @click="isTableLayout = !isTableLayout"
+          ><v-icon left> mdi-view-grid-outline</v-icon> Switch to grid view</v-btn
+        >
+      </div>
+    </div>
+
+    <v-divider></v-divider>
+
+    <v-fade-transition hide-on-leave>
       <template v-if="isTableLayout">
-        <v-card>
+        <v-card class="mt-2" flat>
           <v-data-table
             fixed-header
             height="40vh"
@@ -95,19 +91,60 @@
             :headers="headers"
             :items="desserts"
             :items-per-page="5"
-            class="elevation-2"
+            class="elevation-0"
           ></v-data-table>
         </v-card>
       </template>
+    </v-fade-transition>
 
+    <v-fade-transition hide-on-leave>
       <template v-if="!isTableLayout">
-        <v-row>
-          <v-col v-for="n in 9" :key="n" class="d-flex child-flex" cols="3">
-            <v-card height="20vw" color="grey"></v-card>
-          </v-col>
-        </v-row>
+        <v-item-group v-model="componentCardGroup" :multiple="multipleSelect">
+          <div class="gallery-card-container py-2">
+            <v-item :key="card" v-for="card in 40" v-slot="{ active, toggle }">
+              <v-card
+                hover
+                :color="active ? 'indigo lighten-5' : 'white'"
+                :max-width="$vuetify.breakpoint.smAndDown ? '' : 320"
+                height="180"
+                width="100%"
+                :ripple="false"
+                class="d-flex flex-column justify-space-between pa-4 "
+                @click="toggle"
+              >
+                <v-card-actions class="px-0">
+                  <v-avatar rounded color="indigo">
+                    <v-icon dark>
+                      mdi-alarm
+                    </v-icon>
+                  </v-avatar>
+                  <v-spacer />
+
+                  <v-chip text-color="blue" outlined label class="col-7"
+                    ><div class="col-12 text-truncate">
+                      Products and orders
+                    </div></v-chip
+                  >
+                </v-card-actions>
+
+                <span class="gallery-card-title">
+                  90-day plan
+                </span>
+
+                <div class="gallery-card-subtitle-container">
+                  <div class="gallery-card-subtitle-wrapper">
+                    <h5 class="gallery-card-subtitle">
+                      subtitle is me subtitle is me subtitle is me subtitle is me subtitle is me subtitle is me subtitle
+                      is me subtitle is me subtitle is me
+                    </h5>
+                  </div>
+                </div>
+              </v-card>
+            </v-item>
+          </div>
+        </v-item-group>
       </template>
-    </baseLayoutCard>
+    </v-fade-transition>
 
     <dialog-system-operations v-if="dialogSystemOperations" v-model="dialogSystemOperations" :parent-data="$data" />
 
@@ -159,6 +196,27 @@ export default {
 
   data() {
     return {
+      tags: [
+        "Work",
+        "Home Improvement",
+        "Vacation",
+        "Food",
+        "Drawers",
+        "Shopping",
+        "Art",
+        "Tech",
+        "Creative Writing",
+        "Work",
+        "Home Improvement",
+        "Vacation",
+        "Food",
+        "Drawers",
+        "Shopping",
+        "Art",
+        "Tech",
+        "Creative Writing"
+      ],
+
       fruits: [
         "Apples",
         "Apricots",
@@ -396,14 +454,6 @@ export default {
       search: "",
       searchGroups: "",
 
-      // headers: [
-      //   { text: "Component", value: "title" },
-      //   // { text: 'Controller', value: 'Controller' },
-      //   { text: "Group", value: "folder" },
-      //   // { text: 'protected', value: 'protected'},
-      //   { text: "", value: "actions" }
-      // ],
-
       componentSettings: {
         prev_group_id: "",
         group_id: "1",
@@ -440,17 +490,18 @@ export default {
       groupComponent: ["No Parent"],
 
       items_type: [
-        { value: "blank", text: " Blank Template" },
-        { value: "crud", text: " Complete CRUD" },
-        { value: "crud2", text: " Simple Table CRUD" },
-        { value: "crud3", text: " Dropdown function CRUD" }
+        { value: "blank", text: " Blank Template" }
+        // { value: "crud", text: " Complete CRUD" },
+        // { value: "crud2", text: " Simple Table CRUD" },
+        // { value: "crud3", text: " Dropdown function CRUD" }
       ],
 
       nodata: store.state.baseUrl + "uploads/images/no-data.png",
 
       //NEW VARS
-
-      isTableLayout: true
+      isTableLayout: false,
+      multipleSelect: false,
+      componentCardGroup: 0
     };
   },
 
@@ -498,19 +549,9 @@ export default {
       deep: true
     },
 
-    carouselActiveIndex(val) {
-      this.$store.commit("SET_COMPONENTS_activeCarouselItem", this.carouselActiveIndex);
-    },
-
     groups() {
       if (this.dialogComponent && this.groups != null) {
         this.componentSettings.group_id = this.groups[this.groups.length - 1].group_id;
-      }
-    },
-
-    search(val) {
-      if (val === "") {
-        this.filterGroup("All", "1");
       }
     }
   },
@@ -524,12 +565,6 @@ export default {
           this.selectedFruits = this.fruits.slice();
         }
       });
-    },
-
-    onMove({ relatedContext, draggedContext }) {
-      const relatedElement = relatedContext.element;
-      const draggedElement = draggedContext.element;
-      return (!relatedElement || !relatedElement.fixed) && !draggedElement.fixed;
     },
 
     addNewComponent() {
@@ -749,7 +784,11 @@ export default {
 
     // Saves group data
     saveGroup() {
-      if (this.group_settings.icon === "" || this.group_settings.icon === null || this.group_settings.icon === undefined) {
+      if (
+        this.group_settings.icon === "" ||
+        this.group_settings.icon === null ||
+        this.group_settings.icon === undefined
+      ) {
         this.group_settings.icon = "mdi-folder";
       }
 
@@ -1274,6 +1313,66 @@ export default {
 </script>
 
 <style scoped>
+.v-card--link:before {
+  background: white;
+}
+
+.gallery-card-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(264px, 1fr));
+  grid-auto-rows: 180px;
+  gap: 16px;
+}
+
+.gallery-card-wrapper {
+  box-sizing: border-box;
+
+  text-align: left;
+}
+
+.gallery-card-title {
+  font-size: 1.1rem;
+  font-weight: bold;
+  line-height: 1.2;
+  color: rgb(23, 43, 77);
+  letter-spacing: -0.008em;
+  margin: 0px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.gallery-card-subtitle-container {
+  width: 100%;
+  height: 32px;
+  display: flex;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+  -webkit-box-align: center;
+  align-items: center;
+  color: rgb(107, 119, 140) !important;
+}
+
+.gallery-card-subtitle-wrapper {
+  padding: 2px;
+  margin-left: -2px;
+  margin-right: 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.gallery-card-subtitle {
+  margin: 0px;
+  -webkit-box-flex: 1;
+  flex-grow: 1;
+  flex-shrink: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .box {
   display: flex;
   flex-wrap: wrap;

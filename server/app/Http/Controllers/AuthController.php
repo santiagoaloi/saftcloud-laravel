@@ -61,7 +61,6 @@ class AuthController extends Controller {
             'status' => true
         ], 201);
 
-        return response($response, 201);
     }
 
     public function logout(Request $request) {

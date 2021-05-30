@@ -75,7 +75,7 @@
             </validation-provider>
           </v-col>
 
-          <v-col cols="12" sm="12" lg="6">
+          <!-- <v-col cols="12" sm="12" lg="6">
             <span>Sidebar parent</span>
             <v-select
               v-model="parentData.componentSettings.parent_id"
@@ -89,7 +89,7 @@
               item-color="primary"
               color="primary"
             />
-          </v-col>
+          </v-col> -->
 
           <v-col cols="12" sm="12" lg="6">
             <span>Component title</span>
@@ -126,7 +126,7 @@
             </validation-provider>
           </v-col>
 
-          <v-col cols="12" sm="12" lg="6">
+          <!-- <v-col cols="12" sm="12" lg="6">
             <span>Component / controller name</span>
             <validation-provider v-slot="{ errors }" name="component description" rules="required">
               <v-text-field
@@ -142,7 +142,7 @@
                 @keydown.space.prevent
               />
             </validation-provider>
-          </v-col>
+          </v-col> -->
 
           <v-col cols="12" sm="12" lg="6">
             <span>Template type</span>
@@ -179,7 +179,6 @@
                 hint="Table in your DB."
                 item-color="primary"
                 color="primary"
-                :disabled="parentData.componentSettings.type !== 'crud'"
                 :items="dbTables"
                 @change="getColumns()"
               >
@@ -212,13 +211,8 @@
                 item-color="primary"
                 color="primary"
                 label="Database table key"
-                :disabled="
-                  parentData.componentSettings.type !== 'crud' ||
-                    parentData.componentSettings.table == '' ||
-                    parentData.componentSettings.table == null
-                "
-                :items="parentData.field"
-                @change="getField()"
+                :disabled="selectedTable === ''"
+                :items="tableColumns"
               >
                 <template v-slot:item="data">
                   <template>
@@ -254,7 +248,8 @@ export default {
     return {
       internalValue: this.value,
       dbTables: [],
-      selectedTable: ""
+      selectedTable: "",
+      tableColumns: []
     };
   },
 

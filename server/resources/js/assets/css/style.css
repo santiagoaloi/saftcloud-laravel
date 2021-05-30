@@ -141,6 +141,23 @@ input::-webkit-inner-spin-button {
   color: rgba(0, 0, 0, 0.87);
 }
 
+.v-tab {
+  font-size: 0.8rem !important;
+  font-weight: 400 !important;
+  text-transform: none !important;
+  text-align: left;
+  justify-content: start !important;
+}
+
+.theme--light.v-tabs .v-tab--active:hover::before,
+.theme--light.v-tabs .v-tab--active::before {
+  opacity: 0 !important;
+}
+
+.theme--light.v-tabs .v-tab:hover::before {
+  opacity: 0 !important;
+}
+
 /* @media (min-width: 1904px) {
   .container {
     max-width: 1561px !important;
