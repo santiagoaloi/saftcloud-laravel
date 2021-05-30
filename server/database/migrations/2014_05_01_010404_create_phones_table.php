@@ -13,9 +13,9 @@ class CreatePhonesTable extends Migration {
     public function up() {
         Schema::create('phones', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('entity_id')->constrained();
+            $table->foreignId('entity_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
             $table->string('description')->nullable();
-            $table->integer('phone_code')->nullable();
+            $table->foreignId('country_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE')->nullable();
             $table->integer('phone_number')->nullable();
             $table->timestamps();
         });

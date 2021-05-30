@@ -13,16 +13,16 @@ class CreateComponentsTable extends Migration {
     public function up() {
         Schema::create('components', function (Blueprint $table) {
             $table->id();
-            $table->integer('group_id');
+            $table->foreignId('group_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
             $table->integer('prev_group_id');
-            $table->integer('parent_id');
-            $table->smallInteger('type_id');
+            $table->foreignId('component_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
             $table->string('controller');
             $table->string('title')->nullable();
             $table->string('note')->nullable();
             $table->string('icon');
             $table->smallInteger('global');
             $table->smallInteger('protected');
+            $table->longText('config');
             $table->timestamps();
         });
     }

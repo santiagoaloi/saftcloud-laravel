@@ -13,7 +13,7 @@ class CreateStatesTable extends Migration {
     public function up() {
         Schema::create('states', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('country_id')->constrained();
+            $table->foreignId('country_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
             $table->string('name');
             $table->timestamps();
         });

@@ -13,7 +13,7 @@ class CreateAccountPaymentsTable extends Migration {
     public function up() {
         Schema::create('account_payments', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('account_id')->constrained();
+            $table->foreignId('account_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
             $table->decimal('amount', 8, 2);
             $table->timestamps();
         });

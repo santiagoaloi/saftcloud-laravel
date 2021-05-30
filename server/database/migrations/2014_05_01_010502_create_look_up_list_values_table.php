@@ -13,7 +13,7 @@ class CreateLookUpListValuesTable extends Migration {
     public function up() {
         Schema::create('look_up_list_values', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('look_up_list_id')->constrained();
+            $table->foreignId('look_up_list_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
             $table->string('name', 100);
             $table->integer('value');
             $table->timestamps();
