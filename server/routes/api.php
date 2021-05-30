@@ -26,11 +26,7 @@ use App\Http\Controllers\AuthController;
 // Public routes
 Route::post('/login', [AuthController::class, 'login']);
 
-<<<<<<< HEAD
- Route::resource('/country', CountryController::class);
-=======
 Route::resource('/country', CountryController::class);
->>>>>>> 8888a54365999c88361a913905e683bbf3689303
 Route::get('/countries', [CountryController::class, 'showAll']);
 
 Route::resource('/account', AccountController::class);
