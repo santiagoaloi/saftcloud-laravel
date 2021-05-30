@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Root;
 
 use App\Http\Controllers\Controller;
+use App\Models\Root\Component;
 use Illuminate\Http\Request;
 
 class ComponentController extends Controller {
@@ -31,7 +32,15 @@ class ComponentController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request) {
-        //
+        $postdata = json_decode($request->getContent(), true);
+        Component::create($postdata);
+
+        $getItems = $this->showAll(true);
+
+        return response([
+            'rows' =>  $getItems,
+            'status' => true
+        ], 200);
     }
 
     /**
@@ -42,6 +51,24 @@ class ComponentController extends Controller {
      */
     public function show($id) {
         //
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showAll($local = false) {
+        if ($local){
+            return Component::get();
+        } else {
+            $getItems = Component::get();
+
+            return response([
+                'rows' =>  $getItems,
+                'status' => true
+            ], 200);
+        }
     }
 
     /**
