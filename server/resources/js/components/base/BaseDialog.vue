@@ -9,7 +9,7 @@
     :overlay-opacity="0.7"
     overlay-color="rgba(108, 122, 137)"
   >
-    <v-toolbar ref="parentEl" class="popup-header px-6" flat dark color="#3E4042">
+    <v-toolbar class="popup-header px-6" flat dark color="grey darken-2">
       <template>
         <v-btn
           v-if="$vuetify.breakpoint.mdAndUp"
@@ -41,7 +41,7 @@
 
       <template v-if="saveOnly">
         <v-btn fab small :loading="loading" icon dark @click.stop="save">
-          <v-icon>mdi-check</v-icon>
+          <v-icon color="green lighten-2">mdi-check</v-icon>
         </v-btn>
       </template>
 
@@ -63,7 +63,7 @@
           :loading="loading"
           @click.stop="save"
         >
-          <v-icon color="#00B985"> mdi-check </v-icon>
+          <v-icon color="green lighten-2"> mdi-check </v-icon>
         </v-btn>
 
         <v-btn v-if="!closeOnly" x-small color="white" outlined text fab icon dark class="ml-2" @click.stop="close">
@@ -71,8 +71,8 @@
         </v-btn>
       </template>
     </v-toolbar>
-    <v-sheet color="primary" height="3" />
-    <v-card id="scrollableContent" color="#f8f9fa" style="overflow: auto" flat tile :height="height">
+    <v-sheet color="primary" height="1" />
+    <v-card class="pa-3" id="scrollableContent" color="#f8f9fa" style="overflow: auto" flat tile :height="height">
       <slot />
     </v-card>
 
@@ -176,9 +176,9 @@ export default {
 };
 </script>
 <style>
-.v-application--wrap {
+/* .v-application--wrap {
   filter: var(--blur);
-}
+} */
 
 .bottomColor {
   height: 3px;

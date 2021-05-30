@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid>
+  <v-container style="background-color:rgb(250, 251, 252)" fluid>
     <slot />
   </v-container>
 </template>

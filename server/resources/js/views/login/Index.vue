@@ -42,7 +42,13 @@
               </v-card-title>
               <v-card-subtitle class=" mb-n10">
                 <span v-if="$vuetify.breakpoint.mdAndUp">Don't have an account?</span>
-                <v-btn style="margin-top: -2.9px" small @click="signup = !signup" :class="$vuetify.breakpoint.smAndDown ? '' : 'ml-3'" to="/signup">
+                <v-btn
+                  style="margin-top: -2.9px"
+                  small
+                  @click="signup = !signup"
+                  :class="$vuetify.breakpoint.smAndDown ? '' : 'ml-3'"
+                  to="/signup"
+                >
                   Sign up
                 </v-btn>
               </v-card-subtitle>
@@ -131,7 +137,10 @@
       <v-fade-transition hide-on-leave>
         <ValidationObserver ref="accountRecoveryForm" slim>
           <v-col v-if="forgot" :key="0" cols="12" lg="6" sm="8">
-            <v-card :color="$vuetify.breakpoint.mdAndUp ? 'rgba(200, 200, 200,  0.1)' : 'transparent'" style="border-radius: 21px">
+            <v-card
+              :color="$vuetify.breakpoint.mdAndUp ? 'rgba(200, 200, 200,  0.1)' : 'transparent'"
+              style="border-radius: 21px"
+            >
               <v-card-title class="headline white--text">
                 Having trouble signing in?
               </v-card-title>
@@ -171,7 +180,14 @@
                         Back
                       </v-btn>
 
-                      <v-btn class="white--text" :input-value="true" text large :loading="loading" @click="resetPasswordPreAuthenticate()">
+                      <v-btn
+                        class="white--text"
+                        :input-value="true"
+                        text
+                        large
+                        :loading="loading"
+                        @click="resetPasswordPreAuthenticate()"
+                      >
                         Continue
                       </v-btn>
                     </v-card-actions>
@@ -186,7 +202,10 @@
       <v-fade-transition hide-on-leave>
         <ValidationObserver ref="resetPasswordForm" slim>
           <v-col v-if="resetPasswordScreen" :key="0" cols="12" lg="6" sm="8">
-            <v-card :color="$vuetify.breakpoint.mdAndUp ? 'rgba(200, 200, 200,  0.1)' : 'transparent'" style="border-radius: 21px">
+            <v-card
+              :color="$vuetify.breakpoint.mdAndUp ? 'rgba(200, 200, 200,  0.1)' : 'transparent'"
+              style="border-radius: 21px"
+            >
               <v-col style="background: rgba(43, 54, 67, 0.3); border-radius: 21px" cols="12" sm="12" md="12">
                 <v-card-title class="headline white--text">
                   Change your password
@@ -254,7 +273,14 @@
                           Back
                         </v-btn>
 
-                        <v-btn class="mr-n3 white--text" color="teal" x-large height="38" :loading="loading" @click="preResetPassword()">
+                        <v-btn
+                          class="mr-n3 white--text"
+                          color="teal"
+                          x-large
+                          height="38"
+                          :loading="loading"
+                          @click="preResetPassword()"
+                        >
                           Continue
                         </v-btn>
                       </v-card-actions>
@@ -296,7 +322,7 @@ export default {
   methods: {
     loginSanctum: call("authentication/login"),
     login() {
-      this.loading = true;
+      // this.loading = true;
       this.loginSanctum(this.auth).then(response => {
         if (!response) {
           this.loading = false;
