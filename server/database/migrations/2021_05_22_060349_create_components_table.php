@@ -18,16 +18,16 @@ class CreateComponentsTable extends Migration {
         if (!Schema::hasTable('components')) {
         Schema::create('components', function (Blueprint $table) {
             $table->id();
-            $table->integer('group_id');
-            $table->integer('prev_group_id');
-            $table->integer('parent_id');
-            $table->smallInteger('type_id');
-            $table->string('controller');
+            $table->foreignId('component_group_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
+            $table->integer('prev_group_id')->nullable();
+            $table->foreignId('component_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE')->nullable();
+            $table->string('name');
             $table->string('title')->nullable();
             $table->string('note')->nullable();
             $table->string('icon');
             $table->smallInteger('global');
             $table->smallInteger('protected');
+            $table->longText('config');
             $table->timestamps();
 
                 });

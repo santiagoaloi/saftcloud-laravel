@@ -13,7 +13,7 @@ class CreateSocialTable extends Migration {
     public function up() {
         Schema::create('social', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('entity_id')->constrained();
+            $table->foreignId('entity_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
             $table->string('description', 100)->nullable();
             $table->string('url')->nullable();
             $table->timestamps();

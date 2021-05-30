@@ -13,7 +13,7 @@ class CreateUserSettingsTable extends Migration {
     public function up() {
         Schema::create('user_settings', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained();
+            $table->foreignId('user_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
             $table->longText('view_config');
             $table->timestamps();
         });

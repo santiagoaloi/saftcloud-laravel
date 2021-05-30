@@ -13,9 +13,9 @@ class CreatePointOfSalesTable extends Migration {
     public function up() {
         Schema::create('point_of_sales', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('branch_id')->constrained();
+            $table->foreignId('branch_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
             $table->integer('ptoVta');
-            $table->foreignId('look_up_list_value_id')->constrained();
+            $table->foreignId('look_up_list_value_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
             $table->string('name', 100);
             $table->smallInteger('status')->nullable();
             $table->timestamps();

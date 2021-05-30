@@ -13,8 +13,8 @@ class CreateEntitiesTable extends Migration {
     public function up() {
         Schema::create('entities', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('account_id')->constrained();
-            $table->foreignId('entity_type_id')->constrained();
+            $table->foreignId('account_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
+            $table->foreignId('entity_type_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
             $table->string('first_name', 100);
             $table->string('last_name', 100);
             $table->integer('iva_cond_id')->nullable();
