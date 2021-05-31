@@ -53,6 +53,7 @@ class ComponentController extends Controller {
 
         $componentConfig = [];
 
+<<<<<<< HEAD
         $sql_select = "SELECT {$request['table']}.* FROM {$request['table']}";
         $sql_where  = " WHERE ".$request['table'].". id IS NOT NULL";
         $sql_group  = "";
@@ -64,14 +65,27 @@ class ComponentController extends Controller {
         $config['sql_select'] = $sql_select;
         $config['sql_where'] = $sql_where;
         $config['sql_group'] = $sql_group;
+=======
+        $sql_select = "SELECT {$request['table']}.* FROM {$request['table']} ";
+        $sql_where  = " WHERE ".$request['table'].".id IS NOT NULL";
+        $sql_group  = "";
+
+
+        $config['columns']          = $ArrayColumns;
+        $config['formFields']       = $ArrayFields;
+        $config['componentConfig']  = $componentConfig;
+        $config['sql_select']       = $sql_select;
+        $config['sql_where']        = $sql_where;
+        $config['sql_group']        = $sql_group;
+>>>>>>> 156dbd18ae57e7177311765ed86a0d2b15e49f37
 
         $data = [
-            'component_group_id'    => $request['component_group_id'],
-            'prev_group_id'         => $request['prev_group_id'],
-            'name'                  => $request['name'],
-            'title'                 => $request['title'],
-            'note'                  => $request['note'],
-            'config'                => json_encode($config),
+        'component_group_id'    => $request['component_group_id'],
+        'prev_group_id'         => $request['prev_group_id'],
+        'name'                  => $request['name'],
+        'title'                 => $request['title'],
+        'note'                  => $request['note'],
+        'config'                => json_encode($config),
         ];
 
         Component::create($data);

@@ -79,9 +79,9 @@
       <div class="d-flex">
         <v-switch v-model="multipleSelect" label="Multiple selection" class="mt-1 mx-4"> </v-switch>
         <v-btn @click="isTableLayout = !isTableLayout"><v-icon left> mdi-view-grid-outline</v-icon> Switch to grid view</v-btn>
-        <v-btn @click="secureComponentDrawer = !secureComponentDrawer"
+        <!-- <v-btn @click="secureComponentDrawer = !secureComponentDrawer"
           ><v-icon left> mdi-view-grid-outline</v-icon> Test drawer</v-btn
-        >
+        > -->
       </div>
     </div>
 
@@ -118,7 +118,10 @@
                 width="100%"
                 :ripple="false"
                 class="d-flex flex-column justify-space-between pa-4 "
-                @click="toggle"
+                @click="
+                  toggle();
+                  secureComponentDrawer = true;
+                "
               >
                 <v-card-actions class="px-0 ">
                   <v-avatar rounded color="indigo">
@@ -151,15 +154,8 @@
     </v-fade-transition>
 
     <dialog-system-operations v-if="dialogSystemOperations" v-model="dialogSystemOperations" :parent-data="$data" />
-
     <dialog-group v-if="dialogGroup" v-model="dialogGroup" :parent-data="$data" />
-
-    <dialog-table v-if="dialogTable" v-model="dialogTable" :parent-data="$data" />
-
     <dialog-component v-if="dialogComponent" ref="dialogNewComponent" v-model="dialogComponent" :parent-data="$data" />
-
-    <dialog-selected v-if="dialogSelected" v-model="dialogSelected" :parent-data="$data" />
-
     <dialog-sort v-if="dialogSort" v-model="dialogSort" :parent-data="$data" />
   </div>
 </template>
@@ -179,13 +175,9 @@ export default {
   components: {
     DialogSort: () => import("./DialogSort"),
     DialogGroup: () => import("./DialogGroup"),
-    DialogTable: () => import("./DialogTable"),
-    DialogSelected: () => import("./DialogSelected"),
     DialogComponent: () => import("./DialogComponent"),
     DialogSystemOperations: () => import("./DialogSystemOperations"),
-    ComponentsTable: () => import("./ComponentsTable"),
-    ComponentsAppbar: () => import("./ComponentsAppbar"),
-    ComponentsCarousel: () => import("./ComponentsCarousel")
+    ComponentsAppbar: () => import("./ComponentsAppbar")
   },
 
   mixins: [globalMixin],
@@ -265,7 +257,6 @@ export default {
       isTableLayout: false,
       multipleSelect: false,
       groupInputValue: "",
-      allGroups: [],
       componentTabs: [
         { name: "All", icon: "mdi-all-inclusive", color: "" },
         { name: "Starred", icon: "mdi-star", color: "" },
@@ -278,17 +269,19 @@ export default {
 
   computed: {
     ...sync("drawers", ["secureComponentDrawer"]),
-    ...sync("componentManagement", ["componentCardGroup", "allComponents"]),
+    ...sync("componentManagement", ["componentCardGroup", "allComponents", "allGroups"]),
 
-    likesAllFruit() {
-      return this.selectedComponentGroups.length === this.allComponents.length;
+    selectedAllComponents() {
+      return this.selectedComponentGroups.length === this.allGroups.length;
     },
-    likesSomeFruit() {
-      return this.selectedComponentGroups.length > 0 && !this.likesAllFruit;
+
+    selectedSomeComponents() {
+      return this.selectedComponentGroups.length > 0 && !this.selectedAllComponents;
     },
+
     icon() {
-      if (this.likesAllFruit) return "mdi-close-box";
-      if (this.likesSomeFruit) return "mdi-minus-box";
+      if (this.selectedAllComponents) return "mdi-close-box";
+      if (this.selectedSomeComponents) return "mdi-minus-box";
       return "mdi-checkbox-blank-outline";
     },
 
@@ -311,24 +304,24 @@ export default {
     // },
   },
 
-  watch: {
-    "selected.length": {
-      handler: function(val, oldVal) {
-        if (val === 0 && oldVal >= 1 && this.bulk_action_executing) {
-          window.getApp.$emit("APP_RELOAD_MENU");
-          window.getApp.$emit("APP_REFRESH");
-          this.bulk_action_executing = false;
-        }
-      },
-      deep: true
-    },
+  // watch: {
+  //   "selected.length": {
+  //     handler: function(val, oldVal) {
+  //       if (val === 0 && oldVal >= 1 && this.bulk_action_executing) {
+  //         window.getApp.$emit("APP_RELOAD_MENU");
+  //         window.getApp.$emit("APP_REFRESH");
+  //         this.bulk_action_executing = false;
+  //       }
+  //     },
+  //     deep: true
+  //   },
 
-    groups() {
-      if (this.dialogComponent && this.groups != null) {
-        this.componentSettings.group_id = this.groups[this.groups.length - 1].group_id;
-      }
-    }
-  },
+  //   groups() {
+  //     if (this.dialogComponent && this.groups != null) {
+  //       this.componentSettings.group_id = this.groups[this.groups.length - 1].group_id;
+  //     }
+  //   }
+  // },
 
   mounted() {
     this.getGroups();
@@ -337,19 +330,19 @@ export default {
 
   methods: {
     mapComponentGroup(item) {
-      // return item;
       return this.allGroups.filter(cg => cg.id === item.component_group_id)[0].name;
     },
 
     catchGroupInputValue(e) {
       this.groupInputValue = e;
     },
+
     toggle() {
       this.$nextTick(() => {
-        if (this.likesAllFruit) {
+        if (this.selectedAllComponents) {
           this.selectedComponentGroups = [];
         } else {
-          this.selectedComponentGroups = this.allComponents.slice();
+          this.selectedComponentGroups = this.allGroups.slice();
         }
       });
     },
@@ -377,6 +370,9 @@ export default {
       axios.get("api/showAllComponents").then(response => {
         if (response.data.status) {
           this.allComponents = response.data.rows;
+          this.allComponents.forEach(component => {
+            component.config = JSON.parse(component.config);
+          });
         }
       });
     },
@@ -710,6 +706,9 @@ export default {
       axios.post("api/Component", this.componentSettings).then(response => {
         if (response.data.status) {
           this.allComponents = response.data.rows;
+          this.allComponents.forEach(component => {
+            component.config = JSON.parse(component.config);
+          });
           this.dialogComponent = false;
         }
       });
