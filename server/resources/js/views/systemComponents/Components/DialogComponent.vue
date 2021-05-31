@@ -31,7 +31,7 @@
                 color="primary"
                 label="Select group"
                 solo
-                :items="parentData.allGroups"
+                :items="allGroups"
                 item-value="id"
                 item-text="name"
                 placeholder=" "
@@ -87,7 +87,6 @@
               <v-text-field
                 ref="componentTitle"
                 v-model="parentData.componentSettings.name"
-                autofocus
                 solo
                 prepend-inner-icon="mdi-comment"
                 counter
@@ -223,6 +222,7 @@
   </baseDialog>
 </template>
 <script>
+import { sync } from "vuex-pathify";
 export default {
   name: "DialogComponent",
   inheritAttrs: true,
@@ -258,6 +258,10 @@ export default {
         this.tableColumns = response.data;
       });
     }
+  },
+
+  computed: {
+    ...sync("componentManagement", ["allGroups"])
   },
 
   watch: {

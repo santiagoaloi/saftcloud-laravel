@@ -1,10 +1,10 @@
 <template>
   <div>
     <v-app-bar absolute dense class="px-2">
-      <v-btn @click="previousComponent()" class="mr-2" fab text x-small>
+      <v-btn :disabled="previousComponentDisabled()" @click="previousComponent()" class="mr-2" fab text x-small>
         <v-icon>mdi-chevron-left</v-icon>
       </v-btn>
-      <v-btn @click="nextComponent()" fab text x-small>
+      <v-btn :disabled="nextComponentDisabled()" @click="nextComponent()" fab text x-small>
         <v-icon>mdi-chevron-right</v-icon>
       </v-btn>
       <v-spacer></v-spacer>
@@ -19,7 +19,7 @@
         label="Choose component"
       ></v-select>
 
-      <v-btn fab text x-small>
+      <v-btn @click="secureComponentDrawer = false" fab text x-small>
         <v-icon>mdi-close</v-icon>
       </v-btn>
     </v-app-bar>
@@ -97,8 +97,8 @@
               </v-icon>
             </v-list-item-icon>
             <v-list-item-content>
-              <v-list-item-title>12</v-list-item-title>
-              <v-list-item-subtitle>Columns</v-list-item-subtitle>
+              <v-list-item-title>{{ activeComponent.config.columns.length }}</v-list-item-title>
+              <v-list-item-subtitle> Table columns</v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
 
@@ -135,16 +135,15 @@
           <v-divider></v-divider>
 
           <v-container>
-            <small>Group</small>
+            <small>Component group </small>
             <v-autocomplete
               @update:search-input="catchGroupInputValue($event)"
               solo
               :items="allGroups"
-              multiple
               :maxlength="25"
               item-value="id"
               item-text="name"
-              return-object
+              hide-no-data
             />
           </v-container>
         </v-list>
@@ -161,6 +160,7 @@ export default {
     items: ["Foo", "Bar", "Fizz", "Buzz"]
   }),
   computed: {
+    ...sync("drawers", ["secureComponentDrawer"]),
     ...sync("componentManagement", ["componentCardGroup", "allComponents", "allGroups"]),
 
     activeComponent() {
@@ -175,9 +175,21 @@ export default {
       }
     },
 
+    previousComponentDisabled() {
+      if (this.componentCardGroup === 0) {
+        return true;
+      }
+    },
+
     nextComponent() {
       if (this.componentCardGroup < this.allComponents.length - 1) {
         this.componentCardGroup++;
+      }
+    },
+
+    nextComponentDisabled() {
+      if (this.componentCardGroup === this.allComponents.length - 1) {
+        return true;
       }
     }
   }

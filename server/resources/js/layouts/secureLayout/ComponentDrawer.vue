@@ -1,6 +1,15 @@
 <template>
   <div>
-    <v-navigation-drawer color="white" width="350" v-model="secureComponentDrawer" hideOverlay right app class="elevation-1">
+    <v-navigation-drawer
+      stateless
+      color="white"
+      width="350"
+      v-model="secureComponentDrawer"
+      hideOverlay
+      right
+      app
+      class="elevation-1"
+    >
       <component-drilldown />
     </v-navigation-drawer>
   </div>
@@ -16,12 +25,9 @@ Vue.component("ComponentDrilldown", () =>
 
 export default {
   name: "SecureComponentDrawer",
-
-  data() {
-    return {};
-  },
   computed: {
     ...sync("drawers", ["secureComponentDrawer"])
   }
 };
 </script>
+<style scoped></style>
