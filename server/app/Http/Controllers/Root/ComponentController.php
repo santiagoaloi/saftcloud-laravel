@@ -46,17 +46,18 @@ class ComponentController extends Controller {
             ];
 
             $ArrayFields[] = [
-                'field'  =>   $column,
+                'field'         => $column,
+                'displayField'  => true,
             ];
         };
 
         $componentConfig = [];
 
-        $sql_select = "SELECT {$request['table']}.* FROM {$request['table']} ";
+        $sql_select = "SELECT {$request['table']}.* FROM {$request['table']}";
         $sql_where  = " WHERE ".$request['table'].". id IS NOT NULL";
         $sql_group  = "";
 
-
+        $config['sql_table'] = $sql_group;
         $config['columns']   = $ArrayColumns;
         $config['formFields'] = $ArrayFields;
         $config['componentConfig'] = $componentConfig;
