@@ -21,12 +21,12 @@ class ConstructController extends Controller {
 
         $config = json_decode($component->config, true);
 
-       return $config['formFields'];
+        $formfields = $config['formFields'];
 
-        // return $formFields;
+        // return $formfields;
 
-        foreach ($formFields as $field) {
-            $ArrayColumns['formfields'][$field] = $field;
+        foreach ($formfields as $field) {
+            $ArrayColumns['formfields'][$field['field']] = $field;
         };
 
         return $ArrayColumns;
