@@ -21,7 +21,7 @@ class ConstructController extends Controller {
 
         $config = json_decode($component->config, true);
 
-        $formFields = $config['formFields'];
+       return $config['formFields'];
 
         // return $formFields;
 

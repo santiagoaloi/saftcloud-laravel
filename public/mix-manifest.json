@@ -12,7 +12,7 @@
     "/dist/js/public-footer.js": "/dist/js/public-footer.js",
     "/dist/js/secure-appbar.js": "/dist/js/secure-appbar.js",
     "/dist/js/secure-drawer.js": "/dist/js/secure-drawer.js",
-    "/dist/js/secure-element-drawer.js": "/dist/js/secure-element-drawer.js",
+    "/dist/js/secure-component-drawer.js": "/dist/js/secure-component-drawer.js",
     "/dist/js/secure-view.js": "/dist/js/secure-view.js",
     "/dist/js/login-view.js": "/dist/js/login-view.js",
     "/dist/js/public-appbar-view-footer-combined.js": "/dist/js/public-appbar-view-footer-combined.js",
