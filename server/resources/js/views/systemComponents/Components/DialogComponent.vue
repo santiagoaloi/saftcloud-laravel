@@ -22,16 +22,16 @@
       <v-container class="mt-2" fluid>
         <v-row dense>
           <v-col cols="12" sm="12" lg="6">
-            <span>Group</span>
+            <small>Group</small>
             <validation-provider v-slot="{ errors }" name="component group" rules="required">
-              <v-select
+              <v-autocomplete
                 v-model="parentData.componentSettings.component_group_id"
                 :background-color="errors.length > 0 ? '#faebeb' : 'white'"
                 :error-messages="errors[0]"
                 color="primary"
                 label="Select group"
                 solo
-                :items="parentData.componentGroups"
+                :items="parentData.allGroups"
                 item-value="id"
                 item-text="name"
                 placeholder=" "
@@ -44,7 +44,7 @@
                 @contextmenu="handler($event)"
                 @change="getComponentByGroup"
               >
-              </v-select>
+              </v-autocomplete>
             </validation-provider>
           </v-col>
 
@@ -65,7 +65,7 @@
           </v-col> -->
 
           <v-col cols="12" sm="12" lg="6">
-            <span>Component title</span>
+            <small>Component title</small>
             <validation-provider v-slot="{ errors }" name="component title" rules="required">
               <v-text-field
                 ref="componentTitle"
@@ -82,7 +82,7 @@
           </v-col>
 
           <v-col cols="12" sm="12" lg="6">
-            <span>Component name</span>
+            <small>Component name</small>
             <validation-provider v-slot="{ errors }" name="component title" rules="required">
               <v-text-field
                 ref="componentTitle"
@@ -99,7 +99,7 @@
           </v-col>
 
           <v-col cols="12" sm="12" lg="6">
-            <span>Component description</span>
+            <small>Component description</small>
             <validation-provider v-slot="{ errors }" name="component desc" rules="required">
               <v-text-field
                 v-model="parentData.componentSettings.note"
@@ -151,7 +151,7 @@
         </v-row>
         <v-row>
           <v-col cols="12" sm="12" lg="6">
-            <span>DB Table</span>
+            <small>Database table</small>
             <validation-provider v-slot="{ errors }" name="component table" rules="required">
               <v-autocomplete
                 v-model="parentData.componentSettings.table"

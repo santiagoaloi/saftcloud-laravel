@@ -19,11 +19,10 @@ class ConstructController extends Controller {
         $query = Component::find($request);
         $component = $query[0];
 
-        $config = $component->config;
+        $config = json_decode($component->config, true);
 
-        $formFields = $config['formFields'];
+       return $config['formFields'];
 
-        return $formFields;
 
         foreach ($formFields as $field) {
             $ArrayColumns[$field->field] = [

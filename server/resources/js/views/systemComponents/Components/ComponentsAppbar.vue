@@ -5,7 +5,6 @@
       <div class="d-flex">
         <v-text-field
           v-model.lazy="parentData.search"
-          v-lazy-input:debounce="500"
           spellcheck="false"
           color="primary lighten-1"
           background-color="white"

@@ -4,7 +4,7 @@
       <v-container fluid class="py-0 px-0 px-sm-2 fill-height">
 
       
-      <v-app-bar-nav-icon  class="ml-0" text xSmall fab @click="handleDrawerToggle()" />
+      <v-app-bar-nav-icon  class="ml-0" text xSmall fab @click="secureDefaultDrawer = !secureDefaultDrawer" />
 
       <h3 class="ml-3">SaftCloud</h3>
 
@@ -161,7 +161,7 @@
 <script>
 import axios from "axios";
 import { store } from "@/store";
-import { call } from "vuex-pathify";
+import { call , sync} from "vuex-pathify";
 
 export default {
   name: "DefaultBar",
@@ -257,6 +257,12 @@ export default {
     // });
   },
 
+  computed: {
+    ...sync('drawers', [
+      'secureDefaultDrawer',
+    ]),
+  },
+
   methods: {
     logoutSanctum: call("authentication/logout"),
 
@@ -283,9 +289,7 @@ export default {
       this.$router.push("/desktop");
     },
 
-    handleDrawerToggle() {
-      window.getApp.$emit("APP_DRAWER_TOGGLED");
-    }
+
   }
 };
 </script>

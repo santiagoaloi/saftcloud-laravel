@@ -5,13 +5,12 @@
     <v-card color="transparent" flat class="mt-8">
       <v-row align="center">
         <v-col cols="12" sm="3">
-          <span>Group</span>
+          <small>Component groups</small>
           <v-autocomplete
             @update:search-input="catchGroupInputValue($event)"
             solo
-            v-model="selectedFruits"
-            :items="componentGroups"
-            label="Favorite Fruits"
+            v-model="selectedComponentGroups"
+            :items="allGroups"
             multiple
             :maxlength="25"
             item-value="id"
@@ -21,7 +20,7 @@
             <template v-slot:prepend-item>
               <v-list-item ripple @click="toggle">
                 <v-list-item-action>
-                  <v-icon :color="selectedFruits.length > 0 ? 'indigo darken-4' : 'grey darken-3'">
+                  <v-icon :color="selectedComponentGroups.length > 0 ? 'indigo darken-4' : 'grey darken-3'">
                     {{ icon }}
                   </v-icon>
                 </v-list-item-action>
@@ -38,7 +37,7 @@
               <template>
                 <span v-if="data.index === 0" class="grey--text caption"
                   ><v-chip labal style="color: black" small label color="blue-grey lighten-4">
-                    {{ selectedFruits.length }} groups selected.</v-chip
+                    {{ selectedComponentGroups.length }} groups selected.</v-chip
                   ></span
                 >
               </template>
@@ -58,7 +57,7 @@
         <v-col cols="12" sm="9">
           <div>
             <v-chip-group showArrows centerActive>
-              <v-chip :ripple="false" close @click:close="" v-for="item in selectedFruits" :key="item">
+              <v-chip :ripple="false" close @click:close="" v-for="item in selectedComponentGroups" :key="item">
                 {{ item.name }}
               </v-chip>
             </v-chip-group>
@@ -69,17 +68,19 @@
 
     <div class="d-flex justify-space-between align-center">
       <v-tabs showArrows class="col-6 mt-n3" background-color="transparent" sliderSize="1">
-        <v-tab :ripple="false">All (32)</v-tab>
-        <v-tab :ripple="false">Active (20)</v-tab>
-        <v-tab :ripple="false">Inactive (4)</v-tab>
-        <v-tab :ripple="false">Modular (4)</v-tab>
-        <v-tab :ripple="false">Archived (12)</v-tab>
+        <v-tab :key="i" y v-for="(tab, i) in componentTabs" :ripple="false">
+          <v-icon :color="tab.color" small left>
+            {{ tab.icon }}
+          </v-icon>
+          {{ tab.name }}
+        </v-tab>
       </v-tabs>
 
       <div class="d-flex">
         <v-switch v-model="multipleSelect" label="Multiple selection" class="mt-1 mx-4"> </v-switch>
-        <v-btn @click="isTableLayout = !isTableLayout"
-          ><v-icon left> mdi-view-grid-outline</v-icon> Switch to grid view</v-btn
+        <v-btn @click="isTableLayout = !isTableLayout"><v-icon left> mdi-view-grid-outline</v-icon> Switch to grid view</v-btn>
+        <v-btn @click="secureComponentDrawer = !secureComponentDrawer"
+          ><v-icon left> mdi-view-grid-outline</v-icon> Test drawer</v-btn
         >
       </div>
     </div>
@@ -93,10 +94,10 @@
             fixed-header
             height="40vh"
             checkbox-color="primary"
-            item-key="name"
+            item-key="id"
             show-select
             :headers="headers"
-            :items="components"
+            :items="allComponents"
             :items-per-page="5"
             class="elevation-0"
           ></v-data-table>
@@ -106,9 +107,9 @@
 
     <v-fade-transition hide-on-leave>
       <template v-if="!isTableLayout">
-        <v-item-group v-model="componentCardGroup" :multiple="multipleSelect">
+        <v-item-group v-model="componentCardGroup" mandatory :multiple="multipleSelect">
           <div class="gallery-card-container py-2">
-            <v-item :key="card" v-for="card in allComponents" v-slot="{ active, toggle }">
+            <v-item :key="index" v-for="(component, index) in allComponents" v-slot="{ active, toggle }">
               <v-card
                 hover
                 :color="active ? 'indigo lighten-5' : 'white'"
@@ -126,20 +127,19 @@
                     </v-icon>
                   </v-avatar>
                   <v-spacer />
-
-                  <v-chip text-color="blue" outlined label class="col-6"
-                    ><div class="col-12 text-truncate">
-                      {{ mapComponentGroup(card) }}
-                    </div></v-chip
-                  >
+                  <v-btn color="white" small @click.stop icon :ripple="false"> <v-icon color="yellow"> mdi-star</v-icon></v-btn>
                 </v-card-actions>
 
-                <span class="gallery-card-title"> {{ card.title }} </span>
+                <span class="gallery-card-title"> {{ component.title }} </span>
 
                 <div class="gallery-card-subtitle-container">
                   <div class="gallery-card-subtitle-wrapper">
                     <h5 class="gallery-card-subtitle">
-                      {{ card.note }}
+                      <v-chip style="pointer-events:none" color="grey lighten-5" text-color="blue darken-4" label class="col-6">
+                        <div class="col-12 text-truncate">
+                          {{ mapComponentGroup(component) }}
+                        </div>
+                      </v-chip>
                     </h5>
                   </div>
                 </div>
@@ -166,13 +166,12 @@
 
 <script>
 import axios from "axios";
-import { mapActions, mapGetters } from "vuex";
 import { store } from "@/store";
 import moment from "moment";
 import orderBy from "lodash/orderBy";
-import draggable from "vuedraggable";
 import globalMixin from "@/mixins/globalMixin";
 // import routesBuilder from "@/mixins/routesBuilder";
+import { sync } from "vuex-pathify";
 
 export default {
   name: "ComponentManagement",
@@ -186,8 +185,7 @@ export default {
     DialogSystemOperations: () => import("./DialogSystemOperations"),
     ComponentsTable: () => import("./ComponentsTable"),
     ComponentsAppbar: () => import("./ComponentsAppbar"),
-    ComponentsCarousel: () => import("./ComponentsCarousel"),
-    draggable
+    ComponentsCarousel: () => import("./ComponentsCarousel")
   },
 
   mixins: [globalMixin],
@@ -200,221 +198,22 @@ export default {
 
   data() {
     return {
-      tags: [
-        "Work",
-        "Home Improvement",
-        "Vacation",
-        "Food",
-        "Drawers",
-        "Shopping",
-        "Art",
-        "Tech",
-        "Creative Writing",
-        "Work",
-        "Home Improvement",
-        "Vacation",
-        "Food",
-        "Drawers",
-        "Shopping",
-        "Art",
-        "Tech",
-        "Creative Writing"
-      ],
-
-      fruits: [
-        "Apples",
-        "Apricots",
-        "Avocado",
-        "Bananas",
-        "Blueberries",
-        "Blackberries",
-        "Boysenberries",
-        "Bread fruit",
-        "Cantaloupes (cantalope)",
-        "Cherries",
-        "Cranberries",
-        "Cucumbers",
-        "Currants",
-        "Dates",
-        "Eggplant",
-        "Figs",
-        "Grapes",
-        "Grapefruit",
-        "Guava",
-        "Honeydew melons",
-        "Huckleberries",
-        "Kiwis",
-        "Kumquat",
-        "Lemons",
-        "Limes",
-        "Mangos",
-        "Mulberries",
-        "Muskmelon",
-        "Nectarines",
-        "Olives",
-        "Oranges",
-        "Papaya",
-        "Peaches",
-        "Pears",
-        "Persimmon",
-        "Pineapple",
-        "Plums",
-        "Pomegranate",
-        "Raspberries",
-        "Rose Apple",
-        "Starfruit",
-        "Strawberries",
-        "Tangerines",
-        "Tomatoes",
-        "Watermelons",
-        "Zucchini"
-      ],
-      selectedFruits: [],
+      selectedComponentGroups: [],
 
       headers: [
         {
-          text: "Dessert (100g serving)",
+          text: "Name",
           align: "start",
-          sortable: false,
-          value: "name"
-        },
-        { text: "Calories", value: "calories" },
-        { text: "Fat (g)", value: "fat" },
-        { text: "Carbs (g)", value: "carbs" },
-        { text: "Protein (g)", value: "protein" },
-        { text: "Iron (%)", value: "iron" }
-      ],
-      desserts: [
-        {
-          name: "Frozen Yogurt",
-          calories: 159,
-          fat: 6.0,
-          carbs: 24,
-          protein: 4.0,
-          iron: "1%"
-        },
-        {
-          name: "Ice cream sandwich",
-          calories: 237,
-          fat: 9.0,
-          carbs: 37,
-          protein: 4.3,
-          iron: "1%"
-        },
-        {
-          name: "Eclair",
-          calories: 262,
-          fat: 16.0,
-          carbs: 23,
-          protein: 6.0,
-          iron: "7%"
-        },
-        {
-          name: "Cupcake",
-          calories: 305,
-          fat: 3.7,
-          carbs: 67,
-          protein: 4.3,
-          iron: "8%"
-        },
-        {
-          name: "Gingerbread",
-          calories: 356,
-          fat: 16.0,
-          carbs: 49,
-          protein: 3.9,
-          iron: "16%"
-        },
-        {
-          name: "Jelly bean",
-          calories: 375,
-          fat: 0.0,
-          carbs: 94,
-          protein: 0.0,
-          iron: "0%"
-        },
-        {
-          name: "Lollipop",
-          calories: 392,
-          fat: 0.2,
-          carbs: 98,
-          protein: 0,
-          iron: "2%"
-        },
-        {
-          name: "Honeycomb",
-          calories: 408,
-          fat: 3.2,
-          carbs: 87,
-          protein: 6.5,
-          iron: "45%"
-        },
-        {
-          name: "Donut",
-          calories: 452,
-          fat: 25.0,
-          carbs: 51,
-          protein: 4.9,
-          iron: "22%"
-        },
-        {
-          name: "KitKat",
-          calories: 518,
-          fat: 26.0,
-          carbs: 65,
-          protein: 7,
-          iron: "6%"
+          value: "title"
         }
       ],
 
-      alert: false,
-      addItems: [
-        {
-          icon: "mdi-puzzle-outline",
-          function: this.addNewComponent,
-          title: "New Component"
-        },
-        {
-          icon: "mdi-folder-plus",
-          function: this.addGroup,
-          title: "New Group"
-        }
-      ],
-
-      last_search_filter: sessionStorage.getItem("last_search_filter"),
-
-      upload_path: store.state.baseUrl + "uploads/images/",
-      carouselActiveIndex: 0,
-      model: 0,
-      first_boot: true,
-      loading_boot: true,
-      bulk_action_executing: false,
-
+      //Dialogs
       dialogSystemOperations: false,
-      dialogSort: false,
       dialogComponent: false,
       dialogGroup: false,
-      dialogSelected: false,
-      dialogTable: false,
-      dialogIconModal: false,
-      tab_item: 0,
-      table_tabs: [
-        {
-          icon: "mdi-table-plus",
-          menu_name: "Table"
-        },
 
-        {
-          icon: "mdi-table-column-plus-before",
-          menu_name: "Fields"
-        }
-      ],
       loading: false,
-      loadingRows: false,
-
-      log_insert: 0,
-      log_change: 0,
-
       view_type: false,
 
       // lodash SORT
@@ -425,27 +224,13 @@ export default {
       order_sidebar: false,
       order_global: false,
 
-      component_details: false,
-
       val_errors_group: [],
       val_errors_component: [],
       val_errors_icon: [],
 
-      protected: false,
-      date_time: moment().format("YYYY-MM-DD HH:mm:ss"),
-      dragthis: ".item",
-      count: 0,
-
       activeGroupFolder: "",
       activeGroupItem: 0,
       activeGroupId: "",
-
-      menu_folders: null,
-
-      newGroup: 0,
-      selected_table: null,
-      selected_key: null,
-      selected_group: null,
 
       tables: [],
       field: [],
@@ -454,9 +239,6 @@ export default {
       selectedComponent: [],
 
       rows: [],
-
-      search: "",
-      searchGroups: "",
 
       componentSettings: {
         component_group_id: 0,
@@ -477,41 +259,32 @@ export default {
         ordering: ""
       },
 
-      table_settings: {
-        table_name: ""
-      },
-
-      table_fields: {
-        table_name: ""
-      },
-
-      groupComponent: ["No Parent"],
-
-      items_type: [
-        { value: "blank", text: " Blank Template" }
-        // { value: "crud", text: " Complete CRUD" },
-        // { value: "crud2", text: " Simple Table CRUD" },
-        // { value: "crud3", text: " Dropdown function CRUD" }
-      ],
-
-      nodata: store.state.baseUrl + "uploads/images/no-data.png",
+      items_type: [{ value: "blank", text: " Blank Template" }],
 
       //NEW VARS
       isTableLayout: false,
       multipleSelect: false,
-      componentCardGroup: 0,
       groupInputValue: "",
-      componentGroups: [],
-      allComponents: []
+      allGroups: [],
+      componentTabs: [
+        { name: "All", icon: "mdi-all-inclusive", color: "" },
+        { name: "Starred", icon: "mdi-star", color: "" },
+        { name: "Active", icon: "mdi-lightbulb-on", color: "blue darken-4" },
+        { name: "Inactive", icon: "mdi-lightbulb-on-outline", color: "red lighten-1" },
+        { name: "Modular", icon: "mdi-view-module", color: "" }
+      ]
     };
   },
 
   computed: {
+    ...sync("drawers", ["secureComponentDrawer"]),
+    ...sync("componentManagement", ["componentCardGroup", "allComponents"]),
+
     likesAllFruit() {
-      return this.selectedFruits.length === this.fruits.length;
+      return this.selectedComponentGroups.length === this.allComponents.length;
     },
     likesSomeFruit() {
-      return this.selectedFruits.length > 0 && !this.likesAllFruit;
+      return this.selectedComponentGroups.length > 0 && !this.likesAllFruit;
     },
     icon() {
       if (this.likesAllFruit) return "mdi-close-box";
@@ -565,7 +338,7 @@ export default {
   methods: {
     mapComponentGroup(item) {
       // return item;
-      return this.componentGroups.filter(cg => cg.id === item.component_group_id)[0].name;
+      return this.allGroups.filter(cg => cg.id === item.component_group_id)[0].name;
     },
 
     catchGroupInputValue(e) {
@@ -574,9 +347,9 @@ export default {
     toggle() {
       this.$nextTick(() => {
         if (this.likesAllFruit) {
-          this.selectedFruits = [];
+          this.selectedComponentGroups = [];
         } else {
-          this.selectedFruits = this.fruits.slice();
+          this.selectedComponentGroups = this.allComponents.slice();
         }
       });
     },
@@ -586,7 +359,7 @@ export default {
       axios.post("api/ComponentGroup", { name: this.group_settings.name }).then(response => {
         if (response.data.status) {
           this.dialogGroup = false;
-          this.componentGroups = response.data.rows;
+          this.allGroups = response.data.rows;
         }
       });
     },
@@ -595,7 +368,7 @@ export default {
     getGroups() {
       axios.get("api/showAllGroups").then(response => {
         if (response.data.status) {
-          this.componentGroups = response.data.rows;
+          this.allGroups = response.data.rows;
         }
       });
     },
@@ -937,6 +710,7 @@ export default {
       axios.post("api/Component", this.componentSettings).then(response => {
         if (response.data.status) {
           this.allComponents = response.data.rows;
+          this.dialogComponent = false;
         }
       });
     },
