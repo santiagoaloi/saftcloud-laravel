@@ -16,24 +16,29 @@ class ConstructController extends Controller {
      * @return \Illuminate\Http\Response
     */
     public function index(Request $request) {
-        $query = Component::find($request->id);
+        $query = Component::find($request);
+        $component = $query[0];
 
+        $config = $component->config;
 
-        $config = json_decode($query['config']);
         $formFields = $config['formFields'];
 
+        return $formFields;
+
         foreach ($formFields as $field) {
-            $ArrayColumns[] = [
-                'field'  => $field->field
+            $ArrayColumns[$field->field] = [
+                $field = $field->field,
             ];
         };
 
+        return $ArrayColumns;
 
         $headers[] = $ArrayColumns;
 
-        header('Content-Type: application/json');
-        echo json_encode(['status' => true, 'rows' => $query]);
-        exit();;
+        return response([
+            'rows' =>  $headers,
+            'status' => true
+        ], 200);
     }
 
     public function constructTable(){

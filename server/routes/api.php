@@ -8,6 +8,7 @@ use App\Http\Controllers\Root\ComponentGroupController;
 use App\Http\Controllers\Root\ComponentController;
 use App\Http\Controllers\Public\MakeAccountController;
 use App\Http\Controllers\Root\MysqlController;
+use App\Http\Controllers\Private\ConstructController;
 
 //Authentication Controller
 use App\Http\Controllers\AuthController;
@@ -45,7 +46,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::resource('/Component', ComponentController::class);
     Route::get('/showAllComponents', [ComponentController::class, 'showAll']);
-    Route::post('/testFunction', [ComponentController::class, 'store']);
+    Route::post('/testFunction', [ConstructController::class, 'index']);
 
     Route::resource('/MysqlResource', MysqlController::class);
     Route::get('/showAllTables', [MysqlController::class, 'showAll']);
