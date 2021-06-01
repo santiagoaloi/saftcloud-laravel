@@ -79,9 +79,6 @@
       <div class="d-flex">
         <v-switch v-model="multipleSelect" label="Multiple selection" class="mt-1 mx-4"> </v-switch>
         <v-btn @click="isTableLayout = !isTableLayout"><v-icon left> mdi-view-grid-outline</v-icon> Switch to grid view</v-btn>
-        <!-- <v-btn @click="secureComponentDrawer = !secureComponentDrawer"
-          ><v-icon left> mdi-view-grid-outline</v-icon> Test drawer</v-btn
-        > -->
       </div>
     </div>
 
@@ -124,16 +121,16 @@
                 "
               >
                 <v-card-actions class="px-0 ">
-                  <v-avatar rounded color="indigo">
+                  <v-avatar rounded :color="component.config_settings.icon.color">
                     <v-icon dark>
-                      mdi-alarm
+                      {{ component.config_settings.icon.name }}
                     </v-icon>
                   </v-avatar>
                   <v-spacer />
                   <v-btn color="white" small @click.stop icon :ripple="false"> <v-icon color="yellow"> mdi-star</v-icon></v-btn>
                 </v-card-actions>
 
-                <span class="gallery-card-title"> {{ component.title }} </span>
+                <span class="gallery-card-title"> {{ component.config.title }} </span>
 
                 <div class="gallery-card-subtitle-container">
                   <div class="gallery-card-subtitle-wrapper">
@@ -369,10 +366,7 @@ export default {
     getComponents() {
       axios.get("api/showAllComponents").then(response => {
         if (response.data.status) {
-          this.allComponents = response.data.rows;
-          // this.allComponents.forEach(component => {
-          //   component.config = JSON.parse(component.config);
-          // });
+          this.allComponents = response.data.components;
         }
       });
     },
@@ -705,10 +699,7 @@ export default {
     generate() {
       axios.post("api/Component", this.componentSettings).then(response => {
         if (response.data.status) {
-          this.allComponents = response.data.rows;
-          // this.allComponents.forEach(component => {
-          //   component.config = JSON.parse(component.config);
-          // });
+          this.allComponents = response.data.components;
           this.dialogComponent = false;
         }
       });
