@@ -57,12 +57,12 @@ class ComponentController extends Controller {
         $sql_where  = " WHERE ".$request['table'].". id IS NOT NULL";
         $sql_group  = "";
 
-        $config['sql_table'] = $request['table'];
-        $config['sql_select'] = $sql_select;
-        $config['sql_where'] = $sql_where;
-        $config['sql_group'] = $sql_group;
-        $config['columns']   = $ArrayColumns;
-        $config['form_fields'] = $ArrayFields;
+        $config['sql_table']        = $request['table'];
+        $config['sql_select']       = $sql_select;
+        $config['sql_where']        = $sql_where;
+        $config['sql_group']        = $sql_group;
+        $config['columns']          = $ArrayColumns;
+        $config['form_fields']      = $ArrayFields;
         $config['component_config'] = $componentConfig;
 
         $configSettings['icon']    = [
