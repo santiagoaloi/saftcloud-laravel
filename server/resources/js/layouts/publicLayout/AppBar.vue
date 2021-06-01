@@ -254,7 +254,7 @@ export default {
 
     testFunction() {
       let post = {table: 2}
-      axios.post("/api/testFunction", post).then(response => {
+      axios.get("/api/showAllComponents").then(response => {
         if (response.data.status) {
           console.log(response.data.rows);
         }

@@ -34,7 +34,6 @@ class ComponentController extends Controller {
      * @return \Illuminate\Http\Response
     */
     public function store(Request $request) {
-
         $json_data['table'] = $request['table'];
 
         $MysqlController = new MysqlController;
@@ -51,19 +50,19 @@ class ComponentController extends Controller {
             ];
         };
 
-        $componentConfig = [];
-
         $sql_select = "SELECT {$request['table']}.* FROM {$request['table']}";
         $sql_where  = " WHERE ".$request['table'].". id IS NOT NULL";
         $sql_group  = "";
 
-        $config['sql_table'] = $request['table'];
-        $config['sql_select'] = $sql_select;
-        $config['sql_where'] = $sql_where;
-        $config['sql_group'] = $sql_group;
-        $config['columns']   = $ArrayColumns;
-        $config['form_fields'] = $ArrayFields;
-        $config['component_config'] = $componentConfig;
+        $config['sql_table']    = $request['table'];
+        $config['sql_select']   = $sql_select;
+        $config['sql_where']    = $sql_where;
+        $config['sql_group']    = $sql_group;
+        $config['columns']      = $ArrayColumns;
+        $config['form_fields']  = $ArrayFields;
+        $config['name']         = $request['name'];
+        $config['title']        = $request['title'];
+        $config['note']         = $request['note'];
 
         $configSettings['icon']    = [
             'name'  => 'mdi-folder',
@@ -78,10 +77,6 @@ class ComponentController extends Controller {
 
         $data = [
             'component_group_id'    => $request['component_group_id'],
-            'prev_group_id'         => $request['prev_group_id'],
-            'name'                  => $request['name'],
-            'title'                 => $request['title'],
-            'note'                  => $request['note'],
             'config'                => json_encode($config),
             'config_settings'       => json_encode($configSettings),
         ];
@@ -104,9 +99,10 @@ class ComponentController extends Controller {
     */
     public function show($id) {
         $query = Component::find($id);
+        $component = $this->parseComponent($query);
 
         return response([
-            'rows' =>  $query,
+            'rows' =>  $component,
             'status' => true
         ], 200);
     }
@@ -120,11 +116,14 @@ class ComponentController extends Controller {
         if ($local){
             return Component::get();
         } else {
-            $query = Component::get();
+            $components = Component::get();
+            foreach($components as $component){
+                $arrayComponent[] = $this->parseComponent($component);
+            };
 
             return response([
-                'rows' =>  $query,
-                'status' => true
+                'components' => $arrayComponent,
+                'status'    => true
             ], 200);
         }
     }
@@ -158,5 +157,29 @@ class ComponentController extends Controller {
     */
     public function destroy($id) {
         //
+    }
+
+    public function parseComponent($component){
+        $id = $component->id;
+        $component_group_id = $component->component_group_id;
+        $config = $this->constructConfig($component->config);
+        $configSettings = $this->constructConfig($component->config_settings);
+
+        $result = [
+            'id'                => $id,
+            'component_group_id'=> $component_group_id,
+            'config'            => $config,
+            'config_settings'   => $configSettings,
+        ];
+
+        return $result;
+    }
+
+    public function constructConfig($config){
+        return json_decode($config, true);
+    }
+
+    public function constructConfigSettings($configSettings){
+        return json_decode($configSettings, true);
     }
 }
