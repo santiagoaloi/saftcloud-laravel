@@ -4,7 +4,8 @@ import { make } from "vuex-pathify";
 const state = {
   componentCardGroup: 0,
   allComponents: [],
-  allGroups: []
+  allGroups: [],
+  selectedComponentGroups: []
 };
 
 const mutations = make.mutations(state);

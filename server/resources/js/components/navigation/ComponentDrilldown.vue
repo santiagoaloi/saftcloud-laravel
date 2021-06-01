@@ -33,13 +33,15 @@
         </v-list-item-avatar>
 
         <v-list-item-content>
-          <v-list-item-title>{{ activeComponent.config.title }}</v-list-item-title>
+          <v-list-item-title>
+            <v-text-field spellcheck="false" flat solo hide-details dense v-model="activeComponent.config.title"> </v-text-field
+          ></v-list-item-title>
         </v-list-item-content>
 
         <v-list-item-icon>
-          <v-icon>
-            mdi-star
-          </v-icon>
+          <v-btn @click="setStarred(activeComponent)" color="white" small @click.stop icon :ripple="false">
+            <v-icon :color="isStarredColor(activeComponent)"> {{ isStarredIcon(activeComponent) }} </v-icon></v-btn
+          >
         </v-list-item-icon>
       </v-list-item>
     </v-list>
@@ -47,7 +49,18 @@
     <v-card flat class="mx-auto pa-1 mt-n3" max-width="344">
       <v-card-text>
         <div class="text--primary">
-          {{ activeComponent.config.note }}
+          <v-textarea
+            spellcheck="false"
+            noResize
+            :rows="2"
+            flat
+            solo
+            autogrow
+            hide-details
+            dense
+            v-model="activeComponent.config.note"
+          >
+          </v-textarea>
         </div>
       </v-card-text>
     </v-card>
@@ -64,7 +77,16 @@
             mdi-link
           </v-icon>
         </v-btn>
-        <v-btn @click="removeComponent(activeComponent.id)" depressed class="mx-2" height="70" dark large small color="white">
+        <v-btn
+          @click="removeComponentWarning(activeComponent.id, activeComponent.config.title)"
+          depressed
+          class="mx-2"
+          height="70"
+          dark
+          large
+          small
+          color="white"
+        >
           <v-icon color="pink" large dark>
             mdi-trash-can-outline
           </v-icon>
@@ -137,7 +159,7 @@
           <v-container>
             <small>Component group </small>
             <v-autocomplete
-              @update:search-input="catchGroupInputValue($event)"
+              v-model="activeComponent.component_group_id"
               solo
               :items="allGroups"
               :maxlength="25"
@@ -145,6 +167,9 @@
               item-text="name"
               hide-no-data
             />
+
+            <v-switch class="pl-1" v-model="activeComponent.config_settings.status.active" inset label="Active"></v-switch>
+            <v-switch class="pl-1" v-model="activeComponent.config_settings.status.modular" inset label="Modular"></v-switch>
           </v-container>
         </v-list>
       </v-card>
@@ -153,10 +178,10 @@
 </template>
 
 <script>
-import { sync } from "vuex-pathify";
+import { sync, call } from "vuex-pathify";
+import { store } from "@/store";
 
 export default {
-  inject: ["catchGroupInputValue"],
   data: () => ({
     items: ["Foo", "Bar", "Fizz", "Buzz"]
   }),
@@ -165,15 +190,55 @@ export default {
     ...sync("componentManagement", ["componentCardGroup", "allComponents", "allGroups"]),
 
     activeComponent() {
+      if (this.componentCardGroup === undefined) return;
       return this.allComponents[this.componentCardGroup];
     }
   },
 
   methods: {
+    setStarred(component) {
+      component.config_settings.status.starred = !component.config_settings.status.starred;
+    },
+
+    isStarredColor(component) {
+      if (component.config_settings.status.starred) {
+        return "orange darken-2";
+      } else {
+        return "black";
+      }
+    },
+
+    isStarredIcon(component) {
+      if (component.config_settings.status.starred) {
+        return "mdi-star";
+      } else {
+        return "mdi-star-outline";
+      }
+    },
+
+    removeComponentWarning(id, title) {
+      this.$swal({
+        title: `Delete ${title}?`,
+        text: "This action cannot be undone.",
+        showCancelButton: true,
+        confirmButtonText: "Delete",
+        cancelButtonText: "Cancel",
+        confirmButtonColor: "grey",
+        backdrop: "rgba(108, 122, 137, 0.8)"
+      }).then(result => {
+        if (result.value) {
+          this.removeComponent(id);
+        }
+      });
+    },
+
     removeComponent(id) {
       axios.delete(`api/Component/${id}`).then(response => {
         if (response.data.status) {
           this.allComponents = response.data.components;
+          store.set("snackbar/value", true);
+          store.set("snackbar/text", "Component removed");
+          store.set("snackbar/color", "pink darken-1");
         }
       });
     },

@@ -1,17 +1,6 @@
-/* Enter and leave animations can use different */
-/* durations and timing functions.              */
-.fade-enter-active {
-  transition: all 0.2s cubic-bezier(1, 0.5, 0.8, 1);
+html {
+  overflow: auto;
 }
-.fade-leave-active {
-  transition: all 0.2s cubic-bezier(1, 0.5, 0.8, 1);
-}
-.fade-enter, .fade-leave-to
-/* .slide-fade-leave-active below version 2.1.8 */ {
-  opacity: 0;
-  transition: all 0.2s ease;
-}
-
 .v-application code {
   background-color: transparent !important;
   color: inherit !important;
@@ -73,22 +62,6 @@ input::-webkit-inner-spin-button {
 
 .shadows {
   text-shadow: rgba(61, 61, 61, 0.1) 1px 1px, rgba(61, 61, 61, 0.3) 1px 1px;
-}
-
-.expanded {
-  max-width: 21em;
-  -webkit-transition: all 0.7s ease 0s;
-  -moz-transition: all 0.7s ease 0s;
-  -o-transition: all 0.7s ease 0s;
-  transition: all 0.7s ease 0s;
-}
-
-.shrinked {
-  max-width: 14em;
-  -webkit-transition: all 0.7s ease 0s;
-  -moz-transition: all 0.7s ease 0s;
-  -o-transition: all 0.7s ease 0s;
-  transition: all 0.7s ease 0s;
 }
 
 .articleDropdownElipsis {
@@ -157,9 +130,3 @@ input::-webkit-inner-spin-button {
 .theme--light.v-tabs .v-tab:hover::before {
   opacity: 0 !important;
 }
-
-/* @media (min-width: 1904px) {
-  .container {
-    max-width: 1561px !important;
-  }
-} */

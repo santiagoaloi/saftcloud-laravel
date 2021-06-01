@@ -1,70 +1,7 @@
 <template>
   <div>
     <components-appbar :parent-data="$data" />
-
-    <v-card color="transparent" flat class="mt-8">
-      <v-row align="center">
-        <v-col cols="12" sm="3">
-          <small>Component groups</small>
-          <v-autocomplete
-            @update:search-input="catchGroupInputValue($event)"
-            solo
-            v-model="selectedComponentGroups"
-            :items="allGroups"
-            multiple
-            :maxlength="25"
-            item-value="id"
-            item-text="name"
-            return-object
-          >
-            <template v-slot:prepend-item>
-              <v-list-item ripple @click="toggle">
-                <v-list-item-action>
-                  <v-icon :color="selectedComponentGroups.length > 0 ? 'indigo darken-4' : 'grey darken-3'">
-                    {{ icon }}
-                  </v-icon>
-                </v-list-item-action>
-                <v-list-item-content>
-                  <v-list-item-title>
-                    Select All
-                  </v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-              <v-divider></v-divider>
-            </template>
-
-            <template v-slot:selection="data">
-              <template>
-                <span v-if="data.index === 0" class="grey--text caption"
-                  ><v-chip labal style="color: black" small label color="blue-grey lighten-4">
-                    {{ selectedComponentGroups.length }} groups selected.</v-chip
-                  ></span
-                >
-              </template>
-            </template>
-
-            <template v-slot:no-data>
-              <v-list-item class="ml-1">
-                <v-list-item-content>
-                  <v-list-item-title>
-                    <a @click="dialogGroup = !dialogGroup">+ Create group </a> {{ groupInputValue }}
-                  </v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-            </template>
-          </v-autocomplete>
-        </v-col>
-        <v-col cols="12" sm="9">
-          <div>
-            <v-chip-group showArrows centerActive>
-              <v-chip :ripple="false" close @click:close="" v-for="item in selectedComponentGroups" :key="item">
-                {{ item.name }}
-              </v-chip>
-            </v-chip-group>
-          </div>
-        </v-col>
-      </v-row>
-    </v-card>
+    <components-groups :parent-data="$data" />
 
     <div class="d-flex justify-space-between align-center">
       <v-tabs showArrows class="col-6 mt-n3" background-color="transparent" sliderSize="1">
@@ -84,74 +21,89 @@
 
     <v-divider></v-divider>
 
-    <v-fade-transition hide-on-leave>
-      <template v-if="isTableLayout">
-        <v-card class="mt-2" flat>
-          <v-data-table
-            fixed-header
-            height="40vh"
-            checkbox-color="primary"
-            item-key="id"
-            show-select
-            :headers="headers"
-            :items="allComponents"
-            :items-per-page="5"
-            class="elevation-0"
-          ></v-data-table>
-        </v-card>
-      </template>
-    </v-fade-transition>
+    <template v-if="allComponents.length > 0">
+      <v-fade-transition hide-on-leave>
+        <template v-if="isTableLayout">
+          <v-card class="mt-2" flat>
+            <v-data-table
+              fixed-header
+              height="40vh"
+              checkbox-color="primary"
+              item-key="id"
+              show-select
+              :headers="headers"
+              :items="allComponents"
+              :items-per-page="5"
+              class="elevation-0"
+            ></v-data-table>
+          </v-card>
+        </template>
+      </v-fade-transition>
 
-    <v-fade-transition hide-on-leave>
-      <template v-if="!isTableLayout">
-        <v-item-group v-model="componentCardGroup" mandatory :multiple="multipleSelect">
-          <div class="gallery-card-container py-2">
-            <v-item :key="index" v-for="(component, index) in allComponents" v-slot="{ active, toggle }">
-              <v-card
-                hover
-                :color="active ? 'indigo lighten-5' : 'white'"
-                :max-width="$vuetify.breakpoint.smAndDown ? '' : 320"
-                height="180"
-                width="100%"
-                :ripple="false"
-                class="d-flex flex-column justify-space-between pa-4 "
-                @click="
-                  toggle();
-                  secureComponentDrawer = true;
-                "
-              >
-                <v-card-actions class="px-0 ">
-                  <v-avatar rounded :color="component.config_settings.icon.color">
-                    <v-icon dark>
-                      {{ component.config_settings.icon.name }}
-                    </v-icon>
-                  </v-avatar>
-                  <v-spacer />
-                  <v-btn color="white" small @click.stop icon :ripple="false"> <v-icon color="yellow"> mdi-star</v-icon></v-btn>
-                </v-card-actions>
+      <v-fade-transition hide-on-leave>
+        <template v-if="!isTableLayout">
+          <v-item-group v-model="componentCardGroup" mandatory :multiple="multipleSelect">
+            <div class="gallery-card-container py-2">
+              <v-item :key="index" v-for="(component, index) in allComponentsFiltered" v-slot="{ active, toggle }">
+                <v-card
+                  hover
+                  :color="active ? 'indigo lighten-5' : 'white'"
+                  :max-width="$vuetify.breakpoint.smAndDown ? '' : 320"
+                  height="180"
+                  width="100%"
+                  :ripple="false"
+                  class="d-flex flex-column justify-space-between pa-4 "
+                  @click="
+                    toggle();
+                    secureComponentDrawer = true;
+                  "
+                >
+                  <v-card-actions class="px-0 ">
+                    <v-avatar rounded :color="component.config_settings.icon.color">
+                      <v-icon dark>
+                        {{ component.config_settings.icon.name }}
+                      </v-icon>
+                    </v-avatar>
+                    <v-spacer />
+                    <v-btn @click="setStarred(component)" color="white" small @click.stop icon :ripple="false">
+                      <v-icon :color="isStarredColor(component)"> {{ isStarredIcon(component) }} </v-icon></v-btn
+                    >
+                  </v-card-actions>
 
-                <span class="gallery-card-title"> {{ component.config.title }} </span>
+                  <span class="gallery-card-title"> {{ component.config.title }} </span>
 
-                <div class="gallery-card-subtitle-container">
-                  <div class="gallery-card-subtitle-wrapper">
-                    <h5 class="gallery-card-subtitle">
-                      <v-chip style="pointer-events:none" color="grey lighten-5" text-color="blue darken-4" label class="col-6">
-                        <div class="col-12 text-truncate">
-                          {{ mapComponentGroup(component) }}
-                        </div>
-                      </v-chip>
-                    </h5>
+                  <div class="gallery-card-subtitle-container">
+                    <div class="gallery-card-subtitle-wrapper">
+                      <h5 class="gallery-card-subtitle">
+                        <v-chip style="pointer-events:none" color="grey lighten-5" text-color="blue darken-4" label class="col-6">
+                          <div class="col-12 text-truncate">
+                            {{ mapComponentGroup(component) }}
+                          </div>
+                        </v-chip>
+                      </h5>
+                    </div>
                   </div>
-                </div>
-              </v-card>
-            </v-item>
+                </v-card>
+              </v-item>
+            </div>
+          </v-item-group>
+        </template>
+      </v-fade-transition>
+    </template>
+
+    <template v-else>
+      <v-container fluid>
+        <v-sheet color="transparent" height="45vh" class="d-flex pa-2 justify-center align-center">
+          <div class="flex-grow-1 align-center justify-center d-flex flex-column">
+            <v-img :aspect-ratio="1" width="250" contain src="storage/systemImages/noContent.svg"></v-img>
+            No components found. Choose a different filter.
           </div>
-        </v-item-group>
-      </template>
-    </v-fade-transition>
-    <!-- 
-    <dialog-system-operations v-model="dialogSystemOperations" :parent-data="$data" />
-    <dialog-group v-model="dialogGroup" :parent-data="$data" /> -->
+        </v-sheet>
+      </v-container>
+    </template>
+
+    <!-- <dialog-system-operations v-model="dialogSystemOperations" :parent-data="$data" /> -->
+    <dialog-group v-if="dialogGroup" v-model="dialogGroup" :parent-data="$data" />
     <dialog-component v-if="dialogComponent" ref="dialogNewComponent" v-model="dialogComponent" :parent-data="$data" />
   </div>
 </template>
@@ -169,7 +121,8 @@ export default {
     DialogGroup: () => import("./DialogGroup"),
     DialogComponent: () => import("./DialogComponent"),
     DialogSystemOperations: () => import("./DialogSystemOperations"),
-    ComponentsAppbar: () => import("./ComponentsAppbar")
+    ComponentsAppbar: () => import("./ComponentsAppbar"),
+    ComponentsGroups: () => import("./ComponentsGroups")
   },
 
   mixins: [globalMixin],
@@ -186,25 +139,14 @@ export default {
 
   computed: {
     ...sync("drawers", ["secureComponentDrawer"]),
-    ...sync("componentManagement", ["componentCardGroup", "allComponents", "allGroups"]),
+    ...sync("componentManagement", ["componentCardGroup", "allComponents", "allGroups", "selectedComponentGroups"]),
 
-    selectedAllComponents() {
-      return this.selectedComponentGroups.length === this.allGroups.length;
-    },
-
-    selectedSomeComponents() {
-      return this.selectedComponentGroups.length > 0 && !this.selectedAllComponents;
-    },
-
-    icon() {
-      if (this.selectedAllComponents) return "mdi-close-box";
-      if (this.selectedSomeComponents) return "mdi-minus-box";
-      return "mdi-checkbox-blank-outline";
+    allComponentsFiltered() {
+      return this.allComponents.filter(c => this.selectedComponentGroups.some(g => g.id === c.component_group_id));
     }
   },
 
   mounted() {
-    this.getGroups();
     this.getComponents();
   },
 
@@ -217,11 +159,9 @@ export default {
         dialogGroup: false,
 
         loading: false,
-        view_type: false,
         isTableLayout: false,
         multipleSelect: false,
         groupInputValue: "",
-        selectedComponentGroups: [],
 
         group_settings: {
           group_id: "",
@@ -252,45 +192,41 @@ export default {
           {
             text: "Name",
             align: "start",
-            value: "title"
+            value: "config.title"
           }
-        ],
-        items_type: [{ value: "blank", text: " Blank Template" }]
+        ]
       };
     },
 
-    mapComponentGroup(item) {
-      return this.allGroups.filter(cg => cg.id === item.component_group_id)[0].name;
+    setStarred(component) {
+      component.config_settings.status.starred = !component.config_settings.status.starred;
     },
 
-    catchGroupInputValue(e) {
-      this.groupInputValue = e;
+    isStarredColor(component) {
+      if (component.config_settings.status.starred) {
+        return "orange darken-2";
+      } else {
+        return "black";
+      }
     },
 
-    toggle() {
-      this.$nextTick(() => {
-        if (this.selectedAllComponents) {
-          this.selectedComponentGroups = [];
-        } else {
-          this.selectedComponentGroups = this.allGroups.slice();
-        }
-      });
+    isStarredIcon(component) {
+      if (component.config_settings.status.starred) {
+        return "mdi-star";
+      } else {
+        return "mdi-star-outline";
+      }
     },
 
-    // Saves group data
+    mapComponentGroup(component) {
+      if (this.allGroups.length === 0) return;
+      return this.allGroups.filter(g => g.id === component.component_group_id)[0].name;
+    },
+
     saveGroup() {
       axios.post("api/ComponentGroup", { name: this.group_settings.name }).then(response => {
         if (response.data.status) {
           this.dialogGroup = false;
-          this.allGroups = response.data.rows;
-        }
-      });
-    },
-
-    // get groups
-    getGroups() {
-      axios.get("api/showAllGroups").then(response => {
-        if (response.data.status) {
           this.allGroups = response.data.rows;
         }
       });
@@ -302,18 +238,6 @@ export default {
           this.allComponents = response.data.components;
         }
       });
-    },
-
-    addNewComponent() {
-      this.dialogComponent = true;
-    },
-
-    addNewGroup() {
-      this.dialogGroup = true;
-    },
-
-    sidebarEnabledCheck() {
-      return this.rows.filter(item => item.menu == "1").length;
     },
 
     generate() {

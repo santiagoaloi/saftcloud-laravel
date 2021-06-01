@@ -7,21 +7,8 @@
     show-remove
     @save="saveGroup()"
     @close="() => (internalValue = false)"
-    @remove="
-      deleteGroup(parentData.group_settings.total, parentData.group_settings.group_id, parentData.group_settings.name)
-    "
+    @remove=""
   >
-    <template>
-      <v-banner v-if="parentData.val_errors_group.length != 0" single-line>
-        <v-icon slot="icon" color="warning" size="36">
-          mdi-information-variant
-        </v-icon>
-        <p v-for="(item, index) in parentData.val_errors_group" :key="index" class="pa-0">
-          {{ item }}
-        </p>
-      </v-banner>
-    </template>
-
     <v-card-text>
       <v-container>
         <v-row>
@@ -128,7 +115,7 @@
 export default {
   name: "DialogGroup",
   inheritAttrs: true,
-  inject: ["saveGroup", "deleteGroup"],
+  inject: ["saveGroup"],
 
   props: {
     value: Boolean,
