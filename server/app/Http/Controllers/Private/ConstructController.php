@@ -18,23 +18,16 @@ class ConstructController extends Controller {
     public function index(Request $request) {
         $query = Component::find($request);
         $component = $query[0];
+        $formfields = $this->constructTableFields($component);
+        $headers = $this->constructTableHeaders($component);
+        $model = $this->constructModel($component);
 
-        $config = json_decode($component->config, true);
 
-        $formfields = $config['formFields'];
-
-        // return $formfields;
-
-        foreach ($formfields as $field) {
-            $ArrayColumns['formfields'][$field['field']] = $field;
-        };
-
-        return $ArrayColumns;
-
-        $headers[] = $ArrayColumns;
 
         return response([
-            'rows' =>  $headers,
+            'formfields' => $formfields,
+            'headers'    => $headers,
+            'model'      => $model,
             'status' => true
         ], 200);
     }
@@ -43,7 +36,43 @@ class ConstructController extends Controller {
 
     }
 
-    public function constructTableFields(){
+    public function constructTableFields($component){
+        $config = json_decode($component->config, true);
 
+        $fields = $config['formFields'];
+
+        foreach ($fields as $field) {
+            $formfields[$field['field']] = $field;
+        };
+
+        return $formfields;
+    }
+
+    public function constructTableHeaders($component){
+        $config = json_decode($component->config, true);
+
+        $fields = $config['formFields'];
+
+        foreach ($fields as $field) {
+            if($field['displayField']){
+                $headers[][$field['field']] = $field;
+            }
+        };
+
+        return $headers;
+    }
+
+    public function constructModel($component){
+        $config = json_decode($component->config, true);
+
+        $fields = $config['formFields'];
+
+        foreach ($fields as $field) {
+            if($field['displayField']){
+                $headers[][$field['field']] = $field['field'];
+            }
+        };
+
+        return $headers;
     }
 }
