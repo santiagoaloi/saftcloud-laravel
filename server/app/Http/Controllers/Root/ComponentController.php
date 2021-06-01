@@ -86,7 +86,7 @@ class ComponentController extends Controller {
         $query = $this->showAll(true);
 
         return response([
-            'rows' =>  $query,
+            'components' =>  $query,
             'status' => true
         ], 200);
     }
