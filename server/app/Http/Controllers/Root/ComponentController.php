@@ -102,7 +102,7 @@ class ComponentController extends Controller {
         $component = $this->parseComponent($query);
 
         return response([
-            'rows' =>  $component,
+            'components' =>  $component,
             'status' => true
         ], 200);
     }
