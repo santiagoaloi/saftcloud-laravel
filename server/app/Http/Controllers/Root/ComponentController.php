@@ -114,7 +114,13 @@ class ComponentController extends Controller {
     */
     public function showAll($local = false) {
         if ($local){
-            return Component::get();
+            $components = Component::get();
+
+            foreach($components as $component){
+                $arrayComponent[] = $this->parseComponent($component);
+            };
+
+            return $arrayComponent;
         } else {
             $components = Component::get();
             foreach($components as $component){
