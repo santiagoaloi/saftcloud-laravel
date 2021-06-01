@@ -18,16 +18,21 @@ class ConstructController extends Controller {
     public function index(Request $request) {
         $query = Component::find($request);
         $component = $query[0];
-        $formfields = $this->constructTableFields($component);
-        $headers = $this->constructTableHeaders($component);
-        $model = $this->constructModel($component);
-
-
+        $config = $this->constructConfig($component->config);
+        $configSettings = $this->constructConfig($component->config_settings);
+        $formFields = $this->constructTableFields($config);
+        $headers = $this->constructTableHeaders($config);
+        $model = $this->constructModel($config);
+        $pageHeader = $component->title;
+        $table = $config['sql_table'];
 
         return response([
-            'formfields' => $formfields,
-            'headers'    => $headers,
-            'model'      => $model,
+            'table'         => $table,
+            'form_fields'   => $formFields,
+            'headers'       => $headers,
+            'models'        => $model,
+            'page_header'   => $pageHeader,
+            'config_settings'=> $configSettings,
             'status' => true
         ], 200);
     }
@@ -36,43 +41,50 @@ class ConstructController extends Controller {
 
     }
 
-    public function constructTableFields($component){
-        $config = json_decode($component->config, true);
-
-        $fields = $config['formFields'];
+    public function constructTableFields($config){
+        $fields = $config['form_fields'];
 
         foreach ($fields as $field) {
-            $formfields[$field['field']] = $field;
+            $formFields[$field['field']] = $field;
         };
 
-        return $formfields;
+        return $formFields;
     }
 
-    public function constructTableHeaders($component){
-        $config = json_decode($component->config, true);
+    public function constructTableHeaders($config){
 
-        $fields = $config['formFields'];
+        $fields = $config['form_fields'];
 
         foreach ($fields as $field) {
-            if($field['displayField']){
-                $headers[][$field['field']] = $field;
+            if($field['display_field']){
+                $headers[] = [
+                    'value' => $field['field'],
+                    'text' => $field['field'],
+                ];
             }
         };
 
         return $headers;
     }
 
-    public function constructModel($component){
-        $config = json_decode($component->config, true);
+    public function constructModel($config){
 
-        $fields = $config['formFields'];
+        $fields = $config['form_fields'];
 
         foreach ($fields as $field) {
-            if($field['displayField']){
-                $headers[][$field['field']] = $field['field'];
+            if($field['display_field']){
+                $models[$field['field']] = '';
             }
         };
 
-        return $headers;
+        return $models;
+    }
+
+    public function constructConfig($config){
+        return json_decode($config, true);
+    }
+
+    public function constructConfigSettings($configSettings){
+        return json_decode($configSettings, true);
     }
 }

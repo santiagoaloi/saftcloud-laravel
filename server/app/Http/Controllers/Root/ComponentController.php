@@ -47,7 +47,7 @@ class ComponentController extends Controller {
 
             $ArrayFields[] = [
                 'field'         => $column,
-                'displayField'  => true,
+                'display_field'  => true,
             ];
         };
 
@@ -57,21 +57,33 @@ class ComponentController extends Controller {
         $sql_where  = " WHERE ".$request['table'].". id IS NOT NULL";
         $sql_group  = "";
 
-        $config['sql_table'] = $sql_group;
-        $config['columns']   = $ArrayColumns;
-        $config['formFields'] = $ArrayFields;
-        $config['componentConfig'] = $componentConfig;
+        $config['sql_table'] = $request['table'];
         $config['sql_select'] = $sql_select;
         $config['sql_where'] = $sql_where;
         $config['sql_group'] = $sql_group;
+        $config['columns']   = $ArrayColumns;
+        $config['form_fields'] = $ArrayFields;
+        $config['component_config'] = $componentConfig;
+
+        $configSettings['icon']    = [
+            'name'  => 'mdi-folder',
+            'color' => 'blue',
+        ];
+        $configSettings['status'] = [
+            'starred'   => false,
+            'active'    => false,
+            'inactive'  => false,
+            'modular'   => false,
+        ];
 
         $data = [
-        'component_group_id'    => $request['component_group_id'],
-        'prev_group_id'         => $request['prev_group_id'],
-        'name'                  => $request['name'],
-        'title'                 => $request['title'],
-        'note'                  => $request['note'],
-        'config'                => json_encode($config),
+            'component_group_id'    => $request['component_group_id'],
+            'prev_group_id'         => $request['prev_group_id'],
+            'name'                  => $request['name'],
+            'title'                 => $request['title'],
+            'note'                  => $request['note'],
+            'config'                => json_encode($config),
+            'config_settings'       => json_encode($configSettings),
         ];
 
         Component::create($data);
