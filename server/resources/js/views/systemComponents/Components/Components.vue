@@ -370,9 +370,9 @@ export default {
       axios.get("api/showAllComponents").then(response => {
         if (response.data.status) {
           this.allComponents = response.data.rows;
-          this.allComponents.forEach(component => {
-            component.config = JSON.parse(component.config);
-          });
+          // this.allComponents.forEach(component => {
+          //   component.config = JSON.parse(component.config);
+          // });
         }
       });
     },
@@ -706,9 +706,9 @@ export default {
       axios.post("api/Component", this.componentSettings).then(response => {
         if (response.data.status) {
           this.allComponents = response.data.rows;
-          this.allComponents.forEach(component => {
-            component.config = JSON.parse(component.config);
-          });
+          // this.allComponents.forEach(component => {
+          //   component.config = JSON.parse(component.config);
+          // });
           this.dialogComponent = false;
         }
       });
@@ -992,6 +992,9 @@ export default {
   grid-template-columns: repeat(auto-fill, minmax(264px, 1fr));
   grid-auto-rows: 180px;
   gap: 16px;
+
+  animation: slideAround 10s infinite alternate linear;
+  will-change: grid-template-columns, grid-template-rows;
 }
 
 .gallery-card-wrapper {
