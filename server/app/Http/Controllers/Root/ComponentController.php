@@ -162,11 +162,10 @@ class ComponentController extends Controller {
      * @return \Illuminate\Http\Response
     */
     public function destroy($id) {
-        $post = posts::find($id);
-        $post->delete();
+        $query = Component::find($id);
+        $query->delete();
 
         return $this->showAll();
-        
     }
 
     public function parseComponent($component){
