@@ -27,13 +27,13 @@
     <v-list class="mt-13">
       <v-list-item>
         <v-list-item-avatar>
-          <v-icon color="indigo">
-            mdi-alarm
+          <v-icon :color="activeComponent.config_settings.icon.color">
+            {{ activeComponent.config_settings.icon.name }}
           </v-icon>
         </v-list-item-avatar>
 
         <v-list-item-content>
-          <v-list-item-title>{{ activeComponent.title }}</v-list-item-title>
+          <v-list-item-title>{{ activeComponent.config.title }}</v-list-item-title>
         </v-list-item-content>
 
         <v-list-item-icon>
@@ -47,7 +47,7 @@
     <v-card flat class="mx-auto pa-1 mt-n3" max-width="344">
       <v-card-text>
         <div class="text--primary">
-          {{ activeComponent.note }}
+          {{ activeComponent.config.note }}
         </div>
       </v-card-text>
     </v-card>
@@ -64,7 +64,7 @@
             mdi-link
           </v-icon>
         </v-btn>
-        <v-btn depressed class="mx-2" height="70" dark large small color="white">
+        <v-btn @click="removeComponent(activeComponent.id)" depressed class="mx-2" height="70" dark large small color="white">
           <v-icon color="pink" large dark>
             mdi-trash-can-outline
           </v-icon>
@@ -85,7 +85,7 @@
             </v-list-item-icon>
 
             <v-list-item-content>
-              <v-list-item-title>products</v-list-item-title>
+              <v-list-item-title> {{ activeComponent.config.sql_table }}</v-list-item-title>
               <v-list-item-subtitle>Table</v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
@@ -169,6 +169,14 @@ export default {
   },
 
   methods: {
+    removeComponent(id) {
+      axios.delete(`api/Component/${id}`).then(response => {
+        if (response.data.status) {
+          this.allComponents = response.data.components;
+        }
+      });
+    },
+
     previousComponent() {
       if (this.componentCardGroup > 0) {
         this.componentCardGroup--;

@@ -4,7 +4,6 @@
     v-bind="$attrs"
     v-on="$listeners"
     :fullscreen="$vuetify.breakpoint.smAndDown || isMaximized"
-    :transition="noTransition ? false : 'expand-transition'"
     :hide-overlay="noOverlay"
     :overlay-opacity="0.7"
     overlay-color="rgba(108, 122, 137)"
@@ -52,17 +51,7 @@
       </template>
 
       <template v-if="!noActions">
-        <v-btn
-          v-if="!closeOnly"
-          x-small
-          color="white"
-          outlined
-          text
-          fab
-          class="mx-1"
-          :loading="loading"
-          @click.stop="save"
-        >
+        <v-btn v-if="!closeOnly" x-small color="white" outlined text fab class="mx-1" :loading="loading" @click.stop="save">
           <v-icon color="green lighten-2"> mdi-check </v-icon>
         </v-btn>
 
