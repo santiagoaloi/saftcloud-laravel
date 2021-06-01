@@ -7,6 +7,7 @@ use App\Models\Root\Component;
 use Illuminate\Http\Request;
 
 use App\Http\Controllers\Root\MysqlController;
+use App\Http\Controllers\Root\ComponentController;
 
 class ConstructController extends Controller {
     /**
@@ -18,8 +19,10 @@ class ConstructController extends Controller {
     public function index(Request $request) {
         $query = Component::find($request);
         $component = $query[0];
-        $config = $this->constructConfig($component->config);
-        $configSettings = $this->constructConfig($component->config_settings);
+        $ComponentController = new ComponentController;
+        $config = $ComponentController->constructConfig($component->config);
+        $configSettings = $ComponentController->constructConfig($component->config_settings);
+
         $formFields = $this->constructTableFields($config);
         $headers = $this->constructTableHeaders($config);
         $model = $this->constructModel($config);
@@ -52,7 +55,6 @@ class ConstructController extends Controller {
     }
 
     public function constructTableHeaders($config){
-
         $fields = $config['form_fields'];
 
         foreach ($fields as $field) {
@@ -68,7 +70,6 @@ class ConstructController extends Controller {
     }
 
     public function constructModel($config){
-
         $fields = $config['form_fields'];
 
         foreach ($fields as $field) {
@@ -80,11 +81,4 @@ class ConstructController extends Controller {
         return $models;
     }
 
-    public function constructConfig($config){
-        return json_decode($config, true);
-    }
-
-    public function constructConfigSettings($configSettings){
-        return json_decode($configSettings, true);
-    }
 }
