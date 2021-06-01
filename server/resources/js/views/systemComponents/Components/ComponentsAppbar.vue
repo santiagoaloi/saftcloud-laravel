@@ -27,7 +27,7 @@
           <v-icon class="mr-2" small> mdi-arrow-top-right </v-icon>Export
         </v-btn>
 
-        <v-btn class="ml-2" color="primary" @click.stop="add()">
+        <v-btn class="ml-2" color="primary" @click.stop="parentData.dialogComponent = true">
           <v-icon class="mr-2" small> mdi-plus </v-icon>Create component
         </v-btn>
       </div>
@@ -41,23 +41,6 @@
 export default {
   name: "ComponentsAppbar",
   inheritAttrs: true,
-  inject: [
-    "sortTitle",
-    "sortOwner",
-    "sortUpdated",
-    "sortCreationOrder",
-    "sortSidebarVisibility",
-    "sortGlobal",
-    "setView",
-    "deleteComponentBulk",
-    "enableProtectionBulk",
-    "disableProtectionBulk",
-    "sidebarBulkVisible",
-    "sidebarBulkHidden",
-    "showDesktop",
-    "add"
-  ],
-
   props: {
     value: Boolean,
     parentData: Object

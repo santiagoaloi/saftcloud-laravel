@@ -11,17 +11,7 @@ import { store } from "@/store";
 
 export default {
   name: "Secureview",
-  data() {
-    return {};
-  },
-  computed: {
-    // profileBackground() {
-    //   if (this.imageLoadingFailed) {
-    //     return this.defaultBackground;
-    //   } else {
-    //     return `${store.state.sessionData.userProfile.background}`;
-    //   }
-    // }
-  }
+
+  computed: {}
 };
 </script>

@@ -156,6 +156,7 @@
 import { sync } from "vuex-pathify";
 
 export default {
+  inject: ["catchGroupInputValue"],
   data: () => ({
     items: ["Foo", "Bar", "Fizz", "Buzz"]
   }),

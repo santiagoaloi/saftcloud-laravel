@@ -8,23 +8,13 @@
     @close="() => (internalValue = false)"
   >
     <ValidationObserver ref="newComponentForm" slim>
-      <template>
-        <v-banner v-if="parentData.val_errors_component.length !== 0" single-line>
-          <v-icon slot="icon" color="warning" size="36">
-            mdi-information-variant
-          </v-icon>
-          <p v-for="(item, index) in parentData.val_errors_component" :key="index" class="pa-0 mt-3">
-            {{ item }}
-          </p>
-        </v-banner>
-      </template>
-
       <v-container class="mt-2" fluid>
         <v-row dense>
           <v-col cols="12" sm="12" lg="6">
             <small>Group</small>
             <validation-provider v-slot="{ errors }" name="component group" rules="required">
               <v-autocomplete
+                autofocus
                 v-model="parentData.componentSettings.component_group_id"
                 :background-color="errors.length > 0 ? '#faebeb' : 'white'"
                 :error-messages="errors[0]"
@@ -70,7 +60,6 @@
               <v-text-field
                 ref="componentTitle"
                 v-model="parentData.componentSettings.title"
-                autofocus
                 solo
                 prepend-inner-icon="mdi-comment"
                 counter
