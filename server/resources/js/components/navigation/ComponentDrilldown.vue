@@ -27,20 +27,20 @@
     <v-list class="mt-13">
       <v-list-item>
         <v-list-item-avatar>
-          <v-icon :color="activeComponent.config_settings.icon.color">
-            {{ activeComponent.config_settings.icon.name }}
+          <v-icon :color="selectedComponent.config_settings.icon.color">
+            {{ selectedComponent.config_settings.icon.name }}
           </v-icon>
         </v-list-item-avatar>
 
         <v-list-item-content>
           <v-list-item-title>
-            <v-text-field spellcheck="false" flat solo hide-details dense v-model="activeComponent.config.title"> </v-text-field
+            <v-text-field spellcheck="false" flat solo hide-details dense v-model="selectedComponent.config.title"> </v-text-field
           ></v-list-item-title>
         </v-list-item-content>
 
         <v-list-item-icon>
-          <v-btn @click="setStarred(activeComponent)" color="white" small @click.stop icon :ripple="false">
-            <v-icon :color="isStarredColor(activeComponent)"> {{ isStarredIcon(activeComponent) }} </v-icon></v-btn
+          <v-btn @click="setStarred(selectedComponent)" color="white" small @click.stop icon :ripple="false">
+            <v-icon :color="isStarredColor(selectedComponent)"> {{ isStarredIcon(selectedComponent) }} </v-icon></v-btn
           >
         </v-list-item-icon>
       </v-list-item>
@@ -58,7 +58,7 @@
             autogrow
             hide-details
             dense
-            v-model="activeComponent.config.note"
+            v-model="selectedComponent.config.note"
           >
           </v-textarea>
         </div>
@@ -78,7 +78,7 @@
           </v-icon>
         </v-btn>
         <v-btn
-          @click="removeComponentWarning(activeComponent.id, activeComponent.config.title)"
+          @click="removeComponentWarning(selectedComponent.id, selectedComponent.config.title)"
           depressed
           class="mx-2"
           height="70"
@@ -107,7 +107,7 @@
             </v-list-item-icon>
 
             <v-list-item-content>
-              <v-list-item-title> {{ activeComponent.config.sql_table }}</v-list-item-title>
+              <v-list-item-title> {{ selectedComponent.config.sql_table }}</v-list-item-title>
               <v-list-item-subtitle>Table</v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
@@ -119,7 +119,7 @@
               </v-icon>
             </v-list-item-icon>
             <v-list-item-content>
-              <v-list-item-title>{{ activeComponent.config.columns.length }}</v-list-item-title>
+              <v-list-item-title>{{ selectedComponent.config.columns.length }}</v-list-item-title>
               <v-list-item-subtitle> Table columns</v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
@@ -135,7 +135,7 @@
 
             <v-list-item-content>
               <v-list-item-title>Created</v-list-item-title>
-              <v-list-item-subtitle> {{ activeComponent.created_at }} </v-list-item-subtitle>
+              <v-list-item-subtitle> {{ selectedComponent.created_at }} </v-list-item-subtitle>
               <v-list-item-subtitle>12 days ago</v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
@@ -149,7 +149,7 @@
 
             <v-list-item-content>
               <v-list-item-title>Edited</v-list-item-title>
-              <v-list-item-subtitle> {{ activeComponent.updated_at }} </v-list-item-subtitle>
+              <v-list-item-subtitle> {{ selectedComponent.updated_at }} </v-list-item-subtitle>
               <v-list-item-subtitle>8 days ago</v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
@@ -159,7 +159,7 @@
           <v-container>
             <small>Component group </small>
             <v-autocomplete
-              v-model="activeComponent.component_group_id"
+              v-model="selectedComponent.component_group_id"
               solo
               :items="allGroups"
               :maxlength="25"
@@ -168,8 +168,8 @@
               hide-no-data
             />
 
-            <v-switch class="pl-1" v-model="activeComponent.config_settings.status.active" inset label="Active"></v-switch>
-            <v-switch class="pl-1" v-model="activeComponent.config_settings.status.modular" inset label="Modular"></v-switch>
+            <v-switch class="pl-1" v-model="selectedComponent.config_settings.status.active" inset label="Active"></v-switch>
+            <v-switch class="pl-1" v-model="selectedComponent.config_settings.status.modular" inset label="Modular"></v-switch>
           </v-container>
         </v-list>
       </v-card>
@@ -187,12 +187,7 @@ export default {
   }),
   computed: {
     ...sync("drawers", ["secureComponentDrawer"]),
-    ...sync("componentManagement", ["componentCardGroup", "allComponents", "allGroups"]),
-
-    activeComponent() {
-      if (this.componentCardGroup === undefined) return;
-      return this.allComponents[this.componentCardGroup];
-    }
+    ...sync("componentManagement", ["componentCardGroup", "allComponents", "allGroups", "selectedComponent"])
   },
 
   methods: {

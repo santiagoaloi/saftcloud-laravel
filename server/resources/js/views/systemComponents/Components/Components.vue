@@ -56,6 +56,7 @@
                   @click="
                     toggle();
                     secureComponentDrawer = true;
+                    setSelectedComponent(component);
                   "
                 >
                   <v-card-actions class="px-0 ">
@@ -139,7 +140,13 @@ export default {
 
   computed: {
     ...sync("drawers", ["secureComponentDrawer"]),
-    ...sync("componentManagement", ["componentCardGroup", "allComponents", "allGroups", "selectedComponentGroups"]),
+    ...sync("componentManagement", [
+      "componentCardGroup",
+      "allComponents",
+      "allGroups",
+      "selectedComponentGroups",
+      "selectedComponent"
+    ]),
 
     allComponentsFiltered() {
       return this.allComponents.filter(c => this.selectedComponentGroups.some(g => g.id === c.component_group_id));
@@ -196,6 +203,10 @@ export default {
           }
         ]
       };
+    },
+
+    setSelectedComponent(component) {
+      this.selectedComponent = component;
     },
 
     setStarred(component) {
