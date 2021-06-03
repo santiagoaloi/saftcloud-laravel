@@ -228,7 +228,7 @@ export default {
     showCancelButton: true,
     confirmButtonText: "Delete",
     cancelButtonText: "Cancel",
-    confirmButtonColor: "grey",
+    confirmButtonColor: "#EC407A",
     backdrop: "rgba(108, 122, 137, 0.8)"
    }).then(result => {
     if (result.value) {

@@ -115,12 +115,12 @@ export default {
  methods: {
   removeGroupWarning(id, name) {
    this.$swal({
-    title: `Delete ${name}?`,
+    title: `Delete ${name} group?`,
     text: "This action cannot be undone.",
     showCancelButton: true,
     confirmButtonText: "Delete",
     cancelButtonText: "Cancel",
-    confirmButtonColor: "grey",
+    confirmButtonColor: "#EC407A",
     backdrop: "rgba(108, 122, 137, 0.8)"
    }).then(result => {
     if (result.value) {
@@ -132,7 +132,7 @@ export default {
   removeGroup(id) {
    axios.delete(`api/ComponentGroup/${id}`).then(response => {
     if (response.data.status) {
-     this.allComponents = response.data.components;
+     this.allGroups = response.data.groups;
      store.set("snackbar/value", true);
      store.set("snackbar/text", "Component removed");
      store.set("snackbar/color", "pink darken-1");
@@ -161,7 +161,7 @@ export default {
   getGroups() {
    axios.get("api/showAllGroups").then(response => {
     if (response.data.status) {
-     this.allGroups = response.data.rows;
+     this.allGroups = response.data.groups;
     }
    });
   },
@@ -170,7 +170,7 @@ export default {
    axios.post("api/ComponentGroup", { name: this.group_settings.name }).then(response => {
     if (response.data.status) {
      this.dialogGroup = false;
-     this.allGroups = response.data.rows;
+     this.allGroups = response.data.groups;
     }
    });
   }
