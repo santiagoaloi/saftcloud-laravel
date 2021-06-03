@@ -98,7 +98,7 @@ class ComponentController extends Controller {
      * @return \Illuminate\Http\Response
     */
     public function show($id) {
-        $query = Component::find($id);
+        $query = Component::findOrFail($id);
         $component = $this->parseComponent($query);
 
         return response([
@@ -162,7 +162,7 @@ class ComponentController extends Controller {
      * @return \Illuminate\Http\Response
     */
     public function destroy($id) {
-        $query = Component::find($id);
+        $query = Component::findOrFail($id);
         $query->delete();
 
         return $this->showAll();

@@ -13,8 +13,7 @@ class ComponentGroupController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
+    public function index() {
         //
     }
 
@@ -23,8 +22,7 @@ class ComponentGroupController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
+    public function create() {
         
         //
     }
@@ -54,7 +52,7 @@ class ComponentGroupController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function show($id) {
-        $query = ComponentGroup::find($id);
+        $query = ComponentGroup::findOrFail($id);
 
         return response([
             'rows' =>  $query,
@@ -86,9 +84,8 @@ class ComponentGroupController extends Controller {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
-        //
+    public function edit($id) {
+        
     }
 
     /**
@@ -98,9 +95,12 @@ class ComponentGroupController extends Controller {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        //
+    public function update(Request $request, $id) {
+        $query = ComponentGroup::findOrFail($id);
+
+        $input = $request->all();
+
+        $query->fill($input)->save();
     }
 
     /**
@@ -109,8 +109,10 @@ class ComponentGroupController extends Controller {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        //
+    public function destroy($id) {
+        $query = ComponentGroup::find($id);
+        $query->delete();
+
+        return $this->showAll();
     }
 }
