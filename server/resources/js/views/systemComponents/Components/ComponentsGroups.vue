@@ -55,7 +55,7 @@
       <v-col cols="12" sm="9">
         <div>
           <v-chip-group showArrows centerActive>
-            <v-chip :ripple="false" close @click:close="" v-for="(item, i) in selectedComponentGroups" :key="i">
+            <v-chip :ripple="false" close @click:close="unselectGroup(i)" v-for="(item, i) in selectedComponentGroups" :key="i">
               {{ item.name }}
             </v-chip>
           </v-chip-group>
@@ -105,6 +105,10 @@ export default {
       this.parentData.groupInputValue = e;
     },
 
+    unselectGroup(index) {
+      this.selectedComponentGroups.splice(index, 1);
+    },
+
     selectAll() {
       this.$nextTick(() => {
         if (this.selectedAllComponents) {
@@ -145,14 +149,10 @@ export default {
   grid-template-columns: repeat(auto-fill, minmax(264px, 1fr));
   grid-auto-rows: 180px;
   gap: 16px;
-
-  animation: slideAround 10s infinite alternate linear;
-  will-change: grid-template-columns, grid-template-rows;
 }
 
 .gallery-card-wrapper {
   box-sizing: border-box;
-
   text-align: left;
 }
 

@@ -2,6 +2,7 @@
 import { make } from "vuex-pathify";
 
 const state = {
+  activeStatusTab: 0,
   componentCardGroup: 0,
   allComponents: [],
   selectedComponent: [],

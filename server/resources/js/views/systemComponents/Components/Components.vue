@@ -4,8 +4,8 @@
     <components-groups :parent-data="$data" />
 
     <div class="d-flex justify-space-between align-center">
-      <v-tabs showArrows class="col-6 mt-n3" background-color="transparent" sliderSize="1">
-        <v-tab :key="i" y v-for="(tab, i) in componentTabs" :ripple="false">
+      <v-tabs v-model="activeStatusTab" showArrows class="col-6 mt-n3" background-color="transparent" sliderSize="1">
+        <v-tab :key="i" y v-for="(tab, i) in componentStatusTabs" :ripple="false">
           <v-icon :color="tab.color" small left>
             {{ tab.icon }}
           </v-icon>
@@ -21,7 +21,7 @@
 
     <v-divider></v-divider>
 
-    <template v-if="allComponents.length > 0">
+    <template v-if="allComponentsFiltered.length > 0">
       <v-fade-transition hide-on-leave>
         <template v-if="isTableLayout">
           <v-card class="mt-2" flat>
@@ -97,7 +97,7 @@
         <v-sheet color="transparent" height="45vh" class="d-flex pa-2 justify-center align-center">
           <div class="flex-grow-1 align-center justify-center d-flex flex-column">
             <v-img :aspect-ratio="1" width="250" contain src="storage/systemImages/noContent.svg"></v-img>
-            No components found. Choose a different filter.
+            No components found. Choose a different filter or search criteria.
           </div>
         </v-sheet>
       </v-container>
@@ -141,25 +141,38 @@ export default {
   computed: {
     ...sync("drawers", ["secureComponentDrawer"]),
     ...sync("componentManagement", [
-      "componentCardGroup",
-      "allComponents",
       "allGroups",
-      "selectedComponentGroups",
-      "selectedComponent"
+      "allComponents",
+      "activeStatusTab",
+      "selectedComponent",
+      "componentCardGroup",
+      "selectedComponentGroups"
     ]),
 
+    activeStatusTabName() {
+      return this.componentStatusTabs[this.activeStatusTab].value;
+    },
+
     allComponentsFiltered() {
-      return this.allComponents.filter(c => this.selectedComponentGroups.some(g => g.id === c.component_group_id));
+      return this.selectedComponentGroups.length > 0 ? this.allComponents.filter(this.componentFilters) : [];
     }
   },
 
-  mounted() {
-    this.getComponents();
-  },
-
   methods: {
+    filterStatusTabs(component) {
+      if (this.activeStatusTabName === "all") return true;
+      if (component.config_settings.status[this.activeStatusTabName]) return true;
+    },
+
+    componentFilters(component) {
+      const search = this.search.toString().toLowerCase();
+      if (search != "" && !component.config.title.toLowerCase().match(search)) return;
+      if (this.selectedComponentGroups.some(g => g.id === component.component_group_id) && this.filterStatusTabs(component)) return true;
+    },
+
     initialState() {
       return {
+        search: "",
         //Dialogs
         dialogSystemOperations: false,
         dialogComponent: false,
@@ -188,12 +201,12 @@ export default {
           note: ""
         },
 
-        componentTabs: [
-          { name: "All", icon: "mdi-all-inclusive", color: "" },
-          { name: "Starred", icon: "mdi-star", color: "" },
-          { name: "Active", icon: "mdi-lightbulb-on", color: "blue darken-4" },
-          { name: "Inactive", icon: "mdi-lightbulb-on-outline", color: "red lighten-1" },
-          { name: "Modular", icon: "mdi-view-module", color: "" }
+        componentStatusTabs: [
+          { name: "All", value: "all", icon: "mdi-all-inclusive", color: "" },
+          { name: "Starred", value: "starred", icon: "mdi-star", color: "" },
+          { name: "Active", value: "active", icon: "mdi-lightbulb-on", color: "blue darken-4" },
+          { name: "Inactive", value: "inactive", icon: "mdi-lightbulb-on-outline", color: "red lighten-1" },
+          { name: "Modular", value: "modular", icon: "mdi-view-module", color: "" }
         ],
         headers: [
           {
@@ -263,6 +276,10 @@ export default {
         }
       });
     }
+  },
+
+  mounted() {
+    this.getComponents();
   }
 };
 </script>

@@ -67,30 +67,57 @@
 
     <template>
       <div class="text-center mb-3">
-        <v-btn depressed class="mx-2" height="70" dark large small color="white">
-          <v-icon color="orange" large dark>
-            mdi-pencil-outline
-          </v-icon>
-        </v-btn>
-        <v-btn depressed class="mx-2" height="70" dark large small color="white">
-          <v-icon color="black" large dark>
-            mdi-link
-          </v-icon>
-        </v-btn>
-        <v-btn
-          @click="removeComponentWarning(selectedComponent.id, selectedComponent.config.title)"
-          depressed
-          class="mx-2"
-          height="70"
-          dark
-          large
-          small
-          color="white"
-        >
-          <v-icon color="pink" large dark>
-            mdi-trash-can-outline
-          </v-icon>
-        </v-btn>
+        <v-tooltip color="black" bottom>
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn v-on="on" depressed dark large small color="white">
+              <v-icon color="orange" dark>
+                mdi-pencil-outline
+              </v-icon>
+            </v-btn>
+          </template>
+          <span>Edit</span>
+        </v-tooltip>
+
+        <v-tooltip color="black" bottom>
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn v-on="on" depressed dark large small color="white">
+              <v-icon color="black" dark>
+                mdi-link
+              </v-icon>
+            </v-btn>
+          </template>
+          <span>Open</span>
+        </v-tooltip>
+
+        <v-tooltip color="black" bottom>
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn
+              v-on="on"
+              @click="removeComponentWarning(selectedComponent.id, selectedComponent.config.title)"
+              depressed
+              dark
+              large
+              small
+              color="white"
+            >
+              <v-icon color="pink" dark>
+                mdi-trash-can-outline
+              </v-icon>
+            </v-btn>
+          </template>
+          <span>Delete</span>
+        </v-tooltip>
+
+        <v-tooltip color="black" bottom>
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn v-on="on" depressed dark large small color="white">
+              <v-icon color="green" dark>
+                mdi-check-all
+              </v-icon>
+            </v-btn>
+          </template>
+          <span>Save</span>
+        </v-tooltip>
       </div>
     </template>
 
