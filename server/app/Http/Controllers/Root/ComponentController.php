@@ -157,6 +157,11 @@ class ComponentController extends Controller {
         $input = $request->all();
 
         $query->fill($input)->save();
+
+        return response([
+            'components' => 'tulio balin',
+            'status'    => true
+        ], 200);        
     }
 
     /**
