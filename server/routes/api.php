@@ -37,7 +37,6 @@ Route::post('/makeAccount', [MakeAccountController::class, 'accountCreation']);
 
 // Protected routes
 Route::group(['middleware' => ['auth:sanctum']], function () {
-
     Route::get('/getDbTables', [MysqlController::class, 'showAll']);
     Route::post('/getTableColumns', [MysqlController::class, 'showColumns']);
 
@@ -51,8 +50,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::resource('/MysqlResource', MysqlController::class);
     Route::get('/showAllTables', [MysqlController::class, 'showAll']);
     Route::get('/showColumns', [MysqlController::class, 'showColumns']);
-    
-    
+
     Route::post('/logout', [AuthController::class, 'logout']);
 });
 

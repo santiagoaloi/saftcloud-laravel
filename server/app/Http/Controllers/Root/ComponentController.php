@@ -173,12 +173,19 @@ class ComponentController extends Controller {
         $component_group_id = $component->component_group_id;
         $config = $this->constructConfig($component->config);
         $configSettings = $this->constructConfig($component->config_settings);
+        $origin = [
+            'id'                => $id,
+            'component_group_id'=> $component_group_id,
+            'config'            => $config,
+            'config_settings'   => $configSettings,            
+        ];
 
         $result = [
             'id'                => $id,
             'component_group_id'=> $component_group_id,
             'config'            => $config,
             'config_settings'   => $configSettings,
+            'origin'            => $origin,
         ];
 
         return $result;
