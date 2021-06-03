@@ -33,13 +33,11 @@
      </template>
 
      <template v-slot:selection="data">
-      <template>
-       <span v-if="data.index === 0" class="grey--text caption"
-        ><v-chip labal style="color: black" small label color="blue-grey lighten-4">
-         {{ selectedComponentGroups.length }} groups selected.</v-chip
-        ></span
-       >
-      </template>
+      <span v-if="data.index === 0" class="grey--text caption"
+       ><v-chip labal style="color: black" small label color="blue-grey lighten-4">
+        {{ selectedComponentGroups.length }} groups selected.</v-chip
+       ></span
+      >
      </template>
 
      <template v-slot:no-data>
@@ -58,7 +56,7 @@
         <v-list-item-title> {{ item.name }} </v-list-item-title>
        </v-list-item-content>
        <v-list-item-avatar>
-        <v-btn :ripple="false" @click.stop depressed fab x-small>
+        <v-btn :ripple="false" @click.stop="removeGroupWarning(item.id, item.name)" depressed fab x-small>
          <v-icon>mdi-delete-outline</v-icon>
         </v-btn>
        </v-list-item-avatar>
@@ -115,6 +113,33 @@ export default {
  },
 
  methods: {
+  removeGroupWarning(id, name) {
+   this.$swal({
+    title: `Delete ${name}?`,
+    text: "This action cannot be undone.",
+    showCancelButton: true,
+    confirmButtonText: "Delete",
+    cancelButtonText: "Cancel",
+    confirmButtonColor: "grey",
+    backdrop: "rgba(108, 122, 137, 0.8)"
+   }).then(result => {
+    if (result.value) {
+     this.removeGroup(id);
+    }
+   });
+  },
+
+  removeGroup(id) {
+   axios.delete(`api/ComponentGroup/${id}`).then(response => {
+    if (response.data.status) {
+     this.allComponents = response.data.components;
+     store.set("snackbar/value", true);
+     store.set("snackbar/text", "Component removed");
+     store.set("snackbar/color", "pink darken-1");
+    }
+   });
+  },
+
   catchGroupInputValue(e) {
    this.parentData.groupInputValue = e;
   },

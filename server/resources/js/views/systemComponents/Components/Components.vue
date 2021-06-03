@@ -67,14 +67,14 @@
           </v-avatar>
           <v-spacer />
 
-          <v-btn @click="setModular(component)" color="white" small @click.stop icon :ripple="false">
+          <v-btn @click="setModular(component)" color="white" small icon :ripple="false">
            <v-icon :color="isModularColor(component)"> {{ isModularIcon(component) }} </v-icon>
           </v-btn>
 
-          <v-btn @click="setActive(component)" color="white" small @click.stop icon :ripple="false">
+          <v-btn @click="setActive(component)" color="white" small icon :ripple="false">
            <v-icon :color="isActiveColor(component)"> {{ isActiveIcon(component) }} </v-icon>
           </v-btn>
-          <v-btn @click="setStarred(component)" color="white" small @click.stop icon :ripple="false">
+          <v-btn @click="setStarred(component)" color="white" small icon :ripple="false">
            <v-icon :color="isStarredColor(component)"> {{ isStarredIcon(component) }} </v-icon>
           </v-btn>
          </v-card-actions>
@@ -151,6 +151,7 @@ export default {
   ...sync("componentManagement", [
    "allGroups",
    "allComponents",
+   "unsavedChanges",
    "activeStatusTab",
    "selectedComponent",
    "componentCardGroup",
@@ -227,7 +228,30 @@ export default {
   },
 
   setSelectedComponent(component) {
-   this.selectedComponent = component;
+   if (component.id != this.selectedComponent.id) {
+    if (this.unsavedChanges) {
+     this.$swal({
+      title: `Unsaved changes`,
+      text: "Do you want save or discard your changes?",
+      showCancelButton: true,
+      confirmButtonText: "Save",
+      cancelButtonText: "Discard",
+      confirmButtonColor: "grey",
+      cancelButtonColor: "#EC407A",
+      backdrop: "rgba(108, 122, 137, 0.8)",
+      width: 500
+     }).then(result => {
+      if (result.value) {
+       this.selectedComponent = component;
+      } else {
+       this.selectedComponent = component;
+       this.getComponents();
+      }
+     });
+    } else {
+     this.selectedComponent = component;
+    }
+   }
   },
 
   setStarred(component) {

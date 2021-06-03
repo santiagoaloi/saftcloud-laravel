@@ -73,7 +73,7 @@
     <v-tooltip transition="false" color="black" bottom>
      <template v-slot:activator="{ on, attrs }">
       <v-btn v-on="on" @click="removeComponentWarning(selectedComponent.id, selectedComponent.config.title)" depressed dark large small color="white">
-       <v-icon color="pink" dark>
+       <v-icon color="pink lighten-1" dark>
         mdi-trash-can-outline
        </v-icon>
       </v-btn>
@@ -83,7 +83,7 @@
 
     <v-tooltip transition="false" color="black" bottom>
      <template v-slot:activator="{ on, attrs }">
-      <v-btn v-on="on" depressed dark large small color="white">
+      <v-btn :disabled="!isModified()" v-on="on" depressed large small color="white">
        <v-icon color="green" dark>
         mdi-check-all
        </v-icon>
@@ -178,6 +178,7 @@
 <script>
 import { sync, call } from "vuex-pathify";
 import { store } from "@/store";
+import isEqual from "lodash/isEqual";
 
 export default {
  data: () => ({
@@ -185,10 +186,21 @@ export default {
  }),
  computed: {
   ...sync("drawers", ["secureComponentDrawer"]),
-  ...sync("componentManagement", ["componentCardGroup", "allComponents", "allGroups", "selectedComponent"])
+  ...sync("componentManagement", ["componentCardGroup", "allComponents", "allGroups", "selectedComponent", "unsavedChanges"])
  },
 
  methods: {
+  isModified() {
+   if (this.selectedComponent != []) {
+    const { origin, ...props } = this.selectedComponent;
+    const { component_group_id, group, config, config_settings } = props;
+    const { component_group_id: originGroup, config: originConfig, config_settings: originConfigSettings } = origin;
+
+    this.unsavedChanges = !isEqual(origin, props);
+    return this.unsavedChanges;
+   }
+  },
+
   setStarred(component) {
    component.config_settings.status.starred = !component.config_settings.status.starred;
   },
