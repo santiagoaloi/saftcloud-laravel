@@ -40,7 +40,7 @@ class ComponentGroupController extends Controller {
         $getGroups = $this->showAll(true);
 
         return response([
-            'group' =>  $getGroups,
+            'groups' =>  $getGroups,
             'status' => true
         ], 200);
     }
