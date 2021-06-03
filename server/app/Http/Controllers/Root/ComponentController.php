@@ -114,7 +114,7 @@ class ComponentController extends Controller {
     */
     public function showAll($local = false) {
         if ($local){
-            $components = Component::get();
+            $components = Component::all();
 
             foreach($components as $component){
                 $arrayComponent[] = $this->parseComponent($component);
@@ -122,7 +122,7 @@ class ComponentController extends Controller {
 
             return $arrayComponent;
         } else {
-            $components = Component::get();
+            $components = Component::all();
             foreach($components as $component){
                 $arrayComponent[] = $this->parseComponent($component);
             };
@@ -169,23 +169,26 @@ class ComponentController extends Controller {
     }
 
     public function parseComponent($component){
-        $id = $component->id;
         $component_group_id = $component->component_group_id;
         $config = $this->constructConfig($component->config);
         $configSettings = $this->constructConfig($component->config_settings);
         $origin = [
-            'id'                => $id,
+            'id'                => $component->id,
             'component_group_id'=> $component_group_id,
             'config'            => $config,
-            'config_settings'   => $configSettings,            
+            'config_settings'   => $configSettings,
+            'created_at'        => $component->created_at,
+            'updated_at'        => $component->updated_at,
         ];
 
         $result = [
-            'id'                => $id,
+            'id'                => $component->id,
             'component_group_id'=> $component_group_id,
             'config'            => $config,
             'config_settings'   => $configSettings,
             'origin'            => $origin,
+            'created_at'        => $component->created_at,
+            'updated_at'        => $component->updated_at,
         ];
 
         return $result;

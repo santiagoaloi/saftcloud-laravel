@@ -69,11 +69,11 @@ class ComponentGroupController extends Controller {
         if ($local){
             return ComponentGroup::get();
         } else {
-            $getGroups = ComponentGroup::get();
+            $getGroups = ComponentGroup::all();
 
             return response([
                 'rows' =>  $getGroups,
-                'status' => true
+                'status' => true,
             ], 200);
         }
     }
