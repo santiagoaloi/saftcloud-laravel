@@ -70,7 +70,7 @@ class ComponentController extends Controller {
         ];
         $configSettings['status'] = [
             'starred'   => false,
-            'active'    => false,
+            'active'    => true,
             'inactive'  => false,
             'modular'   => false,
         ];
@@ -86,7 +86,7 @@ class ComponentController extends Controller {
         $query = $this->showAll(true);
 
         return response([
-            'components' =>  $query,
+            'components' => $query,
             'status' => true
         ], 200);
     }
@@ -152,7 +152,11 @@ class ComponentController extends Controller {
      * @return \Illuminate\Http\Response
     */
     public function update(Request $request, $id) {
-        //
+        $query = Component::findOrFail($id);
+
+        $input = $request->all();
+
+        $query->fill($input)->save();
     }
 
     /**
