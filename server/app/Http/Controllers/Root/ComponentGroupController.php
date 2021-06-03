@@ -40,7 +40,7 @@ class ComponentGroupController extends Controller {
         $getGroups = $this->showAll(true);
 
         return response([
-            'rows' =>  $getGroups,
+            'group' =>  $getGroups,
             'status' => true
         ], 200);
     }
@@ -55,7 +55,7 @@ class ComponentGroupController extends Controller {
         $query = ComponentGroup::findOrFail($id);
 
         return response([
-            'rows' =>  $query,
+            'group' =>  $query,
             'status' => true
         ], 200);
     }
@@ -72,7 +72,7 @@ class ComponentGroupController extends Controller {
             $getGroups = ComponentGroup::all();
 
             return response([
-                'rows' =>  $getGroups,
+                'groups' =>  $getGroups,
                 'status' => true,
             ], 200);
         }
