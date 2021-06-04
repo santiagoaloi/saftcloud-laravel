@@ -101,6 +101,13 @@ class ComponentGroupController extends Controller {
         $input = $request->all();
 
         $query->fill($input)->save();
+
+        $groups = $this->showAll(true);
+
+        return response([
+            'groups'    => $groups,
+            'status'    => true
+        ], 200);
     }
 
     /**

@@ -141,7 +141,13 @@ class ComponentController extends Controller {
      * @return \Illuminate\Http\Response
     */
     public function edit($id) {
-        //
+
+        $components = $this->showAll(true);
+
+        return response([
+            'components'=> $components,
+            'status'    => true
+        ], 200);
     }
 
     /**
@@ -158,10 +164,12 @@ class ComponentController extends Controller {
 
         $query->fill($input)->save();
 
+        $components = $this->showAll(true);
+
         return response([
-            'components' => 'tulio balin',
+            'components'=> $components,
             'status'    => true
-        ], 200);        
+        ], 200);
     }
 
     /**
