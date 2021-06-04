@@ -227,8 +227,8 @@ export default {
    };
   },
 
-  setSelectedComponent(component) {
-   if (component.id != this.selectedComponent.id) {
+  setSelectedComponent(nextComponent) {
+   if (nextComponent.id != this.selectedComponent.id) {
     if (this.unsavedChanges) {
      this.$swal({
       title: `Unsaved changes`,
@@ -242,14 +242,14 @@ export default {
       width: 500
      }).then(result => {
       if (result.value) {
-       this.selectedComponent = component;
+       this.saveComponent(this.selectedComponent.id, this.selectedComponent, nextComponent);
       } else {
-       this.selectedComponent = component;
+       this.selectedComponent = nextComponent;
        this.getComponents();
       }
      });
     } else {
-     this.selectedComponent = component;
+     this.selectedComponent = nextComponent;
     }
    }
   },
@@ -320,11 +320,24 @@ export default {
    return this.allGroups.filter(g => g.id === component.component_group_id)[0].name;
   },
 
+  saveComponent(id, component, nextComponent) {
+   axios.put(`api/Component/${id}`, component).then(response => {
+    if (response.data.status) {
+     this.selectedComponent = nextComponent;
+     this.getComponents();
+
+     store.set("snackbar/value", true);
+     store.set("snackbar/text", "Component saved");
+     store.set("snackbar/color", "indigo darken-1");
+    }
+   });
+  },
+
   saveGroup() {
    axios.post("api/ComponentGroup", { name: this.group_settings.name }).then(response => {
     if (response.data.status) {
      this.dialogGroup = false;
-     this.allGroups = response.data.rows;
+     this.allGroups = response.data.groups;
     }
    });
   },

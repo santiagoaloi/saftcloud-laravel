@@ -1,35 +1,33 @@
 <template>
-  <baseDialog
-    v-model="internalValue"
-    title="Group settings "
-    persistent
-    max-width="900"
-    show-remove
-    @save="saveGroup()"
-    @close="() => (internalValue = false)"
-    @remove=""
-  >
-    <v-card-text>
-      <v-container>
-        <v-row>
-          <v-col cols="12" sm="12" md="6">
-            <span>Group name</span>
-            <v-text-field
-              ref="groupTitle"
-              v-model.lazy="parentData.group_settings.name"
-              v-lazy-input:debounce="500"
-              counter
-              maxlength="35"
-              autofocus
-              solo
-              prepend-inner-icon="mdi-comment"
-              placeholder=" "
-              color="primary"
-              label="  "
-              hint=" "
-            />
-          </v-col>
-          <!-- 
+ <baseDialog
+  v-model="internalValue"
+  title="Group settings "
+  persistent
+  max-width="900"
+  show-remove
+  @save="saveGroup()"
+  @close="() => (internalValue = false)"
+ >
+  <v-card-text>
+   <v-container>
+    <v-row>
+     <v-col cols="12" sm="12" md="6">
+      <span>Group name</span>
+      <v-text-field
+       ref="groupTitle"
+       v-model="parentData.group_settings.name"
+       counter
+       maxlength="35"
+       autofocus
+       solo
+       prepend-inner-icon="mdi-comment"
+       placeholder=" "
+       color="primary"
+       label="  "
+       hint=" "
+      />
+     </v-col>
+     <!-- 
             <v-col cols="12" sm="12" md="6">
               <span>Directory name</span>
               <v-text-field
@@ -48,7 +46,7 @@
               />
             </v-col> -->
 
-          <!-- <v-col
+     <!-- <v-col
               cols="12"
               sm="12"
               md="6"
@@ -106,43 +104,43 @@
               </v-autocomplete>
           </v-row>
             </v-col>-->
-        </v-row>
-      </v-container>
-    </v-card-text>
-  </baseDialog>
+    </v-row>
+   </v-container>
+  </v-card-text>
+ </baseDialog>
 </template>
 <script>
 export default {
-  name: "DialogGroup",
-  inheritAttrs: true,
-  inject: ["saveGroup"],
+ name: "DialogGroup",
+ inheritAttrs: true,
+ inject: ["saveGroup"],
 
-  props: {
-    value: Boolean,
-    parentData: Object
+ props: {
+  value: Boolean,
+  parentData: Object
+ },
+
+ data() {
+  return {
+   internalValue: this.value
+  };
+ },
+
+ mounted() {
+  this.parentData.group_settings.name = this.parentData.groupInputValue;
+ },
+
+ watch: {
+  internalValue(val, oldVal) {
+   if (val === oldVal) return;
+
+   this.$emit("input", val);
   },
+  value(val, oldVal) {
+   if (val === oldVal) return;
 
-  data() {
-    return {
-      internalValue: this.value
-    };
-  },
-
-  mounted() {
-    this.parentData.group_settings.name = this.parentData.groupInputValue;
-  },
-
-  watch: {
-    internalValue(val, oldVal) {
-      if (val === oldVal) return;
-
-      this.$emit("input", val);
-    },
-    value(val, oldVal) {
-      if (val === oldVal) return;
-
-      this.internalValue = val;
-    }
+   this.internalValue = val;
   }
+ }
 };
 </script>

@@ -83,7 +83,7 @@
 
     <v-tooltip transition="false" color="black" bottom>
      <template v-slot:activator="{ on, attrs }">
-      <v-btn :disabled="!isModified()" v-on="on" depressed large small color="white">
+      <v-btn @click="saveComponent(selectedComponent.id)" :disabled="!isModified()" v-on="on" depressed large small color="white">
        <v-icon color="green" dark>
         mdi-check-all
        </v-icon>
@@ -219,6 +219,17 @@ export default {
    } else {
     return "mdi-star-outline";
    }
+  },
+
+  saveComponent(id) {
+   axios.put(`api/Component/${id}`, this.selectedComponent).then(response => {
+    if (response.data.status) {
+     //  this.allComponents = response.data.components;
+     store.set("snackbar/value", true);
+     store.set("snackbar/text", "Component saved");
+     store.set("snackbar/color", "indigo darken-1");
+    }
+   });
   },
 
   removeComponentWarning(id, title) {

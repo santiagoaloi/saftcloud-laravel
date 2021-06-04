@@ -94,10 +94,12 @@ export default {
   ...sync("componentManagement", ["allGroups", "selectedComponentGroups"]),
 
   selectedAllComponents() {
+   if (this.selectedComponentGroups.length === 0) return;
    return this.selectedComponentGroups.length === this.allGroups.length;
   },
 
   selectedSomeComponents() {
+   if (this.selectedComponentGroups.length === 0) return;
    return this.selectedComponentGroups.length > 0 && !this.selectedAllComponents;
   },
 
@@ -170,7 +172,6 @@ export default {
    axios.post("api/ComponentGroup", { name: this.group_settings.name }).then(response => {
     if (response.data.status) {
      this.dialogGroup = false;
-     this.allGroups = response.data.groups;
     }
    });
   }
