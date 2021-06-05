@@ -55,7 +55,6 @@
          class="d-flex flex-column justify-space-between pa-4 "
          @click="
           toggle();
-          secureComponentDrawer = true;
           setSelectedComponent(component);
          "
         >
@@ -91,6 +90,15 @@
             </v-chip>
            </h5>
           </div>
+          <div v-if="hasUnsavedChanges" class="gallery-card-subtitle-wrapper">
+           <h5 class="gallery-card-subtitle">
+            <v-chip style="pointer-events:none" color="red lighten-2" text-color="white" label class="col-6">
+             <div class="col-12 text-truncate">
+              Unsaved
+             </div>
+            </v-chip>
+           </h5>
+          </div>
          </div>
         </v-card>
        </v-item>
@@ -113,7 +121,7 @@
 
   <!-- <dialog-system-operations v-model="dialogSystemOperations" :parent-data="$data" /> -->
   <dialog-group v-if="dialogGroup" v-model="dialogGroup" :parent-data="$data" />
-  <dialog-component v-if="dialogComponent" ref="dialogNewComponent" v-model="dialogComponent" :parent-data="$data" />
+  <dialog-component v-if="dialogComponent" v-model="dialogComponent" :parent-data="$data" />
  </div>
 </template>
 
@@ -122,16 +130,16 @@ import axios from "axios";
 import { store } from "@/store";
 import moment from "moment";
 import globalMixin from "@/mixins/globalMixin";
-import { sync, call } from "vuex-pathify";
+import { sync, call, get } from "vuex-pathify";
 
 export default {
  name: "ComponentManagement",
  components: {
   DialogGroup: () => import("./DialogGroup"),
   DialogComponent: () => import("./DialogComponent"),
-  DialogSystemOperations: () => import("./DialogSystemOperations"),
+  ComponentsGroups: () => import("./ComponentsGroups"),
   ComponentsAppbar: () => import("./ComponentsAppbar"),
-  ComponentsGroups: () => import("./ComponentsGroups")
+  DialogSystemOperations: () => import("./DialogSystemOperations")
  },
 
  mixins: [globalMixin],
@@ -153,25 +161,29 @@ export default {
    "allComponents",
    "unsavedChanges",
    "activeStatusTab",
+   "dialogComponent",
    "selectedComponent",
    "componentCardGroup",
-   "selectedComponentGroups"
+   "componentStatusTabs",
+   "selectedComponentGroups",
+   "numberOfFilteredComponents"
   ]),
+
+  hasUnsavedChanges: get("componentManagement/hasUnsavedChanges"),
 
   activeStatusTabName() {
    return this.componentStatusTabs[this.activeStatusTab].value;
   },
 
   allComponentsFiltered() {
-   return this.selectedComponentGroups.length > 0 ? this.allComponents.filter(this.componentFilters) : [];
+   let allComponentsFiltered = this.selectedComponentGroups.length > 0 ? this.allComponents.filter(this.componentFilters) : [];
+   //    this.numberOfFilteredComponents = allComponentsFiltered.length;
+   return allComponentsFiltered;
   }
  },
 
  methods: {
-  filterStatusTabs(component) {
-   if (this.activeStatusTabName === "all") return true;
-   if (component.config_settings.status[this.activeStatusTabName]) return true;
-  },
+  ...call("componentManagement/*"),
 
   componentFilters(component) {
    const search = this.search.toString().toLowerCase();
@@ -179,15 +191,16 @@ export default {
    if (this.selectedComponentGroups.some(g => g.id === component.component_group_id) && this.filterStatusTabs(component)) return true;
   },
 
+  filterStatusTabs(component) {
+   if (this.activeStatusTabName === "all") return true;
+   if (component.config_settings.status[this.activeStatusTabName]) return true;
+  },
   initialState() {
    return {
     search: "",
-    //Dialogs
     dialogSystemOperations: false,
-    dialogComponent: false,
     dialogGroup: false,
 
-    loading: false,
     isTableLayout: false,
     multipleSelect: false,
     groupInputValue: "",
@@ -210,13 +223,6 @@ export default {
      note: ""
     },
 
-    componentStatusTabs: [
-     { name: "All", value: "all", icon: "mdi-all-inclusive", color: "" },
-     { name: "Starred", value: "starred", icon: "mdi-star", color: "" },
-     { name: "Active", value: "active", icon: "mdi-lightbulb-on", color: "blue darken-4" },
-     { name: "Inactive", value: "inactive", icon: "mdi-lightbulb-on-outline", color: "black" },
-     { name: "Modular", value: "modular", icon: "mdi-view-module", color: "" }
-    ],
     headers: [
      {
       text: "Name",
@@ -228,31 +234,41 @@ export default {
   },
 
   setSelectedComponent(nextComponent) {
+   if (!this.secureComponentDrawer) {
+    this.secureComponentDrawer = true;
+   }
+
    if (nextComponent.id != this.selectedComponent.id) {
-    if (this.unsavedChanges) {
-     this.$swal({
-      title: `Unsaved changes`,
-      text: "Do you want save or discard your changes?",
-      showCancelButton: true,
-      confirmButtonText: "Save",
-      cancelButtonText: "Discard",
-      confirmButtonColor: "grey",
-      cancelButtonColor: "#EC407A",
-      backdrop: "rgba(108, 122, 137, 0.8)",
-      width: 500
-     }).then(result => {
-      if (result.value) {
-       this.saveComponent(this.selectedComponent.id, this.selectedComponent, nextComponent);
-      } else {
-       this.selectedComponent = nextComponent;
-       this.getComponents();
-      }
-     });
-    } else {
-     this.selectedComponent = nextComponent;
-    }
+    this.selectedComponent = nextComponent;
    }
   },
+
+  //   setSelectedComponent(nextComponent) {
+  //    if (nextComponent.id != this.selectedComponent.id) {
+  //     if (this.unsavedChanges) {
+  //      this.$swal({
+  //       title: `Unsaved changes`,
+  //       text: "Do you want save or discard your changes?",
+  //       showCancelButton: true,
+  //       confirmButtonText: "Save",
+  //       cancelButtonText: "Discard",
+  //       confirmButtonColor: "grey",
+  //       cancelButtonColor: "#EC407A",
+  //       backdrop: "rgba(108, 122, 137, 0.8)",
+  //       width: 500
+  //      }).then(result => {
+  //       if (result.value) {
+  //        this.saveComponent(this.selectedComponent.id, this.selectedComponent, nextComponent);
+  //       } else {
+  //        this.selectedComponent = nextComponent;
+  //        this.getComponents();
+  //       }
+  //      });
+  //     } else {
+  //      this.selectedComponent = nextComponent;
+  //     }
+  //    }
+  //   },
 
   setStarred(component) {
    component.config_settings.status.starred = !component.config_settings.status.starred;
@@ -325,7 +341,6 @@ export default {
     if (response.data.status) {
      this.selectedComponent = nextComponent;
      this.getComponents();
-
      store.set("snackbar/value", true);
      store.set("snackbar/text", "Component saved");
      store.set("snackbar/color", "indigo darken-1");
@@ -338,14 +353,6 @@ export default {
     if (response.data.status) {
      this.dialogGroup = false;
      this.allGroups = response.data.groups;
-    }
-   });
-  },
-
-  getComponents() {
-   axios.get("api/showAllComponents").then(response => {
-    if (response.data.status) {
-     this.allComponents = response.data.components;
     }
    });
   },
@@ -378,11 +385,9 @@ export default {
 .gallery-card-container {
  display: grid;
  grid-template-columns: repeat(auto-fill, minmax(264px, 1fr));
- grid-auto-rows: 180px;
+ grid-auto-rows: 5 0%;
  gap: 16px;
-
- animation: slideAround 10s infinite alternate linear;
- will-change: grid-template-columns, grid-template-rows;
+ justify-items: center;
 }
 
 .gallery-card-wrapper {

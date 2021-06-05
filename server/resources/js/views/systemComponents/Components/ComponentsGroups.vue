@@ -16,17 +16,15 @@
      placeholder="Select or create groups"
      hide-selected
     >
-     <template v-slot:prepend-item>
-      <v-list-item ripple @click="selectAll">
-       <v-list-item-action>
+     <template v-if="allGroups.length > 0" v-slot:prepend-item>
+      <v-list-item @click="selectAll" :ripple="false">
+       <v-list-item-avatar>
         <v-icon :color="selectedComponentGroups.length > 0 ? 'indigo darken-4' : 'grey darken-3'">
          {{ icon }}
         </v-icon>
-       </v-list-item-action>
+       </v-list-item-avatar>
        <v-list-item-content>
-        <v-list-item-title>
-         Select All
-        </v-list-item-title>
+        <v-list-item-title> {{ selectedAllComponents ? "Unselect All" : "Select All" }} </v-list-item-title>
        </v-list-item-content>
       </v-list-item>
       <v-divider></v-divider>
@@ -41,17 +39,26 @@
      </template>
 
      <template v-slot:no-data>
-      <v-list-item class="ml-1">
+      <v-list-item>
+       <v-list-item-avatar>
+        <v-icon>
+         mdi-plus
+        </v-icon>
+       </v-list-item-avatar>
+
        <v-list-item-content>
         <v-list-item-title>
-         <a @click="parentData.dialogGroup = !parentData.dialogGroup">+ Create group </a>
-         {{ parentData.groupInputValue }}
+         <a @click="parentData.dialogGroup = !parentData.dialogGroup">Create group </a>
+         {{ groupInputValue }}
         </v-list-item-title>
        </v-list-item-content>
       </v-list-item>
      </template>
      <template #item="{ item, on }">
       <v-list-item :ripple="false" v-on="on">
+       <v-list-item-avatar>
+        <v-icon>mdi-folder-outline</v-icon>
+       </v-list-item-avatar>
        <v-list-item-content>
         <v-list-item-title> {{ item.name }} </v-list-item-title>
        </v-list-item-content>
@@ -80,7 +87,7 @@
 <script>
 import axios from "axios";
 import { store } from "@/store";
-import { sync } from "vuex-pathify";
+import { sync, call } from "vuex-pathify";
 
 export default {
  name: "ComponentGroups",
@@ -92,6 +99,11 @@ export default {
 
  computed: {
   ...sync("componentManagement", ["allGroups", "selectedComponentGroups"]),
+
+  groupInputValue() {
+   if (this.parentData.groupInputValue === null || this.parentData.groupInputValue === "") return;
+   return `"${this.parentData.groupInputValue}"`;
+  },
 
   selectedAllComponents() {
    if (this.selectedComponentGroups.length === 0) return;
@@ -115,6 +127,8 @@ export default {
  },
 
  methods: {
+  ...call("componentManagement/*"),
+
   removeGroupWarning(id, name) {
    this.$swal({
     title: `Delete ${name} group?`,
@@ -136,7 +150,7 @@ export default {
     if (response.data.status) {
      this.allGroups = response.data.groups;
      store.set("snackbar/value", true);
-     store.set("snackbar/text", "Component removed");
+     store.set("snackbar/text", "Group removed");
      store.set("snackbar/color", "pink darken-1");
     }
    });
@@ -156,14 +170,6 @@ export default {
      this.selectedComponentGroups = [];
     } else {
      this.selectedComponentGroups = this.allGroups.slice();
-    }
-   });
-  },
-
-  getGroups() {
-   axios.get("api/showAllGroups").then(response => {
-    if (response.data.status) {
-     this.allGroups = response.data.groups;
     }
    });
   },

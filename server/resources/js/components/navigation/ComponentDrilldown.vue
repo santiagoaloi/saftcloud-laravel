@@ -41,10 +41,27 @@
   <v-card flat class="mx-auto pa-1 mt-n3" max-width="344">
    <v-card-text>
     <div class="text--primary">
-     <v-textarea spellcheck="false" noResize :rows="2" flat solo autogrow hide-details dense v-model="selectedComponent.config.note"> </v-textarea>
+     <small>Description </small>
+
+     <v-text-field outlined spellcheck="false" noResize :rows="2" autogrow hide-details dense v-model="selectedComponent.config.note"> </v-text-field>
+     <small>Change component group </small>
+     <v-autocomplete
+      v-model="selectedComponent.component_group_id"
+      outlined
+      :items="allGroups"
+      :maxlength="25"
+      item-value="id"
+      item-text="name"
+      hide-no-data
+     >
+     </v-autocomplete>
     </div>
    </v-card-text>
   </v-card>
+
+  <!-- <v-container>
+  
+  </v-container> -->
 
   <template>
    <div class="text-center mb-3">
@@ -83,7 +100,7 @@
 
     <v-tooltip transition="false" color="black" bottom>
      <template v-slot:activator="{ on, attrs }">
-      <v-btn @click="saveComponent(selectedComponent.id)" :disabled="!isModified()" v-on="on" depressed large small color="white">
+      <v-btn @click="saveComponent(selectedComponent.id)" :disabled="!hasUnsavedChanges" v-on="on" depressed large small color="white">
        <v-icon color="green" dark>
         mdi-check-all
        </v-icon>
@@ -155,20 +172,6 @@
      </v-list-item>
 
      <v-divider></v-divider>
-
-     <v-container>
-      <small>Component group </small>
-      <v-autocomplete
-       v-model="selectedComponent.component_group_id"
-       solo
-       :items="allGroups"
-       :maxlength="25"
-       item-value="id"
-       item-text="name"
-       hide-no-data
-      >
-      </v-autocomplete>
-     </v-container>
     </v-list>
    </v-card>
   </template>
@@ -176,31 +179,24 @@
 </template>
 
 <script>
-import { sync, call } from "vuex-pathify";
+import { sync, call, get } from "vuex-pathify";
 import { store } from "@/store";
 import isEqual from "lodash/isEqual";
 
 export default {
+ name: "ComponentDrilldown",
+
  data: () => ({
   items: ["Foo", "Bar", "Fizz", "Buzz"]
  }),
+
  computed: {
   ...sync("drawers", ["secureComponentDrawer"]),
-  ...sync("componentManagement", ["componentCardGroup", "allComponents", "allGroups", "selectedComponent", "unsavedChanges"])
+  ...sync("componentManagement", ["componentCardGroup", "allComponents", "allGroups", "selectedComponent", "unsavedChanges"]),
+  hasUnsavedChanges: get("componentManagement/hasUnsavedChanges")
  },
 
  methods: {
-  isModified() {
-   if (this.selectedComponent != []) {
-    const { origin, ...props } = this.selectedComponent;
-    const { component_group_id, group, config, config_settings } = props;
-    const { component_group_id: originGroup, config: originConfig, config_settings: originConfigSettings } = origin;
-
-    this.unsavedChanges = !isEqual(origin, props);
-    return this.unsavedChanges;
-   }
-  },
-
   setStarred(component) {
    component.config_settings.status.starred = !component.config_settings.status.starred;
   },
@@ -224,7 +220,7 @@ export default {
   saveComponent(id) {
    axios.put(`api/Component/${id}`, this.selectedComponent).then(response => {
     if (response.data.status) {
-     //  this.allComponents = response.data.components;
+     this.allComponents = response.data.components;
      store.set("snackbar/value", true);
      store.set("snackbar/text", "Component saved");
      store.set("snackbar/color", "indigo darken-1");
@@ -240,7 +236,8 @@ export default {
     confirmButtonText: "Delete",
     cancelButtonText: "Cancel",
     confirmButtonColor: "#EC407A",
-    backdrop: "rgba(108, 122, 137, 0.8)"
+    backdrop: "rgba(108, 122, 137, 0.8)",
+    width: 600
    }).then(result => {
     if (result.value) {
      this.removeComponent(id);
