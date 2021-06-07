@@ -4,7 +4,7 @@
    <v-col cols="12" sm="3">
     <small>Component groups</small>
     <v-autocomplete
-     @update:search-input="catchGroupInputValue($event)"
+     @update:search-input="syncGroupInputValue($event)"
      solo
      v-model="selectedComponentGroups"
      :items="allGroups"
@@ -17,9 +17,9 @@
      hide-selected
     >
      <template v-if="allGroups.length > 0" v-slot:prepend-item>
-      <v-list-item @click="selectAll" :ripple="false">
+      <v-list-item @click="selectAllGroups" :ripple="false">
        <v-list-item-avatar>
-        <v-icon :color="selectedComponentGroups.length > 0 ? 'indigo darken-4' : 'grey darken-3'">
+        <v-icon :color="hasSelectedComponentGroups ? 'indigo darken-4' : 'grey darken-3'">
          {{ icon }}
         </v-icon>
        </v-list-item-avatar>
@@ -48,8 +48,8 @@
 
        <v-list-item-content>
         <v-list-item-title>
-         <a @click="parentData.dialogGroup = !parentData.dialogGroup">Create group </a>
-         {{ groupInputValue }}
+         <a @click="dialogGroup = !dialogGroup">Create group </a>
+         {{ groupSettings.name }}
         </v-list-item-title>
        </v-list-item-content>
       </v-list-item>
@@ -75,6 +75,9 @@
     <div>
      <v-chip-group showArrows centerActive>
       <v-chip :ripple="false" close @click:close="unselectGroup(i)" v-for="(item, i) in selectedComponentGroups" :key="i">
+       <v-avatar left>
+        <v-btn style="pointer-events:none" color="grey lighten-3"> {{ countComponentsInGroup(item.id) }}</v-btn>
+       </v-avatar>
        {{ item.name }}
       </v-chip>
      </v-chip-group>
@@ -87,33 +90,14 @@
 <script>
 import axios from "axios";
 import { store } from "@/store";
-import { sync, call } from "vuex-pathify";
+import { sync, call, get } from "vuex-pathify";
 
 export default {
  name: "ComponentGroups",
 
- props: {
-  value: Boolean,
-  parentData: Object
- },
-
  computed: {
-  ...sync("componentManagement", ["allGroups", "selectedComponentGroups"]),
-
-  groupInputValue() {
-   if (this.parentData.groupInputValue === null || this.parentData.groupInputValue === "") return;
-   return `"${this.parentData.groupInputValue}"`;
-  },
-
-  selectedAllComponents() {
-   if (this.selectedComponentGroups.length === 0) return;
-   return this.selectedComponentGroups.length === this.allGroups.length;
-  },
-
-  selectedSomeComponents() {
-   if (this.selectedComponentGroups.length === 0) return;
-   return this.selectedComponentGroups.length > 0 && !this.selectedAllComponents;
-  },
+  ...sync("componentManagement", ["allGroups", "selectedComponentGroups", "dialogGroup", "groupSettings", "allComponents"]),
+  ...get("componentManagement", ["selectedAllComponents", "selectedSomeComponents", "hasSelectedComponentGroups", "countComponentsInGroup"]),
 
   icon() {
    if (this.selectedAllComponents) return "mdi-close-box";
@@ -145,41 +129,8 @@ export default {
    });
   },
 
-  removeGroup(id) {
-   axios.delete(`api/ComponentGroup/${id}`).then(response => {
-    if (response.data.status) {
-     this.allGroups = response.data.groups;
-     store.set("snackbar/value", true);
-     store.set("snackbar/text", "Group removed");
-     store.set("snackbar/color", "pink darken-1");
-    }
-   });
-  },
-
-  catchGroupInputValue(e) {
-   this.parentData.groupInputValue = e;
-  },
-
-  unselectGroup(index) {
-   this.selectedComponentGroups.splice(index, 1);
-  },
-
-  selectAll() {
-   this.$nextTick(() => {
-    if (this.selectedAllComponents) {
-     this.selectedComponentGroups = [];
-    } else {
-     this.selectedComponentGroups = this.allGroups.slice();
-    }
-   });
-  },
-
-  saveGroup() {
-   axios.post("api/ComponentGroup", { name: this.group_settings.name }).then(response => {
-    if (response.data.status) {
-     this.dialogGroup = false;
-    }
-   });
+  syncGroupInputValue(e) {
+   store.set("componentManagement/groupSettings@name", e);
   }
  }
 };

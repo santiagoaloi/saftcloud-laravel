@@ -3,12 +3,6 @@
 // Spacing
 // $spacer: 8px;
 
-$text-fields: (
- "outlined": rgba(map-get($blue-grey, "lighten-5"), 0.38),
- //"outlined-disabled": rgba(map-get($shades, "black"), 0.26),
- "outlined-hover": rgba(map-get($blue-grey, "lighten-5"), 0.86)
-);
-
 $grid-breakpoints: (
  "xs": 0,
  "sm": 600px,

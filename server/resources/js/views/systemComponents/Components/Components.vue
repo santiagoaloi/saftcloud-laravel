@@ -1,8 +1,7 @@
 <template>
  <div>
   <components-appbar :parent-data="$data" />
-  <components-groups :parent-data="$data" />
-
+  <components-groups />
   <div class="d-flex justify-space-between align-center">
    <v-tabs v-model="activeStatusTab" showArrows class="col-6 mt-n3" background-color="transparent" sliderSize="1">
     <v-tab :key="i" y v-for="(tab, i) in componentStatusTabs" :ripple="false">
@@ -21,107 +20,100 @@
 
   <v-divider></v-divider>
 
-  <template v-if="allComponentsFiltered.length > 0">
-   <v-fade-transition hide-on-leave>
-    <template v-if="isTableLayout">
-     <v-card class="mt-2" flat>
-      <v-data-table
-       fixed-header
-       height="40vh"
-       checkbox-color="primary"
-       item-key="id"
-       show-select
-       :headers="headers"
-       :items="allComponents"
-       :items-per-page="5"
-       class="elevation-0"
-      ></v-data-table>
-     </v-card>
-    </template>
-   </v-fade-transition>
+  <v-card color="transparent" flat :height="calculateHeight()" style="overflow-y:scroll">
+   <template v-if="allComponentsFiltered.length > 0">
+    <v-fade-transition hide-on-leave>
+     <template v-if="isTableLayout">
+      <v-card class="mt-2" flat>
+       <v-data-table
+        fixed-header
+        height="40vh"
+        checkbox-color="primary"
+        item-key="id"
+        show-select
+        :headers="headers"
+        :items="allComponents"
+        :items-per-page="5"
+        class="elevation-0"
+       ></v-data-table>
+      </v-card>
+     </template>
+    </v-fade-transition>
 
-   <v-fade-transition hide-on-leave>
-    <template v-if="!isTableLayout">
-     <v-item-group v-model="componentCardGroup" mandatory :multiple="multipleSelect">
-      <div class="gallery-card-container py-2">
-       <v-item :key="index" v-for="(component, index) in allComponentsFiltered" v-slot="{ active, toggle }">
-        <v-card
-         hover
-         :color="active ? 'indigo lighten-5' : 'white'"
-         :max-width="$vuetify.breakpoint.smAndDown ? '' : 320"
-         height="180"
-         width="100%"
-         :ripple="false"
-         class="d-flex flex-column justify-space-between pa-4 "
-         @click="
-          toggle();
-          setSelectedComponent(component);
-         "
-        >
-         <v-card-actions class="px-0 ">
-          <v-avatar rounded :color="component.config_settings.icon.color">
-           <v-icon dark>
-            {{ component.config_settings.icon.name }}
-           </v-icon>
-          </v-avatar>
-          <v-spacer />
+    <v-fade-transition hide-on-leave>
+     <template v-if="!isTableLayout">
+      <v-item-group v-model="componentCardGroup" mandatory :multiple="multipleSelect">
+       <div class="gallery-card-container pa-2">
+        <v-item :key="index" v-for="(component, index) in allComponentsFiltered" v-slot="{ active, toggle }">
+         <v-card
+          hover
+          :color="active ? 'indigo lighten-5' : 'white'"
+          :max-width="$vuetify.breakpoint.smAndDown ? '' : 320"
+          height="180"
+          width="100%"
+          :ripple="false"
+          class="d-flex flex-column justify-space-between pa-4 "
+          @click="
+           toggle();
+           setSelectedComponent(component);
+          "
+         >
+          <v-card-actions class="px-0 ">
+           <v-avatar rounded :color="component.config_settings.icon.color">
+            <v-icon dark>
+             {{ component.config_settings.icon.name }}
+            </v-icon>
+           </v-avatar>
+           <v-spacer />
 
-          <v-btn @click="setModular(component)" color="white" small icon :ripple="false">
-           <v-icon :color="isModularColor(component)"> {{ isModularIcon(component) }} </v-icon>
-          </v-btn>
+           <v-btn @click="setModular(component)" color="white" small icon :ripple="false">
+            <v-icon :color="isModularColor(component)"> {{ isModularIcon(component) }} </v-icon>
+           </v-btn>
 
-          <v-btn @click="setActive(component)" color="white" small icon :ripple="false">
-           <v-icon :color="isActiveColor(component)"> {{ isActiveIcon(component) }} </v-icon>
-          </v-btn>
-          <v-btn @click="setStarred(component)" color="white" small icon :ripple="false">
-           <v-icon :color="isStarredColor(component)"> {{ isStarredIcon(component) }} </v-icon>
-          </v-btn>
-         </v-card-actions>
+           <v-btn @click="setActive(component)" color="white" small icon :ripple="false">
+            <v-icon :color="isActiveColor(component)"> {{ isActiveIcon(component) }} </v-icon>
+           </v-btn>
+           <v-btn @click="setStarred(component)" color="white" small icon :ripple="false">
+            <v-icon :color="isStarredColor(component)"> {{ isStarredIcon(component) }} </v-icon>
+           </v-btn>
+          </v-card-actions>
 
-         <span class="gallery-card-title"> {{ component.config.title }} </span>
+          <span class="gallery-card-title"> {{ component.config.title }} </span>
 
-         <div class="gallery-card-subtitle-container">
-          <div class="gallery-card-subtitle-wrapper">
-           <h5 class="gallery-card-subtitle">
-            <v-chip style="pointer-events:none" color="grey lighten-5" text-color="blue darken-4" label class="col-6">
-             <div class="col-12 text-truncate">
-              {{ mapComponentGroup(component) }}
-             </div>
-            </v-chip>
-           </h5>
+          <div class="gallery-card-subtitle-container">
+           <div class="gallery-card-subtitle-wrapper">
+            <h5 class="gallery-card-subtitle">
+             <v-chip style="pointer-events:none" color="grey lighten-5" text-color="blue darken-4" label class="col-6">
+              <div class="col-12 text-truncate">
+               {{ mapComponentGroup(component) }}
+              </div>
+             </v-chip>
+            </h5>
+           </div>
           </div>
-          <div v-if="hasUnsavedChanges" class="gallery-card-subtitle-wrapper">
-           <h5 class="gallery-card-subtitle">
-            <v-chip style="pointer-events:none" color="red lighten-2" text-color="white" label class="col-6">
-             <div class="col-12 text-truncate">
-              Unsaved
-             </div>
-            </v-chip>
-           </h5>
-          </div>
-         </div>
-        </v-card>
-       </v-item>
+         </v-card>
+        </v-item>
+       </div>
+      </v-item-group>
+     </template>
+    </v-fade-transition>
+   </template>
+
+   <template v-else>
+    <v-container fluid>
+     <v-sheet color="transparent" height="45vh" class="d-flex pa-2 justify-center align-center">
+      <div class="flex-grow-1 align-center justify-center d-flex flex-column">
+       <v-img :aspect-ratio="1" width="250" contain src="storage/systemImages/noContent.svg"></v-img>
+       No components found. Choose a different filter or search criteria.
       </div>
-     </v-item-group>
-    </template>
-   </v-fade-transition>
-  </template>
+     </v-sheet>
+    </v-container>
+   </template>
+  </v-card>
 
-  <template v-else>
-   <v-container fluid>
-    <v-sheet color="transparent" height="45vh" class="d-flex pa-2 justify-center align-center">
-     <div class="flex-grow-1 align-center justify-center d-flex flex-column">
-      <v-img :aspect-ratio="1" width="250" contain src="storage/systemImages/noContent.svg"></v-img>
-      No components found. Choose a different filter or search criteria.
-     </div>
-    </v-sheet>
-   </v-container>
-  </template>
-
-  <!-- <dialog-system-operations v-model="dialogSystemOperations" :parent-data="$data" /> -->
-  <dialog-group v-if="dialogGroup" v-model="dialogGroup" :parent-data="$data" />
-  <dialog-component v-if="dialogComponent" v-model="dialogComponent" :parent-data="$data" />
+  <dialog-group />
+  <dialog-component />
+  <dialog-component-config v-if="dialogComponentConfig" v-model="dialogComponentConfig" />
  </div>
 </template>
 
@@ -139,7 +131,7 @@ export default {
   DialogComponent: () => import("./DialogComponent"),
   ComponentsGroups: () => import("./ComponentsGroups"),
   ComponentsAppbar: () => import("./ComponentsAppbar"),
-  DialogSystemOperations: () => import("./DialogSystemOperations")
+  DialogComponentConfig: () => import("./DialogComponentConfig")
  },
 
  mixins: [globalMixin],
@@ -151,7 +143,10 @@ export default {
  },
 
  data() {
-  return this.initialState();
+  return {
+   multipleSelect: false,
+   dialogComponentConfig: false
+  };
  },
 
  computed: {
@@ -159,78 +154,21 @@ export default {
   ...sync("componentManagement", [
    "allGroups",
    "allComponents",
-   "unsavedChanges",
    "activeStatusTab",
    "dialogComponent",
    "selectedComponent",
    "componentCardGroup",
    "componentStatusTabs",
-   "selectedComponentGroups",
-   "numberOfFilteredComponents"
+   "selectedComponentGroups"
   ]),
-
-  hasUnsavedChanges: get("componentManagement/hasUnsavedChanges"),
-
-  activeStatusTabName() {
-   return this.componentStatusTabs[this.activeStatusTab].value;
-  },
-
-  allComponentsFiltered() {
-   let allComponentsFiltered = this.selectedComponentGroups.length > 0 ? this.allComponents.filter(this.componentFilters) : [];
-   //    this.numberOfFilteredComponents = allComponentsFiltered.length;
-   return allComponentsFiltered;
-  }
+  ...get("componentManagement", ["hasUnsavedChanges", "activeStatusTabName", "allComponentsFiltered", "isModularIcon", "isStarredIcon"])
  },
 
  methods: {
   ...call("componentManagement/*"),
 
-  componentFilters(component) {
-   const search = this.search.toString().toLowerCase();
-   if (search != "" && !component.config.title.toLowerCase().match(search)) return;
-   if (this.selectedComponentGroups.some(g => g.id === component.component_group_id) && this.filterStatusTabs(component)) return true;
-  },
-
-  filterStatusTabs(component) {
-   if (this.activeStatusTabName === "all") return true;
-   if (component.config_settings.status[this.activeStatusTabName]) return true;
-  },
-  initialState() {
-   return {
-    search: "",
-    dialogSystemOperations: false,
-    dialogGroup: false,
-
-    isTableLayout: false,
-    multipleSelect: false,
-    groupInputValue: "",
-
-    group_settings: {
-     group_id: "",
-     name: "",
-     folder: "",
-     icon: "",
-     total: "",
-     ordering: ""
-    },
-
-    componentSettings: {
-     component_group_id: 0,
-     prev_group_id: 0,
-     title: "",
-     name: "",
-     table: "",
-     note: ""
-    },
-
-    headers: [
-     {
-      text: "Name",
-      align: "start",
-      value: "config.title"
-     }
-    ]
-   };
+  calculateHeight() {
+   return Number(this.$vuetify.breakpoint.height - 375);
   },
 
   setSelectedComponent(nextComponent) {
@@ -243,33 +181,6 @@ export default {
    }
   },
 
-  //   setSelectedComponent(nextComponent) {
-  //    if (nextComponent.id != this.selectedComponent.id) {
-  //     if (this.unsavedChanges) {
-  //      this.$swal({
-  //       title: `Unsaved changes`,
-  //       text: "Do you want save or discard your changes?",
-  //       showCancelButton: true,
-  //       confirmButtonText: "Save",
-  //       cancelButtonText: "Discard",
-  //       confirmButtonColor: "grey",
-  //       cancelButtonColor: "#EC407A",
-  //       backdrop: "rgba(108, 122, 137, 0.8)",
-  //       width: 500
-  //      }).then(result => {
-  //       if (result.value) {
-  //        this.saveComponent(this.selectedComponent.id, this.selectedComponent, nextComponent);
-  //       } else {
-  //        this.selectedComponent = nextComponent;
-  //        this.getComponents();
-  //       }
-  //      });
-  //     } else {
-  //      this.selectedComponent = nextComponent;
-  //     }
-  //    }
-  //   },
-
   setStarred(component) {
    component.config_settings.status.starred = !component.config_settings.status.starred;
   },
@@ -279,14 +190,6 @@ export default {
     return "orange darken-2";
    } else {
     return "black";
-   }
-  },
-
-  isStarredIcon(component) {
-   if (component.config_settings.status.starred) {
-    return "mdi-star";
-   } else {
-    return "mdi-star-outline";
    }
   },
 
@@ -323,51 +226,9 @@ export default {
    }
   },
 
-  isModularIcon(component) {
-   if (component.config_settings.status.modular) {
-    return "mdi-view-module";
-   } else {
-    return "mdi-view-module-outline";
-   }
-  },
-
   mapComponentGroup(component) {
    if (this.allGroups.length === 0) return;
    return this.allGroups.filter(g => g.id === component.component_group_id)[0].name;
-  },
-
-  saveComponent(id, component, nextComponent) {
-   axios.put(`api/Component/${id}`, component).then(response => {
-    if (response.data.status) {
-     this.selectedComponent = nextComponent;
-     this.getComponents();
-     store.set("snackbar/value", true);
-     store.set("snackbar/text", "Component saved");
-     store.set("snackbar/color", "indigo darken-1");
-    }
-   });
-  },
-
-  saveGroup() {
-   axios.post("api/ComponentGroup", { name: this.group_settings.name }).then(response => {
-    if (response.data.status) {
-     this.dialogGroup = false;
-     this.allGroups = response.data.groups;
-    }
-   });
-  },
-
-  generate() {
-   axios.post("api/Component", this.componentSettings).then(response => {
-    if (response.data.status) {
-     this.allComponents = response.data.components;
-     this.dialogComponent = false;
-     this.componentSettings = this.initialState().componentSettings;
-     store.set("snackbar/value", true);
-     store.set("snackbar/text", "Component created");
-     store.set("snackbar/color", "indigo darken-1");
-    }
-   });
   }
  },
 
@@ -386,7 +247,7 @@ export default {
  display: grid;
  grid-template-columns: repeat(auto-fill, minmax(264px, 1fr));
  grid-auto-rows: 5 0%;
- gap: 16px;
+ gap: 10px;
  justify-items: center;
 }
 

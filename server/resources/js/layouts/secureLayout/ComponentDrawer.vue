@@ -1,14 +1,5 @@
 <template>
- <v-navigation-drawer
-  v-if="secureComponentDrawer"
-  color="white"
-  width="350"
-  v-model="secureComponentDrawer"
-  hideOverlay
-  right
-  app
-  class="elevation-0"
- >
+ <v-navigation-drawer color="white" width="350" v-model="secureComponentDrawer" hideOverlay right app class="elevation-0">
   <component-drilldown />
  </v-navigation-drawer>
 </template>
