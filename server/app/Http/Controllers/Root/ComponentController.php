@@ -7,6 +7,9 @@ use App\Models\Root\Component;
 use Illuminate\Http\Request;
 
 use App\Http\Controllers\Root\MysqlController;
+use Illuminate\Support\Facades\File;
+
+use Jawira\CaseConverter\Convert;
 
 class ComponentController extends Controller {
     /**
@@ -47,6 +50,7 @@ class ComponentController extends Controller {
             $ArrayFields[] = [
                 'field'         => $column,
                 'display_field'  => true,
+                ...array($this->formFieldStructure())
             ];
         };
 
@@ -68,6 +72,7 @@ class ComponentController extends Controller {
             'name'  => 'mdi-folder',
             'color' => 'blue',
         ];
+
         $configSettings['status'] = [
             'starred'   => false,
             'active'    => true,
@@ -82,6 +87,8 @@ class ComponentController extends Controller {
         ];
 
         Component::create($data);
+
+        $this->makeNewComponent($request['name']);
 
         $query = $this->showAll(true);
 
@@ -113,16 +120,17 @@ class ComponentController extends Controller {
      * @return \Illuminate\Http\Response
     */
     public function showAll($local = false) {
-        if ($local){
-            $components = Component::all();
+        $components = Component::all();
+        $arrayComponent = [];
 
+        // Local is used when we call it by an other function
+        if ($local){
             foreach($components as $component){
                 $arrayComponent[] = $this->parseComponent($component);
             };
 
             return $arrayComponent;
         } else {
-            $components = Component::all();
             foreach($components as $component){
                 $arrayComponent[] = $this->parseComponent($component);
             };
@@ -217,5 +225,45 @@ class ComponentController extends Controller {
 
     public function constructConfigSettings($configSettings){
         return json_decode($configSettings, true);
+    }
+
+
+    function makeNewComponent($request){
+        $name = new Convert($request);
+
+        $data = [
+            'name' => $name->fromCamel()->toPascal(),
+        ];
+
+        $vue_folder = resource_path("js/views/Protected/{$name->fromCamel()->toKebab()}");
+
+        $this->makeNewDirectory($vue_folder);
+
+        $tmp_vue = file_get_contents(resource_path("js/templates/componentBoilerplate.vue"));
+
+        $build_vue = $this::blend($tmp_vue, $data);
+
+        file_put_contents( $vue_folder . "/{$data['name']}.vue" , $build_vue);
+    }
+
+    function makeNewDirectory($request){
+        if (! File::exists($request)) {
+            File::makeDirectory($request);
+        }
+    }
+
+    public static function blend($filePath, $data){
+        foreach($data as $k=>$v){
+            $key[] = "{".$k."}";
+            $value[] = $v;
+        }
+
+        $fileContent = str_ireplace($key, $value, $filePath);
+
+        return $fileContent;
+    }
+
+    public function formFieldStructure() {
+        return [ "field" => "", "label" => "", "inputType" => "text", "fieldType" => "text", "displayField" => true, "hiddenField" => false, "inputParameters" => "", "inputParametersPreview" => [ ], "inputParametersDefault" => "", "inputIcon" => "", "textareaRows" => 3, "responsiveGrid" => 6, "inputPlaceholder" => "", "inputHint" => "", "validation" => [ "rulesString" => "", "rulesArray" => [ ], "range" => [ "active" => false, "min" => 0, "max" => 0 ], "minValue" => [ "active" => false, "value" => 0 ], "maxValue" => [ "active" => false, "value" => 0 ], "length" => [ "active" => false, "value" => 0 ], "maxLength" => [ "active" => false, "value" => 0 ], "minLength" => [ "active" => false, "value" => 0 ], "digits" => [ "active" => false, "value" => 0 ], "regex" => [ "active" => false, "value" => "" ], "unique" => false ], "events" => [ "eventInput" => "", "eventChange" => "", "eventBlur" => "", "eventFocus" => "" ], "slots" => [ "prepend" => [ "active" => false, "function" => "", "button" => "", "buttonColor" => "", "icon" => "", "iconColor" => "", "whiteText" => false ] ], "parentMenu" => 0, "datePickerTrigger" => false, "dropdownText" => "text", "dropdownValue" => "value", "options" => [ "fieldBackgroundColor" => "", "fieldColor" => "teal", "tooltip" => "", "returnObject" => [ "conditioned" => false, "conditionFunction" => "", "value" => false ], "disabled" => [ "conditioned" => false, "conditionFunction" => "", "value" => false ], "clearable" => [ "conditioned" => false, "conditionFunction" => "", "value" => false ], "multiple" => [ "conditioned" => false, "conditionFunction" => "", "value" => false ], "hideDetails" => [ "conditioned" => false, "conditionFunction" => "", "value" => false ], "dark" => [ "conditioned" => false, "conditionFunction" => "", "value" => false ], "noResize" => [ "conditioned" => false, "conditionFunction" => "", "value" => false ], "dense" => [ "conditioned" => false, "conditionFunction" => "", "value" => false ], "counter" => [ "conditioned" => false, "conditionFunction" => "", "value" => false ], "pendorcha" => [ "conditioned" => false, "conditionFunction" => "", "value" => false ] ] ];
     }
 }
