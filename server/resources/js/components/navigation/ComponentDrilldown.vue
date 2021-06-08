@@ -1,5 +1,5 @@
 <template>
- <div v-if="hasSelectedComponent">
+ <div>
   <v-app-bar absolute dense class="px-2">
    <v-btn :disabled="previousComponentDisabled" @click="previousComponent()" class="mr-2" fab text x-small>
     <v-icon>mdi-chevron-left</v-icon>
@@ -18,7 +18,7 @@
 
   <div class="mt-13">
    <v-card-text class="mb-n6">
-    <v-alert :value="hasUnsavedChanges" border="right" colored-border color="pink" type="warning" elevation="1" dense>
+    <v-alert :value="hasUnsavedChanges(selectedComponent)" border="right" colored-border color="pink" type="warning" elevation="1" dense>
      Unsaved changes
     </v-alert>
    </v-card-text>
@@ -108,7 +108,7 @@
 
     <v-tooltip transition="false" color="black" bottom>
      <template v-slot:activator="{ on, attrs }">
-      <v-btn @click="saveComponent(selectedComponent.id)" :disabled="!hasUnsavedChanges" v-on="on" depressed large small color="white">
+      <v-btn :disabled="!hasUnsavedChanges" @click="saveComponent(selectedComponent.id)" v-on="on" depressed large small color="white">
        <v-icon color="green" dark>
         mdi-check-all
        </v-icon>
@@ -200,8 +200,14 @@ export default {
 
  computed: {
   ...sync("drawers", ["secureComponentDrawer"]),
-  ...sync("componentManagement", ["componentCardGroup", "allComponents", "allGroups", "selectedComponent"]),
-  ...get("componentManagement", ["hasUnsavedChanges", "hasSelectedComponent", "previousComponentDisabled", "nextComponentDisabled"])
+  ...sync("componentManagement", ["componentCardGroup", "allComponents", "allGroups", "selectedComponentIndex"]),
+  ...get("componentManagement", [
+   "hasUnsavedChanges",
+   "hasSelectedComponent",
+   "previousComponentDisabled",
+   "nextComponentDisabled",
+   "selectedComponent"
+  ])
  },
 
  methods: {

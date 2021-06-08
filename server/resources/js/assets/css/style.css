@@ -2,6 +2,28 @@ html {
  overflow: auto;
 }
 
+/* Scroll bar stylings */
+::-webkit-scrollbar {
+ width: 10px;
+ height: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+ background: var(--lightestgrey);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+ background: #888;
+ border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+ background: #555;
+}
+
 /* Removes transition delay and color transition from black to primary.*/
 .v-text-field--outlined fieldset {
  transition-duration: 0s !important;

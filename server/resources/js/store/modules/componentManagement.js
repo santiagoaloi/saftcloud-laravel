@@ -23,8 +23,8 @@ const state = {
  allComponents: [],
  dialogGroup: false,
  activeStatusTab: 0,
- selectedComponent: {},
  componentCardGroup: 0,
+ selectedComponentIndex: 0,
  dialogComponent: false,
  selectedComponentGroups: [],
  groupSettings: {
@@ -48,6 +48,10 @@ const state = {
 const mutations = make.mutations(state);
 
 const getters = {
+ selectedComponent: state => {
+  return state.allComponents[state.selectedComponentIndex];
+ },
+
  previousComponentDisabled: state => {
   return state.componentCardGroup === 0;
  },
@@ -76,10 +80,6 @@ const getters = {
   return !isEmpty(state.allComponents);
  },
 
- hasSelectedComponent: state => {
-  return !isEmpty(state.selectedComponent);
- },
-
  hasSelectedComponentGroups: state => {
   return !isEmpty(state.selectedComponentGroups);
  },
@@ -89,12 +89,11 @@ const getters = {
   return false;
  },
 
- hasUnsavedChanges: (state, getters) => {
-  if (getters.hasSelectedComponent) {
-   const { origin, ...current } = state.selectedComponent;
+ hasUnsavedChanges: () => component => {
+  if (getters.hasSelectedComponentGroups) {
+   const { origin, ...current } = component;
    return !isEqual(origin, current);
   }
-  return false;
  },
 
  isAllGroupsEmpty: state => {
@@ -128,7 +127,7 @@ const actions = {
  },
 
  unselectGroup(index) {
-  state.selectedComponentGroups.splice(index, 1);
+  store.set("componentManagement/selectedComponentGroups", state.selectedComponentGroups.splice(index, 1));
  },
 
  selectAllGroups({ commit, state, getters }) {

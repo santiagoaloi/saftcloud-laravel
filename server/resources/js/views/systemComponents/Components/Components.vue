@@ -14,7 +14,7 @@
 
    <div class="d-flex">
     <v-switch v-model="multipleSelect" label="Multiple selection" class="mt-1 mx-4"> </v-switch>
-    <v-btn @click="isTableLayout = !isTableLayout"><v-icon left> mdi-view-grid-outline</v-icon> Switch to grid view</v-btn>
+    <!-- <v-btn @click="isTableLayout = !isTableLayout"><v-icon left> mdi-view-grid-outline</v-icon> Switch to grid view</v-btn> -->
    </div>
   </div>
 
@@ -22,7 +22,7 @@
 
   <v-card color="transparent" flat :height="calculateHeight()" style="overflow-y:scroll">
    <template v-if="allComponentsFiltered.length > 0">
-    <v-fade-transition hide-on-leave>
+    <!-- <v-fade-transition hide-on-leave>
      <template v-if="isTableLayout">
       <v-card class="mt-2" flat>
        <v-data-table
@@ -38,14 +38,16 @@
        ></v-data-table>
       </v-card>
      </template>
-    </v-fade-transition>
+    </v-fade-transition> -->
 
     <v-fade-transition hide-on-leave>
-     <template v-if="!isTableLayout">
+     <!-- <template v-if="!isTableLayout"> -->
+     <template>
       <v-item-group v-model="componentCardGroup" mandatory :multiple="multipleSelect">
-       <div class="gallery-card-container pa-2">
+       <div id="abc" class="gallery-card-container pa-2">
         <v-item :key="index" v-for="(component, index) in allComponentsFiltered" v-slot="{ active, toggle }">
          <v-card
+          :ref="`SEL${componentCardGroup}ID${index}`"
           hover
           :color="active ? 'indigo lighten-5' : 'white'"
           :max-width="$vuetify.breakpoint.smAndDown ? '' : 320"
@@ -55,7 +57,7 @@
           class="d-flex flex-column justify-space-between pa-4 "
           @click="
            toggle();
-           setSelectedComponent(component);
+           setSelectedComponent(index);
           "
          >
           <v-card-actions class="px-0 ">
@@ -90,6 +92,11 @@
              </v-chip>
             </h5>
            </div>
+           <div v-if="hasUnsavedChanges(component)" class="gallery-card-subtitle-wrapper">
+            <h5 class="gallery-card-subtitle">
+             <v-icon color="pink lighten-2">mdi-content-save-alert-outline</v-icon>
+            </h5>
+           </div>
           </div>
          </v-card>
         </v-item>
@@ -99,7 +106,7 @@
     </v-fade-transition>
    </template>
 
-   <template v-else>
+   <!-- <template v-else>
     <v-container fluid>
      <v-sheet color="transparent" height="45vh" class="d-flex pa-2 justify-center align-center">
       <div class="flex-grow-1 align-center justify-center d-flex flex-column">
@@ -108,19 +115,19 @@
       </div>
      </v-sheet>
     </v-container>
-   </template>
+   </template> -->
   </v-card>
 
   <dialog-group />
   <dialog-component />
-  <dialog-component-config v-if="dialogComponentConfig" v-model="dialogComponentConfig" />
+  <!-- <dialog-component-config v-if="dialogComponentConfig" v-model="dialogComponentConfig" /> -->
  </div>
 </template>
 
 <script>
 import axios from "axios";
 import { store } from "@/store";
-import moment from "moment";
+// import moment from "moment";
 import globalMixin from "@/mixins/globalMixin";
 import { sync, call, get } from "vuex-pathify";
 
@@ -130,8 +137,8 @@ export default {
   DialogGroup: () => import("./DialogGroup"),
   DialogComponent: () => import("./DialogComponent"),
   ComponentsGroups: () => import("./ComponentsGroups"),
-  ComponentsAppbar: () => import("./ComponentsAppbar"),
-  DialogComponentConfig: () => import("./DialogComponentConfig")
+  ComponentsAppbar: () => import("./ComponentsAppbar")
+  //   DialogComponentConfig: () => import("./DialogComponentConfig")
  },
 
  mixins: [globalMixin],
@@ -161,7 +168,14 @@ export default {
    "componentStatusTabs",
    "selectedComponentGroups"
   ]),
-  ...get("componentManagement", ["hasUnsavedChanges", "activeStatusTabName", "allComponentsFiltered", "isModularIcon", "isStarredIcon"])
+  ...get("componentManagement", [
+   "hasUnsavedChanges",
+   "activeStatusTabName",
+   "allComponentsFiltered",
+   "isModularIcon",
+   "isStarredIcon",
+   "selectedComponentIndex"
+  ])
  },
 
  methods: {
@@ -171,14 +185,9 @@ export default {
    return Number(this.$vuetify.breakpoint.height - 375);
   },
 
-  setSelectedComponent(nextComponent) {
-   if (!this.secureComponentDrawer) {
-    this.secureComponentDrawer = true;
-   }
-
-   if (nextComponent.id != this.selectedComponent.id) {
-    this.selectedComponent = nextComponent;
-   }
+  setSelectedComponent(index) {
+   this.secureComponentDrawer = true;
+   store.set("componentManagement/selectedComponentIndex", index);
   },
 
   setStarred(component) {
@@ -230,10 +239,6 @@ export default {
    if (this.allGroups.length === 0) return;
    return this.allGroups.filter(g => g.id === component.component_group_id)[0].name;
   }
- },
-
- mounted() {
-  this.getComponents();
  }
 };
 </script>

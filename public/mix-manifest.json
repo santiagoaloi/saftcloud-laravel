@@ -8,25 +8,15 @@
     "/dist/js/DefaultHomepage.js": "/dist/js/DefaultHomepage.js",
     "/dist/js/Signup.js": "/dist/js/Signup.js",
     "/dist/js/public-appbar.js": "/dist/js/public-appbar.js",
-    "/dist/js/pubblic-view.js": "/dist/js/pubblic-view.js",
+    "/dist/js/public-view.js": "/dist/js/public-view.js",
     "/dist/js/public-footer.js": "/dist/js/public-footer.js",
     "/dist/js/secure-appbar.js": "/dist/js/secure-appbar.js",
     "/dist/js/secure-drawer.js": "/dist/js/secure-drawer.js",
-<<<<<<< HEAD
     "/dist/js/secure-cdrawer.js": "/dist/js/secure-cdrawer.js",
-=======
-    "/dist/js/secure-component-drawer.js": "/dist/js/secure-component-drawer.js",
->>>>>>> 47374ad8597f260704d973d6f6d52826977cbae3
     "/dist/js/secure-view.js": "/dist/js/secure-view.js",
     "/dist/js/login-view.js": "/dist/js/login-view.js",
     "/dist/js/public-appbar-view-footer-combined.js": "/dist/js/public-appbar-view-footer-combined.js",
     "/dist/js/Drawer-Menu.js": "/dist/js/Drawer-Menu.js",
     "/dist/css/app.css": "/dist/css/app.css",
-<<<<<<< HEAD
     "/dist/js/vendor.js": "/dist/js/vendor.js"
-=======
-    "/dist/js/vendor.js": "/dist/js/vendor.js",
-    "/dist/js/public-view.js": "/dist/js/public-view.js",
-    "/dist/js/secure-cdrawer.js": "/dist/js/secure-cdrawer.js"
->>>>>>> 47374ad8597f260704d973d6f6d52826977cbae3
 }

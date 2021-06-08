@@ -23,11 +23,11 @@ Vue.component("secure_layout", () => import(/* webpackChunkName: 'Public-Layout'
 Vue.component("login_layout", () => import(/* webpackChunkName: 'Login-Layout' */ "@/layouts/loginLayout/Index"));
 
 new Vue({
-  created() {
-    AOS.init({});
-  },
-  store,
-  router,
-  vuetify,
-  render: h => h(App)
+ store,
+ router,
+ vuetify,
+ created() {
+  AOS.init({});
+ },
+ render: h => h(App)
 }).$mount("#app");

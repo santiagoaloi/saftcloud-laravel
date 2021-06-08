@@ -1,7 +1,7 @@
 <template>
  <v-card color="transparent" flat class="mt-8">
   <v-row align="center">
-   <v-col cols="12" sm="3">
+   <v-col cols="12" sm="4">
     <small>Component groups</small>
     <v-autocomplete
      @update:search-input="syncGroupInputValue($event)"
@@ -15,6 +15,10 @@
      return-object
      placeholder="Select or create groups"
      hide-selected
+     @click.once="
+      getGroups();
+      getComponents();
+     "
     >
      <template v-if="allGroups.length > 0" v-slot:prepend-item>
       <v-list-item @click="selectAllGroups" :ripple="false">
@@ -71,7 +75,7 @@
      </template>
     </v-autocomplete>
    </v-col>
-   <v-col cols="12" sm="9">
+   <v-col cols="12" sm="8">
     <div>
      <v-chip-group showArrows centerActive>
       <v-chip :ripple="false" close @click:close="unselectGroup(i)" v-for="(item, i) in selectedComponentGroups" :key="i">
@@ -97,6 +101,7 @@ export default {
 
  computed: {
   ...sync("componentManagement", ["allGroups", "selectedComponentGroups", "dialogGroup", "groupSettings", "allComponents"]),
+  // ...get('componentManagement/*'),
   ...get("componentManagement", ["selectedAllComponents", "selectedSomeComponents", "hasSelectedComponentGroups", "countComponentsInGroup"]),
 
   icon() {
@@ -106,9 +111,9 @@ export default {
   }
  },
 
- mounted() {
-  this.getGroups();
- },
+ //  mounted() {
+ //   this.getGroups();
+ //  },
 
  methods: {
   ...call("componentManagement/*"),
