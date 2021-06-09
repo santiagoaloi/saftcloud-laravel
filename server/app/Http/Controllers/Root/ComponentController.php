@@ -168,6 +168,28 @@ class ComponentController extends Controller {
 
         $query->fill($input)->save();
 
+        $components = $this->show($id);
+
+        return response([
+            'components'=> $components,
+            'status'    => true
+        ], 200);
+    }
+
+        /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+    */
+    public function updateAll(Request $request, $id) {
+        $query = Component::findOrFail($id);
+
+        $input = $request->all();
+
+        $query->fill($input)->save();
+
         $components = $this->showAll(true);
 
         return response([
