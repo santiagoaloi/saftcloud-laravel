@@ -86,17 +86,17 @@ export default {
   },
 
   methods: {
+
     // First argument is the object to modify, second is the structure to follow.
     compareAndModifyObject(object, template) {
       (function addFromTemplate(obj, temp) {
         for (var prop in temp) {
           // Unknown to `obj`! Add it
-          if (!(prop in obj)) obj[prop] = temp[prop];
-          else if (
-            typeof obj[prop] == "object" &&
-            typeof temp[prop] == "object"
-          )
+          if (!(prop in obj)) {
+            obj[prop] = temp[prop];
+          } else if ( typeof obj[prop] == "object" && typeof temp[prop] == "object" ) {
             addFromTemplate(obj[prop], temp[prop]); // Nested objects! Recursion-step
+          }
         }
       })(object, template); // Start adding to `object` from `template`
 
