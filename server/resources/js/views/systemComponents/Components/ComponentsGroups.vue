@@ -58,6 +58,7 @@
        </v-list-item-content>
       </v-list-item>
      </template>
+
      <template #item="{ item, on }">
       <v-list-item :ripple="false" v-on="on">
        <v-list-item-avatar>

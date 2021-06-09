@@ -22,10 +22,11 @@ const state = {
  tableColumns: [],
  allComponents: [],
  dialogGroup: false,
- activeStatusTab: 0,
- componentCardGroup: 0,
- selectedComponentIndex: 0,
  dialogComponent: false,
+ dialogIcons: false,
+ activeStatusTab: 0,
+ componentCardGroup: undefined,
+ selectedComponentIndex: 0,
  selectedComponentGroups: [],
  groupSettings: {
   name: "",
@@ -48,16 +49,16 @@ const state = {
 const mutations = make.mutations(state);
 
 const getters = {
- selectedComponent: state => {
-  return state.allComponents[state.selectedComponentIndex];
+ selectedComponent: (state, getters) => {
+  return getters.allComponentsFiltered[state.selectedComponentIndex];
  },
 
  previousComponentDisabled: state => {
   return state.componentCardGroup === 0;
  },
 
- nextComponentDisabled: state => {
-  return state.componentCardGroup === state.allComponents.length - 1;
+ nextComponentDisabled: (state, getters) => {
+  return state.componentCardGroup === getters.allComponentsFiltered.length - 1;
  },
 
  selectedAllComponents: state => {
@@ -100,6 +101,10 @@ const getters = {
   return state.allGroups.length === 0;
  },
 
+ isAllFilteredComponentsEmpty: (state, getters) => {
+  return getters.allComponentsFiltered.length === 0;
+ },
+
  activeStatusTabName: state => {
   return state.componentStatusTabs[state.activeStatusTab].value;
  },
@@ -127,7 +132,7 @@ const actions = {
  },
 
  unselectGroup(index) {
-  store.set("componentManagement/selectedComponentGroups", state.selectedComponentGroups.splice(index, 1));
+  state.selectedComponentGroups.splice(index, 1);
  },
 
  selectAllGroups({ commit, state, getters }) {
@@ -157,8 +162,8 @@ const actions = {
   });
  },
 
- saveComponent({ dispatch }, id, component) {
-  axios.put(`api/Component/${id}`, component).then(response => {
+ saveComponent({ dispatch }, component) {
+  axios.put(`api/Component/${component.id}`, component).then(response => {
    if (response.data.status) {
     dispatch("getComponents");
     store.set("snackbar/value", true);
@@ -204,15 +209,16 @@ const actions = {
   });
  },
 
- previousComponent({ state }) {
+ previousComponent({ state, getters }) {
   if (state.componentCardGroup > 0) {
    state.componentCardGroup--;
   }
  },
 
- nextComponent({ state }) {
-  if (state.componentCardGroup < state.allComponents.length - 1) {
+ nextComponent({ state, getters }) {
+  if (state.componentCardGroup < getters.allComponentsFiltered.length - 1) {
    state.componentCardGroup++;
+   state.selectedComponentIndex++;
   }
  }
 };

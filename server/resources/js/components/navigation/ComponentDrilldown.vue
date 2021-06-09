@@ -11,7 +11,15 @@
 
    <v-select solo hide-details flat dense :items="items" :menu-props="{ top: true, offsetY: true }" label="Choose component"></v-select>
 
-   <v-btn @click="secureComponentDrawer = false" fab text x-small>
+   <v-btn
+    @click="
+     secureComponentDrawer = false;
+     componentCardGroup = undefined;
+    "
+    fab
+    text
+    x-small
+   >
     <v-icon>mdi-close</v-icon>
    </v-btn>
   </v-app-bar>
@@ -25,7 +33,7 @@
 
    <v-list>
     <v-list-item>
-     <v-list-item-avatar>
+     <v-list-item-avatar @click="dialogIcons = true">
       <v-icon :color="selectedComponent.config_settings.icon.color">
        {{ selectedComponent.config_settings.icon.name }}
       </v-icon>
@@ -38,7 +46,7 @@
      </v-list-item-content>
 
      <v-list-item-icon>
-      <v-btn @click="setStarred(selectedComponent)" color="white" small @click.stop icon :ripple="false">
+      <v-btn @click="setStarred(selectedComponent)" color="white" small icon :ripple="false">
        <v-icon :color="isStarredColor(selectedComponent)"> {{ isStarredIcon(selectedComponent) }} </v-icon></v-btn
       >
      </v-list-item-icon>
@@ -108,7 +116,7 @@
 
     <v-tooltip transition="false" color="black" bottom>
      <template v-slot:activator="{ on, attrs }">
-      <v-btn :disabled="!hasUnsavedChanges" @click="saveComponent(selectedComponent.id)" v-on="on" depressed large small color="white">
+      <v-btn :disabled="!hasUnsavedChanges" @click="saveComponent(selectedComponent)" v-on="on" depressed large small color="white">
        <v-icon color="green" dark>
         mdi-check-all
        </v-icon>
@@ -200,14 +208,31 @@ export default {
 
  computed: {
   ...sync("drawers", ["secureComponentDrawer"]),
-  ...sync("componentManagement", ["componentCardGroup", "allComponents", "allGroups", "selectedComponentIndex"]),
+  ...sync("componentManagement", ["componentCardGroup", "allComponents", "allGroups", "selectedComponentIndex", "dialogIcons"]),
   ...get("componentManagement", [
    "hasUnsavedChanges",
    "hasSelectedComponent",
    "previousComponentDisabled",
    "nextComponentDisabled",
-   "selectedComponent"
+   "selectedComponent",
+   "isAllFilteredComponentsEmpty"
   ])
+ },
+
+ watch: {
+  isAllFilteredComponentsEmpty(val) {
+   if (val) {
+    this.secureComponentDrawer = false;
+    this.componentCardGroup = undefined;
+   }
+  },
+
+  componentCardGroup(val) {
+   if (val === undefined) {
+    this.secureComponentDrawer = false;
+    this.componentCardGroup = undefined;
+   }
+  }
  },
 
  methods: {

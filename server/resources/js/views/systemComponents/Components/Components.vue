@@ -43,7 +43,7 @@
     <v-fade-transition hide-on-leave>
      <!-- <template v-if="!isTableLayout"> -->
      <template>
-      <v-item-group v-model="componentCardGroup" mandatory :multiple="multipleSelect">
+      <v-item-group v-model="componentCardGroup" :multiple="multipleSelect">
        <div id="abc" class="gallery-card-container pa-2">
         <v-item :key="index" v-for="(component, index) in allComponentsFiltered" v-slot="{ active, toggle }">
          <v-card
@@ -68,14 +68,14 @@
            </v-avatar>
            <v-spacer />
 
-           <v-btn @click="setModular(component)" color="white" small icon :ripple="false">
+           <v-btn @click.stop="setModular(component)" color="white" small icon :ripple="false">
             <v-icon :color="isModularColor(component)"> {{ isModularIcon(component) }} </v-icon>
            </v-btn>
 
-           <v-btn @click="setActive(component)" color="white" small icon :ripple="false">
+           <v-btn @click.stop="setActive(component)" color="white" small icon :ripple="false">
             <v-icon :color="isActiveColor(component)"> {{ isActiveIcon(component) }} </v-icon>
            </v-btn>
-           <v-btn @click="setStarred(component)" color="white" small icon :ripple="false">
+           <v-btn @click.stop="setStarred(component)" color="white" small icon :ripple="false">
             <v-icon :color="isStarredColor(component)"> {{ isStarredIcon(component) }} </v-icon>
            </v-btn>
           </v-card-actions>
@@ -94,7 +94,12 @@
            </div>
            <div v-if="hasUnsavedChanges(component)" class="gallery-card-subtitle-wrapper">
             <h5 class="gallery-card-subtitle">
-             <v-icon color="pink lighten-2">mdi-content-save-alert-outline</v-icon>
+             <v-tooltip transition="false" color="black" bottom>
+              <template v-slot:activator="{ on, attrs }">
+               <v-icon v-on="on" color="pink lighten-2">mdi-content-save-alert-outline</v-icon>
+              </template>
+              <span>Unsaved</span>
+             </v-tooltip>
             </h5>
            </div>
           </div>
@@ -120,14 +125,12 @@
 
   <dialog-group />
   <dialog-component />
-  <!-- <dialog-component-config v-if="dialogComponentConfig" v-model="dialogComponentConfig" /> -->
+  <dialog-icons />
  </div>
 </template>
 
 <script>
-import axios from "axios";
 import { store } from "@/store";
-// import moment from "moment";
 import globalMixin from "@/mixins/globalMixin";
 import { sync, call, get } from "vuex-pathify";
 
@@ -137,8 +140,8 @@ export default {
   DialogGroup: () => import("./DialogGroup"),
   DialogComponent: () => import("./DialogComponent"),
   ComponentsGroups: () => import("./ComponentsGroups"),
-  ComponentsAppbar: () => import("./ComponentsAppbar")
-  //   DialogComponentConfig: () => import("./DialogComponentConfig")
+  ComponentsAppbar: () => import("./ComponentsAppbar"),
+  DialogIcons: () => import("./DialogIcons")
  },
 
  mixins: [globalMixin],
@@ -176,6 +179,11 @@ export default {
    "isStarredIcon",
    "selectedComponentIndex"
   ])
+ },
+
+ mounted() {
+  this.getGroups();
+  this.getComponents();
  },
 
  methods: {
