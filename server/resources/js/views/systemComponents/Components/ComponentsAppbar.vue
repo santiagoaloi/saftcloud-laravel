@@ -4,7 +4,7 @@
    <h3 class="hidden-sm-and-down black--text">Manage components</h3>
    <div class="d-flex">
     <v-text-field
-     v-model.lazy="parentData.search"
+     v-model.lazy="search"
      spellcheck="false"
      color="primary lighten-1"
      background-color="white"
@@ -53,7 +53,7 @@ export default {
  },
 
  computed: {
-  ...sync("componentManagement", ["dialogComponent"])
+  ...sync("componentManagement", ["dialogComponent", "search"])
  }
 };
 </script>

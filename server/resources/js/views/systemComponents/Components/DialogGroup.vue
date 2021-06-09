@@ -1,12 +1,12 @@
 <template>
  <baseDialog
-  v-model="internalValue"
+  v-model="dialogGroup"
   title="Group settings "
   persistent
   max-width="900"
   show-remove
   @save="saveGroup()"
-  @close="() => (internalValue = false)"
+  @close="() => (dialogGroup = false)"
  >
   <v-card-text>
    <v-container>
@@ -15,132 +15,33 @@
       <span>Group name</span>
       <v-text-field
        ref="groupTitle"
-       v-model="parentData.group_settings.name"
+       v-model="groupSettings.name"
        counter
        maxlength="35"
        autofocus
        solo
        prepend-inner-icon="mdi-comment"
-       placeholder=" "
        color="primary"
-       label="  "
-       hint=" "
       />
      </v-col>
-     <!-- 
-            <v-col cols="12" sm="12" md="6">
-              <span>Directory name</span>
-              <v-text-field
-                v-model.lazy="parentData.group_settings.folder"
-                v-lazy-input:debounce="500"
-                counter
-                maxlength="35"
-                prepend-inner-icon="mdi-folder"
-                solo
-                placeholder=" "
-                color="primary"
-                :disabled="parentData.newGroup !== 1"
-                label="Component folder name"
-                hint="Backend directory and file names.  "
-                @keydown.space.prevent
-              />
-            </v-col> -->
-
-     <!-- <v-col
-              cols="12"
-              sm="12"
-              md="6"
-              lg="6">
-              <span>Group icon</span>
-              <v-autocomplete
-                v-model.lazy="parentData.group_settings.icon"
-                label="Select group icon"
-                clearable
-                solo
-                :items="material_icons"
-                item-value="icon"
-                item-text="name"
-                placeholder=" "
-                item-color="primary"
-                color="primary"
-                :menu-props="{transition:'slide-y-transition', closeOnClick:false, closeOnContentClick:true}">>
-                <template v-slot:selection="{ item }">
-                  <div>
-                    <v-icon
-                      class="ml-2"
-                      color="#4C4C4C">
-                      {{ item.icon }}
-                    </v-icon>
-                  </div>
-                </template>
-
-                <template
-                  slot="item"
-                  slot-scope="data">
-                  <div>
-                    <v-icon
-                      class="ml-2"
-                      color="#4C4C4C"
-                      small>
-                      {{ parentData.item.icon }}
-                    </v-icon>
-                    <span class="ml-2">{{ parentData.item.name }}</span>
-                  </div>
-                </template>
-
-                <template slot="prepend-item">
-                  <v-list-item-content class="px-2">
-                    <v-btn
-                      tile
-                      text
-                      outlined
-                      small
-                      color="primary"
-                      @click.stop="dialogIconModal = true">
-                      Add icon
-                    </v-btn>
-                  </v-list-item-content>
-                </template>
-              </v-autocomplete>
-          </v-row>
-            </v-col>-->
     </v-row>
    </v-container>
   </v-card-text>
  </baseDialog>
 </template>
 <script>
+import { store } from "@/store";
+import { sync, call, set } from "vuex-pathify";
+
 export default {
  name: "DialogGroup",
- inheritAttrs: true,
- inject: ["saveGroup"],
 
- props: {
-  value: Boolean,
-  parentData: Object
+ methods: {
+  ...call("componentManagement/*")
  },
 
- data() {
-  return {
-   internalValue: this.value
-  };
- },
-
- mounted() {
-  this.parentData.group_settings.name = this.parentData.groupInputValue;
- },
-
- watch: {
-  internalValue(val, oldVal) {
-   if (val === oldVal) return;
-
-   this.$emit("input", val);
-  },
-  value(val, oldVal) {
-   if (val === oldVal) return;
-
-   this.internalValue = val;
-  }
+ computed: {
+  ...sync("componentManagement", ["groupSettings", "dialogGroup"])
  }
 };
 </script>

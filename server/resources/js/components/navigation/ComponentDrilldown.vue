@@ -1,67 +1,83 @@
 <template>
  <div>
   <v-app-bar absolute dense class="px-2">
-   <v-btn :disabled="previousComponentDisabled()" @click="previousComponent()" class="mr-2" fab text x-small>
+   <v-btn :disabled="previousComponentDisabled" @click="previousComponent()" class="mr-2" fab text x-small>
     <v-icon>mdi-chevron-left</v-icon>
    </v-btn>
-   <v-btn :disabled="nextComponentDisabled()" @click="nextComponent()" fab text x-small>
+   <v-btn :disabled="nextComponentDisabled" @click="nextComponent()" fab text x-small>
     <v-icon>mdi-chevron-right</v-icon>
    </v-btn>
    <v-spacer></v-spacer>
 
    <v-select solo hide-details flat dense :items="items" :menu-props="{ top: true, offsetY: true }" label="Choose component"></v-select>
 
-   <v-btn @click="secureComponentDrawer = false" fab text x-small>
+   <v-btn
+    @click="
+     secureComponentDrawer = false;
+     componentCardGroup = undefined;
+    "
+    fab
+    text
+    x-small
+   >
     <v-icon>mdi-close</v-icon>
    </v-btn>
   </v-app-bar>
 
-  <v-list class="mt-13">
-   <v-list-item>
-    <v-list-item-avatar>
-     <v-icon :color="selectedComponent.config_settings.icon.color">
-      {{ selectedComponent.config_settings.icon.name }}
-     </v-icon>
-    </v-list-item-avatar>
+  <div class="mt-13">
+   <v-card-text class="mb-n6">
+    <v-alert :value="hasUnsavedChanges(selectedComponent)" border="right" colored-border color="pink" type="warning" elevation="1" dense>
+     Unsaved changes
+    </v-alert>
+   </v-card-text>
 
-    <v-list-item-content>
-     <v-list-item-title>
-      <v-text-field spellcheck="false" flat solo hide-details dense v-model="selectedComponent.config.title"> </v-text-field
-     ></v-list-item-title>
-    </v-list-item-content>
+   <v-list>
+    <v-list-item>
+     <v-list-item-avatar @click="dialogIcons = true">
+      <v-icon :color="selectedComponent.config_settings.icon.color">
+       {{ selectedComponent.config_settings.icon.name }}
+      </v-icon>
+     </v-list-item-avatar>
 
-    <v-list-item-icon>
-     <v-btn @click="setStarred(selectedComponent)" color="white" small @click.stop icon :ripple="false">
-      <v-icon :color="isStarredColor(selectedComponent)"> {{ isStarredIcon(selectedComponent) }} </v-icon></v-btn
-     >
-    </v-list-item-icon>
-   </v-list-item>
-  </v-list>
+     <v-list-item-content>
+      <v-list-item-title>
+       <v-text-field spellcheck="false" flat solo hide-details dense v-model="selectedComponent.config.title"> </v-text-field
+      ></v-list-item-title>
+     </v-list-item-content>
+
+     <v-list-item-icon>
+      <v-btn @click="setStarred(selectedComponent)" color="white" small icon :ripple="false">
+       <v-icon :color="isStarredColor(selectedComponent)"> {{ isStarredIcon(selectedComponent) }} </v-icon></v-btn
+      >
+     </v-list-item-icon>
+    </v-list-item>
+   </v-list>
+  </div>
 
   <v-card flat class="mx-auto pa-1 mt-n3" max-width="344">
    <v-card-text>
     <div class="text--primary">
      <small>Description </small>
 
-     <v-text-field outlined spellcheck="false" noResize :rows="2" autogrow hide-details dense v-model="selectedComponent.config.note"> </v-text-field>
-     <small>Change component group </small>
-     <v-autocomplete
-      v-model="selectedComponent.component_group_id"
-      outlined
-      :items="allGroups"
-      :maxlength="25"
-      item-value="id"
-      item-text="name"
-      hide-no-data
-     >
-     </v-autocomplete>
+     <v-textarea outlined spellcheck="false" noResize :rows="2" autogrow hide-details dense v-model="selectedComponent.config.note"> </v-textarea>
+
+     <div class="mt-2">
+      <small>Change component group </small>
+      <v-autocomplete
+       v-model="selectedComponent.component_group_id"
+       outlined
+       dense
+       :items="allGroups"
+       :maxlength="25"
+       item-value="id"
+       item-text="name"
+       hide-no-data
+      >
+      </v-autocomplete>
+     </div>
     </div>
    </v-card-text>
   </v-card>
-
-  <!-- <v-container>
-  
-  </v-container> -->
 
   <template>
    <div class="text-center mb-3">
@@ -100,7 +116,7 @@
 
     <v-tooltip transition="false" color="black" bottom>
      <template v-slot:activator="{ on, attrs }">
-      <v-btn @click="saveComponent(selectedComponent.id)" :disabled="!hasUnsavedChanges" v-on="on" depressed large small color="white">
+      <v-btn :disabled="!hasUnsavedChanges" @click="saveComponent(selectedComponent)" v-on="on" depressed large small color="white">
        <v-icon color="green" dark>
         mdi-check-all
        </v-icon>
@@ -192,11 +208,36 @@ export default {
 
  computed: {
   ...sync("drawers", ["secureComponentDrawer"]),
-  ...sync("componentManagement", ["componentCardGroup", "allComponents", "allGroups", "selectedComponent", "unsavedChanges"]),
-  hasUnsavedChanges: get("componentManagement/hasUnsavedChanges")
+  ...sync("componentManagement", ["componentCardGroup", "allComponents", "allGroups", "selectedComponentIndex", "dialogIcons"]),
+  ...get("componentManagement", [
+   "hasUnsavedChanges",
+   "hasSelectedComponent",
+   "previousComponentDisabled",
+   "nextComponentDisabled",
+   "selectedComponent",
+   "isAllFilteredComponentsEmpty"
+  ])
+ },
+
+ watch: {
+  isAllFilteredComponentsEmpty(val) {
+   if (val) {
+    this.secureComponentDrawer = false;
+    this.componentCardGroup = undefined;
+   }
+  },
+
+  componentCardGroup(val) {
+   if (val === undefined) {
+    this.secureComponentDrawer = false;
+    this.componentCardGroup = undefined;
+   }
+  }
  },
 
  methods: {
+  ...call("componentManagement/*"),
+
   setStarred(component) {
    component.config_settings.status.starred = !component.config_settings.status.starred;
   },
@@ -217,17 +258,6 @@ export default {
    }
   },
 
-  saveComponent(id) {
-   axios.put(`api/Component/${id}`, this.selectedComponent).then(response => {
-    if (response.data.status) {
-     this.allComponents = response.data.components;
-     store.set("snackbar/value", true);
-     store.set("snackbar/text", "Component saved");
-     store.set("snackbar/color", "indigo darken-1");
-    }
-   });
-  },
-
   removeComponentWarning(id, title) {
    this.$swal({
     title: `Delete ${title}?`,
@@ -243,41 +273,6 @@ export default {
      this.removeComponent(id);
     }
    });
-  },
-
-  removeComponent(id) {
-   axios.delete(`api/Component/${id}`).then(response => {
-    if (response.data.status) {
-     this.allComponents = response.data.components;
-     store.set("snackbar/value", true);
-     store.set("snackbar/text", "Component removed");
-     store.set("snackbar/color", "pink darken-1");
-    }
-   });
-  },
-
-  previousComponent() {
-   if (this.componentCardGroup > 0) {
-    this.componentCardGroup--;
-   }
-  },
-
-  previousComponentDisabled() {
-   if (this.componentCardGroup === 0) {
-    return true;
-   }
-  },
-
-  nextComponent() {
-   if (this.componentCardGroup < this.allComponents.length - 1) {
-    this.componentCardGroup++;
-   }
-  },
-
-  nextComponentDisabled() {
-   if (this.componentCardGroup === this.allComponents.length - 1) {
-    return true;
-   }
   }
  }
 };

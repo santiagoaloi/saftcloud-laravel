@@ -1,21 +1,54 @@
 html {
-  overflow: auto;
+ overflow: auto;
 }
+
+/* Scroll bar stylings */
+::-webkit-scrollbar {
+ width: 10px;
+ height: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+ background: var(--lightestgrey);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+ background: #888;
+ border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+ background: #555;
+}
+
+/* Removes transition delay and color transition from black to primary.*/
+.v-text-field--outlined fieldset {
+ transition-duration: 0s !important;
+ transition-property: unset !important;
+ transition-timing-function: unset !important;
+}
+.v-input__slot {
+ transition: unset !important;
+}
+
 .v-application code {
-  background-color: transparent !important;
-  color: inherit !important;
-  padding: 0 0rem;
+ background-color: transparent !important;
+ color: inherit !important;
+ padding: 0 0rem;
 }
 
 .v-application code,
 .v-application kbd {
-  border-radius: 0px;
-  font-size: 100%;
-  font-weight: 100;
+ border-radius: 0px;
+ font-size: 100%;
+ font-weight: 100;
 }
 
 .swal2-popup {
-  font-family: "Open Sans", Sans-serif !important;
+ font-family: "Open Sans", Sans-serif !important;
 }
 
 /* Change Autocomplete styles in Chrome*/
@@ -26,107 +59,107 @@ textarea:-webkit-autofill:hover textarea:-webkit-autofill:focus,
 select:-webkit-autofill,
 select:-webkit-autofill:hover,
 select:-webkit-autofill:focus {
-  -webkit-text-fill-color: black;
-  -webkit-box-shadow: 0 0 0px 1000px #fafafa inset;
+ -webkit-text-fill-color: black;
+ -webkit-box-shadow: 0 0 0px 1000px #fafafa inset;
 }
 
 :focus {
-  outline: 0 !important;
+ outline: 0 !important;
 }
 
 .v-list {
-  padding: 0px 0 !important;
+ padding: 0px 0 !important;
 }
 .v-text-field input {
-  border-bottom: solid 0px;
+ border-bottom: solid 0px;
 }
 
 /* HIDE INPUT TYPE NUMBER INNER ARROWS
   /* Firefox */
 input[type="number"] {
-  -moz-appearance: textfield;
+ -moz-appearance: textfield;
 }
 ::selection {
-  background: #00e8a644 !important; /* WebKit/Blink Browsers */
+ background: #00e8a644 !important; /* WebKit/Blink Browsers */
 }
 ::-moz-selection {
-  background: #00e8a644 !important; /* WebKit/Blink Browsers */
+ background: #00e8a644 !important; /* WebKit/Blink Browsers */
 }
 /* HIDE INPUT TYPE NUMBER INNER ARROWS
   /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+ -webkit-appearance: none;
+ margin: 0;
 }
 
 .shadows {
-  text-shadow: rgba(61, 61, 61, 0.1) 1px 1px, rgba(61, 61, 61, 0.3) 1px 1px;
+ text-shadow: rgba(61, 61, 61, 0.1) 1px 1px, rgba(61, 61, 61, 0.3) 1px 1px;
 }
 
 .articleDropdownElipsis {
-  width: 350px;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+ width: 350px;
+ overflow: hidden;
+ white-space: nowrap;
+ text-overflow: ellipsis;
 }
 
 .editingButtonElipsis {
-  width: 270px;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+ width: 270px;
+ overflow: hidden;
+ white-space: nowrap;
+ text-overflow: ellipsis;
 }
 
 .dot {
-  margin-left: -1px;
-  margin-top: 7px;
-  display: inline-block;
-  height: 16px;
-  width: 16px;
-  background-color: rgba(255, 255, 255, 0.7);
-  border-radius: 50%;
+ margin-left: -1px;
+ margin-top: 7px;
+ display: inline-block;
+ height: 16px;
+ width: 16px;
+ background-color: rgba(255, 255, 255, 0.7);
+ border-radius: 50%;
 }
 .legend-container .dot {
-  margin-left: 7px;
-  margin-top: 7px;
+ margin-left: 7px;
+ margin-top: 7px;
 }
 .map-price-container {
-  overflow: visible !important;
+ overflow: visible !important;
 }
 .map-price-container > .map-price-marker {
-  width: 30px;
-  height: 30px;
-  border-radius: 50% 50% 50% 0;
-  background: rgb(102, 177, 95);
-  transform: rotate(-45deg) scale(0.6);
+ width: 30px;
+ height: 30px;
+ border-radius: 50% 50% 50% 0;
+ background: rgb(102, 177, 95);
+ transform: rotate(-45deg) scale(0.6);
 }
 .map-price-container > .map-circle-marker {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  background: rgb(34, 34, 34);
-  transform: scale(0.6);
+ width: 30px;
+ height: 30px;
+ border-radius: 50%;
+ background: rgb(34, 34, 34);
+ transform: scale(0.6);
 }
 
 .theme--light.v-data-table {
-  background-color: rgb(255, 255, 255, 0.9);
-  color: rgba(0, 0, 0, 0.87);
+ background-color: rgb(255, 255, 255, 0.9);
+ color: rgba(0, 0, 0, 0.87);
 }
 
 .v-tab {
-  font-size: 0.8rem !important;
-  font-weight: 400 !important;
-  text-transform: none !important;
-  text-align: left;
-  justify-content: start !important;
+ font-size: 0.8rem !important;
+ font-weight: 400 !important;
+ text-transform: none !important;
+ text-align: left;
+ justify-content: start !important;
 }
 
 .theme--light.v-tabs .v-tab--active:hover::before,
 .theme--light.v-tabs .v-tab--active::before {
-  opacity: 0 !important;
+ opacity: 0 !important;
 }
 
 .theme--light.v-tabs .v-tab:hover::before {
-  opacity: 0 !important;
+ opacity: 0 !important;
 }

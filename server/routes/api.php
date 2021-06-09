@@ -14,6 +14,9 @@ use App\Http\Controllers\Root\ComponentDefaultController;
 //Authentication Controller
 use App\Http\Controllers\AuthController;
 
+//Test icons Controller
+use App\Http\Controllers\IconController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -35,6 +38,8 @@ Route::resource('/account', AccountController::class);
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/makeAccount', [MakeAccountController::class, 'accountCreation']);
 
+//Icons (Testing)
+Route::get('/listIcons', [IconController::class, 'listIcons']);
 
 // Protected routes
 Route::group(['middleware' => ['auth:sanctum']], function () {

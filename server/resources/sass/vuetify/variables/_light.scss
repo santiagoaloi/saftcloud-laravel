@@ -1,3 +1,4 @@
+$text-base: #e5eaed;
 $material-light: (
  "status-bar": (
   "regular": map-get($blue-grey, "lighten-2")
@@ -6,21 +7,21 @@ $material-light: (
  "background": rgb(250, 251, 252),
  "surface": #f2f5f8,
  "calendar": (
-  "line-color": map-get($blue-grey, "lighten-2"),
-  "interval-color": map-get($blue-grey, "darken-3"),
-  "interval-line-color": map-get($blue-grey, "lighten-2")
+  "line-color": transparent,
+  "interval-color": transparent,
+  "interval-line-color": transparent
  ),
  "dividers": rgba(map-get($shades, "black"), 0.05),
  "text": (
   "link-hover": transparent
  ),
  "text-fields": (
-  "outlined": transparent,
-  "outlined-hover": transparent
+  "outlined":  lighten($text-base, 2.5%),
+  "outlined-hover":  lighten($text-base, 2.5%)
  ),
- "inputs": (
-  "box": transparent
- ),
+//  "inputs": (
+//   "box": transparent
+//  ),
  "icons": (
   "active": rgba(map-get($shades, "black"), 0.7),
   "inactive": rgba(map-get($shades, "black"), 0.38)
