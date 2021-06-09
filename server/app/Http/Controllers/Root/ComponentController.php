@@ -100,14 +100,18 @@ class ComponentController extends Controller {
      * @param  int  $id
      * @return \Illuminate\Http\Response
     */
-    public function show($id) {
+    public function show($id, $local = false) {
         $query = Component::findOrFail($id);
         $component = $this->parseComponent($query);
 
-        return response([
-            'components' =>  $component,
-            'status' => true
-        ], 200);
+        if ($local){
+            return $component;
+        } else {
+            return response([
+                'component' => $component,
+                'status' => true
+            ], 200);
+        }
     }
 
     /**
@@ -168,27 +172,26 @@ class ComponentController extends Controller {
 
         $query->fill($input)->save();
 
-        $components = $this->show($id);
+        $component = $this->show($id, true);
 
         return response([
-            'components'=> $components,
+            'component'=> $component,
             'status'    => true
         ], 200);
     }
 
-        /**
+    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
     */
-    public function updateAll(Request $request, $id) {
-        $query = Component::findOrFail($id);
+    public function updateAll(Request $request) {
 
-        $input = $request->all();
-
-        $query->fill($input)->save();
+        foreach($request as $item){
+            $this->update($item, $item->id);
+        };
 
         $components = $this->showAll(true);
 
