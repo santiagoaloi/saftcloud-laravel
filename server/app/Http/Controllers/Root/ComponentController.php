@@ -45,9 +45,7 @@ class ComponentController extends Controller {
         $columns = $MysqlController->showColumns($request);
 
         foreach ($columns as $column) {
-            $ArrayColumns[] = [
-                'name'  =>   $column,
-            ];
+            $ArrayColumns[] = ['name' => $column];
 
             $ArrayFields[] = (object)$this->formFieldStructure($column);
         };
@@ -55,6 +53,8 @@ class ComponentController extends Controller {
         $sql_select = "SELECT {$request['table']}.* FROM {$request['table']}";
         $sql_where  = " WHERE ".$request['table'].". id IS NOT NULL";
         $sql_group  = "";
+
+        $config[] = $request;
 
         $config['sql_table']    = $request['table'];
         $config['sql_select']   = $sql_select;
@@ -66,12 +66,12 @@ class ComponentController extends Controller {
         $config['title']        = $request['title'];
         $config['note']         = $request['note'];
 
-        $configSettings['icon']    = [
+        $configSettings['icon'] = [
             'name'  => 'mdi-folder',
             'color' => 'blue',
         ];
 
-        $configSettings['status'] = [
+        $status = [
             'starred'   => false,
             'active'    => true,
             'inactive'  => false,
@@ -82,6 +82,7 @@ class ComponentController extends Controller {
             'component_group_id'    => $request['component_group_id'],
             'config'                => json_encode($config),
             'config_settings'       => json_encode($configSettings),
+            'status'                => json_encode($status),
         ];
 
         Component::create($data);
@@ -150,7 +151,7 @@ class ComponentController extends Controller {
     */
     public function getTrashed() {
         $components = Component::onlyTrashed()->get();
-        
+
         return response([
             'components' => $components,
             'status'    => true
@@ -163,7 +164,7 @@ class ComponentController extends Controller {
     */
     public function recoveryTrashed($id) {
         $components = Component::onlyTrashed()->findOrFail($id)->recovery();
-        
+
         return response([
             'components' => $components,
             'status'    => true
@@ -267,6 +268,7 @@ class ComponentController extends Controller {
             'component_group_id'=> $component_group_id,
             'config'            => $config,
             'config_settings'   => $configSettings,
+            'status'            => $component->status,
             'created_at'        => $component->created_at,
             'updated_at'        => $component->updated_at,
         ];
@@ -276,6 +278,7 @@ class ComponentController extends Controller {
             'component_group_id'=> $component_group_id,
             'config'            => $config,
             'config_settings'   => $configSettings,
+            'status'            => $component->status,
             'origin'            => $origin,
             'created_at'        => $component->created_at,
             'updated_at'        => $component->updated_at,
@@ -292,7 +295,6 @@ class ComponentController extends Controller {
         return json_decode($configSettings, true);
     }
 
-
     function makeNewComponent($request){
         $name = new Convert($request);
 
@@ -303,11 +305,8 @@ class ComponentController extends Controller {
         $vue_folder = resource_path("js/views/Protected/{$name->fromCamel()->toKebab()}");
 
         $this->makeNewDirectory($vue_folder);
-
         $tmp_vue = file_get_contents(resource_path("js/templates/componentBoilerplate.vue"));
-
         $build_vue = $this::blend($tmp_vue, $data);
-
         file_put_contents( $vue_folder . "/{$data['name']}.vue" , $build_vue);
     }
 

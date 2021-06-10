@@ -22,6 +22,7 @@ class CreateComponentsTable extends Migration {
                 $table->string('note')->nullable();
                 $table->longText('config')->nullable();
                 $table->longText('config_settings')->nullable();
+                $table->longText('status')->nullable();
                 $table->softDeletes();
                 $table->timestamps();
             });
