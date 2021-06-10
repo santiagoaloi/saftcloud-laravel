@@ -74,7 +74,6 @@ class ComponentController extends Controller {
         $status = [
             'starred'   => false,
             'active'    => true,
-            'inactive'  => false,
             'modular'   => false,
         ];
 

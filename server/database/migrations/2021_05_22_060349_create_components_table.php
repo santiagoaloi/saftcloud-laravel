@@ -27,7 +27,7 @@ class CreateComponentsTable extends Migration {
                 $table->timestamps();
             });
         };
-        
+
         //Added columns 
         if (!Schema::hasColumn('components', 'config')){
                 Schema::table('components', function (Blueprint $table) {
