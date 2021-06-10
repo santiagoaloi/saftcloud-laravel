@@ -164,15 +164,7 @@ const actions = {
  },
 
  setComponentStatus({ state }, component) {
-  axios.patch(`api/Component/${component.id}`, { status: component.status }).then(response => {
-   if (response.data.status) {
-    const index = state.allComponents.findIndex(c => c.id == component.id);
-    store.set(`componentManagement/allComponents@${index}`, response.data.component);
-    store.set("snackbar/value", true);
-    store.set("snackbar/text", "Component saved");
-    store.set("snackbar/color", "indigo darken-1");
-   }
-  });
+  axios.patch(`api/Component/${component.id}`, { status: component.status });
  },
 
  saveComponent({ state }, component) {

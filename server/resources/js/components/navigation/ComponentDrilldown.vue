@@ -51,7 +51,7 @@
     </v-list-item-content>
 
     <v-list-item-icon>
-     <v-btn @click="setComponentStatus(selectedComponent)" color="white" small icon :ripple="false">
+     <v-btn @click="setStarred(selectedComponent)" color="white" small icon :ripple="false">
       <v-icon :color="isStarredColor(selectedComponent)"> {{ isStarredIcon(selectedComponent) }} </v-icon></v-btn
      >
     </v-list-item-icon>
@@ -235,9 +235,11 @@ export default {
  methods: {
   ...call("componentManagement/*"),
 
-  //   setStarred(component) {
-  //    component.config_settings.status.starred = !component.config_settings.status.starred;
-  //   },
+  setStarred(component) {
+   component.status.starred = !component.status.starred;
+   component.origin.status.starred = !component.origin.status.starred;
+   this.setComponentStatus(component);
+  },
 
   isStarredColor(component) {
    if (component.status.starred) {

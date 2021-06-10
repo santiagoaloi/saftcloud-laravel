@@ -68,15 +68,15 @@
 
           <v-spacer />
 
-          <v-btn @click.stop="setComponentStatus(component.status)" color="white" small icon :ripple="false">
+          <v-btn @click.stop="setModular(component)" color="white" small icon :ripple="false">
            <v-icon :color="isModularColor(component)"> {{ isModularIcon(component) }} </v-icon>
           </v-btn>
 
-          <v-btn @click.stop="setComponentStatus(component.status)" color="white" small icon :ripple="false">
+          <v-btn @click.stop="setActive(component)" color="white" small icon :ripple="false">
            <v-icon :color="isActiveColor(component)"> {{ isActiveIcon(component) }} </v-icon>
           </v-btn>
 
-          <v-btn @click.stop="setComponentStatus(component.status)" color="white" small icon :ripple="false">
+          <v-btn @click.stop="setStarred(component)" color="white" small icon :ripple="false">
            <v-icon :color="isStarredColor(component)"> {{ isStarredIcon(component) }} </v-icon>
           </v-btn>
          </v-card-actions>
@@ -198,6 +198,24 @@ export default {
   setSelectedComponent(index) {
    this.secureComponentDrawer = true;
    store.set("componentManagement/selectedComponentIndex", index);
+  },
+
+  setStarred(component) {
+   component.status.starred = !component.status.starred;
+   component.origin.status.starred = !component.origin.status.starred;
+   this.setComponentStatus(component);
+  },
+
+  setModular(component) {
+   component.status.modular = !component.status.modular;
+   component.origin.status.modular = !component.origin.status.modular;
+   this.setComponentStatus(component);
+  },
+
+  setActive(component) {
+   component.status.active = !component.status.active;
+   component.origin.status.active = !component.origin.status.active;
+   this.setComponentStatus(component);
   },
 
   isStarredColor(component) {
