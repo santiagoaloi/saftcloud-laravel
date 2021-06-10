@@ -21,7 +21,7 @@
   <v-divider></v-divider>
 
   <v-card color="transparent" flat :height="calculateHeight()" style="overflow-y:scroll">
-   <template v-if="allComponentsFiltered.length > 0">
+   <template v-if="!isAllFilteredComponentsEmpty">
     <!-- <v-fade-transition hide-on-leave>
      <template v-if="isTableLayout">
       <v-card class="mt-2" flat>
@@ -40,78 +40,79 @@
      </template>
     </v-fade-transition> -->
 
-    <v-fade-transition hide-on-leave>
-     <!-- <template v-if="!isTableLayout"> -->
-     <template>
-      <v-item-group v-model="componentCardGroup" :multiple="multipleSelect">
-       <div id="abc" class="gallery-card-container pa-2">
-        <v-item :key="index" v-for="(component, index) in allComponentsFiltered" v-slot="{ active, toggle }">
-         <v-card
-          :ref="`SEL${componentCardGroup}ID${index}`"
-          hover
-          :color="active ? 'indigo lighten-5' : 'white'"
-          :max-width="$vuetify.breakpoint.smAndDown ? '' : 320"
-          height="180"
-          width="100%"
-          :ripple="false"
-          class="d-flex flex-column justify-space-between pa-4 "
-          @click="
-           toggle();
-           setSelectedComponent(index);
-          "
-         >
-          <v-card-actions class="px-0 ">
-           <v-avatar rounded :color="component.config_settings.icon.color">
-            <v-icon dark>
-             {{ component.config_settings.icon.name }}
-            </v-icon>
-           </v-avatar>
-           <v-spacer />
+    <!-- <template v-if="!isTableLayout"> -->
+    <template>
+     <v-item-group v-model="componentCardGroup" :multiple="multipleSelect">
+      <transition-group class="gallery-card-container pa-2" appear css name="slide-x-transition">
+       <v-item :key="`${index}`" v-for="(component, index) in allComponentsFiltered" v-slot="{ active, toggle }">
+        <v-card
+         :ref="`SEL${componentCardGroup}ID${index}`"
+         hover
+         :color="$vuetify.theme.dark ? '#2d2c30' : active ? 'indigo lighten-5' : 'white'"
+         height="180"
+         width="100%"
+         elevation="1"
+         :ripple="false"
+         class="d-flex flex-column justify-space-between pa-4 "
+         @click="
+          toggle();
+          setSelectedComponent(index);
+         "
+        >
+         <v-card-actions class="px-0 ">
+          <v-avatar rounded :color="component.config_settings.icon.color">
+           <v-icon dark>
+            {{ component.config_settings.icon.name }}
+           </v-icon>
+          </v-avatar>
 
-           <v-btn @click.stop="setModular(component)" color="white" small icon :ripple="false">
-            <v-icon :color="isModularColor(component)"> {{ isModularIcon(component) }} </v-icon>
-           </v-btn>
+          <v-spacer />
 
-           <v-btn @click.stop="setActive(component)" color="white" small icon :ripple="false">
-            <v-icon :color="isActiveColor(component)"> {{ isActiveIcon(component) }} </v-icon>
-           </v-btn>
-           <v-btn @click.stop="setStarred(component)" color="white" small icon :ripple="false">
-            <v-icon :color="isStarredColor(component)"> {{ isStarredIcon(component) }} </v-icon>
-           </v-btn>
-          </v-card-actions>
+          <v-btn @click.stop="setComponentStatus(component.status)" color="white" small icon :ripple="false">
+           <v-icon :color="isModularColor(component)"> {{ isModularIcon(component) }} </v-icon>
+          </v-btn>
 
-          <span class="gallery-card-title"> {{ component.config.title }} </span>
+          <v-btn @click.stop="setComponentStatus(component.status)" color="white" small icon :ripple="false">
+           <v-icon :color="isActiveColor(component)"> {{ isActiveIcon(component) }} </v-icon>
+          </v-btn>
 
-          <div class="gallery-card-subtitle-container">
-           <div class="gallery-card-subtitle-wrapper">
-            <h5 class="gallery-card-subtitle">
-             <v-chip style="pointer-events:none" color="grey lighten-5" text-color="blue darken-4" label class="col-6">
-              <div class="col-12 text-truncate">
-               {{ mapComponentGroup(component) }}
-              </div>
-             </v-chip>
-            </h5>
-           </div>
-           <div v-if="hasUnsavedChanges(component)" class="gallery-card-subtitle-wrapper">
-            <h5 class="gallery-card-subtitle">
-             <v-tooltip transition="false" color="black" bottom>
-              <template v-slot:activator="{ on, attrs }">
-               <v-icon v-on="on" color="pink lighten-2">mdi-content-save-alert-outline</v-icon>
-              </template>
-              <span>Unsaved</span>
-             </v-tooltip>
-            </h5>
-           </div>
+          <v-btn @click.stop="setComponentStatus(component.status)" color="white" small icon :ripple="false">
+           <v-icon :color="isStarredColor(component)"> {{ isStarredIcon(component) }} </v-icon>
+          </v-btn>
+         </v-card-actions>
+
+         <span class="gallery-card-title"> {{ component.config.title }} </span>
+
+         <div class="gallery-card-subtitle-container">
+          <div class="gallery-card-subtitle-wrapper">
+           <h5 class="gallery-card-subtitle">
+            <v-chip v-if="!$vuetify.theme.dark" style="pointer-events:none" color="grey lighten-5" text-color="blue darken-4" label class="col-6">
+             <div class="col-12 text-truncate">
+              {{ mapComponentGroup(component) }}
+             </div>
+            </v-chip>
+            <span v-else> {{ mapComponentGroup(component) }} </span>
+           </h5>
           </div>
-         </v-card>
-        </v-item>
-       </div>
-      </v-item-group>
-     </template>
-    </v-fade-transition>
+          <div v-if="hasUnsavedChanges(component)" class="gallery-card-subtitle-wrapper">
+           <h5 class="gallery-card-subtitle">
+            <v-tooltip transition="false" color="black" bottom>
+             <template v-slot:activator="{ on, attrs }">
+              <v-icon v-on="on" color="pink lighten-2">mdi-content-save-alert-outline</v-icon>
+             </template>
+             <span>Unsaved</span>
+            </v-tooltip>
+           </h5>
+          </div>
+         </div>
+        </v-card>
+       </v-item>
+      </transition-group>
+     </v-item-group>
+    </template>
    </template>
 
-   <!-- <template v-else>
+   <template v-else>
     <v-container fluid>
      <v-sheet color="transparent" height="45vh" class="d-flex pa-2 justify-center align-center">
       <div class="flex-grow-1 align-center justify-center d-flex flex-column">
@@ -120,7 +121,7 @@
       </div>
      </v-sheet>
     </v-container>
-   </template> -->
+   </template>
   </v-card>
 
   <dialog-group />
@@ -177,7 +178,8 @@ export default {
    "allComponentsFiltered",
    "isModularIcon",
    "isStarredIcon",
-   "selectedComponentIndex"
+   "selectedComponentIndex",
+   "isAllFilteredComponentsEmpty"
   ])
  },
 
@@ -198,48 +200,35 @@ export default {
    store.set("componentManagement/selectedComponentIndex", index);
   },
 
-  setStarred(component) {
-   component.config_settings.status.starred = !component.config_settings.status.starred;
-  },
-
   isStarredColor(component) {
-   if (component.config_settings.status.starred) {
+   if (component.status.starred) {
     return "orange darken-2";
    } else {
     return "black";
    }
   },
 
-  setActive(component) {
-   component.config_settings.status.active = !component.config_settings.status.active;
-   component.config_settings.status.inactive = !component.config_settings.status.active;
-  },
-
   isActiveColor(component) {
-   if (component.config_settings.status.active) {
+   if (component.status.active) {
     return "blue darken-4";
    } else {
     return "black";
+   }
+  },
+
+  isModularColor(component) {
+   if (component.status.modular) {
+    return "blue darken-4";
+   } else {
+    return this.$vuetify.theme.dark ? "white" : "black";
    }
   },
 
   isActiveIcon(component) {
-   if (component.config_settings.status.active) {
+   if (component.status.active) {
     return "mdi-lightbulb-on";
    } else {
     return "mdi-lightbulb-on-outline";
-   }
-  },
-
-  setModular(component) {
-   component.config_settings.status.modular = !component.config_settings.status.modular;
-  },
-
-  isModularColor(component) {
-   if (component.config_settings.status.modular) {
-    return "blue darken-4";
-   } else {
-    return "black";
    }
   },
 
@@ -251,7 +240,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .v-card--link:before {
  background: white;
 }
@@ -274,7 +263,6 @@ export default {
  font-size: 1.1rem;
  font-weight: bold;
  line-height: 1.2;
- color: rgb(23, 43, 77);
  letter-spacing: -0.008em;
  margin: 0px;
  display: -webkit-box;

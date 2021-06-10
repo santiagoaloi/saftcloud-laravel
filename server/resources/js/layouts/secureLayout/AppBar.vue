@@ -1,5 +1,5 @@
 <template>
-    <v-app-bar dense app >
+    <v-app-bar clipped-right dense app >
 
       <v-container fluid class="py-0 px-0 px-sm-2 fill-height">
 
@@ -24,8 +24,7 @@
             <v-icon>mdi-auto-fix</v-icon>
           </v-btn>
         </template>
-        <v-card color="rgba(250, 250, 250, 1)" class="mx-auto pa-2" max-width="300" rounded="xl">
-          <v-list rounded="xl" color="rgba(250, 250, 250, 1)" outlined>
+           <v-list class="pa-2" rounded="xl" color="rgba(250, 250, 250, 1)" outlined>
             <v-list-item v-for="(item, i) in cmsMenu" :key="i" :to="item.href">
               <v-icon class="mr-5">
                 {{ item.icon }}
@@ -35,7 +34,6 @@
               </v-list-item-title>
             </v-list-item>
           </v-list>
-        </v-card>
       </v-menu>
 
       <v-menu rounded="xl" origin="center center" transition="scale-transition" :nudge-bottom="10" offset-y>
@@ -44,8 +42,7 @@
             <v-icon>mdi-dots-vertical</v-icon>
           </v-btn>
         </template>
-        <v-card color="rgba(250, 250, 250, 1)" class="mx-auto pa-2" max-width="300" rounded="xl">
-          <v-list rounded="xl" color="rgba(250, 250, 250, 1)" outlined>
+          <v-list class="pa-2" rounded="xl" color="rgba(250, 250, 250, 1)" outlined>
             <v-list-item v-for="(item, i) in settingsMenu" :key="i" :to="item.href">
               <v-icon class="mr-5">
                 {{ item.icon }}
@@ -55,7 +52,6 @@
               </v-list-item-title>
             </v-list-item>
           </v-list>
-        </v-card>
       </v-menu>
 
       <template>

@@ -3,6 +3,7 @@ import { store } from "@/store";
 import { make } from "vuex-pathify";
 import isEqual from "lodash/isEqual";
 import isEmpty from "lodash/isEmpty";
+import cloneDeep from "lodash/cloneDeep";
 
 const initialComponentSettings = () => {
  return {
@@ -85,12 +86,12 @@ const getters = {
   return !isEmpty(state.selectedComponentGroups);
  },
 
- selectedSomeComponents: (state, getters) => {
+ selectedSomeComponents: (_state, getters) => {
   if (getters.hasSelectedComponentGroups) return true;
   return false;
  },
 
- hasUnsavedChanges: () => component => {
+ hasUnsavedChanges: (_state, getters) => component => {
   if (getters.hasSelectedComponentGroups) {
    const { origin, ...current } = component;
    return !isEqual(origin, current);
@@ -101,7 +102,7 @@ const getters = {
   return state.allGroups.length === 0;
  },
 
- isAllFilteredComponentsEmpty: (state, getters) => {
+ isAllFilteredComponentsEmpty: (_state, getters) => {
   return getters.allComponentsFiltered.length === 0;
  },
 
@@ -109,8 +110,8 @@ const getters = {
   return state.componentStatusTabs[state.activeStatusTab].value;
  },
 
- isModularIcon: () => component => (component.config_settings.status.modular ? "mdi-view-module" : "mdi-view-module-outline"),
- isStarredIcon: () => component => (component.config_settings.status.starred ? "mdi-star" : "mdi-star-outline"),
+ isModularIcon: () => component => (component.status.modular ? "mdi-view-module" : "mdi-view-module-outline"),
+ isStarredIcon: () => component => (component.status.starred ? "mdi-star" : "mdi-star-outline"),
  countComponentsInGroup: () => id => state.allComponents.filter(component => component.component_group_id === id).length
 };
 
@@ -162,15 +163,34 @@ const actions = {
   });
  },
 
- saveComponent({ dispatch }, component) {
-  axios.put(`api/Component/${component.id}`, component).then(response => {
+ setComponentStatus({ state }, component) {
+  axios.patch(`api/Component/${component.id}`, { status: component.status }).then(response => {
    if (response.data.status) {
-    dispatch("getComponents");
+    const index = state.allComponents.findIndex(c => c.id == component.id);
+    store.set(`componentManagement/allComponents@${index}`, response.data.component);
     store.set("snackbar/value", true);
     store.set("snackbar/text", "Component saved");
     store.set("snackbar/color", "indigo darken-1");
    }
   });
+ },
+
+ saveComponent({ state }, component) {
+  axios.put(`api/Component/${component.id}`, component).then(response => {
+   if (response.data.status) {
+    const index = state.allComponents.findIndex(c => c.id == component.id);
+    store.set(`componentManagement/allComponents@${index}`, response.data.component);
+    store.set("snackbar/value", true);
+    store.set("snackbar/text", "Component saved");
+    store.set("snackbar/color", "indigo darken-1");
+   }
+  });
+ },
+
+ rollbackChanges({ state }, component) {
+  const { origin } = component;
+  const index = state.allComponents.findIndex(c => c.id == component.id);
+  store.set(`componentManagement/allComponents@${index}`, { ...origin, origin: cloneDeep(origin) });
  },
 
  removeComponent({ commit }, id) {
@@ -209,7 +229,7 @@ const actions = {
   });
  },
 
- previousComponent({ state, getters }) {
+ previousComponent({ state }) {
   if (state.componentCardGroup > 0) {
    state.componentCardGroup--;
   }

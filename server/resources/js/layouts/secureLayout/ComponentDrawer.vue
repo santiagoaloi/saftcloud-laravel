@@ -1,5 +1,15 @@
 <template>
- <v-navigation-drawer color="white" width="350" v-model="secureComponentDrawer" hideOverlay right app class="elevation-0">
+ <v-navigation-drawer
+  mobileBreakpoint="0"
+  clipped
+  :color="$vuetify.theme.dark ? '#2C2F33' : 'grey lighten-4'"
+  width="350"
+  v-model="secureComponentDrawer"
+  hideOverlay
+  right
+  app
+  class="elevation-3"
+ >
   <component-drilldown />
  </v-navigation-drawer>
 </template>
@@ -14,14 +24,6 @@ export default {
  name: "SecureComponentDrawer",
  computed: {
   ...sync("drawers", ["secureComponentDrawer"])
-  // ...sync("componentManagement", ["componentCardGroup"])
  }
- // watch: {
- //   componentCardGroup(val) {
- //     if (val === undefined) {
- //       this.secureComponentDrawer = false;
- //     }
- //   }
- // }
 };
 </script>

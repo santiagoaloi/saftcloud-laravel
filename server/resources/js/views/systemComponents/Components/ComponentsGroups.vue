@@ -15,10 +15,6 @@
      return-object
      placeholder="Select or create groups"
      hide-selected
-     @click.once="
-      getGroups();
-      getComponents();
-     "
     >
      <template v-if="allGroups.length > 0" v-slot:prepend-item>
       <v-list-item @click="selectAllGroups" :ripple="false">
@@ -111,10 +107,6 @@ export default {
    return "mdi-checkbox-blank-outline";
   }
  },
-
- //  mounted() {
- //   this.getGroups();
- //  },
 
  methods: {
   ...call("componentManagement/*"),
