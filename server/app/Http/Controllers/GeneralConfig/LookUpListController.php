@@ -41,8 +41,11 @@ class LookUpListController extends Controller {
      * @param  \App\Models\GeneralConfig\LookUpList  $lookUpList
      * @return \Illuminate\Http\Response
      */
-    public function show(LookUpList $lookUpList) {
-        //
+    public function show(LookUpList $id) {
+        return response([
+            'row'=> LookUpList::findOrFail($id),
+            'status'    => true
+        ], 200);
     }
 
     /**

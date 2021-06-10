@@ -11,23 +11,19 @@ class CreateComponentsTable extends Migration {
      * @return void
      */
     public function up() {
-
-
         //Original Structure
-
         if (!Schema::hasTable('components')) {
             Schema::create('components', function (Blueprint $table) {
                 $table->id();
                 $table->foreignId('component_group_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE')->nullable();
                 $table->integer('prev_group_id')->nullable()->nullable();
-                $table->foreignId('component_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE')->nullable();
                 $table->string('name')->nullable();
                 $table->string('title')->nullable();
                 $table->string('note')->nullable();
                 $table->longText('config')->nullable();
                 $table->longText('config_settings')->nullable();
+                $table->softDeletes();
                 $table->timestamps();
-
             });
         };
         
@@ -37,13 +33,6 @@ class CreateComponentsTable extends Migration {
                 $table->longText('config');
             });
         };
-
-        //Removed columns 
-        if (Schema::hasColumn('components', 'config2')){
-            Schema::table('components', function (Blueprint $table){
-                $table->dropColumn('config2');
-            });
-        }
     }
 
     /**
@@ -52,6 +41,9 @@ class CreateComponentsTable extends Migration {
      * @return void
      */
     public function down() {
-        Schema::dropIfExists('components');
+        Schema::table('components', function (Blueprint $table) {
+            $table->dropSoftDeletes();
+            // Schema::dropIfExists('components');
+        });
     }
 }

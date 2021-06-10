@@ -9,7 +9,9 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Root\MysqlController;
 use Illuminate\Support\Facades\File;
 
+use App\Models\Root\ComponentDefault;
 use Jawira\CaseConverter\Convert;
+use Illuminate\Support\Facades\Storage;
 
 class ComponentController extends Controller {
     /**
@@ -142,6 +144,32 @@ class ComponentController extends Controller {
         }
     }
 
+    /***  Para mostrar los elementos eliminados
+     * 
+     * 
+    */
+    public function getTrashed() {
+        $components = Component::onlyTrashed()->get();
+        
+        return response([
+            'components' => $components,
+            'status'    => true
+        ], 200);
+    }
+
+        /***  Para mostrar los elementos eliminados
+     * 
+     * 
+    */
+    public function recoveryTrashed($id) {
+        $components = Component::onlyTrashed()->findOrFail($id)->recovery();
+        
+        return response([
+            'components' => $components,
+            'status'    => true
+        ], 200);
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -209,6 +237,21 @@ class ComponentController extends Controller {
     */
     public function destroy($id) {
         $query = Component::findOrFail($id);
+        $config = json_decode($query->config, true);
+
+        // delete component folder
+        $vue_folder = resource_path("js/views/Protected/{$config['name']}");
+
+        $deleted_folder = resource_path("js/views/Deleted/{$config['name']}");
+
+        if (is_dir($vue_folder)) {
+            rename($vue_folder, $deleted_folder);
+        }
+
+        // if(file_exists("$vue_folder/$component_config->name.vue"))
+        // unlink("$vue_folder/$component_config->name.vue");
+
+        // delete row in db
         $query->delete();
 
         return $this->showAll();
@@ -218,6 +261,7 @@ class ComponentController extends Controller {
         $component_group_id = $component->component_group_id;
         $config = $this->constructConfig($component->config);
         $configSettings = $this->constructConfig($component->config_settings);
+
         $origin = [
             'id'                => $component->id,
             'component_group_id'=> $component_group_id,
@@ -285,47 +329,11 @@ class ComponentController extends Controller {
     }
 
     public function formFieldStructure($field) {
-        return [ 
-            "field" => $field,
-            "label" => "", 
-            "inputType" => "text", 
-            "fieldType" => "text", 
-            "displayField" => true, 
-            "hiddenField" => false, 
-            "inputParameters" => "", 
-            "inputParametersPreview" => [ ], 
-            "inputParametersDefault" => "", 
-            "inputIcon" => "",
-            "textareaRows" => 3, 
-            "responsiveGrid" => 6, "inputPlaceholder" => "", "inputHint" => "", 
-            "validation" => [
-                "rulesString" => "", "rulesArray" => [ ], 
-                "range" => [ "active" => false, "min" => 0, "max" => 0 ], 
-                "minValue" => [ "active" => false, "value" => 0 ], "maxValue" => [ "active" => false, "value" => 0 ], 
-                "length" => [ "active" => false, "value" => 0 ], "maxLength" => [ "active" => false, "value" => 0 ], 
-                "minLength" => [ "active" => false, "value" => 0 ], "digits" => [ "active" => false, "value" => 0 ], 
-                "regex" => [ "active" => false, "value" => "" ], "unique" => false 
-            ], 
-            "events" => [ "eventInput" => "", 
-            "eventChange" => "", "eventBlur" => "", "eventFocus" => "" ], 
-            "slots" => [
-                "prepend" => [ "active" => false, "function" => "", "button" => "", 
-                "buttonColor" => "", "icon" => "", "iconColor" => "", "whiteText" => false ] 
-            ], 
-            "parentMenu" => 0, "datePickerTrigger" => false, "dropdownText" => "text", "dropdownValue" => "value", 
-            "options" => [ 
-                "fieldBackgroundColor" => "", "fieldColor" => "teal", "tooltip" => "", 
-                "returnObject" => [ "conditioned" => false, "conditionFunction" => "", "value" => false ], 
-                "disabled" => [ "conditioned" => false, "conditionFunction" => "", "value" => false ], 
-                "clearable" => [ "conditioned" => false, "conditionFunction" => "", "value" => false ], 
-                "multiple" => [ "conditioned" => false, "conditionFunction" => "", "value" => false ], 
-                "hideDetails" => [ "conditioned" => false, "conditionFunction" => "", "value" => false ], 
-                "dark" => [ "conditioned" => false, "conditionFunction" => "", "value" => false ], 
-                "noResize" => [ "conditioned" => false, "conditionFunction" => "", "value" => false ], 
-                "dense" => [ "conditioned" => false, "conditionFunction" => "", "value" => false ], 
-                "counter" => [ "conditioned" => false, "conditionFunction" => "", "value" => false ], 
-            ]
-        ];
+        $model = json_decode(ComponentDefault::pluck('config_structure')->last());
+        
+        $model->form_fields->field = $field;
+
+        return $model->form_fields;
     }
 
 }

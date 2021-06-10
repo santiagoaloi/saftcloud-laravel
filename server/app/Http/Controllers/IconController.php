@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use Storage;
+use Illuminate\Support\Facades\Storage;
 
 // use Illuminate\Support\Facades\Storage;
 
