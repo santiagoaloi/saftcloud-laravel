@@ -261,13 +261,14 @@ class ComponentController extends Controller {
         $component_group_id = $component->component_group_id;
         $config = $this->constructConfig($component->config);
         $configSettings = $this->constructConfig($component->config_settings);
+        $status = $this->constructConfig($component->status);
 
         $origin = [
             'id'                => $component->id,
             'component_group_id'=> $component_group_id,
             'config'            => $config,
             'config_settings'   => $configSettings,
-            'status'            => $component->status,
+            'status'            => $status,
             'created_at'        => $component->created_at,
             'updated_at'        => $component->updated_at,
         ];
@@ -277,7 +278,7 @@ class ComponentController extends Controller {
             'component_group_id'=> $component_group_id,
             'config'            => $config,
             'config_settings'   => $configSettings,
-            'status'            => $component->status,
+            'status'            => $status,
             'origin'            => $origin,
             'created_at'        => $component->created_at,
             'updated_at'        => $component->updated_at,
