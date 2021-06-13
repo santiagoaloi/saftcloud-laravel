@@ -1,42 +1,56 @@
 <template>
- <baseDialog v-model="dialogIcons" title="Icons" persistent max-width="900" @close="() => (dialogIcons = false)">
-  <template>
-   <v-card color="red lighten-2" dark>
-    <v-card-title class="text-h5 red lighten-3">
-     Search for Public APIs
-    </v-card-title>
-    <v-card-text>
-     Explore hundreds of free API's ready for consumption! For more information visit
-     <a class="grey--text text--lighten-3" href="https://github.com/toddmotto/public-apis" target="_blank">the GitHub repository</a>.
-    </v-card-text>
-    <v-card-text>
-     <v-autocomplete
-      v-model="selectedComponent.config_settings.icon.name"
-      :items="items"
-      :loading="isLoading"
-      :search-input.sync="search"
-      color="white"
-      hide-no-data
-      hide-selected
-      item-text="name"
-      item-value="name"
-      label="Mdi Icons"
-      placeholder="Start typing to Search"
-      prepend-icon="mdi-database-search"
-     >
-      <template #item="{ item, on }">
-       <v-list-item :ripple="false" v-on="on">
-        <v-list-item-avatar>
-         <v-icon>{{ item.name }}</v-icon>
-        </v-list-item-avatar>
-        <v-list-item-content>
-         <v-list-item-title> {{ item.name }} </v-list-item-title>
-        </v-list-item-content>
-       </v-list-item>
-      </template>
-     </v-autocomplete>
-    </v-card-text>
-   </v-card>
+ <baseDialog v-model="dialogIcons" title="Icons" saveOnly persistent max-width="600" @save="() => (dialogIcons = false)">
+  <template v-if="selectedComponent">
+   <v-card-text>
+    <v-row>
+     <v-col cols="8">
+      <v-autocomplete
+       v-model="selectedComponent.config_settings.icon.name"
+       :items="items"
+       :loading="isLoading"
+       hide-no-data
+       hide-selected
+       solo
+       item-text="name"
+       item-value="name"
+       label="Search mdi icons..."
+       :color="$vuetify.theme.dark ? 'secondary' : ''"
+      >
+       <template slot="selection" slot-scope="data">
+        <v-icon class="mr-3"> {{ data.item.name }} </v-icon>
+        <span class="mr-2">{{ data.item.name }} </span>
+       </template>
+
+       <template #item="{ item, on }">
+        <v-list-item :ripple="false" v-on="on">
+         <v-list-item-avatar>
+          <v-icon>{{ item.name }}</v-icon>
+         </v-list-item-avatar>
+         <v-list-item-content>
+          <v-list-item-title> {{ item.name }} </v-list-item-title>
+         </v-list-item-content>
+        </v-list-item>
+       </template>
+      </v-autocomplete>
+     </v-col>
+     <v-col>
+      <v-text-field
+       readonly
+       :color="$vuetify.theme.dark ? 'secondary' : ''"
+       append-icon="mdi-home"
+       solo
+       @click="colorPicker = !colorPicker"
+       v-model="selectedComponent.config_settings.icon.color"
+      ></v-text-field>
+     </v-col>
+    </v-row>
+
+    <base-dialog v-if="colorPicker" @save="() => (colorPicker = false)" noGutters noMaximize dense width="300" saveOnly v-model="colorPicker">
+     <v-card class="mx-auto" width="300">
+      <v-color-picker v-model="selectedComponent.config_settings.icon.color" flat></v-color-picker>
+     </v-card>
+    </base-dialog>
+   </v-card-text>
   </template>
  </baseDialog>
 </template>
@@ -51,7 +65,9 @@ export default {
   icons: [],
   isLoading: false,
   model: null,
-  search: null
+  search: null,
+  colorPicker: false,
+  iconColor: ""
  }),
 
  computed: {
@@ -66,8 +82,12 @@ export default {
   }
  },
 
- watch: {
-  search(val) {
+ mounted() {
+  this.getIcons();
+ },
+
+ methods: {
+  getIcons() {
    // Items have already been loaded
    if (this.items.length > 0) return;
 

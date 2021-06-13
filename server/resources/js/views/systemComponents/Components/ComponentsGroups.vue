@@ -15,16 +15,19 @@
      return-object
      placeholder="Select or create groups"
      hide-selected
+     :menu-props="{
+      transition: 'slide-y-transition'
+     }"
     >
      <template v-if="allGroups.length > 0" v-slot:prepend-item>
       <v-list-item @click="selectAllGroups" :ripple="false">
        <v-list-item-avatar>
-        <v-icon :color="hasSelectedComponentGroups ? 'indigo darken-4' : 'grey darken-3'">
+        <v-icon>
          {{ icon }}
         </v-icon>
        </v-list-item-avatar>
        <v-list-item-content>
-        <v-list-item-title> {{ selectedAllComponents ? "Unselect All" : "Select All" }} </v-list-item-title>
+        <v-list-item-title> {{ selectedAllGroups ? "Unselect All" : "Select All" }} </v-list-item-title>
        </v-list-item-content>
       </v-list-item>
       <v-divider></v-divider>
@@ -32,7 +35,13 @@
 
      <template v-slot:selection="data">
       <span v-if="data.index === 0" class="grey--text caption"
-       ><v-chip labal style="color: black" small label color="blue-grey lighten-4">
+       ><v-chip
+        labal
+        :style="$vuetify.theme.dark ? 'color: white' : 'color:black'"
+        small
+        label
+        :color="$vuetify.theme.dark ? 'grey-darken-4' : 'blue-grey lighten-4'"
+       >
         {{ selectedComponentGroups.length }} groups selected.</v-chip
        ></span
       >
@@ -48,8 +57,8 @@
 
        <v-list-item-content>
         <v-list-item-title>
-         <a @click="dialogGroup = !dialogGroup">Create group </a>
-         {{ groupSettings.name }}
+         <span @click="dialogGroup = !dialogGroup">Create group </span>
+         {{ groupName }}
         </v-list-item-title>
        </v-list-item-content>
       </v-list-item>
@@ -75,9 +84,11 @@
    <v-col cols="12" sm="8">
     <div>
      <v-chip-group showArrows centerActive>
-      <v-chip :ripple="false" close @click:close="unselectGroup(i)" v-for="(item, i) in selectedComponentGroups" :key="i">
+      <v-chip :ripple="false" close @click:close="unselectGroup(item.id)" v-for="(item, i) in selectedComponentGroups" :key="i">
        <v-avatar left>
-        <v-btn style="pointer-events:none" color="grey lighten-3"> {{ countComponentsInGroup(item.id) }}</v-btn>
+        <v-btn style="pointer-events:none" :color="$vuetify.theme.dark ? 'grey darken-3' : 'grey lighten-4'">
+         {{ countComponentsInGroup(item.id) }}</v-btn
+        >
        </v-avatar>
        {{ item.name }}
       </v-chip>
@@ -97,13 +108,13 @@ export default {
  name: "ComponentGroups",
 
  computed: {
-  ...sync("componentManagement", ["allGroups", "selectedComponentGroups", "dialogGroup", "groupSettings", "allComponents"]),
+  ...sync("componentManagement", ["allGroups", "selectedComponentGroups", "dialogGroup", "groupName", "allComponents"]),
   // ...get('componentManagement/*'),
-  ...get("componentManagement", ["selectedAllComponents", "selectedSomeComponents", "hasSelectedComponentGroups", "countComponentsInGroup"]),
+  ...get("componentManagement", ["selectedAllGroups", "selectedSomeGroups", "hasSelectedComponentGroups", "countComponentsInGroup"]),
 
   icon() {
-   if (this.selectedAllComponents) return "mdi-close-box";
-   if (this.selectedSomeComponents) return "mdi-minus-box";
+   if (this.selectedAllGroups) return "mdi-close-box";
+   if (this.selectedSomeGroups) return "mdi-minus-box";
    return "mdi-checkbox-blank-outline";
   }
  },
@@ -128,7 +139,7 @@ export default {
   },
 
   syncGroupInputValue(e) {
-   store.set("componentManagement/groupSettings@name", e);
+   store.set("componentManagement/groupName", e);
   }
  }
 };

@@ -1,6 +1,6 @@
 <template>
  <div>
-  <v-app-bar :color="$route.name == 'homepage' ? 'transparent' : '#333781'" absolute app flat height="80">
+  <v-app-bar :color="$route.name == 'homepage' ? 'transparent' : $vuetify.theme.dark ? '#202225' : '#333781'" absolute app flat height="80">
    <v-container style="background-color:transparent" class="py-0 px-0 px-sm-2 fill-height">
     <div
      data-aos="fade"
@@ -11,7 +11,7 @@
      data-aos-duration="400"
     >
      <router-link to="/" class="d-flex align-center text-decoration-none ml-3">
-      <img class="mr-4" src="storage/logo2.png" height="60" />
+      <img class="mr-4" src="storage/logo2.png" height="45" />
       <span class="font-weight-black headline white--text"> SaftCloud</span>
      </router-link>
     </div>
@@ -20,11 +20,8 @@
 
     <template v-if="$vuetify.breakpoint.mdAndUp">
      <v-btn rounded height="36" class="mr-3" color="white" text dark x-large plain @click="testFunction()"> Test</v-btn>
-
      <v-btn rounded to="/signup" height="36" class="mr-3" color="white" text dark x-large plain> Team</v-btn>
-
      <v-btn rounded to="/signup" height="36" class="mr-3" color="white" text dark x-large plain> Company</v-btn>
-
      <v-btn rounded to="/signup" height="36" class="mr-3" dark x-large plain> <v-icon left> mdi-account-plus</v-icon>Sign up</v-btn>
      <template>
       <v-btn min-width="100px" to="/login" height="36" class="mr-3" rounded dark color="pink darken-1" x-large>
@@ -102,6 +99,16 @@
       <v-icon> mdi-menu</v-icon>
      </v-btn>
     </template>
+
+    <v-tooltip transition="false" color="black" bottom>
+     <template v-slot:activator="{ on, attrs }">
+      <v-btn v-on="on" @click="setDarkMode()" fab class="mr-3" color="white" text dark small plain>
+       <v-icon v-if="$vuetify.theme.isDark">mdi-lightbulb-on-outline</v-icon>
+       <v-icon v-else>mdi-lightbulb-outline</v-icon></v-btn
+      >
+     </template>
+     <span> {{ $vuetify.theme.isDark ? " Light mode" : "Dark mode" }}</span>
+    </v-tooltip>
    </v-container>
   </v-app-bar>
  </div>
@@ -169,6 +176,10 @@ export default {
 
  methods: {
   ...mapActions(["logoutVuex", "clearPublicData"]),
+
+  setDarkMode() {
+   this.$vuetify.theme.dark = !this.$vuetify.theme.dark;
+  },
 
   logout() {
    this.clearPublicData();

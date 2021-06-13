@@ -6,11 +6,20 @@
   :fullscreen="$vuetify.breakpoint.smAndDown || isMaximized"
   :hide-overlay="noOverlay"
   :overlay-opacity="0.7"
-  overlay-color="rgba(108, 122, 137)"
+  :overlay-color="$vuetify.theme.dark ? 'rgba(0, 0, 0)' : 'rgba(108, 122, 137)'"
  >
-  <v-toolbar class="popup-header px-6" flat dark color="grey darken-2">
+  <v-toolbar class="popup-header px-6" flat :dense="dense" dark :color="$vuetify.theme.dark ? '#202225' : 'grey darken-2'">
    <template>
-    <v-btn v-if="$vuetify.breakpoint.mdAndUp" x-small color="white" outlined text fab class="ml-n3 mr-4" @click.stop="isMaximized = !isMaximized">
+    <v-btn
+     v-if="$vuetify.breakpoint.mdAndUp && !noMaximize"
+     x-small
+     color="white"
+     outlined
+     text
+     fab
+     class="ml-n3 mr-4"
+     @click.stop="isMaximized = !isMaximized"
+    >
      <v-icon>mdi-window-maximize</v-icon>
     </v-btn>
    </template>
@@ -30,8 +39,8 @@
    </template>
 
    <template v-if="saveOnly">
-    <v-btn fab small :loading="loading" icon dark @click.stop="save">
-     <v-icon color="green lighten-2">mdi-check</v-icon>
+    <v-btn v-if="!closeOnly" x-small color="white" outlined text fab :loading="loading" @click.stop="save">
+     <v-icon color="green lighten-2"> mdi-check </v-icon>
     </v-btn>
    </template>
 
@@ -41,18 +50,26 @@
     </v-btn>
    </template>
 
-   <template v-if="!noActions">
+   <template v-if="!noActions && !saveOnly">
     <v-btn v-if="!closeOnly" x-small color="white" outlined text fab class="mx-1" :loading="loading" @click.stop="save">
      <v-icon color="green lighten-2"> mdi-check </v-icon>
     </v-btn>
 
-    <v-btn v-if="!closeOnly" x-small color="white" outlined text fab icon dark class="ml-2" @click.stop="close">
+    <v-btn v-if="!closeOnly && !saveOnly" x-small color="white" outlined text fab icon dark class="ml-2" @click.stop="close">
      <v-icon color="white" small> mdi-close </v-icon>
     </v-btn>
    </template>
   </v-toolbar>
-  <v-sheet color="primary" height="1" />
-  <v-card class="pa-3" id="scrollableContent" color="#f8f9fa" style="overflow: auto" flat tile :height="height">
+  <!-- <v-sheet color="primary" height="1" /> -->
+  <v-card
+   :class="noGutters ? '' : 'pa-3'"
+   id="scrollableContent"
+   :color="$vuetify.theme.dark ? '#2f3136' : '#f5f5f5'"
+   style="overflow: auto"
+   flat
+   tile
+   :height="height"
+  >
    <slot />
   </v-card>
 
@@ -82,10 +99,7 @@ export default {
    type: [Boolean],
    default: false
   },
-  noTransition: {
-   type: [Boolean],
-   default: false
-  },
+
   closeOnly: {
    type: [Boolean],
    default: false
@@ -99,6 +113,18 @@ export default {
    default: null
   },
   showRemove: {
+   type: [Boolean],
+   default: false
+  },
+  noGutters: {
+   type: [Boolean],
+   default: false
+  },
+  noMaximize: {
+   type: [Boolean],
+   default: false
+  },
+  dense: {
    type: [Boolean],
    default: false
   },

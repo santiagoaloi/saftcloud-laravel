@@ -4,22 +4,11 @@
    <v-row>
     <v-col cols="12" md="4">
      <div class="text-h6 text-lg-h5 font-weight-bold">Navigation</div>
-     <div style="width: 80px; height: 2px" class="mb-5 mt-1 primary" />
+     <div style="width: 80px; height: 2px" class="mb-5 mt-1 secondary" />
      <div class="d-flex flex-wrap">
       <div v-for="(link, i) in links" :key="i" class="w-half body-1 mb-1">
-       <router-link
-        v-if="link.to"
-        class="text-decoration-none text--primary"
-        :to="link.to"
-        >{{ link.label }}</router-link
-       >
-       <a
-        v-else
-        class="text-decoration-none text--primary"
-        :href="link.href"
-        :target="link.target || 'blank'"
-        >{{ link.label }}</a
-       >
+       <router-link v-if="link.to" class="text-decoration-none text--secondary" :to="link.to">{{ link.label }}</router-link>
+       <a v-else class="text-decoration-none text--secondary" :href="link.href" :target="link.target || 'blank'">{{ link.label }}</a>
       </div>
      </div>
     </v-col>
@@ -27,36 +16,26 @@
      <div class="text-h6 text-lg-h5 font-weight-bold">
       Contact Information
      </div>
-     <div style="width: 80px; height: 2px" class="mb-5 mt-1 primary" />
+     <div style="width: 80px; height: 2px" class="mb-5 mt-1 secondary" />
      <div class="d-flex mb-2 font-weight-bold">
-      <v-icon color="primary lighten-1" class="mr-2"
-       >mdi-map-marker-outline</v-icon
-      >
+      <v-icon color="secondary lighten-1" class="mr-2">mdi-map-marker-outline</v-icon>
       Bokstigen 3, 13745, Stockholm SWEDEN
      </div>
      <div class="d-flex mb-2">
-      <v-icon color="primary lighten-1" class="mr-2">mdi-phone-outline</v-icon>
-      <a href="#" class="text-decoration-none text--primary">+46 70 2555 331</a>
+      <v-icon color="secondary lighten-1" class="mr-2">mdi-phone-outline</v-icon>
+      <a href="#" class="text-decoration-none text--secondary">+46 70 2555 331</a>
      </div>
      <div class="d-flex mb-2">
-      <v-icon color="primary lighten-1" class="mr-2">mdi-email-outline</v-icon>
-      <a href="#" class="text-decoration-none text--primary"
-       >hello@saftcloud.com</a
-      >
+      <v-icon color="secondary lighten-1" class="mr-2">mdi-email-outline</v-icon>
+      <a href="#" class="text-decoration-none text--secondary">hello@saftcloud.com</a>
      </div>
     </v-col>
     <v-col cols="12" md="4">
      <div class="text-h6 text-lg-h5 font-weight-bold">Newsletter</div>
-     <div style="width: 80px; height: 2px" class="mb-5 mt-1 primary" />
+     <div style="width: 80px; height: 2px" class="mb-5 mt-1 secondary" />
      <div class="d-flex flex-column flex-lg-row w-full">
-      <v-text-field
-       solo
-       label="Your email"
-       dense
-       height="44"
-       class="mr-lg-2"
-      ></v-text-field>
-      <v-btn large color="primary">Subscribe</v-btn>
+      <v-text-field solo label="Your email" dense height="44" class="mr-lg-2"></v-text-field>
+      <v-btn large color="secondary">Subscribe</v-btn>
      </div>
      <div class="text-center text-md-right mt-4 mt-lg-2">
       Connect

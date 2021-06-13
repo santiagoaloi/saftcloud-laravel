@@ -1,6 +1,5 @@
 <template>
  <baseDialog
-  v-if="dialogComponent"
   v-model="dialogComponent"
   title="Add new component"
   persistent
@@ -15,11 +14,12 @@
       <small>Group</small>
       <validation-provider v-slot="{ errors }" name="component group" rules="required">
        <v-autocomplete
+        @update:search-input="syncGroupInputValue($event)"
         autofocus
         v-model="componentSettings.component_group_id"
-        :background-color="errors.length > 0 ? '#faebeb' : 'white'"
+        :background-color="errors.length > 0 ? '#faebeb' : ''"
         :error-messages="errors[0]"
-        color="primary"
+        :color="$vuetify.theme.dark ? 'secondary' : ''"
         label="Select group"
         solo
         :items="allGroups"
@@ -27,11 +27,41 @@
         item-text="name"
         item-color="primary"
         :menu-props="{
-         transition: 'slide-y-transition',
-         closeOnClick: false,
-         closeOnContentClick: true
+         transition: 'slide-y-transition'
         }"
        >
+        <template v-slot:no-data>
+         <v-list-item>
+          <v-list-item-avatar>
+           <v-icon>
+            mdi-plus
+           </v-icon>
+          </v-list-item-avatar>
+
+          <v-list-item-content>
+           <v-list-item-title>
+            <a @click="dialogGroup = !dialogGroup">Create group </a>
+            {{ groupName }}
+           </v-list-item-title>
+          </v-list-item-content>
+         </v-list-item>
+        </template>
+
+        <template #item="{ item, on }">
+         <v-list-item :ripple="false" v-on="on">
+          <v-list-item-avatar>
+           <v-icon>mdi-folder-outline</v-icon>
+          </v-list-item-avatar>
+          <v-list-item-content>
+           <v-list-item-title> {{ item.name }} </v-list-item-title>
+          </v-list-item-content>
+          <v-list-item-avatar>
+           <v-btn :ripple="false" @click.stop="removeGroupWarning(item.id, item.name)" depressed fab x-small>
+            <v-icon>mdi-delete-outline</v-icon>
+           </v-btn>
+          </v-list-item-avatar>
+         </v-list-item>
+        </template>
        </v-autocomplete>
       </validation-provider>
      </v-col>
@@ -46,9 +76,10 @@
         prepend-inner-icon="mdi-comment"
         counter
         maxlength="35"
-        :background-color="errors.length > 0 ? '#faebeb' : 'white'"
+        :background-color="errors.length > 0 ? '#faebeb' : ''"
         :error-messages="errors[0]"
         validateOnBlur
+        :color="$vuetify.theme.dark ? 'secondary' : ''"
        />
       </validation-provider>
      </v-col>
@@ -63,8 +94,9 @@
         prepend-inner-icon="mdi-comment"
         counter
         maxlength="35"
-        :background-color="errors.length > 0 ? '#faebeb' : 'white'"
+        :background-color="errors.length > 0 ? '#faebeb' : ''"
         :error-messages="errors[0]"
+        :color="$vuetify.theme.dark ? 'secondary' : ''"
        />
       </validation-provider>
      </v-col>
@@ -81,8 +113,9 @@
         color="primary"
         label
         placeholder="Description"
-        :background-color="errors.length > 0 ? '#faebeb' : 'white'"
+        :background-color="errors.length > 0 ? '#faebeb' : ''"
         :error-messages="errors[0]"
+        :color="$vuetify.theme.dark ? 'secondary' : ''"
        />
       </validation-provider>
      </v-col>
@@ -92,7 +125,7 @@
      <validation-provider v-slot="{ errors }" name="component table" rules="required">
       <v-autocomplete
        v-model="componentSettings.table"
-       :background-color="errors.length > 0 ? '#faebeb' : 'white'"
+       :background-color="errors.length > 0 ? '#faebeb' : ''"
        :error-messages="errors[0]"
        :menu-props="{
         transition: 'slide-y-transition',
@@ -107,6 +140,7 @@
        item-color="primary"
        color="primary"
        :items="dbTables"
+       :color="$vuetify.theme.dark ? 'secondary' : ''"
       >
        <template v-slot:item="data">
         <template>
@@ -128,6 +162,8 @@
 </template>
 <script>
 import { sync, call } from "vuex-pathify";
+import { store } from "@/store";
+
 export default {
  name: "DialogComponent",
 
@@ -136,11 +172,31 @@ export default {
  },
 
  computed: {
-  ...sync("componentManagement", ["allGroups", "dialogComponent", "componentSettings", "dbTables"])
+  ...sync("componentManagement", ["allGroups", "dialogComponent", "componentSettings", "dbTables", "dialogGroup", "groupName"])
  },
 
  methods: {
-  ...call("componentManagement/*")
+  ...call("componentManagement/*"),
+
+  removeGroupWarning(id, name) {
+   this.$swal({
+    title: `Delete ${name} group?`,
+    text: "This action cannot be undone.",
+    showCancelButton: true,
+    confirmButtonText: "Delete",
+    cancelButtonText: "Cancel",
+    confirmButtonColor: "#EC407A",
+    backdrop: "rgba(108, 122, 137, 0.8)"
+   }).then(result => {
+    if (result.value) {
+     this.removeGroup(id);
+    }
+   });
+  },
+
+  syncGroupInputValue(e) {
+   store.set("componentManagement/groupName", e);
+  }
  }
 };
 </script>

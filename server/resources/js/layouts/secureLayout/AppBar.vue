@@ -1,5 +1,5 @@
 <template>
-    <v-app-bar clipped-right dense app >
+    <v-app-bar :flat="$vuetify.theme.dark" clipped-right dense app >
 
       <v-container fluid class="py-0 px-0 px-sm-2 fill-height">
 
@@ -24,7 +24,7 @@
             <v-icon>mdi-auto-fix</v-icon>
           </v-btn>
         </template>
-           <v-list class="pa-2" rounded="xl" color="rgba(250, 250, 250, 1)" outlined>
+           <v-list class="pa-2" rounded="xl"   outlined>
             <v-list-item v-for="(item, i) in cmsMenu" :key="i" :to="item.href">
               <v-icon class="mr-5">
                 {{ item.icon }}
@@ -42,7 +42,7 @@
             <v-icon>mdi-dots-vertical</v-icon>
           </v-btn>
         </template>
-          <v-list class="pa-2" rounded="xl" color="rgba(250, 250, 250, 1)" outlined>
+          <v-list class="pa-2" rounded="xl"   outlined>
             <v-list-item v-for="(item, i) in settingsMenu" :key="i" :to="item.href">
               <v-icon class="mr-5">
                 {{ item.icon }}
@@ -85,8 +85,7 @@
           </v-btn>
         </template>
 
-        <v-card color="rgba(250, 250, 250, 1)" class="mx-auto pa-2" max-width="300" rounded="xl">
-          <v-list rounded="xl" color="rgba(250, 250, 250, 1)" outlined>
+          <v-list class="pa-2" rounded="xl"  outlined>
             <!-- <v-list-item style="cursor: pointer">
             <v-list-item-content>
               <v-list-item-title style="font-size: 130%; font-weight: 600">
@@ -125,7 +124,7 @@
                 <v-list-item-title>Mörkt läge</v-list-item-title>
               </v-list-item-content>
               <v-list-item-action>
-                <v-switch inset @click.stop="setDarkMode()" />
+                <v-switch :ripple="false" color="grey darken-1"  @click.stop="setDarkMode()" />
               </v-list-item-action>
             </v-list-item>
 
@@ -147,7 +146,6 @@
               </v-list-item-content>
             </v-list-item>
           </v-list>
-        </v-card>
       </v-menu>
       </v-container>
     </v-app-bar>

@@ -4,7 +4,7 @@
   <components-groups />
   <div class="d-flex justify-space-between align-center">
    <v-tabs v-model="activeStatusTab" showArrows class="col-6 mt-n3" background-color="transparent" sliderSize="1">
-    <v-tab :key="i" y v-for="(tab, i) in componentStatusTabs" :ripple="false">
+    <v-tab :disabled="isComponentsEmpty" :key="i" y v-for="(tab, i) in componentStatusTabs" :ripple="false">
      <v-icon :color="tab.color" small left>
       {{ tab.icon }}
      </v-icon>
@@ -47,11 +47,10 @@
        <v-item :key="`${index}`" v-for="(component, index) in allComponentsFiltered" v-slot="{ active, toggle }">
         <v-card
          :ref="`SEL${componentCardGroup}ID${index}`"
-         hover
          :color="$vuetify.theme.dark ? '#2d2c30' : active ? 'indigo lighten-5' : 'white'"
-         height="180"
+         height="210"
          width="100%"
-         elevation="1"
+         :elevation="9"
          :ripple="false"
          class="d-flex flex-column justify-space-between pa-4 "
          @click="
@@ -60,7 +59,7 @@
          "
         >
          <v-card-actions class="px-0 ">
-          <v-avatar rounded :color="component.config_settings.icon.color">
+          <v-avatar @click="dialogIcons = true" rounded :color="component.config_settings.icon.color">
            <v-icon dark>
             {{ component.config_settings.icon.name }}
            </v-icon>
@@ -86,10 +85,9 @@
          <div class="gallery-card-subtitle-container">
           <div class="gallery-card-subtitle-wrapper">
            <h5 class="gallery-card-subtitle">
-            <v-chip v-if="!$vuetify.theme.dark" style="pointer-events:none" color="grey lighten-5" text-color="blue darken-4" label class="col-6">
-             <div class="col-12 text-truncate">
-              {{ mapComponentGroup(component) }}
-             </div>
+            <v-chip v-if="!$vuetify.theme.dark" style="pointer-events:none" color="grey lighten-5" text-color="black" label class="col-6">
+             <v-icon small> mdi-folder-outline</v-icon>
+             <div class="col-12 text-truncate">{{ mapComponentGroup(component) }}</div>
             </v-chip>
             <span v-else> {{ mapComponentGroup(component) }} </span>
            </h5>
@@ -112,21 +110,24 @@
     </template>
    </template>
 
-   <template v-else>
-    <v-container fluid>
-     <v-sheet color="transparent" height="45vh" class="d-flex pa-2 justify-center align-center">
-      <div class="flex-grow-1 align-center justify-center d-flex flex-column">
-       <v-img :aspect-ratio="1" width="250" contain src="storage/systemImages/noContent.svg"></v-img>
-       No components found. Choose a different filter or search criteria.
-      </div>
-     </v-sheet>
-    </v-container>
-   </template>
+   <v-fade-transition hide-on-leave>
+    <template v-if="isAllFilteredComponentsEmpty">
+     <v-container fluid>
+      <v-sheet color="transparent" height="45vh" class="d-flex pa-2 justify-center align-center">
+       <div class="flex-grow-1 align-center justify-center d-flex flex-column">
+        <v-img :aspect-ratio="1" width="250" contain src="storage/systemImages/noContent.svg"></v-img>
+        No components found. Choose a different filter or
+        <span @click="dialogComponent = true" class="primary--text cursor-pointer"><b> create a new component</b></span>
+       </div>
+      </v-sheet>
+     </v-container>
+    </template>
+   </v-fade-transition>
   </v-card>
 
   <dialog-group />
-  <dialog-component />
-  <dialog-icons />
+  <dialog-component v-if="dialogComponent" />
+  <dialog-icons v-if="dialogIcons" />
  </div>
 </template>
 
@@ -166,20 +167,19 @@ export default {
    "allGroups",
    "allComponents",
    "activeStatusTab",
-   "dialogComponent",
-   "selectedComponent",
    "componentCardGroup",
    "componentStatusTabs",
-   "selectedComponentGroups"
+   "dialogComponent",
+   "dialogIcons"
   ]),
   ...get("componentManagement", [
    "hasUnsavedChanges",
-   "activeStatusTabName",
    "allComponentsFiltered",
    "isModularIcon",
    "isStarredIcon",
    "selectedComponentIndex",
-   "isAllFilteredComponentsEmpty"
+   "isAllFilteredComponentsEmpty",
+   "isComponentsEmpty"
   ])
  },
 
@@ -220,25 +220,25 @@ export default {
 
   isStarredColor(component) {
    if (component.status.starred) {
-    return "orange darken-2";
+    return "orange";
    } else {
-    return "black";
+    return "grey darken-1";
    }
   },
 
   isActiveColor(component) {
    if (component.status.active) {
-    return "blue darken-4";
+    return `${this.$vuetify.theme.dark ? "indigo lighten-4" : "indigo darken-4"} `;
    } else {
-    return "black";
+    return this.$vuetify.theme.dark ? "grey darken-1" : "black";
    }
   },
 
   isModularColor(component) {
    if (component.status.modular) {
-    return "blue darken-4";
+    return `${this.$vuetify.theme.dark ? "indigo lighten-4" : "indigo darken-4"} `;
    } else {
-    return this.$vuetify.theme.dark ? "white" : "black";
+    return this.$vuetify.theme.dark ? "grey darken-1" : "black";
    }
   },
 
@@ -273,7 +273,6 @@ export default {
 
 .gallery-card-wrapper {
  box-sizing: border-box;
-
  text-align: left;
 }
 

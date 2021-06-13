@@ -1,13 +1,12 @@
 <template>
  <div>
   <div class="d-flex justify-space-between align-center">
-   <h3 class="hidden-sm-and-down black--text">Manage components</h3>
+   <h3 class="hidden-sm-and-down ">Manage components</h3>
    <div class="d-flex">
     <v-text-field
      v-model.lazy="search"
      spellcheck="false"
      color="primary lighten-1"
-     background-color="white"
      solo
      dense
      hide-details
@@ -19,11 +18,9 @@
      @blur="expand = false"
     />
 
-    <v-btn class="mx-2 " color="white" @click.stop="parentData.dialogSystemOperations = true">
-     <v-icon class="mr-2" small> mdi-filter </v-icon>Filter
-    </v-btn>
+    <v-btn class="mx-2 " @click.stop="parentData.dialogSystemOperations = true"> <v-icon class="mr-2" small> mdi-filter </v-icon>Filter </v-btn>
 
-    <v-btn class="mx-2 " color="white" @click.stop="parentData.dialogSystemOperations = true">
+    <v-btn class="mx-2 " @click.stop="parentData.dialogSystemOperations = true">
      <v-icon class="mr-2" small> mdi-arrow-top-right </v-icon>Export
     </v-btn>
 

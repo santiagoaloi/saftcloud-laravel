@@ -1,5 +1,5 @@
 <template>
- <div>
+ <div v-if="selectedComponent">
   <!-- <v-card flat class="mx-auto" max-width="344"> -->
   <v-app-bar dense class="px-2" elevation="0">
    <v-btn :disabled="previousComponentDisabled" @click="previousComponent()" class="mr-2" fab text x-small>
@@ -46,7 +46,8 @@
 
     <v-list-item-content>
      <v-list-item-title>
-      <v-text-field spellcheck="false" flat solo hide-details dense v-model="selectedComponent.config.title"> </v-text-field
+      <v-text-field backgroundColor="transparent" spellcheck="false" flat solo hide-details dense v-model="selectedComponent.config.title">
+      </v-text-field
      ></v-list-item-title>
     </v-list-item-content>
 
@@ -62,11 +63,23 @@
    <div class="text--primary">
     <small>Description </small>
 
-    <v-textarea outlined spellcheck="false" noResize :rows="2" autogrow hide-details dense v-model="selectedComponent.config.note"> </v-textarea>
+    <v-textarea
+     :color="$vuetify.theme.dark ? 'secondary' : 'grey'"
+     outlined
+     spellcheck="false"
+     noResize
+     :rows="2"
+     autogrow
+     hide-details
+     dense
+     v-model="selectedComponent.config.note"
+    >
+    </v-textarea>
 
     <div class="mt-2">
      <small>Change component group </small>
      <v-autocomplete
+      :color="$vuetify.theme.dark ? 'secondary' : 'grey'"
       v-model="selectedComponent.component_group_id"
       outlined
       dense
@@ -84,7 +97,7 @@
   <div class="text-center mb-3">
    <v-tooltip transition="false" color="black" bottom>
     <template v-slot:activator="{ on, attrs }">
-     <v-btn v-on="on" depressed dark large small color="white">
+     <v-btn v-on="on" depressed dark large small :color="$vuetify.theme.dark ? '' : 'white'">
       <v-icon color="orange" dark>
        mdi-pencil-outline
       </v-icon>
@@ -95,8 +108,8 @@
 
    <v-tooltip transition="false" color="black" bottom>
     <template v-slot:activator="{ on, attrs }">
-     <v-btn v-on="on" depressed dark large small color="white">
-      <v-icon color="black" dark>
+     <v-btn v-on="on" depressed dark large small :color="$vuetify.theme.dark ? '' : 'white'">
+      <v-icon :color="$vuetify.theme.dark ? '' : 'black'" dark>
        mdi-link
       </v-icon>
      </v-btn>
@@ -106,7 +119,15 @@
 
    <v-tooltip transition="false" color="black" bottom>
     <template v-slot:activator="{ on, attrs }">
-     <v-btn v-on="on" @click="removeComponentWarning(selectedComponent.id, selectedComponent.config.title)" depressed dark large small color="white">
+     <v-btn
+      v-on="on"
+      @click="removeComponentWarning(selectedComponent.id, selectedComponent.config.title)"
+      depressed
+      dark
+      large
+      small
+      :color="$vuetify.theme.dark ? '' : 'white'"
+     >
       <v-icon color="pink lighten-1" dark>
        mdi-trash-can-outline
       </v-icon>
@@ -117,7 +138,15 @@
 
    <v-tooltip transition="false" color="black" bottom>
     <template v-slot:activator="{ on, attrs }">
-     <v-btn :disabled="!hasUnsavedChanges(selectedComponent)" @click="saveComponent(selectedComponent)" v-on="on" depressed large small color="white">
+     <v-btn
+      :disabled="!hasUnsavedChanges(selectedComponent)"
+      @click="saveComponent(selectedComponent)"
+      v-on="on"
+      depressed
+      large
+      small
+      :color="$vuetify.theme.dark ? '' : 'white'"
+     >
       <v-icon color="green" dark>
        mdi-check-all
       </v-icon>
@@ -132,7 +161,7 @@
 
    <v-list-item>
     <v-list-item-icon>
-     <v-icon color="indigo">
+     <v-icon>
       mdi-table
      </v-icon>
     </v-list-item-icon>
@@ -145,7 +174,7 @@
 
    <v-list-item>
     <v-list-item-icon>
-     <v-icon color="indigo">
+     <v-icon>
       mdi-table-row
      </v-icon>
     </v-list-item-icon>
@@ -159,7 +188,7 @@
 
    <v-list-item>
     <v-list-item-icon>
-     <v-icon color="indigo">
+     <v-icon>
       mdi-calendar-plus
      </v-icon>
     </v-list-item-icon>
@@ -173,7 +202,7 @@
 
    <v-list-item>
     <v-list-item-icon>
-     <v-icon color="indigo">
+     <v-icon>
       mdi-calendar-edit
      </v-icon>
     </v-list-item-icon>
@@ -226,8 +255,10 @@ export default {
 
   componentCardGroup(val) {
    if (val === undefined) {
-    this.secureComponentDrawer = false;
-    this.componentCardGroup = undefined;
+    setTimeout(() => {
+     this.secureComponentDrawer = false;
+     this.componentCardGroup = undefined;
+    }, 230);
    }
   }
  },
@@ -243,9 +274,9 @@ export default {
 
   isStarredColor(component) {
    if (component.status.starred) {
-    return "orange darken-2";
+    return "orange";
    } else {
-    return "black";
+    return "grey darken-1";
    }
   },
 
@@ -259,13 +290,15 @@ export default {
 
   removeComponentWarning(id, title) {
    this.$swal({
-    title: `Delete ${title}?`,
-    text: "This action cannot be undone.",
+    title: `<span style="color:${this.$vuetify.theme.dark ? "lightgrey" : ""} "> Delete ${title}? </span>`,
+    html: `<span style="color:${this.$vuetify.theme.dark ? "lightgrey" : ""} ">  This action cannot be undone. </span>`,
+    color: "white",
     showCancelButton: true,
     confirmButtonText: "Delete",
     cancelButtonText: "Cancel",
     confirmButtonColor: "#EC407A",
-    backdrop: "rgba(108, 122, 137, 0.8)",
+    backdrop: `${this.$vuetify.theme.dark ? "rgba(0, 0, 0, 0.6)" : "rgba(108, 122, 137, 0.8)"}`,
+    background: `${this.$vuetify.theme.dark ? "#2f3136" : ""}`,
     width: 600
    }).then(result => {
     if (result.value) {

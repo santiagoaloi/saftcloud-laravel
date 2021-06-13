@@ -9,6 +9,7 @@
   right
   app
   class="elevation-3"
+  v-if="$route.name == 'components'"
  >
   <component-drilldown />
  </v-navigation-drawer>

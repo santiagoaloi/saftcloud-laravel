@@ -1,6 +1,6 @@
 <template>
  <div>
-  <v-container class="fill-height my-15">
+  <v-container class="fill-height">
    <v-row justify="center">
     <v-col cols="12">
      <v-alert dismissible border="left" colored-border color="grey darken-2" elevation="2" class="text-left ">
@@ -11,7 +11,7 @@
     </v-col>
    </v-row>
 
-   <v-card color="white" class="pa-10" width="100%">
+   <v-card :color="$vuetify.theme.dark ? '#2f3136' : '#f5f5f5'" class="px-10" width="100%">
     <v-row justify="center">
      <v-col class="text-center" cols="12" lg="6">
       <v-scroll-x-transition hide-on-leave>
@@ -89,6 +89,7 @@
               :background-color="errors.length > 0 ? '#faebeb' : ''"
               @click.once="getCountries()"
               hide-no-data
+              :loading="countriesLoading"
              >
               <template slot="selection" slot-scope="data">
                <v-row no-gutters dense>
@@ -110,24 +111,19 @@
                </v-row>
               </template>
 
-              <template v-slot:item="data">
-               <v-row no-gutters dense>
-                <v-col cols="3">
-                 <v-list-item-content>
-                  <country-flag class="mr-2" :country="data.item.iso2" />
-                 </v-list-item-content>
-                </v-col>
+              <template #item="{ item, on }">
+               <v-list-item :ripple="false" v-on="on">
+                <v-list-item-avatar>
+                 <country-flag class="mr-2" :country="item.iso2" />
+                </v-list-item-avatar>
+                <v-list-item-content>
+                 <v-list-item-title>
+                  +{{ `${item.phone_code}` }}
 
-                <v-col cols="6">
-                 <v-list-item-content>
-                  <v-list-item-title>
-                   +{{ `${data.item.phone_code}` }}
-
-                   {{ `${data.item.name}` }}
-                  </v-list-item-title>
-                 </v-list-item-content>
-                </v-col>
-               </v-row>
+                  {{ `${item.name}` }}
+                 </v-list-item-title>
+                </v-list-item-content>
+               </v-list-item>
               </template>
              </v-autocomplete>
             </validation-provider>
@@ -181,6 +177,17 @@
               <template slot="selection" slot-scope="data">
                <country-flag class="mr-2" :country="data.item.iso2" />
                <span class="mr-2">{{ data.item.name }} </span>
+              </template>
+
+              <template #item="{ item, on }">
+               <v-list-item :ripple="false" v-on="on">
+                <v-list-item-avatar>
+                 <country-flag class="mr-2" :country="item.iso2" />
+                </v-list-item-avatar>
+                <v-list-item-content>
+                 <v-list-item-title> {{ item.name }} </v-list-item-title>
+                </v-list-item-content>
+               </v-list-item>
               </template>
              </v-autocomplete>
             </validation-provider>
@@ -412,7 +419,7 @@ export default {
 
  data() {
   return {
-   loading: false,
+   countriesLoading: false,
    controller: "Signup",
    terms: false,
    countryCodes: [],
@@ -497,11 +504,18 @@ export default {
   },
 
   getCountries() {
-   axios.get("api/countries").then(response => {
-    if (response.data.status) {
-     this.countryCodes = response.data.rows;
-    }
-   });
+   this.countriesLoading = true;
+   axios
+    .get("api/countries")
+    .then(response => {
+     if (response.data.status) {
+      this.countryCodes = response.data.rows;
+     }
+    })
+    .catch(err => {
+     console.log(err);
+    })
+    .finally(() => (this.countriesLoading = false));
   }
  }
 };

@@ -29,21 +29,14 @@ const state = {
  componentCardGroup: undefined,
  selectedComponentIndex: 0,
  selectedComponentGroups: [],
- groupSettings: {
-  name: "",
-  icon: "",
-  total: "",
-  folder: "",
-  group_id: "",
-  ordering: ""
- },
+ groupName: "",
  componentSettings: initialComponentSettings(),
  componentStatusTabs: [
   { name: "All", value: "all", icon: "mdi-all-inclusive", color: "" },
   { name: "Starred", value: "starred", icon: "mdi-star", color: "" },
   { name: "Modular", value: "modular", icon: "mdi-view-module", color: "" },
-  { name: "Active", value: "active", icon: "mdi-lightbulb-on", color: "blue darken-4" },
-  { name: "Inactive", value: "inactive", icon: "mdi-lightbulb-on-outline", color: "black" }
+  { name: "Active", value: "active", icon: "mdi-lightbulb-on", color: "blue darken-4" }
+  //   { name: "Inactive", value: "inactive", icon: "mdi-lightbulb-on-outline", color: "black" }
  ]
 };
 
@@ -62,7 +55,7 @@ const getters = {
   return state.componentCardGroup === getters.allComponentsFiltered.length - 1;
  },
 
- selectedAllComponents: state => {
+ selectedAllGroups: state => {
   return state.selectedComponentGroups.length === state.allGroups.length;
  },
 
@@ -72,21 +65,21 @@ const getters = {
   return state.allComponents.filter(component => {
    return (
     (search === "" || component.config.title.toLowerCase().match(search)) &&
-    (getters.activeStatusTabName === "all" || component.config_settings.status[getters.activeStatusTabName]) &&
+    (getters.activeStatusTabName === "all" || component.status[getters.activeStatusTabName]) &&
     state.selectedComponentGroups.some(g => g.id === component.component_group_id)
    );
   });
  },
 
- hasLoadedComponents: state => {
-  return !isEmpty(state.allComponents);
+ isComponentsEmpty: state => {
+  return isEmpty(state.allComponents);
  },
 
  hasSelectedComponentGroups: state => {
   return !isEmpty(state.selectedComponentGroups);
  },
 
- selectedSomeComponents: (_state, getters) => {
+ selectedSomeGroups: (_state, getters) => {
   if (getters.hasSelectedComponentGroups) return true;
   return false;
  },
@@ -110,8 +103,8 @@ const getters = {
   return state.componentStatusTabs[state.activeStatusTab].value;
  },
 
- isModularIcon: () => component => (component.status.modular ? "mdi-view-module" : "mdi-view-module-outline"),
  isStarredIcon: () => component => (component.status.starred ? "mdi-star" : "mdi-star-outline"),
+ isModularIcon: () => component => (component.status.modular ? "mdi-view-module" : "mdi-view-module-outline"),
  countComponentsInGroup: () => id => state.allComponents.filter(component => component.component_group_id === id).length
 };
 
@@ -132,12 +125,13 @@ const actions = {
   });
  },
 
- unselectGroup(index) {
-  state.selectedComponentGroups.splice(index, 1);
+ unselectGroup({ state, commit }, id) {
+  const selectedComponentGroups = state.selectedComponentGroups.filter(cg => cg.id !== id);
+  commit("selectedComponentGroups", selectedComponentGroups);
  },
 
  selectAllGroups({ commit, state, getters }) {
-  if (getters.selectedAllComponents) {
+  if (getters.selectedAllGroups) {
    commit("selectedComponentGroups", []);
   } else {
    commit("selectedComponentGroups", state.allGroups.slice());
@@ -163,7 +157,7 @@ const actions = {
   });
  },
 
- setComponentStatus({ state }, component) {
+ setComponentStatus({}, component) {
   axios.patch(`api/Component/${component.id}`, { status: component.status });
  },
 
@@ -197,12 +191,14 @@ const actions = {
  },
 
  saveGroup({ state, commit }) {
-  axios.post("api/ComponentGroup", { name: state.groupSettings.name }).then(response => {
+  axios.post("api/ComponentGroup", { name: state.groupName }).then(response => {
    if (response.data.status) {
     state.dialogGroup = false;
     commit("allGroups", response.data.groups);
+    store.set("componentManagement/groupName", "");
+    store.set(`componentManagement/allComponents@${index}`, response.data.component);
     store.set("snackbar/value", true);
-    store.set("snackbar/text", `Group "${state.groupSettings.name}" created`);
+    store.set("snackbar/text", `Group "${state.groupName}" created`);
     store.set("snackbar/color", "indigo darken-1");
    }
   });
@@ -224,6 +220,7 @@ const actions = {
  previousComponent({ state }) {
   if (state.componentCardGroup > 0) {
    state.componentCardGroup--;
+   state.selectedComponentIndex--;
   }
  },
 
