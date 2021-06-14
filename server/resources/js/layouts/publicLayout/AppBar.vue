@@ -1,6 +1,6 @@
 <template>
  <div>
-  <v-app-bar :color="$route.name == 'homepage' ? 'transparent' : $vuetify.theme.dark ? '#202225' : '#333781'" absolute app flat height="80">
+  <v-app-bar :color="$route.name == 'homepage' ? 'transparent' : '#202225'" absolute app flat height="80">
    <v-container style="background-color:transparent" class="py-0 px-0 px-sm-2 fill-height">
     <div
      data-aos="fade"
@@ -24,7 +24,7 @@
      <v-btn rounded to="/signup" height="36" class="mr-3" color="white" text dark x-large plain> Company</v-btn>
      <v-btn rounded to="/signup" height="36" class="mr-3" dark x-large plain> <v-icon left> mdi-account-plus</v-icon>Sign up</v-btn>
      <template>
-      <v-btn min-width="100px" to="/login" height="36" class="mr-3" rounded dark color="pink darken-1" x-large>
+      <v-btn min-width="100px" to="/login" height="36" class="mr-3" rounded dark color="#42b883" x-large>
        <v-avatar class="ml-n4 mr-3" size="28" left>
         <v-img src="storage/avatars/avatar.png"></v-img>
        </v-avatar>
@@ -102,12 +102,12 @@
 
     <v-tooltip transition="false" color="black" bottom>
      <template v-slot:activator="{ on, attrs }">
-      <v-btn v-on="on" @click="setDarkMode()" fab class="mr-3" color="white" text dark small plain>
-       <v-icon v-if="$vuetify.theme.isDark">mdi-lightbulb-on-outline</v-icon>
+      <v-btn v-on="on" @click="isDark = !isDark" fab class="mr-3" color="white" text dark small plain>
+       <v-icon v-if="isDark">mdi-lightbulb-on-outline</v-icon>
        <v-icon v-else>mdi-lightbulb-outline</v-icon></v-btn
       >
      </template>
-     <span> {{ $vuetify.theme.isDark ? " Light mode" : "Dark mode" }}</span>
+     <span> {{ isDark ? " Light mode" : "Dark mode" }}</span>
     </v-tooltip>
    </v-container>
   </v-app-bar>
@@ -117,12 +117,10 @@
 <script>
 import { store } from "@/store";
 import axios from "axios";
-import globalMixin from "@/mixins/globalMixin";
-import { mapActions } from "vuex";
+import { sync } from "vuex-pathify";
 
 export default {
  name: "PublicAppbar",
- mixins: [globalMixin],
 
  data() {
   return {
@@ -169,31 +167,10 @@ export default {
  },
 
  computed: {
-  profile() {
-   return store.state.sessionData.userProfile;
-  }
+  ...sync("theme", ["isDark"])
  },
 
  methods: {
-  ...mapActions(["logoutVuex", "clearPublicData"]),
-
-  setDarkMode() {
-   this.$vuetify.theme.dark = !this.$vuetify.theme.dark;
-  },
-
-  logout() {
-   this.clearPublicData();
-   this.logoutVuex();
-  },
-
-  // getAvatarSoruce() {
-  //  if (this.isLoggedIn) {
-  //   return `${this.profile.avatar}`;
-  //  } else {
-  //   return `${this.uploadPath}/cms/avatar.png`;
-  //  }
-  // },
-
   testFunction() {
    let post = { id: 30 };
    axios.post("/api/testFunction", post).then(response => {

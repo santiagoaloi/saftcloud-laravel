@@ -36,7 +36,7 @@ router.beforeResolve((to, from, next) => {
  if (auth.loggedIn()) {
   if (to.matched.some(record => record.name === "login")) {
    // Redirect to the home page instead
-   next({ path: "/desktop" });
+   next({ path: "/components" });
   } else {
    // Continue to the login page
    next();

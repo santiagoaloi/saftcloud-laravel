@@ -1,15 +1,15 @@
 <template>
  <div>
   <v-container class="fill-height">
-   <v-row justify="center">
-    <v-col cols="12">
-     <v-alert dismissible border="left" colored-border color="grey darken-2" elevation="2" class="text-left ">
+   <v-expand-transition>
+    <v-sheet color="transparent" v-if="alert" class="px-2">
+     <v-alert v-model="alert" dismissible border="left" colored-border color="grey darken-2" elevation="2" class="text-left ">
       All new accounts are free of charge for the first 14 days since the day of registration, no payment information is required until the trial
       ends. The information uploaded to SaftCloud is confidential and only available to you. We don't comercialice any data uploaded to our databases.
       Once the trial ends, we will retain the data one week, to provide you with backups or exporting capabilities.
      </v-alert>
-    </v-col>
-   </v-row>
+    </v-sheet>
+   </v-expand-transition>
 
    <v-card :color="$vuetify.theme.dark ? '#2f3136' : '#f5f5f5'" class="px-10" width="100%">
     <v-row justify="center">
@@ -397,14 +397,12 @@
 <script>
 import Pricing from "@/components/landing/Pricing.vue";
 import Faq from "@/components/landing/Faq.vue";
-
-import globalMixin from "@/mixins/globalMixin";
 import filterFunctionsMixin from "@/mixins/filterFunctions";
 import CountryFlag from "vue-country-flag";
 import axios from "axios";
 export default {
  name: "Signup",
- mixins: [globalMixin, filterFunctionsMixin],
+ mixins: [filterFunctionsMixin],
  components: {
   CountryFlag,
   Pricing,
@@ -419,6 +417,7 @@ export default {
 
  data() {
   return {
+   alert: true,
    countriesLoading: false,
    controller: "Signup",
    terms: false,

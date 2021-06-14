@@ -5,7 +5,16 @@
     <v-row>
      <v-col>
       <span>Group name</span>
-      <v-text-field ref="groupTitle" v-model="groupName" counter maxlength="35" autofocus solo prepend-inner-icon="mdi-comment" color="primary" />
+      <v-text-field
+       :color="$vuetify.theme.dark ? 'secondary' : ''"
+       ref="groupTitle"
+       v-model="groupName"
+       counter
+       maxlength="35"
+       autofocus
+       solo
+       prepend-inner-icon="mdi-comment"
+      />
      </v-col>
     </v-row>
    </v-container>

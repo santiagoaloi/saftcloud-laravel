@@ -25,7 +25,7 @@ export const store = new Vuex.Store({
     removeItem: key => ls.remove(key)
    },
    // Persist the following vuex variables.
-   paths: ["authentication"]
+   paths: ["authentication", "theme"]
   }),
   pathify.plugin
  ],

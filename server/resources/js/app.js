@@ -18,9 +18,9 @@ Vue.component("vue-diagonal", VueDiagonal);
 import "../sass/theme.scss";
 import "./assets/css/style.css";
 
+Vue.component("login_layout", () => import(/* webpackChunkName: 'Login-Layout' */ "@/layouts/loginLayout/Index"));
 Vue.component("public_layout", () => import(/* webpackChunkName: 'Public-Layout' */ "@/layouts/publicLayout/Index"));
 Vue.component("secure_layout", () => import(/* webpackChunkName: 'Public-Layout' */ "@/layouts/secureLayout/Index"));
-Vue.component("login_layout", () => import(/* webpackChunkName: 'Login-Layout' */ "@/layouts/loginLayout/Index"));
 
 new Vue({
  store,

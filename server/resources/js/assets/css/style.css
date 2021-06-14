@@ -2,6 +2,10 @@ html {
  overflow: auto;
 }
 
+.v-card--link:before {
+ background: transparent !important;
+}
+
 /* Scroll bar stylings */
 ::-webkit-scrollbar {
  width: 7px;

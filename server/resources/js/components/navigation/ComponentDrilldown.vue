@@ -82,6 +82,7 @@
       :color="$vuetify.theme.dark ? 'secondary' : 'grey'"
       v-model="selectedComponent.component_group_id"
       outlined
+      hide-selected
       dense
       :items="allGroups"
       :maxlength="25"
@@ -233,6 +234,7 @@ export default {
  }),
 
  computed: {
+  ...sync("theme", ["isDark"]),
   ...sync("drawers", ["secureComponentDrawer"]),
   ...sync("componentManagement", ["componentCardGroup", "allComponents", "allGroups", "selectedComponentIndex", "dialogIcons"]),
   ...get("componentManagement", [
@@ -241,7 +243,9 @@ export default {
    "previousComponentDisabled",
    "nextComponentDisabled",
    "selectedComponent",
-   "isAllFilteredComponentsEmpty"
+   "isAllFilteredComponentsEmpty",
+   "isStarredColor",
+   "isStarredIcon"
   ])
  },
 
@@ -272,33 +276,17 @@ export default {
    this.setComponentStatus(component);
   },
 
-  isStarredColor(component) {
-   if (component.status.starred) {
-    return "orange";
-   } else {
-    return "grey darken-1";
-   }
-  },
-
-  isStarredIcon(component) {
-   if (component.status.starred) {
-    return "mdi-star";
-   } else {
-    return "mdi-star-outline";
-   }
-  },
-
   removeComponentWarning(id, title) {
    this.$swal({
-    title: `<span style="color:${this.$vuetify.theme.dark ? "lightgrey" : ""} "> Delete ${title}? </span>`,
-    html: `<span style="color:${this.$vuetify.theme.dark ? "lightgrey" : ""} ">  This action cannot be undone. </span>`,
+    title: `<span style="color:${this.isDark ? "lightgrey" : ""} "> Delete ${title}? </span>`,
+    html: `<span style="color:${this.isDark ? "lightgrey" : ""} ">  This action cannot be undone. </span>`,
     color: "white",
     showCancelButton: true,
     confirmButtonText: "Delete",
     cancelButtonText: "Cancel",
     confirmButtonColor: "#EC407A",
-    backdrop: `${this.$vuetify.theme.dark ? "rgba(0, 0, 0, 0.6)" : "rgba(108, 122, 137, 0.8)"}`,
-    background: `${this.$vuetify.theme.dark ? "#2f3136" : ""}`,
+    backdrop: `${this.isDark ? "rgba(0, 0, 0, 0.6)" : "rgba(108, 122, 137, 0.8)"}`,
+    background: `${this.isDark ? "#2f3136" : ""}`,
     width: 600
    }).then(result => {
     if (result.value) {

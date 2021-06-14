@@ -37,6 +37,10 @@ $material-dark: (
  "inputs": (
   "box": $text-base
  ),
+ "text-fields": (
+  "outlined": #4d5458,
+  "outlined-hover": #4d5458
+ ),
  "navigation-drawer": map-get($theme-dark-colors, "1"),
  "skeleton": linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent),
  "table": (

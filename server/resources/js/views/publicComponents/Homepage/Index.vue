@@ -18,8 +18,10 @@
        the cloud.
       </h3>
       <div class="mt-8">
-       <v-btn to="/signup" x-large :color="$vuetify.theme.dark ? 'secondary darken-2' : 'teal accent-1'">Try it for free</v-btn>
-       <v-btn x-large class="my-1 mx-sm-1">Contact Sales</v-btn>
+       <v-btn class="hoverElevationSoft" to="/signup" dark x-large :color="$vuetify.theme.dark ? 'secondary darken-2' : '#42b883'"
+        >Try it for free</v-btn
+       >
+       <v-btn x-large class="my-1 mx-sm-1 hoverElevationSoft">Contact Sales</v-btn>
       </div>
      </v-card>
      <div style="position:absolute;top:85%;right:10%" class=" text-right align-end justify-end">
@@ -74,5 +76,18 @@ export default {
 .vue-typer .custom.caret {
  width: 10px;
  background-color: #3f51b5;
+}
+
+.hoverElevationSoft {
+ border-radius: 8px;
+ -webkit-transition-property: color, background-color, -webkit-box-shadow, -webkit-transform;
+ transition-property: color, background-color, box-shadow, transform, -webkit-box-shadow, -webkit-transform;
+ transition-duration: 0.5s;
+ box-shadow: 0 10px 60px -12px rgb(50 50 93 / 25%), 0 18px 36px -18px rgb(0 0 0 / 30%), 0 -12px 36px -8px rgb(0 0 0 / 3%) !important;
+}
+
+.hoverElevationSoft:hover {
+ transform: translateY(1.5px) !important;
+ box-shadow: 0 13px 27px -5px rgb(50 50 93 / 25%), 0 8px 16px -8px rgb(0 0 0 / 30%), 0 -6px 16px -6px rgb(0 0 0 / 3%) !important;
 }
 </style>

@@ -1,13 +1,8 @@
 <template>
-    <v-app-bar :flat="$vuetify.theme.dark" clipped-right dense app >
-
+    <v-app-bar :flat="isDark" clipped-right dense app >
       <v-container fluid class="py-0 px-0 px-sm-2 fill-height">
-
-      
       <v-app-bar-nav-icon  class="ml-0" text xSmall fab @click="secureDefaultDrawer = !secureDefaultDrawer" />
-
       <h3 class="ml-3">SaftCloud</h3>
-
       <div class="flex-grow-1" />
 
       <v-btn class="mr-2 " text x-small fab to="/">
@@ -121,10 +116,10 @@
                 <v-icon>mdi-tune-vertical</v-icon>
               </v-list-item-action>
               <v-list-item-content>
-                <v-list-item-title>Mörkt läge</v-list-item-title>
+                <v-list-item-title>{{ isDark ? 'Light theme' : 'Dark theme'}} </v-list-item-title>
               </v-list-item-content>
               <v-list-item-action>
-                <v-switch :ripple="false" color="grey darken-1"  @click.stop="setDarkMode()" />
+                <v-switch v-model="isDark" :ripple="false" color="grey darken-1"  @click.stop />
               </v-list-item-action>
             </v-list-item>
 
@@ -133,7 +128,7 @@
                 <v-icon>mdi-tune-vertical</v-icon>
               </v-list-item-action>
               <v-list-item-content>
-                <v-list-item-title>Profilinställngar</v-list-item-title>
+                <v-list-item-title>Profile settings</v-list-item-title>
               </v-list-item-content>
             </v-list-item>
 
@@ -142,7 +137,7 @@
                 <v-icon>mdi-logout</v-icon>
               </v-list-item-action>
               <v-list-item-content>
-                <v-list-item-title>Logga ut</v-list-item-title>
+                <v-list-item-title>Sign out</v-list-item-title>
               </v-list-item-content>
             </v-list-item>
           </v-list>
@@ -219,6 +214,8 @@ export default {
   },
 
   computed: {
+
+
     // profileAvatar() {
     //   if (this.profile.avatar == null || this.imageLoadingFailed) {
     //     return `${this.lazy}avatar.png`;
@@ -237,9 +234,6 @@ export default {
     // }
   },
 
-  destroyed() {
-    window.getApp.$off("APP_SIDEBAR_HAMBURGER");
-  },
 
   mounted() {
     // this.fetchNotificationCount();
@@ -255,14 +249,11 @@ export default {
     ...sync('drawers', [
       'secureDefaultDrawer',
     ]),
+    ...sync("theme", ["isDark"]),
   },
 
   methods: {
     logoutSanctum: call("authentication/logout"),
-
-    setDarkMode() {
-      this.$vuetify.theme.dark = !this.$vuetify.theme.dark;
-    },
 
     fetchNotificationCount() {
       axios.get("site/fetchNotificationCount").then(response => {

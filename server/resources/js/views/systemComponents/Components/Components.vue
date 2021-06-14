@@ -3,8 +3,14 @@
   <components-appbar :parent-data="$data" />
   <components-groups />
   <div class="d-flex justify-space-between align-center">
-   <v-tabs v-model="activeStatusTab" showArrows class="col-6 mt-n3" background-color="transparent" sliderSize="1">
-    <v-tab :disabled="isComponentsEmpty" :key="i" y v-for="(tab, i) in componentStatusTabs" :ripple="false">
+   <v-tabs color="secondary" v-model="activeStatusTab" showArrows class="col-6 mt-n3" background-color="transparent" sliderSize="1">
+    <v-tab
+     :activeClass="$vuetify.theme.dark ? 'white--text' : ''"
+     :disabled="isComponentsEmpty"
+     :key="i"
+     v-for="(tab, i) in componentStatusTabs"
+     :ripple="false"
+    >
      <v-icon :color="tab.color" small left>
       {{ tab.icon }}
      </v-icon>
@@ -47,12 +53,11 @@
        <v-item :key="`${index}`" v-for="(component, index) in allComponentsFiltered" v-slot="{ active, toggle }">
         <v-card
          :ref="`SEL${componentCardGroup}ID${index}`"
-         :color="$vuetify.theme.dark ? '#2d2c30' : active ? 'indigo lighten-5' : 'white'"
+         :color="getComponentCardColor(active)"
          height="210"
          width="100%"
-         :elevation="9"
          :ripple="false"
-         class="d-flex flex-column justify-space-between pa-4 "
+         class="d-flex flex-column justify-space-between pa-4 hoverElevationSoft"
          @click="
           toggle();
           setSelectedComponent(index);
@@ -92,16 +97,18 @@
             <span v-else> {{ mapComponentGroup(component) }} </span>
            </h5>
           </div>
-          <div v-if="hasUnsavedChanges(component)" class="gallery-card-subtitle-wrapper">
-           <h5 class="gallery-card-subtitle">
-            <v-tooltip transition="false" color="black" bottom>
-             <template v-slot:activator="{ on, attrs }">
-              <v-icon v-on="on" color="pink lighten-2">mdi-content-save-alert-outline</v-icon>
-             </template>
-             <span>Unsaved</span>
-            </v-tooltip>
-           </h5>
-          </div>
+          <v-scale-transition>
+           <div v-if="hasUnsavedChanges(component)" class="gallery-card-subtitle-wrapper">
+            <h5 class="gallery-card-subtitle">
+             <v-tooltip transition="false" color="black" bottom>
+              <template v-slot:activator="{ on, attrs }">
+               <v-icon v-on="on" :color="isDark ? 'white' : 'grey darken-4'">mdi-content-save-alert-outline</v-icon>
+              </template>
+              <span>Unsaved</span>
+             </v-tooltip>
+            </h5>
+           </div>
+          </v-scale-transition>
          </div>
         </v-card>
        </v-item>
@@ -117,7 +124,9 @@
        <div class="flex-grow-1 align-center justify-center d-flex flex-column">
         <v-img :aspect-ratio="1" width="250" contain src="storage/systemImages/noContent.svg"></v-img>
         No components found. Choose a different filter or
-        <span @click="dialogComponent = true" class="primary--text cursor-pointer"><b> create a new component</b></span>
+        <span :class="$vuetify.theme.dark ? 'secundary--text' : 'primary--text'" @click="dialogComponent = true" class=" cursor-pointer"
+         ><b> create a new component</b></span
+        >
        </div>
       </v-sheet>
      </v-container>
@@ -125,9 +134,9 @@
    </v-fade-transition>
   </v-card>
 
-  <dialog-group />
-  <dialog-component v-if="dialogComponent" />
+  <dialog-group v-if="dialogGroup" />
   <dialog-icons v-if="dialogIcons" />
+  <dialog-component v-if="dialogComponent" />
  </div>
 </template>
 
@@ -140,10 +149,10 @@ export default {
  name: "ComponentManagement",
  components: {
   DialogGroup: () => import("./DialogGroup"),
+  DialogIcons: () => import("./DialogIcons"),
   DialogComponent: () => import("./DialogComponent"),
-  ComponentsGroups: () => import("./ComponentsGroups"),
   ComponentsAppbar: () => import("./ComponentsAppbar"),
-  DialogIcons: () => import("./DialogIcons")
+  ComponentsGroups: () => import("./ComponentsGroups")
  },
 
  mixins: [globalMixin],
@@ -162,6 +171,7 @@ export default {
  },
 
  computed: {
+  ...sync("theme", ["isDark"]),
   ...sync("drawers", ["secureComponentDrawer"]),
   ...sync("componentManagement", [
    "allGroups",
@@ -170,7 +180,8 @@ export default {
    "componentCardGroup",
    "componentStatusTabs",
    "dialogComponent",
-   "dialogIcons"
+   "dialogIcons",
+   "dialogGroup"
   ]),
   ...get("componentManagement", [
    "hasUnsavedChanges",
@@ -179,7 +190,11 @@ export default {
    "isStarredIcon",
    "selectedComponentIndex",
    "isAllFilteredComponentsEmpty",
-   "isComponentsEmpty"
+   "isComponentsEmpty",
+   "isStarredColor",
+   "isActiveColor",
+   "isModularColor",
+   "isActiveIcon"
   ])
  },
 
@@ -190,6 +205,13 @@ export default {
 
  methods: {
   ...call("componentManagement/*"),
+
+  getComponentCardColor(active) {
+   if (this.$vuetify.theme.dark && !active) return "#40434a";
+   if (this.$vuetify.theme.dark && active) return "#51555e";
+   if (!this.$vuetify.theme.dark && !active) return "white";
+   if (!this.$vuetify.theme.dark && active) return "indigo lighten-5";
+  },
 
   calculateHeight() {
    return Number(this.$vuetify.breakpoint.height - 375);
@@ -218,38 +240,6 @@ export default {
    this.setComponentStatus(component);
   },
 
-  isStarredColor(component) {
-   if (component.status.starred) {
-    return "orange";
-   } else {
-    return "grey darken-1";
-   }
-  },
-
-  isActiveColor(component) {
-   if (component.status.active) {
-    return `${this.$vuetify.theme.dark ? "indigo lighten-4" : "indigo darken-4"} `;
-   } else {
-    return this.$vuetify.theme.dark ? "grey darken-1" : "black";
-   }
-  },
-
-  isModularColor(component) {
-   if (component.status.modular) {
-    return `${this.$vuetify.theme.dark ? "indigo lighten-4" : "indigo darken-4"} `;
-   } else {
-    return this.$vuetify.theme.dark ? "grey darken-1" : "black";
-   }
-  },
-
-  isActiveIcon(component) {
-   if (component.status.active) {
-    return "mdi-lightbulb-on";
-   } else {
-    return "mdi-lightbulb-on-outline";
-   }
-  },
-
   mapComponentGroup(component) {
    if (this.allGroups.length === 0) return;
    return this.allGroups.filter(g => g.id === component.component_group_id)[0].name;
@@ -259,6 +249,18 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.hoverElevationSoft {
+ border-radius: 8px;
+ -webkit-transition-property: color, background-color, -webkit-box-shadow, -webkit-transform;
+ transition-property: color, background-color, box-shadow, transform, -webkit-box-shadow, -webkit-transform;
+ transition-duration: 0.3s;
+ box-shadow: 0 10px 60px -12px rgb(50 50 93 / 25%), 0 18px 36px -18px rgb(0 0 0 / 30%), 0 -12px 36px -8px rgb(0 0 0 / 3%) !important;
+}
+
+.hoverElevationSoft:hover {
+ transform: translateY(1px) !important;
+ box-shadow: 0 13px 27px -5px rgb(50 50 93 / 25%), 0 8px 16px -8px rgb(0 0 0 / 30%), 0 -6px 16px -6px rgb(0 0 0 / 3%) !important;
+}
 .v-card--link:before {
  background: white;
 }
@@ -316,5 +318,14 @@ export default {
  overflow: hidden;
  text-overflow: ellipsis;
  white-space: nowrap;
+}
+
+.theme--dark.v-tabs .v-tab--active:hover::before,
+.theme--dark.v-tabs .v-tab--active::before {
+ opacity: 0;
+}
+
+.v-tab:before {
+ background-color: unset;
 }
 </style>

@@ -15,6 +15,8 @@
      return-object
      placeholder="Select or create groups"
      hide-selected
+     color="primary"
+     item-color="primary"
      :menu-props="{
       transition: 'slide-y-transition'
      }"
@@ -48,7 +50,7 @@
      </template>
 
      <template v-slot:no-data>
-      <v-list-item>
+      <v-list-item @click="dialogGroup = !dialogGroup">
        <v-list-item-avatar>
         <v-icon>
          mdi-plus
@@ -57,8 +59,8 @@
 
        <v-list-item-content>
         <v-list-item-title>
-         <span @click="dialogGroup = !dialogGroup">Create group </span>
-         {{ groupName }}
+         <span>Create group </span>
+         {{ formattedGroupTest }}
         </v-list-item-title>
        </v-list-item-content>
       </v-list-item>
@@ -84,14 +86,16 @@
    <v-col cols="12" sm="8">
     <div>
      <v-chip-group showArrows centerActive>
-      <v-chip :ripple="false" close @click:close="unselectGroup(item.id)" v-for="(item, i) in selectedComponentGroups" :key="i">
-       <v-avatar left>
-        <v-btn style="pointer-events:none" :color="$vuetify.theme.dark ? 'grey darken-3' : 'grey lighten-4'">
-         {{ countComponentsInGroup(item.id) }}</v-btn
-        >
-       </v-avatar>
-       {{ item.name }}
-      </v-chip>
+      <transition-group appear name="scale-transition">
+       <v-chip :ripple="false" close @click:close="unselectGroup(item.id)" v-for="(item, index) in selectedComponentGroups" :key="`${index}`">
+        <v-avatar left>
+         <v-btn style="pointer-events:none" :color="$vuetify.theme.dark ? 'grey darken-3' : 'grey lighten-4'">
+          {{ countComponentsInGroup(item.id) }}</v-btn
+         >
+        </v-avatar>
+        {{ item.name }}
+       </v-chip>
+      </transition-group>
      </v-chip-group>
     </div>
    </v-col>
@@ -109,9 +113,12 @@ export default {
 
  computed: {
   ...sync("componentManagement", ["allGroups", "selectedComponentGroups", "dialogGroup", "groupName", "allComponents"]),
-  // ...get('componentManagement/*'),
+  ...sync("theme", ["isDark"]),
   ...get("componentManagement", ["selectedAllGroups", "selectedSomeGroups", "hasSelectedComponentGroups", "countComponentsInGroup"]),
 
+  formattedGroupTest() {
+   if (this.groupName !== null) return `"${this.groupName}"`;
+  },
   icon() {
    if (this.selectedAllGroups) return "mdi-close-box";
    if (this.selectedSomeGroups) return "mdi-minus-box";
@@ -124,13 +131,14 @@ export default {
 
   removeGroupWarning(id, name) {
    this.$swal({
-    title: `Delete ${name} group?`,
-    text: "This action cannot be undone.",
+    title: `<span style="color:${this.isDark ? "lightgrey" : ""} "> Delete ${name} group? </span>`,
+    html: `<span style="color:${this.isDark ? "lightgrey" : ""} ">  This action cannot be undone. </span>`,
     showCancelButton: true,
     confirmButtonText: "Delete",
     cancelButtonText: "Cancel",
     confirmButtonColor: "#EC407A",
-    backdrop: "rgba(108, 122, 137, 0.8)"
+    backdrop: `${this.isDark ? "rgba(0, 0, 0, 0.6)" : "rgba(108, 122, 137, 0.8)"}`,
+    background: `${this.isDark ? "#2f3136" : ""}`
    }).then(result => {
     if (result.value) {
      this.removeGroup(id);

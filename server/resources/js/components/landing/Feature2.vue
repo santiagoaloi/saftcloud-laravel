@@ -1,15 +1,15 @@
 <template>
  <v-container>
   <div class="d-flex justify-center py-10">
-   <v-card data-aos="zoom-in" data-aos-mirror="true" data-aos-offset="220" width="100%">
-    <v-row align="center" justify="start">
+   <v-card class="   cursor-pointer" data-aos="zoom-in" data-aos-once="true" data-aos-offset="220" width="100%">
+    <v-row align="center" justify="center">
      <v-col cols="12" lg="4">
-      <v-img src="storage/team.jpg" height="280"></v-img>
+      <v-img src="storage/img4.jpg" height="250"></v-img>
      </v-col>
 
      <v-col lg="7">
       <v-container fluid>
-       <h2 class="text-h3 mb-2 #0A2540--text mb-5">
+       <h2 class="text-h3 mb-2 mb-5">
         We want to talk to you
        </h2>
        <div class="text-h6 text-lg-h5 ">
@@ -23,7 +23,7 @@
   </div>
 
   <div class="d-flex justify-center py-10">
-   <v-card data-aos="zoom-in" data-aos-mirror="true" data-aos-offset="220" class="pa-10" width="100%">
+   <v-card data-aos="zoom-in" data-aos-once="true" data-aos-offset="220" class="pa-10    cursor-pointer" width="100%">
     <v-row align="center" justify="center">
      <v-col cols="12" lg="6">
       <div class="text-uppercase font-weight-bold body-2 primary--text mb-2 mt-0 mt-xl-10">
@@ -46,8 +46,4 @@
  </v-container>
 </template>
 
-<style scoped lang="scss">
-.test {
- background: linear-gradient(-555deg, rgb(71, 60, 114) 60%, #cedaec 60%);
-}
-</style>
+<style scoped></style>

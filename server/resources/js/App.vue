@@ -4,41 +4,30 @@
 
 <script>
 import config from "./configs";
+import { sync } from "vuex-pathify";
 
 export default {
  name: "AppVue",
 
- data() {
-  return {};
- },
-
  computed: {
+  ...sync("theme", ["isDark"]),
+
   layout() {
    return this.$route.meta.layout;
   }
  },
 
- //  mounted() {
- //   console.log(...config.icons.map(href => ({ rel: "stylesheet", href })));
- //  },
+ watch: {
+  isDark: {
+   immediate: true,
+   handler(val) {
+    this.$vuetify.theme.dark = val;
+   }
+  }
+ },
 
  head: {
-  link: [
-   // adds config/icons into the html head tag
-   ...config.icons.map(href => ({ rel: "stylesheet", href }))
-  ]
- },
-
- created() {
-  window.getApp = this;
- },
-
- methods: {}
+  link: [...config.icons.map(href => ({ rel: "stylesheet", href }))]
+ }
 };
 </script>
-<style>
-.v-toolbar__content,
-.v-toolbar__extension {
- padding: 0px 0px !important;
-}
-</style>

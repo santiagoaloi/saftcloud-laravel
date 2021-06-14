@@ -6,7 +6,7 @@
     <v-text-field
      v-model.lazy="search"
      spellcheck="false"
-     color="primary lighten-1"
+     :color="$vuetify.theme.dark ? 'secondary' : ''"
      solo
      dense
      hide-details

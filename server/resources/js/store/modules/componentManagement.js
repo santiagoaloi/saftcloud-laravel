@@ -4,6 +4,7 @@ import { make } from "vuex-pathify";
 import isEqual from "lodash/isEqual";
 import isEmpty from "lodash/isEmpty";
 import cloneDeep from "lodash/cloneDeep";
+import vuetify from "@/plugins/vuetify";
 
 const initialComponentSettings = () => {
  return {
@@ -35,8 +36,7 @@ const state = {
   { name: "All", value: "all", icon: "mdi-all-inclusive", color: "" },
   { name: "Starred", value: "starred", icon: "mdi-star", color: "" },
   { name: "Modular", value: "modular", icon: "mdi-view-module", color: "" },
-  { name: "Active", value: "active", icon: "mdi-lightbulb-on", color: "blue darken-4" }
-  //   { name: "Inactive", value: "inactive", icon: "mdi-lightbulb-on-outline", color: "black" }
+  { name: "Active", value: "active", icon: "mdi-lightbulb-on", color: "" }
  ]
 };
 
@@ -95,7 +95,7 @@ const getters = {
   return state.allGroups.length === 0;
  },
 
- isAllFilteredComponentsEmpty: (_state, getters) => {
+ isAllFilteredComponentsEmpty: (_, getters) => {
   return getters.allComponentsFiltered.length === 0;
  },
 
@@ -104,7 +104,29 @@ const getters = {
  },
 
  isStarredIcon: () => component => (component.status.starred ? "mdi-star" : "mdi-star-outline"),
+ isActiveIcon: () => component => (component.status.active ? "mdi-lightbulb-on" : "mdi-lightbulb-on-outline"),
  isModularIcon: () => component => (component.status.modular ? "mdi-view-module" : "mdi-view-module-outline"),
+
+ isStarredColor: () => component => (component.status.starred ? "orange" : "grey darken-1"),
+
+ isActiveColor: (_, __, rootState) => component =>
+  rootState.theme.isDark && component.status.active
+   ? "indigo lighten-4"
+   : !rootState.theme.isDark && component.status.active
+   ? "indigo darken-4"
+   : rootState.theme.isDark && !component.status.active
+   ? "grey darken-1"
+   : "black",
+
+ isModularColor: (_, __, rootState) => component =>
+  rootState.theme.isDark && component.status.modular
+   ? "indigo lighten-4"
+   : !rootState.theme.isDark && component.status.modular
+   ? "indigo darken-4"
+   : rootState.theme.isDark && !component.status.modular
+   ? "grey darken-1"
+   : "black",
+
  countComponentsInGroup: () => id => state.allComponents.filter(component => component.component_group_id === id).length
 };
 
@@ -168,7 +190,7 @@ const actions = {
     store.set(`componentManagement/allComponents@${index}`, response.data.component);
     store.set("snackbar/value", true);
     store.set("snackbar/text", "Component saved");
-    store.set("snackbar/color", "indigo darken-1");
+    store.set("snackbar/color", "grey darken-2");
    }
   });
  },
@@ -199,7 +221,7 @@ const actions = {
     store.set(`componentManagement/allComponents@${index}`, response.data.component);
     store.set("snackbar/value", true);
     store.set("snackbar/text", `Group "${state.groupName}" created`);
-    store.set("snackbar/color", "indigo darken-1");
+    store.set("snackbar/color", "grey darken-2");
    }
   });
  },
@@ -212,7 +234,7 @@ const actions = {
     state.componentSettings = initialComponentSettings();
     store.set("snackbar/value", true);
     store.set("snackbar/text", "Component created");
-    store.set("snackbar/color", "indigo darken-1");
+    store.set("snackbar/color", "grey darken-2");
    }
   });
  },

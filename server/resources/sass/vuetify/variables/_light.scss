@@ -16,12 +16,9 @@ $material-light: (
   "link-hover": transparent
  ),
  "text-fields": (
-  "outlined":  lighten($text-base, 2.5%),
-  "outlined-hover":  lighten($text-base, 2.5%)
+  "outlined": #a0a1a1,
+  "outlined-hover": #a0a1a1
  ),
-//  "inputs": (
-//   "box": transparent
-//  ),
  "icons": (
   "active": rgba(map-get($shades, "black"), 0.7),
   "inactive": rgba(map-get($shades, "black"), 0.38)

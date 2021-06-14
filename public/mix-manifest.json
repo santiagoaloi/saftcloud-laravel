@@ -18,5 +18,6 @@
     "/dist/js/public-appbar-view-footer-combined.js": "/dist/js/public-appbar-view-footer-combined.js",
     "/dist/js/Drawer-Menu.js": "/dist/js/Drawer-Menu.js",
     "/dist/css/app.css": "/dist/css/app.css",
-    "/dist/js/vendor.js": "/dist/js/vendor.js"
+    "/dist/js/vendor.js": "/dist/js/vendor.js",
+    "/dist/js/public-snackbar.js": "/dist/js/public-snackbar.js"
 }
