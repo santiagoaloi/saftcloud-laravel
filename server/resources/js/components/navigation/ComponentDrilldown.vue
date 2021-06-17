@@ -237,7 +237,7 @@ export default {
     setTimeout(() => {
      this.secureComponentDrawer = false;
      this.componentCardGroup = undefined;
-    }, 230);
+    }, 0);
    }
   }
  },
