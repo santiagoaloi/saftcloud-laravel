@@ -1,6 +1,6 @@
 <template>
  <v-container>
-  <div class="d-flex justify-center py-10">
+  <!-- <div class="d-flex justify-center py-10">
    <v-card class="   cursor-pointer" data-aos="zoom-in" data-aos-once="true" data-aos-offset="220" width="100%">
     <v-row align="center" justify="center">
      <v-col cols="12" lg="4">
@@ -20,13 +20,13 @@
      </v-col>
     </v-row>
    </v-card>
-  </div>
+  </div> -->
 
-  <div class="d-flex justify-center py-10">
-   <v-card data-aos="zoom-in" data-aos-once="true" data-aos-offset="220" class="pa-10    cursor-pointer" width="100%">
-    <v-row align="center" justify="center">
+  <div class="py-10">
+   <v-card data-aos="zoom-in" data-aos-once="true" data-aos-offset="220" class="pa-10 cursor-pointer" width="100%">
+    <v-row align="center">
      <v-col cols="12" lg="6">
-      <div class="text-uppercase font-weight-bold body-2 primary--text mb-2 mt-0 mt-xl-10">
+      <div class="text-uppercase body-2 primary--text mb-2 mt-0 mt-xl-10">
        Organize your products and sale workflows
       </div>
       <h2 class="text-h3">
@@ -38,7 +38,10 @@
       </div>
      </v-col>
      <v-col cols="12" lg="6">
-      <v-img contain src="storage/image1.png" max-height="400"></v-img>
+      <video class="float-right" autoplay muted loop>
+       <source src="storage/videos/woman_sd.mp4" type="video/mp4" />
+       /> Your browser does not support the video element. Kindly update it to latest version.
+      </video>
      </v-col>
     </v-row>
    </v-card>
@@ -46,4 +49,9 @@
  </v-container>
 </template>
 
-<style scoped></style>
+<script>
+export default {
+ name: "app",
+ components: {}
+};
+</script>

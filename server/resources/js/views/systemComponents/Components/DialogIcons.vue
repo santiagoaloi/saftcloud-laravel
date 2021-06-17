@@ -10,6 +10,7 @@
        :loading="isLoading"
        hide-no-data
        hide-selected
+       hide-details
        solo
        item-text="name"
        item-value="name"
@@ -41,6 +42,7 @@
        solo
        @click="colorPicker = !colorPicker"
        v-model="selectedComponent.config_settings.icon.color"
+       hide-details
       ></v-text-field>
      </v-col>
     </v-row>

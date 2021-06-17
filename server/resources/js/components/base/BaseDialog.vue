@@ -60,17 +60,11 @@
     </v-btn>
    </template>
   </v-toolbar>
-  <!-- <v-sheet color="primary" height="1" /> -->
-  <v-card
-   :class="noGutters ? '' : 'pa-3'"
-   id="scrollableContent"
-   :color="$vuetify.theme.dark ? '#2f3136' : '#f5f5f5'"
-   style="overflow: auto"
-   flat
-   tile
-   :height="height"
-  >
-   <slot />
+  <v-sheet color="primary" height="2" />
+  <v-card :class="noGutters ? '' : 'pa-2'" :color="$vuetify.theme.dark ? '#2f3136' : '#f5f5f5'" style="overflow: auto" flat tile :height="height">
+   <v-container class="fill-height">
+    <slot />
+   </v-container>
   </v-card>
 
   <slot :parentData="$data" name="footer" />

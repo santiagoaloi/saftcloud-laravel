@@ -4,7 +4,6 @@ import { make } from "vuex-pathify";
 import isEqual from "lodash/isEqual";
 import isEmpty from "lodash/isEmpty";
 import cloneDeep from "lodash/cloneDeep";
-import vuetify from "@/plugins/vuetify";
 
 const initialComponentSettings = () => {
  return {
@@ -12,8 +11,7 @@ const initialComponentSettings = () => {
   note: "",
   table: "",
   title: "",
-  prev_group_id: 0,
-  component_group_id: 0
+  component_group_id: ""
  };
 };
 
@@ -31,7 +29,17 @@ const state = {
  selectedComponentIndex: 0,
  selectedComponentGroups: [],
  groupName: "",
+ isTableLayout: false,
  componentSettings: initialComponentSettings(),
+ tableHeaders: [
+  {
+   text: "Component",
+   align: "start",
+   sortable: true,
+   value: "config.name"
+  }
+ ],
+
  componentStatusTabs: [
   { name: "All", value: "all", icon: "mdi-all-inclusive", color: "" },
   { name: "Starred", value: "starred", icon: "mdi-star", color: "" },
