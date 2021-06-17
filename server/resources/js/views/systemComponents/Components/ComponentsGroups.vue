@@ -75,7 +75,7 @@
         <v-list-item-title> {{ item.name }} </v-list-item-title>
        </v-list-item-content>
        <v-list-item-avatar>
-        <v-btn :ripple="false" @click.stop="renameGroup(item.id, item.name)" depressed fab x-small>
+        <v-btn :ripple="false" @click.stop="renameGroupWarning(item.id, item.name)" depressed fab x-small>
          <v-icon>mdi-pencil-outline</v-icon>
         </v-btn>
        </v-list-item-avatar>
@@ -139,7 +139,7 @@ export default {
  methods: {
   ...call("componentManagement/*"),
 
-  renameGroup(id, name) {
+  renameGroupWarning(id, name) {
    this.$swal({
     title: `<span style="color:${this.isDark ? "lightgrey" : "white"} "> Rename group </span>`,
     showCancelButton: true,
@@ -152,7 +152,7 @@ export default {
     background: `${this.isDark ? "#2f3136" : ""}`
    }).then(result => {
     if (result.value) {
-     alert("renamed");
+     this.renameGroup({ id, name });
     }
    });
   },

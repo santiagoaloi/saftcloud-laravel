@@ -187,6 +187,17 @@ const actions = {
   });
  },
 
+ renameGroup({ commit }, { id, name }) {
+  axios.patch(`api/ComponentGroup/${id}`, { name: name }).then(response => {
+   if (response.data.status) {
+    commit("allGroups", response.data.groups);
+    store.set("snackbar/value", true);
+    store.set("snackbar/text", "Group renamed");
+    store.set("snackbar/color", "grey darken-2");
+   }
+  });
+ },
+
  setComponentStatus({}, component) {
   axios.patch(`api/Component/${component.id}`, { status: component.status });
  },
