@@ -32,15 +32,13 @@ class LookUpListController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request) {
-        //
+        $query = LookUpList::create($request);
+        return response([
+            'components' => $query,
+            'status' => true
+        ], 200);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\GeneralConfig\LookUpList  $lookUpList
-     * @return \Illuminate\Http\Response
-     */
     public function show(LookUpList $id) {
         return response([
             'row'=> LookUpList::findOrFail($id),
@@ -48,34 +46,18 @@ class LookUpListController extends Controller {
         ], 200);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\GeneralConfig\LookUpList  $lookUpList
-     * @return \Illuminate\Http\Response
-     */
     public function edit(LookUpList $lookUpList) {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\GeneralConfig\LookUpList  $lookUpList
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, LookUpList $lookUpList) {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\GeneralConfig\LookUpList  $lookUpList
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(LookUpList $lookUpList) {
-        //
+        $query = Component::findOrFail($id);
+        $query->delete();
+
+        return $this->showAll();
     }
 }
