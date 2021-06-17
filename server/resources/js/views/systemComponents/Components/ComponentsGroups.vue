@@ -75,6 +75,11 @@
         <v-list-item-title> {{ item.name }} </v-list-item-title>
        </v-list-item-content>
        <v-list-item-avatar>
+        <v-btn :ripple="false" @click.stop="renameGroup(item.id, item.name)" depressed fab x-small>
+         <v-icon>mdi-pencil-outline</v-icon>
+        </v-btn>
+       </v-list-item-avatar>
+       <v-list-item-avatar>
         <v-btn :ripple="false" @click.stop="removeGroupWarning(item.id, item.name)" depressed fab x-small>
          <v-icon>mdi-delete-outline</v-icon>
         </v-btn>
@@ -109,16 +114,17 @@ import { store } from "@/store";
 import { sync, call, get } from "vuex-pathify";
 
 export default {
- name: "ComponentGroups",
+ name: "ComponentsGroups",
 
  computed: {
-  ...sync("componentManagement", ["allGroups", "selectedComponentGroups", "dialogGroup", "groupName", "allComponents"]),
   ...sync("theme", ["isDark"]),
+  ...sync("componentManagement", ["allGroups", "selectedComponentGroups", "dialogGroup", "groupName", "allComponents"]),
   ...get("componentManagement", ["selectedAllGroups", "selectedSomeGroups", "hasSelectedComponentGroups", "countComponentsInGroup"]),
 
   formattedGroupTest() {
    if (this.groupName !== null) return `"${this.groupName}"`;
   },
+
   icon() {
    if (this.selectedAllGroups) return "mdi-close-box";
    if (this.selectedSomeGroups) return "mdi-minus-box";
@@ -126,8 +132,30 @@ export default {
   }
  },
 
+ mounted() {
+  this.getGroups();
+ },
+
  methods: {
   ...call("componentManagement/*"),
+
+  renameGroup(id, name) {
+   this.$swal({
+    title: `<span style="color:${this.isDark ? "lightgrey" : "white"} "> Rename group </span>`,
+    showCancelButton: true,
+    confirmButtonText: "Rename",
+    cancelButtonText: "Cancel",
+    confirmButtonColor: "#42b883",
+    input: "text",
+    inputValue: name,
+    backdrop: `${this.isDark ? "rgba(0, 0, 0, 0.6)" : "rgba(108, 122, 137, 0.8)"}`,
+    background: `${this.isDark ? "#2f3136" : ""}`
+   }).then(result => {
+    if (result.value) {
+     alert("renamed");
+    }
+   });
+  },
 
   removeGroupWarning(id, name) {
    this.$swal({
@@ -152,64 +180,3 @@ export default {
  }
 };
 </script>
-
-<style scoped>
-.v-card--link:before {
- background: white;
-}
-
-.gallery-card-container {
- display: grid;
- grid-template-columns: repeat(auto-fill, minmax(264px, 1fr));
- grid-auto-rows: 180px;
- gap: 16px;
-}
-
-.gallery-card-wrapper {
- box-sizing: border-box;
- text-align: left;
-}
-
-.gallery-card-title {
- font-size: 1.1rem;
- font-weight: bold;
- line-height: 1.2;
- color: rgb(23, 43, 77);
- letter-spacing: -0.008em;
- margin: 0px;
- display: -webkit-box;
- -webkit-line-clamp: 2;
- -webkit-box-orient: vertical;
- overflow: hidden;
- text-overflow: ellipsis;
-}
-
-.gallery-card-subtitle-container {
- width: 100%;
- height: 32px;
- display: flex;
- -webkit-box-pack: justify;
- justify-content: space-between;
- -webkit-box-align: center;
- align-items: center;
- color: rgb(107, 119, 140) !important;
-}
-
-.gallery-card-subtitle-wrapper {
- padding: 2px;
- margin-left: -2px;
- margin-right: 4px;
- overflow: hidden;
- text-overflow: ellipsis;
-}
-
-.gallery-card-subtitle {
- margin: 0px;
- -webkit-box-flex: 1;
- flex-grow: 1;
- flex-shrink: 1;
- overflow: hidden;
- text-overflow: ellipsis;
- white-space: nowrap;
-}
-</style>

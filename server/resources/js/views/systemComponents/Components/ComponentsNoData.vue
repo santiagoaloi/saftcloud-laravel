@@ -1,0 +1,31 @@
+<template>
+ <v-container fluid>
+  <v-sheet color="transparent" height="45vh" class="d-flex pa-2 justify-center align-center">
+   <div class="flex-grow-1 align-center justify-center d-flex flex-column">
+    <v-img :aspect-ratio="1" width="250" contain src="storage/systemImages/noContent.svg"></v-img>
+    No components found. Choose a different filter or
+    <span :class="isDark ? 'secundary--text' : 'primary--text'" @click="dialogComponent = true" class=" cursor-pointer"
+     ><b> create a new component</b></span
+    >
+   </div>
+  </v-sheet>
+ </v-container>
+</template>
+
+<script>
+import { store } from "@/store";
+import { sync } from "vuex-pathify";
+
+export default {
+ name: "ComponentNoData",
+
+ data() {
+  return {};
+ },
+
+ computed: {
+  ...sync("theme", ["isDark"]),
+  ...sync("componentManagement", ["dialogComponent"])
+ }
+};
+</script>

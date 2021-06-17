@@ -1,9 +1,9 @@
 <template>
  <v-app>
+  <auth-bar />
   <auth-drawer />
   <auth-cdrawer />
   <!-- <auth-element-drawer v-if="$route.name == 'Formbuilder'" /> -->
-  <auth-bar />
   <auth-view />
   <snackbar />
  </v-app>

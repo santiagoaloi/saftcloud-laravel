@@ -1,30 +1,5 @@
 <template>
  <div v-if="selectedComponent">
-  <!-- <v-card flat class="mx-auto" max-width="344"> -->
-  <v-app-bar dense class="px-2" elevation="0">
-   <v-btn :disabled="previousComponentDisabled" @click="previousComponent()" class="mr-2" fab text x-small>
-    <v-icon>mdi-chevron-left</v-icon>
-   </v-btn>
-   <v-btn :disabled="nextComponentDisabled" @click="nextComponent()" fab text x-small>
-    <v-icon>mdi-chevron-right</v-icon>
-   </v-btn>
-   <v-spacer></v-spacer>
-
-   <v-select solo hide-details flat dense :items="items" :menu-props="{ top: true, offsetY: true }" label="Choose component"></v-select>
-
-   <v-btn
-    @click="
-     secureComponentDrawer = false;
-     componentCardGroup = undefined;
-    "
-    fab
-    text
-    x-small
-   >
-    <v-icon>mdi-close</v-icon>
-   </v-btn>
-  </v-app-bar>
-
   <v-expand-transition>
    <v-sheet :color="$vuetify.theme.dark ? '#2C2F33' : 'grey lighten-4'" v-if="hasUnsavedChanges(selectedComponent)" class="px-2">
     <v-alert class="mt-3" elevation="2" coloredBorder color="pink" border="right" dense>

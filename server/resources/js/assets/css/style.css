@@ -97,37 +97,10 @@ input::-webkit-inner-spin-button {
  margin: 0;
 }
 
-.shadows {
+.text-shadow {
  text-shadow: rgba(61, 61, 61, 0.1) 1px 1px, rgba(61, 61, 61, 0.3) 1px 1px;
 }
 
-.articleDropdownElipsis {
- width: 350px;
- overflow: hidden;
- white-space: nowrap;
- text-overflow: ellipsis;
-}
-
-.editingButtonElipsis {
- width: 270px;
- overflow: hidden;
- white-space: nowrap;
- text-overflow: ellipsis;
-}
-
-.dot {
- margin-left: -1px;
- margin-top: 7px;
- display: inline-block;
- height: 16px;
- width: 16px;
- background-color: rgba(255, 255, 255, 0.7);
- border-radius: 50%;
-}
-.legend-container .dot {
- margin-left: 7px;
- margin-top: 7px;
-}
 .map-price-container {
  overflow: visible !important;
 }
@@ -146,11 +119,6 @@ input::-webkit-inner-spin-button {
  transform: scale(0.6);
 }
 
-.theme--light.v-data-table {
- background-color: rgb(255, 255, 255, 0.9);
- color: rgba(0, 0, 0, 0.87);
-}
-
 .v-tab {
  font-size: 0.8rem !important;
  font-weight: 400 !important;
@@ -159,11 +127,11 @@ input::-webkit-inner-spin-button {
  justify-content: start !important;
 }
 
-.theme--light.v-tabs .v-tab--active:hover::before,
-.theme--light.v-tabs .v-tab--active::before {
+.theme--dark.v-tabs .v-tab--active:hover::before,
+.theme--dark.v-tabs .v-tab--active::before {
  opacity: 0 !important;
 }
 
-.theme--light.v-tabs .v-tab:hover::before {
- opacity: 0 !important;
+.v-tab:before {
+ background-color: unset !important;
 }

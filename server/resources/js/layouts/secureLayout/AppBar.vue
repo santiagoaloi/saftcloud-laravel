@@ -2,7 +2,6 @@
     <v-app-bar :flat="isDark" clipped-right dense app >
       <v-container fluid class="py-0 px-0 px-sm-2 fill-height">
       <v-app-bar-nav-icon  class="ml-0" text xSmall fab @click="secureDefaultDrawer = !secureDefaultDrawer" />
-      <h3 class="ml-3">SaftCloud</h3>
       <div class="flex-grow-1" />
 
       <v-btn class="mr-2 " text x-small fab to="/">

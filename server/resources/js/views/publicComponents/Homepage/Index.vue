@@ -3,16 +3,16 @@
   <v-img height="101vh" style="margin-top:-80px" gradient="to top right, rgba(0,0,0,.1), rgba(0,0,0,.2)" src="storage/11.png" :transition="false">
    <v-container class="fill-height text-left pa-10" :style="$vuetify.breakpoint.smAndDown ? 'margin-top:80px' : ''">
     <v-row class="d-flex flex-column">
-     <div class="font-weight-black text-h4 text-sm-h3 text-md-h2 text-lg-h1">
+     <div class="text-shadow font-weight-black text-h4 text-sm-h3 text-md-h2 text-lg-h1">
       <vue-typer :pre-type-delay="1000" :type-delay="90" :repeat="0" caret-animation="smooth" text="SaftCloud POS"></vue-typer>
      </div>
 
      <v-card flat color="transparent" width="600">
-      <h1 class=" white--text ">
+      <h1 class=" text-shadow  white--text ">
        Upgrade your business to the next-generation Point of Sales in the cloud.
       </h1>
 
-      <h3 class=" white--text mt-10" style="font-weight:100">
+      <h3 class=" text-shadow white--text mt-10" style="font-weight:100">
        Upgrade your business to the next-generation Point of Sales in the cloud. Upgrade your business to the next-generation Point of Sales in the
        cloud. Upgrade your business to the next-generation Point of Sales in the cloud. Upgrade your business to the next-generation Point of Sales in
        the cloud.

@@ -18,12 +18,8 @@
      @blur="expand = false"
     />
 
-    <v-btn class="mx-2 " @click.stop="parentData.dialogSystemOperations = true"> <v-icon class="mr-2" small> mdi-filter </v-icon>Filter </v-btn>
-
-    <v-btn class="mx-2 " @click.stop="parentData.dialogSystemOperations = true">
-     <v-icon class="mr-2" small> mdi-arrow-top-right </v-icon>Export
-    </v-btn>
-
+    <v-btn class="mx-2 "> <v-icon class="mr-2" small> mdi-filter </v-icon>Filter </v-btn>
+    <v-btn class="mx-2 "> <v-icon class="mr-2" small> mdi-arrow-top-right </v-icon>Export </v-btn>
     <v-btn class="ml-2" color="primary" @click.stop="dialogComponent = true"> <v-icon class="mr-2" small> mdi-plus </v-icon>Create component </v-btn>
    </div>
   </div>
@@ -33,15 +29,10 @@
 </template>
 
 <script>
-import { sync, call } from "vuex-pathify";
+import { sync } from "vuex-pathify";
 
 export default {
  name: "ComponentsAppbar",
- inheritAttrs: true,
- props: {
-  value: Boolean,
-  parentData: Object
- },
 
  data() {
   return {
