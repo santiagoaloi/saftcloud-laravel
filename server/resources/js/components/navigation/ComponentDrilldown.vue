@@ -36,7 +36,7 @@
 
   <v-card-text>
    <div class="text--primary">
-    <small>Description </small>
+    <small>Description</small>
 
     <v-textarea
      :color="$vuetify.theme.dark ? 'secondary' : 'grey'"
@@ -73,7 +73,7 @@
   <div class="text-center mb-3">
    <v-tooltip transition="false" color="black" bottom>
     <template v-slot:activator="{ on, attrs }">
-     <v-btn v-on="on" depressed dark large small :color="$vuetify.theme.dark ? '' : 'white'">
+     <v-btn @click="componentEditSheet = !componentEditSheet" v-on="on" depressed dark large small :color="$vuetify.theme.dark ? '' : 'white'">
       <v-icon color="orange" dark>
        mdi-pencil-outline
       </v-icon>
@@ -211,7 +211,7 @@ export default {
  computed: {
   ...sync("theme", ["isDark"]),
   ...sync("drawers", ["secureComponentDrawer"]),
-  ...sync("componentManagement", ["componentCardGroup", "allComponents", "allGroups", "selectedComponentIndex", "dialogIcons"]),
+  ...sync("componentManagement", ["componentCardGroup", "allComponents", "allGroups", "selectedComponentIndex", "dialogIcons", "componentEditSheet"]),
   ...get("componentManagement", [
    "hasUnsavedChanges",
    "hasSelectedComponent",

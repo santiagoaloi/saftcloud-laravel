@@ -27,6 +27,7 @@
   <dialog-icons />
   <dialog-group v-if="dialogGroup" />
   <dialog-component v-if="dialogComponent" />
+  <component-edit-sheet />
  </div>
 </template>
 
@@ -45,7 +46,8 @@ export default {
   DialogComponent: () => import("./DialogComponent"),
   ComponentsNoData: () => import("./ComponentsNoData"),
   ComponentsAppbar: () => import("./ComponentsAppbar"),
-  ComponentsGroups: () => import("./ComponentsGroups")
+  ComponentsGroups: () => import("./ComponentsGroups"),
+  ComponentEditSheet: () => import("./ComponentsEdit/ComponentsEditSheet")
  },
 
  data() {

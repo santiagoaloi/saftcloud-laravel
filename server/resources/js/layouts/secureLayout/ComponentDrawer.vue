@@ -2,13 +2,12 @@
  <v-navigation-drawer
   mobileBreakpoint="0"
   clipped
-  :color="$vuetify.theme.dark ? '#2C2F33' : 'grey lighten-5'"
+  :color="$vuetify.theme.dark ? '#2C2F33' : '#f6f8fa'"
   width="350"
   v-model="secureComponentDrawer"
   hideOverlay
   right
   app
-  class="elevation-3"
   v-if="$route.name == 'components'"
  >
   <!-- Navigation menu fixed  -->

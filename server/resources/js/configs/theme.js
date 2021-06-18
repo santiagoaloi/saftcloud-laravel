@@ -19,7 +19,7 @@ export default {
 
  // dark theme colors
  dark: {
-  background: "#052090c",
+  background: "#ffffff",
   surface: "#111b227",
   primary: "#24262a",
   secondary: "#829099",

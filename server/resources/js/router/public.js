@@ -179,23 +179,20 @@ export default [
    alias: "Signup"
   },
   component: () => import(/* webpackChunkName: 'Signup' */ "@/views/publicComponents/Signup/Signup.vue")
+ },
+ {
+  path: "/verifyAccount",
+  props: true,
+  name: "verifyAccount",
+  alias: "VerifyAccount",
+  meta: {
+   layout: "public_layout",
+   editable: false,
+   spinner: true,
+   alias: "VerifyAccount"
+  },
+  component: () => import(/* webpackChunkName: 'Signup' */ "@/views/publicComponents/Signup/VerifyAccount.vue")
  }
- // {
- //   path: "/verifyAccount",
- //   props: true,
- //   name: "verifyAccount",
- //   alias: "VerifyAccount",
- //   meta: {
- //     layout: "public_layout",
- //     editable: false,
- //     spinner: true,
- //     alias: "VerifyAccount",
- //   },
- //   component: () =>
- //     import(
- //       /* webpackChunkName: 'Signup' */ "@/views/publicComponents/Signup/VerifyAccount.vue"
- //     ),
- // },
 
  // {
  //   path: "/profiles",

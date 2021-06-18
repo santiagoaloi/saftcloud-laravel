@@ -22,9 +22,10 @@ const state = {
  tableColumns: [],
  allComponents: [],
  dialogGroup: false,
- dialogComponent: false,
  dialogIcons: false,
  activeStatusTab: 0,
+ dialogComponent: false,
+ componentEditSheet: false,
  componentCardGroup: undefined,
  selectedComponentIndex: 0,
  selectedComponentGroups: [],
@@ -140,7 +141,6 @@ const getters = {
 
 const actions = {
  ...make.actions(state),
-
  getDbTables({ commit }) {
   axios.get("api/showAllTables").then(response => {
    commit("dbTables", response.data);
@@ -199,7 +199,7 @@ const actions = {
  },
 
  setComponentStatus({}, component) {
-  axios.patch(`api/Component/${component.id}`, { status: component.status });
+  axios.patch(`api/Component/${component.id}`, { sztatus: component.status });
  },
 
  saveComponent({ state }, component) {
@@ -216,7 +216,7 @@ const actions = {
 
  rollbackChanges({ state }, component) {
   const { origin } = component;
-  const index = state.allComponents.findIndex(c => c.id == component.id);
+  const index = state.allComponents.findIndex(c => c.id === component.id);
   store.set(`componentManagement/allComponents@${index}`, { ...origin, origin: cloneDeep(origin) });
  },
 
