@@ -10,31 +10,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\File;
 
 class ComponentGroupController extends Controller {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index() {
-        //
-    }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create() {
-        
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response $response
-     */
     public function store(Request $request) {
         $postdata = json_decode($request->getContent(), true);
         ComponentGroup::create($postdata);
@@ -47,56 +23,54 @@ class ComponentGroupController extends Controller {
         ], 200);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id) {
-        $query = ComponentGroup::findOrFail($id);
+    public function show(Request $id, $local = false) {
+        $result = ComponentGroup::findOrFail($id);
 
-        return response([
-            'group' =>  $query,
-            'status' => true
-        ], 200);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function showAll($local = false) {
         if ($local){
-            return ComponentGroup::get();
+            return $result;
         } else {
-            $getGroups = ComponentGroup::all();
-
             return response([
-                'groups' =>  $getGroups,
-                'status' => true,
+                'group' => $result,
+                'status' => true
             ], 200);
         }
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    public function showAll($local = false) {
+        if ($local){
+            return ComponentGroup::get();
+        } else {
+            return response([
+                'groups' =>  ComponentGroup::all(),
+                'status' => true,
+            ], 200);
+        }
+    }
+    
+    //  Para mostrar los elementos eliminados
+    public function getTrashed() {
+        $result = ComponentGroup::onlyTrashed()->get();
+
+        return response([
+            'rows' => $result,
+            'status'=> true
+        ], 200);
+    }
+
+    //  Para mostrar un elemento eliminado
+    public function recoveryTrashed($id) {
+        $result = ComponentGroup::onlyTrashed()->findOrFail($id)->recovery();
+
+        return response([
+            'row' => $result,
+            'status'=> true
+        ], 200);
+    }
+
     public function edit($id) {
         
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id) {
         $query = ComponentGroup::findOrFail($id);
 
@@ -104,25 +78,32 @@ class ComponentGroupController extends Controller {
 
         $query->fill($input)->save();
 
-        $groups = $this->showAll(true);
+        $result = $this->showAll(true);
 
         return response([
-            'groups'    => $groups,
+            'groups'    => $result,
             'status'    => true
         ], 200);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    public function updateAll(Request $request) {
+        foreach($request as $item){
+            $this->update($item, $item->id);
+        };
+
+        $result = $this->showAll(true);
+
+        return response([
+            'rows'=> $result,
+            'status'=> true
+        ], 200);
+    }
+
     public function destroy($id) {
         $query = ComponentGroup::find($id);
         $query->delete();
 
-        return $this->showAll();
+        return $this->showAll(true);
     }
 
 }

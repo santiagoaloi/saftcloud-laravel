@@ -7,72 +7,95 @@ use App\Models\Private\Role;
 use Illuminate\Http\Request;
 
 class RoleController extends Controller {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index() {
-        //
-    }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create() {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request) {
-        //
+        $query = Role::create($request);
+        return response([
+            'row' => $query,
+            'status' => true
+        ], 200);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id) {
-        //
+    public function show(Request $id, $local = false) {
+        $result = Role::findOrFail($id);
+
+        if ($local){
+            return $result;
+        } else {
+            return response([
+                'row' => $result,
+                'status' => true
+            ], 200);
+        }
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    public function showAll($local = false) {
+        if ($local){
+            return Role::get();
+        } else {
+            return response([
+                'rows' => Role::all(),
+                'status'=> true
+            ], 200);
+        }
+    }
+
+    //  Para mostrar los elementos eliminados
+    public function getTrashed() {
+        $result = Role::onlyTrashed()->get();
+
+        return response([
+            'rows' => $result,
+            'status'=> true
+        ], 200);
+    }
+
+    //  Para mostrar un elemento eliminado
+    public function recoveryTrashed($id) {
+        $result = Role::onlyTrashed()->findOrFail($id)->recovery();
+
+        return response([
+            'row' => $result,
+            'status'=> true
+        ], 200);
+    }
+
     public function edit($id) {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id) {
-        //
+        $query = Role::findOrFail($id);
+
+        $input = $request->all();
+
+        $query->fill($input)->save();
+
+        $result = $this->show($id, true);
+
+        return response([
+            'row'=> $result,
+            'status'=> true
+        ], 200);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    public function updateAll(Request $request) {
+        foreach($request as $item){
+            $this->update($item, $item->id);
+        };
+
+        $result = $this->showAll(true);
+
+        return response([
+            'rows'=> $result,
+            'status'=> true
+        ], 200);
+    }
+
     public function destroy($id) {
-        //
+        $query = Role::findOrFail($id);
+        $query->delete();
+
+        return $this->showAll(true);
     }
 }

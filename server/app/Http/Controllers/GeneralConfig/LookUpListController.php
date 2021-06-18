@@ -7,55 +7,89 @@ use App\Models\GeneralConfig\LookUpList;
 use Illuminate\Http\Request;
 
 class LookUpListController extends Controller {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index() {
-        //
-    }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create() {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request) {
         $query = LookUpList::create($request);
         return response([
-            'components' => $query,
+            'row' => $query,
             'status' => true
         ], 200);
     }
 
-    public function show(LookUpList $id) {
+    public function show(Request $id, $local = false) {
+        $result = LookUpList::findOrFail($id);
+
+        if ($local){
+            return $result;
+        } else {
+            return response([
+                'row' => $result,
+                'status' => true
+            ], 200);
+        }
+    }
+
+    public function showAll($local = false) {
         return response([
-            'row'=> LookUpList::findOrFail($id),
+            'rows' => LookUpList::all(),
             'status'    => true
         ], 200);
     }
 
-    public function edit(LookUpList $lookUpList) {
+    //  Para mostrar los elementos eliminados
+    public function getTrashed() {
+        $result = LookUpList::onlyTrashed()->get();
+
+        return response([
+            'rows' => $result,
+            'status'    => true
+        ], 200);
+    }
+
+    //  Para mostrar un elemento eliminado
+    public function recoveryTrashed($id) {
+        $result = LookUpList::onlyTrashed()->findOrFail($id)->recovery();
+
+        return response([
+            'row' => $result,
+            'status'    => true
+        ], 200);
+    }
+
+    public function edit($id) {
         //
     }
 
-    public function update(Request $request, LookUpList $lookUpList) {
-        //
+    public function update(Request $request, $id) {
+        $query = LookUpList::findOrFail($id);
+
+        $input = $request->all();
+
+        $query->fill($input)->save();
+
+        $result = $this->show($id, true);
+
+        return response([
+            'row'=> $result,
+            'status'=> true
+        ], 200);
     }
 
-    public function destroy(LookUpList $lookUpList) {
-        $query = Component::findOrFail($id);
+    public function updateAll(Request $request) {
+        foreach($request as $item){
+            $this->update($item, $item->id);
+        };
+
+        $result = $this->showAll(true);
+
+        return response([
+            'rows'=> $result,
+            'status'    => true
+        ], 200);
+    }
+
+    public function destroy($id) {
+        $query = LookUpList::findOrFail($id);
         $query->delete();
 
         return $this->showAll();

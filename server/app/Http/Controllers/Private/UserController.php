@@ -7,79 +7,95 @@ use App\Models\User;
 use Illuminate\Http\Request;
 
 class UserController extends Controller {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
+
+    public function store(Request $request) {
+        $query = User::create($request);
+        return response([
+            'row' => $query,
+            'status' => true
+        ], 200);
+    }
+
+    public function show(Request $id, $local = false) {
+        $result = User::find($id);
+
+        if ($local){
+            return $result;
+        } else {
+            return response([
+                'row' => $result,
+                'status' => true
+            ], 200);
+        }
+    }
+
+    public function showAll($local = false) {
+        if ($local){
+            return User::get();
+        } else {
+            return response([
+                'rows' => User::all(),
+                'status'=> true
+            ], 200);
+        }
+    }
+
+    //  Para mostrar los elementos eliminados
+    public function getTrashed() {
+        $result = User::onlyTrashed()->get();
+
+        return response([
+            'rows' => $result,
+            'status'=> true
+        ], 200);
+    }
+
+    //  Para mostrar un elemento eliminado
+    public function recoveryTrashed($id) {
+        $result = User::onlyTrashed()->findOrFail($id)->recovery();
+
+        return response([
+            'row' => $result,
+            'status'=> true
+        ], 200);
+    }
+
+    public function edit($id) {
         //
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+    public function update(Request $request, $id) {
+        $query = User::findOrFail($id);
+
+        $input = $request->all();
+
+        $query->fill($input)->save();
+
+        $result = $this->show($id, true);
+
+        return response([
+            'row'=> $result,
+            'status'=> true
+        ], 200);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+    public function updateAll(Request $request) {
+        foreach($request as $item){
+            $this->update($item, $item->id);
+        };
+
+        $result = $this->showAll(true);
+
+        return response([
+            'rows'=> $result,
+            'status'=> true
+        ], 200);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+    public function destroy($id) {
+        $query = User::findOrFail($id);
+        $query->delete();
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        return $this->showAll(true);
     }
 }
