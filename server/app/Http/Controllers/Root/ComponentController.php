@@ -14,30 +14,11 @@ use Jawira\CaseConverter\Convert;
 use Illuminate\Support\Facades\Storage;
 
 class ComponentController extends Controller {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-    */
-    public function index() {
-        //
-    }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-    */
     public function create() {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-    */
     public function store(Request $request) {
         $json_data['table'] = $request['table'];
 
@@ -96,31 +77,20 @@ class ComponentController extends Controller {
         ], 200);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-    */
     public function show($id, $local = false) {
         $query = Component::findOrFail($id);
-        $component = $this->parseComponent($query);
+        $result = $this->parseComponent($query);
 
         if ($local){
-            return $component;
+            return $result;
         } else {
             return response([
-                'component' => $component,
+                'component' => $result,
                 'status' => true
             ], 200);
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @return \Illuminate\Http\Response
-    */
     public function showAll($local = false) {
         $components = Component::all();
         $arrayComponent = [];
@@ -144,55 +114,35 @@ class ComponentController extends Controller {
         }
     }
 
-    /***  Para mostrar los elementos eliminados
-     * 
-     * 
-    */
+    //  Para mostrar los elementos eliminados
     public function getTrashed() {
-        $components = Component::onlyTrashed()->get();
+        $result = Component::onlyTrashed()->get();
 
         return response([
-            'components' => $components,
+            'components' => $result,
             'status'    => true
         ], 200);
     }
 
-        /***  Para mostrar los elementos eliminados
-     * 
-     * 
-    */
+    //  Para mostrar un elemento eliminado
     public function recoveryTrashed($id) {
-        $components = Component::onlyTrashed()->findOrFail($id)->recovery();
+        $result = Component::onlyTrashed()->findOrFail($id)->recovery();
 
         return response([
-            'components' => $components,
+            'component' => $result,
             'status'    => true
         ], 200);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-    */
     public function edit($id) {
-
-        $components = $this->showAll(true);
+        $result = $this->showAll(true);
 
         return response([
-            'components'=> $components,
+            'components'=> $result,
             'status'    => true
         ], 200);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-    */
     public function update(Request $request, $id) {
         $query = Component::findOrFail($id);
 
@@ -200,31 +150,23 @@ class ComponentController extends Controller {
 
         $query->fill($input)->save();
 
-        $component = $this->show($id, true);
+        $result = $this->show($id, true);
 
         return response([
-            'component'=> $component,
+            'component'=> $result,
             'status'    => true
         ], 200);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-    */
     public function updateAll(Request $request) {
-
         foreach($request as $item){
             $this->update($item, $item->id);
         };
 
-        $components = $this->showAll(true);
+        $result = $this->showAll(true);
 
         return response([
-            'components'=> $components,
+            'components'=> $result,
             'status'    => true
         ], 200);
     }

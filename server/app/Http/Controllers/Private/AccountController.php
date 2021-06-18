@@ -7,89 +7,95 @@ use App\Models\Private\Account;
 use Illuminate\Http\Request;
 
 class AccountController extends Controller {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index() {
-        //
-    }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create() {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request) {
-        //
+        $query = Account::create($request);
+        return response([
+            'row' => $query,
+            'status' => true
+        ], 200);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id) {
-        $query = Account::find($id);
+    public function show(Request $id, $local = false) {
+        $result = Account::find($id);
 
-        header('Content-Type: application/json');
-        echo json_encode(['status' => true, 'rows' => $query]);
-        exit();
+        if ($local){
+            return $result;
+        } else {
+            return response([
+                'row' => $result,
+                'status' => true
+            ], 200);
+        }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function showAll() {
-        $query = Account::all();
-
-        header('Content-Type: application/json');
-        echo json_encode(['status' => true, 'rows' => $query]);
-        exit();
+    public function showAll($local = false) {
+        if ($local){
+            return Account::get();
+        } else {
+            return response([
+                'rows' => Account::all(),
+                'status'=> true
+            ], 200);
+        }
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
+    //  Para mostrar los elementos eliminados
+    public function getTrashed() {
+        $result = Account::onlyTrashed()->get();
+
+        return response([
+            'rows' => $result,
+            'status'=> true
+        ], 200);
+    }
+
+    //  Para mostrar un elemento eliminado
+    public function recoveryTrashed($id) {
+        $result = Account::onlyTrashed()->findOrFail($id)->recovery();
+
+        return response([
+            'row' => $result,
+            'status'=> true
+        ], 200);
+    }
+
     public function edit($id) {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id) {
-        //
+        $query = Account::findOrFail($id);
+
+        $input = $request->all();
+
+        $query->fill($input)->save();
+
+        $result = $this->show($id, true);
+
+        return response([
+            'row'=> $result,
+            'status'=> true
+        ], 200);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    public function updateAll(Request $request) {
+        foreach($request as $item){
+            $this->update($item, $item->id);
+        };
+
+        $result = $this->showAll(true);
+
+        return response([
+            'rows'=> $result,
+            'status'=> true
+        ], 200);
+    }
+
     public function destroy($id) {
-        //
+        $query = Account::findOrFail($id);
+        $query->delete();
+
+        return $this->showAll(true);
     }
 }

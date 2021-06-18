@@ -7,90 +7,91 @@ use App\Models\GeneralConfig\LookUpListValue;
 use Illuminate\Http\Request;
 
 class LookUpListValueController extends Controller {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index() {
-        //
-    }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create() {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request) {
+        $query = LookUpListValue::create($request);
+        return response([
+            'row' => $query,
+            'status' => true
+        ], 200);
+    }
+
+    public function show(Request $id, $local = false) {
+        $result = LookUpListValue::findOrFail($id);
+
+        if ($local){
+            return $result;
+        } else {
+            return response([
+                'row' => $result,
+                'status' => true
+            ], 200);
+        }
+    }
+
+    public function showAll($local = false) {
+        return response([
+            'rows' => LookUpListValue::all(),
+            'status'    => true
+        ], 200);
+    }
+
+    //  Para mostrar los elementos eliminados
+    public function getTrashed() {
+        $result = LookUpListValue::onlyTrashed()->get();
+
+        return response([
+            'rows' => $result,
+            'status'    => true
+        ], 200);
+    }
+
+    //  Para mostrar un elemento eliminado
+    public function recoveryTrashed($id) {
+        $result = LookUpListValue::onlyTrashed()->findOrFail($id)->recovery();
+
+        return response([
+            'row' => $result,
+            'status'    => true
+        ], 200);
+    }
+
+    public function edit($id) {
         //
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\GeneralConfig\LookUpListValue  $lookUpListValue
-     * @return \Illuminate\Http\Response
-     */
-    public function show($lookUpListValue) {
-        $query = LookUpListValue::get();
+    public function update(Request $request, $id) {
+        $query = LookUpListValue::findOrFail($id);
 
-        header('Content-Type: application/json');
-        echo json_encode(['status' => true, 'rows' => $query]);
-        exit();
+        $input = $request->all();
+
+        $query->fill($input)->save();
+
+        $result = $this->show($id, true);
+
+        return response([
+            'row'=> $result,
+            'status'=> true
+        ], 200);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\GeneralConfig\LookUpListValue  $lookUpListValue
-     * @return \Illuminate\Http\Response
-     */
-    public function showAll() {
-        $query = LookUpListValue::get();
+    public function updateAll(Request $request) {
+        foreach($request as $item){
+            $this->update($item, $item->id);
+        };
 
-        header('Content-Type: application/json');
-        echo json_encode(['status' => true, 'rows' => $query]);
-        exit();
+        $result = $this->showAll(true);
+
+        return response([
+            'rows'=> $result,
+            'status'    => true
+        ], 200);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\GeneralConfig\LookUpListValue  $lookUpListValue
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(LookUpListValue $lookUpListValue) {
-        //
-    }
+    public function destroy($id) {
+        $query = LookUpListValue::findOrFail($id);
+        $query->delete();
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\GeneralConfig\LookUpListValue  $lookUpListValue
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, LookUpListValue $lookUpListValue) {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\GeneralConfig\LookUpListValue  $lookUpListValue
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(LookUpListValue $lookUpListValue) {
-        //
+        return $this->showAll();
     }
 }
