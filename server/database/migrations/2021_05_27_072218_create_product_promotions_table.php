@@ -13,6 +13,7 @@ class CreateProductPromotionsTable extends Migration {
     public function up() {
         Schema::create('product_promotions', function (Blueprint $table) {
             $table->id();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

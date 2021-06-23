@@ -11,8 +11,8 @@ class PaymentMethodController extends Controller {
     public function store(Request $request) {
         $query = PaymentMethod::create($request);
         return response([
-            'row' => $query,
-            'status' => true
+            'row'=> $query,
+            'status'=> true
         ], 200);
     }
 
@@ -23,17 +23,21 @@ class PaymentMethodController extends Controller {
             return $result;
         } else {
             return response([
-                'row' => $result,
-                'status' => true
+                'row'=> $result,
+                'status'=> true
             ], 200);
         }
     }
 
     public function showAll($local = false) {
-        return response([
-            'rows' => PaymentMethod::all(),
-            'status'    => true
-        ], 200);
+        if ($local){
+            return PaymentMethod::get();
+        } else {
+            return response([
+                'rows'=> PaymentMethod::get(),
+                'status'=> true
+            ], 200);
+        }
     }
 
     //  Para mostrar los elementos eliminados
@@ -41,8 +45,8 @@ class PaymentMethodController extends Controller {
         $result = PaymentMethod::onlyTrashed()->get();
 
         return response([
-            'rows' => $result,
-            'status'    => true
+            'rows'=> $result,
+            'status'=> true
         ], 200);
     }
 
@@ -51,8 +55,8 @@ class PaymentMethodController extends Controller {
         $result = PaymentMethod::onlyTrashed()->findOrFail($id)->recovery();
 
         return response([
-            'row' => $result,
-            'status'    => true
+            'row'=> $result,
+            'status'=> true
         ], 200);
     }
 
@@ -84,7 +88,7 @@ class PaymentMethodController extends Controller {
 
         return response([
             'rows'=> $result,
-            'status'    => true
+            'status'=> true
         ], 200);
     }
 
@@ -92,6 +96,6 @@ class PaymentMethodController extends Controller {
         $query = PaymentMethod::findOrFail($id);
         $query->delete();
 
-        return $this->showAll();
+        return $this->showAll(true);
     }
 }

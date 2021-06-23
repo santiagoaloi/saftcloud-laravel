@@ -15,8 +15,9 @@ class CreatePhonesTable extends Migration {
             $table->id();
             $table->foreignId('entity_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
             $table->string('description')->nullable();
-            $table->foreignId('country_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE')->nullable();
+            $table->foreignId('country_id')->nullable()->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
             $table->integer('phone_number')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

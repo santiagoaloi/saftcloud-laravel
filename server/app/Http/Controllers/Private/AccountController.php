@@ -11,20 +11,20 @@ class AccountController extends Controller {
     public function store(Request $request) {
         $query = Account::create($request);
         return response([
-            'row' => $query,
-            'status' => true
+            'row'=> $query,
+            'status'=> true
         ], 200);
     }
 
     public function show(Request $id, $local = false) {
-        $result = Account::find($id);
+        $result = Account::findOrFail($id);
 
         if ($local){
             return $result;
         } else {
             return response([
-                'row' => $result,
-                'status' => true
+                'row'=> $result,
+                'status'=> true
             ], 200);
         }
     }
@@ -34,7 +34,7 @@ class AccountController extends Controller {
             return Account::get();
         } else {
             return response([
-                'rows' => Account::all(),
+                'rows'=> Account::get(),
                 'status'=> true
             ], 200);
         }
@@ -45,7 +45,7 @@ class AccountController extends Controller {
         $result = Account::onlyTrashed()->get();
 
         return response([
-            'rows' => $result,
+            'rows'=> $result,
             'status'=> true
         ], 200);
     }
@@ -55,7 +55,7 @@ class AccountController extends Controller {
         $result = Account::onlyTrashed()->findOrFail($id)->recovery();
 
         return response([
-            'row' => $result,
+            'row'=> $result,
             'status'=> true
         ], 200);
     }

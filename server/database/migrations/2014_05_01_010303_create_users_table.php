@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration {
             $table->smallInteger('second_factor')->nullable();
             $table->string('avatar')->nullable();
             $table->rememberToken();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

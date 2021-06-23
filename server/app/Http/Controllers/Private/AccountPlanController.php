@@ -1,40 +1,40 @@
 <?php
 
-namespace App\Http\Controllers\Public;
+namespace App\Http\Controllers\Private;
 
 use App\Http\Controllers\Controller;
-use App\Models\Public\Country;
+use App\Models\Private\AccountPlan;
 use Illuminate\Http\Request;
 
-class CountryController extends Controller {
-
+class AccountPlanController extends Controller {
+    
     public function store(Request $request) {
-        $query = Country::create($request);
+        $query = AccountPlan::create($request);
         return response([
-            'row'=> $query,
-            'status'=> true
+            'row' => $query,
+            'status' => true
         ], 200);
     }
 
     public function show(Request $id, $local = false) {
-        $result = Country::find($id);
+        $result = AccountPlan::find($id);
 
         if ($local){
             return $result;
         } else {
             return response([
-                'row'=> $result,
-                'status'=> true
+                'row' => $result,
+                'status' => true
             ], 200);
         }
     }
 
     public function showAll($local = false) {
         if ($local){
-            return Country::get();
+            return AccountPlan::get();
         } else {
             return response([
-                'rows'=> Country::get(),
+                'rows' => AccountPlan::get(),
                 'status'=> true
             ], 200);
         }
@@ -42,20 +42,20 @@ class CountryController extends Controller {
 
     //  Para mostrar los elementos eliminados
     public function getTrashed() {
-        $result = Country::onlyTrashed()->get();
+        $result = AccountPlan::onlyTrashed()->get();
 
         return response([
-            'rows'=> $result,
+            'rows' => $result,
             'status'=> true
         ], 200);
     }
 
     //  Para mostrar un elemento eliminado
     public function recoveryTrashed($id) {
-        $result = Country::onlyTrashed()->findOrFail($id)->recovery();
+        $result = AccountPlan::onlyTrashed()->findOrFail($id)->recovery();
 
         return response([
-            'row'=> $result,
+            'row' => $result,
             'status'=> true
         ], 200);
     }
@@ -65,7 +65,7 @@ class CountryController extends Controller {
     }
 
     public function update(Request $request, $id) {
-        $query = Country::findOrFail($id);
+        $query = AccountPlan::findOrFail($id);
 
         $input = $request->all();
 
@@ -93,7 +93,7 @@ class CountryController extends Controller {
     }
 
     public function destroy($id) {
-        $query = Country::findOrFail($id);
+        $query = AccountPlan::findOrFail($id);
         $query->delete();
 
         return $this->showAll(true);

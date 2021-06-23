@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\File;
 
 use App\Models\Root\ComponentDefault;
 use Jawira\CaseConverter\Convert;
-use Illuminate\Support\Facades\Storage;
 
 class ComponentController extends Controller {
 
@@ -265,8 +264,9 @@ class ComponentController extends Controller {
 
     public function formFieldStructure($field) {
         $model = json_decode(ComponentDefault::pluck('config_structure')->last());
-        
+
         $model->form_fields->field = $field;
+        $model->form_fields->label = $field;
 
         return $model->form_fields;
     }

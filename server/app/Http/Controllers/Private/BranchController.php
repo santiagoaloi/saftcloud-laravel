@@ -12,7 +12,7 @@ class BranchController extends Controller {
     public function store(Request $request) {
         $query = Branch::create($request);
         return response([
-            'row' => $query,
+            'row'=> $query,
             'status' => true
         ], 200);
     }
@@ -24,7 +24,7 @@ class BranchController extends Controller {
             return $result;
         } else {
             return response([
-                'row' => $result,
+                'row'=> $result,
                 'status' => true
             ], 200);
         }
@@ -35,7 +35,7 @@ class BranchController extends Controller {
             return Branch::get();
         } else {
             return response([
-                'rows' => Branch::all(),
+                'rows'=> Branch::get(),
                 'status'=> true
             ], 200);
         }
@@ -46,7 +46,7 @@ class BranchController extends Controller {
         $result = Branch::onlyTrashed()->get();
 
         return response([
-            'rows' => $result,
+            'rows'=> $result,
             'status'=> true
         ], 200);
     }
@@ -56,7 +56,7 @@ class BranchController extends Controller {
         $result = Branch::onlyTrashed()->findOrFail($id)->recovery();
 
         return response([
-            'row' => $result,
+            'row'=> $result,
             'status'=> true
         ], 200);
     }

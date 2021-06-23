@@ -15,6 +15,7 @@ class CreateAccountPaymentsTable extends Migration {
             $table->id();
             $table->foreignId('account_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
             $table->decimal('amount', 8, 2);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -16,13 +16,14 @@ class CreateAddressesTable extends Migration {
             $table->foreignId('entity_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
             $table->string('description')->nullable();
             $table->foreignId('state_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
-            $table->string('city')->nullable();
+            $table->string('city');
             $table->string('neighborhood')->nullable();
             $table->string('street')->nullable();
             $table->string('street_number')->nullable();
             $table->string('floor')->nullable();
             $table->string('streetX')->nullable();
             $table->string('streetY')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

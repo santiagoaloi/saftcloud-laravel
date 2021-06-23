@@ -7,16 +7,58 @@ use App\Models\Root\ComponentDefault;
 use App\Models\Root\Component;
 use Illuminate\Http\Request;
 
-use Illuminate\Support\Arr;
-
 class ComponentDefaultController extends Controller {
 
     public function store(Request $request) {
-        //
+        $query = ComponentDefault::create($request);
+        return response([
+            'row'=> $query,
+            'status'=> true
+        ], 200);
     }
 
-    public function show($id) {
-        //
+    public function show(Request $id, $local = false) {
+        $result = ComponentDefault::find($id);
+
+        if ($local){
+            return $result;
+        } else {
+            return response([
+                'row'=> $result,
+                'status'=> true
+            ], 200);
+        }
+    }
+
+    public function showAll($local = false) {
+        if ($local){
+            return ComponentDefault::get();
+        } else {
+            return response([
+                'rows'=> ComponentDefault::get(),
+                'status'=> true
+            ], 200);
+        }
+    }
+
+    //  Para mostrar los elementos eliminados
+    public function getTrashed() {
+        $result = ComponentDefault::onlyTrashed()->get();
+
+        return response([
+            'rows'=> $result,
+            'status'=> true
+        ], 200);
+    }
+
+    //  Para mostrar un elemento eliminado
+    public function recoveryTrashed($id) {
+        $result = ComponentDefault::onlyTrashed()->findOrFail($id)->recovery();
+
+        return response([
+            'row'=> $result,
+            'status'=> true
+        ], 200);
     }
 
     public function edit($id) {
@@ -24,17 +66,48 @@ class ComponentDefaultController extends Controller {
     }
 
     public function update(Request $request, $id) {
-        //
+        $query = ComponentDefault::findOrFail($id);
+
+        $input = $request->all();
+
+        $query->fill($input)->save();
+
+        $result = $this->show($id, true);
+
+        return response([
+            'row'=> $result,
+            'status'=> true
+        ], 200);
+    }
+
+    public function updateAll(Request $request) {
+        foreach($request as $item){
+            $this->update($item, $item->id);
+        };
+
+        $result = $this->showAll(true);
+
+        return response([
+            'rows'=> $result,
+            'status'=> true
+        ], 200);
     }
 
     public function destroy($id) {
-        //
+        $query = ComponentDefault::findOrFail($id);
+        $query->delete();
+
+        return $this->showAll(true);
     }
 
 
+
+    function getLast(){
+        return ComponentDefault::pluck('config_structure')->last();
+    }
+
     public function compareComponentConfig(Request $request){
-        $model = ComponentDefault::pluck('config_structure')->last();
-        // $model = ComponentDefault::where('id', 1)->pluck('component_defaults', 'surname')->all();
+        $model = $this->getLast();
 
         $getConfig = Component::find($request['id'], ['config']);
 

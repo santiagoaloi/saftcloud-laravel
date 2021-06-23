@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Http\Controllers\Public;
+namespace App\Http\Controllers\Pos;
 
 use App\Http\Controllers\Controller;
-use App\Models\Public\Country;
+use App\Models\Pos\Product;
 use Illuminate\Http\Request;
 
-class CountryController extends Controller {
+class ProductController extends Controller {
 
     public function store(Request $request) {
-        $query = Country::create($request);
+        $query = Product::create($request);
         return response([
             'row'=> $query,
             'status'=> true
@@ -17,7 +17,7 @@ class CountryController extends Controller {
     }
 
     public function show(Request $id, $local = false) {
-        $result = Country::find($id);
+        $result = Product::findOrFail($id);
 
         if ($local){
             return $result;
@@ -31,10 +31,10 @@ class CountryController extends Controller {
 
     public function showAll($local = false) {
         if ($local){
-            return Country::get();
+            return Product::get();
         } else {
             return response([
-                'rows'=> Country::get(),
+                'rows'=> Product::get(),
                 'status'=> true
             ], 200);
         }
@@ -42,7 +42,7 @@ class CountryController extends Controller {
 
     //  Para mostrar los elementos eliminados
     public function getTrashed() {
-        $result = Country::onlyTrashed()->get();
+        $result = Product::onlyTrashed()->get();
 
         return response([
             'rows'=> $result,
@@ -52,7 +52,7 @@ class CountryController extends Controller {
 
     //  Para mostrar un elemento eliminado
     public function recoveryTrashed($id) {
-        $result = Country::onlyTrashed()->findOrFail($id)->recovery();
+        $result = Product::onlyTrashed()->findOrFail($id)->recovery();
 
         return response([
             'row'=> $result,
@@ -65,7 +65,7 @@ class CountryController extends Controller {
     }
 
     public function update(Request $request, $id) {
-        $query = Country::findOrFail($id);
+        $query = Product::findOrFail($id);
 
         $input = $request->all();
 
@@ -93,7 +93,7 @@ class CountryController extends Controller {
     }
 
     public function destroy($id) {
-        $query = Country::findOrFail($id);
+        $query = Product::findOrFail($id);
         $query->delete();
 
         return $this->showAll(true);

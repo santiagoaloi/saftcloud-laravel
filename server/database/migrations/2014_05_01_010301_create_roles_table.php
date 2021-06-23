@@ -13,7 +13,10 @@ class CreateRolesTable extends Migration {
     public function up() {
         Schema::create('roles', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('account_id')->nullable()->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
+            $table->foreignId('role_id')->nullable()->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
             $table->string('description');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

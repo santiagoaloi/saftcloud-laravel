@@ -18,6 +18,7 @@ class CreateCountriesTable extends Migration {
             $table->string('iso2', 10);
             $table->string('iso3', 10);
             $table->string('phone_code', 25);
+            $table->softDeletes();
         });
     }
 

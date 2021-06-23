@@ -11,8 +11,8 @@ class PointOfSaleController extends Controller {
     public function store(Request $request) {
         $query = PointOfSale::create($request);
         return response([
-            'row' => $query,
-            'status' => true
+            'row'=> $query,
+            'status'=> true
         ], 200);
     }
 
@@ -23,8 +23,8 @@ class PointOfSaleController extends Controller {
             return $result;
         } else {
             return response([
-                'row' => $result,
-                'status' => true
+                'row'=> $result,
+                'status'=> true
             ], 200);
         }
     }
@@ -34,7 +34,7 @@ class PointOfSaleController extends Controller {
             return PointOfSale::get();
         } else {
             return response([
-                'rows' => PointOfSale::all(),
+                'rows'=> PointOfSale::get(),
                 'status'=> true
             ], 200);
         }
@@ -45,7 +45,7 @@ class PointOfSaleController extends Controller {
         $result = PointOfSale::onlyTrashed()->get();
 
         return response([
-            'rows' => $result,
+            'rows'=> $result,
             'status'=> true
         ], 200);
     }
@@ -55,7 +55,7 @@ class PointOfSaleController extends Controller {
         $result = PointOfSale::onlyTrashed()->findOrFail($id)->recovery();
 
         return response([
-            'row' => $result,
+            'row'=> $result,
             'status'=> true
         ], 200);
     }

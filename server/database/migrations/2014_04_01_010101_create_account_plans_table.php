@@ -4,18 +4,20 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateLookUpListValuesTable extends Migration {
+class CreateAccountPlansTable extends Migration {
     /**
      * Run the migrations.
      *
      * @return void
      */
     public function up() {
-        Schema::create('look_up_list_values', function (Blueprint $table) {
+        Schema::create('account_plans', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('look_up_list_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
-            $table->string('name', 100);
-            $table->integer('value');
+            $table->integer('users');
+            $table->text('modules');
+            $table->integer('locations');
+            $table->integer('cash_registers');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
@@ -26,6 +28,6 @@ class CreateLookUpListValuesTable extends Migration {
      * @return void
      */
     public function down() {
-        Schema::dropIfExists('look_up_list_values');
+        Schema::dropIfExists('account_plans');
     }
 }

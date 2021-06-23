@@ -14,7 +14,7 @@ class CreateComponentDefaultsTable extends Migration {
         Schema::create('component_defaults', function (Blueprint $table) {
             $table->id();
             $table->longText('config_structure');
-            $table->longText('field_structure');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
