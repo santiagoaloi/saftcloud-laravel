@@ -1,10 +1,25 @@
 <template>
- <div class="text-center">
-  <v-bottom-sheet fullscreen v-model="componentEditSheet">
-   <v-sheet class="text-center" height="100%" color="#f6f8fa">
-    <components-edit-sheet-appbar />
-    <components-edit-sheet-drawer />
-   </v-sheet>
+ <div>
+  <v-bottom-sheet no-click-animation persistent fullscreen v-model="componentEditSheet">
+   <v-card :color="isDark ? '' : '#FAFBFC'" tile height="100%">
+    <template v-if="componentEditSheet">
+     <components-edit-sheet-appbar />
+     <v-row no-gutters class="text-start">
+      <v-col :style="height" cols="auto">
+       <components-edit-sheet-drawer />
+      </v-col>
+      <v-col>
+       <v-card-text style="overflow:auto">
+        <v-icon small>mdi-folder</v-icon> Products > {{ selectedComponent.config.title }}
+        <v-divider class="mt-2"></v-divider>
+        <v-scroll-y-transition hide-on-leave>
+         <router-view />
+        </v-scroll-y-transition>
+       </v-card-text>
+      </v-col>
+     </v-row>
+    </template>
+   </v-card>
   </v-bottom-sheet>
  </div>
 </template>
@@ -24,8 +39,14 @@ export default {
  data: () => ({}),
 
  computed: {
-  ...sync("componentManagement", ["componentEditSheet"])
-  // ...get("componentManagement", ["selectedComponent"]),
+  ...sync("theme", ["isDark"]),
+
+  ...sync("componentManagement", ["componentEditSheet"]),
+  ...get("componentManagement", ["selectedComponent"]),
+
+  height() {
+   return `height:${this.$vuetify.breakpoint.height - this.$vuetify.application.top}px;overflow:auto`;
+  }
  },
 
  mounted() {},

@@ -3,7 +3,6 @@
   <auth-bar />
   <auth-drawer />
   <auth-cdrawer />
-  <!-- <auth-element-drawer v-if="$route.name == 'Formbuilder'" /> -->
   <auth-view />
   <snackbar />
  </v-app>
@@ -16,7 +15,6 @@ export default {
   AuthBar: () => import(/* webpackChunkName: 'secure-appbar' */ "./AppBar"),
   AuthDrawer: () => import(/* webpackChunkName: 'secure-drawer' */ "./Drawer"),
   AuthCdrawer: () => import(/* webpackChunkName: 'secure-cdrawer' */ "./ComponentDrawer"),
-  // AuthElementDrawer: () => import(/* webpackChunkName: 'secure-element-drawer' */ "./elementDrawer"),
   AuthView: () => import(/* webpackChunkName: 'secure-view' */ "./View"),
   Snackbar: () =>
    import(

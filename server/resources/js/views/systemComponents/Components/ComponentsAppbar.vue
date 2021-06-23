@@ -45,20 +45,3 @@ export default {
  }
 };
 </script>
-<style scoped>
-.expanded {
- width: 24em;
- -webkit-transition: all 0.7s ease 0s;
- -moz-transition: all 0.7s ease 0s;
- -o-transition: all 0.7s ease 0s;
- transition: all 0.7s ease 0s;
-}
-
-.shrinked {
- width: 16em;
- -webkit-transition: all 0.7s ease 0s;
- -moz-transition: all 0.7s ease 0s;
- -o-transition: all 0.7s ease 0s;
- transition: all 0.7s ease 0s;
-}
-</style>
