@@ -30,14 +30,10 @@ class ComponentController extends Controller {
             $ArrayFields[] = (object)$this->formFieldStructure($column);
         };
 
-        $sql_select = "SELECT {$request['table']}.* FROM {$request['table']}";
-        $sql_where  = " WHERE ".$request['table'].". id IS NOT NULL";
-        $sql_group  = "";
+        $sql_query = "SELECT {$request['table']}.* FROM {$request['table']}";
 
         $config['sql_table']    = $request['table'];
-        $config['sql_select']   = $sql_select;
-        $config['sql_where']    = $sql_where;
-        $config['sql_group']    = $sql_group;
+        $config['sql_query']    = $sql_query;
         $config['columns']      = $ArrayColumns;
         $config['form_fields']  = $ArrayFields;
         $config['name']         = $request['name'];
@@ -180,9 +176,6 @@ class ComponentController extends Controller {
         if (is_dir($vue_folder)) {
             rename($vue_folder, $deleted_folder);
         }
-
-        // if(file_exists("$vue_folder/$component_config->name.vue"))
-        // unlink("$vue_folder/$component_config->name.vue");
 
         // delete row in db
         $query->delete();
