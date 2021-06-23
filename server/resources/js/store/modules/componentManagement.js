@@ -31,6 +31,7 @@ const state = {
  selectedComponentGroups: [],
  groupName: "",
  isTableLayout: false,
+ componentEditDrawerActiveMenu: "",
  componentSettings: initialComponentSettings(),
  tableHeaders: [
   {

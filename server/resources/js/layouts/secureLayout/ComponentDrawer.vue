@@ -8,7 +8,7 @@
   hideOverlay
   right
   app
-  v-if="$route.name == 'components'"
+  v-if="$route.name.startsWith('components')"
  >
   <!-- Navigation menu fixed  -->
   <template v-slot:prepend>
@@ -23,8 +23,8 @@
 import Vue from "vue";
 import { sync } from "vuex-pathify";
 
-Vue.component("ComponentDrilldownBar", () => import("@/components/navigation/ComponentDrilldownBar"));
 Vue.component("ComponentDrilldown", () => import("@/components/navigation/ComponentDrilldown"));
+Vue.component("ComponentDrilldownBar", () => import("@/components/navigation/ComponentDrilldownBar"));
 
 export default {
  name: "SecureComponentDrawer",
