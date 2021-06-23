@@ -34,8 +34,6 @@ class ComponentController extends Controller {
         $sql_where  = " WHERE ".$request['table'].". id IS NOT NULL";
         $sql_group  = "";
 
-        $config[] = $request;
-
         $config['sql_table']    = $request['table'];
         $config['sql_select']   = $sql_select;
         $config['sql_where']    = $sql_where;
