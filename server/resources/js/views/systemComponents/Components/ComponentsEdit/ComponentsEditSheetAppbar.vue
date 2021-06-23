@@ -14,7 +14,7 @@
    </div>
   </v-fade-transition>
 
-  <v-btn class="mr-2" x-small color="white" outlined text fab>
+  <v-btn @click="saveComponent(selectedComponent)" class="mr-2" x-small color="white" outlined text fab>
    <v-icon color="green lighten-2"> mdi-check </v-icon>
   </v-btn>
 

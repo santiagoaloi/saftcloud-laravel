@@ -22,8 +22,10 @@
        :items="allGroups"
        item-value="id"
        item-text="name"
-       :color="$vuetify.theme.dark ? 'secondary' : ''"
        item-color="primary"
+       :color="isDark ? 'white' : ''"
+       :background-color="isDark ? 'grey darken-4' : 'grey lighten-5'"
+       :error="errors.length > 0"
        prepend-inner-icon="mdi-comment"
        :menu-props="{
         transition: 'slide-y-transition'
@@ -75,8 +77,9 @@
        prepend-inner-icon="mdi-comment"
        counter
        maxlength="35"
-       :error-messages="errors[0]"
-       :color="$vuetify.theme.dark ? 'secondary' : ''"
+       :color="isDark ? 'white' : ''"
+       :background-color="isDark ? 'grey darken-4' : 'grey lighten-5'"
+       :error="errors.length > 0"
       />
      </validation-provider>
     </v-col>
@@ -91,8 +94,9 @@
        prepend-inner-icon="mdi-comment"
        counter
        maxlength="35"
-       :error-messages="errors[0]"
-       :color="$vuetify.theme.dark ? 'secondary' : errors.length > 0 ? '#faebeb' : ''"
+       :color="isDark ? 'white' : ''"
+       :background-color="isDark ? 'grey darken-4' : 'grey lighten-5'"
+       :error="errors.length > 0"
       />
      </validation-provider>
     </v-col>
@@ -107,11 +111,11 @@
        prepend-inner-icon="mdi-file"
        counter
        maxlength="35"
-       color="primary"
        label
        placeholder="Description"
-       :error-messages="errors[0]"
-       :color="$vuetify.theme.dark ? 'secondary' : ''"
+       :color="isDark ? 'white' : ''"
+       :background-color="isDark ? 'grey darken-4' : 'grey lighten-5'"
+       :error="errors.length > 0"
       />
      </validation-provider>
     </v-col>
@@ -121,7 +125,6 @@
       <v-autocomplete
        hide-details
        v-model="componentSettings.table"
-       :error-messages="errors[0]"
        :menu-props="{
         transition: 'slide-y-transition'
        }"
@@ -129,8 +132,10 @@
        solo
        prepend-inner-icon="mdi-table"
        :items="dbTables"
-       :color="$vuetify.theme.dark ? 'secondary' : ''"
        item-color="primary"
+       :color="isDark ? 'white' : ''"
+       :background-color="isDark ? 'grey darken-4' : 'grey lighten-5'"
+       :error="errors.length > 0"
       >
        <template v-slot:item="data">
         <template>
@@ -162,6 +167,7 @@ export default {
  },
 
  computed: {
+  ...sync("theme", ["isDark"]),
   ...sync("componentManagement", ["allGroups", "dialogComponent", "componentSettings", "dbTables", "dialogGroup", "groupName"])
  },
 

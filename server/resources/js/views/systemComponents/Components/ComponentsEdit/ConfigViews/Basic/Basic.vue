@@ -1,5 +1,5 @@
 <template>
- <v-sheet height="200" color="transparent">
+ <div>
   <v-row>
    <v-col sm="4">
     <div class="mt-2">
@@ -30,7 +30,7 @@
     </div>
    </v-col>
   </v-row>
- </v-sheet>
+ </div>
 </template>
 
 <script>

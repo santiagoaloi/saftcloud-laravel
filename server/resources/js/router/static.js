@@ -47,13 +47,19 @@ export default [
     path: "/components/basic",
     name: "components/basic",
     meta: { layout: "secure_layout" },
-    component: () => import("@/views/systemComponents/Components/ComponentsEdit/ConfigViews/Basic.vue")
+    component: () => import("@/views/systemComponents/Components/ComponentsEdit/ConfigViews/Basic/Basic.vue")
    },
    {
     path: "/components/formFields",
     name: "components/formFields",
     meta: { layout: "secure_layout" },
-    component: () => import("@/views/systemComponents/Components/ComponentsEdit/ConfigViews/FormFields.vue")
+    component: () => import("@/views/systemComponents/Components/ComponentsEdit/ConfigViews/FormFields/FormFields.vue")
+   },
+   {
+    path: "/components/query",
+    name: "components/query",
+    meta: { layout: "secure_layout" },
+    component: () => import("@/views/systemComponents/Components/ComponentsEdit/ConfigViews/Query/Query.vue")
    }
   ]
  }

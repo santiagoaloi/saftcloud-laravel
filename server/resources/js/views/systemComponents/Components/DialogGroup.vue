@@ -12,7 +12,6 @@
    <v-col>
     <span>Group name</span>
     <v-text-field
-     :color="$vuetify.theme.dark ? 'secondary' : ''"
      ref="groupTitle"
      v-model="groupName"
      counter
@@ -20,6 +19,9 @@
      autofocus
      solo
      prepend-inner-icon="mdi-comment"
+     :color="isDark ? 'white' : ''"
+     :background-color="isDark ? 'grey darken-4' : 'grey lighten-5'"
+     :error="errors.length > 0"
     />
    </v-col>
   </v-row>
@@ -42,6 +44,7 @@ export default {
  },
 
  computed: {
+  ...sync("theme", ["isDark"]),
   ...sync("componentManagement", ["groupName", "dialogGroup"])
  }
 };

@@ -16,10 +16,6 @@ export default {
 
  computed: {
   ...sync("componentManagement", ["componentEditSheet"])
- },
-
- mounted() {},
-
- methods: {}
+ }
 };
 </script>

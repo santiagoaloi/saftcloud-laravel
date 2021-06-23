@@ -296,6 +296,7 @@ export default {
   login() {
    // this.loading = true;
    this.loginSanctum(this.auth).then(response => {
+    // alert(response);
     if (!response) {
      this.loading = false;
      store.set("snackbar/value", true);

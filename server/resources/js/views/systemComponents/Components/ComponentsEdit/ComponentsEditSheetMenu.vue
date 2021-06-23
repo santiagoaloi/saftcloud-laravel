@@ -37,7 +37,7 @@ export default {
    { icon: "mdi-view-dashboard-outline", key: "menu.dashboard", text: "Toolbar", link: "", disabled: true },
    { icon: "mdi-view-dashboard-outline", key: "menu.dashboard", text: "Permissions", link: "", disabled: true },
    { header: "Database" },
-   { icon: "mdi-view-dashboard-outline", key: "menu.dashboard", text: "Query", link: "", disabled: true },
+   { icon: "mdi-view-dashboard-outline", key: "menu.dashboard", text: "Query", link: "/components/query", disabled: false },
    { icon: "mdi-view-dashboard-outline", key: "menu.dashboard", text: "Columns", link: "", disabled: true },
    { icon: "mdi-view-dashboard-outline", key: "menu.dashboard", text: "Fields", link: "/components/formFields", disabled: false }
   ]
@@ -48,10 +48,10 @@ export default {
  },
 
  mounted() {
-  if (this.componentEditDrawerActiveMenu != "") {
-   this.$router.push(this.componentEditDrawerActiveMenu);
-  } else {
+  if (!this.componentEditDrawerActiveMenu) {
    this.$router.push("/components/basic");
+  } else {
+   this.$router.push(this.componentEditDrawerActiveMenu);
   }
  },
 
