@@ -11,8 +11,8 @@ class RoleController extends Controller {
     public function store(Request $request) {
         $query = Role::create($request);
         return response([
-            'row' => $query,
-            'status' => true
+            'row'=> $query,
+            'status'=> true
         ], 200);
     }
 
@@ -23,8 +23,8 @@ class RoleController extends Controller {
             return $result;
         } else {
             return response([
-                'row' => $result,
-                'status' => true
+                'row'=> $result,
+                'status'=> true
             ], 200);
         }
     }
@@ -34,7 +34,7 @@ class RoleController extends Controller {
             return Role::get();
         } else {
             return response([
-                'rows' => Role::all(),
+                'rows'=> Role::get(),
                 'status'=> true
             ], 200);
         }
@@ -45,7 +45,7 @@ class RoleController extends Controller {
         $result = Role::onlyTrashed()->get();
 
         return response([
-            'rows' => $result,
+            'rows'=> $result,
             'status'=> true
         ], 200);
     }
@@ -55,7 +55,7 @@ class RoleController extends Controller {
         $result = Role::onlyTrashed()->findOrFail($id)->recovery();
 
         return response([
-            'row' => $result,
+            'row'=> $result,
             'status'=> true
         ], 200);
     }

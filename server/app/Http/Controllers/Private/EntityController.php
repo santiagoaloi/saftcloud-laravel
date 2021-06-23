@@ -8,12 +8,11 @@ use Illuminate\Http\Request;
 
 class EntityController extends Controller {
 
-
     public function store(Request $request) {
         $query = Entity::create($request);
         return response([
-            'row' => $query,
-            'status' => true
+            'row'=> $query,
+            'status'=> true
         ], 200);
     }
 
@@ -24,8 +23,8 @@ class EntityController extends Controller {
             return $result;
         } else {
             return response([
-                'row' => $result,
-                'status' => true
+                'row'=> $result,
+                'status'=> true
             ], 200);
         }
     }
@@ -35,7 +34,7 @@ class EntityController extends Controller {
             return Entity::get();
         } else {
             return response([
-                'rows' => Entity::all(),
+                'rows'=> Entity::get(),
                 'status'=> true
             ], 200);
         }
@@ -46,7 +45,7 @@ class EntityController extends Controller {
         $result = Entity::onlyTrashed()->get();
 
         return response([
-            'rows' => $result,
+            'rows'=> $result,
             'status'=> true
         ], 200);
     }
@@ -56,7 +55,7 @@ class EntityController extends Controller {
         $result = Entity::onlyTrashed()->findOrFail($id)->recovery();
 
         return response([
-            'row' => $result,
+            'row'=> $result,
             'status'=> true
         ], 200);
     }

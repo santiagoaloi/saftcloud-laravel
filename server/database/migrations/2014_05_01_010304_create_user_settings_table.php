@@ -15,6 +15,7 @@ class CreateUserSettingsTable extends Migration {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
             $table->longText('view_config');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

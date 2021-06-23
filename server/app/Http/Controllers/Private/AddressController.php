@@ -34,7 +34,7 @@ class AddressController extends Controller {
             return Address::get();
         } else {
             return response([
-                'rows' => Address::all(),
+                'rows' => Address::get(),
                 'status'=> true
             ], 200);
         }

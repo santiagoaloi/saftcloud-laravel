@@ -16,6 +16,7 @@ class CreateSocialTable extends Migration {
             $table->foreignId('entity_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
             $table->string('description', 100)->nullable();
             $table->string('url')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

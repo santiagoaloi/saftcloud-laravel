@@ -34,7 +34,7 @@ class AccountPaymentController extends Controller {
             return AccountPayment::get();
         } else {
             return response([
-                'rows' => AccountPayment::all(),
+                'rows' => AccountPayment::get(),
                 'status'=> true
             ], 200);
         }

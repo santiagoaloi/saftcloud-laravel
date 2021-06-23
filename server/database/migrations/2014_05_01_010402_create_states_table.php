@@ -15,6 +15,7 @@ class CreateStatesTable extends Migration {
             $table->id();
             $table->foreignId('country_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
             $table->string('name');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

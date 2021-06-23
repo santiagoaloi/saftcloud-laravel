@@ -11,8 +11,8 @@ class LookUpListValueController extends Controller {
     public function store(Request $request) {
         $query = LookUpListValue::create($request);
         return response([
-            'row' => $query,
-            'status' => true
+            'row'=> $query,
+            'status'=> true
         ], 200);
     }
 
@@ -23,17 +23,21 @@ class LookUpListValueController extends Controller {
             return $result;
         } else {
             return response([
-                'row' => $result,
-                'status' => true
+                'row'=> $result,
+                'status'=> true
             ], 200);
         }
     }
 
-    public function showAll($local = false) {
-        return response([
-            'rows' => LookUpListValue::all(),
-            'status'    => true
-        ], 200);
+    public function showAll($local = false, $parentId = ['']) {
+        if ($local){
+            return LookUpListValue::whereIn('look_up_list_id', $parentId)->get();
+        } else {
+            return response([
+                'rows'=> LookUpListValue::get(),
+                'status'=> true
+            ], 200);
+        }
     }
 
     //  Para mostrar los elementos eliminados
@@ -41,8 +45,8 @@ class LookUpListValueController extends Controller {
         $result = LookUpListValue::onlyTrashed()->get();
 
         return response([
-            'rows' => $result,
-            'status'    => true
+            'rows'=> $result,
+            'status'=> true
         ], 200);
     }
 
@@ -51,8 +55,8 @@ class LookUpListValueController extends Controller {
         $result = LookUpListValue::onlyTrashed()->findOrFail($id)->recovery();
 
         return response([
-            'row' => $result,
-            'status'    => true
+            'row'=> $result,
+            'status'=> true
         ], 200);
     }
 
@@ -84,7 +88,7 @@ class LookUpListValueController extends Controller {
 
         return response([
             'rows'=> $result,
-            'status'    => true
+            'status'=> true
         ], 200);
     }
 
@@ -92,6 +96,6 @@ class LookUpListValueController extends Controller {
         $query = LookUpListValue::findOrFail($id);
         $query->delete();
 
-        return $this->showAll();
+        return $this->showAll(true);
     }
 }

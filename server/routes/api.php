@@ -15,7 +15,8 @@ use App\Http\Controllers\Root\ComponentDefaultController;
 use App\Http\Controllers\AuthController;
 
 //Test icons Controller
-use App\Http\Controllers\IconController;
+use App\Http\Controllers\Public\IconController;
+use App\Http\Controllers\TestFunctionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,6 +41,8 @@ Route::post('/makeAccount', [MakeAccountController::class, 'accountCreation']);
 
 //Icons (Testing)
 Route::get('/listIcons', [IconController::class, 'listIcons']);
+Route::post('/testFunction', [TestFunctionController::class, 'test2']);
+
 
 // Protected routes
 Route::group(['middleware' => ['auth:sanctum']], function () {
@@ -51,7 +54,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::resource('/Component', ComponentController::class);
     Route::get('/showAllComponents', [ComponentController::class, 'showAll']);
-    Route::post('/testFunction', [ComponentDefaultController::class, 'compareComponentConfig']);
 
     Route::resource('/MysqlResource', MysqlController::class);
     Route::get('/showAllTables', [MysqlController::class, 'showAll']);

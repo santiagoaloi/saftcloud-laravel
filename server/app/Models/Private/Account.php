@@ -4,11 +4,12 @@ namespace App\Models\Private;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Account extends Model {
     use HasFactory;
+    use SoftDeletes;
 
     protected $cast = [];
-    protected $connection = 'mysql';
-    protected $fillable = ['license', 'plan', 'name', 'email', 'payment_status', 'owner_first_name', 'owner_last_name', 'phone_code', 'phone_number'];
+    protected $fillable = ['license', 'account_plan_id', 'payment_status', 'email', 'doc_type_id', 'doc_number', 'name'];
 }

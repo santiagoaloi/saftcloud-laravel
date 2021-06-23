@@ -11,8 +11,8 @@ class UserController extends Controller {
     public function store(Request $request) {
         $query = User::create($request);
         return response([
-            'row' => $query,
-            'status' => true
+            'row'=> $query,
+            'status'=> true
         ], 200);
     }
 
@@ -23,8 +23,8 @@ class UserController extends Controller {
             return $result;
         } else {
             return response([
-                'row' => $result,
-                'status' => true
+                'row'=> $result,
+                'status'=> true
             ], 200);
         }
     }
@@ -34,7 +34,7 @@ class UserController extends Controller {
             return User::get();
         } else {
             return response([
-                'rows' => User::all(),
+                'rows'=> User::get(),
                 'status'=> true
             ], 200);
         }
@@ -45,7 +45,7 @@ class UserController extends Controller {
         $result = User::onlyTrashed()->get();
 
         return response([
-            'rows' => $result,
+            'rows'=> $result,
             'status'=> true
         ], 200);
     }
@@ -55,7 +55,7 @@ class UserController extends Controller {
         $result = User::onlyTrashed()->findOrFail($id)->recovery();
 
         return response([
-            'row' => $result,
+            'row'=> $result,
             'status'=> true
         ], 200);
     }

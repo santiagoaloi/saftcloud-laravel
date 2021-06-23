@@ -13,7 +13,11 @@ class CreateComponentGroupsTable extends Migration {
     public function up() {
         Schema::create('component_groups', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('component_group_id')->nullable()->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
             $table->string('name')->nullable();
+            $table->string('icon')->nullable();
+            $table->smallInteger('ordering')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

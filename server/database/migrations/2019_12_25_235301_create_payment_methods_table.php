@@ -13,6 +13,9 @@ class CreatePaymentMethodsTable extends Migration {
     public function up() {
         Schema::create('payment_methods', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('entity_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
+            $table->string('description');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

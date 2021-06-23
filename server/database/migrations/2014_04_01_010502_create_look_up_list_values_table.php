@@ -4,16 +4,19 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateEntityTypesTable extends Migration {
+class CreateLookUpListValuesTable extends Migration {
     /**
      * Run the migrations.
      *
      * @return void
      */
     public function up() {
-        Schema::create('entity_types', function (Blueprint $table) {
+        Schema::create('look_up_list_values', function (Blueprint $table) {
             $table->id();
-            $table->string('description', 50);
+            $table->foreignId('look_up_list_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
+            $table->string('name');
+            $table->integer('value');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
@@ -24,6 +27,6 @@ class CreateEntityTypesTable extends Migration {
      * @return void
      */
     public function down() {
-        Schema::dropIfExists('entity_types');
+        Schema::dropIfExists('look_up_list_values');
     }
 }

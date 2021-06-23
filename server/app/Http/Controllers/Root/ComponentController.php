@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\File;
 
 use App\Models\Root\ComponentDefault;
 use Jawira\CaseConverter\Convert;
-use Illuminate\Support\Facades\Storage;
 
 class ComponentController extends Controller {
 
@@ -34,8 +33,6 @@ class ComponentController extends Controller {
         $sql_select = "SELECT {$request['table']}.* FROM {$request['table']}";
         $sql_where  = " WHERE ".$request['table'].". id IS NOT NULL";
         $sql_group  = "";
-
-        $config[] = $request;
 
         $config['sql_table']    = $request['table'];
         $config['sql_select']   = $sql_select;
@@ -265,8 +262,9 @@ class ComponentController extends Controller {
 
     public function formFieldStructure($field) {
         $model = json_decode(ComponentDefault::pluck('config_structure')->last());
-        
+
         $model->form_fields->field = $field;
+        $model->form_fields->label = $field;
 
         return $model->form_fields;
     }
