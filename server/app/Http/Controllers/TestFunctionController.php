@@ -48,6 +48,10 @@ class TestFunctionController extends Controller {
 
     function test2(Request $request){
 
+        $query = 'SELECT users.* FROM users left join caca';
+        return DB::SELECT($query);
+
+
 
         if ($request->has(['name', 'email'])) {
             return $request->name.' - '.$request->email;

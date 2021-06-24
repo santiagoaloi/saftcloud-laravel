@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Root\Component;
 use Illuminate\Http\Request;
 
-use App\Http\Controllers\Root\MysqlController;
+// use App\Http\Controllers\Root\MysqlController;
 use Illuminate\Support\Facades\File;
 
 use App\Models\Root\ComponentDefault;
@@ -138,8 +138,19 @@ class ComponentController extends Controller {
 
     public function update(Request $request, $id) {
         $query = Component::findOrFail($id);
+        $sql_original = json_decode($query->config, true)['sql_query'];
+        // $pepe = $original->sql_query;
 
         $input = $request->all();
+        $sql_new = $request->config['sql_query'];
+
+        if($sql_original != $sql_new) {
+            $originalFormFields = json_decode($query->config, true)['form_fields'];
+            $newFormFields = $request->config['form_fields'];
+            $compare = new ComponentDefaultController;
+            return $compare->compareCompare($newFormFields, $originalFormFields);
+        }
+
 
         $query->fill($input)->save();
 

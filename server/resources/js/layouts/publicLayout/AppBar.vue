@@ -177,6 +177,8 @@ export default {
     if (response.data.status) {
      console.log(response.data.rows);
     }
+   }).catch(error => {
+    console.log({ ...error });
    });
   }
  }
