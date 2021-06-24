@@ -242,12 +242,7 @@
          </v-col>
 
          <v-col cols="12" sm="12" md="12">
-          <v-card-actions
-           style="
-                            margin-top: -1.5 em;
-                            cursor: pointer !important;
-                          "
-          >
+          <v-card-actions style=" margin-top: -1.5 em;cursor: pointer !important;">
            <div class="flex-grow-1" />
            <v-btn color="grey" x-large height="38" class="white--text" @click="resetPassword = false">
             Back
@@ -296,7 +291,6 @@ export default {
   login() {
    // this.loading = true;
    this.loginSanctum(this.auth).then(response => {
-    // alert(response);
     if (!response) {
      this.loading = false;
      store.set("snackbar/value", true);

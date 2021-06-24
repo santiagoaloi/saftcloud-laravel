@@ -8,7 +8,7 @@
    </template>
 
    <v-list>
-    <v-list-item dense @click="selectAll()">
+    <v-list-item dense @click="selectAllFormFields()">
      <v-list-item-action>
       <v-icon>mdi-expand-all-outline</v-icon>
      </v-list-item-action>
@@ -17,7 +17,7 @@
      </v-list-item-content>
     </v-list-item>
 
-    <v-list-item dense @click="unselectAll()">
+    <v-list-item dense @click="unselectAllFormFieldsFromFields()">
      <v-list-item-action>
       <v-icon>mdi-collapse-all-outline</v-icon>
      </v-list-item-action>
@@ -36,7 +36,7 @@
       <v-list-item-title>Show enabled ones only </v-list-item-title>
      </v-list-item-content>
      <v-list-item-action>
-      <v-switch v-model="showSelectedOnly" color="primary accent-3" :ripple="false" @click.stop />
+      <v-switch v-model="displayEnabledFormFieldsOnly" color="primary accent-3" :ripple="false" @click.stop />
      </v-list-item-action>
     </v-list-item>
    </v-list>
@@ -55,13 +55,12 @@ export default {
   draggable
  },
  data: () => ({
-  showSelectedOnly: false,
   selectedFieldItem: 0
  }),
 
  computed: {
   ...sync("theme", ["isDark"]),
-  ...sync("componentManagement", ["componentEditSheet"]),
+  ...sync("componentManagement", ["componentEditSheet", "displayEnabledFormFieldsOnly"]),
   ...get("componentManagement", ["selectedComponent"]),
 
   availableFields() {
@@ -72,13 +71,13 @@ export default {
  mounted() {},
 
  methods: {
-  unselectAll() {
+  unselectAllFormFieldsFromFields() {
    this.selectedComponent.config.form_fields.forEach(field => {
     field.displayField = false;
    });
   },
 
-  selectAll() {
+  selectAllFormFields() {
    this.selectedComponent.config.form_fields.forEach(field => {
     field.displayField = true;
    });

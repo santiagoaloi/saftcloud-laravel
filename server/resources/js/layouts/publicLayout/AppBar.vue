@@ -173,13 +173,16 @@ export default {
  methods: {
   testFunction() {
    let post = { id: 30 };
-   axios.post("/api/testFunction", post).then(response => {
-    if (response.data.status) {
-     console.log(response.data.rows);
-    }
-   }).catch(error => {
-    console.log({ ...error });
-   });
+   axios
+    .post("/api/testFunction", post)
+    .then(response => {
+     if (response.data.status) {
+      console.log(response.data.rows);
+     }
+    })
+    .catch(error => {
+     console.log({ ...error.toJSON().config.transformResponse() });
+    });
   }
  }
 };

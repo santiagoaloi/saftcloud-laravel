@@ -2,30 +2,29 @@
  <div>
   <v-divider></v-divider>
   <form-fields-toolbar />
+  <v-divider></v-divider>
   <v-row class="mt-1">
-   <v-col cols="auto"> <form-fields-list /> </v-col>
-   <v-col> <v-sheet class="rightPanelHeight transparent"> </v-sheet> </v-col>
+   <v-col cols="auto">
+    <form-fields-list />
+   </v-col>
+   <v-col>
+    <form-fields-right-panel />
+   </v-col>
   </v-row>
  </div>
 </template>
 
 <script>
 import axios from "axios";
-import draggable from "vuedraggable";
-
 import { sync, get } from "vuex-pathify";
 export default {
  name: "ComponentsEditViewsBasic",
  components: {
-  draggable,
   FormFieldsToolbar: () => import("./FormFieldsToolbar"),
-  FormFieldsList: () => import("./FormFieldsList")
+  FormFieldsList: () => import("./FormFieldsList"),
+  FormFieldsRightPanel: () => import("./FormFieldsRightPanel")
  },
 
- data: () => ({
-  showSelectedOnly: false,
-  search: "",
-  selectedFieldItem: 0
- })
+ data: () => ({})
 };
 </script>

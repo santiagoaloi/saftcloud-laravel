@@ -17,6 +17,7 @@ const initialComponentSettings = () => {
 
 const state = {
  search: "",
+ searchFields: "",
  dbTables: [],
  allGroups: [],
  tableColumns: [],
@@ -29,6 +30,7 @@ const state = {
  componentCardGroup: undefined,
  selectedComponentIndex: 0,
  selectedComponentGroups: [],
+ displayEnabledFormFieldsOnly: false,
  groupName: "",
  isTableLayout: false,
  componentEditDrawerActiveMenu: undefined,
@@ -67,6 +69,20 @@ const getters = {
 
  selectedAllGroups: state => {
   return state.selectedComponentGroups.length === state.allGroups.length;
+ },
+
+ filteredFormFields: (state, getters) => {
+  const searchFields = state.searchFields.toString().toLowerCase();
+  return getters.selectedComponent.config.form_fields.filter(item => {
+   return item.label.toLowerCase().match(searchFields);
+  });
+ },
+
+ filteredSelectedFields: (state, getters) => {
+  const searchFields = state.searchFields.toString().toLowerCase();
+  return getters.selectedComponent.config.form_fields.filter(item => {
+   return item.label.toLowerCase().match(searchFields) && item.displayField;
+  });
  },
 
  allComponentsFiltered: (state, getters) => {

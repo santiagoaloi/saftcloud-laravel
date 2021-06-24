@@ -2,9 +2,9 @@
  <v-responsive width="500">
   <v-text-field
    :color="isDark ? 'white' : ''"
-   v-model="search"
+   v-model="searchFields"
    hide-details
-   label="Search fields..."
+   label="Buscar"
    prepend-inner-icon="mdi-magnify"
    autocomplete="off"
    autocorrect="off"
@@ -27,7 +27,7 @@
       <v-list-item
        dense
        :active-class="isDark ? 'indigo' : ''"
-       v-for="(item, i) in showSelectedOnly ? filteredSelectedFields : filteredFields"
+       v-for="(item, i) in displayEnabledFormFieldsOnly ? filteredSelectedFields : filteredFormFields"
        :key="i"
        two-line
        :ripple="false"
@@ -48,7 +48,7 @@
         <v-chip dark label x-small color="blue-grey lighten-2">{{ item.fieldType }}</v-chip>
        </v-list-item-action>
 
-       <v-icon v-if="!showSelectedOnly" class="drag my-handle">
+       <v-icon v-if="!displayEnabledFormFieldsOnly" class="drag my-handle">
         mdi-drag-vertical
        </v-icon>
       </v-list-item>
@@ -63,36 +63,25 @@
 import axios from "axios";
 import draggable from "vuedraggable";
 
-import { sync, get } from "vuex-pathify";
+import { sync, get, call } from "vuex-pathify";
 export default {
- name: "ComponentsEditViewsBasic",
+ name: "ComponentsEditViewsFormFieldsRightPanel",
  components: {
   draggable
  },
  data: () => ({
   showSelectedOnly: false,
-  selectedFieldItem: 0,
-  search: ""
+  selectedFieldItem: 0
  }),
+
+ methods: {
+  ...call("componentManagement/*")
+ },
 
  computed: {
   ...sync("theme", ["isDark"]),
-  ...sync("componentManagement", ["componentEditSheet"]),
-  ...get("componentManagement", ["selectedComponent"]),
-
-  filteredFields: function() {
-   const search = this.search.toString().toLowerCase();
-   return this.selectedComponent.config.form_fields.filter(item => {
-    return item.label.toLowerCase().match(search);
-   });
-  },
-
-  filteredSelectedFields: function() {
-   const search = this.search.toString().toLowerCase();
-   return this.selectedComponent.config.form_fields.filter(item => {
-    return item.label.toLowerCase().match(search) && item.displayField;
-   });
-  }
+  ...sync("componentManagement", ["searchFields", "displayEnabledFormFieldsOnly"]),
+  ...get("componentManagement", ["selectedComponent", "filteredFormFields", "filteredSelectedFields"])
  }
 };
 </script>
@@ -101,10 +90,7 @@ export default {
  height: calc(100vh - 230px);
  overflow-y: auto;
 }
-.rightPanelHeight {
- height: calc(100vh - 165px);
- overflow-y: auto;
-}
+
 .drag {
  cursor: grab;
 }

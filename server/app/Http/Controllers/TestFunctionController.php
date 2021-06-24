@@ -8,6 +8,9 @@ use App\Http\Controllers\Root\ComponentDefaultController;
 
 use App\Models\GeneralConfig\LookUpList;
 
+Use Exception;
+
+
 class TestFunctionController extends Controller {
 
     function getIP(Request $request){
@@ -49,19 +52,23 @@ class TestFunctionController extends Controller {
     function test2(Request $request){
 
         $query = 'SELECT users.* FROM users left join caca';
-        return DB::SELECT($query);
+
+         try { 
+            DB::SELECT($query);
+           }catch(Exception $e){
+              return response()->json(array('message' =>$e->getMessage())); 
+            }
 
 
-
-        if ($request->has(['name', 'email'])) {
-            return $request->name.' - '.$request->email;
-        } else if ($request->has('id')) {
-            return $request->id;
-        } else if ($request->has('email')) {
-            return $request->email;
-        } else {
-            return "no tiene nombre ni email";
-        }
+        // if ($request->has(['name', 'email'])) {
+        //     return $request->name.' - '.$request->email;
+        // } else if ($request->has('id')) {
+        //     return $request->id;
+        // } else if ($request->has('email')) {
+        //     return $request->email;
+        // } else {
+        //     return "no tiene nombre ni email";
+        // }
 
     }
 
