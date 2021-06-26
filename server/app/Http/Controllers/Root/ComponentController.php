@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 
 // use App\Http\Controllers\Root\MysqlController;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\DB;
 
 use App\Models\Root\ComponentDefault;
 use Jawira\CaseConverter\Convert;
@@ -21,21 +22,18 @@ class ComponentController extends Controller {
     public function store(Request $request) {
         $json_data['table'] = $request['table'];
 
-        $MysqlController = new MysqlController;
-        $columns = $MysqlController->showColumns($request);
-
-        foreach ($columns as $column) {
-            $ArrayColumns[] = ['name' => $column];
-
-            $ArrayFields[] = (object)$this->formFieldStructure($column);
-        };
-
         $sql_query = "SELECT {$request['table']}.* FROM {$request['table']}";
+        $object = array_keys((array)DB::SELECT($sql_query)[0]);
+        // $res = array_keys((array)$object[0]);
+
+        $formColumnsAndFields = $this->formColumnsAndFields($object);
+
+        return$formColumnsAndFields;
 
         $config['sql_table']    = $request['table'];
         $config['sql_query']    = $sql_query;
-        $config['columns']      = $ArrayColumns;
-        $config['form_fields']  = $ArrayFields;
+        $config['columns']      = $formColumnsAndFields['ArrayColumns'];
+        $config['form_fields']  = $formColumnsAndFields['ArrayFields'];
         $config['name']         = $request['name'];
         $config['title']        = $request['title'];
         $config['note']         = $request['note'];
@@ -139,18 +137,25 @@ class ComponentController extends Controller {
     public function update(Request $request, $id) {
         $query = Component::findOrFail($id);
         $sql_original = json_decode($query->config, true)['sql_query'];
-        // $pepe = $original->sql_query;
 
         $input = $request->all();
         $sql_new = $request->config['sql_query'];
 
         if($sql_original != $sql_new) {
+
+            $sql_query = 'SELECT users.* FROM users';
+            return DB::SELECT($sql_query);
+
+            $mySql = new MysqlController;
+            $formColumnsAndFields = $this->formColumnsAndFields($mySql->showColumnsFromQuery($columnsBuilder));
+
             $originalFormFields = json_decode($query->config, true)['form_fields'];
             $newFormFields = $request->config['form_fields'];
             $compare = new ComponentDefaultController;
             return $compare->compareCompare($newFormFields, $originalFormFields);
         }
 
+        return "hola";
 
         $query->fill($input)->save();
 
@@ -264,6 +269,35 @@ class ComponentController extends Controller {
         return $fileContent;
     }
 
+    //** FORMA NUEVA **//
+    function formColumnsAndFields($columns){
+        foreach ($columns as $column) {
+            $ArrayColumns[] = ['name' => $column];
+
+            $ArrayFields[] = (object)$this->formFieldStructure($column);
+        };
+
+        return [
+            'ArrayColumns'=>$ArrayColumns, 'ArrayFields'=>$ArrayFields
+        ];
+    }
+
+    //** FORMA VIEJA **//
+    function formColumnsAndFieldsOld($request){
+        $MysqlController = new MysqlController;
+        $columns = $MysqlController->showColumns($request);
+
+        foreach ($columns as $column) {
+            $ArrayColumns[] = ['name' => $column];
+
+            $ArrayFields[] = (object)$this->formFieldStructure($column);
+        };
+
+        return [
+            'ArrayColumns'=>$ArrayColumns, 'ArrayFields'=>$ArrayFields
+        ];
+    }
+
     public function formFieldStructure($field) {
         $model = json_decode(ComponentDefault::pluck('config_structure')->last());
 
@@ -272,5 +306,15 @@ class ComponentController extends Controller {
 
         return $model->form_fields;
     }
+
+    function getStringBetween($string, $start, $end){
+        $string = ' ' . $string;
+        $ini = strpos($string, $start);
+        if ($ini == 0) return '';
+        $ini += strlen($start);
+        $len = strpos($string, $end, $ini) - $ini;
+        return trim(substr($string, $ini, $len));
+    }
+
 
 }
