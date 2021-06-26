@@ -216,10 +216,22 @@ const actions = {
  },
 
  setComponentStatus({}, component) {
-  axios.patch(`api/Component/${component.id}`, { sztatus: component.status });
+  axios.patch(`api/Component/${component.id}`, { status: component.status });
  },
 
  saveComponent({ state }, component) {
+  //Remove strange characters, add space instead.
+  component.config.sql_query = component.config.sql_query
+   .split(/\r?\n/)
+   .map(row =>
+    row
+     .trim()
+     .split(/\s+/)
+     .join(" ")
+   )
+   .join("\n")
+   .replace(/(\r\n|\n|\r)/gm, " ");
+
   axios.put(`api/Component/${component.id}`, component).then(response => {
    if (response.data.status) {
     const index = state.allComponents.findIndex(c => c.id == component.id);

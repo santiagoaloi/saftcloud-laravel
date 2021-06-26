@@ -2,6 +2,12 @@ html {
  overflow: auto;
 }
 
+.v-dialog--scrollable,
+.v-dialog--scrollable > form {
+ display: flex;
+ flex-direction: column !important;
+}
+
 .expanded {
  width: 24em;
  -webkit-transition: all 0.7s ease 0s;

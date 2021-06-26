@@ -49,27 +49,18 @@ class TestFunctionController extends Controller {
         echo json_encode(['status' => 'Success', 'rows' => $users]);exit();
     }
 
-    function test2(Request $request){
+    function test2(){
 
-        $query = 'SELECT users.* FROM users left join caca';
+        $query = 'SELECT users.* FROM users ';
 
          try { 
-            DB::SELECT($query);
+            $object =  DB::SELECT($query);
+            return response(Exception $e)->json(array($e)); 
+            //   return  array_keys((array)$object[0]);
+
            }catch(Exception $e){
               return response()->json(array('message' =>$e->getMessage())); 
             }
-
-
-        // if ($request->has(['name', 'email'])) {
-        //     return $request->name.' - '.$request->email;
-        // } else if ($request->has('id')) {
-        //     return $request->id;
-        // } else if ($request->has('email')) {
-        //     return $request->email;
-        // } else {
-        //     return "no tiene nombre ni email";
-        // }
-
     }
 
     function probarFormFieldStructure(){
