@@ -181,7 +181,7 @@ export default {
      }
     })
     .catch(error => {
-     console.log({ ...error.toJSON().config.transformResponse() });
+     console.log({ ...error });
     });
   }
  }

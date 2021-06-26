@@ -27,7 +27,7 @@ const actions = {
    })
    .catch(error => {
     console.log({ ...error });
-    return false;
+    // return false;
    });
  },
 

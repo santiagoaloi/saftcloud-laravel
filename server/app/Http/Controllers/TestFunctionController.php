@@ -49,7 +49,7 @@ class TestFunctionController extends Controller {
         echo json_encode(['status' => 'Success', 'rows' => $users]);exit();
     }
 
-    function test2(Request $request){
+    function test2(){
 
         $query = 'SELECT users.* FROM users asdfasd';
 

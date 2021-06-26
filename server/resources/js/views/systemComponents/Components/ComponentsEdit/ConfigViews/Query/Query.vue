@@ -1,22 +1,8 @@
 <template>
  <div>
-  <v-row>
-   <v-col sm="4">
-    <div class="mt-2">
-     <small>Query</small>
-     <v-textarea
-      :background-color="isDark ? 'grey darken-4' : 'grey lighten-5'"
-      :color="$vuetify.theme.dark ? 'secondary' : 'grey'"
-      spellcheck="false"
-      :rows="7"
-      autogrow
-      solo
-      hide-details
-      v-model="selectedComponent.config.sql_query"
-     />
-    </div>
-   </v-col>
-  </v-row>
+  <v-card flat width="100%" class="queryHeight">
+   <base-editor :key="editorKey" v-model="selectedComponent.config.sql_query" mode="sql" />
+  </v-card>
  </div>
 </template>
 
@@ -26,7 +12,17 @@ import { sync, get } from "vuex-pathify";
 export default {
  name: "ComponentsEditQuery",
  components: {},
- data: () => ({}),
+ data: () => ({
+  editorKey: 800
+ }),
+
+ watch: {
+  isDark(oldValue, newValue) {
+   if (oldValue !== newValue) {
+    this.editorKey++;
+   }
+  }
+ },
 
  computed: {
   ...sync("theme", ["isDark"]),
@@ -39,3 +35,10 @@ export default {
  methods: {}
 };
 </script>
+
+<style scoped>
+.queryHeight {
+ height: calc(100vh - 103px);
+ overflow-y: auto;
+}
+</style>

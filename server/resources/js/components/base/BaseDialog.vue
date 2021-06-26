@@ -7,8 +7,10 @@
   :hide-overlay="noOverlay"
   :overlay-opacity="0.7"
   :overlay-color="$vuetify.theme.dark ? 'rgba(0, 0, 0)' : 'rgba(108, 122, 137)'"
+  scrollable
+  class="d-flex flex-column"
  >
-  <v-toolbar class="popup-header px-6" flat :dense="dense" dark :color="$vuetify.theme.dark ? '#202225' : 'grey darken-2'">
+  <v-toolbar class=" px-6" flat :dense="dense" dark :color="$vuetify.theme.dark ? '#202225' : 'grey darken-2'">
    <template>
     <v-btn
      v-if="$vuetify.breakpoint.mdAndUp && !noMaximize"
@@ -60,14 +62,14 @@
     </v-btn>
    </template>
   </v-toolbar>
-  <v-sheet color="primary" height="2" />
-  <v-card :class="noGutters ? '' : 'pa-2'" style="overflow: auto" flat tile :height="height">
-   <v-container class="fill-height">
+  <!-- <v-sheet color="primary" height="2" /> -->
+  <v-card width="100%" :class="noGutters ? '' : 'pa-2'" style="overflow: auto" flat tile :height="height">
+   <v-container fluid class="fill-height">
     <slot />
    </v-container>
   </v-card>
 
-  <slot :parentData="$data" name="footer" />
+  <!-- <slot :parentData="$data" name="footer" /> -->
  </v-dialog>
 </template>
 
