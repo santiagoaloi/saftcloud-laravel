@@ -51,15 +51,31 @@ class TestFunctionController extends Controller {
 
     function test2(){
 
-        $query = 'SELECT users.* FROM users ';
+        $query = 'SELECT users.* FROM users asdfasd';
 
+<<<<<<< HEAD
          try { 
             $object =  DB::SELECT($query);
               return  array_keys((array)$object[0]);
+=======
+        try {
+            return DB::SELECT($query);
+        }catch(Exception $e){
+            return response()->json(array('message' =>$e->getMessage()));
+        }
 
-           }catch(Exception $e){
-              return response()->json(array('message' =>$e->getMessage())); 
-            }
+
+        // if ($request->has(['name', 'email'])) {
+        //     return $request->name.' - '.$request->email;
+        // } else if ($request->has('id')) {
+        //     return $request->id;
+        // } else if ($request->has('email')) {
+        //     return $request->email;
+        // } else {
+        //     return "no tiene nombre ni email";
+        // }
+>>>>>>> b9d126ff6a921c12c29d6338ccf3ca35be50f93a
+
     }
 
     function probarFormFieldStructure(){
