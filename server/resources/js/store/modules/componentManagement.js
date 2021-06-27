@@ -30,6 +30,7 @@ const state = {
  componentCardGroup: undefined,
  selectedComponentIndex: 0,
  selectedComponentGroups: [],
+ ComponentsConfigStructure: {},
  displayEnabledFormFieldsOnly: false,
  groupName: "",
  isTableLayout: false,
@@ -158,6 +159,13 @@ const getters = {
 
 const actions = {
  ...make.actions(state),
+
+ getComponentsConfigStructure({ commit }) {
+  axios.get("api/ComponentDefaultLast").then(response => {
+   commit("ComponentsConfigStructure", response.data);
+  });
+ },
+
  getDbTables({ commit }) {
   axios.get("api/showAllTables").then(response => {
    commit("dbTables", response.data);

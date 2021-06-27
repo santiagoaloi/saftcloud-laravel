@@ -55,8 +55,7 @@ class TestFunctionController extends Controller {
 
          try { 
             $object =  DB::SELECT($query);
-            return response(Exception $e)->json(array($e)); 
-            //   return  array_keys((array)$object[0]);
+              return  array_keys((array)$object[0]);
 
            }catch(Exception $e){
               return response()->json(array('message' =>$e->getMessage())); 

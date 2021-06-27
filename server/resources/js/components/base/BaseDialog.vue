@@ -3,7 +3,7 @@
   v-model="internalValue"
   v-bind="$attrs"
   v-on="$listeners"
-  :fullscreen="$vuetify.breakpoint.smAndDown || isMaximized"
+  :fullscreen="$vuetify.breakpoint.smAndDown || isMaximized || fullscreen"
   :hide-overlay="noOverlay"
   :overlay-opacity="0.7"
   :overlay-color="$vuetify.theme.dark ? 'rgba(0, 0, 0)' : 'rgba(108, 122, 137)'"
@@ -95,7 +95,6 @@ export default {
    type: [Boolean],
    default: false
   },
-
   closeOnly: {
    type: [Boolean],
    default: false
@@ -117,6 +116,10 @@ export default {
    default: false
   },
   noMaximize: {
+   type: [Boolean],
+   default: false
+  },
+  fullscreen: {
    type: [Boolean],
    default: false
   },

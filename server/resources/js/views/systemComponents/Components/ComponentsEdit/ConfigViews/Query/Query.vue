@@ -26,7 +26,6 @@ export default {
 
  computed: {
   ...sync("theme", ["isDark"]),
-  ...sync("componentManagement", ["componentEditSheet"]),
   ...get("componentManagement", ["selectedComponent"])
  },
 

@@ -26,16 +26,16 @@
   <p class="my-3">Edit components settings, groups folders or drill down for more information</p>
   <v-divider class="mt-3"></v-divider>
 
-  <baseDialog v-if="DialogEditor" width="60vw" no-gutters v-model="DialogEditor">
+  <baseDialog v-if="DialogEditor" fullscreen width="60vw" no-gutters v-model="DialogEditor">
    <v-card flat width="100%" height="70vh">
-    <base-editor v-model="query" mode="markdown" />
+    <base-editor v-model="query" mode="json" />
    </v-card>
   </baseDialog>
  </div>
 </template>
 
 <script>
-import { sync } from "vuex-pathify";
+import { sync, call } from "vuex-pathify";
 
 export default {
  name: "ComponentsAppbar",
@@ -46,6 +46,14 @@ export default {
    expand: false,
    DialogEditor: false
   };
+ },
+
+ methods: {
+  ...call("componentManagement/*")
+ },
+
+ mounted() {
+  this.getComponentsConfigStructure();
  },
 
  computed: {
