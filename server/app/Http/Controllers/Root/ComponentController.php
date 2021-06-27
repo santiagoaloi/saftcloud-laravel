@@ -7,6 +7,8 @@ use App\Models\Root\Component;
 use Illuminate\Http\Request;
 
 // use App\Http\Controllers\Root\MysqlController;
+use Illuminate\Database\QueryException;
+Use Exception;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\DB;
 
@@ -22,13 +24,10 @@ class ComponentController extends Controller {
     public function store(Request $request) {
         $json_data['table'] = $request['table'];
 
-        $sql_query = "SELECT {$request['table']}.* FROM {$request['table']}";
-        $object = array_keys((array)DB::SELECT($sql_query)[0]);
-        // $res = array_keys((array)$object[0]);
+        $sql_query = "SELECT count(*) as temp, branches.* FROM branches";
+        $object =  array_keys((array)DB::SELECT($sql_query)[0]);
 
         $formColumnsAndFields = $this->formColumnsAndFields($object);
-
-        return$formColumnsAndFields;
 
         $config['sql_table']    = $request['table'];
         $config['sql_query']    = $sql_query;
@@ -142,20 +141,40 @@ class ComponentController extends Controller {
         $sql_new = $request->config['sql_query'];
 
         if($sql_original != $sql_new) {
+            try{
+                DB::select($sql_new);
+            }catch(QueryException $ex){ 
+                dd($ex->getMessage()); 
+            }
 
-            $sql_query = 'SELECT users.* FROM users';
-            return DB::SELECT($sql_query);
+            $sql_query = str_replace('SELECT', 'SELECT count(*) as temp, ', $sql_new);
+            try{
+                $object =  array_keys((array)DB::SELECT($sql_query)[0]);
+            }catch(Exception $e){
+                return response()->json(array('message' =>$e->getMessage())); 
+            }
 
-            $mySql = new MysqlController;
-            $formColumnsAndFields = $this->formColumnsAndFields($mySql->showColumnsFromQuery($columnsBuilder));
+            $formColumnsAndFields = $this->formColumnsAndFields($object);
+            $newFormFields = $formColumnsAndFields['ArrayFields'];
 
             $originalFormFields = json_decode($query->config, true)['form_fields'];
-            $newFormFields = $request->config['form_fields'];
             $compare = new ComponentDefaultController;
-            return $compare->compareCompare($newFormFields, $originalFormFields);
+            $result = $compare->compareCompare($newFormFields, $originalFormFields);
+
+            $pepe = $result['diff'];
+            foreach($pepe as $to){
+                $new[] = $to['to'];
+            }
+
+            foreach($result['less'] as $item){
+                $new[] = $item;
+            }
+
+            $input['config']['columns'] = $formColumnsAndFields['ArrayColumns'];
+            $input['config']['form_fields'] = $new;
         }
 
-        return "hola";
+        return $input;
 
         $query->fill($input)->save();
 
@@ -225,7 +244,6 @@ class ComponentController extends Controller {
             'created_at'        => $component->created_at,
             'updated_at'        => $component->updated_at,
         ];
-
         return $result;
     }
 
@@ -263,36 +281,19 @@ class ComponentController extends Controller {
             $key[] = "{".$k."}";
             $value[] = $v;
         }
-
         $fileContent = str_ireplace($key, $value, $filePath);
-
         return $fileContent;
     }
 
     //** FORMA NUEVA **//
     function formColumnsAndFields($columns){
         foreach ($columns as $column) {
-            $ArrayColumns[] = ['name' => $column];
+            if($column != 'id' && $column != 'temp'){
+                $ArrayColumns[] = ['name' => $column];
 
-            $ArrayFields[] = (object)$this->formFieldStructure($column);
+                $ArrayFields[] = (object)$this->formFieldStructure($column);
+            }
         };
-
-        return [
-            'ArrayColumns'=>$ArrayColumns, 'ArrayFields'=>$ArrayFields
-        ];
-    }
-
-    //** FORMA VIEJA **//
-    function formColumnsAndFieldsOld($request){
-        $MysqlController = new MysqlController;
-        $columns = $MysqlController->showColumns($request);
-
-        foreach ($columns as $column) {
-            $ArrayColumns[] = ['name' => $column];
-
-            $ArrayFields[] = (object)$this->formFieldStructure($column);
-        };
-
         return [
             'ArrayColumns'=>$ArrayColumns, 'ArrayFields'=>$ArrayFields
         ];
@@ -307,6 +308,44 @@ class ComponentController extends Controller {
         return $model->form_fields;
     }
 
+    function getEachTable($string){
+        if (str_contains($string, ',')){
+            $string = explode(',', $string);
+        }
+        if(is_object($string)){
+            foreach ($string as $item){
+                $columns = $this->getColumnsFromString($item);
+            }
+        } else {
+            $columns = $this->getColumnsFromString($string);
+        }
+        return $columns;
+    }
+
+    function getColumnsFromString($item){
+        return $item;
+        $item = trim($item);
+        $column = $this->after('.', $item);
+        if($column == '*'){
+            $table = $this->before('.', $item);
+            $arrayColumns = $this->getAllColumnsFromTable($table);
+            foreach($arrayColumns as $item){
+                $columns[] = $item;
+            }
+        } else {
+            $columns[] = $column;
+        }
+        return $columns;
+    }
+
+    function getAllColumnsFromTable($table){
+        $query = DB::select("SELECT COLUMN_NAME from INFORMATION_SCHEMA.COLUMNS where TABLE_SCHEMA = 'laravel_vue' AND TABLE_NAME = '$table'");
+        foreach($query as $key => $value){
+            $columns[] = $value->COLUMN_NAME;
+        }
+        return $columns;
+    }
+
     function getStringBetween($string, $start, $end){
         $string = ' ' . $string;
         $ini = strpos($string, $start);
@@ -316,5 +355,13 @@ class ComponentController extends Controller {
         return trim(substr($string, $ini, $len));
     }
 
+    //** CUT A STRING RETURING THE STRING AFTER SPECIFIED CHARACTER **//
+    function after ($string, $inthat){
+        if (!is_bool(strpos($inthat, $string)))
+        return substr($inthat, strpos($inthat,$string)+strlen($string));
+    }
 
+    function before($string, $inthat){
+        return substr($inthat, 0, strpos($inthat, $string));
+    }
 }
