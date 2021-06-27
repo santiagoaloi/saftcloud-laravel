@@ -100,6 +100,9 @@ class ComponentDefaultController extends Controller {
         return $this->showAll(true);
     }
 
+    function getLastJson(){
+        return ComponentDefault::get('config_structure')->last();
+    }
 
 
     function getLast(){
