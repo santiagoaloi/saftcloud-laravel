@@ -174,8 +174,6 @@ class ComponentController extends Controller {
             $input['config']['form_fields'] = $new;
         }
 
-        return $input;
-
         $query->fill($input)->save();
 
         $result = $this->show($id, true);
