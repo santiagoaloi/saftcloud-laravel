@@ -24,8 +24,9 @@ class ComponentController extends Controller {
     public function store(Request $request) {
         $json_data['table'] = $request['table'];
 
-        $sql_query = "SELECT count(*) as temp, branches.* FROM branches";
-        $object =  array_keys((array)DB::SELECT($sql_query)[0]);
+        $sql_query = "SELECT {$request['table']}.* FROM {$request['table']}";
+        $sql_modified = str_replace('SELECT', 'SELECT count(*) as temp, ', $sql_query);
+        $object =  array_keys((array)DB::SELECT($sql_modified)[0]);
 
         $formColumnsAndFields = $this->formColumnsAndFields($object);
 
