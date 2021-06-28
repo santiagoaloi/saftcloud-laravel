@@ -4,13 +4,13 @@
   v-bind="$attrs"
   v-on="$listeners"
   :fullscreen="$vuetify.breakpoint.smAndDown || isMaximized || fullscreen"
-  :hide-overlay="noOverlay"
+  :hide-overlay="noOverlay || fullscreen"
   :overlay-opacity="0.7"
   :overlay-color="$vuetify.theme.dark ? 'rgba(0, 0, 0)' : 'rgba(108, 122, 137)'"
   scrollable
   class="d-flex flex-column"
  >
-  <v-toolbar class=" px-6" flat :dense="dense" dark :color="$vuetify.theme.dark ? '#202225' : 'grey darken-2'">
+  <v-toolbar absolute class=" px-6" flat :dense="dense" dark :color="$vuetify.theme.dark ? '#202225' : 'grey darken-2'">
    <template>
     <v-btn
      v-if="$vuetify.breakpoint.mdAndUp && !noMaximize"
@@ -63,7 +63,7 @@
    </template>
   </v-toolbar>
   <!-- <v-sheet color="primary" height="2" /> -->
-  <v-card width="100%" :class="noGutters ? '' : 'pa-2'" style="overflow: auto" flat tile :height="height">
+  <v-card width="100%" :class="noGutters ? '' : 'pa-2'" style="overflow: auto" flat tile>
    <v-container fluid class="fill-height">
     <slot />
    </v-container>
@@ -167,9 +167,3 @@ export default {
  }
 };
 </script>
-<style>
-.bottomColor {
- height: 3px;
- background: #0eb675;
-}
-</style>

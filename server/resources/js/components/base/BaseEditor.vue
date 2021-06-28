@@ -109,23 +109,23 @@ export default {
 <style scoped>
 .text\/x-mariadb {
  height: 100%;
- font-size: 22px !important;
+ font-size: 20px !important;
  position: relative;
 }
 
 .text\/x-mariadb >>> .CodeMirror {
  height: 100%;
- font-size: 22px !important;
+ font-size: 20px !important;
  position: relative;
 }
 
 .json-editor {
  height: 100%;
- font-size: 22px;
  position: relative;
 }
 .json-editor >>> .CodeMirror {
  height: 100%;
+ font-size: 20px !important;
  min-height: 300px;
 }
 .json-editor >>> .CodeMirror-scroll {
@@ -137,6 +137,7 @@ export default {
 }
 .mrkd-editor >>> .CodeMirror {
  height: 100%;
+ font-size: 20px !important;
  min-height: 300px;
 }
 .mrkd-editor >>> .CodeMirror-scroll {

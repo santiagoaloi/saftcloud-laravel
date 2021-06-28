@@ -26,9 +26,17 @@
   <p class="my-3">Edit components settings, groups folders or drill down for more information</p>
   <v-divider class="mt-3"></v-divider>
 
-  <baseDialog v-if="DialogEditor" fullscreen width="60vw" no-gutters v-model="DialogEditor">
-   <v-card flat width="100%" height="70vh">
-    <base-editor v-model="query" mode="json" />
+  <baseDialog
+   v-model="DialogEditor"
+   fullscreen
+   transition="dialog-bottom-transition"
+   @save="saveComponentsConfigStructure()"
+   @close="DialogEditor = false"
+   width="60vw"
+   no-gutters
+  >
+   <v-card flat width="100%" class="dialogHeight pt-14">
+    <base-editor v-model="ComponentsConfigStructure" mode="json" />
    </v-card>
   </baseDialog>
  </div>
@@ -57,7 +65,13 @@ export default {
  },
 
  computed: {
-  ...sync("componentManagement", ["dialogComponent", "search"])
+  ...sync("componentManagement", ["dialogComponent", "search", "ComponentsConfigStructure"])
  }
 };
 </script>
+<style>
+.dialogHeight {
+ height: calc(100vh - 18px);
+ overflow-y: auto;
+}
+</style>

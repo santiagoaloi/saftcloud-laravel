@@ -160,9 +160,13 @@ const getters = {
 const actions = {
  ...make.actions(state),
 
+ saveComponentsConfigStructure({ commit, state }) {
+  axios.post("api/ComponentDefault", { config_structure: "1" }).then(response => {});
+ },
+
  getComponentsConfigStructure({ commit }) {
   axios.get("api/ComponentDefaultLast").then(response => {
-   commit("ComponentsConfigStructure", response.data);
+   commit("ComponentsConfigStructure", JSON.stringify(response.data, null, 2));
   });
  },
 
