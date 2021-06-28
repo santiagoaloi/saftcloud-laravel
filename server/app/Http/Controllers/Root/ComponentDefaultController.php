@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 class ComponentDefaultController extends Controller {
 
     public function store(Request $request) {
-        $query = ComponentDefault::create([$request]);
+        $query = ComponentDefault::create(['config_structure'=>json_encode($request['config_structure'])]);
         return response([
             'row'=> $query,
             'status'=> true
