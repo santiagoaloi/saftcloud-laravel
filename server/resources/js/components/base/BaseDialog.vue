@@ -10,7 +10,7 @@
   scrollable
   class="d-flex flex-column"
  >
-  <v-toolbar absolute class=" px-6" flat :dense="dense" dark :color="$vuetify.theme.dark ? '#202225' : 'grey darken-2'">
+  <v-toolbar :absolute="absoluteToolbar" class=" px-6" flat :dense="dense" dark :color="$vuetify.theme.dark ? '#202225' : 'grey darken-2'">
    <template>
     <v-btn
      v-if="$vuetify.breakpoint.mdAndUp && !noMaximize"
@@ -87,6 +87,12 @@ export default {
    type: [String],
    default: ""
   },
+
+  absoluteToolbar: {
+   type: [Boolean],
+   default: false
+  },
+
   noActions: {
    type: [Boolean],
    default: false

@@ -34,6 +34,7 @@
    @close="DialogEditor = false"
    width="60vw"
    no-gutters
+   absoluteToolbar
   >
    <v-card flat width="100%" class="dialogHeight pt-14">
     <base-editor v-model="ComponentsConfigStructure" mode="json" />
