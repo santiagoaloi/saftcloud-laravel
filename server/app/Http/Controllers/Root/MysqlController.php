@@ -61,8 +61,8 @@ class MysqlController extends Controller {
     function showAllTablesAndColumns(){
         $tables = DB::select("select table_name from information_schema.tables where table_schema = 'laravel_vue'");
         foreach($tables as $table){
-            $table_name = json_encode($table->table_name);
-            $columns = DB::select("select column_name from information_schema.columns where table_schema = 'laravel_vue' and table_name = $table_name");
+            $table_name = $table->table_name;
+            $columns = DB::select("select column_name from information_schema.columns where table_schema = 'laravel_vue' and table_name = '$table_name'");
             foreach($columns as $column){
                 $column_name[] = $column->column_name;
             }
