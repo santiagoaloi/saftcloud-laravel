@@ -67,6 +67,7 @@ class MysqlController extends Controller {
                 $column_name[] = $column->column_name;
             }
             $tableArray[$table_name] = $column_name;
+            $column_name = [];
         }
 
         return response([
