@@ -7,10 +7,25 @@ use App\Models\Root\ComponentDefault;
 use App\Models\Root\Component;
 use Illuminate\Http\Request;
 
+use App\Http\Controllers\Root\ComponentController;
+
 class ComponentDefaultController extends Controller {
 
     public function store(Request $request) {
         $query = ComponentDefault::create(['config_structure'=>json_encode($request['config_structure'])]);
+        
+        $getComponents = new ComponentController;
+        $components = $getComponents->showAll(true);
+        foreach ($components as $component){
+            $result = $this->compareComponentConfig($component);
+            $component['config']['form_fields'] = $result;
+            $newComponents[]=$component;
+        };
+
+        $saveComponents = $getComponents->updateAll($newComponents, true);
+
+        return $saveComponents;
+
         return response([
             'row'=> $query,
             'status'=> true
@@ -109,30 +124,53 @@ class ComponentDefaultController extends Controller {
         return ComponentDefault::pluck('config_structure')->last();
     }
 
-    public function compareComponentConfig(Request $request){
+    public function compareComponentConfig($request){
         $model = $this->getLast();
 
-        $getConfig = Component::find($request['id'], ['config']);
-
-        $it_1 = json_decode($getConfig->config, true);
+        $items = $request['config']['form_fields'];
         $it_2 = json_decode($model, true);
-
-        $items = $it_1['form_fields'];
 
         $modelo = $it_2['form_fields'];
 
         foreach($items as $item){
-            $pepe = $this->compareCompare($item, $modelo);
+            $result[] = $this->testCompare($item, $modelo);
         };
-        return $pepe;
+        return $result;
     }
 
-    public function compareCompare($item, $model){
+    function testCompare($item, $model){
+        $newItem = [];
+        foreach($model as $k => $v) {
+            if(!isset($item[$k])) {
+                $newItem[$k] = $v;
+            } else if (isset($item[$k]) && !is_array($item[$k]) && is_array($v)) {
+                $newItem[$k] = $v;
+            } else if (isset($item[$k]) && is_array($item[$k]) && !is_array($v)) {
+                $newItem[$k] = $v;
+            } else if (isset($item[$k]) && is_array($item[$k]) && is_array($v)) {
+                $newVal = [];
+                foreach($v as $subKey => $val) {
+                    if(is_array($val)){
+                        $test = $this->testCompare($item[$k][$subKey], $val);
+                        $newVal[$subKey] = $test;
+                    } else if (!is_array($val) && !isset($item[$k][$subKey])){
+                        $newVal[$subKey] = $model[$k][$subKey];
+                    } else {
+                        $newVal[$subKey] = $item[$k][$subKey];
+                    }
+                } $newItem[$k] = $newVal;
+            } else {
+                $newItem[$k] = $item[$k];
+            }
+        }
+        return $newItem;
+    }
 
+    public function compareItems($item, $model){
         $result = array("more"=>array(),"less"=>array(),"diff"=>array());
         foreach($model as $k => $v) {
             if(is_array($v) && isset($item[$k]) && is_array($item[$k])) {
-                $sub_result = $this->compareCompare($v, $item[$k]);
+                $sub_result = $this->compareItems($v, $item[$k]);
                 //merge results
                 foreach(array_keys($sub_result) as $key) {
                     if(!empty($sub_result[$key])) {

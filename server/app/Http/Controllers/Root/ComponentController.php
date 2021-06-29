@@ -185,12 +185,17 @@ class ComponentController extends Controller {
         ], 200);
     }
 
-    public function updateAll(Request $request) {
+    public function updateAll($request, $local = false) {
         foreach($request as $item){
-            $this->update($item, $item->id);
+            $component = Component::find($item['id']);
+            $component->fill($item)->save();
         };
 
         $result = $this->showAll(true);
+
+        if($local){
+            return $result;
+        }
 
         return response([
             'components'=> $result,
