@@ -1,6 +1,6 @@
 <template>
  <div class="d-flex justify-space-between align-center">
-  <v-tabs color="secondary" v-model="activeStatusTab" showArrows class="col-6 mt-n3" background-color="transparent" sliderSize="1">
+  <v-tabs color="accent" v-model="activeStatusTab" showArrows class="col-6 mt-n3" background-color="transparent" sliderSize="1">
    <v-tab :activeClass="isDark ? 'white--text' : ''" :disabled="isComponentsEmpty" :key="i" v-for="(tab, i) in componentStatusTabs" :ripple="false">
     <v-icon :color="tab.color" small left>
      {{ tab.icon }}

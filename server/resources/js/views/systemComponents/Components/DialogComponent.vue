@@ -1,12 +1,12 @@
 <template>
  <baseDialog
-  v-model="dialogComponent"
+  v-model="dialogs.dialogComponent"
   title="Add new component"
   C
   persistent
   max-width="900"
   @save="validateComponentForm()"
-  @close="() => (dialogComponent = false)"
+  @close="() => (dialogs.dialogComponent = false)"
  >
   <ValidationObserver ref="createComponentForm" slim>
    <v-row>
@@ -14,40 +14,27 @@
      <small>Group</small>
      <validation-provider v-slot="{ errors }" name="component group" rules="required">
       <v-autocomplete
-       hide-details
+       prepend-inner-icon="mdi-folder-outline"
        @update:search-input="syncGroupInputValue($event)"
-       autofocus
-       v-model="componentSettings.component_group_id"
        solo
+       v-model="componentSettings.component_group_id"
        :items="allGroups"
+       :maxlength="25"
        item-value="id"
        item-text="name"
-       item-color="primary"
+       placeholder="Select or create groups"
+       hide-selected
+       hide-no-data
        :color="isDark ? 'white' : ''"
        :background-color="isDark ? 'grey darken-4' : 'grey lighten-5'"
        :error="errors.length > 0"
-       prepend-inner-icon="mdi-comment"
+       item-color="primary"
        :menu-props="{
-        transition: 'slide-y-transition'
+        transition: 'slide-y-transition',
+        closeOnContentClick: true
        }"
+       hide-details
       >
-       <template v-slot:no-data>
-        <v-list-item>
-         <v-list-item-avatar>
-          <v-icon>
-           mdi-plus
-          </v-icon>
-         </v-list-item-avatar>
-
-         <v-list-item-content>
-          <v-list-item-title>
-           <a @click="dialogGroup = !dialogGroup">Create group </a>
-           {{ groupName }}
-          </v-list-item-title>
-         </v-list-item-content>
-        </v-list-item>
-       </template>
-
        <template #item="{ item, on }">
         <v-list-item :ripple="false" v-on="on">
          <v-list-item-avatar>
@@ -56,11 +43,6 @@
          <v-list-item-content>
           <v-list-item-title> {{ item.name }} </v-list-item-title>
          </v-list-item-content>
-         <v-list-item-avatar>
-          <v-btn :ripple="false" @click.stop="removeGroupWarning(item.id, item.name)" depressed fab x-small>
-           <v-icon>mdi-delete-outline</v-icon>
-          </v-btn>
-         </v-list-item-avatar>
         </v-list-item>
        </template>
       </v-autocomplete>
@@ -158,9 +140,11 @@
 <script>
 import { sync, call } from "vuex-pathify";
 import { store } from "@/store";
+import componentGroups from "@/mixins/componentGroups";
 
 export default {
  name: "DialogComponent",
+ mixins: [componentGroups],
 
  mounted() {
   this.getDbTables();
@@ -168,7 +152,7 @@ export default {
 
  computed: {
   ...sync("theme", ["isDark"]),
-  ...sync("componentManagement", ["allGroups", "dialogComponent", "componentSettings", "dbTables", "dialogGroup", "groupName"])
+  ...sync("componentManagement", ["allGroups", "dialogs", "componentSettings", "dbTables", "groupName"])
  },
 
  methods: {
@@ -180,26 +164,6 @@ export default {
      this.createComponent();
     }
    });
-  },
-
-  removeGroupWarning(id, name) {
-   this.$swal({
-    title: `Delete ${name} group?`,
-    text: "This action cannot be undone.",
-    showCancelButton: true,
-    confirmButtonText: "Delete",
-    cancelButtonText: "Cancel",
-    confirmButtonColor: "#EC407A",
-    backdrop: "rgba(108, 122, 137, 0.8)"
-   }).then(result => {
-    if (result.value) {
-     this.removeGroup(id);
-    }
-   });
-  },
-
-  syncGroupInputValue(e) {
-   store.set("componentManagement/groupName", e);
   }
  }
 };

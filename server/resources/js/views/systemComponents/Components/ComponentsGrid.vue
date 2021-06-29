@@ -16,7 +16,7 @@
       "
      >
       <v-card-actions class="px-0 ">
-       <v-avatar @click="dialogIcons = true" rounded :color="component.config_settings.icon.color">
+       <v-avatar @click="dialogs.dialogIcons = true" rounded :color="component.config_settings.icon.color">
         <v-icon dark>
          {{ component.config_settings.icon.name }}
         </v-icon>
@@ -97,7 +97,7 @@ export default {
    "allGroups"
   ]),
 
-  ...sync("componentManagement", ["componentCardGroup", "dialogIcons"])
+  ...sync("componentManagement", ["componentCardGroup", "dialogs", "cardGroupKey"])
  },
 
  methods: {

@@ -1,5 +1,5 @@
 <template>
- <baseDialog v-model="dialogIcons" title="Icons" saveOnly persistent max-width="600" @save="() => (dialogIcons = false)">
+ <baseDialog v-model="dialogs.dialogIcons" title="Icons" saveOnly persistent max-width="600" @save="() => (dialogs.dialogIcons = false)">
   <template v-if="selectedComponent">
    <v-card-text>
     <v-row>
@@ -73,7 +73,7 @@ export default {
  }),
 
  computed: {
-  ...sync("componentManagement", ["dialogIcons"]),
+  ...sync("componentManagement", ["dialogs"]),
   ...get("componentManagement", ["selectedComponent"]),
 
   items() {

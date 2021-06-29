@@ -10,9 +10,7 @@ import CodeMirror from "codemirror";
 import "codemirror/addon/lint/lint.css";
 import "codemirror/lib/codemirror.css";
 import "codemirror/theme/material-palenight.css";
-import "codemirror/theme/eclipse.css";
-import "codemirror/theme/dracula.css";
-import "codemirror/theme/base16-light.css";
+import "codemirror/theme/elegant.css";
 
 import "codemirror/mode/javascript/javascript";
 import "codemirror/mode/markdown/markdown";
@@ -32,6 +30,7 @@ export default {
  },
  computed: {
   ...sync("theme", ["isDark"]),
+  ...sync("componentManagement", ["dbTablesAndColumns"]),
 
   editorStyle() {
    if (this.mode === "sql") return "text/x-mariadb";
@@ -69,21 +68,18 @@ export default {
    autofocus: true,
    showCursorWhenSelecting: true,
    gutters: ["CodeMirror-lint-markers"],
-   theme: this.isDark ? "material-palenight" : "base16-light",
+   theme: this.isDark ? "material-palenight" : "elegant",
    lint: true,
    hintOptions: {
     completeSingle: false,
-    tables: {
-     users: ["name", "score", "birthDate"],
-     countries: ["name", "population", "size"]
-    }
+    tables: { ...this.dbTablesAndColumns }
    }
   });
 
-  //Show sql hints only when letters are pressed.
+  //Show sql hints only when alpha keystrokes are pressed.
   var letters = /^[A-Za-z]+$/;
   this.editor.on("inputRead", function(editor, change) {
-   if (change.text[0].match(letters)) {
+   if (change.text[0].match(letters) || change.text[0] === ".") {
     editor.showHint();
    }
   });

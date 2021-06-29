@@ -8,7 +8,7 @@
 
 <script>
 import axios from "axios";
-import { sync, get } from "vuex-pathify";
+import { sync, call, get } from "vuex-pathify";
 export default {
  name: "ComponentsEditQuery",
  components: {},
@@ -29,9 +29,9 @@ export default {
   ...get("componentManagement", ["selectedComponent"])
  },
 
- mounted() {},
-
- methods: {}
+ methods: {
+  ...call("componentManagement/*")
+ }
 };
 </script>
 

@@ -1,5 +1,7 @@
 <template>
- <v-sheet class="rightPanelHeight transparent"> hello </v-sheet>
+ <v-sheet class="rightPanelHeight transparent">
+  <v-text-field v-model="selectedComponentFormField.label"> </v-text-field>
+ </v-sheet>
 </template>
 
 <script>
@@ -13,7 +15,7 @@ export default {
 
  computed: {
   ...sync("theme", ["isDark"]),
-  ...get("componentManagement", ["selectedComponent"])
+  ...get("componentManagement", ["selectedComponentFormField"])
  }
 };
 </script>

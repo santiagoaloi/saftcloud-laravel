@@ -7,8 +7,8 @@ import cloneDeep from "lodash/cloneDeep";
 
 const initialComponentSettings = () => {
  return {
-  name: "",
   note: "",
+  name: "",
   table: "",
   title: "",
   component_group_id: ""
@@ -17,23 +17,27 @@ const initialComponentSettings = () => {
 
 const state = {
  search: "",
- searchFields: "",
  dbTables: [],
+ dbTablesAndColumns: {},
  allGroups: [],
+ groupName: "",
  tableColumns: [],
+ searchFields: "",
  allComponents: [],
- dialogGroup: false,
- dialogIcons: false,
+ dialogs: {
+  dialogGroup: false,
+  dialogIcons: false,
+  dialogComponent: false
+ },
  activeStatusTab: 0,
- dialogComponent: false,
+ isTableLayout: false,
  componentEditSheet: false,
- componentCardGroup: undefined,
  selectedComponentIndex: 0,
  selectedComponentGroups: [],
  ComponentsConfigStructure: {},
+ componentCardGroup: undefined,
+ selectedComponentActiveField: "",
  displayEnabledFormFieldsOnly: false,
- groupName: "",
- isTableLayout: false,
  componentEditDrawerActiveMenu: undefined,
  componentSettings: initialComponentSettings(),
  tableHeaders: [
@@ -58,6 +62,11 @@ const mutations = make.mutations(state);
 const getters = {
  selectedComponent: (state, getters) => {
   return getters.allComponentsFiltered[state.selectedComponentIndex];
+ },
+
+ selectedComponentFormField: (state, getters) => {
+  const index = getters.selectedComponent.config.form_fields.findIndex(f => f.field == state.selectedComponentActiveField);
+  return getters.selectedComponent.config.form_fields[index];
  },
 
  previousComponentDisabled: state => {
@@ -130,11 +139,13 @@ const getters = {
   return state.componentStatusTabs[state.activeStatusTab].value;
  },
 
- isStarredIcon: () => component => (component.status.starred ? "mdi-star" : "mdi-star-outline"),
- isActiveIcon: () => component => (component.status.active ? "mdi-lightbulb-on" : "mdi-lightbulb-on-outline"),
- isModularIcon: () => component => (component.status.modular ? "mdi-view-module" : "mdi-view-module-outline"),
-
  isStarredColor: () => component => (component.status.starred ? "orange" : "grey darken-1"),
+
+ isStarredIcon: () => component => (component.status.starred ? "mdi-star" : "mdi-star-outline"),
+
+ isActiveIcon: () => component => (component.status.active ? "mdi-lightbulb-on" : "mdi-lightbulb-on-outline"),
+
+ isModularIcon: () => component => (component.status.modular ? "mdi-view-module" : "mdi-view-module-outline"),
 
  isActiveColor: (_, __, rootState) => component =>
   rootState.theme.isDark && component.status.active
@@ -173,6 +184,12 @@ const actions = {
  getDbTables({ commit }) {
   axios.get("api/showAllTables").then(response => {
    commit("dbTables", response.data);
+  });
+ },
+
+ getDbTablesAndColumns({ commit }) {
+  axios.get("api/showAllTablesAndColumns").then(response => {
+   commit("dbTablesAndColumns", response.data.tableAndColumns);
   });
  },
 
@@ -216,8 +233,8 @@ const actions = {
   });
  },
 
- renameGroup({ commit }, { id, name }) {
-  axios.patch(`api/ComponentGroup/${id}`, { name: name }).then(response => {
+ renameGroup({ commit }, { id, newName }) {
+  axios.patch(`api/ComponentGroup/${id}`, { name: newName }).then(response => {
    if (response.data.status) {
     commit("allGroups", response.data.groups);
     store.set("snackbar/value", true);
@@ -275,10 +292,9 @@ const actions = {
  saveGroup({ state, commit }) {
   axios.post("api/ComponentGroup", { name: state.groupName }).then(response => {
    if (response.data.status) {
-    state.dialogGroup = false;
+    state.dialogs.dialogGroup = false;
     commit("allGroups", response.data.groups);
-    store.set("componentManagement/groupName", "");
-    store.set(`componentManagement/allComponents@${index}`, response.data.component);
+    store.set("componentManagement/groupName", null);
     store.set("snackbar/value", true);
     store.set("snackbar/text", `Group "${state.groupName}" created`);
     store.set("snackbar/color", "grey darken-2");
@@ -286,15 +302,26 @@ const actions = {
   });
  },
 
- createComponent({ state, commit }) {
+ createComponent({ state, commit, getters }) {
   axios.post("api/Component", state.componentSettings).then(response => {
    if (response.data.status) {
     commit("allComponents", response.data.components);
-    state.dialogComponent = false;
-    state.componentSettings = initialComponentSettings();
+    state.dialogs.dialogComponent = false;
     store.set("snackbar/value", true);
     store.set("snackbar/text", "Component created");
     store.set("snackbar/color", "grey darken-2");
+
+    // Autoselect latest created component
+    store.set("drawers/secureComponentDrawer", true);
+
+    const activeGroup = state.allGroups.filter(item => {
+     return item.id === state.componentSettings.component_group_id;
+    })[0];
+
+    state.selectedComponentGroups.push(activeGroup);
+    store.set("componentManagement/componentCardGroup", getters.allComponentsFiltered.length - 1);
+    store.set("componentManagement/selectedComponentIndex", state.allComponents.length - 1);
+    state.componentSettings = initialComponentSettings();
    }
   });
  },

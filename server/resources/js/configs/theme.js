@@ -19,25 +19,22 @@ export default {
 
  // dark theme colors
  dark: {
-  background: "#ffffff",
   surface: "#111b227",
   primary: "#24262a",
   secondary: "#829099",
-  accent: "#82B1FF",
+  accent: "#5469d4",
   error: "#FF5252",
   info: "#2196F3",
   success: "#4CAF502",
-  warning: "#FFC107",
   warning: "#FFC107"
  },
 
  // light theme colors
  light: {
   background: "#ffffff",
-  //   surface: "#f2f5f8",
   primary: "#5469d4",
   secondary: "#a0b9c8",
-  accent: "#048ba8",
+  accent: "#5469d4",
   error: "#ef476f",
   info: "#2196F3",
   success: "#06d6a0",

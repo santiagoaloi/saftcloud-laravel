@@ -5,7 +5,7 @@
    <!-- Navigation menu fixed  -->
    <template v-slot:prepend>
     <div class="px-4 my-2">
-     <div class="title font-weight-bold primary--text text--lighten-2">SaftCloud</div>
+     <div class="title font-weight-bold accent--text ">SaftCloud</div>
      <div class="overline grey--text">v5.0.2</div>
     </div>
    </template>

@@ -3,30 +3,30 @@
   <components-appbar />
   <components-groups />
   <components-tabs />
+  <v-divider />
 
   <v-card color="transparent" flat :height="calculateHeight()" style="overflow-y:auto">
    <template v-if="!isAllFilteredComponentsEmpty">
-    <v-fade-transition hide-on-leave>
+    <v-scroll-y-transition hide-on-leave>
      <components-table v-if="isTableLayout" />
-    </v-fade-transition>
+    </v-scroll-y-transition>
    </template>
 
    <template v-if="!isAllFilteredComponentsEmpty">
-    <v-fade-transition hide-on-leave>
+    <v-scroll-x-transition hide-on-leave>
      <components-grid v-if="!isTableLayout" />
-    </v-fade-transition>
+    </v-scroll-x-transition>
    </template>
 
    <template v-if="isAllFilteredComponentsEmpty">
-    <v-fade-transition hide-on-leave>
+    <v-scroll-y-transition hide-on-leave>
      <components-no-data />
-    </v-fade-transition>
+    </v-scroll-y-transition>
    </template>
   </v-card>
 
   <dialog-icons />
-  <dialog-group v-if="dialogGroup" />
-  <dialog-component v-if="dialogComponent" />
+  <dialog-component v-if="dialogs.dialogComponent" />
   <component-edit-sheet />
  </div>
 </template>
@@ -38,15 +38,14 @@ import { sync, call, get } from "vuex-pathify";
 export default {
  name: "ComponentsManagement",
  components: {
-  DialogGroup: () => import("./DialogGroup"),
   DialogIcons: () => import("./DialogIcons"),
   ComponentsTabs: () => import("./ComponentsTabs"),
   ComponentsGrid: () => import("./ComponentsGrid"),
   ComponentsTable: () => import("./ComponentsTable"),
+  ComponentsGroups: () => import("./ComponentsGroups"),
   DialogComponent: () => import("./DialogComponent"),
   ComponentsNoData: () => import("./ComponentsNoData"),
   ComponentsAppbar: () => import("./ComponentsAppbar"),
-  ComponentsGroups: () => import("./ComponentsGroups"),
   ComponentEditSheet: () => import("./ComponentsEdit/ComponentsEditSheet")
  },
 
@@ -57,17 +56,18 @@ export default {
  computed: {
   ...sync("theme", ["isDark"]),
   ...get("componentManagement", ["isAllFilteredComponentsEmpty"]),
-  ...sync("componentManagement", ["dialogComponent", "dialogIcons", "dialogGroup", "isTableLayout"])
+  ...sync("componentManagement", ["dialogs", "isTableLayout"])
  },
 
  mounted() {
   this.getComponents();
+  this.getDbTablesAndColumns();
  },
 
  methods: {
   ...call("componentManagement/*"),
   calculateHeight() {
-   return Number(this.$vuetify.breakpoint.height - 375);
+   return Number(this.$vuetify.breakpoint.height - 338);
   }
  }
 };

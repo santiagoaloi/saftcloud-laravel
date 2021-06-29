@@ -31,6 +31,7 @@
        :key="i"
        two-line
        :ripple="false"
+       @click="selectedComponentActiveField = item.field"
       >
        <v-list-item-action @click.stop>
         <v-switch :ripple="false" v-model="item.displayField" :color="isDark ? 'indigo lighten-4' : 'primary accent-4'" />
@@ -80,7 +81,7 @@ export default {
 
  computed: {
   ...sync("theme", ["isDark"]),
-  ...sync("componentManagement", ["searchFields", "displayEnabledFormFieldsOnly"]),
+  ...sync("componentManagement", ["searchFields", "displayEnabledFormFieldsOnly", "selectedComponentActiveField"]),
   ...get("componentManagement", ["selectedComponent", "filteredFormFields", "filteredSelectedFields"])
  }
 };

@@ -20,13 +20,16 @@
 
     <v-btn @click="DialogEditor = true" class="mx-2 "> <v-icon class="mr-2" small> mdi-code-json </v-icon>Config Structure </v-btn>
     <v-btn class="mx-2 "> <v-icon class="mr-2" small> mdi-arrow-top-right </v-icon>Export </v-btn>
-    <v-btn class="ml-2" color="primary" @click.stop="dialogComponent = true"> <v-icon class="mr-2" small> mdi-plus </v-icon>Create component </v-btn>
+    <v-btn class="ml-2" :color="isDark ? 'accent' : 'primary'" @click.stop="dialogs.dialogComponent = true">
+     <v-icon class="mr-2" small> mdi-plus </v-icon>Create component
+    </v-btn>
    </div>
   </div>
   <p class="my-3">Edit components settings, groups folders or drill down for more information</p>
   <v-divider class="mt-3"></v-divider>
 
   <baseDialog
+   v-if="DialogEditor"
    v-model="DialogEditor"
    fullscreen
    transition="dialog-bottom-transition"
@@ -35,6 +38,7 @@
    width="60vw"
    no-gutters
    absoluteToolbar
+   title="Component config structure"
   >
    <v-card flat width="100%" class="dialogHeight pt-14">
     <base-editor v-model="ComponentsConfigStructure" mode="json" />
@@ -66,7 +70,8 @@ export default {
  },
 
  computed: {
-  ...sync("componentManagement", ["dialogComponent", "search", "ComponentsConfigStructure"])
+  ...sync("theme", ["isDark"]),
+  ...sync("componentManagement", ["dialogs", "search", "ComponentsConfigStructure"])
  }
 };
 </script>

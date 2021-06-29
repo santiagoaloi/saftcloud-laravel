@@ -13,7 +13,7 @@
 
   <v-list>
    <v-list-item>
-    <v-list-item-avatar @click="dialogIcons = true">
+    <v-list-item-avatar @click="dialogs.dialogIcons = true">
      <v-icon :color="selectedComponent.config_settings.icon.color">
       {{ selectedComponent.config_settings.icon.name }}
      </v-icon>
@@ -211,7 +211,7 @@ export default {
  computed: {
   ...sync("theme", ["isDark"]),
   ...sync("drawers", ["secureComponentDrawer"]),
-  ...sync("componentManagement", ["componentCardGroup", "allComponents", "allGroups", "selectedComponentIndex", "dialogIcons", "componentEditSheet"]),
+  ...sync("componentManagement", ["componentCardGroup", "allComponents", "allGroups", "selectedComponentIndex", "dialogs", "componentEditSheet"]),
   ...get("componentManagement", [
    "hasUnsavedChanges",
    "hasSelectedComponent",

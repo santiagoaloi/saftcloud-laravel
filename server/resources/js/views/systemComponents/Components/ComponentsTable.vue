@@ -22,6 +22,7 @@ export default {
 
  data() {
   return {};
+  allComponentsFiltered;
  },
 
  computed: {
@@ -35,14 +36,3 @@ export default {
  }
 };
 </script>
-
-<style scoped lang="scss">
-.theme--dark.v-tabs .v-tab--active:hover::before,
-.theme--dark.v-tabs .v-tab--active::before {
- opacity: 0;
-}
-
-.v-tab:before {
- background-color: unset;
-}
-</style>
