@@ -148,7 +148,7 @@ class ComponentController extends Controller {
                 dd($ex->getMessage()); 
             }
 
-            $sql_query = str_replace('SELECT', 'SELECT count(*) as temp, ', $sql_new);
+            $sql_query = str_ireplace('SELECT', 'SELECT count(*) as temp, ', $sql_new);
             try{
                 $object =  array_keys((array)DB::SELECT($sql_query)[0]);
             }catch(Exception $e){
@@ -161,15 +161,6 @@ class ComponentController extends Controller {
             $originalFormFields = json_decode($query->config, true)['form_fields'];
             $compare = new ComponentDefaultController;
             $result = $compare->testCompare($newFormFields, $originalFormFields);
-
-            // $pepe = $result['diff'];
-            // foreach($pepe as $to){
-            //     $new[] = $to['to'];
-            // }
-
-            // foreach($result['less'] as $item){
-            //     $new[] = $item;
-            // }
 
             $input['config']['columns'] = $formColumnsAndFields['ArrayColumns'];
             $input['config']['form_fields'] = $result;
