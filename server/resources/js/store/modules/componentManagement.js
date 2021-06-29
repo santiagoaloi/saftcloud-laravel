@@ -25,7 +25,6 @@ const state = {
  searchFields: "",
  allComponents: [],
  dialogs: {
-  dialogGroup: false,
   dialogIcons: false,
   dialogComponent: false
  },
@@ -268,6 +267,8 @@ const actions = {
     store.set("snackbar/value", true);
     store.set("snackbar/text", "Component saved");
     store.set("snackbar/color", "grey darken-2");
+   } else {
+    console.log(response);
    }
   });
  },
@@ -314,11 +315,11 @@ const actions = {
     // Autoselect latest created component
     store.set("drawers/secureComponentDrawer", true);
 
-    const activeGroup = state.allGroups.filter(item => {
-     return item.id === state.componentSettings.component_group_id;
-    })[0];
+    const activeGroup = state.allGroups.find(item => item.id === state.componentSettings.component_group_id);
+    const groupExists = state.selectedComponentGroups.find(item => item.id === activeGroup.id);
 
-    state.selectedComponentGroups.push(activeGroup);
+    if (!groupExists) state.selectedComponentGroups.push(activeGroup);
+
     store.set("componentManagement/componentCardGroup", getters.allComponentsFiltered.length - 1);
     store.set("componentManagement/selectedComponentIndex", state.allComponents.length - 1);
     state.componentSettings = initialComponentSettings();

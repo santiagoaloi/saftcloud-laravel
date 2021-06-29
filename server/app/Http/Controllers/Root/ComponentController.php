@@ -144,9 +144,14 @@ class ComponentController extends Controller {
         if($sql_original != $sql_new) {
             try{
                 DB::select($sql_new);
-            }catch(QueryException $ex){ 
-                dd($ex->getMessage()); 
+            }catch(Exception $e){
+                return response()->json(array('message' =>$e->getMessage())); 
             }
+
+            // No puedo accceder al string del mensaje de error.
+            // }catch(QueryException $ex){ 
+            //     dd($ex->getMessage()); 
+            // }
 
             $sql_query = str_replace('SELECT', 'SELECT count(*) as temp, ', $sql_new);
             try{

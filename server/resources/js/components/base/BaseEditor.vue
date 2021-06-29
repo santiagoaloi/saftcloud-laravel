@@ -25,7 +25,11 @@ export default {
 
  data() {
   return {
-   editor: {}
+   editor: {},
+   tables: {
+    users: ["name", "score", "birthDate"],
+    countries: ["name", "population", "size"]
+   }
   };
  },
  computed: {
@@ -57,6 +61,7 @@ export default {
  },
 
  mounted() {
+  console.log(this.tables), console.log(this.dbTablesAndColumns);
   this.editor = CodeMirror.fromTextArea(this.$refs.textarea, {
    spellcheck: false,
    autocorrect: false,
@@ -72,7 +77,7 @@ export default {
    lint: true,
    hintOptions: {
     completeSingle: false,
-    tables: { ...this.dbTablesAndColumns }
+    tables: { ...this.tables, ...this.dbTablesAndColumns }
    }
   });
 
