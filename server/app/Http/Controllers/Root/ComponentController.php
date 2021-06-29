@@ -167,17 +167,8 @@ class ComponentController extends Controller {
             $compare = new ComponentDefaultController;
             $result = $compare->testCompare($newFormFields, $originalFormFields);
 
-            $pepe = $result['diff'];
-            foreach($pepe as $to){
-                $new[] = $to['to'];
-            }
-
-            foreach($result['less'] as $item){
-                $new[] = $item;
-            }
-
             $input['config']['columns'] = $formColumnsAndFields['ArrayColumns'];
-            $input['config']['form_fields'] = $new;
+            $input['config']['form_fields'] = $result;
         }
 
         $query->fill($input)->save();
