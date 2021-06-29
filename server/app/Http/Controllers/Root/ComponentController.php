@@ -160,7 +160,7 @@ class ComponentController extends Controller {
 
             $originalFormFields = json_decode($query->config, true)['form_fields'];
             $compare = new ComponentDefaultController;
-            $result = $compare->compareCompare($newFormFields, $originalFormFields);
+            $result = $compare->testCompare($newFormFields, $originalFormFields);
 
             $pepe = $result['diff'];
             foreach($pepe as $to){
