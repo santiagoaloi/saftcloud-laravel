@@ -50,32 +50,16 @@ class TestFunctionController extends Controller {
     }
 
     function test2(){
-
-        $query = 'SELECT users.* FROM users asdfasd';
-
-<<<<<<< HEAD
-         try { 
-            $object =  DB::SELECT($query);
-              return  array_keys((array)$object[0]);
-=======
-        try {
-            return DB::SELECT($query);
-        }catch(Exception $e){
-            return response()->json(array('message' =>$e->getMessage()));
+        $tables = DB::select("select table_name from information_schema.tables where table_schema = 'laravel_vue'");
+        foreach($tables as $table){
+            $table_name = json_encode($table->table_name);
+            $columns = DB::select("select column_name from information_schema.columns where table_schema = 'laravel_vue' and table_name = $table_name");
+            foreach($columns as $column){
+                $column_name[] = $column->column_name;
+            }
+            $tableArray[$table_name] = $column_name;
         }
-
-
-        // if ($request->has(['name', 'email'])) {
-        //     return $request->name.' - '.$request->email;
-        // } else if ($request->has('id')) {
-        //     return $request->id;
-        // } else if ($request->has('email')) {
-        //     return $request->email;
-        // } else {
-        //     return "no tiene nombre ni email";
-        // }
->>>>>>> b9d126ff6a921c12c29d6338ccf3ca35be50f93a
-
+        return $tableArray;
     }
 
     function probarFormFieldStructure(){
