@@ -68,7 +68,11 @@ class MysqlController extends Controller {
             }
             $tableArray[$table_name] = $column_name;
         }
-        return $tableArray;
+
+        return response([
+            'tableAndColumns'=> $tableArray,
+            'status'    => true
+        ], 200);
     }
 
     function showColumnsFromQuery($request) {
