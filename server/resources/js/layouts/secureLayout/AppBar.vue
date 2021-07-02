@@ -11,7 +11,7 @@
       <v-btn class="mr-2 " text x-small fab @click="pushDesktop">
         <v-icon>mdi-desktop-mac</v-icon>
       </v-btn>
-
+<!-- 
       <v-menu rounded="xl" origin="center center" transition="scale-transition" :nudge-bottom="10" offset-y>
         <template v-slot:activator="{ on, attrs }">
           <v-btn class="mr-2" text x-small fab v-bind="attrs" v-on="on">
@@ -28,7 +28,7 @@
               </v-list-item-title>
             </v-list-item>
           </v-list>
-      </v-menu>
+      </v-menu> -->
 
       <v-menu rounded="xl" origin="center center" transition="scale-transition" :nudge-bottom="10" offset-y>
         <template v-slot:activator="{ on, attrs }">
@@ -55,6 +55,32 @@
           </v-btn>
         </v-badge>
       </template>
+
+
+      <v-menu rounded="xl" origin="center center" transition="scale-transition" :nudge-bottom="10" offset-y>
+        <template v-slot:activator="{ on, attrs }">
+
+
+
+          <v-btn class="mr-2" text x-small fab v-bind="attrs" v-on="on">
+            <v-icon>mdi-earth</v-icon> 
+          </v-btn>  
+        </template>
+           <v-list class="pa-2" rounded="xl"   outlined>
+            <v-list-item v-for="(language, i) in languages" :key="i" :to="language.name">
+         
+              <v-list-item-avatar> 
+                       <country-flag :country="language.flag" />
+
+              </v-list-item-avatar>
+
+
+              <v-list-item-title class="mr-5">
+                {{ language.name }}
+              </v-list-item-title>
+            </v-list-item>
+          </v-list>
+      </v-menu>
 
       <v-divider inset vertical class="mx-3 grey" />
 
@@ -150,9 +176,14 @@
 import axios from "axios";
 import { store } from "@/store";
 import { call , sync} from "vuex-pathify";
+import CountryFlag from "vue-country-flag";
+
 
 export default {
   name: "DefaultBar",
+ components: {
+  CountryFlag
+ },
 
   data() {
     return {
@@ -160,6 +191,18 @@ export default {
       notificationCount: 0,
       appBarKey: 1,
       x: 0,
+
+            languages: [
+        {
+          flag: "GB",
+          name: "English"
+        },
+                {
+          flag: "ES",
+          name: "Espanol"
+        },
+      ],
+
       cmsMenu: [
         {
           icon: "mdi-auto-fix",

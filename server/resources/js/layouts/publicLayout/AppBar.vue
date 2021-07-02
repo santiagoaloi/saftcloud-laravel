@@ -24,7 +24,7 @@
      <v-btn rounded to="/signup" height="36" class="mr-3" color="white" text dark x-large plain> Company</v-btn>
      <v-btn rounded to="/signup" height="36" class="mr-3" dark x-large plain> <v-icon left> mdi-account-plus</v-icon>Sign up</v-btn>
      <template>
-      <v-btn min-width="100px" to="/login" height="36" class="mr-3" rounded dark color="#42b883" x-large>
+      <v-btn min-width="100px" to="/login" height="36" class="mr-3" rounded dark color="primary" x-large>
        <v-avatar class="ml-n4 mr-3" size="28" left>
         <v-img src="storage/avatars/avatar.png"></v-img>
        </v-avatar>
@@ -117,7 +117,7 @@
 <script>
 import { store } from "@/store";
 import axios from "axios";
-import { sync } from "vuex-pathify";
+import { sync, get, call } from "vuex-pathify";
 
 export default {
  name: "PublicAppbar",

@@ -1,7 +1,9 @@
 <template>
  <v-main>
   <v-container fluid>
-   <router-view />
+   <v-fade-transition hide-on-leave>
+    <router-view />
+   </v-fade-transition>
   </v-container>
  </v-main>
 </template>

@@ -11,7 +11,7 @@ export default [
  //   },
  //   component: () =>
  //     import(
- //       /* webpackChunkName: 'DefaultHomepage' */ "@/views/publicComponents/ElementsPreview/preview.vue"
+ //       /* webpackChunkName: 'DefaultHomepage' */ "@/views/Public/ElementsPreview/preview.vue"
  //     ),
  // },
 
@@ -22,7 +22,7 @@ export default [
    layout: "login_layout"
   },
   transition: "fade",
-  component: () => import(/* webpackChunkName: 'login-page' */ "@/views/login/Index.vue")
+  component: () => import(/* webpackChunkName: 'login-page' */ "@/views/Login/Index.vue")
  },
  {
   path: "/homepage",
@@ -34,7 +34,7 @@ export default [
    spinner: false,
    alias: "Homepage"
   },
-  component: () => import(/* webpackChunkName: 'DefaultHomepage' */ "@/views/publicComponents/Homepage/Index.vue")
+  component: () => import(/* webpackChunkName: 'DefaultHomepage' */ "@/views/Public/Homepage/Index.vue")
  },
 
  // {
@@ -49,7 +49,7 @@ export default [
  //   },
  //   component: () =>
  //     import(
- //       /* webpackChunkName: 'Aktuellt' */ "@/views/publicComponents/Aktuellt/Aktuellt.vue"
+ //       /* webpackChunkName: 'Aktuellt' */ "@/views/Public/Aktuellt/Aktuellt.vue"
  //     ),
  // },
 
@@ -65,7 +65,7 @@ export default [
  //   },
  //   component: () =>
  //     import(
- //       /* webpackChunkName: 'aktuelltdrilldown' */ "@/views/publicComponents/Aktuellt/Drilldown.vue"
+ //       /* webpackChunkName: 'aktuelltdrilldown' */ "@/views/Public/Aktuellt/Drilldown.vue"
  //     ),
  // },
 
@@ -81,7 +81,7 @@ export default [
  //   },
  //   component: () =>
  //     import(
- //       /* webpackChunkName: 'medlem' */ "@/views/publicComponents/Medlem/Medlem.vue"
+ //       /* webpackChunkName: 'medlem' */ "@/views/Public/Medlem/Medlem.vue"
  //     ),
  // },
 
@@ -98,7 +98,7 @@ export default [
  //   },
  //   component: () =>
  //     import(
- //       /* webpackChunkName: 'medlem' */ "@/views/publicComponents/Press/Press.vue"
+ //       /* webpackChunkName: 'medlem' */ "@/views/Public/Press/Press.vue"
  //     ),
  // },
 
@@ -114,7 +114,7 @@ export default [
  //   },
  //   component: () =>
  //     import(
- //       /* webpackChunkName: 'medlem' */ "@/views/publicComponents/Om/Om.vue"
+ //       /* webpackChunkName: 'medlem' */ "@/views/Public/Om/Om.vue"
  //     ),
  // },
 
@@ -130,7 +130,7 @@ export default [
  //   },
  //   component: () =>
  //     import(
- //       /* webpackChunkName: 'medlem' */ "@/views/publicComponents/Kontakt/Kontakt.vue"
+ //       /* webpackChunkName: 'medlem' */ "@/views/Public/Kontakt/Kontakt.vue"
  //     ),
  // },
 
@@ -146,7 +146,7 @@ export default [
  //   },
  //   component: () =>
  //     import(
- //       /* webpackChunkName: 'medlem' */ "@/views/publicComponents/English/English.vue"
+ //       /* webpackChunkName: 'medlem' */ "@/views/Public/English/English.vue"
  //     ),
  // },
 
@@ -163,7 +163,7 @@ export default [
  //   },
  //   component: () =>
  //     import(
- //       /* webpackChunkName: 'portfolio' */ "@/views/publicComponents/Portfolio/Portfolio.vue"
+ //       /* webpackChunkName: 'portfolio' */ "@/views/Public/Portfolio/Portfolio.vue"
  //     ),
  // },
 
@@ -178,7 +178,7 @@ export default [
    spinner: true,
    alias: "Signup"
   },
-  component: () => import(/* webpackChunkName: 'Signup' */ "@/views/publicComponents/Signup/Signup.vue")
+  component: () => import(/* webpackChunkName: 'Signup' */ "@/views/Public/Signup/Signup.vue")
  },
  {
   path: "/verifyAccount",
@@ -191,7 +191,7 @@ export default [
    spinner: true,
    alias: "VerifyAccount"
   },
-  component: () => import(/* webpackChunkName: 'Signup' */ "@/views/publicComponents/Signup/VerifyAccount.vue")
+  component: () => import(/* webpackChunkName: 'Signup' */ "@/views/Public/Signup/VerifyAccount.vue")
  }
 
  // {
@@ -206,7 +206,7 @@ export default [
  //   },
  //   component: () =>
  //     import(
- //       /* webpackChunkName: 'portfoliotdrilldown' */ "@/views/publicComponents/Portfolio/Drilldown.vue"
+ //       /* webpackChunkName: 'portfoliotdrilldown' */ "@/views/Public/Portfolio/Drilldown.vue"
  //     ),
  // },
 ];

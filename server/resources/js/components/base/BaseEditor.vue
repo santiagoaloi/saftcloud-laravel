@@ -17,6 +17,14 @@ import "codemirror/mode/markdown/markdown";
 import "codemirror/addon/lint/lint";
 import "codemirror/addon/lint/json-lint";
 
+import "codemirror/addon/edit/matchBrackets";
+
+import "codemirror/addon/hint/show-hint";
+import "codemirror/addon/hint/show-hint.css";
+
+import "codemirror/addon/hint/sql-hint";
+import "codemirror/mode/sql/sql";
+
 require("script-loader!jsonlint");
 
 export default {
@@ -107,26 +115,19 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 .text\/x-mariadb {
  height: 100%;
- font-size: 20px !important;
  position: relative;
 }
 
 .text\/x-mariadb >>> .CodeMirror {
  height: 100%;
- font-size: 20px !important;
  position: relative;
 }
 
-.json-editor {
- height: 100%;
- position: relative;
-}
 .json-editor >>> .CodeMirror {
  height: 100%;
- font-size: 20px !important;
  min-height: 300px;
 }
 .json-editor >>> .CodeMirror-scroll {
@@ -134,14 +135,21 @@ export default {
 }
 .mrkd-editor {
  height: 100%;
- font-size: 22px;
 }
 .mrkd-editor >>> .CodeMirror {
  height: 100%;
- font-size: 20px !important;
  min-height: 300px;
 }
 .mrkd-editor >>> .CodeMirror-scroll {
  height: 100%;
+}
+
+.CodeMirror-hints {
+ z-index: 9999 !important;
+}
+
+.CodeMirror {
+ height: 100%;
+ font-size: 19px !important;
 }
 </style>

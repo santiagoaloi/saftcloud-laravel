@@ -170,8 +170,13 @@ const getters = {
 const actions = {
  ...make.actions(state),
 
- saveComponentsConfigStructure({ state }) {
-  axios.post("api/ComponentDefault", { config_structure: JSON.parse(state.ComponentsConfigStructure) }).then(response => {});
+ saveComponentsConfigStructure({ state, dispatch }) {
+  axios.post("api/ComponentDefault", { config_structure: JSON.parse(state.ComponentsConfigStructure) }).then(response => {
+   dispatch("getComponents");
+   store.set("snackbar/value", true);
+   store.set("snackbar/text", "Config structure updated");
+   store.set("snackbar/color", "grey darken-2");
+  });
  },
 
  getComponentsConfigStructure({ commit }) {
@@ -243,6 +248,21 @@ const actions = {
   });
  },
 
+ setSelectedComponent({ rootState, state }, index) {
+  if (!rootState.drawers.secureComponentDrawer) {
+   store.set("drawers/secureComponentDrawer", true);
+  }
+  if (state.selectedComponentIndex != index) {
+   store.set("componentManagement/selectedComponentIndex", index);
+  }
+ },
+
+ setActiveField({ state }, field) {
+  if (state.selectedComponentActiveField != field) {
+   store.set("componentManagement/selectedComponentActiveField", field);
+  }
+ },
+
  setComponentStatus({}, component) {
   axios.patch(`api/Component/${component.id}`, { status: component.status });
  },
@@ -268,7 +288,9 @@ const actions = {
     store.set("snackbar/text", "Component saved");
     store.set("snackbar/color", "grey darken-2");
    } else {
-    console.log(response);
+    store.set("snackbar/value", true);
+    store.set("snackbar/text", response.data.message);
+    store.set("snackbar/color", "pink darken-1");
    }
   });
  },
@@ -309,8 +331,8 @@ const actions = {
     commit("allComponents", response.data.components);
     state.dialogs.dialogComponent = false;
     store.set("snackbar/value", true);
-    store.set("snackbar/text", "Component created");
-    store.set("snackbar/color", "grey darken-2");
+    store.set("snackbar/text", `"${state.componentSettings.title}" component created`);
+    store.set("snackbar/color", "indigo darken-2");
 
     // Autoselect latest created component
     store.set("drawers/secureComponentDrawer", true);

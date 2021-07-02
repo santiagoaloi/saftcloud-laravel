@@ -40,7 +40,7 @@
      <v-col cols="12" lg="6">
       <video class="float-right" autoplay muted loop>
        <source src="storage/videos/woman_sd.mp4" type="video/mp4" />
-       /> Your browser does not support the video element. Kindly update it to latest version.
+       Your browser does not support the video element. Kindly update it to latest version.
       </video>
      </v-col>
     </v-row>
