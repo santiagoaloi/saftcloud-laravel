@@ -13,22 +13,20 @@ const actions = {
  ...make.actions(state),
 
  login({ commit }, data) {
-  return axios
-   .post("api/login", data)
-   .then(response => {
-    if (response.data.status) {
-     axios.defaults.headers.common["authorization"] = `Bearer ${response.data.data.token}`;
-     commit("session", response.data.data);
-     router.push("/components");
-     return true;
-    } else {
-     return false;
-    }
-   })
-   .catch(error => {
-    console.log({ ...error });
-    // return false;
-   });
+  return axios.post("api/login", data).then(response => {
+   if (response.data.status) {
+    axios.defaults.headers.common["authorization"] = `Bearer ${response.data.data.token}`;
+    commit("session", response.data.data);
+    router.push("/components");
+    return true;
+   } else {
+    return false;
+   }
+  });
+  //  .catch(error => {
+  //   console.log({ ...error });
+  //   // return false;
+  //  });
  },
 
  logout({ commit }, data) {

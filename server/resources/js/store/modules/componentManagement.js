@@ -264,7 +264,7 @@ const actions = {
  },
 
  setComponentStatus({}, component) {
-  axios.patch(`api/Component/${component.id}`, { status: component.status });
+  axios.patch(`api/component/${component.id}`, { status: component.status });
  },
 
  saveComponent({ state }, component) {
@@ -302,7 +302,7 @@ const actions = {
  },
 
  removeComponent({ commit }, id) {
-  axios.delete(`api/Component/${id}`).then(response => {
+  axios.delete(`api/component/${id}`).then(response => {
    if (response.data.status) {
     commit("allComponents", response.data.components);
     store.set("snackbar/value", true);

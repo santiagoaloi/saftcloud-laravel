@@ -7,7 +7,6 @@
       <v-autocomplete
        v-model="icon.name"
        :items="items"
-       :loading="isLoading"
        hide-no-data
        hide-selected
        hide-details
@@ -58,6 +57,7 @@
  </baseDialog>
 </template>
 <script>
+import { store } from "@/store";
 import axios from "axios";
 import { sync, get } from "vuex-pathify";
 export default {
@@ -76,7 +76,6 @@ export default {
  data() {
   return {
    internalValue: this.value,
-   icons: [],
    isLoading: false,
    colorPicker: false,
    iconColor: ""
@@ -84,7 +83,7 @@ export default {
  },
 
  computed: {
-  ...sync("theme", ["isDark"]),
+  ...sync("theme", ["isDark", "icons"]),
 
   items() {
    return this.icons.map(icon => {
@@ -112,21 +111,15 @@ export default {
 
  methods: {
   getIcons() {
-   // Items have already been loaded
    if (this.items.length > 0) return;
-   // Items have already been requested
-   if (this.isLoading) return;
-   this.isLoading = true;
-   // Lazily load input items
    axios
     .get("api/listIcons")
     .then(response => {
-     this.icons = response.data.icons;
+     store.set("theme/icons", response.data.icons);
     })
     .catch(err => {
      console.log(err);
-    })
-    .finally(() => (this.isLoading = false));
+    });
   }
  }
 };
