@@ -4,6 +4,7 @@ namespace App\Http\Controllers\GeneralConfig;
 
 use App\Http\Controllers\Controller;
 use App\Models\GeneralConfig\LookUpList;
+use App\Models\GeneralConfig\LookUpListValue;
 use Illuminate\Http\Request;
 
 class LookUpListController extends Controller {
@@ -64,15 +65,17 @@ class LookUpListController extends Controller {
         //
     }
 
-    public function update(Request $request, $id) {
-        $query = LookUpList::findOrFail($id);
+    public function update(Request $request, LookUpListValue $obj) {
+        // $query = LookUpList::findOrFail($id);
 
-        $input = $request->all();
+        // $input = $request->all();
 
-        $query->fill($input)->save();
+        // $query->fill($input)->save();
+
+        $obj->update($request->all());
 
         return response([
-            'row'=> $query,
+            'row'=> $obj,
             'status'=> true
         ], 200);
     }

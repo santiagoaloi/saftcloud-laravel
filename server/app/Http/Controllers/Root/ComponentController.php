@@ -67,18 +67,14 @@ class ComponentController extends Controller {
         ], 200);
     }
 
-    public function show($id, $local = false) {
+    public function show($id) {
         $query = Component::findOrFail($id);
         $result = $this->parseComponent($query);
 
-        if ($local){
-            return $result;
-        } else {
-            return response([
-                'component' => $result,
-                'status' => true
-            ], 200);
-        }
+        return response([
+            'component' => $result,
+            'status' => true
+        ], 200);
     }
 
     public function showAll($local = false) {
@@ -138,44 +134,44 @@ class ComponentController extends Controller {
         $sql_original = json_decode($query->config, true)['sql_query'];
 
         $input = $request->all();
-        $sql_new = $request->config['sql_query'];
 
-        if($sql_original != $sql_new) {
-            try{
-                DB::select($sql_new);
-            }catch(Exception $e){
-                return response()->json(array('message' =>$e->getMessage())); 
+        if(isset($request->config['sql_query'])){
+            $sql_new = $request->config['sql_query'];
+
+            if($sql_original != $sql_new) {
+                try{
+                    DB::select($sql_new);
+                }catch(Exception $e){
+                    return response()->json(array('message' =>$e->getMessage())); 
+                }
+
+                // No puedo accceder al string del mensaje de error.
+                // }catch(QueryException $ex){ 
+                //     dd($ex->getMessage()); 
+                // }
+
+                $sql_query = str_replace('SELECT', 'SELECT count(*) as temp, ', $sql_new);
+                try{
+                    $object =  array_keys((array)DB::SELECT($sql_query)[0]);
+                }catch(Exception $e){
+                    return response()->json(array('message' =>$e->getMessage())); 
+                }
+
+                $formColumnsAndFields = $this->formColumnsAndFields($object);
+                $newFormFields = $formColumnsAndFields['ArrayFields'];
+
+                $originalFormFields = json_decode($query->config, true)['form_fields'];
+                $compare = new ComponentDefaultController;
+                $result = $compare->testCompare($newFormFields, $originalFormFields);
+
+                $input['config']['columns'] = $formColumnsAndFields['ArrayColumns'];
+                $input['config']['form_fields'] = $result;
             }
-
-            // No puedo accceder al string del mensaje de error.
-            // }catch(QueryException $ex){ 
-            //     dd($ex->getMessage()); 
-            // }
-
-            $sql_query = str_replace('SELECT', 'SELECT count(*) as temp, ', $sql_new);
-            try{
-                $object =  array_keys((array)DB::SELECT($sql_query)[0]);
-            }catch(Exception $e){
-                return response()->json(array('message' =>$e->getMessage())); 
-            }
-
-            $formColumnsAndFields = $this->formColumnsAndFields($object);
-            $newFormFields = $formColumnsAndFields['ArrayFields'];
-
-            $originalFormFields = json_decode($query->config, true)['form_fields'];
-            $compare = new ComponentDefaultController;
-            $result = $compare->testCompare($newFormFields, $originalFormFields);
-
-            $input['config']['columns'] = $formColumnsAndFields['ArrayColumns'];
-            $input['config']['form_fields'] = $result;
         }
 
         $query->fill($input)->save();
 
-        return response([
-            'component'=> $query,
-            'status'    => true
-        ], 200);
+        return $this->show($query->id);
     }
 
     public function updateAll($request, $local = false) {
