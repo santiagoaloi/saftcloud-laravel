@@ -39,7 +39,7 @@ class ComponentController extends Controller {
 
         $configSettings['icon'] = [
             'name'  => 'mdi-folder',
-            'color' => 'blue',
+            'color' => '#6453DCED',
         ];
 
         $status = [

@@ -5,7 +5,7 @@ export default [
  //   meta: { layout: "secure_layout" },
  //   transition: "fade",
  //   component: () =>
- //     import("@/views/systemComponents/CmsBuilder/Formfield/Formfield.vue")
+ //     import("@/views/System/CmsBuilder/Formfield/Formfield.vue")
  // },
 
  // {
@@ -15,7 +15,7 @@ export default [
  //   transition: "fade",
  //   component: () =>
  //     import(
- //       "@/views/systemComponents/CmsBuilder/Nesteddraggable/Nesteddraggable.vue"
+ //       "@/views/System/CmsBuilder/Nesteddraggable/Nesteddraggable.vue"
  //     )
  // },
 
@@ -25,7 +25,7 @@ export default [
  //   meta: { layout: "secure_layout" },
  //   transition: "fade",
  //   component: () =>
- //     import("@/views/systemComponents/CmsBuilder/Formbuilder/Formbuilder.vue")
+ //     import("@/views/System/CmsBuilder/Formbuilder/Formbuilder.vue")
  // },
 
  {
@@ -33,7 +33,7 @@ export default [
   name: "desktop",
   meta: { layout: "secure_layout" },
   transition: "fade",
-  component: () => import("@/views/systemComponents/Desktop/Desktop.vue")
+  component: () => import("@/views/System/Desktop/Desktop.vue")
  },
 
  {
@@ -41,25 +41,25 @@ export default [
   name: "components",
   meta: { layout: "secure_layout" },
   transition: "fade",
-  component: () => import(/* webpackChunkName: 'components' */ "@/views/systemComponents/Components/Components.vue"),
+  component: () => import(/* webpackChunkName: 'components' */ "@/views/System/Components/Components.vue"),
   children: [
    {
     path: "/components/basic",
     name: "components/basic",
     meta: { layout: "secure_layout" },
-    component: () => import("@/views/systemComponents/Components/ComponentsEdit/ConfigViews/Basic/Basic.vue")
+    component: () => import("@/views/System/Components/ComponentsEdit/ConfigViews/Basic/Basic.vue")
    },
    {
     path: "/components/formFields",
     name: "components/formFields",
     meta: { layout: "secure_layout" },
-    component: () => import("@/views/systemComponents/Components/ComponentsEdit/ConfigViews/FormFields/FormFields.vue")
+    component: () => import("@/views/System/Components/ComponentsEdit/ConfigViews/FormFields/FormFields.vue")
    },
    {
     path: "/components/query",
     name: "components/query",
     meta: { layout: "secure_layout" },
-    component: () => import("@/views/systemComponents/Components/ComponentsEdit/ConfigViews/Query/Query.vue")
+    component: () => import("@/views/System/Components/ComponentsEdit/ConfigViews/Query/Query.vue")
    }
   ]
  }
@@ -71,7 +71,7 @@ export default [
  //   transition: "fade",
  //   component: () =>
  //     import(
- //       /* webpackChunkName: 'usermgmt' */ "@/views/systemComponents/Users/Users.vue"
+ //       /* webpackChunkName: 'usermgmt' */ "@/views/System/Users/Users.vue"
  //     )
  // },
 
@@ -82,7 +82,7 @@ export default [
  //   transition: "fade",
  //   component: () =>
  //     import(
- //       /* webpackChunkName: 'usermgmt' */ "@/views/systemComponents/Notifications/Notifications.vue"
+ //       /* webpackChunkName: 'usermgmt' */ "@/views/System/Notifications/Notifications.vue"
  //     )
  // },
 
@@ -93,7 +93,7 @@ export default [
  //   transition: "fade",
  //   component: () =>
  //     import(
- //       /* webpackChunkName: 'previewprofile' */ "@/views/systemComponents/Users/PreviewProfile.vue"
+ //       /* webpackChunkName: 'previewprofile' */ "@/views/System/Users/PreviewProfile.vue"
  //     )
  // },
 
@@ -103,7 +103,7 @@ export default [
  //   meta: { layout: "secure_layout" },
  //   transition: "fade",
  //   component: () =>
- //     import("@/views/systemComponents/ComponentsManagement/Tabs/Index.vue"),
+ //     import("@/views/System/ComponentsManagement/Tabs/Index.vue"),
  //   children: [
  //     {
  //       path: "/ComponentsManagement/info",
@@ -111,7 +111,7 @@ export default [
  //       meta: { layout: "secure_layout" },
  //       transition: "fade",
  //       component: () =>
- //         import("@/views/systemComponents/ComponentsManagement/Info/Index.vue")
+ //         import("@/views/System/ComponentsManagement/Info/Index.vue")
  //     },
  //     {
  //       path: "/ComponentsManagement/sql",
@@ -119,7 +119,7 @@ export default [
  //       meta: { layout: "secure_layout" },
  //       transition: "fade",
  //       component: () =>
- //         import("@/views/systemComponents/ComponentsManagement/Sql/Index.vue")
+ //         import("@/views/System/ComponentsManagement/Sql/Index.vue")
  //     },
  //     {
  //       path: "/ComponentsManagement/table",
@@ -128,7 +128,7 @@ export default [
  //       transition: "fade",
  //       component: () =>
  //         import(
- //           "@/views/systemComponents/ComponentsManagement/Table/Index.vue"
+ //           "@/views/System/ComponentsManagement/Table/Index.vue"
  //         )
  //     },
  //     {
@@ -137,7 +137,7 @@ export default [
  //       meta: { layout: "secure_layout" },
  //       transition: "fade",
  //       component: () =>
- //         import("@/views/systemComponents/ComponentsManagement/Form/Index.vue")
+ //         import("@/views/System/ComponentsManagement/Form/Index.vue")
  //     },
  //     {
  //       path: "/ComponentsManagement/menuforms",
@@ -146,7 +146,7 @@ export default [
  //       transition: "fade",
  //       component: () =>
  //         import(
- //           "@/views/systemComponents/ComponentsManagement/MenuForms/Index.vue"
+ //           "@/views/System/ComponentsManagement/MenuForms/Index.vue"
  //         )
  //     },
  //     {
@@ -156,7 +156,7 @@ export default [
  //       transition: "fade",
  //       component: () =>
  //         import(
- //           "@/views/systemComponents/ComponentsManagement/Permission/Index.vue"
+ //           "@/views/System/ComponentsManagement/Permission/Index.vue"
  //         )
  //     },
  //     {
@@ -167,7 +167,7 @@ export default [
 
  //       component: () =>
  //         import(
- //           "@/views/systemComponents/ComponentsManagement/DynamicAppbar/Index.vue"
+ //           "@/views/System/ComponentsManagement/DynamicAppbar/Index.vue"
  //         )
  //     }
  //   ]
@@ -178,14 +178,14 @@ export default [
  //   meta: { layout: "secure_layout" },
  //   name: "profile",
  //   transition: "fade",
- //   component: () => import("@/views/systemComponents/Profile/Profile.vue"),
+ //   component: () => import("@/views/System/Profile/Profile.vue"),
  //   children: [
  //     {
  //       path: "/profile/info",
  //       name: "profile/info",
  //       meta: { layout: "secure_layout" },
  //       component: () =>
- //         import("@/views/systemComponents/Profile/Profileinfo.vue")
+ //         import("@/views/System/Profile/Profileinfo.vue")
  //     },
 
  //     {
@@ -193,7 +193,7 @@ export default [
  //       name: "profile/securechange",
  //       meta: { layout: "secure_layout" },
  //       component: () =>
- //         import("@/views/systemComponents/Profile/Profilepassword.vue")
+ //         import("@/views/System/Profile/Profilepassword.vue")
  //     },
 
  //     {
@@ -201,7 +201,7 @@ export default [
  //       name: "profile/secureauth",
  //       meta: { layout: "secure_layout" },
  //       component: () =>
- //         import("@/views/systemComponents/Profile/Profileauth.vue")
+ //         import("@/views/System/Profile/Profileauth.vue")
  //     },
 
  //     {
@@ -209,7 +209,7 @@ export default [
  //       name: "profile/infoWeb",
  //       meta: { layout: "secure_layout" },
  //       component: () =>
- //         import("@/views/systemComponents/Profile/Profileinfoweb.vue")
+ //         import("@/views/System/Profile/Profileinfoweb.vue")
  //     },
 
  //     {
@@ -217,14 +217,14 @@ export default [
  //       name: "profile/profilePhotos",
  //       meta: { layout: "secure_layout" },
  //       component: () =>
- //         import("@/views/systemComponents/Profile/Profilephotos.vue")
+ //         import("@/views/System/Profile/Profilephotos.vue")
  //     },
 
  //     // {
  //     //   path: '/profile/infoPreview',
  //     //   name: 'profile/infoPreview',
  //     //   meta: { layout: 'secure_layout' },
- //     //   component: () => import('@/views/systemComponents/Profile/InfoPreview.vue'),
+ //     //   component: () => import('@/views/System/Profile/InfoPreview.vue'),
  //     //   },
 
  //     {
@@ -233,7 +233,7 @@ export default [
  //       meta: { layout: "secure_layout" },
 
  //       component: () =>
- //         import("@/views/systemComponents/Profile/Personalization.vue")
+ //         import("@/views/System/Profile/Personalization.vue")
  //     }
  //   ]
  // },
@@ -243,20 +243,20 @@ export default [
  //   meta: { layout: "secure_layout" },
  //   name: "appconfig",
  //   component: () =>
- //     import("@/views/systemComponents/AppConfig/Configuration.vue"),
+ //     import("@/views/System/AppConfig/Configuration.vue"),
  //   children: [
  //     {
  //       path: "/appconfig/general",
  //       name: "appconfig/general",
  //       meta: { layout: "secure_layout" },
  //       component: () =>
- //         import("@/views/systemComponents/AppConfig/General.vue")
+ //         import("@/views/System/AppConfig/General.vue")
  //     },
  //     {
  //       path: "/appconfig/emails",
  //       name: "appconfig/emails",
  //       meta: { layout: "secure_layout" },
- //       component: () => import("@/views/systemComponents/AppConfig/Emails.vue")
+ //       component: () => import("@/views/System/AppConfig/Emails.vue")
  //     }
  //   ]
  // }

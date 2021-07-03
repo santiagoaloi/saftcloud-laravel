@@ -27,9 +27,14 @@
     </v-list-item-content>
 
     <v-list-item-icon>
-     <v-btn @click="setStarred(selectedComponent)" color="white" small icon :ripple="false">
-      <v-icon :color="isStarredColor(selectedComponent)"> {{ isStarredIcon(selectedComponent) }} </v-icon></v-btn
-     >
+     <v-tooltip transition="false" color="black" bottom>
+      <template v-slot:activator="{ on, attrs }">
+       <v-btn v-on="on" @click="setStarred(selectedComponent)" color="white" small icon :ripple="false">
+        <v-icon :color="isStarredColor(selectedComponent)"> {{ isStarredIcon(selectedComponent) }} </v-icon></v-btn
+       >
+      </template>
+      <span>Favourite</span>
+     </v-tooltip>
     </v-list-item-icon>
    </v-list-item>
   </v-list>
@@ -39,7 +44,9 @@
     <small>Description</small>
 
     <v-textarea
-     :color="$vuetify.theme.dark ? 'secondary' : 'grey'"
+     :outlined="isDark"
+     :color="isDark ? '#208ad6' : 'grey'"
+     :background-color="isDark ? 'grey darken-4' : 'grey lighten-5'"
      outlined
      spellcheck="false"
      noResize
@@ -54,7 +61,9 @@
     <div class="mt-2">
      <small>Change component group </small>
      <v-autocomplete
-      :color="$vuetify.theme.dark ? 'secondary' : 'grey'"
+      :outlined="isDark"
+      :color="isDark ? '#208ad6' : 'grey'"
+      :background-color="isDark ? 'grey darken-4' : 'grey lighten-5'"
       v-model="selectedComponent.component_group_id"
       outlined
       hide-selected
@@ -74,7 +83,7 @@
    <v-tooltip transition="false" color="black" bottom>
     <template v-slot:activator="{ on, attrs }">
      <v-btn @click="edit()" v-on="on" depressed dark large small :color="$vuetify.theme.dark ? '' : 'white'">
-      <v-icon color="orange" dark>
+      <v-icon color="#6453DCED" dark>
        mdi-pencil-outline
       </v-icon>
      </v-btn>

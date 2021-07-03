@@ -157,3 +157,16 @@ input::-webkit-inner-spin-button {
 .v-tab:before {
  background-color: unset !important;
 }
+
+.v-toolbar.v-toolbar--absolute {
+ z-index: 9999;
+}
+
+.drag {
+ cursor: grab;
+}
+
+.drag:active {
+ cursor: grabbing;
+ transform: scale(0.99);
+}

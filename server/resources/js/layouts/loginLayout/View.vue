@@ -9,20 +9,7 @@
 </template>
 
 <script>
-import globalMixin from "@/mixins/globalMixin";
-
 export default {
- name: "Loginview",
- mixins: [globalMixin]
- // computed: {
- //   loginBackground() {
- //     return {
- //       "background-image": `url(storage/11.png)`,
- //       "background-repeat": "no-repeat",
- //       "background-size": "cover",
- //       "background-attachment": "fixed"
- //     };
- //   }
- // }
+ name: "Loginview"
 };
 </script>

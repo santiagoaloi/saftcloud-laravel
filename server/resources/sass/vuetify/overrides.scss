@@ -81,17 +81,17 @@
    border-bottom: 0 !important;
   }
 
-  tbody {
-   tr {
-    cursor: pointer !important;
-    transition: box-shadow 0.2s;
+  //   tbody {
+  //    tr {
+  //     cursor: pointer !important;
+  //     transition: box-shadow 0.2s;
 
-    &:not(.v-data-table__selected):hover {
-     box-shadow: 0 3px 15px -2px rgba(177, 176, 176, 0.397);
-     transform: translateY(0.5px);
-    }
-   }
-  }
+  //     &:not(.v-data-table__selected):hover {
+  //      box-shadow: 0 3px 15px -2px rgba(177, 176, 176, 0.397);
+  //      transform: translateY(0.5px);
+  //     }
+  //    }
+  //   }
  }
 }
 

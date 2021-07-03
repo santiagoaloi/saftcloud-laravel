@@ -39,8 +39,8 @@ $material-dark: (
   "solo-inverted": red
  ),
  "text-fields": (
-  "outlined": #4d5458,
-  "outlined-hover": #4d5458
+  "outlined": rgb(26, 25, 25),
+  "outlined-hover": rgb(39, 38, 38)
  ),
  "navigation-drawer": map-get($theme-dark-colors, "1"),
  "skeleton": linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent),

@@ -1,10 +1,9 @@
 $text-base: #e5eaed;
 $material-light: (
- //  "cards": #f6f8fa,
-  "status-bar":
-  (
-   "regular": map-get($blue-grey, "lighten-2")
-  ),
+ "cards": #fafbfc,
+ "status-bar": (
+  "regular": map-get($blue-grey, "lighten-2")
+ ),
  "app-bar": #ffffff,
  "background": #f6f8fa,
  //"surface": #dbe4ec,

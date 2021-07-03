@@ -10,9 +10,17 @@
   scrollable
   class="d-flex flex-column"
  >
-  <v-toolbar :absolute="absoluteToolbar" class=" px-6" flat :dense="dense" dark :color="$vuetify.theme.dark ? '#202225' : 'grey darken-2'">
+  <v-toolbar
+   :absolute="absoluteToolbar"
+   class="pr-3"
+   flat
+   :dense="dense"
+   dark
+   color="#24292e
+"
+  >
    <template>
-    <v-btn
+    <!-- <v-btn
      v-if="$vuetify.breakpoint.mdAndUp && !noMaximize"
      x-small
      color="white"
@@ -23,11 +31,11 @@
      @click.stop="isMaximized = !isMaximized"
     >
      <v-icon>mdi-window-maximize</v-icon>
-    </v-btn>
+    </v-btn> -->
    </template>
 
    <v-toolbar-title>
-    {{ title }}
+    <span class="accent--text text--lighten-4"> {{ title }} </span>
    </v-toolbar-title>
 
    <div class="flex-grow-1" />

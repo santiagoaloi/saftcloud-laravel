@@ -32,22 +32,20 @@ const actions = {
  },
 
  logout({ commit }, data) {
-  return axios
-   .post("api/logout", data)
-   .then(response => {
-    if (response.data.status) {
-     commit("session", {});
-     router.push("/login");
-     axios.defaults.headers.common["authorization"] = "";
-     return true;
-    } else {
-     return false;
-    }
-   })
-   .catch(error => {
-    // console.log({ ...error });
+  return axios.post("api/logout", data).then(response => {
+   if (response.data.status) {
+    commit("session", {});
+    router.push("/login");
+    axios.defaults.headers.common["authorization"] = "";
+    return true;
+   } else {
     return false;
-   });
+   }
+  });
+  //  .catch(error => {
+  //   console.log({ ...error });
+  //   return false;
+  //  });
  }
 };
 

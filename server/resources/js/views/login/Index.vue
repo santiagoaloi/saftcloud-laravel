@@ -1,5 +1,5 @@
 <template>
- <v-row align="center" justify="space-between">
+ <v-row align="center" justify="space-between" class="mb-0">
   <v-col cols="12" lg="6">
    <v-row no-gutters align="center" justify="center">
     <div>
@@ -35,7 +35,7 @@
   <v-fade-transition hide-on-leave>
    <ValidationObserver ref="authForm" slim>
     <v-col v-if="!resetPasswordScreen && !forgot" cols="12" sm="12" md="12" lg="6" xl="5">
-     <v-card :color="$vuetify.theme.dark ? '#2f3136' : '#f5f5f5'" elevation="10">
+     <v-card :color="$vuetify.theme.dark ? '#2f3136' : '#f5f5f5'">
       <v-card-title class=" py-10">
        <h1>Login</h1>
       </v-card-title>
@@ -63,11 +63,12 @@
            name="User"
            type="text"
            :disabled="loading"
-           :background-color="errors.length > 0 ? '#faebeb' : ''"
-           :error-messages="errors[0]"
            @keydown.enter.prevent="login()"
            @keydown.space.prevent
-           :color="$vuetify.theme.dark ? 'secondary' : ''"
+           :color="isDark ? 'white' : ''"
+           :background-color="isDark ? 'grey darken-4' : 'grey lighten-4'"
+           :error="errors.length > 0"
+           spellcheck="false"
           />
          </validation-provider>
         </v-col>
@@ -79,17 +80,18 @@
             v-model.trim="auth.password"
             hide-details
             solo
-            :color="$vuetify.theme.dark ? 'secondary' : ''"
             prepend-inner-icon="mdi-shield-key-outline"
             placeholder="Password"
             :type="password_visible ? 'text' : 'password'"
             :append-icon="password_visible ? 'mdi-eye-off-outline' : 'mdi-eye-outline'"
             :disabled="loading"
-            :background-color="errors.length > 0 ? '#faebeb' : ''"
-            :error-messages="errors[0]"
             @click:append="password_visible = !password_visible"
             @keydown.enter.prevent="login()"
             @keydown.space.prevent
+            :color="isDark ? 'white' : ''"
+            :background-color="isDark ? 'grey darken-4' : 'grey lighten-4'"
+            :error="errors.length > 0"
+            spellcheck="false"
            />
           </validation-provider>
          </div>
@@ -265,13 +267,11 @@
 
 <script>
 import axios from "axios";
-import { call } from "vuex-pathify";
-import globalMixin from "@/mixins/globalMixin";
+import { sync, get, call } from "vuex-pathify";
 import { store } from "@/store";
 
 export default {
  name: "Login",
- mixins: [globalMixin],
 
  data() {
   return {
@@ -284,6 +284,10 @@ export default {
    loading: false,
    password_visible: false
   };
+ },
+
+ computed: {
+  ...sync("theme", ["isDark"])
  },
 
  methods: {

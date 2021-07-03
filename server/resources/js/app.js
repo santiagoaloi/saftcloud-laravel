@@ -24,10 +24,10 @@ Vue.component("secure_layout", () => import(/* webpackChunkName: 'Public-Layout'
 
 new Vue({
  store,
- router,
  vuetify,
  created() {
   AOS.init({});
  },
+ router,
  render: h => h(App)
 }).$mount("#app");
