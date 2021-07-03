@@ -24,8 +24,6 @@ class ComponentDefaultController extends Controller {
 
         $saveComponents = $getComponents->updateAll($newComponents, true);
 
-        return $saveComponents;
-
         return response([
             'row'=> $query,
             'status'=> true
@@ -87,10 +85,8 @@ class ComponentDefaultController extends Controller {
 
         $query->fill($input)->save();
 
-        $result = $this->show($id, true);
-
         return response([
-            'row'=> $result,
+            'row'=> $query,
             'status'=> true
         ], 200);
     }

@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class UserSettingsController extends Controller {
 
     public function store(Request $request) {
-        $query = UserSettings::create($request);
+        $query = UserSettings::create($request->all());
         return response([
             'row'=> $query,
             'status'=> true
@@ -71,10 +71,8 @@ class UserSettingsController extends Controller {
 
         $query->fill($input)->save();
 
-        $result = $this->show($id, true);
-
         return response([
-            'row'=> $result,
+            'row'=> $query,
             'status'=> true
         ], 200);
     }

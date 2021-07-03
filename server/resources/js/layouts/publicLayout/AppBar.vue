@@ -172,9 +172,9 @@ export default {
 
  methods: {
   testFunction() {
-   let post = { id: 30 };
+   let post = { 'name':'Buenos Aires'};
    axios
-    .post("/api/testFunction", post)
+    .put("/api/testFunction/1", post)
     .then(response => {
      if (response.data.status) {
       console.log(response.data.rows);

@@ -8,9 +8,8 @@ use Illuminate\Http\Request;
 
 class BranchController extends Controller {
 
-
     public function store(Request $request) {
-        $query = Branch::create($request);
+        $query = Branch::create($request->all());
         return response([
             'row'=> $query,
             'status' => true
@@ -72,10 +71,8 @@ class BranchController extends Controller {
 
         $query->fill($input)->save();
 
-        $result = $this->show($id, true);
-
         return response([
-            'row'=> $result,
+            'row'=> $query,
             'status'=> true
         ], 200);
     }

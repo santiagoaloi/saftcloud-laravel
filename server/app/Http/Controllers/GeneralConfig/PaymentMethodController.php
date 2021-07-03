@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class PaymentMethodController extends Controller {
 
     public function store(Request $request) {
-        $query = PaymentMethod::create($request);
+        $query = PaymentMethod::create($request->all());
         return response([
             'row'=> $query,
             'status'=> true
@@ -71,10 +71,8 @@ class PaymentMethodController extends Controller {
 
         $query->fill($input)->save();
 
-        $result = $this->show($id, true);
-
         return response([
-            'row'=> $result,
+            'row'=> $query,
             'status'=> true
         ], 200);
     }

@@ -171,11 +171,11 @@ const actions = {
  ...make.actions(state),
 
  saveComponentsConfigStructure({ state }) {
-  axios.post("api/ComponentDefault", { config_structure: JSON.parse(state.ComponentsConfigStructure) }).then(response => {});
+  axios.post("api/componentDefault", { config_structure: JSON.parse(state.ComponentsConfigStructure) }).then(response => {});
  },
 
  getComponentsConfigStructure({ commit }) {
-  axios.get("api/ComponentDefaultLast").then(response => {
+  axios.get("api/componentDefaultLast").then(response => {
    commit("ComponentsConfigStructure", JSON.stringify(response.data, null, 2));
   });
  },
@@ -260,7 +260,7 @@ const actions = {
    .join("\n")
    .replace(/(\r\n|\n|\r)/gm, " ");
 
-  axios.put(`api/Component/${component.id}`, component).then(response => {
+  axios.put(`api/component/${component.id}`, component).then(response => {
    if (response.data.status) {
     const index = state.allComponents.findIndex(c => c.id == component.id);
     store.set(`componentManagement/allComponents@${index}`, response.data.component);

@@ -7,6 +7,13 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Root\ComponentDefaultController;
 
 use App\Models\GeneralConfig\LookUpList;
+use App\Http\Controllers\Private\RoleController;
+
+use App\Exceptions\Handler;
+use App\Http\Controllers\Private\UserController;
+use App\Http\Controllers\Public\StateController;
+
+
 
 Use Exception;
 
@@ -49,18 +56,9 @@ class TestFunctionController extends Controller {
         echo json_encode(['status' => 'Success', 'rows' => $users]);exit();
     }
 
-    function test2(){
-        $tables = DB::select("select table_name from information_schema.tables where table_schema = 'laravel_vue'");
-        foreach($tables as $table){
-            $table_name = $table->table_name;
-            $columns = DB::select("select column_name from information_schema.columns where table_schema = 'laravel_vue' and table_name = '$table_name'");
-            foreach($columns as $column){
-                $column_name[] = $column->column_name;
-            }
-            $tableArray[$table_name] = $column_name;
-            $column_name = [];
-        }
-        return $tableArray;
+    public function test2(Request $request, $id){
+        $user = new StateController;
+        return $user->update($request, $id);
     }
 
     function probarFormFieldStructure(){

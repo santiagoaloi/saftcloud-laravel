@@ -9,24 +9,20 @@ use Illuminate\Http\Request;
 class StateController extends Controller {
 
     public function store(Request $request) {
-        $query = State::create($request);
+        $query = State::create($request->all());
         return response([
             'row'=> $query,
             'status'=> true
         ], 200);
     }
 
-    public function show(Request $id, $local = false) {
+    public function show(Request $id) {
         $result = State::find($id);
 
-        if ($local){
-            return $result;
-        } else {
-            return response([
-                'row'=> $result,
-                'status'=> true
-            ], 200);
-        }
+        return response([
+            'row'=> $result,
+            'status'=> true
+        ], 200);
     }
 
     public function showAll($local = false) {
@@ -71,10 +67,8 @@ class StateController extends Controller {
 
         $query->fill($input)->save();
 
-        $result = $this->show($id, true);
-
         return response([
-            'row'=> $result,
+            'row'=> $query,
             'status'=> true
         ], 200);
     }

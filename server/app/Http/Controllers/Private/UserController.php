@@ -9,14 +9,19 @@ use Illuminate\Http\Request;
 class UserController extends Controller {
 
     public function store(Request $request) {
-        $query = User::create($request);
+        //** TEST PARA SUBIR ARCHIVOS AL CREAR UN USUARIO */
+        // if($request->hasFile('picture')){
+        //     $query['picture']=$request->file('picture')->store('avatars', 'public');
+        // };
+
+        $query = User::create($request->all());
         return response([
             'row'=> $query,
             'status'=> true
         ], 200);
     }
 
-    public function show(Request $id, $local = false) {
+    public function show($id, $local = false) {
         $result = User::find($id);
 
         if ($local){
@@ -71,10 +76,8 @@ class UserController extends Controller {
 
         $query->fill($input)->save();
 
-        $result = $this->show($id, true);
-
         return response([
-            'row'=> $result,
+            'row'=> $query,
             'status'=> true
         ], 200);
     }

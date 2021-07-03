@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class AccountPlanController extends Controller {
     
     public function store(Request $request) {
-        $query = AccountPlan::create($request);
+        $query = AccountPlan::create($request->all());
         return response([
             'row' => $query,
             'status' => true
@@ -71,10 +71,8 @@ class AccountPlanController extends Controller {
 
         $query->fill($input)->save();
 
-        $result = $this->show($id, true);
-
         return response([
-            'row'=> $result,
+            'row'=> $query,
             'status'=> true
         ], 200);
     }

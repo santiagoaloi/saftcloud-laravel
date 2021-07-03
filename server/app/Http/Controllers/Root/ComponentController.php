@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Root\Component;
 use Illuminate\Http\Request;
 
-// use App\Http\Controllers\Root\MysqlController;
 use Illuminate\Database\QueryException;
 Use Exception;
 use Illuminate\Support\Facades\File;
@@ -173,10 +172,8 @@ class ComponentController extends Controller {
 
         $query->fill($input)->save();
 
-        $result = $this->show($id, true);
-
         return response([
-            'component'=> $result,
+            'component'=> $query,
             'status'    => true
         ], 200);
     }
