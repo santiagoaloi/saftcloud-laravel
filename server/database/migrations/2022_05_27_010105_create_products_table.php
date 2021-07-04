@@ -16,12 +16,13 @@ class CreateProductsTable extends Migration {
             $table->foreignId('entity_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
             $table->string('bar_code');
             $table->string('sku');
-            $table->integer('category_id');
-            $table->integer('family_id');
-            $table->integer('brand_id');
+            $table->foreignId('product_category_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
+            $table->foreignId('product_family_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
+            $table->foreignId('product_brand_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
             $table->string('product_name');
             $table->string('quantity');
-            $table->integer('unimed_id');
+            $table->unsignedBigInteger('unimed_id');
+            $table->foreign('unimed_id')->references('id')->on('look_up_list_values')->onDelete('RESTRICT')->onUpdate('CASCADE');
             $table->decimal('cost_net', 20, 2);
             $table->decimal('cost_untaxed', 20, 2);
             $table->unsignedBigInteger('iva_id');
