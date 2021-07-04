@@ -1,7 +1,6 @@
 <template>
  <div>
   <v-text-field
-   :color="isDark ? 'white' : ''"
    v-model="searchFields"
    hide-details
    label="Buscar"
@@ -12,8 +11,11 @@
    spellcheck="false"
    solo
    class="mb-2"
+   :color="isDark ? '#208ad6' : 'grey'"
+   :background-color="isDark ? 'grey darken-4' : 'grey lighten-5'"
+   :outlined="isDark"
   />
-  <v-list-item-group v-model="selectedFieldItem" mandatory active-class="blue-grey lighten-4">
+  <v-list-item-group v-model="selectedFieldItemGroup" mandatory active-class="blue-grey lighten-4">
    <v-list class="fieldListHeight" color="transparent">
     <draggable
      v-model="selectedComponent.config.form_fields"
@@ -65,22 +67,29 @@ import axios from "axios";
 import draggable from "vuedraggable";
 import { sync, get, call } from "vuex-pathify";
 export default {
- name: "ComponentsEditViewsFormFieldsRightPanel",
+ name: "ComponentsEditViewsFormFieldsList",
  components: {
   draggable
  },
- data: () => ({
-  showSelectedOnly: false,
-  selectedFieldItem: 0
- }),
+ data: () => ({}),
 
  methods: {
   ...call("componentManagement/*")
  },
 
+ mounted() {
+  this.setActiveField(this.filteredFormFields[0].field);
+ },
+
  computed: {
   ...sync("theme", ["isDark"]),
-  ...sync("componentManagement", ["searchFields", "displayEnabledFormFieldsOnly", "selectedComponentActiveField"]),
+  ...sync("componentManagement", [
+   "searchFields",
+   "displayEnabledFormFieldsOnly",
+   "selectedComponentActiveField",
+   "selectedFieldItemGroup",
+   "showSelectedFieldsOnly"
+  ]),
   ...get("componentManagement", ["selectedComponent", "filteredFormFields", "filteredSelectedFields"])
  }
 };

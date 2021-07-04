@@ -93,7 +93,7 @@
    </transition-group>
   </v-item-group>
 
-  <base-dialog-icons :icon="componentIcon" v-model="dialogIcons" />
+  <base-dialog-icons v-if="dialogIcons" :icon="componentIcon" v-model="dialogIcons" />
  </div>
 </template>
 

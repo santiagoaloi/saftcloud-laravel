@@ -41,8 +41,7 @@
 
   <v-card-text>
    <div class="text--primary">
-    <small>Description</small>
-
+    <baseFieldLabel label="Description" />
     <v-textarea
      :outlined="isDark"
      :color="isDark ? '#208ad6' : 'grey'"
@@ -52,14 +51,14 @@
      noResize
      :rows="2"
      autogrow
-     hide-details
      dense
      v-model="selectedComponent.config.note"
     >
     </v-textarea>
 
     <div class="mt-2">
-     <small>Change component group </small>
+     <baseFieldLabel label="Change component group " />
+     <small></small>
      <v-autocomplete
       :outlined="isDark"
       :color="isDark ? '#208ad6' : 'grey'"

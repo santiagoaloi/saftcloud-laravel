@@ -109,15 +109,7 @@
          <v-card-actions class="mt-n7">
           <!-- <div class="flex-grow-1" /> -->
 
-          <v-btn
-           width="40%"
-           color="pink accent-5"
-           class="mr-n2 white--text"
-           large
-           :loading="loading"
-           @click.prevent="login()"
-           :disabled="auth.email === '' || auth.password === ''"
-          >
+          <v-btn width="40%" color="primary" class="mr-n2 white--text" large :loading="loading" @click.prevent="login()">
            Login
           </v-btn>
          </v-card-actions>
@@ -293,7 +285,7 @@ export default {
  methods: {
   loginSanctum: call("authentication/login"),
   login() {
-   // this.loading = true;
+   this.loading = true;
    this.loginSanctum(this.auth).then(response => {
     if (!response) {
      this.loading = false;

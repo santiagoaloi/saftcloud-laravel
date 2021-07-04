@@ -1,6 +1,6 @@
 $text-base: #e5eaed;
 $material-light: (
- "cards": #fafbfc,
+ "cards": #f0f3f5,
  "status-bar": (
   "regular": map-get($blue-grey, "lighten-2")
  ),
@@ -31,9 +31,9 @@ $material-light: (
  ),
  "tabs": rgba(0, 0, 0, 0.7),
  "table": (
-  "active": map-get($grey, "lighten-4"),
-  "hover": #fff,
-  "group": map-get($grey, "lighten-4")
+  "active": #e1e3eb,
+  "hover": #e1e3eb,
+  "group": #c8cad4
  ),
  "picker": (
   "body": map-get($shades, "white"),

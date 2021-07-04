@@ -45,8 +45,8 @@ $material-dark: (
  "navigation-drawer": map-get($theme-dark-colors, "1"),
  "skeleton": linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent),
  "table": (
-  "active": #192328,
-  "hover": #354553,
+  "active": #2f3136,
+  "hover": #393c42,
   "group": #354553
  ),
  "toolbar": map-get($theme-dark-colors, "4"),

@@ -2,7 +2,7 @@
  <v-navigation-drawer
   mobileBreakpoint="0"
   clipped
-  :color="$vuetify.theme.dark ? '#2C2F33' : '#f6f8fa'"
+  :color="$vuetify.theme.dark ? '#2C2F33' : '#f0f3f5'"
   width="350"
   v-model="secureComponentDrawer"
   hideOverlay

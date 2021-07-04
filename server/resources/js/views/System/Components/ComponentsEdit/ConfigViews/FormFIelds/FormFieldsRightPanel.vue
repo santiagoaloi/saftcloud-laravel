@@ -1,7 +1,7 @@
 <template>
  <div>
-  <v-sheet class="rightPanelHeight transparent">
-   <v-tabs color="accent" v-model="activeStatusTab" showArrows class="col-12 mt-n3 px-0" background-color="transparent" sliderSize="1">
+  <v-sheet class=" rightPanelHeight transparent">
+   <v-tabs color="accent" showArrows class="col-12 mt-n3 px-0" background-color="transparent" sliderSize="1">
     <v-tab :activeClass="isDark ? 'white--text' : ''" :key="i" v-for="(tab, i) in fieldsOptionsTabs" :ripple="false">
      <v-icon :color="tab.color" small left>
       {{ tab.icon }}
@@ -12,8 +12,8 @@
 
    <v-row>
     <v-col cols="6">
-     <small class="ml-1">LABEL</small>
-     <v-icon style="margin-top:-2px" :color="selectedComponentFormField.icon.color" class="ml-2" small>mdi-palette-outline</v-icon>
+     <baseFieldLabel label="label" />
+     <!-- <v-icon style="margin-top:-2px" :color="selectedComponentFormField.icon.color" class="ml-2" small>mdi-palette-outline</v-icon> -->
      <v-text-field
       :outlined="isDark"
       :solo="!isDark"
@@ -26,7 +26,7 @@
      </v-text-field>
     </v-col>
     <v-col cols="6">
-     <small class="ml-1">INPUT TYPE</small>
+     <baseFieldLabel label="Input type" />
      <v-select
       :outlined="isDark"
       :solo="!isDark"
@@ -41,7 +41,7 @@
     </v-col>
    </v-row>
   </v-sheet>
-  <base-dialog-icons :icon="fieldIcon" v-model="dialogIcon" />
+  <base-dialog-icons v-if="dialogIcon" :icon="fieldIcon" v-model="dialogIcon" />
  </div>
 </template>
 
@@ -55,11 +55,11 @@ export default {
  data: () => ({
   dialogIcon: false,
   fieldsOptionsTabs: [
-   { name: "Basic", value: "all", icon: "mdi-all-inclusive", color: "" },
-   { name: "Slots", value: "starred", icon: "mdi-star", color: "" },
-   { name: "Validation", value: "modular", icon: "mdi-view-module", color: "" },
-   { name: "Options", value: "active", icon: "mdi-lightbulb-on", color: "" },
-   { name: "Evevnts", value: "active", icon: "mdi-lightbulb-on", color: "" }
+   { name: "Basic", value: "all", icon: "mdi-note-outline", color: "" },
+   { name: "Slots", value: "starred", icon: "mdi-code-brackets", color: "" },
+   { name: "Validation", value: "modular", icon: "mdi-check-bold", color: "" },
+   { name: "Options", value: "active", icon: "mdi-apple-keyboard-option", color: "" },
+   { name: "Evevnts", value: "active", icon: "mdi-cursor-default-click-outline", color: "" }
   ],
 
   inputTypes: [
@@ -86,8 +86,12 @@ export default {
 };
 </script>
 <style scoped>
+::v-deep .border {
+ border-left: 1px solid grey !important;
+}
 .rightPanelHeight {
  height: calc(100vh - 165px);
  overflow-y: auto;
+ overflow-x: hidden;
 }
 </style>
