@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Private\Social;
+use Illuminate\Support\Facades\DB;
 
 class SocialSeeder extends Seeder {
     /**
@@ -12,12 +12,9 @@ class SocialSeeder extends Seeder {
      * @return void
      */
     public function run() {
-        
-        $social = [
+        DB::table('social')->insert([
             ["id"=>1,"entity_id"=>1,"description"=>"Facebook","url"=>""],
             ["id"=>2,"entity_id"=>1,"description"=>"Instagram","url"=>""]
-        ];
-
-        Social::create($social);
+        ]);
     }
 }

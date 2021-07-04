@@ -4,19 +4,17 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAccountPlansTable extends Migration {
+class CreateProductCategoriesTable extends Migration {
     /**
      * Run the migrations.
      *
      * @return void
      */
     public function up() {
-        Schema::create('account_plans', function (Blueprint $table) {
+        Schema::create('product_categories', function (Blueprint $table) {
             $table->id();
-            $table->integer('users');
-            $table->text('modules')->nullable();
-            $table->integer('locations');
-            $table->integer('cash_registers');
+            $table->foreignId('entity_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
+            $table->string('name');
             $table->softDeletes();
             $table->timestamps();
         });
@@ -28,6 +26,6 @@ class CreateAccountPlansTable extends Migration {
      * @return void
      */
     public function down() {
-        Schema::dropIfExists('account_plans');
+        Schema::dropIfExists('product_categories');
     }
 }

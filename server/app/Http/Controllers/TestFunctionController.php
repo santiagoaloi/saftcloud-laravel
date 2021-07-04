@@ -12,6 +12,8 @@ use App\Http\Controllers\Private\RoleController;
 use App\Exceptions\Handler;
 use App\Http\Controllers\Private\UserController;
 use App\Http\Controllers\Public\StateController;
+use App\Http\Controllers\GeneralConfig\LookUpListValueController;
+use App\Http\Controllers\GeneralConfig\LookUpListController;
 
 
 
@@ -57,8 +59,8 @@ class TestFunctionController extends Controller {
     }
 
     public function test2(Request $request, $id){
-        $user = new StateController;
-        return $user->update($request, $id);
+        $user = new ComponentDefaultController;
+        return $user->showAll();
     }
 
     function probarFormFieldStructure(){
