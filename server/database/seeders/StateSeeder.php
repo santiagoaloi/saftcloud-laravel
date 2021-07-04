@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Public\State;
+use Illuminate\Support\Facades\DB;
 
 class StateSeeder extends Seeder {
     /**
@@ -12,8 +12,7 @@ class StateSeeder extends Seeder {
      * @return void
      */
     public function run() {
-
-        $state = [
+        DB::table('states')->insert([
             ["id"=> 1, "country_id"=> 12, "name"=> "Buenos Aires"],
             ["id"=> 2, "country_id"=> 12, "name"=> "Capital Federal"],
             ["id"=> 3, "country_id"=> 12, "name"=> "Catamarca"],
@@ -38,8 +37,6 @@ class StateSeeder extends Seeder {
             ["id"=> 22, "country_id"=> 12, "name"=> "Santiago del Estero"],
             ["id"=> 23, "country_id"=> 12, "name"=> "Tierra del Fuego"],
             ["id"=> 24, "country_id"=> 12, "name"=> "Tucuman"]
-        ];
-
-        State::create($state);
+        ]);
     }
 }

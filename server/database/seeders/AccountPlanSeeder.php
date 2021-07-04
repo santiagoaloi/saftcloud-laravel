@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Private\AccountPlan;
+use Illuminate\Support\Facades\DB;
 
 class AccountPlanSeeder extends Seeder {
     /**
@@ -12,10 +12,8 @@ class AccountPlanSeeder extends Seeder {
      * @return void
      */
     public function run() {
-        $AccountPlan = [
-            ["id"=>1, "users"=>3, "modules"=>"", "locations"=>"1", "cash_registers"=>"1"]
-        ];
-        AccountPlan::create($AccountPlan);
+        DB::table('account_plans')->insert([
+            ["users"=>3, "locations"=>"1", "cash_registers"=>"1"]
+        ]);
     }
-
 }

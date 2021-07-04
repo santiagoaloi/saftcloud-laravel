@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Root\ComponentGroup;
+use Illuminate\Support\Facades\DB;
 
 class ComponentGroupSeeder extends Seeder {
     /**
@@ -12,10 +12,8 @@ class ComponentGroupSeeder extends Seeder {
      * @return void
      */
     public function run() {
-        $ComponentGroups = [
-            ["id"=>1, "component_group_id"=> "", "name"=>"Grupo 1"]
-        ];
-
-        ComponentGroup::create($ComponentGroups);
+        DB::table('component_groups')->insert([
+            ["id"=>1, "name"=>"Grupo 1"]
+        ]);
     }
 }

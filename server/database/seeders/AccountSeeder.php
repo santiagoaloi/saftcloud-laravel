@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Private\Account;
+use Illuminate\Support\Facades\DB;
 
 class AccountSeeder extends Seeder {
     /**
@@ -12,10 +12,8 @@ class AccountSeeder extends Seeder {
      * @return void
      */
     public function run() {
-        $Accounts = [
-            ["id"=>1, "license"=>1234567890, "account_plan_id"=>999, "payment_status"=>"999", "email"=>"info@saftcloud.com", "doc_type_id"=>25, "doc_number"=>20324501364, "name"=>"SAFTcloud"]
-        ];
-
-        Account::create($Accounts);
+        DB::table('accounts')->insert([
+            ["id"=>1, "license"=>1234567890, "account_plan_id"=>1, "payment_status"=>"999", "email"=>"info@saftcloud.com", "doc_type_id"=>25, "doc_number"=>20324501364, "name"=>"SAFTcloud"]
+        ]);
     }
 }

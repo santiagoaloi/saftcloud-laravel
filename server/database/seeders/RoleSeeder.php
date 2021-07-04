@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Private\Role;
+use Illuminate\Support\Facades\DB;
 
 class RoleSeeder extends Seeder {
     /**
@@ -12,12 +12,9 @@ class RoleSeeder extends Seeder {
      * @return void
      */
     public function run() {
-
-        $role = [
-            ["id"=>1, "account_id"=>"", "role_id"=>"", "description"=>"Root"],
-            ["id"=>2, "account_id"=>"", "role_id"=>"", "description"=>"Admin"]
-        ];
-
-        Role::create($role);
+        DB::table('roles')->insert([
+            ["id"=>1, "description"=>"Root"],
+            ["id"=>2, "description"=>"Admin"]
+        ]);
     }
 }

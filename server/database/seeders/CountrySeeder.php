@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Public\Country;
+use Illuminate\Support\Facades\DB;
 
 class CountrySeeder extends Seeder {
     /**
@@ -12,8 +12,7 @@ class CountrySeeder extends Seeder {
      * @return void
      */
     public function run() {
-
-        $countries = [
+        DB::table('countries')->insert([
             ["id"=>1,"nombre"=>"Afganistán","name"=>"Afghanistan","iso2"=>"AF","iso3"=>"AFG","phone_code"=>"93","deleted_at"=>null],
             ["id"=>2,"nombre"=>"Albania","name"=>"Albania","iso2"=>"AL","iso3"=>"ALB","phone_code"=>"355","deleted_at"=>null],
             ["id"=>3,"nombre"=>"Alemania","name"=>"Germany","iso2"=>"DE","iso3"=>"DEU","phone_code"=>"49","deleted_at"=>null],
@@ -260,8 +259,6 @@ class CountrySeeder extends Seeder {
             ["id"=>244,"nombre"=>"Yibuti","name"=>"Djibouti","iso2"=>"DJ","iso3"=>"DJI","phone_code"=>"253","deleted_at"=>null],
             ["id"=>245,"nombre"=>"Zambia","name"=>"Zambia","iso2"=>"ZM","iso3"=>"ZMB","phone_code"=>"260","deleted_at"=>null],
             ["id"=>246,"nombre"=>"Zimbabue","name"=>"Zimbabwe","iso2"=>"ZW","iso3"=>"ZWE","phone_code"=>"263","deleted_at"=>null]
-        ];
-
-        Country::create($countries);
+        ]);
     }
 }

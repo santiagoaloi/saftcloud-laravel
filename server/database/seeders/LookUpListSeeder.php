@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-USE App\Models\GeneralConfig\LookUpList;
+use Illuminate\Support\Facades\DB;
 
 class LookUpListSeeder extends Seeder {
     /**
@@ -12,7 +12,7 @@ class LookUpListSeeder extends Seeder {
      * @return void
      */
     public function run() {
-        $LookUpList = [
+        DB::table('look_up_lists')->insert([
                 ["id"=> 1, "name"=> "entity_types"],
                 ["id"=> 2, "name"=> "iva_conditions"],
                 ["id"=> 3, "name"=> "document_types"],
@@ -27,8 +27,6 @@ class LookUpListSeeder extends Seeder {
                 ["id"=> 12, "name"=> "measurement_units"],
                 ["id"=> 13, "name"=> "payment_status"],
                 ["id"=> 14, "name"=> "sell_status"]
-        ];
-
-        LookUpList::create($LookUpList);
+        ]);
     }
 }
