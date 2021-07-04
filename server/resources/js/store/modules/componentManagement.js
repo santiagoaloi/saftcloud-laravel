@@ -227,7 +227,7 @@ const actions = {
  },
 
  removeGroup({ commit }, id) {
-  axios.delete(`api/ComponentGroup/${id}`).then(response => {
+  axios.delete(`api/componentGroup/${id}`).then(response => {
    if (response.data.status) {
     commit("allGroups", response.data.groups);
     store.set("snackbar/value", true);
@@ -238,7 +238,7 @@ const actions = {
  },
 
  renameGroup({ commit }, { id, newName }) {
-  axios.patch(`api/ComponentGroup/${id}`, { name: newName }).then(response => {
+  axios.patch(`api/componentGroup/${id}`, { name: newName }).then(response => {
    if (response.data.status) {
     commit("allGroups", response.data.groups);
     store.set("snackbar/value", true);
@@ -313,7 +313,7 @@ const actions = {
  },
 
  saveGroup({ state, commit }) {
-  axios.post("api/ComponentGroup", { name: state.groupName }).then(response => {
+  axios.post("api/componentGroup", { name: state.groupName }).then(response => {
    if (response.data.status) {
     state.dialogs.dialogGroup = false;
     commit("allGroups", response.data.groups);
@@ -326,7 +326,7 @@ const actions = {
  },
 
  createComponent({ state, commit, getters }) {
-  axios.post("api/Component", state.componentSettings).then(response => {
+  axios.post("api/component", state.componentSettings).then(response => {
    if (response.data.status) {
     commit("allComponents", response.data.components);
     state.dialogs.dialogComponent = false;
