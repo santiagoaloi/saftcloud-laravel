@@ -3,9 +3,9 @@
   <v-card-text>
    <h2 class="text--primary mb-5">Hi {{ signupForm.name }}, nice to meet you!</h2>
    <ValidationObserver ref="step0" slim>
-    <v-row justify="center">
+    <v-row>
      <v-col sm="6">
-      <span>Name</span>
+      <baseFieldLabel label="Name" />
       <validation-provider v-slot="{ errors }" name="First name" rules="required">
        <v-text-field
         autofocus
@@ -15,7 +15,6 @@
         @keydown.enter.prevent="validateAndProceed()"
         prepend-inner-icon="mdi-account"
         :outlined="isDark"
-        :solo="!isDark"
         :color="isDark ? '#208ad6' : 'grey'"
         :background-color="isDark ? 'grey darken-4' : 'grey lighten-4'"
         :error="errors.length > 0"
@@ -23,7 +22,7 @@
       </validation-provider>
      </v-col>
      <v-col sm="6">
-      <span>Last name </span>
+      <baseFieldLabel label="Last name" />
       <validation-provider v-slot="{ errors }" name="Last name" rules="required">
        <v-text-field
         v-model="signupForm.lastname"
@@ -32,7 +31,6 @@
         @keydown.enter.prevent="validateAndProceed()"
         prepend-inner-icon="mdi-account"
         :outlined="isDark"
-        :solo="!isDark"
         :color="isDark ? '#208ad6' : 'grey'"
         :background-color="isDark ? 'grey darken-4' : 'grey lighten-4'"
         :error="errors.length > 0"

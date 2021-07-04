@@ -157,7 +157,7 @@
               </v-list-item-content>
             </v-list-item>
 
-            <v-list-item @click="logoutSanctum">
+            <v-list-item @click="logout()">
               <v-list-item-action>
                 <v-icon>mdi-logout</v-icon>
               </v-list-item-action>
@@ -295,7 +295,7 @@ export default {
   },
 
   methods: {
-    logoutSanctum: call("authentication/logout"),
+  ...call("authentication/*"),
 
     fetchNotificationCount() {
       axios.get("site/fetchNotificationCount").then(response => {

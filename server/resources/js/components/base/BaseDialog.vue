@@ -84,8 +84,6 @@
 <script>
 export default {
  name: "BaseDialog",
-
- inheritAttrs: false,
  props: {
   value: {
    type: [Boolean],

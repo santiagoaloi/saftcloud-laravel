@@ -81,7 +81,7 @@
   <div class="text-center mb-3">
    <v-tooltip transition="false" color="black" bottom>
     <template v-slot:activator="{ on, attrs }">
-     <v-btn @click="edit()" v-on="on" depressed dark large small :color="$vuetify.theme.dark ? '' : 'white'">
+     <v-btn @click="componentEditSheet = !componentEditSheet" v-on="on" depressed dark large small :color="$vuetify.theme.dark ? '' : 'white'">
       <v-icon color="#6453DCED" dark>
        mdi-pencil-outline
       </v-icon>
@@ -200,7 +200,6 @@
 
    <v-divider></v-divider>
   </v-list>
-  <!-- </v-card> -->
  </div>
 </template>
 
@@ -253,11 +252,6 @@ export default {
  methods: {
   ...call("componentManagement/*"),
 
-  edit() {
-   this.componentEditSheet = !this.componentEditSheet;
-   //    this.$router.push("/components/basic");
-  },
-
   setStarred(component) {
    component.status.starred = !component.status.starred;
    component.origin.status.starred = !component.origin.status.starred;
@@ -285,9 +279,3 @@ export default {
  }
 };
 </script>
-<style scoped>
-/* ::v-deep .v-alert--dense {
- padding-top: 0px;
- padding-bottom: 0px;
-} */
-</style>

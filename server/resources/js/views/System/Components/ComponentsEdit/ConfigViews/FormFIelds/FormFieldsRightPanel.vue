@@ -20,8 +20,8 @@
       :color="isDark ? '#208ad6' : 'grey'"
       :background-color="isDark ? 'grey darken-4' : 'grey lighten-4'"
       v-model="selectedComponentFormField.label"
-      :append-icon="selectedComponentFormField.icon.name"
-      @click:append="dialogIcon = true"
+      :prepend-inner-icon="selectedComponentFormField.icon.name"
+      @click:prepend-inner="dialogIcon = true"
      >
      </v-text-field>
     </v-col>
