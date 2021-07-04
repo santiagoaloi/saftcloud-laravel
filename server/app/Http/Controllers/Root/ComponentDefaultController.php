@@ -13,16 +13,19 @@ class ComponentDefaultController extends Controller {
 
     public function store(Request $request) {
         $query = ComponentDefault::create(['config_structure'=>json_encode($request['config_structure'])]);
-        
+
         $getComponents = new ComponentController;
         $components = $getComponents->showAll(true);
-        foreach ($components as $component){
-            $result = $this->compareComponentConfig($component);
-            $component['config']['form_fields'] = $result;
-            $newComponents[]=$component;
-        };
 
-        $saveComponents = $getComponents->updateAll($newComponents, true);
+        if (!isset($components)){
+            foreach ($components as $component){
+                $result = $this->compareComponentConfig($component);
+                $component['config']['form_fields'] = $result;
+                $newComponents[]=$component;
+            };
+
+            $getComponents->updateAll($newComponents, true);
+        }
 
         return response([
             'row'=> $query,

@@ -18,7 +18,7 @@ class DatabaseSeeder extends Seeder {
         $this->call(LookUpListValueSeeder::class);
         $this->call(AccountSeeder::class);
 
-        // $this->call(ComponentDefaultSeeder::class);
+        $this->call(ComponentDefaultSeeder::class);
         $this->call(ComponentGroupSeeder::class);
         // $this->call(ComponentSeeder::class);
 

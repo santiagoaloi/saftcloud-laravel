@@ -13,7 +13,8 @@ class ComponentGroupSeeder extends Seeder {
      */
     public function run() {
         DB::table('component_groups')->insert([
-            ["id"=>1, "name"=>"Grupo 1"]
+            ["id"=>1, "component_group_id"=>null, "name"=>"Grupo 1"],
+            ["id"=>2, "component_group_id"=>1, "name"=>"Grupo 1"]
         ]);
     }
 }
