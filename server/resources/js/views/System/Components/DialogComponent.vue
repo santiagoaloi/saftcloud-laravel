@@ -1,12 +1,11 @@
 <template>
  <baseDialog
-  v-model="dialogs.dialogComponent"
+  v-model="dialogComponent"
   title="Add new component"
-  C
   persistent
   max-width="900"
   @save="validateComponentForm()"
-  @close="() => (dialogs.dialogComponent = false)"
+  @close="dialogComponent = !dialogComponent"
  >
   <ValidationObserver ref="createComponentForm" slim>
    <v-row>
@@ -154,6 +153,7 @@ import componentGroups from "@/mixins/componentGroups";
 export default {
  name: "DialogComponent",
  mixins: [componentGroups],
+ inheritAttrs: false,
 
  mounted() {
   this.getDbTables();
@@ -161,7 +161,7 @@ export default {
 
  computed: {
   ...sync("theme", ["isDark"]),
-  ...sync("componentManagement", ["allGroups", "dialogs", "componentSettings", "dbTables", "groupName"])
+  ...sync("componentManagement", ["allGroups", "dialogComponent", "componentSettings", "dbTables", "groupName"])
  },
 
  methods: {

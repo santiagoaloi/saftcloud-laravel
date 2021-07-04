@@ -24,10 +24,8 @@ const state = {
  tableColumns: [],
  searchFields: "",
  allComponents: [],
- dialogs: {
-  dialogIcons: false,
-  dialogComponent: false
- },
+ dialogComponent: false,
+ dialogIcons: false,
  activeStatusTab: 0,
  isTableLayout: false,
  componentEditSheet: false,
@@ -172,6 +170,10 @@ const getters = {
 const actions = {
  ...make.actions(state),
 
+ closeComponentDialog({}) {
+  store.set("componentManagement/dialogComponent", false);
+ },
+
  saveComponentsConfigStructure({ state, dispatch }) {
   axios.post("api/componentDefault", { config_structure: JSON.parse(state.ComponentsConfigStructure) }).then(response => {
    dispatch("getComponents");
@@ -181,57 +183,57 @@ const actions = {
   });
  },
 
- getComponentsConfigStructure({ commit }) {
+ getComponentsConfigStructure({}) {
   axios.get("api/componentDefaultLast").then(response => {
-   commit("ComponentsConfigStructure", JSON.stringify(response.data, null, 2));
+   store.set("componentManagement/ComponentsConfigStructure", JSON.stringify(response.data, null, 2));
   });
  },
 
- getDbTables({ commit }) {
+ getDbTables({}) {
   axios.get("api/showAllTables").then(response => {
-   commit("dbTables", response.data);
+   store.set("componentManagement/dbTables", response.data);
   });
  },
 
- getDbTablesAndColumns({ commit }) {
+ getDbTablesAndColumns({}) {
   axios.get("api/showAllTablesAndColumns").then(response => {
-   commit("dbTablesAndColumns", response.data.tableAndColumns);
+   store.set("componentManagement/dbTablesAndColumns", response.data.tableAndColumns);
   });
  },
 
- getGroups({ commit }) {
+ getGroups({}) {
   axios.get("api/showAllGroups").then(response => {
    if (response.data.status) {
-    commit("allGroups", response.data.groups);
+    store.set("componentManagement/allGroups", response.data.groups);
    }
   });
  },
 
- unselectGroup({ state, commit }, id) {
+ unselectGroup({ state }, id) {
   const selectedComponentGroups = state.selectedComponentGroups.filter(cg => cg.id !== id);
-  commit("selectedComponentGroups", selectedComponentGroups);
+  store.set("componentManagement/selectedComponentGroups", selectedComponentGroups);
  },
 
- selectAllGroups({ commit, state, getters }) {
+ selectAllGroups({ state, getters }) {
   if (getters.selectedAllGroups) {
-   commit("selectedComponentGroups", []);
+   store.set("componentManagement/selectedComponentGroups", []);
   } else {
-   commit("selectedComponentGroups", state.allGroups.slice());
+   store.set("componentManagement/selectedComponentGroups", state.allGroups.slice());
   }
  },
 
- getComponents({ commit }) {
+ getComponents({}) {
   axios.get("api/showAllComponents").then(response => {
    if (response.data.status) {
-    commit("allComponents", response.data.components);
+    store.set("componentManagement/allComponents", response.data.components);
    }
   });
  },
 
- removeGroup({ commit }, id) {
+ removeGroup({}, id) {
   axios.delete(`api/componentGroup/${id}`).then(response => {
    if (response.data.status) {
-    commit("allGroups", response.data.groups);
+    store.set("componentManagement/allGroups", response.data.groups);
     store.set("snackbar/value", true);
     store.set("snackbar/text", "Group removed");
     store.set("snackbar/color", "pink darken-1");
@@ -239,10 +241,10 @@ const actions = {
   });
  },
 
- renameGroup({ commit }, { id, newName }) {
+ renameGroup({}, { id, newName }) {
   axios.patch(`api/componentGroup/${id}`, { name: newName }).then(response => {
    if (response.data.status) {
-    commit("allGroups", response.data.groups);
+    store.set("componentManagement/allGroups", response.data.groups);
     store.set("snackbar/value", true);
     store.set("snackbar/text", "Group renamed");
     store.set("snackbar/color", "grey darken-2");
@@ -303,10 +305,10 @@ const actions = {
   store.set(`componentManagement/allComponents@${index}`, { ...origin, origin: cloneDeep(origin) });
  },
 
- removeComponent({ commit }, id) {
+ removeComponent({}, id) {
   axios.delete(`api/component/${id}`).then(response => {
    if (response.data.status) {
-    commit("allComponents", response.data.components);
+    store.set("componentManagement/allComponents", response.data.components);
     store.set("snackbar/value", true);
     store.set("snackbar/text", "Component removed");
     store.set("snackbar/color", "pink darken-1");
@@ -314,11 +316,10 @@ const actions = {
   });
  },
 
- saveGroup({ state, commit }) {
+ saveGroup({ state }) {
   axios.post("api/componentGroup", { name: state.groupName }).then(response => {
    if (response.data.status) {
-    state.dialogs.dialogGroup = false;
-    commit("allGroups", response.data.groups);
+    store.set("componentManagement/allGroups", response.data.groups);
     store.set("componentManagement/groupName", null);
     store.set("snackbar/value", true);
     store.set("snackbar/text", `Group "${state.groupName}" created`);
@@ -327,11 +328,11 @@ const actions = {
   });
  },
 
- createComponent({ state, commit, getters }) {
+ createComponent({ state, getters }) {
   axios.post("api/component", state.componentSettings).then(response => {
    if (response.data.status) {
-    commit("allComponents", response.data.components);
-    state.dialogs.dialogComponent = false;
+    store.set("componentManagement/allComponents", response.data.components);
+    store.set("componentManagement/dialogComponent", false);
     store.set("snackbar/value", true);
     store.set("snackbar/text", `"${state.componentSettings.title}" component created`);
     store.set("snackbar/color", "indigo darken-2");
@@ -346,22 +347,22 @@ const actions = {
 
     store.set("componentManagement/componentCardGroup", getters.allComponentsFiltered.length - 1);
     store.set("componentManagement/selectedComponentIndex", state.allComponents.length - 1);
-    state.componentSettings = initialComponentSettings();
+    store.set("componentManagement/componentSettings", state.initialComponentSettings());
    }
   });
  },
 
  previousComponent({ state }) {
   if (state.componentCardGroup > 0) {
-   state.componentCardGroup--;
-   state.selectedComponentIndex--;
+   store.set("componentManagement/componentCardGroup", state.componentCardGroup - 1);
+   store.set("componentManagement/selectedComponentIndex", state.selectedComponentIndex - 1);
   }
  },
 
  nextComponent({ state, getters }) {
   if (state.componentCardGroup < getters.allComponentsFiltered.length - 1) {
-   state.componentCardGroup++;
-   state.selectedComponentIndex++;
+   store.set("componentManagement/componentCardGroup", state.componentCardGroup + 1);
+   store.set("componentManagement/selectedComponentIndex", state.selectedComponentIndex + 1);
   }
  }
 };

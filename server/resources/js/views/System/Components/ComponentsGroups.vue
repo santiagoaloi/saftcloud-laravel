@@ -1,7 +1,7 @@
 <template>
  <v-row align="center" class="mt-2">
   <v-col cols="12" sm="4">
-   <small>Component groups</small>
+   <baseFieldLabel label="Component groups" />
    <v-autocomplete
     @update:search-input="syncGroupInputValue($event)"
     v-model="selectedComponentGroups"

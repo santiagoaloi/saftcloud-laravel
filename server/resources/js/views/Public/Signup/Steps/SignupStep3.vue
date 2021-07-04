@@ -8,7 +8,7 @@
     <v-row justify="center">
      <v-col sm="6">
       <validation-provider v-slot="{ errors }" name="Company name" rules="required">
-       <span>Account name</span>
+       <baseFieldLabel label="Account" />
        <v-text-field
         autofocus
         v-model="signupForm.companyName"
@@ -17,14 +17,15 @@
         hide-details
         @keydown.enter.prevent="validateAndProceed()"
         prepend-inner-icon="mdi-account"
-        :color="isDark ? 'white' : ''"
-        :background-color="isDark ? 'grey darken-4' : 'grey lighten-5'"
+        :outlined="isDark"
+        :color="isDark ? '#208ad6' : 'grey'"
+        :background-color="isDark ? 'grey darken-4' : 'grey lighten-4'"
         :error="errors.length > 0"
        ></v-text-field>
       </validation-provider>
      </v-col>
      <v-col sm="6">
-      <span>Parent company name alias</span>
+      <baseFieldLabel label="Company Alias" />
       <validation-provider v-slot="{ errors }" name="Company name alias" rules="required">
        <v-text-field
         v-model="signupForm.companyNameAlias"
@@ -33,8 +34,9 @@
         hide-details
         @keydown.enter.prevent="validateAndProceed()"
         prepend-inner-icon="mdi-account"
-        :color="isDark ? 'white' : ''"
-        :background-color="isDark ? 'grey darken-4' : 'grey lighten-5'"
+        :outlined="isDark"
+        :color="isDark ? '#208ad6' : 'grey'"
+        :background-color="isDark ? 'grey darken-4' : 'grey lighten-4'"
         :error="errors.length > 0"
        ></v-text-field>
       </validation-provider>
@@ -42,7 +44,6 @@
     </v-row>
    </ValidationObserver>
   </v-card-text>
-
   <v-btn dark class="mx-1" @click="step--" large color="grey darken-2">Back</v-btn>
   <v-btn @click="validateAndProceed()" large color="primary">Continue</v-btn>
  </div>

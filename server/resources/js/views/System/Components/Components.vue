@@ -25,7 +25,7 @@
    </template>
   </v-card>
 
-  <dialog-component v-if="dialogs.dialogComponent" />
+  <dialog-component />
   <component-edit-sheet />
  </div>
 </template>
@@ -54,7 +54,7 @@ export default {
  computed: {
   ...sync("theme", ["isDark"]),
   ...get("componentManagement", ["isAllFilteredComponentsEmpty", "selectedComponent"]),
-  ...sync("componentManagement", ["dialogs", "isTableLayout"])
+  ...sync("componentManagement", ["dialogComponent", "isTableLayout"])
  },
 
  mounted() {

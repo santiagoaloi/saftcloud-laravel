@@ -7,7 +7,8 @@
    <ValidationObserver ref="step1" slim>
     <v-row justify="center">
      <v-col sm="12">
-      <span>Email</span>
+      <baseFieldLabel label="Email" />
+      <span></span>
       <validation-provider v-slot="{ errors }" name="Email" rules="required|email">
        <v-text-field
         autofocus
@@ -17,14 +18,15 @@
         hide-details
         @keydown.enter.prevent="validateAndProceed()"
         prepend-inner-icon="mdi-email"
-        :color="isDark ? 'white' : ''"
-        :background-color="isDark ? 'grey darken-4' : 'grey lighten-5'"
+        :outlined="isDark"
+        :color="isDark ? '#208ad6' : 'grey'"
+        :background-color="isDark ? 'grey darken-4' : 'grey lighten-4'"
         :error="errors.length > 0"
        ></v-text-field>
       </validation-provider>
      </v-col>
      <v-col sm="6">
-      <span>Country Code</span>
+      <baseFieldLabel label="Country Code" />
       <validation-provider v-slot="{ errors }" name="CountryCode" rules="required">
        <v-autocomplete
         :items="countryCodes"
@@ -35,8 +37,9 @@
         hide-details
         @keydown.enter.prevent="validateAndProceed()"
         hide-no-data
-        :color="isDark ? 'white' : ''"
-        :background-color="isDark ? 'grey darken-4' : 'grey lighten-5'"
+        :outlined="isDark"
+        :color="isDark ? '#208ad6' : 'grey'"
+        :background-color="isDark ? 'grey darken-4' : 'grey lighten-4'"
         :error="errors.length > 0"
        >
         <template slot="selection" slot-scope="data">
@@ -65,7 +68,8 @@
       </validation-provider>
      </v-col>
      <v-col sm="6">
-      <span>Phone number</span>
+      <baseFieldLabel label="Phone number" />
+      <span></span>
       <validation-provider v-slot="{ errors }" name="Phone mumber" rules="required">
        <v-text-field
         type="number"
@@ -74,8 +78,9 @@
         hide-details
         @keydown.enter.prevent="validateAndProceed()"
         prepend-inner-icon="mdi-phone"
-        :color="isDark ? 'white' : ''"
-        :background-color="isDark ? 'grey darken-4' : 'grey lighten-5'"
+        :outlined="isDark"
+        :color="isDark ? '#208ad6' : 'grey'"
+        :background-color="isDark ? 'grey darken-4' : 'grey lighten-4'"
         :error="errors.length > 0"
        ></v-text-field>
       </validation-provider>

@@ -14,7 +14,6 @@
  "dependencies": {
   "aos": "^2.3.4",
   "axios": "^0.21",
-  "js-cookie": "^2.2.1",
   "jsonlint": "^1.6.3",
   "secure-ls": "^1.2.6",
   "sql-formatter": "^4.0.2",
@@ -29,7 +28,9 @@
   "vuedraggable": "^2.24.3",
   "vuetify": "^2.5.1",
   "vuex": "^3.4.0",
-  "vuex-persistedstate": "^4.0.0-beta.3"
+  "vuex-multi-tab-state": "^1.0.16",
+  "vuex-persistedstate": "^4.0.0-beta.3",
+  "vuex-shared-mutations": "^1.0.2"
  },
  "devDependencies": {
   "@vue/cli-plugin-babel": "^4.5.11",
