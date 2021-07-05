@@ -10,15 +10,13 @@ use Illuminate\Database\QueryException;
 Use Exception;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\DB;
+use App\Helpers\Helper;
+use App\Helpers\FileManager;
 
 use App\Models\Root\ComponentDefault;
 use Jawira\CaseConverter\Convert;
 
 class ComponentController extends Controller {
-
-    public function create() {
-        //
-    }
 
     public function store(Request $request) {
         $json_data['table'] = $request['table'];
@@ -251,31 +249,14 @@ class ComponentController extends Controller {
     function makeNewComponent($request){
         $name = new Convert($request);
 
-        $data = [
-            'name' => $name->fromCamel()->toPascal(),
-        ];
+        $data = ['name' => $name->fromCamel()->toPascal()];
 
         $vue_folder = resource_path("js/views/Protected/{$name->fromCamel()->toKebab()}");
 
-        $this->makeNewDirectory($vue_folder);
+        FileManager::makeNewDirectory($vue_folder);
         $tmp_vue = file_get_contents(resource_path("js/templates/componentBoilerplate.vue"));
-        $build_vue = $this::blend($tmp_vue, $data);
+        $build_vue = Helper::blend($tmp_vue, $data);
         file_put_contents( $vue_folder . "/{$data['name']}.vue" , $build_vue);
-    }
-
-    function makeNewDirectory($request){
-        if (! File::exists($request)) {
-            File::makeDirectory($request);
-        }
-    }
-
-    public static function blend($filePath, $data){
-        foreach($data as $k=>$v){
-            $key[] = "{".$k."}";
-            $value[] = $v;
-        }
-        $fileContent = str_ireplace($key, $value, $filePath);
-        return $fileContent;
     }
 
     //** FORMA NUEVA **//
@@ -301,60 +282,4 @@ class ComponentController extends Controller {
         return $model->form_fields;
     }
 
-    function getEachTable($string){
-        if (str_contains($string, ',')){
-            $string = explode(',', $string);
-        }
-        if(is_object($string)){
-            foreach ($string as $item){
-                $columns = $this->getColumnsFromString($item);
-            }
-        } else {
-            $columns = $this->getColumnsFromString($string);
-        }
-        return $columns;
-    }
-
-    function getColumnsFromString($item){
-        return $item;
-        $item = trim($item);
-        $column = $this->after('.', $item);
-        if($column == '*'){
-            $table = $this->before('.', $item);
-            $arrayColumns = $this->getAllColumnsFromTable($table);
-            foreach($arrayColumns as $item){
-                $columns[] = $item;
-            }
-        } else {
-            $columns[] = $column;
-        }
-        return $columns;
-    }
-
-    function getAllColumnsFromTable($table){
-        $query = DB::select("SELECT COLUMN_NAME from INFORMATION_SCHEMA.COLUMNS where TABLE_SCHEMA = 'laravel_vue' AND TABLE_NAME = '$table'");
-        foreach($query as $key => $value){
-            $columns[] = $value->COLUMN_NAME;
-        }
-        return $columns;
-    }
-
-    function getStringBetween($string, $start, $end){
-        $string = ' ' . $string;
-        $ini = strpos($string, $start);
-        if ($ini == 0) return '';
-        $ini += strlen($start);
-        $len = strpos($string, $end, $ini) - $ini;
-        return trim(substr($string, $ini, $len));
-    }
-
-    //** CUT A STRING RETURING THE STRING AFTER SPECIFIED CHARACTER **//
-    function after ($string, $inthat){
-        if (!is_bool(strpos($inthat, $string)))
-        return substr($inthat, strpos($inthat,$string)+strlen($string));
-    }
-
-    function before($string, $inthat){
-        return substr($inthat, 0, strpos($inthat, $string));
-    }
 }

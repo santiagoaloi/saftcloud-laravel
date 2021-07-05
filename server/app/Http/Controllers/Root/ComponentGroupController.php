@@ -51,11 +51,10 @@ class ComponentGroupController extends Controller {
     public function showAllWithChild() {
         $parents = DB::table('component_groups')->select('id', 'name', 'icon', 'component_group_id')->where('component_group_id', NULL)->get();
         $childs = DB::table('component_groups')->select('id', 'name', 'icon', 'component_group_id')->where('component_group_id', '!=' , NULL)->get();
-
         $query = DB::select("SELECT JSON_EXTRACT(config, '$.name') as name, JSON_EXTRACT(config_settings, '$.icon.name') as icon, component_group_id FROM components");
 
         if(isset($parents)){
-            if(isset($query)){
+            if(!empty($query)){
                 foreach($query as $tes => $val){
                     $name = str_replace('"', "", $val->name);
                     $icon = str_replace('"', "", $val->icon);
@@ -68,7 +67,7 @@ class ComponentGroupController extends Controller {
             }
 
             foreach($parents as $parent){
-                if(isset($components)){
+                if(!empty($query)){
                     foreach($components as $component){
                         if($parent->id == $component['component_group_id']){
                             $parent->items[] = $component;
@@ -77,7 +76,7 @@ class ComponentGroupController extends Controller {
                 }
                 if(isset($childs)){
                     foreach($childs as $child){
-                        if($parent->id == $child->component_group_id){
+                        if($parent->id === $child->component_group_id){
                             $parent->items[] = $child;
                             if(isset($components)){
                                 foreach($components as $component){
@@ -91,10 +90,13 @@ class ComponentGroupController extends Controller {
                 }
                 $array['menu'][]['items'][] = $parent;
             }
-
             return $array;
+            // return response([
+            //     'components' => $array,
+            //     'status'    => true
+            // ], 200);
         } else {
-            return "No groups created";
+            return "no";
         }
 
     }

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Root\ComponentDefault;
 use App\Models\Root\Component;
 use Illuminate\Http\Request;
+use App\Helpers\Helper;
 
 use App\Http\Controllers\Root\ComponentController;
 
@@ -13,6 +14,7 @@ class ComponentDefaultController extends Controller {
 
     public function store(Request $request) {
         $query = ComponentDefault::create(['config_structure'=>json_encode($request['config_structure'])]);
+        $this->updateJsonModel($query->config_structure);
 
         $getComponents = new ComponentController;
         $components = $getComponents->showAll(true);
@@ -118,7 +120,6 @@ class ComponentDefaultController extends Controller {
         return ComponentDefault::get('config_structure')->last();
     }
 
-
     function getLast(){
         return ComponentDefault::pluck('config_structure')->last();
     }
@@ -132,66 +133,14 @@ class ComponentDefaultController extends Controller {
         $modelo = $it_2['form_fields'];
 
         foreach($items as $item){
-            $result[] = $this->testCompare($item, $modelo);
+            $result[] = Helper::compareItems($item, $modelo);
         };
         return $result;
     }
 
-    function testCompare($item, $model){
-        $newItem = [];
-        foreach($model as $k => $v) {
-            if(!isset($item[$k])) {
-                $newItem[$k] = $v;
-            } else if (isset($item[$k]) && !is_array($item[$k]) && is_array($v)) {
-                $newItem[$k] = $v;
-            } else if (isset($item[$k]) && is_array($item[$k]) && !is_array($v)) {
-                $newItem[$k] = $v;
-            } else if (isset($item[$k]) && is_array($item[$k]) && is_array($v)) {
-                $newVal = [];
-                foreach($v as $subKey => $val) {
-                    if(is_array($val)){
-                        $test = $this->testCompare($item[$k][$subKey], $val);
-                        $newVal[$subKey] = $test;
-                    } else if (!is_array($val) && !isset($item[$k][$subKey])){
-                        $newVal[$subKey] = $model[$k][$subKey];
-                    } else {
-                        $newVal[$subKey] = $item[$k][$subKey];
-                    }
-                } $newItem[$k] = $newVal;
-            } else {
-                $newItem[$k] = $item[$k];
-            }
-        }
-        return $newItem;
-    }
-
-    public function compareItems($item, $model){
-        $result = array("more"=>array(),"less"=>array(),"diff"=>array());
-        foreach($model as $k => $v) {
-            if(is_array($v) && isset($item[$k]) && is_array($item[$k])) {
-                $sub_result = $this->compareItems($v, $item[$k]);
-                //merge results
-                foreach(array_keys($sub_result) as $key) {
-                    if(!empty($sub_result[$key])) {
-                        $result[$key] = array_merge_recursive($result[$key],array($k => $sub_result[$key]));
-                    }
-                }
-            } else {
-                if(isset($item[$k])) {
-                    if($v !== $item[$k]) {
-                        $result["diff"][$k] = array("from"=>$v,"to"=>$item[$k]);
-                    }
-                } else {
-                    $result["more"][$k] = $v;
-                }
-            }
-        }
-        foreach($item as $k => $v) {
-            if(!isset($model[$k])) {
-                $result["less"][$k] = $v;
-            }
-        }
-        return $result;
+    public function updateJsonModel($jsonModel){
+        $getJsonFile2 = app_path("Models/model.json");
+        file_put_contents($getJsonFile2, $jsonModel);
     }
 
 }
