@@ -13,7 +13,7 @@ export default {
 
  computed: {
   ...sync("theme", ["isDark"]),
-  ...sync("componentManagement", ["allGroups", "selectedComponentGroups", "dialogs", "groupName", "allComponents"]),
+  ...sync("componentManagement", ["allGroups", "selectedComponentGroups", "groupName", "groupParent", "allComponents"]),
   ...get("componentManagement", ["selectedAllGroups", "selectedSomeGroups", "hasSelectedComponentGroups", "countComponentsInGroup"]),
 
   formattedGroup() {
@@ -38,7 +38,7 @@ export default {
    this.$swal({
     title: `<span style="color:${this.isDark ? "lightgrey" : "black"} "> add group </span>`,
     showCancelButton: true,
-    confirmButtonText: "Add",
+    confirmButtonText: "Continue",
     cancelButtonText: "Cancel",
     confirmButtonColor: "#5469d4",
     customClass: {
@@ -51,16 +51,41 @@ export default {
    }).then(result => {
     if (result.value) {
      this.groupName = result.value;
+     this.selectGroupParent();
+    }
+   });
+  },
+
+  selectGroupParent() {
+   let fruits = ["Products", "test"];
+   this.$swal({
+    title: `<span style="color:${this.isDark ? "lightgrey" : "black"} "> Select Group Parent </span>`,
+    showCancelButton: true,
+    confirmButtonText: "Create group",
+    cancelButtonText: "Back",
+    confirmButtonColor: "#5469d4",
+    customClass: {
+     input: `${this.isDark ? "swalDarkSelect" : ""}`
+    },
+    input: "select",
+    inputOptions: ["No Parent", ...fruits],
+    backdrop: `${this.isDark ? "rgba(0, 0, 0, 0.6)" : "rgba(108, 122, 137, 0.8)"}`,
+    background: `${this.isDark ? "#2f3136" : ""}`
+   }).then(result => {
+    if (result.value) {
+     this.groupParent = result.value;
      this.saveGroup();
+    } else if (result.dismiss === "cancel") {
+     this.addGroupDialog();
     }
    });
   },
 
   renameGroupWarning(id, name) {
    this.$swal({
-    title: `<span style="color:${this.isDark ? "lightgrey" : "black"} "> Rename group </span>`,
+    title: `<span style="color:${this.isDark ? "lightgrey" : "black"} "> Edit group </span>`,
     showCancelButton: true,
-    confirmButtonText: "Rename",
+    confirmButtonText: "Continue",
     cancelButtonText: "Cancel",
     confirmButtonColor: "#5469d4",
     customClass: {

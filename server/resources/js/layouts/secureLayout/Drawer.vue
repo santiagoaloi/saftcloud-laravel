@@ -11,7 +11,7 @@
    </template>
 
    <!-- Navigation menu -->
-   <main-menu class="pa-2" :menu="navigation.menu" />
+   <main-menu class="pa-2" :menu="navigationStructure.menu" />
   </v-navigation-drawer>
  </div>
 </template>
@@ -21,7 +21,7 @@
 import nav from "@/configs/navigation";
 import axios from "axios";
 import Vue from "vue";
-import { sync } from "vuex-pathify";
+import { sync, call } from "vuex-pathify";
 
 Vue.component("MainMenu", () => import(/* webpackChunkName: 'Drawer-Menu' */ "@/components/navigation/MainMenu"));
 
@@ -29,12 +29,20 @@ export default {
  name: "SecureDrawer",
 
  data() {
-  return {
-   navigation: nav
-  };
+  return {};
  },
+
+ //  mounted() {
+ //   this.getNavigationStructure();
+ //  },
+
  computed: {
-  ...sync("drawers", ["secureDefaultDrawer"])
+  ...sync("drawers", ["secureDefaultDrawer"]),
+  ...sync("componentManagement", ["navigationStructure"])
+ },
+
+ methods: {
+  ...call("componentManagement/*")
  }
 };
 </script>
