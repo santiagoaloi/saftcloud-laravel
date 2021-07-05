@@ -38,7 +38,7 @@ class ComponentController extends Controller {
         $config['note']         = $request['note'];
 
         $configSettings['icon'] = [
-            'name'  => 'mdi-folder',
+            'name'  => 'mdi-view-grid',
             'color' => '#6453DCED',
         ];
 
