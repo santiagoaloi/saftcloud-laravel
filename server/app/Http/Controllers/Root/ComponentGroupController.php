@@ -54,36 +54,49 @@ class ComponentGroupController extends Controller {
 
         $query = DB::select("SELECT JSON_EXTRACT(config, '$.name') as name, JSON_EXTRACT(config_settings, '$.icon.name') as icon, component_group_id FROM components");
 
-        foreach($query as $tes => $val){
-            $name = str_replace('"', "", $val->name);
-            $icon = str_replace('"', "", $val->icon);
-            $url = '/'.$name;
-            $components[$tes]['name'] = $name;
-            $components[$tes]['icon'] = $icon;
-            $components[$tes]['link'] = $url;
-            $components[$tes]['component_group_id'] = $val->component_group_id;
-        }
-
-        foreach($parents as $parent){
-            foreach($components as $component){
-                if($parent->id == $component['component_group_id']){
-                    $parent->items[] = $component;
+        if(isset($parents)){
+            if(isset($query)){
+                foreach($query as $tes => $val){
+                    $name = str_replace('"', "", $val->name);
+                    $icon = str_replace('"', "", $val->icon);
+                    $url = '/'.$name;
+                    $components[$tes]['name'] = $name;
+                    $components[$tes]['icon'] = $icon;
+                    $components[$tes]['link'] = $url;
+                    $components[$tes]['component_group_id'] = $val->component_group_id;
                 }
             }
-            foreach($childs as $child){
-                if($parent->id == $child->component_group_id){
-                    $parent->items[] = $child;
+
+            foreach($parents as $parent){
+                if(isset($components)){
                     foreach($components as $component){
-                        if($child->id === $component['component_group_id']){
-                            $child->items[] = $component;
+                        if($parent->id == $component['component_group_id']){
+                            $parent->items[] = $component;
                         }
                     }
                 }
+                if(isset($childs)){
+                    foreach($childs as $child){
+                        if($parent->id == $child->component_group_id){
+                            $parent->items[] = $child;
+                            if(isset($components)){
+                                foreach($components as $component){
+                                    if($child->id === $component['component_group_id']){
+                                        $child->items[] = $component;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                $array['menu'][]['items'][] = $parent;
             }
-            $array['menu'][]['items'][] = $parent;
+
+            return $array;
+        } else {
+            return "No groups created";
         }
 
-        return $array;
     }
 
     public function showAllGroupNames(){
