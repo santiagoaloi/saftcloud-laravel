@@ -58,33 +58,51 @@ class TestFunctionController extends Controller {
     }
 
     public function test2(Request $request){
-        $parents = DB::table('component_groups')->select('id', 'name', 'icon', 'component_group_id')->where('component_group_id', NULL)->get();
-        $childs = DB::table('component_groups')->select('id', 'name', 'icon', 'component_group_id')->where('component_group_id', '!=' , NULL)->get();
-        $components = DB::table('components')->select('config', 'component_group_id')->get();
+        // $parents = DB::table('component_groups')->select('id', 'name', 'icon', 'component_group_id')->where('component_group_id', NULL)->get();
+        // $childs = DB::table('component_groups')->select('id', 'name', 'icon', 'component_group_id')->where('component_group_id', '!=' , NULL)->get();
+        // $components = DB::table('components')->select('config', 'component_group_id')->get();
 
-    //     $test = DB::table("SELECT JSON_EXTRACT('components.config') as test FROM components")->get();
-    // return $test;
 
-        foreach($parents as $parent){
-            foreach($components as $component){
-                if($parent->id == $component->component_group_id){
-                    $parent->items[] = $component;
-                }
-            }
-            foreach($childs as $child){
-                if($parent->id == $child->component_group_id){
-                    $parent->items[] = $child;
-                }
-                foreach($components as $component){
-                    if($child->id == $component->component_group_id){
-                        $child->items[] = $component;
-                    }
-                }
-            }
-            $array['menu'][]['items'][] = $parent;
-        }
+        $test = DB::select('SELECT JSON_EXTRACT(config , "$.name") as test FROM components');
 
-        return $array;
+
+
+
+         return $test;
+
+        // $test = DB::table('components')
+        // ->whereJsonLength ('config->name', 1)
+        // ->get();
+
+        // $names = [];
+        // foreach ($test as $result) {
+        //      $config = json_decode($result->config, true);
+        //      $names[] = $config['name'];
+        // }
+        // return $names;
+
+        // $test = DB::table("SELECT JSON_EXTRACT('components.config') as test FROM components")->get();
+
+        // foreach($parents as $parent){
+        //     foreach($components as $component){
+        //         if($parent->id == $component->component_group_id){
+        //             $parent->items[] = $component;
+        //         }
+        //     }
+        //     foreach($childs as $child){
+        //         if($parent->id == $child->component_group_id){
+        //             $parent->items[] = $child;
+        //         }
+        //         foreach($components as $component){
+        //             if($child->id == $component->component_group_id){
+        //                 $child->items[] = $component;
+        //             }
+        //         }
+        //     }
+        //     $array['menu'][]['items'][] = $parent;
+        // }
+
+        // return $array;
     }
 
     function probarFormFieldStructure(){

@@ -32,9 +32,9 @@ export default {
   return {};
  },
 
- //  mounted() {
- //   this.getNavigationStructure();
- //  },
+ mounted() {
+  this.getNavigationStructure();
+ },
 
  computed: {
   ...sync("drawers", ["secureDefaultDrawer"]),

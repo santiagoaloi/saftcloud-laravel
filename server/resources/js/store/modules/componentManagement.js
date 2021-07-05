@@ -57,29 +57,30 @@ const state = {
   { name: "Active", value: "active", icon: "mdi-lightbulb-on", color: "" }
  ],
 
- navigationStructure: {
-  menu: [
-   {
-    items: [
-     {
-      name: "Products",
-      icon: "mdi-file-outline",
-      items: [
-       { icon: "mdi-file-outline", name: "Child  2.1", link: "/" },
-       {
-        icon: "mdi-file-outline",
-        name: "Sub-Child 2.2 ",
-        items: [
-         { icon: "mdi-file-outline", name: "Menu Levels 3.1", link: "/" },
-         { icon: "mdi-file-outline", name: "Menu Levels 3.2", link: "/" }
-        ]
-       }
-      ]
-     }
-    ]
-   }
-  ]
- }
+ //  navigationStructure: {
+ //   menu: [
+ //    {
+ //     items: [
+ //      {
+ //       name: "Products",
+ //       icon: "mdi-file-outline",
+ //       items: [
+ //        { icon: "mdi-file-outline", name: "Child  2.1", link: "/" },
+ //        {
+ //         icon: "mdi-file-outline",
+ //         name: "Sub-Child 2.2 ",
+ //         items: [
+ //          { icon: "mdi-file-outline", name: "Menu Levels 3.1", link: "/" },
+ //          { icon: "mdi-file-outline", name: "Menu Levels 3.2", link: "/" }
+ //         ]
+ //        }
+ //       ]
+ //      }
+ //     ]
+ //    }
+ //   ]
+ //  }
+ navigationStructure: {}
 };
 
 const mutations = make.mutations(state);
@@ -230,6 +231,12 @@ const actions = {
  getDbGroupNames({}) {
   axios.get("api/showAllGroupNames").then(response => {
    store.set("componentManagement/dbGroupNames", response.data.groupNames);
+  });
+ },
+
+ getNavigationStructure({}) {
+  axios.get("api/getNavigationStructure").then(response => {
+   store.set("componentManagement/navigationStructure", response.data);
   });
  },
 
