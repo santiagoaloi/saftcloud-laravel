@@ -60,6 +60,7 @@ export default {
  mounted() {
   this.getComponents();
   this.getDbTablesAndColumns();
+  this.getDbGroupNames();
  },
 
  methods: {

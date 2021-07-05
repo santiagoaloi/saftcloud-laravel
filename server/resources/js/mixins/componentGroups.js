@@ -13,7 +13,7 @@ export default {
 
  computed: {
   ...sync("theme", ["isDark"]),
-  ...sync("componentManagement", ["allGroups", "selectedComponentGroups", "groupName", "groupParent", "allComponents"]),
+  ...sync("componentManagement", ["allGroups", "selectedComponentGroups", "groupName", "groupParent", "allComponents", "dbGroupNames"]),
   ...get("componentManagement", ["selectedAllGroups", "selectedSomeGroups", "hasSelectedComponentGroups", "countComponentsInGroup"]),
 
   formattedGroup() {
@@ -57,7 +57,6 @@ export default {
   },
 
   selectGroupParent() {
-   let fruits = ["Products", "test"];
    this.$swal({
     title: `<span style="color:${this.isDark ? "lightgrey" : "black"} "> Select Group Parent </span>`,
     showCancelButton: true,
@@ -68,11 +67,12 @@ export default {
      input: `${this.isDark ? "swalDarkSelect" : ""}`
     },
     input: "select",
-    inputOptions: ["No Parent", ...fruits],
+    inputOptions: ["No Parent", ...this.dbGroupNames],
     backdrop: `${this.isDark ? "rgba(0, 0, 0, 0.6)" : "rgba(108, 122, 137, 0.8)"}`,
     background: `${this.isDark ? "#2f3136" : ""}`
    }).then(result => {
     if (result.value) {
+     console.log(result);
      this.groupParent = result.value;
      this.saveGroup();
     } else if (result.dismiss === "cancel") {

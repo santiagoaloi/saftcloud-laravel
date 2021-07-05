@@ -19,7 +19,7 @@ const state = {
  search: "",
  dbTables: [],
  dbTablesAndColumns: {},
- dbGroupNanmes: [],
+ dbGroupNames: [],
  allGroups: [],
  groupName: "",
  groupParent: "",
@@ -204,6 +204,7 @@ const actions = {
  saveComponentsConfigStructure({ state, dispatch }) {
   axios.post("api/componentDefault", { config_structure: JSON.parse(state.ComponentsConfigStructure) }).then(response => {
    dispatch("getComponents");
+   dispatch("getNavigationStructure");
    store.set("snackbar/value", true);
    store.set("snackbar/text", "Config structure updated");
    store.set("snackbar/color", "grey darken-2");
@@ -229,15 +230,25 @@ const actions = {
  },
 
  getDbGroupNames({}) {
-  axios.get("api/showAllGroupNames").then(response => {
-   store.set("componentManagement/dbGroupNames", response.data.groupNames);
-  });
+  axios
+   .get("api/showAllGroupNames")
+   .then(response => {
+    store.set("componentManagement/dbGroupNames", response.data);
+   })
+   .catch(error => {
+    store.set("componentManagement/dbGroupNames", []);
+   });
  },
 
  getNavigationStructure({}) {
-  axios.get("api/getNavigationStructure").then(response => {
-   store.set("componentManagement/navigationStructure", response.data);
-  });
+  axios
+   .get("api/getNavigationStructure")
+   .then(response => {
+    store.set("componentManagement/navigationStructure", response.data);
+   })
+   .catch(error => {
+    store.set("componentManagement/navigationStructure", {});
+   });
  },
 
  getGroups({}) {
@@ -269,13 +280,14 @@ const actions = {
   });
  },
 
- removeGroup({}, id) {
+ removeGroup({ dispatch }, id) {
   axios.delete(`api/componentGroup/${id}`).then(response => {
    if (response.data.status) {
     store.set("componentManagement/allGroups", response.data.groups);
     store.set("snackbar/value", true);
     store.set("snackbar/text", "Group removed");
     store.set("snackbar/color", "pink darken-1");
+    dispatch("getNavigationStructure");
    }
   });
  },
@@ -355,14 +367,20 @@ const actions = {
   });
  },
 
- saveGroup({ state }) {
+ saveGroup({ state, dispatch }) {
   // store.set("componentManagement/groupName", "");
   // store.set("componentManagement/groupParent", "");
 
-  let parent = state.allGroups.find(g => g.name === state.groupParent);
+  let parent;
+  if (state.groupParent === "No Parent") {
+   parent = null;
+  } else {
+   parent = state.allGroups.find(g => g.name === state.dbGroupNames[state.groupParent - 1]);
+  }
 
-  console.log(groupParent);
-  axios.post("api/componentGroup", { name: state.groupName, component_group_id: parent }).then(response => {
+  alert(parent);
+
+  axios.post("api/componentGroup", { name: state.groupName, component_group_id: parent.id }).then(response => {
    if (response.data.status) {
     store.set("componentManagement/allGroups", response.data.groups);
     store.set("componentManagement/groupName", "");
@@ -370,6 +388,7 @@ const actions = {
     store.set("snackbar/value", true);
     store.set("snackbar/text", `Group "${state.groupName}" created`);
     store.set("snackbar/color", "grey darken-2");
+    dispatch("getNavigationStructure");
    }
   });
  },

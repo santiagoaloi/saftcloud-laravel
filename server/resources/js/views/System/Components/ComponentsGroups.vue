@@ -105,9 +105,7 @@ export default {
  name: "ComponentsGroups",
  mixins: [componentGroups],
 
- mounted() {
-  this.getDbGroupNames();
- },
+ mounted() {},
  methods: {
   ...call("componentManagement/*")
  }
