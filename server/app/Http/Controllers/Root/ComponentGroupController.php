@@ -72,7 +72,7 @@ class ComponentGroupController extends Controller {
                     }
                 }
             }
-            $array['menu']['items'][] = $parent;
+            $array['menu'][]['items'][] = $parent;
         }
 
         return $array;
