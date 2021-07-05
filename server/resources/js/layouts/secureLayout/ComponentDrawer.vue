@@ -2,7 +2,7 @@
  <v-navigation-drawer
   mobileBreakpoint="0"
   clipped
-  :color="$vuetify.theme.dark ? '#2C2F33' : '#f0f3f5'"
+  :color="isDark ? '#2C2F33' : '#f0f3f5'"
   width="350"
   v-model="secureComponentDrawer"
   hideOverlay
@@ -29,6 +29,7 @@ Vue.component("ComponentDrilldownBar", () => import("@/components/navigation/Com
 export default {
  name: "SecureComponentDrawer",
  computed: {
+  ...sync("theme", ["isDark"]),
   ...sync("drawers", ["secureComponentDrawer"])
  }
 };

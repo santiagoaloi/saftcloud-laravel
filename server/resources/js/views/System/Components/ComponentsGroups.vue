@@ -99,14 +99,28 @@
 </template>
 
 <script>
+import { call } from "vuex-pathify";
 import componentGroups from "@/mixins/componentGroups";
 export default {
  name: "ComponentsGroups",
- mixins: [componentGroups]
+ mixins: [componentGroups],
+
+ mounted() {
+  this.getDbGroupNames();
+ },
+ methods: {
+  ...call("componentManagement/*")
+ }
 };
 </script>
 <style>
 .swalDarkTitle {
+ color: white !important;
+}
+
+.swalDarkSelect {
+ min-width: 100% !important;
+ background: rgb(54, 57, 63) !important;
  color: white !important;
 }
 </style>

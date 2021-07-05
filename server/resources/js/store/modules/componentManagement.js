@@ -19,8 +19,10 @@ const state = {
  search: "",
  dbTables: [],
  dbTablesAndColumns: {},
+ dbGroupNanmes: [],
  allGroups: [],
  groupName: "",
+ groupParent: "",
  tableColumns: [],
  searchFields: "",
  allComponents: [],
@@ -53,7 +55,31 @@ const state = {
   { name: "Starred", value: "starred", icon: "mdi-star", color: "" },
   { name: "Modular", value: "modular", icon: "mdi-view-module", color: "" },
   { name: "Active", value: "active", icon: "mdi-lightbulb-on", color: "" }
- ]
+ ],
+
+ navigationStructure: {
+  menu: [
+   {
+    items: [
+     {
+      name: "Products",
+      icon: "mdi-file-outline",
+      items: [
+       { icon: "mdi-file-outline", name: "Child  2.1", link: "/" },
+       {
+        icon: "mdi-file-outline",
+        name: "Sub-Child 2.2 ",
+        items: [
+         { icon: "mdi-file-outline", name: "Menu Levels 3.1", link: "/" },
+         { icon: "mdi-file-outline", name: "Menu Levels 3.2", link: "/" }
+        ]
+       }
+      ]
+     }
+    ]
+   }
+  ]
+ }
 };
 
 const mutations = make.mutations(state);
@@ -201,6 +227,12 @@ const actions = {
   });
  },
 
+ getDbGroupNames({}) {
+  axios.get("api/showAllGroupNames").then(response => {
+   store.set("componentManagement/dbGroupNames", response.data.groupNames);
+  });
+ },
+
  getGroups({}) {
   axios.get("api/showAllGroups").then(response => {
    if (response.data.status) {
@@ -317,10 +349,17 @@ const actions = {
  },
 
  saveGroup({ state }) {
-  axios.post("api/componentGroup", { name: state.groupName }).then(response => {
+  // store.set("componentManagement/groupName", "");
+  // store.set("componentManagement/groupParent", "");
+
+  let parent = state.allGroups.find(g => g.name === state.groupParent);
+
+  console.log(groupParent);
+  axios.post("api/componentGroup", { name: state.groupName, component_group_id: parent }).then(response => {
    if (response.data.status) {
     store.set("componentManagement/allGroups", response.data.groups);
-    store.set("componentManagement/groupName", null);
+    store.set("componentManagement/groupName", "");
+    store.set("componentManagement/groupChild", "");
     store.set("snackbar/value", true);
     store.set("snackbar/text", `Group "${state.groupName}" created`);
     store.set("snackbar/color", "grey darken-2");
