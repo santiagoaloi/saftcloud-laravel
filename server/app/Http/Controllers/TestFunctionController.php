@@ -60,14 +60,21 @@ class TestFunctionController extends Controller {
     public function test2(Request $request){
         $parents = DB::table('component_groups')->select('id', 'name', 'icon', 'component_group_id')->where('component_group_id', NULL)->get();
         $childs = DB::table('component_groups')->select('id', 'name', 'icon', 'component_group_id')->where('component_group_id', '!=' , NULL)->get();
-        $components = DB::table('components')->select('config', 'component_group_id')->get();
+        // $components = DB::table('components')->select('config', 'component_group_id')->get();
 
-    //     $test = DB::table("SELECT JSON_EXTRACT('components.config') as test FROM components")->get();
-    // return $test;
+        $test = DB::select("SELECT JSON_EXTRACT(config, '$.name') as name, component_group_id FROM components");
+
+        foreach($test as $tes => $val){
+            $pe = str_replace('"', "", $val->name);
+            $pe2 = '/'.$pe;
+            $components[$tes]['name'] = $pe;
+            $components[$tes]['link'] = $pe2;
+            $components[$tes]['component_group_id'] = $val->component_group_id;
+        }
 
         foreach($parents as $parent){
             foreach($components as $component){
-                if($parent->id == $component->component_group_id){
+                if($parent->id == $component['component_group_id']){
                     $parent->items[] = $component;
                 }
             }
@@ -76,7 +83,7 @@ class TestFunctionController extends Controller {
                     $parent->items[] = $child;
                 }
                 foreach($components as $component){
-                    if($child->id == $component->component_group_id){
+                    if($child->id == $component['component_group_id']){
                         $child->items[] = $component;
                     }
                 }
