@@ -71,10 +71,10 @@ class ComponentGroupController extends Controller {
             foreach($childs as $child){
                 if($parent->id == $child->component_group_id){
                     $parent->items[] = $child;
-                }
-                foreach($components as $component){
-                    if($child->id == $component['component_group_id']){
-                        $child->items[] = $component;
+                    foreach($components as $component){
+                        if($child->id === $component['component_group_id']){
+                            $child->items[] = $component;
+                        }
                     }
                 }
             }
