@@ -60,7 +60,6 @@ class TestFunctionController extends Controller {
     public function test2(Request $request){
         $parents = DB::table('component_groups')->select('id', 'name', 'icon', 'component_group_id')->where('component_group_id', NULL)->get();
         $childs = DB::table('component_groups')->select('id', 'name', 'icon', 'component_group_id')->where('component_group_id', '!=' , NULL)->get();
-        // $components = DB::table('components')->select('config', 'component_group_id')->get();
 
         $test = DB::select("SELECT JSON_EXTRACT(config, '$.name') as name, component_group_id FROM components");
 
