@@ -52,13 +52,15 @@ class ComponentGroupController extends Controller {
         $parents = DB::table('component_groups')->select('id', 'name', 'icon', 'component_group_id')->where('component_group_id', NULL)->get();
         $childs = DB::table('component_groups')->select('id', 'name', 'icon', 'component_group_id')->where('component_group_id', '!=' , NULL)->get();
 
-        $query = DB::select("SELECT JSON_EXTRACT(config, '$.name') as name, component_group_id FROM components");
+        $query = DB::select("SELECT JSON_EXTRACT(config, '$.name') as name, JSON_EXTRACT(config_settings, '$.icon.name') as icon, component_group_id FROM components");
 
         foreach($query as $tes => $val){
-            $pe = str_replace('"', "", $val->name);
-            $pe2 = '/'.$pe;
-            $components[$tes]['name'] = $pe;
-            $components[$tes]['link'] = $pe2;
+            $name = str_replace('"', "", $val->name);
+            $icon = str_replace('"', "", $val->icon);
+            $url = '/'.$name;
+            $components[$tes]['name'] = $name;
+            $components[$tes]['icon'] = $icon;
+            $components[$tes]['link'] = $url;
             $components[$tes]['component_group_id'] = $val->component_group_id;
         }
 
