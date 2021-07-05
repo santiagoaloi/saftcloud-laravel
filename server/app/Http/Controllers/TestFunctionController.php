@@ -58,6 +58,51 @@ class TestFunctionController extends Controller {
     }
 
     public function test2(Request $request){
+<<<<<<< HEAD
+        // $parents = DB::table('component_groups')->select('id', 'name', 'icon', 'component_group_id')->where('component_group_id', NULL)->get();
+        // $childs = DB::table('component_groups')->select('id', 'name', 'icon', 'component_group_id')->where('component_group_id', '!=' , NULL)->get();
+        // $components = DB::table('components')->select('config', 'component_group_id')->get();
+
+
+        $test = DB::select('SELECT JSON_EXTRACT(config , "$.name") as test FROM components');
+
+
+
+
+         return $test;
+
+        // $test = DB::table('components')
+        // ->whereJsonLength ('config->name', 1)
+        // ->get();
+
+        // $names = [];
+        // foreach ($test as $result) {
+        //      $config = json_decode($result->config, true);
+        //      $names[] = $config['name'];
+        // }
+        // return $names;
+
+        // $test = DB::table("SELECT JSON_EXTRACT('components.config') as test FROM components")->get();
+
+        // foreach($parents as $parent){
+        //     foreach($components as $component){
+        //         if($parent->id == $component->component_group_id){
+        //             $parent->items[] = $component;
+        //         }
+        //     }
+        //     foreach($childs as $child){
+        //         if($parent->id == $child->component_group_id){
+        //             $parent->items[] = $child;
+        //         }
+        //         foreach($components as $component){
+        //             if($child->id == $component->component_group_id){
+        //                 $child->items[] = $component;
+        //             }
+        //         }
+        //     }
+        //     $array['menu'][]['items'][] = $parent;
+        // }
+=======
         $parents = DB::table('component_groups')->select('id', 'name', 'icon', 'component_group_id')->where('component_group_id', NULL)->get();
         $childs = DB::table('component_groups')->select('id', 'name', 'icon', 'component_group_id')->where('component_group_id', '!=' , NULL)->get();
 
@@ -89,8 +134,9 @@ class TestFunctionController extends Controller {
             }
             $array['menu'][]['items'][] = $parent;
         }
+>>>>>>> c3e2f7dd3b05d760c7de856226deafad6e5dc448
 
-        return $array;
+        // return $array;
     }
 
     function probarFormFieldStructure(){
