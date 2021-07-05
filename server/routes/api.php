@@ -92,7 +92,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::resource('/componentGroup', ComponentGroupController::class);
     Route::get('/showAllGroups', [ComponentGroupController::class, 'showAll']);
     Route::get('/showAllGroupNames', [ComponentGroupController::class, 'showAllGroupNames']);
-    Route::get('/showAllWithChild', [ComponentGroupController::class, 'showAllWithChild']);
+    Route::get('/getNavigationStructure', [ComponentGroupController::class, 'showAllWithChild']);
 
     Route::resource('/mysqlResource', MysqlController::class);
     Route::get('/showAllTables', [MysqlController::class, 'showAll']);
