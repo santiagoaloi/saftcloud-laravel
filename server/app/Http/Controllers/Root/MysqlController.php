@@ -83,12 +83,18 @@ class MysqlController extends Controller {
         return  $result;
     }
 
-    static function checkSoftDelete($table, $table2, $id){
+    static function checkTableExistense($table, $table2, $id){
         DB::table($table)->whereExists(function ($query) use ($id, $table2) {
             $query->select(DB::raw(1))
                 ->from($table2)
                 ->whereRaw("$table2.user_id = $id");   // HAY QUE MODIFICAR user_id PARA QUE SEA DINAMICO
         })->get();
+
+        
+        $tables = DB::select("select component_groups.* from component_groups 
+        where exists(
+            select components.* from components where components.component_group_id = component_groups. id AND components.component_group_id = 1)");
+
     }
 
 

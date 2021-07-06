@@ -27,8 +27,9 @@ class ComponentGroupController extends Controller {
     }
 
     public function showAll() {
+        $query = ComponentGroup::all();
         return response([
-            'groups' =>  ComponentGroup::all(),
+            'groups' => $query,
             'status' => true,
         ], 200);
     }
@@ -137,19 +138,22 @@ class ComponentGroupController extends Controller {
         $exist = DB::table('component_groups')->whereExists(function ($query) use ($id) {
             $query->select(DB::raw(1))
                   ->from('components')
-                  ->whereRaw("components.component_group_id = $id");
+                  ->whereRaw("components.component_group_id = $id")
+                  ->whereRaw("components.component_group_id = component_groups.id");
         })->get();
 
-        if(empty($exist)){
+        if(count($exist) < 1){
             $query = ComponentGroup::find($id);
             $query->delete();
 
             return $this->showAll();
+        } else {
+            // return "pepe";
+            return response([
+                'message' => 'Hay un componente vinculado a este grupo',
+                'status'=> false
+            ], 404);
         }
-        return response([
-            'message' => 'Hay un componente vinculado a este grupo',
-            'status'=> false
-        ], 204);
     }
 
 }
