@@ -16,36 +16,21 @@ class ComponentGroupController extends Controller {
         $postdata = json_decode($request->getContent(), true);
         ComponentGroup::create($postdata);
 
-        $getGroups = $this->showAll(true);
+        return $this->showAll();
+    }
 
+    public function show(Request $id) {
         return response([
-            'groups' =>  $getGroups,
+            'group' => ComponentGroup::findOrFail($id),
             'status' => true
         ], 200);
     }
 
-    public function show(Request $id, $local = false) {
-        $result = ComponentGroup::findOrFail($id);
-
-        if ($local){
-            return $result;
-        } else {
-            return response([
-                'group' => $result,
-                'status' => true
-            ], 200);
-        }
-    }
-
-    public function showAll($local = false) {
-        if ($local){
-            return ComponentGroup::get();
-        } else {
-            return response([
-                'groups' =>  ComponentGroup::all(),
-                'status' => true,
-            ], 200);
-        }
+    public function showAll() {
+        return response([
+            'groups' =>  ComponentGroup::all(),
+            'status' => true,
+        ], 200);
     }
 
     public function showAllWithChild() {
@@ -135,17 +120,9 @@ class ComponentGroupController extends Controller {
 
     public function update(Request $request, $id) {
         $query = ComponentGroup::findOrFail($id);
+        $query->fill($request->all())->save();
 
-        $input = $request->all();
-
-        $query->fill($input)->save();
-
-        $result = $this->showAll(true);
-
-        return response([
-            'groups'    => $result,
-            'status'    => true
-        ], 200);
+        return $this->showAll();
     }
 
     public function updateAll(Request $request) {
@@ -153,19 +130,14 @@ class ComponentGroupController extends Controller {
             $this->update($item, $item->id);
         };
 
-        $result = $this->showAll(true);
-
-        return response([
-            'rows'=> $result,
-            'status'=> true
-        ], 200);
+        return $this->showAll();
     }
 
     public function destroy($id) {
         $query = ComponentGroup::find($id);
         $query->delete();
 
-        return $this->showAll(true);
+        return $this->showAll();
     }
 
 }

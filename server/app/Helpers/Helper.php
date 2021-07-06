@@ -4,11 +4,7 @@ namespace App\Helpers;
 use Illuminate\Support\Facades\DB;
 
 class Helper{
-    public static function test(){
-        echo "help";
-    }
-
-    public static function blend($filePath, $data){
+    static function blend($filePath, $data){
         foreach($data as $k=>$v){
             $key[] = "{".$k."}";
             $value[] = $v;
@@ -16,7 +12,6 @@ class Helper{
         $fileContent = str_ireplace($key, $value, $filePath);
         return $fileContent;
     }
-
 
     static function compareItems($item, $model){
         $newItem = [];
@@ -46,11 +41,11 @@ class Helper{
         return $newItem;
     }
 
-    public function oldCompareItems($item, $model){
+    static function oldCompareItems($item, $model){
         $result = array("more"=>array(),"less"=>array(),"diff"=>array());
         foreach($model as $k => $v) {
             if(is_array($v) && isset($item[$k]) && is_array($item[$k])) {
-                $sub_result = $this->oldCompareItems($v, $item[$k]);
+                $sub_result = Helper::oldCompareItems($v, $item[$k]);
                 //merge results
                 foreach(array_keys($sub_result) as $key) {
                     if(!empty($sub_result[$key])) {

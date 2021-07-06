@@ -57,8 +57,9 @@ class TestFunctionController extends Controller {
         echo json_encode(['status' => 'Success', 'rows' => $users]);exit();
     }
 
-    public function test2(Request $request){
-        return Helper::test();
+    public function test2(Request $request, $id){
+        $test = new UserController;
+        return $test->update($request, $id);
 
         $parents = DB::table('component_groups')->select('id', 'name', 'icon', 'component_group_id')->where('component_group_id', NULL)->get();
         $childs = DB::table('component_groups')->select('id', 'name', 'icon', 'component_group_id')->where('component_group_id', '!=' , NULL)->get();

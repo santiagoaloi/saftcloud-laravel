@@ -16,46 +16,34 @@ class ProductPromotionController extends Controller {
         ], 200);
     }
 
-    public function show(Request $id, $local = false) {
+    public function show(Request $id) {
         $result = ProductPromotion::findOrFail($id);
 
-        if ($local){
-            return $result;
-        } else {
-            return response([
-                'row'=> $result,
-                'status'=> true
-            ], 200);
-        }
+        return response([
+            'row'=> $result,
+            'status'=> true
+        ], 200);
     }
 
-    public function showAll($local = false) {
-        if ($local){
-            return ProductPromotion::get();
-        } else {
-            return response([
-                'rows'=> ProductPromotion::get(),
-                'status'=> true
-            ], 200);
-        }
+    public function showAll() {
+        return response([
+            'rows'=> ProductPromotion::get(),
+            'status'=> true
+        ], 200);
     }
 
     //  Para mostrar los elementos eliminados
     public function getTrashed() {
-        $result = ProductPromotion::onlyTrashed()->get();
-
         return response([
-            'rows'=> $result,
+            'rows'=> ProductPromotion::onlyTrashed()->get(),
             'status'=> true
         ], 200);
     }
 
     //  Para mostrar un elemento eliminado
     public function recoveryTrashed($id) {
-        $result = ProductPromotion::onlyTrashed()->findOrFail($id)->recovery();
-
         return response([
-            'row'=> $result,
+            'row'=> ProductPromotion::onlyTrashed()->findOrFail($id)->recovery(),
             'status'=> true
         ], 200);
     }
@@ -66,10 +54,7 @@ class ProductPromotionController extends Controller {
 
     public function update(Request $request, $id) {
         $query = ProductPromotion::findOrFail($id);
-
-        $input = $request->all();
-
-        $query->fill($input)->save();
+        $query->fill($request->all())->save();
 
         return response([
             'row'=> $query,
@@ -82,18 +67,13 @@ class ProductPromotionController extends Controller {
             $this->update($item, $item->id);
         };
 
-        $result = $this->showAll(true);
-
-        return response([
-            'rows'=> $result,
-            'status'=> true
-        ], 200);
+        return $this->showAll();
     }
 
     public function destroy($id) {
         $query = ProductPromotion::findOrFail($id);
         $query->delete();
 
-        return $this->showAll(true);
+        return $this->showAll();
     }
 }

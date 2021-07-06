@@ -17,46 +17,32 @@ class LookUpListController extends Controller {
         ], 200);
     }
 
-    public function show(Request $id, $local = false) {
-        $result = LookUpList::findOrFail($id);
-
-        if ($local){
-            return $result;
-        } else {
-            return response([
-                'row'=> $result,
-                'status'=> true
-            ], 200);
-        }
+    public function show(Request $id) {
+        return response([
+            'row'=> LookUpList::findOrFail($id),
+            'status'=> true
+        ], 200);
     }
 
-    public function showAll($local = false) {
-        if ($local){
-            return LookUpList::get();
-        } else {
-            return response([
-                'rows'=> LookUpList::get(),
-                'status'=> true
-            ], 200);
-        }
+    public function showAll() {
+        return response([
+            'rows'=> LookUpList::get(),
+            'status'=> true
+        ], 200);
     }
 
     //  Para mostrar los elementos eliminados
     public function getTrashed() {
-        $result = LookUpList::onlyTrashed()->get();
-
         return response([
-            'rows'=> $result,
+            'rows'=> LookUpList::onlyTrashed()->get(),
             'status'=> true
         ], 200);
     }
 
     //  Para mostrar un elemento eliminado
     public function recoveryTrashed($id) {
-        $result = LookUpList::onlyTrashed()->findOrFail($id)->recovery();
-
         return response([
-            'row'=> $result,
+            'row'=> LookUpList::onlyTrashed()->findOrFail($id)->recovery(),
             'status'=> true
         ], 200);
     }
@@ -65,17 +51,12 @@ class LookUpListController extends Controller {
         //
     }
 
-    public function update(Request $request, LookUpListValue $obj) {
-        // $query = LookUpList::findOrFail($id);
-
-        // $input = $request->all();
-
-        // $query->fill($input)->save();
-
-        $obj->update($request->all());
+    public function update(Request $request, $id) {
+        $query = LookUpList::findOrFail($id);
+        $query->fill($request->all())->save();
 
         return response([
-            'row'=> $obj,
+            'row'=> $query,
             'status'=> true
         ], 200);
     }
@@ -85,18 +66,13 @@ class LookUpListController extends Controller {
             $this->update($item, $item->id);
         };
 
-        $result = $this->showAll(true);
-
-        return response([
-            'rows'=> $result,
-            'status'=> true
-        ], 200);
+        return $this->showAll();
     }
 
     public function destroy($id) {
         $query = LookUpList::findOrFail($id);
         $query->delete();
 
-        return $this->showAll(true);
+        return $this->showAll();
     }
 }

@@ -21,46 +21,34 @@ class UserController extends Controller {
         ], 200);
     }
 
-    public function show($id, $local = false) {
+    public function show($id) {
         $result = User::find($id);
 
-        if ($local){
-            return $result;
-        } else {
-            return response([
-                'row'=> $result,
-                'status'=> true
-            ], 200);
-        }
+        return response([
+            'row'=> $result,
+            'status'=> true
+        ], 200);
     }
 
-    public function showAll($local = false) {
-        if ($local){
-            return User::get();
-        } else {
-            return response([
-                'rows'=> User::get(),
-                'status'=> true
-            ], 200);
-        }
+    public function showAll() {
+        return response([
+            'rows'=> User::get(),
+            'status'=> true
+        ], 200);
     }
 
     //  Para mostrar los elementos eliminados
     public function getTrashed() {
-        $result = User::onlyTrashed()->get();
-
         return response([
-            'rows'=> $result,
+            'rows'=> User::onlyTrashed()->get(),
             'status'=> true
         ], 200);
     }
 
     //  Para mostrar un elemento eliminado
     public function recoveryTrashed($id) {
-        $result = User::onlyTrashed()->findOrFail($id)->recovery();
-
         return response([
-            'row'=> $result,
+            'row'=> User::onlyTrashed()->findOrFail($id)->recovery(),
             'status'=> true
         ], 200);
     }
@@ -71,10 +59,7 @@ class UserController extends Controller {
 
     public function update(Request $request, $id) {
         $query = User::findOrFail($id);
-
-        $input = $request->all();
-
-        $query->fill($input)->save();
+        $query->fill($request->all())->save();
 
         return response([
             'row'=> $query,
@@ -87,18 +72,13 @@ class UserController extends Controller {
             $this->update($item, $item->id);
         };
 
-        $result = $this->showAll(true);
-
-        return response([
-            'rows'=> $result,
-            'status'=> true
-        ], 200);
+        return $this->showAll();
     }
 
     public function destroy($id) {
         $query = User::findOrFail($id);
         $query->delete();
 
-        return $this->showAll(true);
+        return $this->showAll();
     }
 }

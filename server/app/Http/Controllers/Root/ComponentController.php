@@ -57,12 +57,7 @@ class ComponentController extends Controller {
 
         $this->makeNewComponent($request['name']);
 
-        $query = $this->showAll(true);
-
-        return response([
-            'components' => $query,
-            'status' => true
-        ], 200);
+        return $this->showAll(true);
     }
 
     public function show($id) {
@@ -79,18 +74,13 @@ class ComponentController extends Controller {
         $components = Component::all();
         $arrayComponent = [];
 
-        // Local is used when we call it by an other function
-        if ($local){
-            foreach($components as $component){
-                $arrayComponent[] = $this->parseComponent($component);
-            };
+        foreach($components as $component){
+            $arrayComponent[] = $this->parseComponent($component);
+        };
 
+        if ($local){
             return $arrayComponent;
         } else {
-            foreach($components as $component){
-                $arrayComponent[] = $this->parseComponent($component);
-            };
-
             return response([
                 'components' => $arrayComponent,
                 'status'    => true
@@ -100,31 +90,22 @@ class ComponentController extends Controller {
 
     //  Para mostrar los elementos eliminados
     public function getTrashed() {
-        $result = Component::onlyTrashed()->get();
-
         return response([
-            'components' => $result,
+            'components' => Component::onlyTrashed()->get(),
             'status'    => true
         ], 200);
     }
 
     //  Para mostrar un elemento eliminado
     public function recoveryTrashed($id) {
-        $result = Component::onlyTrashed()->findOrFail($id)->recovery();
-
         return response([
-            'component' => $result,
+            'component' => Component::onlyTrashed()->findOrFail($id)->recovery(),
             'status'    => true
         ], 200);
     }
 
     public function edit($id) {
-        $result = $this->showAll(true);
 
-        return response([
-            'components'=> $result,
-            'status'    => true
-        ], 200);
     }
 
     public function update(Request $request, $id) {
@@ -172,22 +153,13 @@ class ComponentController extends Controller {
         return $this->show($query->id);
     }
 
-    public function updateAll($request, $local = false) {
+    public function updateAll($request) {
         foreach($request as $item){
             $component = Component::find($item['id']);
             $component->fill($item)->save();
         };
 
-        $result = $this->showAll(true);
-
-        if($local){
-            return $result;
-        }
-
-        return response([
-            'components'=> $result,
-            'status'    => true
-        ], 200);
+        return $this->showAll(true);
     }
 
     public function destroy($id) {
@@ -206,7 +178,7 @@ class ComponentController extends Controller {
         // delete row in db
         $query->delete();
 
-        return $this->showAll();
+        return $this->showAll(true);
     }
 
     public function parseComponent($component){

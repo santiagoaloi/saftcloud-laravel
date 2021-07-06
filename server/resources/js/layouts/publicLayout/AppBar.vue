@@ -172,7 +172,7 @@ export default {
 
  methods: {
   testFunction() {
-   let post = { 'name':'Buenos Aires'};
+   let post = { 'avatar':'kheee'};
    axios
     .put("/api/testFunction/1", post)
     .then(response => {

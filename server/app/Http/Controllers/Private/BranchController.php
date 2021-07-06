@@ -16,46 +16,34 @@ class BranchController extends Controller {
         ], 200);
     }
 
-    public function show(Request $id, $local = false) {
+    public function show(Request $id) {
         $result = Branch::find($id);
 
-        if ($local){
-            return $result;
-        } else {
-            return response([
-                'row'=> $result,
-                'status' => true
-            ], 200);
-        }
+        return response([
+            'row'=> $result,
+            'status' => true
+        ], 200);
     }
 
-    public function showAll($local = false) {
-        if ($local){
-            return Branch::get();
-        } else {
-            return response([
-                'rows'=> Branch::get(),
-                'status'=> true
-            ], 200);
-        }
+    public function showAll() {
+        return response([
+            'rows'=> Branch::get(),
+            'status'=> true
+        ], 200);
     }
 
     //  Para mostrar los elementos eliminados
     public function getTrashed() {
-        $result = Branch::onlyTrashed()->get();
-
         return response([
-            'rows'=> $result,
+            'rows'=> Branch::onlyTrashed()->get(),
             'status'=> true
         ], 200);
     }
 
     //  Para mostrar un elemento eliminado
     public function recoveryTrashed($id) {
-        $result = Branch::onlyTrashed()->findOrFail($id)->recovery();
-
         return response([
-            'row'=> $result,
+            'row'=> Branch::onlyTrashed()->findOrFail($id)->recovery(),
             'status'=> true
         ], 200);
     }
@@ -66,10 +54,7 @@ class BranchController extends Controller {
 
     public function update(Request $request, $id) {
         $query = Branch::findOrFail($id);
-
-        $input = $request->all();
-
-        $query->fill($input)->save();
+        $query->fill($request->all())->save();
 
         return response([
             'row'=> $query,
@@ -82,18 +67,13 @@ class BranchController extends Controller {
             $this->update($item, $item->id);
         };
 
-        $result = $this->showAll(true);
-
-        return response([
-            'rows'=> $result,
-            'status'=> true
-        ], 200);
+        return $this->showAll();
     }
 
     public function destroy($id) {
         $query = Branch::findOrFail($id);
         $query->delete();
 
-        return $this->showAll(true);
+        return $this->showAll();
     }
 }

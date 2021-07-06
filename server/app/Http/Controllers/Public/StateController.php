@@ -17,41 +17,31 @@ class StateController extends Controller {
     }
 
     public function show(Request $id) {
-        $result = State::find($id);
-
         return response([
-            'row'=> $result,
+            'row'=> State::find($id),
             'status'=> true
         ], 200);
     }
 
-    public function showAll($local = false) {
-        if ($local){
-            return State::get();
-        } else {
-            return response([
-                'rows'=> State::get(),
-                'status'=> true
-            ], 200);
-        }
+    public function showAll() {
+        return response([
+            'rows'=> State::get(),
+            'status'=> true
+        ], 200);
     }
 
     //  Para mostrar los elementos eliminados
     public function getTrashed() {
-        $result = State::onlyTrashed()->get();
-
         return response([
-            'rows'=> $result,
+            'rows'=> State::onlyTrashed()->get(),
             'status'=> true
         ], 200);
     }
 
     //  Para mostrar un elemento eliminado
     public function recoveryTrashed($id) {
-        $result = State::onlyTrashed()->findOrFail($id)->recovery();
-
         return response([
-            'row'=> $result,
+            'row'=> State::onlyTrashed()->findOrFail($id)->recovery(),
             'status'=> true
         ], 200);
     }
@@ -62,10 +52,7 @@ class StateController extends Controller {
 
     public function update(Request $request, $id) {
         $query = State::findOrFail($id);
-
-        $input = $request->all();
-
-        $query->fill($input)->save();
+        $query->fill($request->all())->save();
 
         return response([
             'row'=> $query,
@@ -78,18 +65,13 @@ class StateController extends Controller {
             $this->update($item, $item->id);
         };
 
-        $result = $this->showAll(true);
-
-        return response([
-            'rows'=> $result,
-            'status'=> true
-        ], 200);
+        return $this->showAll();
     }
 
     public function destroy($id) {
         $query = State::findOrFail($id);
         $query->delete();
 
-        return $this->showAll(true);
+        return $this->showAll();
     }
 }

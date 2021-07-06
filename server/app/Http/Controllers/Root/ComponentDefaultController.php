@@ -19,20 +19,14 @@ class ComponentDefaultController extends Controller {
         $getComponents = new ComponentController;
         $components = $getComponents->showAll(true);
 
-        if (!isset($components)){
+        if (isset($components)){
             foreach ($components as $component){
                 $result = $this->compareComponentConfig($component);
                 $component['config']['form_fields'] = $result;
                 $newComponents[]=$component;
             };
-
-            $getComponents->updateAll($newComponents, true);
+            return $getComponents->updateAll($newComponents);
         }
-
-        return response([
-            'row'=> $query,
-            'status'=> true
-        ], 200);
     }
 
     public function show(Request $id, $local = false) {
@@ -49,11 +43,12 @@ class ComponentDefaultController extends Controller {
     }
 
     public function showAll($local = false) {
+        $query = ComponentDefault::get();
         if ($local){
-            return ComponentDefault::get();
+            return $query;
         } else {
             return response([
-                'rows'=> ComponentDefault::get(),
+                'rows'=> $query,
                 'status'=> true
             ], 200);
         }
@@ -85,10 +80,7 @@ class ComponentDefaultController extends Controller {
 
     public function update(Request $request, $id) {
         $query = ComponentDefault::findOrFail($id);
-
-        $input = $request->all();
-
-        $query->fill($input)->save();
+        $query->fill($request->all())->save();
 
         return response([
             'row'=> $query,
@@ -96,9 +88,10 @@ class ComponentDefaultController extends Controller {
         ], 200);
     }
 
-    public function updateAll(Request $request) {
+    public function updateAll($request) {
         foreach($request as $item){
-            $this->update($item, $item->id);
+            $query = ComponentDefault::findOrFail($item['id']);
+            $query->fill($item)->save();
         };
 
         $result = $this->showAll(true);
