@@ -132,7 +132,6 @@
          <v-list-item-avatar>
           <v-icon small> mdi-table </v-icon>
          </v-list-item-avatar>
-
          <v-list-item-content>
           <v-list-item-title v-html="data.item" />
          </v-list-item-content>

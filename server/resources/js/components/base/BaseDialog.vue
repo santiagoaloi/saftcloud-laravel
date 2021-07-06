@@ -70,8 +70,7 @@
     </v-btn>
    </template>
   </v-toolbar>
-  <!-- <v-sheet color="primary" height="2" /> -->
-  <v-card width="100%" :class="noGutters ? '' : 'pa-2'" style="overflow: auto" flat tile>
+  <v-card width="100%" :class="{ 'pa-2': !noGutters }" style="overflow: auto" flat tile>
    <v-container fluid class="fill-height">
     <slot />
    </v-container>

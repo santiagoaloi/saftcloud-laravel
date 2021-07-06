@@ -6,9 +6,10 @@
     <v-text-field
      v-model.lazy="search"
      spellcheck="false"
+     :outlined="isDark"
+     :solo="!isDark"
      :color="isDark ? '#208ad6' : 'grey'"
      :background-color="isDark ? 'grey darken-4' : 'grey lighten-5'"
-     solo
      dense
      hide-details
      placeholder="Search components..."

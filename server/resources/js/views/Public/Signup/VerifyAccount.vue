@@ -32,7 +32,7 @@
               solo
               hide-details
               @keydown.enter.prevent="nextStep(1)"
-              :background-color="errors.length > 0 ? '#faebeb' : ''"
+              :background-color="errors.length ? '#faebeb' : ''"
              ></v-text-field>
             </validation-provider>
            </v-col>
@@ -66,7 +66,7 @@
               solo
               hide-details
               @keydown.enter.prevent="nextStep(1)"
-              :background-color="errors.length > 0 ? '#faebeb' : ''"
+              :background-color="errors.length ? '#faebeb' : ''"
              ></v-text-field>
             </validation-provider> </v-col
            ><v-col sm="6">
@@ -77,7 +77,7 @@
               solo
               hide-details
               @keydown.enter.prevent="nextStep(1)"
-              :background-color="errors.length > 0 ? '#faebeb' : ''"
+              :background-color="errors.length ? '#faebeb' : ''"
              ></v-text-field>
             </validation-provider>
            </v-col>

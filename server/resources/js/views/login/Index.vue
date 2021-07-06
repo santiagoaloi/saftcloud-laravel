@@ -41,7 +41,7 @@
       </v-card-title>
       <v-card-subtitle class=" mb-n10">
        <span v-if="$vuetify.breakpoint.mdAndUp">Don't have an account?</span>
-       <v-btn style="margin-top: -2.9px" small @click="signup = !signup" :class="$vuetify.breakpoint.smAndDown ? '' : 'ml-3'" to="/signup">
+       <v-btn style="margin-top: -2.9px" small @click="signup = !signup" :class="{ 'ml-3': !$vuetify.breakpoint.smAndDown }" to="/signup">
         Sign up
        </v-btn>
       </v-card-subtitle>
@@ -149,7 +149,7 @@
            prepend-inner-icon="mdi-account"
            name="User"
            type="text"
-           :background-color="errors.length > 0 ? '#faebeb' : 'white'"
+           :background-color="errors.length ? '#faebeb' : 'white'"
            :error-messages="errors[0]"
            @keydown.enter.prevent="resetPasswordPreAuthenticate()"
            @keydown.space.prevent
@@ -205,7 +205,7 @@
             name="User"
             :type="password_visible ? 'text' : 'password'"
             :append-icon="password_visible ? 'mdi-eye-outline' : 'mdi-eye-off-outline'"
-            :background-color="errors.length > 0 ? '#faebeb' : 'white'"
+            :background-color="errors.length ? '#faebeb' : 'white'"
             :error-messages="errors[0]"
             @keydown.enter.prevent="preResetPassword()"
             @keydown.space.prevent
@@ -226,7 +226,7 @@
             name="User"
             :type="password_visible ? 'text' : 'password'"
             :append-icon="password_visible ? 'mdi-eye-outline' : 'mdi-eye-outline'"
-            :background-color="errors.length > 0 ? '#faebeb' : 'white'"
+            :background-color="errors.length ? '#faebeb' : 'white'"
             :error-messages="errors[0]"
             @keydown.enter.prevent="preResetPassword()"
             @keydown.space.prevent

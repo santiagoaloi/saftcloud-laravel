@@ -111,7 +111,7 @@ export default {
 
  methods: {
   getIcons() {
-   if (this.items.length > 0) return;
+   if (this.items.length) return;
    axios
     .get("api/listIcons")
     .then(response => {

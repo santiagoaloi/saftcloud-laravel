@@ -37,21 +37,33 @@ export default {
   addGroupDialog() {
    this.$swal({
     title: `<span style="color:${this.isDark ? "lightgrey" : "black"} "> add group </span>`,
+    allowOutsideClick: false,
+    allowEscapeKey: false,
+    allowEnterKey: false,
     showCancelButton: true,
     confirmButtonText: "Continue",
     cancelButtonText: "Cancel",
     confirmButtonColor: "#5469d4",
     customClass: {
-     input: `${this.isDark ? "swalDarkTitle" : ""}`
+     input: `${this.isDark ? "swalDarkTitle" : ""}`,
+     validationMessage: `${this.isDark ? "swalDarkValidation" : ""}`
     },
     input: "text",
+    inputPlaceholder: "Group name goes here...",
     inputValue: this.groupName,
     backdrop: `${this.isDark ? "rgba(0, 0, 0, 0.6)" : "rgba(108, 122, 137, 0.8)"}`,
-    background: `${this.isDark ? "#2f3136" : ""}`
+    background: `${this.isDark ? "#2f3136" : ""}`,
+    inputValidator: value => {
+     if (!value) {
+      return "You need to write a group name";
+     }
+    }
    }).then(result => {
     if (result.value) {
      this.groupName = result.value;
      this.selectGroupParent();
+    } else if (result.dismiss === "cancel") {
+     this.groupName = "";
     }
    });
   },
@@ -59,6 +71,9 @@ export default {
   selectGroupParent() {
    this.$swal({
     title: `<span style="color:${this.isDark ? "lightgrey" : "black"} "> Select Group Parent </span>`,
+    allowOutsideClick: false,
+    allowEscapeKey: false,
+    allowEnterKey: false,
     showCancelButton: true,
     confirmButtonText: "Create group",
     cancelButtonText: "Back",
@@ -84,6 +99,9 @@ export default {
   renameGroupWarning(id, name) {
    this.$swal({
     title: `<span style="color:${this.isDark ? "lightgrey" : "black"} "> Edit group </span>`,
+    allowOutsideClick: false,
+    allowEscapeKey: false,
+    allowEnterKey: false,
     showCancelButton: true,
     confirmButtonText: "Continue",
     cancelButtonText: "Cancel",
@@ -106,6 +124,7 @@ export default {
   removeGroupWarning(id, name) {
    this.$swal({
     title: `<span style="color:${this.isDark ? "lightgrey" : ""} "> Delete ${name} group? </span>`,
+    allowOutsideClick: false,
     html: `<span style="color:${this.isDark ? "lightgrey" : ""} ">  This action cannot be undone. </span>`,
     showCancelButton: true,
     confirmButtonText: "Delete",

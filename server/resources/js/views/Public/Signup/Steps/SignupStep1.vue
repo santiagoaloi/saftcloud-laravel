@@ -114,7 +114,7 @@ export default {
  },
 
  mounted() {
-  if (this.countryCodes.length === 0) {
+  if (!this.countryCodes.length) {
    this.getCountries();
   }
  },

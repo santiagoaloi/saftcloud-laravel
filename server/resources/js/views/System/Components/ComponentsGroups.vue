@@ -22,7 +22,7 @@
     :color="isDark ? '#208ad6' : 'grey'"
     :background-color="isDark ? 'grey darken-4' : 'grey lighten-5'"
    >
-    <template v-if="allGroups.length > 0" v-slot:prepend-item>
+    <template v-if="allGroups.length" v-slot:prepend-item>
      <v-list-item @click="selectAllGroups" :ripple="false">
       <v-list-item-avatar>
        <v-icon>
@@ -116,9 +116,22 @@ export default {
  color: white !important;
 }
 
+.swalDarkValidation {
+ align-items: center;
+ justify-content: center;
+ margin: 0;
+ padding: 0;
+ background: transparent;
+ color: white;
+ font-size: 1em;
+ font-weight: 300;
+}
+
 .swalDarkSelect {
  min-width: 100% !important;
  background: rgb(54, 57, 63) !important;
  color: white !important;
+ border-radius: 8px;
+ height: 50px;
 }
 </style>

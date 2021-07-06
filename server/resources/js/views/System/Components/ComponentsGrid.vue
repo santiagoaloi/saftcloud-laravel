@@ -66,12 +66,17 @@
            :color="isDark ? 'rgb(54, 57, 63)' : 'grey lighten-4'"
            :text-color="isDark ? 'grey lighten-1' : 'indigo darken-4'"
            label
-           class="col-6"
+           class="col-12"
+           small
           >
-           <v-icon small> mdi-folder-outline</v-icon>
-           <div class="col-12 text-truncate">{{ mapComponentGroup(component) }}</div>
+           <v-icon x-small> mdi-folder-outline</v-icon>
+           <div class="col-12 text-truncate">
+            <template v-if="mapComponentGroup(component).component_group_id">
+             {{ mapGroupParent(component) }} <v-icon small>mdi-menu-right</v-icon>
+            </template>
+            {{ mapComponentGroup(component).name }}
+           </div>
           </v-chip>
-          <!-- <span v-else> {{ mapComponentGroup(component) }} </span> -->
          </h5>
         </div>
         <v-scale-transition>
@@ -101,10 +106,8 @@
 import { store } from "@/store";
 import globalMixin from "@/mixins/globalMixin";
 import { sync, call, get } from "vuex-pathify";
-
 export default {
  name: "ComponentsGridView",
-
  data() {
   return {
    dialogIcons: false
@@ -132,7 +135,6 @@ export default {
    if (!this.selectedComponent) return;
    return this.selectedComponent.config_settings.icon;
   },
-
   ...sync("componentManagement", ["componentCardGroup", "dialogs", "cardGroupKey"])
  },
 
@@ -140,10 +142,7 @@ export default {
   ...call("componentManagement/*"),
 
   getComponentCardColor(active) {
-   if (this.$vuetify.theme.dark && !active) return "#40434a";
-   if (this.$vuetify.theme.dark && active) return "#51555e";
-   if (!this.$vuetify.theme.dark && !active) return "white";
-   if (!this.$vuetify.theme.dark && active) return "indigo lighten-5";
+   return this.isDark ? (active ? "#51555e" : "#40434a") : active ? "indigo lighten-5" : "white";
   },
 
   setStarred(component) {
@@ -165,8 +164,14 @@ export default {
   },
 
   mapComponentGroup(component) {
-   if (this.allGroups.length === 0) return;
-   return this.allGroups.filter(g => g.id === component.component_group_id)[0].name;
+   if (!this.allGroups.length) return;
+   return this.allGroups.find(g => g.id === component.component_group_id);
+  },
+
+  mapGroupParent(component) {
+   if (!this.allGroups.length) return;
+   const parentGroupId = this.allGroups.find(g => g.id === component.component_group_id).component_group_id;
+   return this.allGroups.find(g => g.id === parentGroupId).name;
   }
  }
 };

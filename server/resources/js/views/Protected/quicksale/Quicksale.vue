@@ -16,7 +16,7 @@
 
 <script>
 export default {
-    name: "Mocosocomponent",
+    name: "Quicksale",
     mounted() {
         console.log('Component mounted.')
     }
