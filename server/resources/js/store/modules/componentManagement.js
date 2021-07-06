@@ -22,7 +22,7 @@ const state = {
  dbGroupNames: [],
  allGroups: [],
  groupName: "",
- groupParent: "",
+ groupParent: 0,
  tableColumns: [],
  searchFields: "",
  allComponents: [],
@@ -57,29 +57,29 @@ const state = {
   { name: "Active", value: "active", icon: "mdi-lightbulb-on", color: "" }
  ],
 
- //  navigationStructure: {
- //   menu: [
- //    {
- //     items: [
- //      {
- //       name: "Products",
- //       icon: "mdi-file-outline",
- //       items: [
- //        { icon: "mdi-file-outline", name: "Child  2.1", link: "/" },
- //        {
- //         icon: "mdi-file-outline",
- //         name: "Sub-Child 2.2 ",
- //         items: [
- //          { icon: "mdi-file-outline", name: "Menu Levels 3.1", link: "/" },
- //          { icon: "mdi-file-outline", name: "Menu Levels 3.2", link: "/" }
- //         ]
- //        }
- //       ]
- //      }
- //     ]
- //    }
- //   ]
- //  }
+ navigationStructure2: {
+  menu: [
+   {
+    items: [
+     {
+      name: "Products",
+      icon: "mdi-file-outline",
+      items: [
+       { icon: "mdi-file-outline", name: "Child  2.1", link: "/" },
+       {
+        icon: "mdi-file-outline",
+        name: "Sub-Child 2.2 ",
+        items: [
+         { icon: "mdi-file-outline", name: "Menu Levels 3.1", link: "/" },
+         { icon: "mdi-file-outline", name: "Menu Levels 3.2", link: "/" }
+        ]
+       }
+      ]
+     }
+    ]
+   }
+  ]
+ },
  navigationStructure: {}
 };
 
@@ -141,7 +141,7 @@ const getters = {
   return !isEmpty(state.selectedComponentGroups);
  },
 
- selectedSomeGroups: (_state, getters) => {
+ selectedSomeGroups: (_, getters) => {
   if (getters.hasSelectedComponentGroups) return true;
   return false;
  },
@@ -246,7 +246,7 @@ const actions = {
    .then(response => {
     store.set("componentManagement/navigationStructure", response.data);
    })
-   .catch(error => {
+   .catch(_ => {
     store.set("componentManagement/navigationStructure", {});
    });
  },
@@ -282,13 +282,14 @@ const actions = {
 
  removeGroup({ dispatch }, id) {
   axios.delete(`api/componentGroup/${id}`).then(response => {
-   if (response.data.status) {
-    store.set("componentManagement/allGroups", response.data.groups);
-    store.set("snackbar/value", true);
-    store.set("snackbar/text", "Group removed");
-    store.set("snackbar/color", "pink darken-1");
-    dispatch("getNavigationStructure");
-   }
+   //  if (response.data.status) {
+   store.set("componentManagement/allGroups", response.data.groups);
+   store.set("snackbar/value", true);
+   store.set("snackbar/text", "Group removed");
+   store.set("snackbar/color", "pink darken-1");
+   dispatch("getNavigationStructure");
+   dispatch("getGroups");
+   //  }
   });
  },
 
@@ -322,7 +323,7 @@ const actions = {
   axios.patch(`api/component/${component.id}`, { status: component.status });
  },
 
- saveComponent({ state }, component) {
+ saveComponent({ state, dispatch }, component) {
   //Remove strange characters, add space instead.
   component.config.sql_query = component.config.sql_query
    .split(/\r?\n/)
@@ -342,6 +343,7 @@ const actions = {
     store.set("snackbar/value", true);
     store.set("snackbar/text", "Component saved");
     store.set("snackbar/color", "grey darken-2");
+    dispatch("getNavigationStructure");
    } else {
     store.set("snackbar/value", true);
     store.set("snackbar/text", response.data.message);
@@ -356,31 +358,28 @@ const actions = {
   store.set(`componentManagement/allComponents@${index}`, { ...origin, origin: cloneDeep(origin) });
  },
 
- removeComponent({}, id) {
+ removeComponent({ dispatch }, id) {
   axios.delete(`api/component/${id}`).then(response => {
    if (response.data.status) {
     store.set("componentManagement/allComponents", response.data.components);
     store.set("snackbar/value", true);
     store.set("snackbar/text", "Component removed");
     store.set("snackbar/color", "pink darken-1");
+    dispatch("getNavigationStructure");
    }
   });
  },
 
  saveGroup({ state, dispatch }) {
-  // store.set("componentManagement/groupName", "");
-  // store.set("componentManagement/groupParent", "");
+  // let parent;
+  // if (!state.groupParent) {
+  //  parent = null;
+  // } else {
+  //  parent = state.allGroups.find(g => g.name === state.dbGroupNames[state.groupParent - 1]);
+  // }
 
-  let parent;
-  if (state.groupParent === "No Parent") {
-   parent = null;
-  } else {
-   parent = state.allGroups.find(g => g.name === state.dbGroupNames[state.groupParent - 1]);
-  }
-
-  alert(parent);
-
-  axios.post("api/componentGroup", { name: state.groupName, component_group_id: parent.id }).then(response => {
+  parent = state.allGroups.find(g => g.name === state.dbGroupNames[state.groupParent - 1]);
+  axios.post("api/componentGroup", { name: state.groupName, component_group_id: parent ? parent.id : null }).then(response => {
    if (response.data.status) {
     store.set("componentManagement/allGroups", response.data.groups);
     store.set("componentManagement/groupName", "");
@@ -388,12 +387,16 @@ const actions = {
     store.set("snackbar/value", true);
     store.set("snackbar/text", `Group "${state.groupName}" created`);
     store.set("snackbar/color", "grey darken-2");
+    store.set("componentManagement/groupName", "");
+    store.set("componentManagement/groupParent", 0);
     dispatch("getNavigationStructure");
+    dispatch("getDbGroupNames");
+    dispatch("getGroups");
    }
   });
  },
 
- createComponent({ state, getters }) {
+ createComponent({ state, getters, dispatch }) {
   axios.post("api/component", state.componentSettings).then(response => {
    if (response.data.status) {
     store.set("componentManagement/allComponents", response.data.components);
@@ -412,7 +415,8 @@ const actions = {
 
     store.set("componentManagement/componentCardGroup", getters.allComponentsFiltered.length - 1);
     store.set("componentManagement/selectedComponentIndex", state.allComponents.length - 1);
-    store.set("componentManagement/componentSettings", state.initialComponentSettings());
+    store.set("componentManagement/componentSettings", initialComponentSettings());
+    dispatch("getNavigationStructure");
    }
   });
  },

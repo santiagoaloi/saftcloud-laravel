@@ -21,7 +21,7 @@
         :outlined="isDark"
         :color="isDark ? '#208ad6' : 'grey'"
         :background-color="isDark ? 'grey darken-4' : 'grey lighten-4'"
-        :error="errors.length > 0"
+        :error="errors.length"
        ></v-text-field>
       </validation-provider>
      </v-col>
@@ -40,7 +40,7 @@
         :outlined="isDark"
         :color="isDark ? '#208ad6' : 'grey'"
         :background-color="isDark ? 'grey darken-4' : 'grey lighten-4'"
-        :error="errors.length > 0"
+        :error="errors.length"
        >
         <template slot="selection" slot-scope="data">
          <country-flag :country="data.item.iso2" />
@@ -81,7 +81,7 @@
         :outlined="isDark"
         :color="isDark ? '#208ad6' : 'grey'"
         :background-color="isDark ? 'grey darken-4' : 'grey lighten-4'"
-        :error="errors.length > 0"
+        :error="errors.length"
        ></v-text-field>
       </validation-provider>
      </v-col>
@@ -114,7 +114,7 @@ export default {
  },
 
  mounted() {
-  if (this.countryCodes.length === 0) {
+  if (!this.countryCodes.length) {
    this.getCountries();
   }
  },

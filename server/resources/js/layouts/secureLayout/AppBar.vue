@@ -1,5 +1,5 @@
 <template>
-    <v-app-bar :flat="isDark" clipped-right dense app >
+    <v-app-bar  :class="{ 'darkBorder': isDark }" :flat="isDark" clipped-right dense app >
       <v-container fluid class="py-0 px-0 px-sm-2 fill-height">
       <v-app-bar-nav-icon  class="ml-0" text xSmall fab @click="secureDefaultDrawer = !secureDefaultDrawer" />
       <div class="flex-grow-1" />
@@ -320,3 +320,9 @@ export default {
   }
 };
 </script>
+<style scoped>
+
+.darkBorder {
+  border-bottom: solid 1px #404859;
+}
+</style>

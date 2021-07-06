@@ -27,7 +27,7 @@
        solo
        :color="isDark ? '#208ad6' : 'grey'"
        :background-color="isDark ? 'grey darken-4' : 'grey lighten-5'"
-       :error="errors.length > 0"
+       :error="errors.length"
        :item-color="isDark ? 'indigo lighten-3' : 'primary'"
        :menu-props="{
         transition: 'slide-y-transition',
@@ -64,7 +64,7 @@
        maxlength="35"
        :color="isDark ? '#208ad6' : 'grey'"
        :background-color="isDark ? 'grey darken-4' : 'grey lighten-5'"
-       :error="errors.length > 0"
+       :error="errors.length"
       />
      </validation-provider>
     </v-col>
@@ -82,7 +82,7 @@
        maxlength="35"
        :color="isDark ? '#208ad6' : 'grey'"
        :background-color="isDark ? 'grey darken-4' : 'grey lighten-5'"
-       :error="errors.length > 0"
+       :error="errors.length"
        :outlined="isDark"
       />
      </validation-provider>
@@ -103,7 +103,7 @@
        solo
        :color="isDark ? '#208ad6' : 'grey'"
        :background-color="isDark ? 'grey darken-4' : 'grey lighten-5'"
-       :error="errors.length > 0"
+       :error="errors.length"
        :outlined="isDark"
       />
      </validation-provider>
@@ -125,14 +125,13 @@
        :item-color="isDark ? 'indigo lighten-3' : 'primary'"
        :color="isDark ? '#208ad6' : 'grey'"
        :background-color="isDark ? 'grey darken-4' : 'grey lighten-5'"
-       :error="errors.length > 0"
+       :error="errors.length"
       >
        <template v-slot:item="data">
         <template>
          <v-list-item-avatar>
           <v-icon small> mdi-table </v-icon>
          </v-list-item-avatar>
-
          <v-list-item-content>
           <v-list-item-title v-html="data.item" />
          </v-list-item-content>

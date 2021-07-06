@@ -25,8 +25,7 @@ const actions = {
      return false;
     }
    })
-   .catch(error => {
-    console.log({ ...error });
+   .catch(_ => {
     return false;
    });
  },
@@ -45,10 +44,9 @@ const actions = {
      return false;
     }
    })
-   .catch(error => {
+   .catch(_ => {
     commit("session", {});
     router.push("/login");
-    console.log({ ...error });
     return false;
    });
  }

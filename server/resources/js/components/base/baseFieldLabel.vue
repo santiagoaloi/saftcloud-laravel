@@ -1,8 +1,8 @@
 <template>
  <div class="ml-1 mb-1">
-  <h6 class="grey--text text--darken-1">
+  <h5 class="grey--text text--darken-1">
    {{ label | uppercase }}
-  </h6>
+  </h5>
  </div>
 </template>
 
