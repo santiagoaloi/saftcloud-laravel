@@ -20,7 +20,7 @@
         :outlined="isDark"
         :color="isDark ? '#208ad6' : 'grey'"
         :background-color="isDark ? 'grey darken-4' : 'grey lighten-4'"
-        :error="errors.length"
+        :error="errors.length > 0"
        ></v-text-field>
       </validation-provider>
      </v-col>
@@ -37,7 +37,7 @@
         :outlined="isDark"
         :color="isDark ? '#208ad6' : 'grey'"
         :background-color="isDark ? 'grey darken-4' : 'grey lighten-4'"
-        :error="errors.length"
+        :error="errors.length > 0"
        ></v-text-field>
       </validation-provider>
      </v-col>

@@ -235,7 +235,7 @@ const actions = {
    .then(response => {
     store.set("componentManagement/dbGroupNames", response.data);
    })
-   .catch(error => {
+   .catch(_ => {
     store.set("componentManagement/dbGroupNames", []);
    });
  },
@@ -359,15 +359,22 @@ const actions = {
  },
 
  removeComponent({ dispatch }, id) {
-  axios.delete(`api/component/${id}`).then(response => {
-   if (response.data.status) {
-    store.set("componentManagement/allComponents", response.data.components);
+  axios
+   .delete(`api/component/${id}`)
+   .then(response => {
+    if (response.data.status) {
+     store.set("componentManagement/allComponents", response.data.components);
+     store.set("snackbar/value", true);
+     store.set("snackbar/text", "Component removed");
+     store.set("snackbar/color", "pink darken-1");
+     dispatch("getNavigationStructure");
+    }
+   })
+   .catch(_ => {
     store.set("snackbar/value", true);
-    store.set("snackbar/text", "Component removed");
+    store.set("snackbar/text", "Component can't be removed.");
     store.set("snackbar/color", "pink darken-1");
-    dispatch("getNavigationStructure");
-   }
-  });
+   });
  },
 
  saveGroup({ state, dispatch }) {
@@ -398,26 +405,26 @@ const actions = {
 
  createComponent({ state, getters, dispatch }) {
   axios.post("api/component", state.componentSettings).then(response => {
-   if (response.data.status) {
-    store.set("componentManagement/allComponents", response.data.components);
-    store.set("componentManagement/dialogComponent", false);
-    store.set("snackbar/value", true);
-    store.set("snackbar/text", `"${state.componentSettings.title}" component created`);
-    store.set("snackbar/color", "indigo darken-2");
+   //  if (response.data.status) {
+   store.set("componentManagement/allComponents", response.data.components);
+   store.set("snackbar/value", true);
+   store.set("snackbar/text", `"${state.componentSettings.title}" component created`);
+   store.set("snackbar/color", "indigo darken-2");
 
-    // Autoselect latest created component
-    store.set("drawers/secureComponentDrawer", true);
+   // Autoselect latest created component
+   store.set("drawers/secureComponentDrawer", true);
+   store.set("componentManagement/dialogComponent", false);
 
-    const activeGroup = state.allGroups.find(item => item.id === state.componentSettings.component_group_id);
-    const groupExists = state.selectedComponentGroups.find(item => item.id === activeGroup.id);
+   const activeGroup = state.allGroups.find(item => item.id === state.componentSettings.component_group_id);
+   const groupExists = state.selectedComponentGroups.find(item => item.id === activeGroup.id);
 
-    if (!groupExists) state.selectedComponentGroups.push(activeGroup);
+   if (!groupExists) state.selectedComponentGroups.push(activeGroup);
 
-    store.set("componentManagement/componentCardGroup", getters.allComponentsFiltered.length - 1);
-    store.set("componentManagement/selectedComponentIndex", state.allComponents.length - 1);
-    store.set("componentManagement/componentSettings", initialComponentSettings());
-    dispatch("getNavigationStructure");
-   }
+   store.set("componentManagement/componentCardGroup", getters.allComponentsFiltered.length - 1);
+   store.set("componentManagement/selectedComponentIndex", state.allComponents.length - 1);
+   store.set("componentManagement/componentSettings", initialComponentSettings());
+   dispatch("getNavigationStructure");
+   //  }
   });
  },
 

@@ -67,7 +67,7 @@
            @keydown.space.prevent
            :color="isDark ? 'white' : ''"
            :background-color="isDark ? 'grey darken-4' : 'grey lighten-4'"
-           :error="errors.length"
+           :error="errors.length > 0"
            spellcheck="false"
           />
          </validation-provider>
@@ -90,7 +90,7 @@
             @keydown.space.prevent
             :color="isDark ? 'white' : ''"
             :background-color="isDark ? 'grey darken-4' : 'grey lighten-4'"
-            :error="errors.length"
+            :error="errors.length > 0"
             spellcheck="false"
            />
           </validation-provider>

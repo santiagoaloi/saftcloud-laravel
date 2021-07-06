@@ -27,7 +27,7 @@
        solo
        :color="isDark ? '#208ad6' : 'grey'"
        :background-color="isDark ? 'grey darken-4' : 'grey lighten-5'"
-       :error="errors.length"
+       :error="errors.length > 0"
        :item-color="isDark ? 'indigo lighten-3' : 'primary'"
        :menu-props="{
         transition: 'slide-y-transition',
@@ -64,7 +64,7 @@
        maxlength="35"
        :color="isDark ? '#208ad6' : 'grey'"
        :background-color="isDark ? 'grey darken-4' : 'grey lighten-5'"
-       :error="errors.length"
+       :error="errors.length > 0"
       />
      </validation-provider>
     </v-col>
@@ -82,7 +82,7 @@
        maxlength="35"
        :color="isDark ? '#208ad6' : 'grey'"
        :background-color="isDark ? 'grey darken-4' : 'grey lighten-5'"
-       :error="errors.length"
+       :error="errors.length > 0"
        :outlined="isDark"
       />
      </validation-provider>
@@ -103,7 +103,7 @@
        solo
        :color="isDark ? '#208ad6' : 'grey'"
        :background-color="isDark ? 'grey darken-4' : 'grey lighten-5'"
-       :error="errors.length"
+       :error="errors.length > 0"
        :outlined="isDark"
       />
      </validation-provider>
@@ -125,7 +125,7 @@
        :item-color="isDark ? 'indigo lighten-3' : 'primary'"
        :color="isDark ? '#208ad6' : 'grey'"
        :background-color="isDark ? 'grey darken-4' : 'grey lighten-5'"
-       :error="errors.length"
+       :error="errors.length > 0"
       >
        <template v-slot:item="data">
         <template>

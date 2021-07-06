@@ -16,7 +16,7 @@
 
 <script>
 export default {
-    name: "Test Child",
+    name: "Quicksale",
     mounted() {
         console.log('Component mounted.')
     }

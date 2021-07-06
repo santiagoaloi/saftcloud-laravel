@@ -142,10 +142,7 @@ export default {
   ...call("componentManagement/*"),
 
   getComponentCardColor(active) {
-   if (this.isDark && !active) return "#40434a";
-   if (this.isDark && active) return "#51555e";
-   if (!this.isDark && !active) return "white";
-   if (!this.isDark && active) return "indigo lighten-5";
+   return this.isDark ? (active ? "#51555e" : "#40434a") : active ? "indigo lighten-5" : "white";
   },
 
   setStarred(component) {
