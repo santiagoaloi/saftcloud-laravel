@@ -34,8 +34,8 @@ class ComponentGroupController extends Controller {
     }
 
     public function showAllWithChild() {
-        $parents = DB::table('component_groups')->select('id', 'name', 'icon', 'component_group_id')->where('component_group_id', NULL)->get();
-        $childs = DB::table('component_groups')->select('id', 'name', 'icon', 'component_group_id')->where('component_group_id', '!=' , NULL)->get();
+        $parents = DB::table('component_groups')->select('id', 'name', 'icon', 'component_group_id')->where('component_group_id', NULL)->where('deleted_at', '=', NULL)->get();
+        $childs = DB::table('component_groups')->select('id', 'name', 'icon', 'component_group_id')->where('component_group_id', '!=' , NULL)->where('deleted_at', '=', NULL)->get();
         $query = DB::select("SELECT JSON_EXTRACT(config, '$.name') as name, JSON_EXTRACT(config_settings, '$.icon.name') as icon, component_group_id FROM components");
 
         if(isset($parents)){
@@ -134,10 +134,22 @@ class ComponentGroupController extends Controller {
     }
 
     public function destroy($id) {
-        $query = ComponentGroup::find($id);
-        $query->delete();
+        $exist = DB::table('component_groups')->whereExists(function ($query) use ($id) {
+            $query->select(DB::raw(1))
+                  ->from('components')
+                  ->whereRaw("components.component_group_id = $id");
+        })->get();
 
-        return $this->showAll();
+        if(empty($exist)){
+            $query = ComponentGroup::find($id);
+            $query->delete();
+
+            return $this->showAll();
+        }
+        return response([
+            'message' => 'Hay un componente vinculado a este grupo',
+            'status'=> false
+        ], 204);
     }
 
 }

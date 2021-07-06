@@ -82,23 +82,16 @@ class MysqlController extends Controller {
         };
         return  $result;
     }
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id) {
-        //
+
+    static function checkSoftDelete($table, $table2, $id){
+        DB::table($table)->whereExists(function ($query) use ($id, $table2) {
+            $query->select(DB::raw(1))
+                ->from($table2)
+                ->whereRaw("$table2.user_id = $id");   // HAY QUE MODIFICAR user_id PARA QUE SEA DINAMICO
+        })->get();
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(Request $request, $id) {
         //
     }

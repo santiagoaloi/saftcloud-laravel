@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Root;
 
 use App\Http\Controllers\Controller;
 use App\Models\Root\ComponentDefault;
-use App\Models\Root\Component;
 use Illuminate\Http\Request;
 use App\Helpers\Helper;
 
@@ -114,7 +113,10 @@ class ComponentDefaultController extends Controller {
     }
 
     function getLast(){
-        return ComponentDefault::pluck('config_structure')->last();
+        $getJsonFile2 = app_path("Models/model.json");
+        return file_get_contents($getJsonFile2);
+
+        // return ComponentDefault::pluck('config_structure')->last();
     }
 
     public function compareComponentConfig($request){

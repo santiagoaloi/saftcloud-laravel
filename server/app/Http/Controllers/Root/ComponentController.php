@@ -6,9 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Root\Component;
 use Illuminate\Http\Request;
 
-use Illuminate\Database\QueryException;
 Use Exception;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\DB;
 use App\Helpers\Helper;
 use App\Helpers\FileManager;
