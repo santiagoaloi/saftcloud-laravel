@@ -13,11 +13,22 @@ class UserController extends Controller {
         // if($request->hasFile('picture')){
         //     $query['picture']=$request->file('picture')->store('avatars', 'public');
         // };
+        try{
+            $query = User::create($request->all());
+        }
 
-        $query = User::create($request->all());
+        catch(\Illuminate\Database\QueryException $e){
+            $errorCode = $e->errorInfo[1];
+            if($errorCode){
+                return response([
+                    'message'=> $e->errorInfo[2],
+                    'code'=> $e->errorInfo[1]
+                ], 404);
+            }
+        }
+
         return response([
-            'row'=> $query,
-            'status'=> true
+            'row'=> $query
         ], 200);
     }
 
@@ -25,31 +36,27 @@ class UserController extends Controller {
         $result = User::find($id);
 
         return response([
-            'row'=> $result,
-            'status'=> true
+            'row'=> $result
         ], 200);
     }
 
     public function showAll() {
         return response([
-            'rows'=> User::get(),
-            'status'=> true
+            'rows'=> User::get()
         ], 200);
     }
 
     //  Para mostrar los elementos eliminados
     public function getTrashed() {
         return response([
-            'rows'=> User::onlyTrashed()->get(),
-            'status'=> true
+            'rows'=> User::onlyTrashed()->get()
         ], 200);
     }
 
     //  Para mostrar un elemento eliminado
     public function recoveryTrashed($id) {
         return response([
-            'row'=> User::onlyTrashed()->findOrFail($id)->recovery(),
-            'status'=> true
+            'row'=> User::onlyTrashed()->find($id)->recovery()
         ], 200);
     }
 
@@ -58,12 +65,11 @@ class UserController extends Controller {
     }
 
     public function update(Request $request, $id) {
-        $query = User::findOrFail($id);
+        $query = User::find($id);
         $query->fill($request->all())->save();
 
         return response([
-            'row'=> $query,
-            'status'=> true
+            'row'=> $query
         ], 200);
     }
 
@@ -76,7 +82,7 @@ class UserController extends Controller {
     }
 
     public function destroy($id) {
-        $query = User::findOrFail($id);
+        $query = User::find($id);
         $query->delete();
 
         return $this->showAll();

@@ -11,8 +11,7 @@ class EntityController extends Controller {
     public function store(Request $request) {
         $query = Entity::create($request->all());
         return response([
-            'row'=> $query,
-            'status'=> true
+            'row'=> $query
         ], 200);
     }
 
@@ -20,31 +19,27 @@ class EntityController extends Controller {
         $result = Entity::find($id);
 
         return response([
-            'row'=> $result,
-            'status'=> true
+            'row'=> $result
         ], 200);
     }
 
     public function showAll() {
         return response([
-            'rows'=> Entity::get(),
-            'status'=> true
+            'rows'=> Entity::get()
         ], 200);
     }
 
     //  Para mostrar los elementos eliminados
     public function getTrashed() {
         return response([
-            'rows'=> Entity::onlyTrashed()->get(),
-            'status'=> true
+            'rows'=> Entity::onlyTrashed()->get()
         ], 200);
     }
 
     //  Para mostrar un elemento eliminado
     public function recoveryTrashed($id) {
         return response([
-            'row'=> Entity::onlyTrashed()->findOrFail($id)->recovery(),
-            'status'=> true
+            'row'=> Entity::onlyTrashed()->find($id)->recovery()
         ], 200);
     }
 
@@ -53,12 +48,11 @@ class EntityController extends Controller {
     }
 
     public function update(Request $request, $id) {
-        $query = Entity::findOrFail($id);
+        $query = Entity::find($id);
         $query->fill($request->all())->save();
 
         return response([
-            'row'=> $query,
-            'status'=> true
+            'row'=> $query
         ], 200);
     }
 
@@ -71,7 +65,7 @@ class EntityController extends Controller {
     }
 
     public function destroy($id) {
-        $query = Entity::findOrFail($id);
+        $query = Entity::find($id);
         $query->delete();
 
         return $this->showAll();

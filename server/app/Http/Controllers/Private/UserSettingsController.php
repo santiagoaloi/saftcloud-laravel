@@ -11,8 +11,7 @@ class UserSettingsController extends Controller {
     public function store(Request $request) {
         $query = UserSettings::create($request->all());
         return response([
-            'row'=> $query,
-            'status'=> true
+            'row'=> $query
         ], 200);
     }
 
@@ -20,31 +19,27 @@ class UserSettingsController extends Controller {
         $result = UserSettings::find($id);
 
         return response([
-            'row'=> $result,
-            'status'=> true
+            'row'=> $result
         ], 200);
     }
 
     public function showAll() {
         return response([
-            'rows'=> UserSettings::get(),
-            'status'=> true
+            'rows'=> UserSettings::get()
         ], 200);
     }
 
     //  Para mostrar los elementos eliminados
     public function getTrashed() {
         return response([
-            'rows'=> UserSettings::onlyTrashed()->get(),
-            'status'=> true
+            'rows'=> UserSettings::onlyTrashed()->get()
         ], 200);
     }
 
     //  Para mostrar un elemento eliminado
     public function recoveryTrashed($id) {
         return response([
-            'row'=> UserSettings::onlyTrashed()->findOrFail($id)->recovery(),
-            'status'=> true
+            'row'=> UserSettings::onlyTrashed()->find($id)->recovery()
         ], 200);
     }
 
@@ -53,12 +48,11 @@ class UserSettingsController extends Controller {
     }
 
     public function update(Request $request, $id) {
-        $query = UserSettings::findOrFail($id);
+        $query = UserSettings::find($id);
         $query->fill($request->all())->save();
 
         return response([
-            'row'=> $query,
-            'status'=> true
+            'row'=> $query
         ], 200);
     }
 
@@ -71,7 +65,7 @@ class UserSettingsController extends Controller {
     }
 
     public function destroy($id) {
-        $query = UserSettings::findOrFail($id);
+        $query = UserSettings::find($id);
         $query->delete();
 
         return $this->showAll();

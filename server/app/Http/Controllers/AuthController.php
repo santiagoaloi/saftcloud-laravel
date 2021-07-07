@@ -56,9 +56,8 @@ class AuthController extends Controller {
         ];
 
         return response([
-            'data' =>  $response,
-            'status' => true
-        ], 201);
+            'data' => $response
+        ], 200);
 
     }
 

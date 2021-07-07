@@ -11,40 +11,35 @@ class SocialController extends Controller {
     public function store(Request $request) {
         $query = Social::create($request->all());
         return response([
-            'row'=> $query,
-            'status'=> true
+            'row'=> $query
         ], 200);
     }
 
     public function show(Request $id) {
-        $result = Social::findOrFail($id);
+        $result = Social::find($id);
 
         return response([
-            'row'=> $result,
-            'status'=> true
+            'row'=> $result
         ], 200);
     }
 
     public function showAll() {
         return response([
-            'rows'=> Social::get(),
-            'status'=> true
+            'rows'=> Social::get()
         ], 200);
     }
 
     //  Para mostrar los elementos eliminados
     public function getTrashed() {
         return response([
-            'rows'=> Social::onlyTrashed()->get(),
-            'status'=> true
+            'rows'=> Social::onlyTrashed()->get()
         ], 200);
     }
 
     //  Para mostrar un elemento eliminado
     public function recoveryTrashed($id) {
         return response([
-            'row'=> Social::onlyTrashed()->findOrFail($id)->recovery(),
-            'status'=> true
+            'row'=> Social::onlyTrashed()->find($id)->recovery()
         ], 200);
     }
 
@@ -53,12 +48,11 @@ class SocialController extends Controller {
     }
 
     public function update(Request $request, $id) {
-        $query = Social::findOrFail($id);
+        $query = Social::find($id);
         $query->fill($request->all())->save();
 
         return response([
-            'row'=> $query,
-            'status'=> true
+            'row'=> $query
         ], 200);
     }
 
@@ -71,7 +65,7 @@ class SocialController extends Controller {
     }
 
     public function destroy($id) {
-        $query = Social::findOrFail($id);
+        $query = Social::find($id);
         $query->delete();
 
         return $this->showAll();

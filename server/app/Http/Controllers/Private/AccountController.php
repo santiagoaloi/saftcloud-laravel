@@ -11,40 +11,35 @@ class AccountController extends Controller {
     public function store(Request $request) {
         $query = Account::create($request->all());
         return response([
-            'row'=> $query,
-            'status'=> true
+            'row'=> $query
         ], 200);
     }
 
     public function show(Request $id) {
-        $result = Account::findOrFail($id);
+        $result = Account::find($id);
 
         return response([
-            'row'=> $result,
-            'status'=> true
+            'row'=> $result
         ], 200);
     }
 
     public function showAll() {
         return response([
-            'rows'=> Account::get(),
-            'status'=> true
+            'rows'=> Account::get()
         ], 200);
     }
 
     //  Para mostrar los elementos eliminados
     public function getTrashed() {
         return response([
-            'rows'=> Account::onlyTrashed()->get(),
-            'status'=> true
+            'rows'=> Account::onlyTrashed()->get()
         ], 200);
     }
 
     //  Para mostrar un elemento eliminado
     public function recoveryTrashed($id) {
         return response([
-            'row'=> Account::onlyTrashed()->findOrFail($id)->recovery(),
-            'status'=> true
+            'row'=> Account::onlyTrashed()->find($id)->recovery()
         ], 200);
     }
 
@@ -53,12 +48,11 @@ class AccountController extends Controller {
     }
 
     public function update(Request $request, $id) {
-        $query = Account::findOrFail($id);
+        $query = Account::find($id);
         $query->fill($request->all())->save();
 
         return response([
-            'row'=> $query,
-            'status'=> true
+            'row'=> $query
         ], 200);
     }
 
@@ -71,7 +65,7 @@ class AccountController extends Controller {
     }
 
     public function destroy($id) {
-        $query = Account::findOrFail($id);
+        $query = Account::find($id);
         $query->delete();
 
         return $this->showAll();

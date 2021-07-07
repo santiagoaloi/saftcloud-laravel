@@ -11,8 +11,7 @@ class AccountPlanController extends Controller {
     public function store(Request $request) {
         $query = AccountPlan::create($request->all());
         return response([
-            'row' => $query,
-            'status' => true
+            'row' => $query
         ], 200);
     }
 
@@ -20,31 +19,27 @@ class AccountPlanController extends Controller {
         $result = AccountPlan::find($id);
 
         return response([
-            'row' => $result,
-            'status' => true
+            'row' => $result
         ], 200);
     }
 
     public function showAll() {
         return response([
-            'rows' => AccountPlan::get(),
-            'status'=> true
+            'rows' => AccountPlan::get()
         ], 200);
     }
 
     //  Para mostrar los elementos eliminados
     public function getTrashed() {
         return response([
-            'rows' => AccountPlan::onlyTrashed()->get(),
-            'status'=> true
+            'rows' => AccountPlan::onlyTrashed()->get()
         ], 200);
     }
 
     //  Para mostrar un elemento eliminado
     public function recoveryTrashed($id) {
         return response([
-            'row' => AccountPlan::onlyTrashed()->findOrFail($id)->recovery(),
-            'status'=> true
+            'row' => AccountPlan::onlyTrashed()->find($id)->recovery()
         ], 200);
     }
 
@@ -53,12 +48,11 @@ class AccountPlanController extends Controller {
     }
 
     public function update(Request $request, $id) {
-        $query = AccountPlan::findOrFail($id);
+        $query = AccountPlan::find($id);
         $query->fill($request->all())->save();
 
         return response([
-            'row'=> $query,
-            'status'=> true
+            'row'=> $query
         ], 200);
     }
 
@@ -71,7 +65,7 @@ class AccountPlanController extends Controller {
     }
 
     public function destroy($id) {
-        $query = AccountPlan::findOrFail($id);
+        $query = AccountPlan::find($id);
         $query->delete();
 
         return $this->showAll();

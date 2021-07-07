@@ -16,6 +16,7 @@ class CreateComponentsTable extends Migration {
             Schema::create('components', function (Blueprint $table) {
                 $table->id();
                 $table->foreignId('component_group_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
+                $table->string('name')->unique();
                 $table->longText('config');
                 $table->longText('config_settings');
                 $table->longText('status')->nullable();

@@ -11,38 +11,33 @@ class ProductController extends Controller {
     public function store(Request $request) {
         $query = Product::create($request->all());
         return response([
-            'row'=> $query,
-            'status'=> true
+            'row'=> $query
         ], 200);
     }
 
     public function show(Request $id, $local = false) {
         return response([
-            'row'=> Product::findOrFail($id),
-            'status'=> true
+            'row'=> Product::find($id)
         ], 200);
     }
 
     public function showAll() {
         return response([
-            'rows'=> Product::get(),
-            'status'=> true
+            'rows'=> Product::get()
         ], 200);
     }
 
     //  Para mostrar los elementos eliminados
     public function getTrashed() {
         return response([
-            'rows'=> Product::onlyTrashed()->get(),
-            'status'=> true
+            'rows'=> Product::onlyTrashed()->get()
         ], 200);
     }
 
     //  Para mostrar un elemento eliminado
     public function recoveryTrashed($id) {
         return response([
-            'row'=> Product::onlyTrashed()->findOrFail($id)->recovery(),
-            'status'=> true
+            'row'=> Product::onlyTrashed()->find($id)->recovery()
         ], 200);
     }
 
@@ -51,12 +46,11 @@ class ProductController extends Controller {
     }
 
     public function update(Request $request, $id) {
-        $query = Product::findOrFail($id);
+        $query = Product::find($id);
         $query->fill($request->all())->save();
 
         return response([
-            'row'=> $query,
-            'status'=> true
+            'row'=> $query
         ], 200);
     }
 
@@ -68,7 +62,7 @@ class ProductController extends Controller {
     }
 
     public function destroy($id) {
-        $query = Product::findOrFail($id);
+        $query = Product::find($id);
         $query->delete();
 
         return $this->showAll();
