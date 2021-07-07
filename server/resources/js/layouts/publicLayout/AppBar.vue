@@ -172,11 +172,11 @@ export default {
 
  methods: {
   testFunction() {
-   let post = { 'avatar':'kheee'};
+   let post = { avatar: "kheee" };
    axios
     .put("/api/testFunction/1", post)
     .then(response => {
-     if (response.data.status) {
+     if (response.status === 200) {
       console.log(response.data.rows);
      }
     })

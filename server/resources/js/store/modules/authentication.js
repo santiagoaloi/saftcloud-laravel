@@ -16,7 +16,7 @@ const actions = {
   return axios
    .post("api/login", data)
    .then(response => {
-    if (response.data.status) {
+    if (response.status === 200) {
      commit("session", response.data.data);
      axios.defaults.headers.common["authorization"] = `Bearer ${response.data.data.token}`;
      router.push("/components");
@@ -34,7 +34,7 @@ const actions = {
   return axios
    .post("api/logout", data)
    .then(response => {
-    if (response.data.status) {
+    if (response.status === 200) {
      commit("session", {});
      router.push("/login");
      return true;

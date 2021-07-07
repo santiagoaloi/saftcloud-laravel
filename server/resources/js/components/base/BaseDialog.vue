@@ -16,7 +16,7 @@
    flat
    :dense="dense"
    dark
-   color="#24292e
+   color="#36393f
 "
   >
    <template>

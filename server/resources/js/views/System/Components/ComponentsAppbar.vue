@@ -20,8 +20,10 @@
      @blur="expand = false"
     />
 
-    <v-btn @click="DialogEditor = true" class="mx-2 "> <v-icon class="mr-2" small> mdi-code-json </v-icon>Config Structure </v-btn>
-    <v-btn class="mx-2 "> <v-icon class="mr-2" small> mdi-arrow-top-right </v-icon>Export </v-btn>
+    <v-btn :color="isDark ? 'grey darken-4' : ''" @click="dialogEditor = true" class="mx-2 ">
+     <v-icon class="mr-2" small> mdi-code-json </v-icon>Config Structure
+    </v-btn>
+    <v-btn class="mx-2 " :color="isDark ? 'grey darken-4' : ''"> <v-icon class="mr-2" small> mdi-arrow-top-right </v-icon>Export </v-btn>
     <v-btn class="ml-2" :color="isDark ? 'accent' : 'primary'" @click.stop="dialogComponent = true">
      <v-icon class="mr-2" small> mdi-plus </v-icon>Create component
     </v-btn>
@@ -31,15 +33,11 @@
   <v-divider class="mt-3"></v-divider>
 
   <baseDialog
-   v-if="DialogEditor"
-   v-model="DialogEditor"
+   v-model="dialogEditor"
    fullscreen
    transition="dialog-bottom-transition"
-   @save="
-    saveComponentsConfigStructure();
-    DialogEditor = false;
-   "
-   @close="DialogEditor = false"
+   @save="saveComponentsConfigStructure()"
+   @close="dialogEditor = false"
    width="60vw"
    no-gutters
    absoluteToolbar
@@ -60,9 +58,8 @@ export default {
 
  data() {
   return {
-   query: "SELECT * FROM users",
    expand: false,
-   DialogEditor: false
+   dialogEditor: false
   };
  },
 

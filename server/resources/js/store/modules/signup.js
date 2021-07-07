@@ -58,7 +58,7 @@ const actions = {
  accountCreation({ state }) {
   state.loading = true;
   axios.post("api/makeAccount", this.signupForm).then(response => {
-   if (response.data.status) {
+   if (response.status === 200) {
     this.$router.push("/VerifyAccount");
    } else {
     state.loading = false;
@@ -71,7 +71,7 @@ const actions = {
   axios
    .get("api/countries")
    .then(response => {
-    if (response.data.status) {
+    if (response.status === 200) {
      commit("countryCodes", response.data.rows);
     }
    })

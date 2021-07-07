@@ -57,29 +57,6 @@ const state = {
   { name: "Active", value: "active", icon: "mdi-lightbulb-on", color: "" }
  ],
 
- navigationStructure2: {
-  menu: [
-   {
-    items: [
-     {
-      name: "Products",
-      icon: "mdi-file-outline",
-      items: [
-       { icon: "mdi-file-outline", name: "Child  2.1", link: "/" },
-       {
-        icon: "mdi-file-outline",
-        name: "Sub-Child 2.2 ",
-        items: [
-         { icon: "mdi-file-outline", name: "Menu Levels 3.1", link: "/" },
-         { icon: "mdi-file-outline", name: "Menu Levels 3.2", link: "/" }
-        ]
-       }
-      ]
-     }
-    ]
-   }
-  ]
- },
  navigationStructure: {}
 };
 
@@ -253,7 +230,7 @@ const actions = {
 
  getGroups({}) {
   axios.get("api/showAllGroups").then(response => {
-   if (response.data.status) {
+   if (response.status === 200) {
     store.set("componentManagement/allGroups", response.data.groups);
    }
   });
@@ -274,7 +251,7 @@ const actions = {
 
  getComponents({}) {
   axios.get("api/showAllComponents").then(response => {
-   if (response.data.status) {
+   if (response.status === 200) {
     store.set("componentManagement/allComponents", response.data.components);
    }
   });
@@ -282,20 +259,20 @@ const actions = {
 
  removeGroup({ dispatch }, id) {
   axios.delete(`api/componentGroup/${id}`).then(response => {
-   //  if (response.data.status) {
-   store.set("componentManagement/allGroups", response.data.groups);
-   store.set("snackbar/value", true);
-   store.set("snackbar/text", "Group removed");
-   store.set("snackbar/color", "pink darken-1");
-   dispatch("getNavigationStructure");
-   dispatch("getGroups");
-   //  }
+   if (response.status === 200) {
+    store.set("componentManagement/allGroups", response.data.groups);
+    store.set("snackbar/value", true);
+    store.set("snackbar/text", "Group removed");
+    store.set("snackbar/color", "pink darken-1");
+    dispatch("getNavigationStructure");
+    dispatch("getGroups");
+   }
   });
  },
 
  renameGroup({}, { id, newName }) {
   axios.patch(`api/componentGroup/${id}`, { name: newName }).then(response => {
-   if (response.data.status) {
+   if (response.status === 200) {
     store.set("componentManagement/allGroups", response.data.groups);
     store.set("snackbar/value", true);
     store.set("snackbar/text", "Group renamed");
@@ -337,7 +314,7 @@ const actions = {
    .replace(/(\r\n|\n|\r)/gm, " ");
 
   axios.put(`api/component/${component.id}`, component).then(response => {
-   if (response.data.status) {
+   if (response.status === 200) {
     const index = state.allComponents.findIndex(c => c.id == component.id);
     store.set(`componentManagement/allComponents@${index}`, response.data.component);
     store.set("snackbar/value", true);
@@ -362,7 +339,7 @@ const actions = {
   axios
    .delete(`api/component/${id}`)
    .then(response => {
-    if (response.data.status) {
+    if (response.status === 200) {
      store.set("componentManagement/allComponents", response.data.components);
      store.set("snackbar/value", true);
      store.set("snackbar/text", "Component removed");
@@ -370,9 +347,10 @@ const actions = {
      dispatch("getNavigationStructure");
     }
    })
-   .catch(_ => {
+   .catch(error => {
+    console.log({ ...error });
     store.set("snackbar/value", true);
-    store.set("snackbar/text", "Component can't be removed.");
+    store.set("snackbar/text", `${error.response.status} ${error.response.statusText}`);
     store.set("snackbar/color", "pink darken-1");
    });
  },
@@ -387,7 +365,7 @@ const actions = {
 
   parent = state.allGroups.find(g => g.name === state.dbGroupNames[state.groupParent - 1]);
   axios.post("api/componentGroup", { name: state.groupName, component_group_id: parent ? parent.id : null }).then(response => {
-   if (response.data.status) {
+   if (response.status === 200) {
     store.set("componentManagement/allGroups", response.data.groups);
     store.set("componentManagement/groupName", "");
     store.set("componentManagement/groupChild", "");
@@ -405,7 +383,7 @@ const actions = {
 
  createComponent({ state, getters, dispatch }) {
   axios.post("api/component", state.componentSettings).then(response => {
-   //  if (response.data.status) {
+   //  if (response.status === 200) {
    store.set("componentManagement/allComponents", response.data.components);
    store.set("snackbar/value", true);
    store.set("snackbar/text", `"${state.componentSettings.title}" component created`);

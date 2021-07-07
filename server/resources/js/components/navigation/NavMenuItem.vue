@@ -2,8 +2,8 @@
  <div>
   <v-list-item v-if="!menuItem.items" :input-value="menuItem.value" :to="menuItem.link" :exact="menuItem.exact" :disabled="menuItem.disabled" link>
    <v-list-item-icon>
-    <v-icon :small="small" :class="{ 'grey--text': menuItem.disabled }">
-     {{ menuItem.icon || "mdi-circle-medium" }}
+    <v-icon :class="{ 'grey--text': menuItem.disabled }">
+     {{ menuItem.value ? "mdi-folder-open-outline" : "mdi-folder-outline" }}
     </v-icon>
    </v-list-item-icon>
    <v-list-item-content>
@@ -21,10 +21,11 @@
    :to="menuItem.link"
    link
    color="primary lighten-2"
+   ref="group"
   >
    <template v-slot:activator>
     <v-list-item-icon v-if="!subgroup">
-     <v-icon :small="small">{{ menuItem.icon || "mdi-circle-medium" }}</v-icon>
+     <v-icon>{{ icon }}</v-icon>
     </v-list-item-icon>
     <v-list-item-content>
      <v-list-item-title>
@@ -48,6 +49,10 @@
 |
 */
 export default {
+ data: () => ({
+  icon: "mdi-folder-outline"
+ }),
+
  props: {
   menuItem: {
    type: Object,
@@ -61,6 +66,16 @@ export default {
    type: Boolean,
    default: false
   }
+ },
+ mounted() {
+  this.$watch(
+   () => {
+    return this.$refs.group.isActive;
+   },
+   val => {
+    this.icon = val ? "mdi-folder-open-outline" : "mdi-folder-outline";
+   }
+  );
  }
 };
 </script>

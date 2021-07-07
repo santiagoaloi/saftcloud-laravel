@@ -146,7 +146,7 @@ export default {
 
   getCountryPhoneCodes() {
    axios.get(`${this.controller}/getCountryPhoneCodes`).then(response => {
-    if (response.data.status) {
+    if (response.status === 200) {
      this.countryCodes = response.data.data;
     }
    });
@@ -157,7 +157,7 @@ export default {
     newAccount: this.signupForm
    };
    axios.post(`${this.controller}/accountCreation`, post).then(response => {
-    if (response.data.status) {
+    if (response.status === 200) {
      this.$router.push("/login");
     }
    });

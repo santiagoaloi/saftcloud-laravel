@@ -1,5 +1,5 @@
 <template>
-    <v-app-bar  :class="{ 'darkBorder': isDark }" :flat="isDark" clipped-right dense app >
+    <v-app-bar :class="{ 'darkBorder': isDark }" :flat="isDark" clipped-right dense app >
       <v-container fluid class="py-0 px-0 px-sm-2 fill-height">
       <v-app-bar-nav-icon  class="ml-0" text xSmall fab @click="secureDefaultDrawer = !secureDefaultDrawer" />
       <div class="flex-grow-1" />
@@ -11,24 +11,6 @@
       <v-btn class="mr-2 " text x-small fab @click="pushDesktop">
         <v-icon>mdi-desktop-mac</v-icon>
       </v-btn>
-<!-- 
-      <v-menu rounded="xl" origin="center center" transition="scale-transition" :nudge-bottom="10" offset-y>
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn class="mr-2" text x-small fab v-bind="attrs" v-on="on">
-            <v-icon>mdi-auto-fix</v-icon>
-          </v-btn>
-        </template>
-           <v-list class="pa-2" rounded="xl"   outlined>
-            <v-list-item v-for="(item, i) in cmsMenu" :key="i" :to="item.href">
-              <v-icon class="mr-5">
-                {{ item.icon }}
-              </v-icon>
-              <v-list-item-title class="mr-5">
-                {{ item.title }}
-              </v-list-item-title>
-            </v-list-item>
-          </v-list>
-      </v-menu> -->
 
       <v-menu rounded="xl" origin="center center" transition="scale-transition" :nudge-bottom="10" offset-y>
         <template v-slot:activator="{ on, attrs }">
@@ -60,21 +42,15 @@
       <v-menu rounded="xl" origin="center center" transition="scale-transition" :nudge-bottom="10" offset-y>
         <template v-slot:activator="{ on, attrs }">
 
-
-
           <v-btn class="mr-2" text x-small fab v-bind="attrs" v-on="on">
             <v-icon>mdi-earth</v-icon> 
           </v-btn>  
         </template>
            <v-list class="pa-2" rounded="xl"   outlined>
             <v-list-item v-for="(language, i) in languages" :key="i" :to="language.name">
-         
               <v-list-item-avatar> 
                        <country-flag :country="language.flag" />
-
               </v-list-item-avatar>
-
-
               <v-list-item-title class="mr-5">
                 {{ language.name }}
               </v-list-item-title>
@@ -106,14 +82,6 @@
         </template>
 
           <v-list class="pa-2" rounded="xl"  outlined>
-            <!-- <v-list-item style="cursor: pointer">
-            <v-list-item-content>
-              <v-list-item-title style="font-size: 130%; font-weight: 600">
-                {{ profile.first_name }} {{ profile.last_name }}
-              </v-list-item-title>
-            </v-list-item-content>
-          </v-list-item> -->
-
             <v-list-item style="cursor: pointer">
               <v-list-item-content>
                 <v-list-item-title style="font-size: 130%; font-weight: 600">
@@ -121,12 +89,6 @@
                 </v-list-item-title>
               </v-list-item-content>
             </v-list-item>
-
-            <!-- <v-list-item style="cursor: pointer; margin-top: -20px">
-            <v-list-item-content>
-              <v-list-item-title>{{ profile.email }}</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item> -->
 
             <v-list-item style="cursor: pointer; margin-top: -20px">
               <v-list-item-content>
@@ -181,7 +143,7 @@ import CountryFlag from "vue-country-flag";
 
 export default {
   name: "DefaultBar",
- components: {
+  components: {
   CountryFlag
  },
 
@@ -190,7 +152,6 @@ export default {
       imageLoadingFailed: false,
       notificationCount: 0,
       appBarKey: 1,
-      x: 0,
 
             languages: [
         {
@@ -203,13 +164,6 @@ export default {
         },
       ],
 
-      cmsMenu: [
-        {
-          icon: "mdi-auto-fix",
-          href: "/formBuilder",
-          title: "CMS Builder"
-        }
-      ],
 
       settingsMenu: [
         {
@@ -304,7 +258,6 @@ export default {
     },
 
     pushprofile() {
-      this.disableModeration();
       this.$router.push("/profile/info");
     },
 
@@ -312,7 +265,6 @@ export default {
       this.$router.push("/notifications");
     },
     pushDesktop() {
-      this.disableModeration();
       this.$router.push("/desktop");
     },
 
