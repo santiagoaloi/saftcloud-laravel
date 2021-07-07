@@ -29,12 +29,11 @@ class ComponentController extends Controller {
         $config['sql_query']    = $sql_query;
         $config['columns']      = $formColumnsAndFields['ArrayColumns'];
         $config['form_fields']  = $formColumnsAndFields['ArrayFields'];
-        $config['name']         = $request['name'];
         $config['title']        = $request['title'];
         $config['note']         = $request['note'];
 
         $configSettings['icon'] = [
-            'name'  => 'mdi-view-grid',
+            'name'  => 'mdi-apps',
             'color' => '#6453DCED',
         ];
 
@@ -46,6 +45,7 @@ class ComponentController extends Controller {
 
         $data = [
             'component_group_id'    => $request['component_group_id'],
+            'name'                  => $request['name'],
             'config'                => json_encode($config),
             'config_settings'       => json_encode($configSettings),
             'status'                => json_encode($status),
@@ -53,18 +53,17 @@ class ComponentController extends Controller {
 
         Component::create($data);
 
-        $this->makeNewComponent($request['name']);
+        $this->makeNewComponentFile($request['name']);
 
         return $this->showAll(true);
     }
 
     public function show($id) {
-        $query = Component::findOrFail($id);
+        $query = Component::find($id);
         $result = $this->parseComponent($query);
 
         return response([
-            'component' => $result,
-            'status' => true
+            'component' => $result
         ], 200);
     }
 
@@ -80,8 +79,7 @@ class ComponentController extends Controller {
             return $arrayComponent;
         } else {
             return response([
-                'components' => $arrayComponent,
-                'status'    => true
+                'components' => $arrayComponent
             ], 200);
         }
     }
@@ -89,16 +87,14 @@ class ComponentController extends Controller {
     //  Para mostrar los elementos eliminados
     public function getTrashed() {
         return response([
-            'components' => Component::onlyTrashed()->get(),
-            'status'    => true
+            'components' => Component::onlyTrashed()->get()
         ], 200);
     }
 
     //  Para mostrar un elemento eliminado
     public function recoveryTrashed($id) {
         return response([
-            'component' => Component::onlyTrashed()->findOrFail($id)->recovery(),
-            'status'    => true
+            'component' => Component::onlyTrashed()->find($id)->recovery()
         ], 200);
     }
 
@@ -107,7 +103,7 @@ class ComponentController extends Controller {
     }
 
     public function update(Request $request, $id) {
-        $query = Component::findOrFail($id);
+        $query = Component::find($id);
         $sql_original = json_decode($query->config, true)['sql_query'];
 
         $input = $request->all();
@@ -161,7 +157,7 @@ class ComponentController extends Controller {
     }
 
     public function destroy($id) {
-        $query = Component::findOrFail($id);
+        $query = Component::find($id);
         $config = json_decode($query->config, true);
 
         // delete component folder
@@ -181,6 +177,7 @@ class ComponentController extends Controller {
 
     public function parseComponent($component){
         $component_group_id = $component->component_group_id;
+        $name = $component->name;
         $config = $this->constructConfig($component->config);
         $configSettings = $this->constructConfig($component->config_settings);
         $status = $this->constructConfig($component->status);
@@ -188,6 +185,7 @@ class ComponentController extends Controller {
         $origin = [
             'id'                => $component->id,
             'component_group_id'=> $component_group_id,
+            'name'              => $name,
             'config'            => $config,
             'config_settings'   => $configSettings,
             'status'            => $status,
@@ -198,6 +196,7 @@ class ComponentController extends Controller {
         $result = [
             'id'                => $component->id,
             'component_group_id'=> $component_group_id,
+            'name'              => $name,
             'config'            => $config,
             'config_settings'   => $configSettings,
             'status'            => $status,
@@ -216,7 +215,7 @@ class ComponentController extends Controller {
         return json_decode($configSettings, true);
     }
 
-    function makeNewComponent($request){
+    function makeNewComponentFile($request){
         $name = new Convert($request);
 
         $data = ['name' => $name->fromCamel()->toPascal()];

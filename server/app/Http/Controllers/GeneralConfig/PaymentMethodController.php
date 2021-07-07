@@ -11,40 +11,35 @@ class PaymentMethodController extends Controller {
     public function store(Request $request) {
         $query = PaymentMethod::create($request->all());
         return response([
-            'row'=> $query,
-            'status'=> true
+            'row'=> $query
         ], 200);
     }
 
     public function show(Request $id) {
-        $result = PaymentMethod::findOrFail($id);
+        $result = PaymentMethod::find($id);
 
         return response([
-            'row'=> $result,
-            'status'=> true
+            'row'=> $result
         ], 200);
     }
 
     public function showAll() {
         return response([
-            'rows'=> PaymentMethod::get(),
-            'status'=> true
+            'rows'=> PaymentMethod::get()
         ], 200);
     }
 
     //  Para mostrar los elementos eliminados
     public function getTrashed() {
         return response([
-            'rows'=> PaymentMethod::onlyTrashed()->get(),
-            'status'=> true
+            'rows'=> PaymentMethod::onlyTrashed()->get()
         ], 200);
     }
 
     //  Para mostrar un elemento eliminado
     public function recoveryTrashed($id) {
         return response([
-            'row'=> PaymentMethod::onlyTrashed()->findOrFail($id)->recovery(),
-            'status'=> true
+            'row'=> PaymentMethod::onlyTrashed()->find($id)->recovery()
         ], 200);
     }
 
@@ -53,12 +48,11 @@ class PaymentMethodController extends Controller {
     }
 
     public function update(Request $request, $id) {
-        $query = PaymentMethod::findOrFail($id);
+        $query = PaymentMethod::find($id);
         $query->fill($request->all())->save();
 
         return response([
-            'row'=> $query,
-            'status'=> true
+            'row'=> $query
         ], 200);
     }
 
@@ -71,7 +65,7 @@ class PaymentMethodController extends Controller {
     }
 
     public function destroy($id) {
-        $query = PaymentMethod::findOrFail($id);
+        $query = PaymentMethod::find($id);
         $query->delete();
 
         return $this->showAll();

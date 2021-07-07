@@ -11,8 +11,7 @@ class PhoneController extends Controller {
     public function store(Request $request) {
         $query = Phone::create($request->all());
         return response([
-            'row'=> $query,
-            'status'=> true
+            'row'=> $query
         ], 200);
     }
 
@@ -20,31 +19,27 @@ class PhoneController extends Controller {
         $result = Phone::find($id);
 
         return response([
-            'row'=> $result,
-            'status'=> true
+            'row'=> $result
         ], 200);
     }
 
     public function showAll() {
         return response([
-            'rows'=> Phone::get(),
-            'status'=> true
+            'rows'=> Phone::get()
         ], 200);
     }
 
     //  Para mostrar los elementos eliminados
     public function getTrashed() {
         return response([
-            'rows'=> Phone::onlyTrashed()->get(),
-            'status'=> true
+            'rows'=> Phone::onlyTrashed()->get()
         ], 200);
     }
 
     //  Para mostrar un elemento eliminado
     public function recoveryTrashed($id) {
         return response([
-            'row'=> Phone::onlyTrashed()->findOrFail($id)->recovery(),
-            'status'=> true
+            'row'=> Phone::onlyTrashed()->find($id)->recovery()
         ], 200);
     }
 
@@ -53,12 +48,11 @@ class PhoneController extends Controller {
     }
 
     public function update(Request $request, $id) {
-        $query = Phone::findOrFail($id);
+        $query = Phone::find($id);
         $query->fill($request->all())->save();
 
         return response([
-            'row'=> $query,
-            'status'=> true
+            'row'=> $query
         ], 200);
     }
 
@@ -71,7 +65,7 @@ class PhoneController extends Controller {
     }
 
     public function destroy($id) {
-        $query = Phone::findOrFail($id);
+        $query = Phone::find($id);
         $query->delete();
 
         return $this->showAll();

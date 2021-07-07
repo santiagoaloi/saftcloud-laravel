@@ -2,22 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\Helper;
 use App\Exceptions\Handler;
 use Illuminate\Http\Request;
+
 use Illuminate\Support\Facades\DB;
-
 use App\Models\GeneralConfig\LookUpList;
-use App\Http\Controllers\Private\RoleController;
 
+use App\Http\Controllers\Private\RoleController;
 use App\Http\Controllers\Private\UserController;
 use App\Http\Controllers\Public\StateController;
+use App\Http\Controllers\Private\BranchController;
+use App\Http\Controllers\Root\ComponentController;
 use App\Http\Controllers\Root\ComponentGroupController;
 use App\Http\Controllers\Root\ComponentDefaultController;
+Use Exception;
 use App\Http\Controllers\GeneralConfig\LookUpListController;
 use App\Http\Controllers\GeneralConfig\LookUpListValueController;
-use App\Http\Controllers\Root\ComponentController;
-Use Exception;
-use App\Helpers\Helper;
 
 class TestFunctionController extends Controller {
 
@@ -57,43 +58,9 @@ class TestFunctionController extends Controller {
         echo json_encode(['status' => 'Success', 'rows' => $users]);exit();
     }
 
-    public function test2(Request $request, $id){
+    public function test2(Request $request){
         $test = new UserController;
-        return $test->update($request, $id);
-
-        $parents = DB::table('component_groups')->select('id', 'name', 'icon', 'component_group_id')->where('component_group_id', NULL)->get();
-        $childs = DB::table('component_groups')->select('id', 'name', 'icon', 'component_group_id')->where('component_group_id', '!=' , NULL)->get();
-
-        $test = DB::select("SELECT JSON_EXTRACT(config, '$.name') as name, component_group_id FROM components");
-
-        foreach($test as $tes => $val){
-            $pe = str_replace('"', "", $val->name);
-            $pe2 = '/'.$pe;
-            $components[$tes]['name'] = $pe;
-            $components[$tes]['link'] = $pe2;
-            $components[$tes]['component_group_id'] = $val->component_group_id;
-        }
-
-        foreach($parents as $parent){
-            foreach($components as $component){
-                if($parent->id == $component['component_group_id']){
-                    $parent->items[] = $component;
-                }
-            }
-            foreach($childs as $child){
-                if($parent->id == $child->component_group_id){
-                    $parent->items[] = $child;
-                }
-                foreach($components as $component){
-                    if($child->id == $component['component_group_id']){
-                        $child->items[] = $component;
-                    }
-                }
-            }
-            $array['menu'][]['items'][] = $parent;
-        }
-
-        return $array;
+        return $test->store($request);
     }
 
     function probarFormFieldStructure(){

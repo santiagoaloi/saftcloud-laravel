@@ -11,40 +11,35 @@ class RoleController extends Controller {
     public function store(Request $request) {
         $query = Role::create($request->all());
         return response([
-            'row'=> $query,
-            'status'=> true
+            'row'=> $query
         ], 200);
     }
 
     public function show(Request $id) {
-        $result = Role::findOrFail($id);
+        $result = Role::find($id);
 
         return response([
-            'row'=> $result,
-            'status'=> true
+            'row'=> $result
         ], 200);
     }
 
     public function showAll() {
         return response([
-            'rows'=> Role::get(),
-            'status'=> true
+            'rows'=> Role::get()
         ], 200);
     }
 
     //  Para mostrar los elementos eliminados
     public function getTrashed() {
         return response([
-            'rows'=> Role::onlyTrashed()->get(),
-            'status'=> true
+            'rows'=> Role::onlyTrashed()->get()
         ], 200);
     }
 
     //  Para mostrar un elemento eliminado
     public function recoveryTrashed($id) {
         return response([
-            'row'=> Role::onlyTrashed()->findOrFail($id)->recovery(),
-            'status'=> true
+            'row'=> Role::onlyTrashed()->find($id)->recovery()
         ], 200);
     }
 
@@ -53,12 +48,11 @@ class RoleController extends Controller {
     }
 
     public function update(Request $request, $id) {
-        $query = Role::findOrFail($id);
+        $query = Role::find($id);
         $query->fill($request->all())->save();
 
         return response([
-            'row'=> $query,
-            'status'=> true
+            'row'=> $query
         ], 200);
     }
 
@@ -71,7 +65,7 @@ class RoleController extends Controller {
     }
 
     public function destroy($id) {
-        $query = Role::findOrFail($id);
+        $query = Role::find($id);
         $query->delete();
 
         return $this->showAll();

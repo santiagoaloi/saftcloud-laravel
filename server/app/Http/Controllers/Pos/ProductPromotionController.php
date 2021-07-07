@@ -11,40 +11,35 @@ class ProductPromotionController extends Controller {
     public function store(Request $request) {
         $query = ProductPromotion::create($request->all());
         return response([
-            'row'=> $query,
-            'status'=> true
+            'row'=> $query
         ], 200);
     }
 
     public function show(Request $id) {
-        $result = ProductPromotion::findOrFail($id);
+        $result = ProductPromotion::find($id);
 
         return response([
-            'row'=> $result,
-            'status'=> true
+            'row'=> $result
         ], 200);
     }
 
     public function showAll() {
         return response([
-            'rows'=> ProductPromotion::get(),
-            'status'=> true
+            'rows'=> ProductPromotion::get()
         ], 200);
     }
 
     //  Para mostrar los elementos eliminados
     public function getTrashed() {
         return response([
-            'rows'=> ProductPromotion::onlyTrashed()->get(),
-            'status'=> true
+            'rows'=> ProductPromotion::onlyTrashed()->get()
         ], 200);
     }
 
     //  Para mostrar un elemento eliminado
     public function recoveryTrashed($id) {
         return response([
-            'row'=> ProductPromotion::onlyTrashed()->findOrFail($id)->recovery(),
-            'status'=> true
+            'row'=> ProductPromotion::onlyTrashed()->find($id)->recovery()
         ], 200);
     }
 
@@ -53,12 +48,11 @@ class ProductPromotionController extends Controller {
     }
 
     public function update(Request $request, $id) {
-        $query = ProductPromotion::findOrFail($id);
+        $query = ProductPromotion::find($id);
         $query->fill($request->all())->save();
 
         return response([
-            'row'=> $query,
-            'status'=> true
+            'row'=> $query
         ], 200);
     }
 
@@ -71,7 +65,7 @@ class ProductPromotionController extends Controller {
     }
 
     public function destroy($id) {
-        $query = ProductPromotion::findOrFail($id);
+        $query = ProductPromotion::find($id);
         $query->delete();
 
         return $this->showAll();

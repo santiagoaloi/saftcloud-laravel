@@ -105,4 +105,4 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 });
 
 //Testing
-Route::put('/testFunction/{id}', [TestFunctionController::class, 'test2']);
+Route::post('/testFunction', [TestFunctionController::class, 'test2']);

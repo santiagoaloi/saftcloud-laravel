@@ -11,8 +11,7 @@ class BranchController extends Controller {
     public function store(Request $request) {
         $query = Branch::create($request->all());
         return response([
-            'row'=> $query,
-            'status' => true
+            'row'=> $query
         ], 200);
     }
 
@@ -20,31 +19,27 @@ class BranchController extends Controller {
         $result = Branch::find($id);
 
         return response([
-            'row'=> $result,
-            'status' => true
+            'row'=> $result
         ], 200);
     }
 
     public function showAll() {
         return response([
-            'rows'=> Branch::get(),
-            'status'=> true
+            'rows'=> Branch::get()
         ], 200);
     }
 
     //  Para mostrar los elementos eliminados
     public function getTrashed() {
         return response([
-            'rows'=> Branch::onlyTrashed()->get(),
-            'status'=> true
+            'rows'=> Branch::onlyTrashed()->get()
         ], 200);
     }
 
     //  Para mostrar un elemento eliminado
     public function recoveryTrashed($id) {
         return response([
-            'row'=> Branch::onlyTrashed()->findOrFail($id)->recovery(),
-            'status'=> true
+            'row'=> Branch::onlyTrashed()->find($id)->recovery()
         ], 200);
     }
 
@@ -53,12 +48,11 @@ class BranchController extends Controller {
     }
 
     public function update(Request $request, $id) {
-        $query = Branch::findOrFail($id);
+        $query = Branch::find($id);
         $query->fill($request->all())->save();
 
         return response([
-            'row'=> $query,
-            'status'=> true
+            'row'=> $query
         ], 200);
     }
 
@@ -71,7 +65,7 @@ class BranchController extends Controller {
     }
 
     public function destroy($id) {
-        $query = Branch::findOrFail($id);
+        $query = Branch::find($id);
         $query->delete();
 
         return $this->showAll();

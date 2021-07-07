@@ -35,8 +35,7 @@ class ComponentDefaultController extends Controller {
             return $result;
         } else {
             return response([
-                'row'=> $result,
-                'status'=> true
+                'row'=> $result
             ], 200);
         }
     }
@@ -47,8 +46,7 @@ class ComponentDefaultController extends Controller {
             return $query;
         } else {
             return response([
-                'rows'=> $query,
-                'status'=> true
+                'rows'=> $query
             ], 200);
         }
     }
@@ -58,18 +56,16 @@ class ComponentDefaultController extends Controller {
         $result = ComponentDefault::onlyTrashed()->get();
 
         return response([
-            'rows'=> $result,
-            'status'=> true
+            'rows'=> $result
         ], 200);
     }
 
     //  Para mostrar un elemento eliminado
     public function recoveryTrashed($id) {
-        $result = ComponentDefault::onlyTrashed()->findOrFail($id)->recovery();
+        $result = ComponentDefault::onlyTrashed()->find($id)->recovery();
 
         return response([
-            'row'=> $result,
-            'status'=> true
+            'row'=> $result
         ], 200);
     }
 
@@ -78,31 +74,29 @@ class ComponentDefaultController extends Controller {
     }
 
     public function update(Request $request, $id) {
-        $query = ComponentDefault::findOrFail($id);
+        $query = ComponentDefault::find($id);
         $query->fill($request->all())->save();
 
         return response([
-            'row'=> $query,
-            'status'=> true
+            'row'=> $query
         ], 200);
     }
 
     public function updateAll($request) {
         foreach($request as $item){
-            $query = ComponentDefault::findOrFail($item['id']);
+            $query = ComponentDefault::find($item['id']);
             $query->fill($item)->save();
         };
 
         $result = $this->showAll(true);
 
         return response([
-            'rows'=> $result,
-            'status'=> true
+            'rows'=> $result
         ], 200);
     }
 
     public function destroy($id) {
-        $query = ComponentDefault::findOrFail($id);
+        $query = ComponentDefault::find($id);
         $query->delete();
 
         return $this->showAll(true);

@@ -11,8 +11,7 @@ class AddressController extends Controller {
     public function store(Request $request) {
         $query = Address::create($request->all());
         return response([
-            'row' => $query,
-            'status' => true
+            'row' => $query
         ], 200);
     }
 
@@ -20,31 +19,27 @@ class AddressController extends Controller {
         $result = Address::find($id);
 
         return response([
-            'row' => $result,
-            'status' => true
+            'row' => $result
         ], 200);
     }
 
     public function showAll() {
         return response([
-            'rows' => Address::get(),
-            'status'=> true
+            'rows' => Address::get()
         ], 200);
     }
 
     //  Para mostrar los elementos eliminados
     public function getTrashed() {
         return response([
-            'rows' => Address::onlyTrashed()->get(),
-            'status'=> true
+            'rows' => Address::onlyTrashed()->get()
         ], 200);
     }
 
     //  Para mostrar un elemento eliminado
     public function recoveryTrashed($id) {
         return response([
-            'row' => Address::onlyTrashed()->findOrFail($id)->recovery(),
-            'status'=> true
+            'row' => Address::onlyTrashed()->find($id)->recovery()
         ], 200);
     }
 
@@ -53,12 +48,11 @@ class AddressController extends Controller {
     }
 
     public function update(Request $request, $id) {
-        $query = Address::findOrFail($id);
+        $query = Address::find($id);
         $query->fill($request->all())->save();
 
         return response([
-            'row'=> $query,
-            'status'=> true
+            'row'=> $query
         ], 200);
     }
 
@@ -71,7 +65,7 @@ class AddressController extends Controller {
     }
 
     public function destroy($id) {
-        $query = Address::findOrFail($id);
+        $query = Address::find($id);
         $query->delete();
 
         return $this->showAll();

@@ -172,9 +172,9 @@ export default {
 
  methods: {
   testFunction() {
-   let post = { 'avatar':'kheee'};
+   let post = { 'entity_id':1, 'role_id':1, 'email':'facu.ft@gmail.com'};
    axios
-    .put("/api/testFunction/1", post)
+    .post("/api/testFunction/", post)
     .then(response => {
      if (response.data.status) {
       console.log(response.data.rows);

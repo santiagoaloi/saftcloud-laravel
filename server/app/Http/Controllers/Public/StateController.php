@@ -11,38 +11,33 @@ class StateController extends Controller {
     public function store(Request $request) {
         $query = State::create($request->all());
         return response([
-            'row'=> $query,
-            'status'=> true
+            'row'=> $query
         ], 200);
     }
 
     public function show(Request $id) {
         return response([
-            'row'=> State::find($id),
-            'status'=> true
+            'row'=> State::find($id)
         ], 200);
     }
 
     public function showAll() {
         return response([
-            'rows'=> State::get(),
-            'status'=> true
+            'rows'=> State::get()
         ], 200);
     }
 
     //  Para mostrar los elementos eliminados
     public function getTrashed() {
         return response([
-            'rows'=> State::onlyTrashed()->get(),
-            'status'=> true
+            'rows'=> State::onlyTrashed()->get()
         ], 200);
     }
 
     //  Para mostrar un elemento eliminado
     public function recoveryTrashed($id) {
         return response([
-            'row'=> State::onlyTrashed()->findOrFail($id)->recovery(),
-            'status'=> true
+            'row'=> State::onlyTrashed()->find($id)->recovery()
         ], 200);
     }
 
@@ -51,12 +46,11 @@ class StateController extends Controller {
     }
 
     public function update(Request $request, $id) {
-        $query = State::findOrFail($id);
+        $query = State::find($id);
         $query->fill($request->all())->save();
 
         return response([
-            'row'=> $query,
-            'status'=> true
+            'row'=> $query
         ], 200);
     }
 
@@ -69,7 +63,7 @@ class StateController extends Controller {
     }
 
     public function destroy($id) {
-        $query = State::findOrFail($id);
+        $query = State::find($id);
         $query->delete();
 
         return $this->showAll();

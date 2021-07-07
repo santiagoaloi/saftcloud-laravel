@@ -11,8 +11,7 @@ class CountryController extends Controller {
     public function store(Request $request) {
         $query = Country::create($request->all());
         return response([
-            'row'=> $query,
-            'status'=> true
+            'row'=> $query
         ], 200);
     }
 
@@ -20,31 +19,27 @@ class CountryController extends Controller {
         $result = Country::find($id);
 
         return response([
-            'row'=> $result,
-            'status'=> true
+            'row'=> $result
         ], 200);
     }
 
     public function showAll() {
         return response([
-            'rows'=> Country::get(),
-            'status'=> true
+            'rows'=> Country::get()
         ], 200);
     }
 
     //  Para mostrar los elementos eliminados
     public function getTrashed() {
         return response([
-            'rows'=> Country::onlyTrashed()->get(),
-            'status'=> true
+            'rows'=> Country::onlyTrashed()->get()
         ], 200);
     }
 
     //  Para mostrar un elemento eliminado
     public function recoveryTrashed($id) {
         return response([
-            'row'=> Country::onlyTrashed()->findOrFail($id)->recovery(),
-            'status'=> true
+            'row'=> Country::onlyTrashed()->find($id)->recovery()
         ], 200);
     }
 
@@ -53,12 +48,11 @@ class CountryController extends Controller {
     }
 
     public function update(Request $request, $id) {
-        $query = Country::findOrFail($id);
+        $query = Country::find($id);
         $query->fill($request->all())->save();
 
         return response([
-            'row'=> $query,
-            'status'=> true
+            'row'=> $query
         ], 200);
     }
 
@@ -71,7 +65,7 @@ class CountryController extends Controller {
     }
 
     public function destroy($id) {
-        $query = Country::findOrFail($id);
+        $query = Country::find($id);
         $query->delete();
 
         return $this->showAll();

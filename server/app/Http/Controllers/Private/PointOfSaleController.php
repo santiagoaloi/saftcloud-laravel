@@ -11,8 +11,7 @@ class PointOfSaleController extends Controller {
     public function store(Request $request) {
         $query = PointOfSale::create($request->all());
         return response([
-            'row'=> $query,
-            'status'=> true
+            'row'=> $query
         ], 200);
     }
 
@@ -20,31 +19,27 @@ class PointOfSaleController extends Controller {
         $result = PointOfSale::find($id);
 
         return response([
-            'row'=> $result,
-            'status'=> true
+            'row'=> $result
         ], 200);
     }
 
     public function showAll() {
         return response([
-            'rows'=> PointOfSale::get(),
-            'status'=> true
+            'rows'=> PointOfSale::get()
         ], 200);
     }
 
     //  Para mostrar los elementos eliminados
     public function getTrashed() {
         return response([
-            'rows'=> PointOfSale::onlyTrashed()->get(),
-            'status'=> true
+            'rows'=> PointOfSale::onlyTrashed()->get()
         ], 200);
     }
 
     //  Para mostrar un elemento eliminado
     public function recoveryTrashed($id) {
         return response([
-            'row'=> PointOfSale::onlyTrashed()->findOrFail($id)->recovery(),
-            'status'=> true
+            'row'=> PointOfSale::onlyTrashed()->find($id)->recovery()
         ], 200);
     }
 
@@ -53,12 +48,11 @@ class PointOfSaleController extends Controller {
     }
 
     public function update(Request $request, $id) {
-        $query = PointOfSale::findOrFail($id);
+        $query = PointOfSale::find($id);
         $query->fill($request->all())->save();
 
         return response([
-            'row'=> $query,
-            'status'=> true
+            'row'=> $query
         ], 200);
     }
 
@@ -71,7 +65,7 @@ class PointOfSaleController extends Controller {
     }
 
     public function destroy($id) {
-        $query = PointOfSale::findOrFail($id);
+        $query = PointOfSale::find($id);
         $query->delete();
 
         return $this->showAll();

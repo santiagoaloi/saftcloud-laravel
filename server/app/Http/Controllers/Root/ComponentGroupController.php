@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Root\ComponentGroup;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\File;
 
 class ComponentGroupController extends Controller {
 
@@ -21,7 +20,7 @@ class ComponentGroupController extends Controller {
 
     public function show(Request $id) {
         return response([
-            'group' => ComponentGroup::findOrFail($id),
+            'group' => ComponentGroup::find($id),
             'status' => true
         ], 200);
     }
@@ -107,7 +106,7 @@ class ComponentGroupController extends Controller {
 
     //  Para mostrar un elemento eliminado
     public function recoveryTrashed($id) {
-        $result = ComponentGroup::onlyTrashed()->findOrFail($id)->recovery();
+        $result = ComponentGroup::onlyTrashed()->find($id)->recovery();
 
         return response([
             'row' => $result,
@@ -120,7 +119,7 @@ class ComponentGroupController extends Controller {
     }
 
     public function update(Request $request, $id) {
-        $query = ComponentGroup::findOrFail($id);
+        $query = ComponentGroup::find($id);
         $query->fill($request->all())->save();
 
         return $this->showAll();
@@ -148,7 +147,6 @@ class ComponentGroupController extends Controller {
 
             return $this->showAll();
         } else {
-            // return "pepe";
             return response([
                 'message' => 'Hay un componente vinculado a este grupo',
                 'status'=> false
