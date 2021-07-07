@@ -221,7 +221,7 @@ const actions = {
   axios
    .get("api/getNavigationStructure")
    .then(response => {
-    store.set("componentManagement/navigationStructure", response.data);
+    store.set("componentManagement/navigationStructure", response.data.navigationStructure);
    })
    .catch(_ => {
     store.set("componentManagement/navigationStructure", {});
