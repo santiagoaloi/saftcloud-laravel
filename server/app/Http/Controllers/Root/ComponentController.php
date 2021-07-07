@@ -158,12 +158,11 @@ class ComponentController extends Controller {
 
     public function destroy($id) {
         $query = Component::find($id);
-        $config = json_decode($query->config, true);
 
         // delete component folder
-        $vue_folder = resource_path("js/views/Protected/{$config['name']}");
+        $vue_folder = resource_path("js/views/Protected/{$query->name}");
 
-        $deleted_folder = resource_path("js/views/Deleted/{$config['name']}");
+        $deleted_folder = resource_path("js/views/Deleted/{$query->name}");
 
         if (is_dir($vue_folder)) {
             rename($vue_folder, $deleted_folder);

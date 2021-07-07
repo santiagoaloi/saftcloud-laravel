@@ -10,5 +10,5 @@ class Component extends Model {
     use HasFactory;
     use SoftDeletes;
 
-    protected $fillable = ['component_group_id', 'config', 'config_settings', 'status'];
+    protected $fillable = ['component_group_id', 'name', 'config', 'config_settings', 'status'];
 }
