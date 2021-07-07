@@ -364,46 +364,63 @@ const actions = {
   // }
 
   parent = state.allGroups.find(g => g.name === state.dbGroupNames[state.groupParent - 1]);
-  axios.post("api/componentGroup", { name: state.groupName, component_group_id: parent ? parent.id : null }).then(response => {
-   if (response.status === 200) {
-    store.set("componentManagement/allGroups", response.data.groups);
-    store.set("componentManagement/groupName", "");
-    store.set("componentManagement/groupChild", "");
+  axios
+   .post("api/componentGroup", { name: state.groupName, component_group_id: parent ? parent.id : null })
+   .then(response => {
+    if (response.status === 200) {
+     store.set("componentManagement/allGroups", response.data.groups);
+     store.set("componentManagement/groupName", "");
+     store.set("componentManagement/groupChild", "");
+     store.set("snackbar/value", true);
+     store.set("snackbar/text", `Group "${state.groupName}" created`);
+     store.set("snackbar/color", "grey darken-2");
+     store.set("componentManagement/groupName", "");
+     store.set("componentManagement/groupParent", 0);
+     dispatch("getNavigationStructure");
+     dispatch("getDbGroupNames");
+     dispatch("getGroups");
+    }
+   })
+   .catch(error => {
+    console.log({ ...error });
     store.set("snackbar/value", true);
-    store.set("snackbar/text", `Group "${state.groupName}" created`);
-    store.set("snackbar/color", "grey darken-2");
-    store.set("componentManagement/groupName", "");
-    store.set("componentManagement/groupParent", 0);
-    dispatch("getNavigationStructure");
-    dispatch("getDbGroupNames");
-    dispatch("getGroups");
-   }
-  });
+    store.set("snackbar/text", `${error.response.status} ${error.response.statusText}`);
+    store.set("snackbar/color", "pink darken-1");
+   });
  },
 
  createComponent({ state, getters, dispatch }) {
-  axios.post("api/component", state.componentSettings).then(response => {
-   //  if (response.status === 200) {
-   store.set("componentManagement/allComponents", response.data.components);
-   store.set("snackbar/value", true);
-   store.set("snackbar/text", `"${state.componentSettings.title}" component created`);
-   store.set("snackbar/color", "indigo darken-2");
+  axios
+   .post("api/component", state.componentSettings)
+   .then(response => {
+    if (response.status === 200) {
+     store.set("componentManagement/allComponents", response.data.components);
+     store.set("snackbar/value", true);
+     store.set("snackbar/text", `"${state.componentSettings.title}" component created`);
+     store.set("snackbar/color", "indigo darken-2");
 
-   // Autoselect latest created component
-   store.set("drawers/secureComponentDrawer", true);
-   store.set("componentManagement/dialogComponent", false);
+     // Autoselect latest created component
+     store.set("drawers/secureComponentDrawer", true);
+     store.set("componentManagement/dialogComponent", false);
 
-   const activeGroup = state.allGroups.find(item => item.id === state.componentSettings.component_group_id);
-   const groupExists = state.selectedComponentGroups.find(item => item.id === activeGroup.id);
+     const activeGroup = state.allGroups.find(item => item.id === state.componentSettings.component_group_id);
+     const groupExists = state.selectedComponentGroups.find(item => item.id === activeGroup.id);
 
-   if (!groupExists) state.selectedComponentGroups.push(activeGroup);
+     if (!groupExists) state.selectedComponentGroups.push(activeGroup);
 
-   store.set("componentManagement/componentCardGroup", getters.allComponentsFiltered.length - 1);
-   store.set("componentManagement/selectedComponentIndex", state.allComponents.length - 1);
-   store.set("componentManagement/componentSettings", initialComponentSettings());
-   dispatch("getNavigationStructure");
-   //  }
-  });
+     store.set("componentManagement/componentCardGroup", getters.allComponentsFiltered.length - 1);
+     store.set("componentManagement/selectedComponentIndex", state.allComponents.length - 1);
+     store.set("componentManagement/componentSettings", initialComponentSettings());
+     dispatch("getNavigationStructure");
+     console.log(initialComponentSettings());
+    }
+   })
+   .catch(error => {
+    console.log({ ...error });
+    store.set("snackbar/value", true);
+    store.set("snackbar/text", `${error.response.status} ${error.response.statusText}`);
+    store.set("snackbar/color", "pink darken-1");
+   });
  },
 
  previousComponent({ state }) {
