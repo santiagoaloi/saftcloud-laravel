@@ -55,7 +55,7 @@ class ComponentController extends Controller {
 
         $this->makeNewComponentFile($request['name']);
 
-        return $this->showAll(true);
+        return $this->showAll();
     }
 
     public function show($id) {
@@ -67,7 +67,7 @@ class ComponentController extends Controller {
         ], 200);
     }
 
-    public function showAll($local = false) {
+    public function showAll() {
         $components = Component::all();
         $arrayComponent = [];
 
@@ -75,13 +75,9 @@ class ComponentController extends Controller {
             $arrayComponent[] = $this->parseComponent($component);
         };
 
-        if ($local){
-            return $arrayComponent;
-        } else {
-            return response([
-                'components' => $arrayComponent
-            ], 200);
-        }
+        return response([
+            'components' => $arrayComponent
+        ], 200);
     }
 
     //  Para mostrar los elementos eliminados
@@ -153,11 +149,15 @@ class ComponentController extends Controller {
             $component->fill($item)->save();
         };
 
-        return $this->showAll(true);
+        return $this->showAll();
     }
 
     public function destroy($id) {
         $query = Component::find($id);
+        $pathDeleted = resource_path('js/views/Deleted');
+        if(!file_exists($pathDeleted)){
+            FileManager::makeNewDirectory($pathDeleted);
+        }
 
         // delete component folder
         $vue_folder = resource_path("js/views/Protected/{$query->name}");
@@ -171,7 +171,7 @@ class ComponentController extends Controller {
         // delete row in db
         $query->delete();
 
-        return $this->showAll(true);
+        return $this->showAll();
     }
 
     public function parseComponent($component){
