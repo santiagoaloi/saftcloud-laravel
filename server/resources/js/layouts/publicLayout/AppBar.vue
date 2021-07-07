@@ -172,11 +172,7 @@ export default {
 
  methods: {
   testFunction() {
-<<<<<<< HEAD
    let post = { avatar: "kheee" };
-=======
-   let post = { 'entity_id':1, 'role_id':1, 'email':'facu.ft@gmail.com'};
->>>>>>> 12690165b76e4534e540e3a7e2a6b4b95c1e7714
    axios
     .post("/api/testFunction/", post)
     .then(response => {
