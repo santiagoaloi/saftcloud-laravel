@@ -37,8 +37,8 @@ class ComponentGroupController extends Controller {
         $parents = DB::table('component_groups')->select('id', 'name', 'icon', 'component_group_id')->where('component_group_id', NULL)->where('deleted_at', '=', NULL)->get();
         $childs = DB::table('component_groups')->select('id', 'name', 'icon', 'component_group_id')->where('component_group_id', '!=' , NULL)->where('deleted_at', '=', NULL)->get();
         $query = DB::select("SELECT JSON_EXTRACT(config, '$.name') as name, JSON_EXTRACT(config_settings, '$.icon.name') as icon, component_group_id FROM components");
+        $array = [];
 
-        if(isset($parents)){
             if(!empty($query)){
                 foreach($query as $tes => $val){
                     $name = str_replace('"', "", $val->name);
@@ -75,19 +75,14 @@ class ComponentGroupController extends Controller {
                 }
                 $array['menu'][]['items'][] = $parent;
             }
-            return $array;
-            // return response([
-            //     'components' => $array,
-            //     'status'    => true
-            // ], 200);
-        } else {
-            return "no";
-        }
-
+            return response([
+                'navigationStructure' => $array
+            ], 200);
     }
 
     public function showAllGroupNames(){
-        $components = DB::table('component_groups')->select('name')->get();
+        $components = DB::table('component_groups')->select('name')->where('deleted_at', '!=', 'NULL')->get();
+        $array = [];
         foreach($components as $component){
             $array[] = $component->name;
         }
