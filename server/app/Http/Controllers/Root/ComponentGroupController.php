@@ -142,8 +142,12 @@ class ComponentGroupController extends Controller {
 
             return $this->showAll();
         } else {
+            $components = DB::table('components')->where('component_group_id', '=', $id)
+            ->get();
+
             return response([
                 'message' => 'Hay un componente vinculado a este grupo',
+                'components' => $components,
                 'status'=> false
             ], 404);
         }

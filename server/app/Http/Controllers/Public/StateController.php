@@ -59,13 +59,17 @@ class StateController extends Controller {
             $this->update($item, $item->id);
         };
 
-        return $this->showAll();
+        return response([
+            'message'=> "Todos los estados fueron actualizadas."
+        ], 200);
     }
 
     public function destroy($id) {
         $query = State::find($id);
         $query->delete();
 
-        return $this->showAll();
+        return response([
+            'message'=> "Estado eliminado."
+        ], 200);
     }
 }
