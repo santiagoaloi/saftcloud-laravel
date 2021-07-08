@@ -51,7 +51,19 @@ class ComponentController extends Controller {
             'status'                => json_encode($status),
         ];
 
-        Component::create($data);
+        try{
+            Component::create($data);
+        }
+
+        catch(\Illuminate\Database\QueryException $e){
+            $errorCode = $e->errorInfo[1];
+            if($errorCode){
+                return response([
+                    'message'=> $e->errorInfo[2],
+                    'code'=> $e->errorInfo[1]
+                ], 404);
+            }
+        }
 
         $this->makeNewComponentFile($request['name']);
 

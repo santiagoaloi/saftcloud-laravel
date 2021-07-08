@@ -36,12 +36,12 @@ class ComponentGroupController extends Controller {
     public function showAllWithChild() {
         $parents = DB::table('component_groups')->select('id', 'name', 'icon', 'component_group_id')->where('component_group_id', NULL)->where('deleted_at', '=', NULL)->get();
         $childs = DB::table('component_groups')->select('id', 'name', 'icon', 'component_group_id')->where('component_group_id', '!=' , NULL)->where('deleted_at', '=', NULL)->get();
-        $query = DB::select("SELECT JSON_EXTRACT(config, '$.name') as name, JSON_EXTRACT(config_settings, '$.icon.name') as icon, component_group_id FROM components");
+        $query = DB::select("SELECT name, JSON_EXTRACT(config_settings, '$.icon.name') as icon, component_group_id FROM components");
         $array = [];
 
             if(!empty($query)){
                 foreach($query as $tes => $val){
-                    $name = str_replace('"', "", $val->name);
+                    $name = $val->name;
                     $icon = str_replace('"', "", $val->icon);
                     $url = '/'.$name;
                     $components[$tes]['name'] = $name;
