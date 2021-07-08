@@ -13,8 +13,8 @@
 
   <v-list>
    <v-list-item>
-    <v-list-item-avatar @click="dialogs.dialogIcons = true">
-     <v-icon :color="selectedComponent.config_settings.icon.color">
+    <v-list-item-avatar>
+     <v-icon :color="isDark ? '#ccc' : 'black'">
       {{ selectedComponent.config_settings.icon.name }}
      </v-icon>
     </v-list-item-avatar>
@@ -211,14 +211,12 @@ import isEqual from "lodash/isEqual";
 export default {
  name: "ComponentDrilldown",
 
- data: () => ({
-  items: ["Foo", "Bar", "Fizz", "Buzz"]
- }),
+ data: () => ({}),
 
  computed: {
   ...sync("theme", ["isDark"]),
   ...sync("drawers", ["secureComponentDrawer"]),
-  ...sync("componentManagement", ["componentCardGroup", "allComponents", "allGroups", "selectedComponentIndex", "dialogs", "componentEditSheet"]),
+  ...sync("componentManagement", ["componentCardGroup", "allComponents", "allGroups", "selectedComponentIndex", "componentEditSheet"]),
   ...get("componentManagement", [
    "hasUnsavedChanges",
    "hasSelectedComponent",

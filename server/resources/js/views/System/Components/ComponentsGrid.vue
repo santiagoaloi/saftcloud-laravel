@@ -16,12 +16,23 @@
         setSelectedComponent(index);
        "
       >
-       <v-card-actions class="px-0 ">
-        <v-avatar @click="dialogIcons = true" rounded :color="component.config_settings.icon.color">
-         <v-icon dark>
-          {{ component.config_settings.icon.name }}
-         </v-icon>
-        </v-avatar>
+       <v-card-actions class="px-0">
+        <v-hover v-slot="{ hover }">
+         <v-avatar class="cursor-pointer" size="65" @click="dialogIcons = true" rounded :color="component.config_settings.icon.color">
+          <v-expand-transition>
+           <div v-if="hover" class="d-flex black v-card--reveal white--text" style="height: 100%;">
+            <v-icon size="30" dark>
+             mdi-pencil
+            </v-icon>
+           </div>
+          </v-expand-transition>
+          <v-fade-transition hide-on-leave>
+           <v-icon v-if="!hover" size="30" dark>
+            {{ component.config_settings.icon.name }}
+           </v-icon>
+          </v-fade-transition>
+         </v-avatar>
+        </v-hover>
 
         <v-spacer />
 
@@ -55,7 +66,7 @@
         </div>
        </v-card-actions>
 
-       <span class="gallery-card-title"> {{ component.config.title }} </span>
+       <span class="gallery-card-title"> {{ component.name }} </span>
 
        <div class="gallery-card-subtitle-container">
         <div class="gallery-card-subtitle-wrapper">
@@ -257,5 +268,14 @@ export default {
  overflow: hidden;
  text-overflow: ellipsis;
  white-space: nowrap;
+}
+
+.v-card--reveal {
+ align-items: center;
+ bottom: 0;
+ justify-content: center;
+ opacity: 0.5;
+ position: absolute;
+ width: 100%;
 }
 </style>

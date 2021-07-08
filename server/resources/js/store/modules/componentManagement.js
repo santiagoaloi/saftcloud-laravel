@@ -46,7 +46,7 @@ const state = {
    text: "Component",
    align: "start",
    sortable: true,
-   value: "config.name"
+   value: "name"
   }
  ],
 
@@ -103,12 +103,24 @@ const getters = {
   const search = state.search.toLowerCase();
   return state.allComponents.filter(component => {
    return (
-    (search === "" || component.config.title.toLowerCase().match(search)) &&
+    (search === "" || component.name.toLowerCase().match(search)) &&
     (getters.activeStatusTabName === "all" || component.status[getters.activeStatusTabName]) &&
     state.selectedComponentGroups.some(g => g.id === component.component_group_id)
    );
   });
  },
+
+ //  allComponentsFiltered: (state, getters) => {
+ //   if (!getters.hasSelectedComponentGroups) return [];
+ //   const search = state.search.toLowerCase();
+ //   return state.allComponents.filter(component => {
+ //    return (
+ //     (search === "" || component.config.title.toLowerCase().match(search)) &&
+ //     (getters.activeStatusTabName === "all" || component.status[getters.activeStatusTabName]) &&
+ //     state.selectedComponentGroups.some(g => g.id === component.component_group_id)
+ //    );
+ //   });
+ //  },
 
  isComponentsEmpty: state => {
   return isEmpty(state.allComponents);
@@ -258,16 +270,24 @@ const actions = {
  },
 
  removeGroup({ dispatch }, id) {
-  axios.delete(`api/componentGroup/${id}`).then(response => {
-   if (response.status === 200) {
-    store.set("componentManagement/allGroups", response.data.groups);
+  axios
+   .delete(`api/componentGroup/${id}`)
+   .then(response => {
+    if (response.status === 200) {
+     store.set("componentManagement/allGroups", response.data.groups);
+     store.set("snackbar/value", true);
+     store.set("snackbar/text", "Group removed");
+     store.set("snackbar/color", "pink darken-1");
+     dispatch("getNavigationStructure");
+     dispatch("getGroups");
+    }
+   })
+   .catch(error => {
+    console.log({ ...error });
     store.set("snackbar/value", true);
-    store.set("snackbar/text", "Group removed");
+    store.set("snackbar/text", `${error.response.data.message}`);
     store.set("snackbar/color", "pink darken-1");
-    dispatch("getNavigationStructure");
-    dispatch("getGroups");
-   }
-  });
+   });
  },
 
  renameGroup({}, { id, newName }) {
@@ -412,7 +432,6 @@ const actions = {
      store.set("componentManagement/selectedComponentIndex", state.allComponents.length - 1);
      store.set("componentManagement/componentSettings", initialComponentSettings());
      dispatch("getNavigationStructure");
-     console.log(initialComponentSettings());
     }
    })
    .catch(error => {

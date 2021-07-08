@@ -41,22 +41,22 @@
 
       <v-menu rounded="xl" origin="center center" transition="scale-transition" :nudge-bottom="10" offset-y>
         <template v-slot:activator="{ on, attrs }">
-
-          <v-btn class="mr-2" text x-small fab v-bind="attrs" v-on="on">
+          <v-btn class="mr-3" text x-small fab v-bind="attrs" v-on="on">
             <v-icon>mdi-earth</v-icon> 
-          </v-btn>  
+          </v-btn>
         </template>
-           <v-list class="pa-2" rounded="xl"   outlined>
-            <v-list-item v-for="(language, i) in languages" :key="i" :to="language.name">
-              <v-list-item-avatar> 
-                       <country-flag :country="language.flag" />
-              </v-list-item-avatar>
+          <v-list class="pa-2" rounded="xl"   outlined>
+  <v-list-item v-for="(language, i) in languages" :key="i" :to="language.name">
+                <country-flag class="mr-0" :country="language.flag" />
+                   <v-list-item-content>
               <v-list-item-title class="mr-5">
                 {{ language.name }}
               </v-list-item-title>
+              </v-list-item-content>
             </v-list-item>
           </v-list>
       </v-menu>
+ 
 
       <v-divider inset vertical class="mx-3 grey" />
 
@@ -110,7 +110,7 @@
               </v-list-item-action>
             </v-list-item>
 
-            <v-list-item rel="noopener" @click="pushprofile">
+            <v-list-item  @click="pushprofile">
               <v-list-item-action>
                 <v-icon>mdi-tune-vertical</v-icon>
               </v-list-item-action>

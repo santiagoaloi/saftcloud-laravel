@@ -16,7 +16,7 @@
    flat
    :dense="dense"
    dark
-   color="#36393f
+   color="#36393f 
 "
   >
    <template>
@@ -44,7 +44,7 @@
 
    <template v-if="closeOnly && !noActions">
     <v-btn x-small color="white" outlined text fab class="mx-1" icon dark @click.stop="close">
-     <v-icon>mdi-close</v-icon>
+     <v-icon>{{ fullscreen ? "mdi-chevron-down" : "mdi-close" }}</v-icon>
     </v-btn>
    </template>
 
@@ -66,7 +66,7 @@
     </v-btn>
 
     <v-btn v-if="!closeOnly && !saveOnly" x-small color="white" outlined text fab icon dark class="ml-2" @click.stop="close">
-     <v-icon color="white" small> mdi-close </v-icon>
+     <v-icon>{{ fullscreen ? "mdi-chevron-down" : "mdi-close" }}</v-icon>
     </v-btn>
    </template>
   </v-toolbar>
