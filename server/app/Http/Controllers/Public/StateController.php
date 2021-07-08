@@ -11,33 +11,33 @@ class StateController extends Controller {
     public function store(Request $request) {
         $query = State::create($request->all());
         return response([
-            'row'=> $query
+            'state'=> $query
         ], 200);
     }
 
     public function show(Request $id) {
         return response([
-            'row'=> State::find($id)
+            'state'=> State::find($id)
         ], 200);
     }
 
     public function showAll($country_id) {
         return response([
-            'rows'=> State::where('country_id', $country_id)->get()
+            'states'=> State::where('country_id', $country_id)->get()
         ], 200);
     }
 
     //  Para mostrar los elementos eliminados
     public function getTrashed() {
         return response([
-            'rows'=> State::onlyTrashed()->get()
+            'states'=> State::onlyTrashed()->get()
         ], 200);
     }
 
     //  Para mostrar un elemento eliminado
     public function recoveryTrashed($id) {
         return response([
-            'row'=> State::onlyTrashed()->find($id)->recovery()
+            'state'=> State::onlyTrashed()->find($id)->recovery()
         ], 200);
     }
 
@@ -50,7 +50,7 @@ class StateController extends Controller {
         $query->fill($request->all())->save();
 
         return response([
-            'row'=> $query
+            'state'=> $query
         ], 200);
     }
 
