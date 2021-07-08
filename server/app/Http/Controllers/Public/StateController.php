@@ -2,14 +2,26 @@
 
 namespace App\Http\Controllers\Public;
 
-use App\Http\Controllers\Controller;
 use App\Models\Public\State;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Database\QueryException;
 
 class StateController extends Controller {
 
     public function store(Request $request) {
-        $query = State::create($request->all());
+        try{
+            $query = State::create($request->all());
+        }
+        catch(QueryException $e){
+            if($e->errorInfo[1]){
+                return response([
+                    'message'=> $e->errorInfo[2],
+                    'code'=> $e->errorInfo[1]
+                ], 404);
+            }
+        }
+
         return response([
             'state'=> $query
         ], 200);
@@ -47,7 +59,18 @@ class StateController extends Controller {
 
     public function update(Request $request, $id) {
         $query = State::find($id);
-        $query->fill($request->all())->save();
+
+        try{
+            $query->fill($request->all())->save();
+        }
+        catch(QueryException $e){
+            if($e->errorInfo[1]){
+                return response([
+                    'message'=> $e->errorInfo[2],
+                    'code'=> $e->errorInfo[1]
+                ], 404);
+            }
+        }
 
         return response([
             'state'=> $query

@@ -2,14 +2,26 @@
 
 namespace App\Http\Controllers\GeneralConfig;
 
-use App\Http\Controllers\Controller;
-use App\Models\GeneralConfig\LookUpListValue;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Database\QueryException;
+use App\Models\GeneralConfig\LookUpListValue;
 
 class LookUpListValueController extends Controller {
 
     public function store(Request $request) {
-        $query = LookUpListValue::create($request->all());
+        try{
+            $query = LookUpListValue::create($request->all());
+        }
+        catch(QueryException $e){
+            if($e->errorInfo[1]){
+                return response([
+                    'message'=> $e->errorInfo[2],
+                    'code'=> $e->errorInfo[1]
+                ], 404);
+            }
+        }
+
         return response([
             'row'=> $query
         ], 200);
@@ -61,10 +73,17 @@ class LookUpListValueController extends Controller {
 
     public function update(Request $request, $id) {
         $query = LookUpListValue::find($id);
-
-        $input = $request->all();
-
-        $query->fill($input)->save();
+        try{
+            $query->fill($request->all())->save();
+        }
+        catch(QueryException $e){
+            if($e->errorInfo[1]){
+                return response([
+                    'message'=> $e->errorInfo[2],
+                    'code'=> $e->errorInfo[1]
+                ], 404);
+            }
+        }
 
         return response([
             'row'=> $query

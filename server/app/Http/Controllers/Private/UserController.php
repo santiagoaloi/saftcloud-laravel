@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Private;
 
-use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Database\QueryException;
 
 class UserController extends Controller {
 
@@ -17,9 +18,8 @@ class UserController extends Controller {
             $query = User::create($request->all());
         }
 
-        catch(\Illuminate\Database\QueryException $e){
-            $errorCode = $e->errorInfo[1];
-            if($errorCode){
+        catch(QueryException $e){
+            if($e->errorInfo[1]){
                 return response([
                     'message'=> $e->errorInfo[2],
                     'code'=> $e->errorInfo[1]
@@ -66,7 +66,17 @@ class UserController extends Controller {
 
     public function update(Request $request, $id) {
         $query = User::find($id);
-        $query->fill($request->all())->save();
+        try{
+            $query->fill($request->all())->save();
+        }
+        catch(QueryException $e){
+            if($e->errorInfo[1]){
+                return response([
+                    'message'=> $e->errorInfo[2],
+                    'code'=> $e->errorInfo[1]
+                ], 404);
+            }
+        }
 
         return response([
             'row'=> $query

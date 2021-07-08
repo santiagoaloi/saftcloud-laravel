@@ -8,12 +8,23 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Root\ComponentGroup;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Database\QueryException;
 
 class ComponentGroupController extends Controller {
 
     public function store(Request $request) {
         $postdata = json_decode($request->getContent(), true);
-        ComponentGroup::create($postdata);
+        try{
+            ComponentGroup::create($postdata);
+        }
+        catch(QueryException $e){
+            if($e->errorInfo[1]){
+                return response([
+                    'message'=> $e->errorInfo[2],
+                    'code'=> $e->errorInfo[1]
+                ], 404);
+            }
+        }
 
         return $this->showAll();
     }
@@ -115,7 +126,17 @@ class ComponentGroupController extends Controller {
 
     public function update(Request $request, $id) {
         $query = ComponentGroup::find($id);
-        $query->fill($request->all())->save();
+        try{
+            $query->fill($request->all())->save();
+        }
+        catch(QueryException $e){
+            if($e->errorInfo[1]){
+                return response([
+                    'message'=> $e->errorInfo[2],
+                    'code'=> $e->errorInfo[1]
+                ], 404);
+            }
+        }
 
         return $this->showAll();
     }
@@ -142,8 +163,7 @@ class ComponentGroupController extends Controller {
 
             return $this->showAll();
         } else {
-            $components = DB::table('components')->where('component_group_id', '=', $id)
-            ->get();
+            $components = DB::table('components')->where('component_group_id', '=', $id)->get();
 
             return response([
                 'message' => 'Hay un componente vinculado a este grupo',

@@ -2,14 +2,26 @@
 
 namespace App\Http\Controllers\Private;
 
-use App\Http\Controllers\Controller;
-use App\Models\Private\Phone;
 use Illuminate\Http\Request;
+use App\Models\Private\Phone;
+use App\Http\Controllers\Controller;
+use Illuminate\Database\QueryException;
 
 class PhoneController extends Controller {
 
     public function store(Request $request) {
-        $query = Phone::create($request->all());
+        try{
+            $query = Phone::create($request->all());
+        }
+        catch(QueryException $e){
+            if($e->errorInfo[1]){
+                return response([
+                    'message'=> $e->errorInfo[2],
+                    'code'=> $e->errorInfo[1]
+                ], 404);
+            }
+        }
+
         return response([
             'row'=> $query
         ], 200);
@@ -49,7 +61,17 @@ class PhoneController extends Controller {
 
     public function update(Request $request, $id) {
         $query = Phone::find($id);
-        $query->fill($request->all())->save();
+        try{
+            $query->fill($request->all())->save();
+        }
+        catch(QueryException $e){
+            if($e->errorInfo[1]){
+                return response([
+                    'message'=> $e->errorInfo[2],
+                    'code'=> $e->errorInfo[1]
+                ], 404);
+            }
+        }
 
         return response([
             'row'=> $query

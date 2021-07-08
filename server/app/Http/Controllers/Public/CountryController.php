@@ -2,14 +2,26 @@
 
 namespace App\Http\Controllers\Public;
 
-use App\Http\Controllers\Controller;
-use App\Models\Public\Country;
 use Illuminate\Http\Request;
+use App\Models\Public\Country;
+use App\Http\Controllers\Controller;
+use Illuminate\Database\QueryException;
 
 class CountryController extends Controller {
 
     public function store(Request $request) {
-        $query = Country::create($request->all());
+        try{
+            $query = Country::create($request->all());
+        }
+        catch(QueryException $e){
+            if($e->errorInfo[1]){
+                return response([
+                    'message'=> $e->errorInfo[2],
+                    'code'=> $e->errorInfo[1]
+                ], 404);
+            }
+        }
+
         return response([
             'row'=> $query
         ], 200);
@@ -49,7 +61,17 @@ class CountryController extends Controller {
 
     public function update(Request $request, $id) {
         $query = Country::find($id);
-        $query->fill($request->all())->save();
+        try{
+            $query->fill($request->all())->save();
+        }
+        catch(QueryException $e){
+            if($e->errorInfo[1]){
+                return response([
+                    'message'=> $e->errorInfo[2],
+                    'code'=> $e->errorInfo[1]
+                ], 404);
+            }
+        }
 
         return response([
             'row'=> $query

@@ -2,14 +2,26 @@
 
 namespace App\Http\Controllers\Pos;
 
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Pos\ProductPromotion;
-use Illuminate\Http\Request;
+use Illuminate\Database\QueryException;
 
 class ProductPromotionController extends Controller {
 
     public function store(Request $request) {
-        $query = ProductPromotion::create($request->all());
+        try{
+            $query = ProductPromotion::create($request->all());
+        }
+        catch(QueryException $e){
+            if($e->errorInfo[1]){
+                return response([
+                    'message'=> $e->errorInfo[2],
+                    'code'=> $e->errorInfo[1]
+                ], 404);
+            }
+        }
+
         return response([
             'row'=> $query
         ], 200);
@@ -49,7 +61,17 @@ class ProductPromotionController extends Controller {
 
     public function update(Request $request, $id) {
         $query = ProductPromotion::find($id);
-        $query->fill($request->all())->save();
+        try{
+            $query->fill($request->all())->save();
+        }
+        catch(QueryException $e){
+            if($e->errorInfo[1]){
+                return response([
+                    'message'=> $e->errorInfo[2],
+                    'code'=> $e->errorInfo[1]
+                ], 404);
+            }
+        }
 
         return response([
             'row'=> $query

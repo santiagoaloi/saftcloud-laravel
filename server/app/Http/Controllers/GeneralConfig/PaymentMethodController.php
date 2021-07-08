@@ -2,14 +2,27 @@
 
 namespace App\Http\Controllers\GeneralConfig;
 
-use App\Http\Controllers\Controller;
-use App\Models\GeneralConfig\PaymentMethod;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Database\QueryException;
+use App\Models\GeneralConfig\PaymentMethod;
 
 class PaymentMethodController extends Controller {
 
     public function store(Request $request) {
-        $query = PaymentMethod::create($request->all());
+        try{
+            $query = PaymentMethod::create($request->all());
+        }
+        catch(QueryException $e){
+            if($e->errorInfo[1]){
+                return response([
+                    'message'=> $e->errorInfo[2],
+                    'code'=> $e->errorInfo[1]
+                ], 404);
+            }
+        }
+        
+
         return response([
             'row'=> $query
         ], 200);
@@ -49,7 +62,17 @@ class PaymentMethodController extends Controller {
 
     public function update(Request $request, $id) {
         $query = PaymentMethod::find($id);
-        $query->fill($request->all())->save();
+        try{
+            $query->fill($request->all())->save();
+        }
+        catch(QueryException $e){
+            if($e->errorInfo[1]){
+                return response([
+                    'message'=> $e->errorInfo[2],
+                    'code'=> $e->errorInfo[1]
+                ], 404);
+            }
+        }
 
         return response([
             'row'=> $query

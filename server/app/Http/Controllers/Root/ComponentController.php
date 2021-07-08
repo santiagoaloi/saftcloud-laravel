@@ -2,17 +2,18 @@
 
 namespace App\Http\Controllers\Root;
 
-use App\Http\Controllers\Controller;
-use App\Models\Root\Component;
+use App\Helpers\Helper;
+use App\Helpers\FileManager;
 use Illuminate\Http\Request;
 
 Use Exception;
-use Illuminate\Support\Facades\DB;
-use App\Helpers\Helper;
-use App\Helpers\FileManager;
-
-use App\Models\Root\ComponentDefault;
+use App\Models\Root\Component;
 use Jawira\CaseConverter\Convert;
+use Illuminate\Support\Facades\DB;
+
+use App\Http\Controllers\Controller;
+use App\Models\Root\ComponentDefault;
+use Illuminate\Database\QueryException;
 
 class ComponentController extends Controller {
 
@@ -54,7 +55,6 @@ class ComponentController extends Controller {
         try{
             Component::create($data);
         }
-
         catch(\Illuminate\Database\QueryException $e){
             $errorCode = $e->errorInfo[1];
             if($errorCode){
@@ -150,7 +150,17 @@ class ComponentController extends Controller {
             }
         }
 
-        $query->fill($input)->save();
+        try{
+            $query->fill($input)->save();
+        }
+        catch(QueryException $e){
+            if($e->errorInfo[1]){
+                return response([
+                    'message'=> $e->errorInfo[2],
+                    'code'=> $e->errorInfo[1]
+                ], 404);
+            }
+        }
 
         return $this->show($query->id);
     }

@@ -2,17 +2,29 @@
 
 namespace App\Http\Controllers\Root;
 
+use App\Helpers\Helper;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Root\ComponentDefault;
-use Illuminate\Http\Request;
-use App\Helpers\Helper;
 
+use Illuminate\Database\QueryException;
 use App\Http\Controllers\Root\ComponentController;
 
 class ComponentDefaultController extends Controller {
 
     public function store(Request $request) {
-        $query = ComponentDefault::create(['config_structure'=>json_encode($request['config_structure'])]);
+        try{
+            $query = ComponentDefault::create(['config_structure'=>json_encode($request['config_structure'])]);
+        }
+        catch(QueryException $e){
+            if($e->errorInfo[1]){
+                return response([
+                    'message'=> $e->errorInfo[2],
+                    'code'=> $e->errorInfo[1]
+                ], 404);
+            }
+        }
+
         $this->updateJsonModel($query->config_structure);
 
         $getComponents = new ComponentController;
@@ -76,7 +88,17 @@ class ComponentDefaultController extends Controller {
 
     public function update(Request $request, $id) {
         $query = ComponentDefault::find($id);
-        $query->fill($request->all())->save();
+        try{
+            $query->fill($request->all())->save();
+        }
+        catch(QueryException $e){
+            if($e->errorInfo[1]){
+                return response([
+                    'message'=> $e->errorInfo[2],
+                    'code'=> $e->errorInfo[1]
+                ], 404);
+            }
+        }
 
         return response([
             'row'=> $query

@@ -2,14 +2,26 @@
 
 namespace App\Http\Controllers\Private;
 
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Private\UserSettings;
-use Illuminate\Http\Request;
+use Illuminate\Database\QueryException;
 
 class UserSettingsController extends Controller {
 
     public function store(Request $request) {
-        $query = UserSettings::create($request->all());
+        try{
+            $query = UserSettings::create($request->all());
+        }
+        catch(QueryException $e){
+            if($e->errorInfo[1]){
+                return response([
+                    'message'=> $e->errorInfo[2],
+                    'code'=> $e->errorInfo[1]
+                ], 404);
+            }
+        }
+
         return response([
             'row'=> $query
         ], 200);
@@ -49,7 +61,17 @@ class UserSettingsController extends Controller {
 
     public function update(Request $request, $id) {
         $query = UserSettings::find($id);
-        $query->fill($request->all())->save();
+        try{
+            $query->fill($request->all())->save();
+        }
+        catch(QueryException $e){
+            if($e->errorInfo[1]){
+                return response([
+                    'message'=> $e->errorInfo[2],
+                    'code'=> $e->errorInfo[1]
+                ], 404);
+            }
+        }
 
         return response([
             'row'=> $query
