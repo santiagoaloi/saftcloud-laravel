@@ -22,10 +22,9 @@ const initialSignupForm = () => {
 const state = {
  step: 0,
  terms: false,
- states: [],
- cities: [],
  countryCodes: [],
- signupForm: initialSignupForm()
+ signupForm: initialSignupForm(),
+ states: []
 };
 
 const mutations = make.mutations(state);
@@ -79,6 +78,19 @@ const actions = {
     console.log(err);
    })
    .finally(() => (state.countriesLoading = false));
+ },
+
+ getStates({ commit }, state) {
+  axios
+   .post(`api/states/${state.id}`)
+   .then(response => {
+    if (response.status === 200) {
+     commit("states", response.data.states);
+    }
+   })
+   .catch(err => {
+    console.log(err);
+   });
  }
 };
 

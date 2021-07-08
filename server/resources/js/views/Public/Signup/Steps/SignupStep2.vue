@@ -22,6 +22,7 @@
         :color="isDark ? '#208ad6' : 'grey'"
         :background-color="isDark ? 'grey darken-4' : 'grey lighten-4'"
         :error="errors.length > 0"
+        @change="getStates({ id: $event })"
        >
         <template slot="selection" slot-scope="data">
          <country-flag class="mr-2" :country="data.item.iso2" />
@@ -45,17 +46,22 @@
      <v-col sm="6">
       <baseFieldLabel label="State, Province, or Region " />
       <validation-provider v-slot="{ errors }" name="State" rules="required">
-       <v-text-field
+       <v-autocomplete
+        :disabled="!states.length"
+        :items="states"
         v-model="signupForm.state"
         solo
+        attach
+        item-text="name"
+        item-value="id"
         hide-details
         @keydown.enter.prevent="validateAndProceed()"
-        prepend-inner-icon="mdi-earth"
         :outlined="isDark"
         :color="isDark ? '#208ad6' : 'grey'"
         :background-color="isDark ? 'grey darken-4' : 'grey lighten-4'"
         :error="errors.length > 0"
-       ></v-text-field>
+       >
+       </v-autocomplete>
       </validation-provider>
      </v-col>
 
@@ -63,6 +69,7 @@
       <baseFieldLabel label="City" />
       <validation-provider v-slot="{ errors }" name="City" rules="required">
        <v-text-field
+        :disabled="!states.length"
         v-model="signupForm.city"
         solo
         hide-details
@@ -119,7 +126,7 @@
 </template>
 
 <script>
-import { sync, get } from "vuex-pathify";
+import { sync, get, call } from "vuex-pathify";
 import CountryFlag from "vue-country-flag";
 
 export default {
@@ -133,19 +140,21 @@ export default {
 
  computed: {
   ...sync("theme", ["isDark"]),
-  ...sync("signup", ["signupForm", "step", "countryCodes"]),
+  ...sync("signup", ["signupForm", "step", "countryCodes", "states"]),
   ...get("signup", ["filterCountries"])
  },
 
- mounted() {},
-
  methods: {
+  ...call("signup/*"),
   validateAndProceed() {
    this.$refs.step2.validate().then(success => {
     if (success) {
      this.step++;
     }
    });
+  },
+  test(e) {
+   console.log(e);
   }
  }
 };

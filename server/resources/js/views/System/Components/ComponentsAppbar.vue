@@ -42,6 +42,8 @@
    no-gutters
    absoluteToolbar
    title="Components config structure"
+   filled
+   fluid
   >
    <v-card flat width="100%" class="dialogHeight pt-14">
     <base-editor v-model="ComponentsConfigStructure" mode="json" />

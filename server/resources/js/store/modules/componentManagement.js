@@ -40,15 +40,8 @@ const state = {
  selectedComponentActiveField: "",
  displayEnabledFormFieldsOnly: false,
  componentEditDrawerActiveMenu: undefined,
+ componentsLinkedToGroup: [],
  componentSettings: initialComponentSettings(),
- tableHeaders: [
-  {
-   text: "Component",
-   align: "start",
-   sortable: true,
-   value: "name"
-  }
- ],
 
  componentStatusTabs: [
   { name: "All", value: "all", icon: "mdi-all-inclusive", color: "" },
@@ -57,7 +50,8 @@ const state = {
   { name: "Active", value: "active", icon: "mdi-lightbulb-on", color: "" }
  ],
 
- navigationStructure: {}
+ navigationStructure: {},
+ componentsLinkedToGroupDialog: false
 };
 
 const mutations = make.mutations(state);
@@ -287,6 +281,8 @@ const actions = {
     store.set("snackbar/value", true);
     store.set("snackbar/text", `${error.response.data.message}`);
     store.set("snackbar/color", "pink darken-1");
+    store.set("componentManagement/componentsLinkedToGroup", error.response.data.components);
+    store.set("componentManagement/componentsLinkedToGroupDialog", true);
    });
  },
 

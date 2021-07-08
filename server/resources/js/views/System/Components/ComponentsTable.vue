@@ -7,8 +7,6 @@
   :height="calculateHeight()"
   :headers="tableHeaders"
   :items="allComponentsFiltered"
-  :items-per-page="-1"
-  class="elevation-0 mt-2"
  ></v-data-table>
 </template>
 

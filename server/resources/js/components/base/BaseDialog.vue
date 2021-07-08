@@ -71,7 +71,7 @@
    </template>
   </v-toolbar>
   <v-card width="100%" :class="{ 'pa-2': !noGutters }" style="overflow: auto" flat tile>
-   <v-container fluid class="fill-height">
+   <v-container :fluid="fluid" :class="{ 'fill-height': filled }">
     <slot />
    </v-container>
   </v-card>
@@ -88,6 +88,17 @@ export default {
    type: [Boolean],
    default: false
   },
+
+  filled: {
+   type: [Boolean],
+   default: false
+  },
+
+  fluid: {
+   type: [Boolean],
+   default: false
+  },
+
   title: {
    type: [String],
    default: ""
