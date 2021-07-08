@@ -16,9 +16,12 @@ class ComponentDefaultController extends Controller {
         $this->updateJsonModel($query->config_structure);
 
         $getComponents = new ComponentController;
-        $components = $getComponents->showAll(true);
+        $components = $getComponents->showAll();
+        print_r($components);exit;
 
-        if (isset($components)){
+
+        if(count($components)){
+            return 'se';
             foreach ($components as $component){
                 $result = $this->compareComponentConfig($component);
                 $component['config']['form_fields'] = $result;
@@ -26,6 +29,7 @@ class ComponentDefaultController extends Controller {
             };
             return $getComponents->updateAll($newComponents);
         }
+        return 'hola';
     }
 
     public function show(Request $id, $local = false) {
