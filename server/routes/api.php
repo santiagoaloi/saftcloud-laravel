@@ -49,7 +49,7 @@ Route::resource('/country', CountryController::class);
 Route::get('/countries', [CountryController::class, 'showAll']);
 
 Route::resource('/state', StateController::class);
-Route::get('/states', [StateController::class, 'showAll']);
+Route::post('/states/{country_id}', [StateController::class, 'showAll']);
 
 Route::resource('/account', AccountController::class);
 Route::post('/register', [AuthController::class, 'register']);

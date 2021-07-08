@@ -21,9 +21,9 @@ class StateController extends Controller {
         ], 200);
     }
 
-    public function showAll() {
+    public function showAll($country_id) {
         return response([
-            'rows'=> State::get()
+            'rows'=> State::where('country_id', $country_id)->get()
         ], 200);
     }
 
