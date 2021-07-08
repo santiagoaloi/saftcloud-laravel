@@ -17,19 +17,16 @@ class ComponentDefaultController extends Controller {
 
         $getComponents = new ComponentController;
         $components = $getComponents->showAll();
-        print_r($components);exit;
 
-
-        if(count($components)){
-            return 'se';
-            foreach ($components as $component){
+        if(count($components->original['components'])){
+            foreach ($components->original['components'] as $component){
                 $result = $this->compareComponentConfig($component);
                 $component['config']['form_fields'] = $result;
                 $newComponents[]=$component;
             };
             return $getComponents->updateAll($newComponents);
         }
-        return 'hola';
+        return $components;
     }
 
     public function show(Request $id, $local = false) {
