@@ -24,14 +24,17 @@ class ComponentController extends Controller {
         $sql_modified = str_replace('SELECT', 'SELECT count(*) as temp, ', $sql_query);
         $object =  array_keys((array)DB::SELECT($sql_modified)[0]);
 
-        $formColumnsAndFields = $this->formColumnsAndFields($object);
+        $formColumnsAndFields = $this->buildColumnsAndFields($object);
+        $general_config       = $this->buildGeneralConfig();
 
-        $config['sql_table']    = $request['table'];
-        $config['sql_query']    = $sql_query;
+        $config['general_config'] = $general_config;
+        $config['general_config']->sql_table    = $request['table'];
+        $config['general_config']->sql_query    = $sql_query;
+        $config['general_config']->title        = $request['title'];
+        $config['general_config']->note         = $request['note'];
+
         $config['columns']      = $formColumnsAndFields['ArrayColumns'];
         $config['form_fields']  = $formColumnsAndFields['ArrayFields'];
-        $config['title']        = $request['title'];
-        $config['note']         = $request['note'];
 
         $configSettings['icon'] = [
             'name'  => 'mdi-apps',
@@ -126,11 +129,6 @@ class ComponentController extends Controller {
                     return response()->json(array('message' =>$e->getMessage())); 
                 }
 
-                // No puedo accceder al string del mensaje de error.
-                // }catch(QueryException $ex){ 
-                //     dd($ex->getMessage()); 
-                // }
-
                 $sql_query = str_replace('SELECT', 'SELECT count(*) as temp, ', $sql_new);
                 try{
                     $object =  array_keys((array)DB::SELECT($sql_query)[0]);
@@ -138,7 +136,7 @@ class ComponentController extends Controller {
                     return response()->json(array('message' =>$e->getMessage())); 
                 }
 
-                $formColumnsAndFields = $this->formColumnsAndFields($object);
+                $formColumnsAndFields = $this->buildColumnsAndFields($object);
                 $newFormFields = $formColumnsAndFields['ArrayFields'];
 
                 $originalFormFields = json_decode($query->config, true)['form_fields'];
@@ -249,8 +247,14 @@ class ComponentController extends Controller {
         file_put_contents( $vue_folder . "/{$data['name']}.vue" , $build_vue);
     }
 
+    function buildGeneralConfig(){
+        $query = json_decode(ComponentDefault::get('config_structure')->last());
+        $config_structure = json_decode($query->config_structure);
+        return $config_structure->general_config;
+    }
+
     //** FORMA NUEVA **//
-    function formColumnsAndFields($columns){
+    function buildColumnsAndFields($columns){
         foreach ($columns as $column) {
             if($column != 'id' && $column != 'temp'){
                 $ArrayColumns[] = ['name' => $column];
