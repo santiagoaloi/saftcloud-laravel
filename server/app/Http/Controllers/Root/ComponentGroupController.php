@@ -92,7 +92,7 @@ class ComponentGroupController extends Controller {
     }
 
     public function showAllGroupNames(){
-        $components = DB::table('component_groups')->select('name')->where('deleted_at', '!=', 'NULL')->get();
+        $components = DB::table('component_groups')->select('name')->where('deleted_at', '=', 'NULL')->get();
         $array = [];
         foreach($components as $component){
             $array[] = $component->name;
