@@ -171,7 +171,7 @@
      </v-icon>
     </v-list-item-icon>
     <v-list-item-content>
-     <v-list-item-title>{{ selectedComponent.config.general_config.columns.length }}</v-list-item-title>
+     <v-list-item-title>{{ selectedComponent.config.columns.length }}</v-list-item-title>
      <v-list-item-subtitle> Table columns</v-list-item-subtitle>
     </v-list-item-content>
    </v-list-item>

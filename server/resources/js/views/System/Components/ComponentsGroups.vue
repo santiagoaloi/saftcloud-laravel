@@ -31,7 +31,7 @@
         </v-icon>
        </v-list-item-avatar>
        <v-list-item-content>
-        <v-list-item-title> {{ selectedAllGroups ? "Unselect All" : "Select All" }} </v-list-item-title>
+        <v-list-item-title> {{ selectedAllGroups ? "Unselect all groups" : "Select all groups" }} </v-list-item-title>
        </v-list-item-content>
       </v-list-item>
       <v-divider></v-divider>
@@ -67,19 +67,32 @@
 
      <template #item="{ item, on }">
       <v-list-item :ripple="false" v-on="on">
-       <v-list-item-avatar>
-        <v-icon>mdi-folder-outline</v-icon>
+       <v-list-item-avatar style="margin-left:1px">
+        <v-avatar class="white--text" tile size="30" color="primary">
+         <h6>{{ countComponentsInGroup(item.id) }}</h6>
+        </v-avatar>
        </v-list-item-avatar>
        <v-list-item-content>
         <v-list-item-title> {{ item.name }} </v-list-item-title>
        </v-list-item-content>
 
-       <v-btn class="mr-2" :ripple="false" @click.stop="renameGroupWarning(item.id, item.name)" small depressed>
-        <v-icon small>mdi-pencil-outline</v-icon>
-       </v-btn>
-       <v-btn :ripple="false" @click.stop="removeGroupWarning(item.id, item.name)" small depressed>
-        <v-icon small>mdi-delete-outline</v-icon>
-       </v-btn>
+       <v-tooltip transition="false" color="black" bottom>
+        <template v-slot:activator="{ on, attrs }">
+         <v-btn v-on="on" class="mr-2" :ripple="false" @click.stop="renameGroupWarning(item.id, item.name)" small depressed>
+          <v-icon small>mdi-pencil-outline</v-icon>
+         </v-btn>
+        </template>
+        <span>Edit group</span>
+       </v-tooltip>
+
+       <v-tooltip transition="false" color="black" bottom>
+        <template v-slot:activator="{ on, attrs }">
+         <v-btn v-on="on" :ripple="false" @click.stop="removeGroupWarning(item.id, item.name)" small depressed>
+          <v-icon small>mdi-delete-outline</v-icon>
+         </v-btn>
+        </template>
+        <span>Remove group</span>
+       </v-tooltip>
       </v-list-item>
      </template>
     </v-autocomplete>

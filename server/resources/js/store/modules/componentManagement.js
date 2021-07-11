@@ -99,7 +99,7 @@ const getters = {
   const search = state.search.toLowerCase();
   return state.allComponents.filter(component => {
    return (
-    (search === "" || component.general_config.name.toLowerCase().match(search)) &&
+    (search === "" || component.config.general_config.title.toLowerCase().match(search)) &&
     (getters.activeStatusTabName === "all" || component.status[getters.activeStatusTabName]) &&
     state.selectedComponentGroups.some(g => g.id === component.component_group_id)
    );
@@ -321,7 +321,7 @@ const actions = {
 
  saveComponent({ state, dispatch }, component) {
   //Remove strange characters, add space instead.
-  component.config.sql_query = component.config.sql_query
+  component.config.general_config.sql_query = component.config.general_config.sql_query
    .split(/\r?\n/)
    .map(row =>
     row

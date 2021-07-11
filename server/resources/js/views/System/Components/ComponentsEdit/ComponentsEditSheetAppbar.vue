@@ -1,7 +1,7 @@
 <template>
  <v-app-bar color="#24292e" flat dense>
   <v-toolbar-title class="white--text"
-   >Editing <span class="accent--text text--lighten-4"> {{ selectedComponent.general_config.name }} </span></v-toolbar-title
+   >Editing <span class="accent--text text--lighten-4"> {{ selectedComponent.config.general_config.title }} </span></v-toolbar-title
   >
 
   <v-spacer></v-spacer>

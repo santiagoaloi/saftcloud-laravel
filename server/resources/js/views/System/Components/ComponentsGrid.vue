@@ -66,7 +66,7 @@
         </div>
        </v-card-actions>
 
-       <span class="gallery-card-title"> {{ component.config.general_config.name }} </span>
+       <span class="gallery-card-title pl-1"> {{ component.config.general_config.title }} </span>
 
        <div class="gallery-card-subtitle-container">
         <div class="gallery-card-subtitle-wrapper">

@@ -28,7 +28,7 @@
       :background-color="isDark ? '#28292b' : 'grey lighten-4'"
       spellcheck="false"
       hide-details
-      v-model="selectedComponent.name"
+      v-model="selectedComponent.config.general_config.title"
      />
     </div>
 
@@ -43,14 +43,14 @@
       :rows="2"
       autogrow
       hide-details
-      v-model="selectedComponent.config.note"
+      v-model="selectedComponent.config.general_config.note"
      >
      </v-textarea>
     </div>
 
     <div class="mt-2">
      <baseFieldLabel label="Display in navigation drawer" />
-     <v-switch> hola </v-switch>
+     <v-switch v-model="selectedComponent" />
     </div>
    </v-col>
   </v-row>
