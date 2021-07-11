@@ -43,6 +43,8 @@ const state = {
  componentsLinkedToGroup: [],
  componentSettings: initialComponentSettings(),
 
+ groupNameBeingRemoved: "",
+
  componentStatusTabs: [
   { name: "All", value: "all", icon: "mdi-all-inclusive", color: "" },
   { name: "Starred", value: "starred", icon: "mdi-star", color: "" },
@@ -97,7 +99,7 @@ const getters = {
   const search = state.search.toLowerCase();
   return state.allComponents.filter(component => {
    return (
-    (search === "" || component.name.toLowerCase().match(search)) &&
+    (search === "" || component.general_config.name.toLowerCase().match(search)) &&
     (getters.activeStatusTabName === "all" || component.status[getters.activeStatusTabName]) &&
     state.selectedComponentGroups.some(g => g.id === component.component_group_id)
    );
@@ -278,21 +280,22 @@ const actions = {
    })
    .catch(error => {
     console.log({ ...error });
-    store.set("snackbar/value", true);
-    store.set("snackbar/text", `${error.response.data.message}`);
-    store.set("snackbar/color", "pink darken-1");
+    // store.set("snackbar/value", true);
+    // store.set("snackbar/text", `${error.response.data.message}`);
+    // store.set("snackbar/color", "pink darken-1");
     store.set("componentManagement/componentsLinkedToGroup", error.response.data.components);
     store.set("componentManagement/componentsLinkedToGroupDialog", true);
    });
  },
 
- renameGroup({}, { id, newName }) {
+ renameGroup({ dispatch }, { id, newName }) {
   axios.patch(`api/componentGroup/${id}`, { name: newName }).then(response => {
    if (response.status === 200) {
     store.set("componentManagement/allGroups", response.data.groups);
     store.set("snackbar/value", true);
     store.set("snackbar/text", "Group renamed");
     store.set("snackbar/color", "grey darken-2");
+    dispatch("getNavigationStructure");
    }
   });
  },
@@ -361,6 +364,7 @@ const actions = {
      store.set("snackbar/text", "Component removed");
      store.set("snackbar/color", "pink darken-1");
      dispatch("getNavigationStructure");
+     store.set("drawers/secureComponentDrawer", false);
     }
    })
    .catch(error => {
@@ -372,13 +376,6 @@ const actions = {
  },
 
  saveGroup({ state, dispatch }) {
-  // let parent;
-  // if (!state.groupParent) {
-  //  parent = null;
-  // } else {
-  //  parent = state.allGroups.find(g => g.name === state.dbGroupNames[state.groupParent - 1]);
-  // }
-
   parent = state.allGroups.find(g => g.name === state.dbGroupNames[state.groupParent - 1]);
   axios
    .post("api/componentGroup", { name: state.groupName, component_group_id: parent ? parent.id : null })

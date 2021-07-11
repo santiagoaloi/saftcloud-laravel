@@ -1,7 +1,11 @@
 <template>
     <v-app-bar :class="{ 'darkBorder': isDark }" :flat="isDark" clipped-right dense app >
       <v-container fluid class="py-0 px-0 px-sm-2 fill-height">
-      <v-app-bar-nav-icon  class="ml-0" text xSmall fab @click="secureDefaultDrawer = !secureDefaultDrawer" />
+      
+      <v-app-bar-nav-icon  class="ml-n2 mr-3" text xSmall fab @click="secureDefaultDrawer = !secureDefaultDrawer" />
+
+       <h4> {{ title }}</h4>
+
       <div class="flex-grow-1" />
 
       <v-btn class="mr-2 " text x-small fab to="/">
@@ -151,7 +155,7 @@ export default {
     return {
       imageLoadingFailed: false,
       notificationCount: 0,
-      appBarKey: 1,
+      title: this.$route.meta.title,
 
             languages: [
         {

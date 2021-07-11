@@ -1,65 +1,35 @@
 export default [
- // {
- //   path: "/formField",
- //   name: "formField",
- //   meta: { layout: "secure_layout" },
- //   transition: "fade",
- //   component: () =>
- //     import("@/views/System/CmsBuilder/Formfield/Formfield.vue")
- // },
-
- // {
- //   path: "/nesteddraggable",
- //   name: "nesteddraggable",
- //   meta: { layout: "secure_layout" },
- //   transition: "fade",
- //   component: () =>
- //     import(
- //       "@/views/System/CmsBuilder/Nesteddraggable/Nesteddraggable.vue"
- //     )
- // },
-
- // {
- //   path: "/formbuilder",
- //   name: "Formbuilder",
- //   meta: { layout: "secure_layout" },
- //   transition: "fade",
- //   component: () =>
- //     import("@/views/System/CmsBuilder/Formbuilder/Formbuilder.vue")
- // },
-
  {
   path: "/desktop",
   name: "desktop",
   meta: { layout: "secure_layout" },
-  transition: "fade",
   component: () => import("@/views/System/Desktop/Desktop.vue")
  },
 
  {
   path: "/components",
   name: "components",
-  meta: { layout: "secure_layout" },
-  transition: "fade",
+  meta: { layout: "secure_layout", title: "Manage components" },
   component: () => import(/* webpackChunkName: 'components' */ "@/views/System/Components/Components.vue"),
   children: [
    {
     path: "/components/basic",
     name: "components/basic",
-    meta: { layout: "secure_layout" },
-    component: () => import("@/views/System/Components/ComponentsEdit/ConfigViews/Basic/Basic.vue")
+    meta: { layout: "secure_layout", title: "Manage components" },
+    component: () => import(/* webpackChunkName: 'components-basic' */ "@/views/System/Components/ComponentsEdit/ConfigViews/Basic/Basic.vue")
    },
    {
     path: "/components/formFields",
     name: "components/formFields",
-    meta: { layout: "secure_layout" },
-    component: () => import("@/views/System/Components/ComponentsEdit/ConfigViews/FormFields/FormFields.vue")
+    meta: { layout: "secure_layout", title: "Manage components" },
+    component: () =>
+     import(/* webpackChunkName: 'components-formFields' */ "@/views/System/Components/ComponentsEdit/ConfigViews/FormFields/FormFields.vue")
    },
    {
     path: "/components/query",
     name: "components/query",
-    meta: { layout: "secure_layout" },
-    component: () => import("@/views/System/Components/ComponentsEdit/ConfigViews/Query/Query.vue")
+    meta: { layout: "secure_layout", title: "Manage components" },
+    component: () => import(/* webpackChunkName: 'components-query' */ "@/views/System/Components/ComponentsEdit/ConfigViews/Query/Query.vue")
    }
   ]
  }

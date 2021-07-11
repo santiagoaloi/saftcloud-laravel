@@ -21,7 +21,7 @@
      :outlined="isDark"
      :solo="!isDark"
      :color="isDark ? '#208ad6' : 'grey'"
-     :background-color="isDark ? 'grey darken-4' : 'grey lighten-5'"
+     :background-color="isDark ? '#28292b' : 'grey lighten-5'"
     >
      <template v-if="allGroups.length" v-slot:prepend-item>
       <v-list-item @click="selectAllGroups" :ripple="false">
@@ -38,10 +38,13 @@
      </template>
 
      <template v-slot:selection="data">
-      <span v-if="data.index === 0" class="grey--text caption"
-       ><v-chip labal :style="isDark ? 'color: white' : 'color:black'" small label :color="isDark ? 'grey-darken-4' : 'blue-grey lighten-4'">
-        {{ selectedComponentGroups.length }} groups selected.</v-chip
-       ></span
+      <v-chip
+       v-if="data.index === 0"
+       :style="isDark ? 'color: white' : 'color:black'"
+       small
+       :color="isDark ? 'grey-darken-4' : 'blue-grey lighten-4'"
+      >
+       {{ selectedComponentGroups.length }} groups selected.</v-chip
       >
      </template>
 
@@ -70,16 +73,13 @@
        <v-list-item-content>
         <v-list-item-title> {{ item.name }} </v-list-item-title>
        </v-list-item-content>
-       <v-list-item-avatar>
-        <v-btn :ripple="false" @click.stop="renameGroupWarning(item.id, item.name)" depressed fab x-small>
-         <v-icon>mdi-pencil-outline</v-icon>
-        </v-btn>
-       </v-list-item-avatar>
-       <v-list-item-avatar>
-        <v-btn :ripple="false" @click.stop="removeGroupWarning(item.id, item.name)" depressed fab x-small>
-         <v-icon>mdi-delete-outline</v-icon>
-        </v-btn>
-       </v-list-item-avatar>
+
+       <v-btn class="mr-2" :ripple="false" @click.stop="renameGroupWarning(item.id, item.name)" small depressed>
+        <v-icon small>mdi-pencil-outline</v-icon>
+       </v-btn>
+       <v-btn :ripple="false" @click.stop="removeGroupWarning(item.id, item.name)" small depressed>
+        <v-icon small>mdi-delete-outline</v-icon>
+       </v-btn>
       </v-list-item>
      </template>
     </v-autocomplete>
@@ -104,8 +104,26 @@
    width="700"
    v-model="componentsLinkedToGroupDialog"
    title="Components still linked to this group"
+   v-if="componentsLinkedToGroupDialog"
   >
+   <v-expand-transition appear>
+    <v-sheet v-model="removeAlert" color="transparent" v-if="removeAlert">
+     <v-alert dismissible border="left" colored-border color="grey darken-2" elevation="2" class="text-left ">
+      <div>These componets are still associated with the group "{{ groupNameBeingRemoved }}"</div>
+      <div>You can remove the components permanently and then remove the group.</div>
+     </v-alert>
+    </v-sheet>
+   </v-expand-transition>
+
    <v-data-table checkbox-color="primary" item-key="id" show-select :headers="tableHeaders2" :items="componentsLinkedToGroup" :items-per-page="-1">
+    <template #item.avatar="{item}">
+     <v-avatar class="cursor-pointer" size="30" rounded color="indigo">
+      <v-icon size="25" dark>
+       mdi-apps
+      </v-icon>
+     </v-avatar>
+    </template>
+
     <template #item.actions="{item}">
      <v-menu rounded="lg" origin="center center" transition="scale-transition" :nudge-bottom="10" offset-y>
       <template v-slot:activator="{ on }">
@@ -159,7 +177,14 @@ export default {
 
  data() {
   return {
+   removeAlert: true,
    tableHeaders2: [
+    {
+     text: "Avatar",
+     align: "start",
+     sortable: false,
+     value: "avatar"
+    },
     {
      text: "Component",
      align: "start",
@@ -183,7 +208,7 @@ export default {
  },
 
  computed: {
-  ...sync("componentManagement", ["componentsLinkedToGroupDialog", "componentsLinkedToGroup"])
+  ...sync("componentManagement", ["componentsLinkedToGroupDialog", "componentsLinkedToGroup", "groupNameBeingRemoved"])
  },
  methods: {
   ...call("componentManagement/*")

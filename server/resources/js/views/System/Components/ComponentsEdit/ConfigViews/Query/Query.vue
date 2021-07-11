@@ -1,7 +1,7 @@
 <template>
  <div>
   <v-card flat width="100%" class="queryHeight">
-   <base-editor :key="editorKey" v-model="selectedComponent.config.sql_query" mode="sql" />
+   <base-editor :key="editorKey" v-model="selectedComponent.config.general_config.sql_query" mode="sql" />
   </v-card>
  </div>
 </template>

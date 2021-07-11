@@ -66,7 +66,7 @@
         </div>
        </v-card-actions>
 
-       <span class="gallery-card-title"> {{ component.name }} </span>
+       <span class="gallery-card-title"> {{ component.config.general_config.name }} </span>
 
        <div class="gallery-card-subtitle-container">
         <div class="gallery-card-subtitle-wrapper">
@@ -95,7 +95,7 @@
           <h5 class="gallery-card-subtitle">
            <v-tooltip transition="false" color="black" bottom>
             <template v-slot:activator="{ on, attrs }">
-             <v-icon v-on="on" :color="isDark ? 'white' : 'grey darken-4'">mdi-content-save-alert-outline</v-icon>
+             <v-icon v-on="on" :color="isDark ? 'white' : '#28292b'">mdi-content-save-alert-outline</v-icon>
             </template>
             <span>Unsaved</span>
            </v-tooltip>
@@ -109,7 +109,7 @@
    </transition-group>
   </v-item-group>
 
-  <base-dialog-icons v-if="dialogIcons" :icon="componentIcon" v-model="dialogIcons" />
+  <base-dialog-icons :icon="componentIcon" v-if="dialogIcons" v-model="dialogIcons" />
  </div>
 </template>
 

@@ -1,7 +1,7 @@
 <template>
  <div v-if="selectedComponent">
   <v-expand-transition>
-   <v-sheet :color="$vuetify.theme.dark ? '#2C2F33' : 'grey lighten-4'" v-if="hasUnsavedChanges(selectedComponent)" class="px-2">
+   <v-sheet :color="isDark ? '#2C2F33' : 'grey lighten-4'" v-if="hasUnsavedChanges(selectedComponent)" class="px-2">
     <v-alert class="mt-3" elevation="2" coloredBorder color="pink" border="right" dense>
      <div class="d-flex justify-space-between align-center">
       Unsaved
@@ -21,7 +21,15 @@
 
     <v-list-item-content>
      <v-list-item-title>
-      <v-text-field backgroundColor="transparent" spellcheck="false" flat solo hide-details dense v-model="selectedComponent.config.title">
+      <v-text-field
+       backgroundColor="transparent"
+       spellcheck="false"
+       flat
+       solo
+       hide-details
+       dense
+       v-model="selectedComponent.config.general_config.name"
+      >
       </v-text-field
      ></v-list-item-title>
     </v-list-item-content>
@@ -45,14 +53,14 @@
     <v-textarea
      :outlined="isDark"
      :color="isDark ? '#208ad6' : 'grey'"
-     :background-color="isDark ? 'grey darken-4' : 'grey lighten-5'"
+     :background-color="isDark ? '#28292b' : 'grey lighten-5'"
      outlined
      spellcheck="false"
      noResize
      :rows="2"
      autogrow
      dense
-     v-model="selectedComponent.config.note"
+     v-model="selectedComponent.config.general_config.note"
     >
     </v-textarea>
 
@@ -62,7 +70,7 @@
      <v-autocomplete
       :outlined="isDark"
       :color="isDark ? '#208ad6' : 'grey'"
-      :background-color="isDark ? 'grey darken-4' : 'grey lighten-5'"
+      :background-color="isDark ? '#28292b' : 'grey lighten-5'"
       v-model="selectedComponent.component_group_id"
       outlined
       hide-selected
@@ -81,7 +89,7 @@
   <div class="text-center mb-3">
    <v-tooltip transition="false" color="black" bottom>
     <template v-slot:activator="{ on, attrs }">
-     <v-btn @click="componentEditSheet = !componentEditSheet" v-on="on" depressed dark large small :color="$vuetify.theme.dark ? '' : 'white'">
+     <v-btn @click="componentEditSheet = !componentEditSheet" v-on="on" depressed dark large small :color="isDark ? '' : 'white'">
       <v-icon color="#6453DCED" dark>
        mdi-pencil-outline
       </v-icon>
@@ -92,8 +100,8 @@
 
    <v-tooltip transition="false" color="black" bottom>
     <template v-slot:activator="{ on, attrs }">
-     <v-btn v-on="on" depressed dark large small :color="$vuetify.theme.dark ? '' : 'white'">
-      <v-icon :color="$vuetify.theme.dark ? '' : 'black'" dark>
+     <v-btn v-on="on" depressed dark large small :color="isDark ? '' : 'white'">
+      <v-icon :color="isDark ? '' : 'black'" dark>
        mdi-link
       </v-icon>
      </v-btn>
@@ -110,7 +118,7 @@
       dark
       large
       small
-      :color="$vuetify.theme.dark ? '' : 'white'"
+      :color="isDark ? '' : 'white'"
      >
       <v-icon color="pink lighten-1" dark>
        mdi-trash-can-outline
@@ -129,7 +137,7 @@
       depressed
       large
       small
-      :color="$vuetify.theme.dark ? '' : 'white'"
+      :color="isDark ? '' : 'white'"
      >
       <v-icon color="green" dark>
        mdi-check-all
@@ -151,7 +159,7 @@
     </v-list-item-icon>
 
     <v-list-item-content>
-     <v-list-item-title> {{ selectedComponent.config.sql_table }}</v-list-item-title>
+     <v-list-item-title> {{ selectedComponent.config.general_config.sql_table }}</v-list-item-title>
      <v-list-item-subtitle>Table</v-list-item-subtitle>
     </v-list-item-content>
    </v-list-item>
@@ -163,7 +171,7 @@
      </v-icon>
     </v-list-item-icon>
     <v-list-item-content>
-     <v-list-item-title>{{ selectedComponent.config.columns.length }}</v-list-item-title>
+     <v-list-item-title>{{ selectedComponent.config.general_config.columns.length }}</v-list-item-title>
      <v-list-item-subtitle> Table columns</v-list-item-subtitle>
     </v-list-item-content>
    </v-list-item>

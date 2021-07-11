@@ -16,7 +16,7 @@
         prepend-inner-icon="mdi-account"
         :outlined="isDark"
         :color="isDark ? '#208ad6' : 'grey'"
-        :background-color="isDark ? 'grey darken-4' : 'grey lighten-4'"
+        :background-color="isDark ? '#28292b' : 'grey lighten-4'"
         :error="errors.length > 0"
        ></v-text-field>
       </validation-provider>
@@ -32,7 +32,7 @@
         prepend-inner-icon="mdi-account"
         :outlined="isDark"
         :color="isDark ? '#208ad6' : 'grey'"
-        :background-color="isDark ? 'grey darken-4' : 'grey lighten-4'"
+        :background-color="isDark ? '#28292b' : 'grey lighten-4'"
         :error="errors.length > 0"
        ></v-text-field>
       </validation-provider>

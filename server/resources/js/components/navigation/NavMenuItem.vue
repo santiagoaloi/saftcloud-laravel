@@ -3,7 +3,7 @@
   <v-list-item v-if="!menuItem.items" :input-value="menuItem.value" :to="menuItem.link" :exact="menuItem.exact" :disabled="menuItem.disabled" link>
    <v-list-item-icon>
     <v-icon :class="{ 'grey--text': menuItem.disabled }">
-     {{ menuItem.value ? "mdi-folder-open-outline" : "mdi-folder-outline" }}
+     {{ menuItem.icon ? menuItem.icon : "mdi-folder-outline" }}
     </v-icon>
    </v-list-item-icon>
    <v-list-item-content>

@@ -10,7 +10,7 @@
       </v-col>
       <v-col>
        <v-card-text style="overflow:auto">
-        <v-icon small>mdi-folder</v-icon> Products > {{ selectedComponent.config.title }}
+        <v-icon small>mdi-folder</v-icon> Products > {{ selectedComponent.config.general_config.name }}
         <v-divider class="mt-2"></v-divider>
         <v-scroll-y-transition hide-on-leave>
          <router-view />
@@ -39,8 +39,6 @@ export default {
  data: () => ({}),
 
  computed: {
-  ...sync("theme", ["isDark"]),
-
   ...sync("componentManagement", ["componentEditSheet"]),
   ...get("componentManagement", ["selectedComponent"]),
 

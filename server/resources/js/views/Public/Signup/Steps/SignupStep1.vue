@@ -20,7 +20,7 @@
         prepend-inner-icon="mdi-email"
         :outlined="isDark"
         :color="isDark ? '#208ad6' : 'grey'"
-        :background-color="isDark ? 'grey darken-4' : 'grey lighten-4'"
+        :background-color="isDark ? '#28292b' : 'grey lighten-4'"
         :error="errors.length > 0"
        ></v-text-field>
       </validation-provider>
@@ -39,7 +39,7 @@
         hide-no-data
         :outlined="isDark"
         :color="isDark ? '#208ad6' : 'grey'"
-        :background-color="isDark ? 'grey darken-4' : 'grey lighten-4'"
+        :background-color="isDark ? '#28292b' : 'grey lighten-4'"
         :error="errors.length > 0"
        >
         <template slot="selection" slot-scope="data">
@@ -80,7 +80,7 @@
         prepend-inner-icon="mdi-phone"
         :outlined="isDark"
         :color="isDark ? '#208ad6' : 'grey'"
-        :background-color="isDark ? 'grey darken-4' : 'grey lighten-4'"
+        :background-color="isDark ? '#28292b' : 'grey lighten-4'"
         :error="errors.length > 0"
        ></v-text-field>
       </validation-provider>

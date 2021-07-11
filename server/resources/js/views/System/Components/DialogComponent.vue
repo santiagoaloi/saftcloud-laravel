@@ -26,7 +26,7 @@
        hide-no-data
        solo
        :color="isDark ? '#208ad6' : 'grey'"
-       :background-color="isDark ? 'grey darken-4' : 'grey lighten-5'"
+       :background-color="isDark ? '#28292b' : 'grey lighten-5'"
        :error="errors.length > 0"
        :item-color="isDark ? 'indigo lighten-3' : 'primary'"
        :menu-props="{
@@ -63,7 +63,7 @@
        counter
        maxlength="35"
        :color="isDark ? '#208ad6' : 'grey'"
-       :background-color="isDark ? 'grey darken-4' : 'grey lighten-5'"
+       :background-color="isDark ? '#28292b' : 'grey lighten-5'"
        :error="errors.length > 0"
       />
      </validation-provider>
@@ -81,7 +81,7 @@
        counter
        maxlength="35"
        :color="isDark ? '#208ad6' : 'grey'"
-       :background-color="isDark ? 'grey darken-4' : 'grey lighten-5'"
+       :background-color="isDark ? '#28292b' : 'grey lighten-5'"
        :error="errors.length > 0"
        :outlined="isDark"
       />
@@ -102,7 +102,7 @@
        placeholder="Description"
        solo
        :color="isDark ? '#208ad6' : 'grey'"
-       :background-color="isDark ? 'grey darken-4' : 'grey lighten-5'"
+       :background-color="isDark ? '#28292b' : 'grey lighten-5'"
        :error="errors.length > 0"
        :outlined="isDark"
       />
@@ -124,7 +124,7 @@
        :items="dbTables"
        :item-color="isDark ? 'indigo lighten-3' : 'primary'"
        :color="isDark ? '#208ad6' : 'grey'"
-       :background-color="isDark ? 'grey darken-4' : 'grey lighten-5'"
+       :background-color="isDark ? '#28292b' : 'grey lighten-5'"
        :error="errors.length > 0"
       >
        <template v-slot:item="data">

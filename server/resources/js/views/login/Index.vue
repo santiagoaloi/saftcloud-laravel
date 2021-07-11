@@ -66,7 +66,7 @@
            @keydown.enter.prevent="login()"
            @keydown.space.prevent
            :color="isDark ? 'white' : ''"
-           :background-color="isDark ? 'grey darken-4' : 'grey lighten-4'"
+           :background-color="isDark ? '#28292b' : 'grey lighten-4'"
            :error="errors.length > 0"
            spellcheck="false"
           />
@@ -89,7 +89,7 @@
             @keydown.enter.prevent="login()"
             @keydown.space.prevent
             :color="isDark ? 'white' : ''"
-            :background-color="isDark ? 'grey darken-4' : 'grey lighten-4'"
+            :background-color="isDark ? '#28292b' : 'grey lighten-4'"
             :error="errors.length > 0"
             spellcheck="false"
            />

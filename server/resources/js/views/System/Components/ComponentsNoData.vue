@@ -4,7 +4,7 @@
    <div class="flex-grow-1 align-center justify-center d-flex flex-column">
     <v-img :aspect-ratio="1" width="250" contain src="storage/systemImages/noContent.svg"></v-img>
     No components found. Choose a different filter or
-    <span :class="isDark ? 'secundary--text' : 'primary--text'" @click="dialogs.dialogComponent = true" class=" cursor-pointer"
+    <span :class="isDark ? 'secundary--text' : 'primary--text'" @click="dialogComponent = true" class=" cursor-pointer"
      ><b> create a new component</b></span
     >
    </div>
@@ -25,7 +25,7 @@ export default {
 
  computed: {
   ...sync("theme", ["isDark"]),
-  ...sync("componentManagement", ["dialogs"])
+  ...sync("componentManagement", ["dialogComponent"])
  }
 };
 </script>

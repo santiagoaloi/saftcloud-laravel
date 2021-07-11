@@ -18,7 +18,7 @@
       :outlined="isDark"
       :solo="!isDark"
       :color="isDark ? '#208ad6' : 'grey'"
-      :background-color="isDark ? 'grey darken-4' : 'grey lighten-4'"
+      :background-color="isDark ? '#28292b' : 'grey lighten-4'"
       v-model="selectedComponentFormField.label"
       :prepend-inner-icon="selectedComponentFormField.icon.name"
       @click:prepend-inner="dialogIcon = true"
@@ -33,7 +33,7 @@
       v-model="selectedComponentFormField.inputType"
       :item-color="isDark ? 'indigo lighten-3' : 'primary'"
       :color="isDark ? '#208ad6' : 'grey'"
-      :background-color="isDark ? 'grey darken-4' : 'grey lighten-4'"
+      :background-color="isDark ? '#28292b' : 'grey lighten-4'"
       :menu-props="{ transition: 'slide-y-transition' }"
       :items="inputTypes"
       hide-details

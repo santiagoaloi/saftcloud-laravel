@@ -25,7 +25,7 @@
       :outlined="isDark"
       :solo="!isDark"
       :color="isDark ? '#208ad6' : 'grey'"
-      :background-color="isDark ? 'grey darken-4' : 'grey lighten-4'"
+      :background-color="isDark ? '#28292b' : 'grey lighten-4'"
       spellcheck="false"
       hide-details
       v-model="selectedComponent.name"
@@ -38,7 +38,7 @@
       :outlined="isDark"
       :solo="!isDark"
       :color="isDark ? '#208ad6' : 'grey'"
-      :background-color="isDark ? 'grey darken-4' : 'grey lighten-4'"
+      :background-color="isDark ? '#28292b' : 'grey lighten-4'"
       spellcheck="false"
       :rows="2"
       autogrow
@@ -46,6 +46,11 @@
       v-model="selectedComponent.config.note"
      >
      </v-textarea>
+    </div>
+
+    <div class="mt-2">
+     <baseFieldLabel label="Display in navigation drawer" />
+     <v-switch> hola </v-switch>
     </div>
    </v-col>
   </v-row>

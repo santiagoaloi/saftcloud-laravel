@@ -86,8 +86,6 @@ mix
   }
  });
 
-// console.log("test");
-
 mix.then(() => {
  process.nextTick(publishAssets);
 });

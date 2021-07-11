@@ -12,7 +12,7 @@
    solo
    class="mb-2"
    :color="isDark ? '#208ad6' : 'grey'"
-   :background-color="isDark ? 'grey darken-4' : 'grey lighten-5'"
+   :background-color="isDark ? '#28292b' : 'grey lighten-5'"
    :outlined="isDark"
   />
   <v-list-item-group v-model="selectedFieldItemGroup" mandatory active-class="blue-grey lighten-4">

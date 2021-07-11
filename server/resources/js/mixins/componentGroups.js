@@ -13,7 +13,15 @@ export default {
 
  computed: {
   ...sync("theme", ["isDark"]),
-  ...sync("componentManagement", ["allGroups", "selectedComponentGroups", "groupName", "groupParent", "allComponents", "dbGroupNames"]),
+  ...sync("componentManagement", [
+   "allGroups",
+   "selectedComponentGroups",
+   "groupName",
+   "groupParent",
+   "allComponents",
+   "dbGroupNames",
+   "groupNameBeingRemoved"
+  ]),
   ...get("componentManagement", ["selectedAllGroups", "selectedSomeGroups", "hasSelectedComponentGroups", "countComponentsInGroup"]),
 
   formattedGroup() {
@@ -122,10 +130,11 @@ export default {
   },
 
   removeGroupWarning(id, name) {
+   this.groupNameBeingRemoved = name;
    this.$swal({
     title: `<span style="color:${this.isDark ? "lightgrey" : ""} "> Delete ${name} group? </span>`,
     allowOutsideClick: false,
-    html: `<span style="color:${this.isDark ? "lightgrey" : ""} ">  This action cannot be undone. </span>`,
+    html: `<span style="color:${this.isDark ? "lightgrey" : ""} ">  If no components are linked to this group, this group will be removed. </span>`,
     showCancelButton: true,
     confirmButtonText: "Delete",
     cancelButtonText: "Cancel",
