@@ -1,9 +1,9 @@
 <template>
  <v-app>
-  <pub-bar />
-  <pub-view />
+  <public-bar />
+  <public-view />
   <snackbar />
-  <pub-footer />
+  <public-footer />
  </v-app>
 </template>
 
@@ -11,9 +11,9 @@
 export default {
  name: "Publiclayout",
  components: {
-  PubBar: () => import(/* webpackChunkName: 'public-appbar' */ "./AppBar"),
-  PubView: () => import(/* webpackChunkName: 'public-view' */ "./View"),
-  PubFooter: () => import(/* webpackChunkName: 'public-footer' */ "./Footer"),
+  PublicBar: () => import(/* webpackChunkName: 'public-appbar' */ "./AppBar"),
+  PublicView: () => import(/* webpackChunkName: 'public-view' */ "./View"),
+  PublicFooter: () => import(/* webpackChunkName: 'public-footer' */ "./Footer"),
   Snackbar: () =>
    import(
     /* webpackChunkName: 'public-snackbar' */

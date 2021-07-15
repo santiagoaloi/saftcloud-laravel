@@ -128,7 +128,7 @@
     </v-sheet>
    </v-expand-transition>
 
-   <v-data-table checkbox-color="primary" item-key="id" show-select :headers="tableHeaders2" :items="componentsLinkedToGroup" :items-per-page="-1">
+   <v-data-table checkbox-color="primary" item-key="id" show-select :headers="headers" :items="componentsLinkedToGroup" :items-per-page="-1">
     <template #item.avatar="{item}">
      <v-avatar class="cursor-pointer" size="30" rounded color="indigo">
       <v-icon size="25" dark>
@@ -191,7 +191,7 @@ export default {
  data() {
   return {
    removeAlert: true,
-   tableHeaders2: [
+   headers: [
     {
      text: "Avatar",
      align: "start",

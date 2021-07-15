@@ -142,11 +142,12 @@ export default {
    "allGroups"
   ]),
 
+  ...sync("componentManagement", ["componentCardGroup", "dialogs", "cardGroupKey"]),
+
   componentIcon() {
    if (!this.selectedComponent) return;
    return this.selectedComponent.config_settings.icon;
-  },
-  ...sync("componentManagement", ["componentCardGroup", "dialogs", "cardGroupKey"])
+  }
  },
 
  methods: {

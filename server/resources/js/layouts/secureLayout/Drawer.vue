@@ -23,7 +23,7 @@ import axios from "axios";
 import Vue from "vue";
 import { sync, call } from "vuex-pathify";
 
-Vue.component("MainMenu", () => import(/* webpackChunkName: 'Drawer-Menu' */ "@/components/navigation/MainMenu"));
+Vue.component("MainMenu", () => import(/* webpackChunkName: 'components-drawer-menu' */ "@/components/navigation/MainMenu"));
 
 export default {
  name: "SecureDrawer",

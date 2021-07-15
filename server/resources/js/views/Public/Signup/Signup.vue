@@ -38,8 +38,8 @@ import axios from "axios";
 export default {
  name: "Signup",
  components: {
-  steps: () => import("./Steps/Steps"),
-  signupAlert: () => import("./Steps/SignupAlert"),
+  steps: () => import(/* webpackChunkName: 'signup-steps' */ "./Steps/Steps"),
+  signupAlert: () => import(/* webpackChunkName: 'signup-steps-alert' */ "./Steps/SignupAlert"),
 
   Pricing,
   Faq

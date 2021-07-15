@@ -28,7 +28,7 @@
        solo
        hide-details
        dense
-       v-model="selectedComponent.config.general_config.name"
+       v-model="selectedComponent.config.general_config.title"
       >
       </v-text-field
      ></v-list-item-title>
@@ -56,7 +56,6 @@
      :background-color="isDark ? '#28292b' : 'grey lighten-5'"
      outlined
      spellcheck="false"
-     noResize
      :rows="2"
      autogrow
      dense
@@ -187,8 +186,8 @@
 
     <v-list-item-content>
      <v-list-item-title>Created</v-list-item-title>
-     <v-list-item-subtitle> {{ selectedComponent.created_at }} </v-list-item-subtitle>
-     <v-list-item-subtitle>12 days ago</v-list-item-subtitle>
+     <v-list-item-subtitle> {{ selectedComponent.created_at | momentDate }} </v-list-item-subtitle>
+     <v-list-item-subtitle> {{ selectedComponent.created_at | momentDateAgo }}</v-list-item-subtitle>
     </v-list-item-content>
    </v-list-item>
 
@@ -201,8 +200,8 @@
 
     <v-list-item-content>
      <v-list-item-title>Edited</v-list-item-title>
-     <v-list-item-subtitle> {{ selectedComponent.updated_at }} </v-list-item-subtitle>
-     <v-list-item-subtitle>8 days ago</v-list-item-subtitle>
+     <v-list-item-subtitle> {{ selectedComponent.updated_at | momentDate }} </v-list-item-subtitle>
+     <v-list-item-subtitle>{{ selectedComponent.updated_at | momentDateAgo }} </v-list-item-subtitle>
     </v-list-item-content>
    </v-list-item>
 

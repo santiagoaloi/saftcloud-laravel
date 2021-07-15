@@ -23,8 +23,12 @@
 import Vue from "vue";
 import { sync } from "vuex-pathify";
 
-Vue.component("ComponentDrilldown", () => import("@/components/navigation/ComponentDrilldown"));
-Vue.component("ComponentDrilldownBar", () => import("@/components/navigation/ComponentDrilldownBar"));
+Vue.component("ComponentDrilldown", () =>
+ import(/* webpackChunkName: 'components-navigation-drilldown' */ "@/components/navigation/ComponentDrilldown")
+);
+Vue.component("ComponentDrilldownBar", () =>
+ import(/* webpackChunkName: 'components-navigation-drilldown-bar' */ "@/components/navigation/ComponentDrilldownBar")
+);
 
 export default {
  name: "SecureComponentDrawer",

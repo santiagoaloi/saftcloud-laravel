@@ -1,9 +1,9 @@
 <template>
  <div v-if="selectedComponent">
-  <v-app-bar class="pa-0 mt-1" color="transparent" flat dense>
+  <v-app-bar color="transparent" flat dense>
    <v-tooltip transition="false" color="black" bottom>
     <template v-slot:activator="{ on, attrs }">
-     <v-btn v-on="on" dark :disabled="previousComponentDisabled" @click="previousComponent()" class="mr-2" fab text x-small>
+     <v-btn v-on="on" :disabled="previousComponentDisabled" @click="previousComponent()" class="mr-2" fab text x-small>
       <v-icon>mdi-chevron-left</v-icon>
      </v-btn>
     </template>
@@ -11,7 +11,7 @@
    </v-tooltip>
    <v-tooltip transition="false" color="black" bottom>
     <template v-slot:activator="{ on, attrs }">
-     <v-btn v-on="on" dark :disabled="nextComponentDisabled" @click="nextComponent()" fab text x-small>
+     <v-btn v-on="on" :disabled="nextComponentDisabled" @click="nextComponent()" fab text x-small>
       <v-icon>mdi-chevron-right</v-icon>
      </v-btn>
     </template>
@@ -20,9 +20,14 @@
 
    <v-spacer></v-spacer>
 
-   <v-btn @click.stop="secureComponentDrawer = false" fab text x-small>
-    <v-icon>mdi-menu</v-icon>
-   </v-btn>
+   <v-tooltip transition="false" color="black" bottom>
+    <template v-slot:activator="{ on, attrs }">
+     <v-btn v-on="on" @click.stop="secureComponentDrawer = false" fab text x-small>
+      <v-icon>mdi-menu</v-icon>
+     </v-btn>
+    </template>
+    <span>Hide</span>
+   </v-tooltip>
   </v-app-bar>
  </div>
 </template>

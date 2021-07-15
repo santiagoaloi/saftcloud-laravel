@@ -19,8 +19,8 @@
   <template #item.actions="{item}">
    <v-tooltip transition="false" color="black" bottom>
     <template v-slot:activator="{ on, attrs }">
-     <v-btn v-on="on" color="white" small icon :ripple="false">
-      <v-icon> {{ isStarredIcon(component) }} </v-icon>
+     <v-btn v-on="on" @click.stop="setStarred(component)" color="white" small icon :ripple="false">
+      <v-icon :color="isStarredColor(component)"> {{ isStarredIcon(component) }} </v-icon>
      </v-btn>
     </template>
     <span>Favourite</span>
@@ -77,7 +77,8 @@ export default {
      text: "Avatar",
      align: "start",
      sortable: false,
-     value: "avatar"
+     value: "avatar",
+     width: 0
     },
     {
      text: "Component",
@@ -106,7 +107,7 @@ export default {
  methods: {
   ...call("componentManagement/*"),
   calculateHeight() {
-   return Number(this.$vuetify.breakpoint.height - 420);
+   return Number(this.$vuetify.breakpoint.height - 370);
   }
  }
 };

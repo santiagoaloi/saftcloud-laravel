@@ -18,7 +18,7 @@ export default [
    spinner: false,
    alias: "Homepage"
   },
-  component: () => import(/* webpackChunkName: 'DefaultHomepage' */ "@/views/Public/Homepage/Index.vue")
+  component: () => import(/* webpackChunkName: 'public-homepage' */ "@/views/Public/Homepage/Index.vue")
  },
 
  {
@@ -32,7 +32,7 @@ export default [
    spinner: true,
    alias: "Signup"
   },
-  component: () => import(/* webpackChunkName: 'Signup' */ "@/views/Public/Signup/Signup.vue")
+  component: () => import(/* webpackChunkName: 'signup' */ "@/views/Public/Signup/Signup.vue")
  },
  {
   path: "/verifyAccount",
@@ -45,6 +45,6 @@ export default [
    spinner: true,
    alias: "VerifyAccount"
   },
-  component: () => import(/* webpackChunkName: 'Signup' */ "@/views/Public/Signup/VerifyAccount.vue")
+  component: () => import(/* webpackChunkName: 'signup-verify-account' */ "@/views/Public/Signup/VerifyAccount.vue")
  }
 ];

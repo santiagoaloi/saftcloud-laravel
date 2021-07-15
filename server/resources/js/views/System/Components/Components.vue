@@ -3,6 +3,7 @@
   <components-appbar />
   <components-groups />
   <components-tabs />
+
   <v-divider />
 
   <v-card color="transparent" flat :height="calculateHeight()" style="overflow-y:auto">
@@ -37,14 +38,14 @@ import { sync, call, get } from "vuex-pathify";
 export default {
  name: "ComponentsManagement",
  components: {
-  ComponentsTabs: () => import("./ComponentsTabs"),
-  ComponentsGrid: () => import("./ComponentsGrid"),
-  ComponentsTable: () => import("./ComponentsTable"),
-  ComponentsGroups: () => import("./ComponentsGroups"),
-  DialogComponent: () => import("./DialogComponent"),
-  ComponentsNoData: () => import("./ComponentsNoData"),
-  ComponentsAppbar: () => import("./ComponentsAppbar"),
-  ComponentEditSheet: () => import("./ComponentsEdit/ComponentsEditSheet")
+  ComponentsTabs: () => import(/* webpackChunkName: 'components-tabs' */ "./ComponentsTabs"),
+  ComponentsGrid: () => import(/* webpackChunkName: 'components-grid' */ "./ComponentsGrid"),
+  ComponentsTable: () => import(/* webpackChunkName: 'components-table' */ "./ComponentsTable"),
+  ComponentsGroups: () => import(/* webpackChunkName: 'components-groups' */ "./ComponentsGroups"),
+  DialogComponent: () => import(/* webpackChunkName: 'components-dialog-new-component' */ "./DialogComponent"),
+  ComponentsNoData: () => import(/* webpackChunkName: 'components-no-data' */ "./ComponentsNoData"),
+  ComponentsAppbar: () => import(/* webpackChunkName: 'components-appbar' */ "./ComponentsAppbar"),
+  ComponentEditSheet: () => import(/* webpackChunkName: 'components-edit-sheet' */ "./ComponentsEdit/ComponentsEditSheet")
  },
 
  data() {
@@ -66,7 +67,7 @@ export default {
  methods: {
   ...call("componentManagement/*"),
   calculateHeight() {
-   return Number(this.$vuetify.breakpoint.height - 350);
+   return Number(this.$vuetify.breakpoint.height - 310);
   }
  }
 };

@@ -48,9 +48,21 @@
      </v-textarea>
     </div>
 
+    <v-divider class="my-5"></v-divider>
     <div class="mt-2">
-     <baseFieldLabel label="Display in navigation drawer" />
-     <v-switch v-model="selectedComponent" />
+     <baseFieldLabel class="mb-n3" label="Navigation drawer settings" />
+
+     <v-list-item two-line>
+      <v-list-item-icon>
+       <v-switch hide-details class="mt-2" v-model="selectedComponent" />
+      </v-list-item-icon>
+      <v-list-item-content>
+       <v-list-item-title>Visible in sidebar</v-list-item-title>
+       <v-list-item-subtitle>
+        Display this component in the left navigation drawer.
+       </v-list-item-subtitle>
+      </v-list-item-content>
+     </v-list-item>
     </div>
    </v-col>
   </v-row>
