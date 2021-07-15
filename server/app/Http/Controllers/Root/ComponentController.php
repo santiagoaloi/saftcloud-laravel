@@ -24,7 +24,7 @@ class ComponentController extends Controller {
         $sql_modified = str_replace('SELECT', 'SELECT count(*) as temp, ', $sql_query);
         $object =  array_keys((array)DB::SELECT($sql_modified)[0]);
 
-        $formColumnsAndFields = $this->buildColumnsAndFields($object);
+        $formColumnsAndFields = $this->buildColumnsAndFields($object);  // TRAE LOS VALORES POR DEFECTO DE 
         $general_config       = $this->buildGeneralConfig();
 
         $config['general_config'] = $general_config;
@@ -115,12 +115,14 @@ class ComponentController extends Controller {
 
     public function update(Request $request, $id) {
         $query = Component::find($id);
-        $sql_original = json_decode($query->config, true)['sql_query'];
+
+        $general_config = json_decode($query->config, true);
+        $sql_original = $general_config['general_config']['sql_query'];
 
         $input = $request->all();
 
-        if(isset($request->config['sql_query'])){
-            $sql_new = $request->config['sql_query'];
+        if(isset($request->config['general_config']['sql_query'])){
+            $sql_new = $request->config['general_config']['sql_query'];
 
             if($sql_original != $sql_new) {
                 try{
@@ -140,8 +142,8 @@ class ComponentController extends Controller {
                 $newFormFields = $formColumnsAndFields['ArrayFields'];
 
                 $originalFormFields = json_decode($query->config, true)['form_fields'];
-                $compare = new ComponentDefaultController;
-                $result = $compare->testCompare($newFormFields, $originalFormFields);
+
+                $result = Helper::compareItems($originalFormFields, $newFormFields);
 
                 $input['config']['columns'] = $formColumnsAndFields['ArrayColumns'];
                 $input['config']['form_fields'] = $result;
