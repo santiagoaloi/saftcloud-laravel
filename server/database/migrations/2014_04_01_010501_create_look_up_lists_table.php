@@ -13,7 +13,7 @@ class CreateLookUpListsTable extends Migration {
     public function up() {
         Schema::create('look_up_lists', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name')->unique();
             $table->softDeletes();
             $table->timestamps();
         });

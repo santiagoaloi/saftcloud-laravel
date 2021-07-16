@@ -16,7 +16,7 @@ class CreateAccountsTable extends Migration {
             $table->integer('license')->unique();
             $table->foreignId('account_plan_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
             $table->integer('payment_status');
-            $table->string('email')->nullable();
+            $table->string('email')->unique();
             $table->unsignedBigInteger('doc_type_id')->nullable();
             $table->foreign('doc_type_id')->references('id')->on('look_up_list_values')->onDelete('RESTRICT')->onUpdate('CASCADE');
             $table->bigInteger('doc_number')->nullable();
