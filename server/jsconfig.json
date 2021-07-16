@@ -1,0 +1,13 @@
+{
+ "typeAcquisition": {
+  "exclude": ["dotenv"]
+ },
+ "compilerOptions": {
+  "baseUrl": ".",
+  "paths": {
+   "@/*": ["resources/js/*"],
+   "@Components/*": ["resources/js/*"]
+  }
+ },
+ "exclude": ["node_modules", "public"]
+}

@@ -23,7 +23,7 @@ export const store = new Vuex.Store({
    },
    // Persist the following vuex modules.
    // If left empty, all modules are persisted.
-   paths: ["session", "theme.isDark", "signup", "componentManagement", "drawers"]
+   paths: ["authentication", "theme.isDark", "signup", "componentManagement", "drawers"]
   }),
   pathify.plugin
  ],

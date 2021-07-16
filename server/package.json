@@ -13,6 +13,7 @@
  },
  "dependencies": {
   "moment": "^2.29.1",
+  "vls": "^0.7.4",
   "vue-country-flag": "^2.0.4",
   "vue-diagonal": "^0.1.0",
   "vue-head": "^2.2.0",

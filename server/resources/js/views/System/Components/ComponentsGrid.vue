@@ -38,7 +38,7 @@
 
         <div :class="{ 'show-btns': hover, 'hide-btns': !hover }">
          <v-tooltip transition="false" color="black" bottom>
-          <template v-slot:activator="{ on, attrs }">
+          <template v-slot:activator="{ on }">
            <v-btn v-on="on" @click.stop="setModular(component)" color="white" small icon :ripple="false">
             <v-icon :color="isModularColor(component)"> {{ isModularIcon(component) }} </v-icon>
            </v-btn>
@@ -47,7 +47,7 @@
          </v-tooltip>
 
          <v-tooltip transition="false" color="black" bottom>
-          <template v-slot:activator="{ on, attrs }">
+          <template v-slot:activator="{ on }">
            <v-btn v-on="on" @click.stop="setActive(component)" color="white" small icon :ripple="false">
             <v-icon :color="isActiveColor(component)"> {{ isActiveIcon(component) }} </v-icon>
            </v-btn>
@@ -56,7 +56,7 @@
          </v-tooltip>
 
          <v-tooltip transition="false" color="black" bottom>
-          <template v-slot:activator="{ on, attrs }">
+          <template v-slot:activator="{ on }">
            <v-btn v-on="on" @click.stop="setStarred(component)" color="white" small icon :ripple="false">
             <v-icon :color="isStarredColor(component)"> {{ isStarredIcon(component) }} </v-icon>
            </v-btn>
@@ -94,7 +94,7 @@
          <div v-if="hasUnsavedChanges(component)" class="gallery-card-subtitle-wrapper">
           <h5 class="gallery-card-subtitle">
            <v-tooltip transition="false" color="black" bottom>
-            <template v-slot:activator="{ on, attrs }">
+            <template v-slot:activator="{ on }">
              <v-icon v-on="on" :color="isDark ? 'white' : '#28292b'">mdi-content-save-alert-outline</v-icon>
             </template>
             <span>Unsaved</span>
@@ -133,7 +133,6 @@ export default {
    "hasUnsavedChanges",
    "isModularIcon",
    "isStarredIcon",
-   "selectedComponentIndex",
    "selectedComponent",
    "isStarredColor",
    "isActiveColor",
