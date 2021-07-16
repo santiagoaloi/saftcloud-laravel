@@ -7,6 +7,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use App\Models\Root\ComponentGroup;
 
+use App\Http\Controllers\Root\ComponentController;
 use App\Http\Controllers\Controller;
 use Illuminate\Database\QueryException;
 
@@ -165,9 +166,18 @@ class ComponentGroupController extends Controller {
         } else {
             $components = DB::table('components')->where('component_group_id', '=', $id)->get();
 
+            $funcComponentController = New ComponentController;
+            foreach($components as $component){
+                $arrayComponent[] = $funcComponentController->parseComponent($component);
+            };
+    
+            return response([
+                'components' => $arrayComponent
+            ], 200);
+
             return response([
                 'message' => 'Hay un componente vinculado a este grupo',
-                'components' => $components,
+                'components' => $arrayComponent,
                 'status'=> false
             ], 404);
         }
