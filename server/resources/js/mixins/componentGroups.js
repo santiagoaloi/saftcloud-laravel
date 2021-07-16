@@ -42,6 +42,12 @@ export default {
  methods: {
   ...call("componentManagement/*"),
 
+  dbGroupNamesFiltered(editedGroupName) {
+   return this.dbGroupNames.filter(group => {
+    return group !== editedGroupName;
+   });
+  },
+
   addGroupDialog() {
    this.$swal({
     title: `<span style="color:${this.isDark ? "lightgrey" : "black"} "> add group </span>`,
@@ -69,14 +75,14 @@ export default {
    }).then(result => {
     if (result.value) {
      this.groupName = result.value;
-     this.selectGroupParent();
+     this.selectGroupParentNewGroup();
     } else if (result.dismiss === "cancel") {
      this.groupName = "";
     }
    });
   },
 
-  selectGroupParent() {
+  selectGroupParentNewGroup() {
    this.$swal({
     title: `<span style="color:${this.isDark ? "lightgrey" : "black"} "> Select Group Parent </span>`,
     allowOutsideClick: false,
@@ -95,7 +101,6 @@ export default {
     background: `${this.isDark ? "#2f3136" : ""}`
    }).then(result => {
     if (result.value) {
-     console.log(result);
      this.groupParent = result.value;
      this.saveGroup();
     } else if (result.dismiss === "cancel") {
@@ -104,7 +109,7 @@ export default {
    });
   },
 
-  renameGroupWarning(id, name) {
+  renameGroupDialog(id, name) {
    this.$swal({
     title: `<span style="color:${this.isDark ? "lightgrey" : "black"} "> Edit group </span>`,
     allowOutsideClick: false,
@@ -120,11 +125,43 @@ export default {
     input: "text",
     inputValue: name,
     backdrop: `${this.isDark ? "rgba(0, 0, 0, 0.6)" : "rgba(108, 122, 137, 0.8)"}`,
+    background: `${this.isDark ? "#2f3136" : ""}`,
+    inputValidator: value => {
+     if (!value) {
+      return "You need to write a group name";
+     }
+    }
+   }).then(result => {
+    if (result.value) {
+     this.groupName = result.value;
+     this.selectGroupParentEditGroup(id, this.groupName);
+    }
+   });
+  },
+
+  selectGroupParentEditGroup(id, name) {
+   this.$swal({
+    title: `<span style="color:${this.isDark ? "lightgrey" : "black"} "> Select Group Parent </span>`,
+    allowOutsideClick: false,
+    allowEscapeKey: false,
+    allowEnterKey: false,
+    showCancelButton: true,
+    confirmButtonText: "Save group",
+    cancelButtonText: "Back",
+    confirmButtonColor: "#5469d4",
+    customClass: {
+     input: `${this.isDark ? "swalDarkSelect" : ""}`
+    },
+    input: "select",
+    inputOptions: ["No Parent", ...this.dbGroupNamesFiltered(name)],
+    backdrop: `${this.isDark ? "rgba(0, 0, 0, 0.6)" : "rgba(108, 122, 137, 0.8)"}`,
     background: `${this.isDark ? "#2f3136" : ""}`
    }).then(result => {
     if (result.value) {
-     let newName = result.value;
-     this.renameGroup({ id, newName });
+     this.groupParent = result.value;
+     this.renameGroup(id);
+    } else if (result.dismiss === "cancel") {
+     this.renameGroupDialog(id, name);
     }
    });
   },

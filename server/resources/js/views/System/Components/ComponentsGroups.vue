@@ -78,7 +78,7 @@
 
        <v-tooltip transition="false" color="black" bottom>
         <template v-slot:activator="{ on, attrs }">
-         <v-btn v-on="on" class="mr-2" :ripple="false" @click.stop="renameGroupWarning(item.id, item.name)" small depressed>
+         <v-btn v-on="on" class="mr-2" :ripple="false" @click.stop="renameGroupDialog(item.id, item.name)" small depressed>
           <v-icon small>mdi-pencil-outline</v-icon>
          </v-btn>
         </template>
@@ -130,9 +130,9 @@
 
    <v-data-table checkbox-color="primary" item-key="id" show-select :headers="headers" :items="componentsLinkedToGroup" :items-per-page="-1">
     <template #item.avatar="{item}">
-     <v-avatar class="cursor-pointer" size="30" rounded color="indigo">
+     <v-avatar class="cursor-pointer" size="30" rounded :color="item.config_settings.icon.color">
       <v-icon size="25" dark>
-       mdi-apps
+       {{ item.config_settings.icon.name }}
       </v-icon>
      </v-avatar>
     </template>

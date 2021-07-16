@@ -26,7 +26,7 @@
     <span>Favourite</span>
    </v-tooltip>
 
-   <v-menu rounded="lg" origin="center center" transition="scale-transition" :nudge-bottom="10" offset-y>
+   <v-menu rounded="xl" origin="center center" transition="scale-transition" :nudge-bottom="10" offset-y>
     <template v-slot:activator="{ on }">
      <v-btn icon v-on="on">
       <v-icon>mdi-dots-vertical</v-icon>
@@ -36,22 +36,18 @@
     <v-list class="pa-2" rounded="xl" outlined>
      <v-list-item @click.stop>
       <v-list-item-action>
-       <v-btn small icon dark color="#4C4C4C">
-        <v-icon color="grey darken-2" small class="mx-2">
-         mdi-pencil-outline
-        </v-icon>
-       </v-btn>
+       <v-icon color="grey darken-2" small class="mx-2">
+        mdi-pencil-outline
+       </v-icon>
       </v-list-item-action>
       <v-list-item-title>Editar</v-list-item-title>
      </v-list-item>
 
      <v-list-item @click.stop>
       <v-list-item-action>
-       <v-btn small icon dark color="#4C4C4C">
-        <v-icon color="red lighten-2" small class="mx-2">
-         mdi-delete-outline
-        </v-icon>
-       </v-btn>
+       <v-icon color="red lighten-2" small class="mx-2">
+        mdi-delete-outline
+       </v-icon>
       </v-list-item-action>
 
       <v-list-item-title>Eliminar</v-list-item-title>

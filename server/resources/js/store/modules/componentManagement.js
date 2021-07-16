@@ -106,18 +106,6 @@ const getters = {
   });
  },
 
- //  allComponentsFiltered: (state, getters) => {
- //   if (!getters.hasSelectedComponentGroups) return [];
- //   const search = state.search.toLowerCase();
- //   return state.allComponents.filter(component => {
- //    return (
- //     (search === "" || component.config.title.toLowerCase().match(search)) &&
- //     (getters.activeStatusTabName === "all" || component.status[getters.activeStatusTabName]) &&
- //     state.selectedComponentGroups.some(g => g.id === component.component_group_id)
- //    );
- //   });
- //  },
-
  isComponentsEmpty: state => {
   return isEmpty(state.allComponents);
  },
@@ -270,12 +258,20 @@ const actions = {
    .delete(`api/componentGroup/${id}`)
    .then(response => {
     if (response.status === 200) {
-     store.set("componentManagement/allGroups", response.data.groups);
-     store.set("snackbar/value", true);
-     store.set("snackbar/text", "Group removed");
-     store.set("snackbar/color", "pink darken-1");
-     dispatch("getNavigationStructure");
-     dispatch("getGroups");
+     if (response.data.components && response.data.components.length) {
+      store.set("componentManagement/componentsLinkedToGroup", response.data.components);
+      store.set("componentManagement/componentsLinkedToGroupDialog", true);
+     }
+     if (response.data.groups) {
+      alert("hey");
+      store.set("componentManagement/allGroups", response.data.groups);
+      store.set("snackbar/value", true);
+      store.set("snackbar/text", "Group removed");
+      store.set("snackbar/color", "pink darken-1");
+      dispatch("getDbGroupNames");
+      dispatch("getNavigationStructure");
+      dispatch("getGroups");
+     }
     }
    })
    .catch(error => {
@@ -283,15 +279,43 @@ const actions = {
     // store.set("snackbar/value", true);
     // store.set("snackbar/text", `${error.response.data.message}`);
     // store.set("snackbar/color", "pink darken-1");
-    store.set("componentManagement/componentsLinkedToGroup", error.response.data.components);
-    store.set("componentManagement/componentsLinkedToGroupDialog", true);
+    // store.set("componentManagement/componentsLinkedToGroup", error.response.data.components);
+    // store.set("componentManagement/componentsLinkedToGroupDialog", true);
    });
  },
 
- renameGroup({ dispatch }, { id, newName }) {
-  axios.patch(`api/componentGroup/${id}`, { name: newName }).then(response => {
+ saveGroup({ state, dispatch }) {
+  parent = state.allGroups.find(g => g.name === state.dbGroupNames[state.groupParent - 1]);
+  axios
+   .post("api/componentGroup", { name: state.groupName, component_group_id: parent ? parent.id : null })
+   .then(response => {
+    if (response.status === 200) {
+     store.set("componentManagement/allGroups", response.data.groups);
+     store.set("snackbar/value", true);
+     store.set("snackbar/text", `Group "${state.groupName}" created`);
+     store.set("snackbar/color", "grey darken-2");
+     store.set("componentManagement/groupName", "");
+     store.set("componentManagement/groupChild", "");
+     store.set("componentManagement/groupParent", 0);
+     dispatch("getNavigationStructure");
+     dispatch("getDbGroupNames");
+     dispatch("getGroups");
+    }
+   })
+   .catch(error => {
+    console.log({ ...error });
+    store.set("snackbar/value", true);
+    store.set("snackbar/text", `${error.response.status} ${error.response.statusText}`);
+    store.set("snackbar/color", "pink darken-1");
+   });
+ },
+
+ renameGroup({ dispatch, state }, id) {
+  parent = state.allGroups.find(g => g.name === state.dbGroupNames[state.groupParent - 1]);
+  axios.put(`api/componentGroup/${id}`, { name: state.groupName, component_group_id: parent ? parent.id : null }).then(response => {
    if (response.status === 200) {
     store.set("componentManagement/allGroups", response.data.groups);
+    store.set("componentManagement/groupName", "");
     store.set("snackbar/value", true);
     store.set("snackbar/text", "Group renamed");
     store.set("snackbar/color", "grey darken-2");
@@ -365,33 +389,6 @@ const actions = {
      store.set("snackbar/color", "pink darken-1");
      dispatch("getNavigationStructure");
      store.set("drawers/secureComponentDrawer", false);
-    }
-   })
-   .catch(error => {
-    console.log({ ...error });
-    store.set("snackbar/value", true);
-    store.set("snackbar/text", `${error.response.status} ${error.response.statusText}`);
-    store.set("snackbar/color", "pink darken-1");
-   });
- },
-
- saveGroup({ state, dispatch }) {
-  parent = state.allGroups.find(g => g.name === state.dbGroupNames[state.groupParent - 1]);
-  axios
-   .post("api/componentGroup", { name: state.groupName, component_group_id: parent ? parent.id : null })
-   .then(response => {
-    if (response.status === 200) {
-     store.set("componentManagement/allGroups", response.data.groups);
-     store.set("componentManagement/groupName", "");
-     store.set("componentManagement/groupChild", "");
-     store.set("snackbar/value", true);
-     store.set("snackbar/text", `Group "${state.groupName}" created`);
-     store.set("snackbar/color", "grey darken-2");
-     store.set("componentManagement/groupName", "");
-     store.set("componentManagement/groupParent", 0);
-     dispatch("getNavigationStructure");
-     dispatch("getDbGroupNames");
-     dispatch("getGroups");
     }
    })
    .catch(error => {

@@ -54,7 +54,7 @@
 
      <v-list-item two-line>
       <v-list-item-icon>
-       <v-switch hide-details class="mt-2" v-model="selectedComponent" />
+       <v-switch hide-details class="mt-2" v-model="selectedComponent.config.general_config.isVisibleInSidebar" />
       </v-list-item-icon>
       <v-list-item-content>
        <v-list-item-title>Visible in sidebar</v-list-item-title>
@@ -90,11 +90,7 @@ export default {
    if (!this.selectedComponent) return;
    return this.selectedComponent.config_settings.icon;
   }
- },
-
- mounted() {},
-
- methods: {}
+ }
 };
 </script>
 
