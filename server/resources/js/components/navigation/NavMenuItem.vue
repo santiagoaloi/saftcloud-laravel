@@ -8,7 +8,7 @@
    </v-list-item-icon>
    <v-list-item-content>
     <v-list-item-title>
-     {{ menuItem.name }}
+     {{ menuItem.title || menuItem.name }}
     </v-list-item-title>
    </v-list-item-content>
   </v-list-item>

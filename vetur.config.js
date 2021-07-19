@@ -2,10 +2,5 @@
 /** @type {import('vls').VeturConfig} */
 module.exports = {
   settings: {},
-  projects: [
-    "./server/resources/js",
-    // {
-    // many comments here from template
-    // }
-  ],
+  projects: ["./server/resources/js"],
 };
