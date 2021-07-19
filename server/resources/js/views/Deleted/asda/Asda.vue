@@ -16,11 +16,9 @@
 
 <script>
 export default {
- name: "Da",
-
- created() {},
- mounted() {
-  console.log("Component mounted.");
- }
-};
+    name: "Asda",
+    mounted() {
+        console.log('Component mounted.')
+    }
+}
 </script>

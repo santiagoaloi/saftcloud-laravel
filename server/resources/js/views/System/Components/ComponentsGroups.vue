@@ -77,7 +77,7 @@
        </v-list-item-content>
 
        <v-tooltip transition="false" color="black" bottom>
-        <template v-slot:activator="{ on, attrs }">
+        <template v-slot:activator="{ on }">
          <v-btn v-on="on" class="mr-2" :ripple="false" @click.stop="renameGroupDialog(item.id, item.name)" small depressed>
           <v-icon small>mdi-pencil-outline</v-icon>
          </v-btn>
@@ -86,7 +86,7 @@
        </v-tooltip>
 
        <v-tooltip transition="false" color="black" bottom>
-        <template v-slot:activator="{ on, attrs }">
+        <template v-slot:activator="{ on }">
          <v-btn v-on="on" :ripple="false" @click.stop="removeGroupWarning(item.id, item.name)" small depressed>
           <v-icon small>mdi-delete-outline</v-icon>
          </v-btn>
@@ -129,7 +129,7 @@
    </v-expand-transition>
 
    <v-data-table checkbox-color="primary" item-key="id" show-select :headers="headers" :items="componentsLinkedToGroup" :items-per-page="-1">
-    <template #item.avatar="{item}">
+    <template v-slot:[`item.avatar`]="{ item }">
      <v-avatar class="cursor-pointer" size="30" rounded :color="item.config_settings.icon.color">
       <v-icon size="25" dark>
        {{ item.config_settings.icon.name }}
@@ -137,7 +137,7 @@
      </v-avatar>
     </template>
 
-    <template #item.actions="{item}">
+    <template v-slot:[`item.actions`]>
      <v-menu rounded="lg" origin="center center" transition="scale-transition" :nudge-bottom="10" offset-y>
       <template v-slot:activator="{ on }">
        <v-btn icon v-on="on">
@@ -171,8 +171,7 @@
       </v-list>
      </v-menu>
     </template>
-
-    <template #item.deleted_at="{item}">
+    <template v-slot:[`item.deleted_at`]="{ item }">
      <v-chip v-if="item.deleted_at">Removed</v-chip>
      <v-chip color="primary" v-else>Active</v-chip>
     </template>

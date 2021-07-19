@@ -10,6 +10,10 @@ const publicDir = "C:/xampp/htdocs/saftcloud/public";
 |---------------------------------------------------------------------
 */
 
+mix.options({
+ purifyCss: false
+});
+
 mix.disableNotifications();
 
 /*
@@ -64,6 +68,7 @@ if (mix.inProduction()) {
 */
 
 mix.setPublicPath("../public/");
+
 mix
  .js("resources/js/app.js", "public/dist/js")
  .extract()

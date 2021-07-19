@@ -1,5 +1,5 @@
 <template>
- <baseDialog dense v-model="internalValue" title="Icons" saveOnly max-width="600" @save="() => (internalValue = false)">
+ <baseDialog dense v-model="internalValue" title="Icons" max-width="600" @save="() => (internalValue = false)" @close="() => (internalValue = false)">
   <template>
    <v-card-text>
     <v-row>
