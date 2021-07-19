@@ -48,15 +48,15 @@ class ComponentGroupController extends Controller {
     public function showAllWithChild() {
         $parents = DB::table('component_groups')->select('id', 'name', 'icon', 'component_group_id')->where('component_group_id', NULL)->where('deleted_at', '=', NULL)->get();
         $childs = DB::table('component_groups')->select('id', 'name', 'icon', 'component_group_id')->where('component_group_id', '!=' , NULL)->where('deleted_at', '=', NULL)->get();
-        $query = DB::select("SELECT name, JSON_EXTRACT(config_settings, '$.icon.name') as icon, JSON_EXTRACT(config, '$.general_config.isVisibleInSidebar') as isVisibleInSidebar, component_group_id FROM components where deleted_at is NULL HAVING isVisibleInSidebar = true");
+        $query = DB::select("SELECT name, JSON_EXTRACT(config, '$.general_config.title') as title, JSON_EXTRACT(config_settings, '$.icon.name') as icon, JSON_EXTRACT(config, '$.general_config.isVisibleInSidebar') as isVisibleInSidebar, component_group_id FROM components where deleted_at is NULL HAVING isVisibleInSidebar = true");
         $array = [];
 
             if(!empty($query)){
                 foreach($query as $tes => $val){
-                    $name = $val->name;
                     $icon = str_replace('"', "", $val->icon);
-                    $url = '/'.$name;
-                    $components[$tes]['name'] = $name;
+                    $url = '/'.$val->name;
+                    $title = $val->title;
+                    $components[$tes]['title'] = $title;
                     $components[$tes]['icon'] = $icon;
                     $components[$tes]['link'] = $url;
                     $components[$tes]['component_group_id'] = $val->component_group_id;
