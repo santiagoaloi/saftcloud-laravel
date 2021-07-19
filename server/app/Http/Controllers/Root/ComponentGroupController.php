@@ -74,7 +74,6 @@ class ComponentGroupController extends Controller {
                 if(isset($childs) && !empty($query)){
                     foreach($childs as $child){
                         if($parent->id === $child->component_group_id){
-                            $parent->items[] = $child;
                             if(isset($components)){
                                 foreach($components as $component){
                                     if($child->id === $component['component_group_id']){
@@ -82,11 +81,16 @@ class ComponentGroupController extends Controller {
                                     }
                                 }
                             }
+                            if(isset($child->items)){
+                                $parent->items[] = $child;        
+                            }
                         }
                     }
                 }
                 $array['menu'][]['items'][] = $parent;
             }
+
+
             return response([
                 'navigationStructure' => $array
             ], 200);
