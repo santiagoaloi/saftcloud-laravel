@@ -13,26 +13,28 @@
      item-text="name"
      return-object
      placeholder="Select or create groups"
-     hide-selected
      item-color="primary"
-     :menu-props="{
-      transition: 'slide-y-transition'
-     }"
+     @click="persistenDropdown ? (dropDownValue = !dropDownValue) : ''"
+     @keydown="!dropDownValue ? (dropDownValue = true) : ''"
+     :menu-props="setValue()"
      :outlined="isDark"
      :solo="!isDark"
      :color="isDark ? '#208ad6' : 'grey'"
      :background-color="isDark ? '#28292b' : 'grey lighten-5'"
     >
      <template v-if="allGroups.length" v-slot:prepend-item>
-      <v-list-item @click="selectAllGroups" :ripple="false">
-       <v-list-item-avatar>
-        <v-icon>
+      <v-list-item :ripple="false" @click.stop="selectAllGroups">
+       <v-list-item-action>
+        <v-icon class="ml-1">
          {{ icon }}
         </v-icon>
-       </v-list-item-avatar>
+       </v-list-item-action>
        <v-list-item-content>
         <v-list-item-title> {{ selectedAllGroups ? "Unselect all groups" : "Select all groups" }} </v-list-item-title>
        </v-list-item-content>
+       <v-lisit-item-actions>
+        <v-switch style="margin-top:20px" @click.stop v-model="persistenDropdown" label="Persist" :ripple="false" />
+       </v-lisit-item-actions>
       </v-list-item>
       <v-divider></v-divider>
      </template>
@@ -48,30 +50,13 @@
       >
      </template>
 
-     <template v-slot:no-data>
-      <v-list-item @click="addGroupDialog()">
-       <v-list-item-avatar>
-        <v-icon>
-         mdi-plus
-        </v-icon>
-       </v-list-item-avatar>
-
-       <v-list-item-content>
-        <v-list-item-title>
-         <span>Create group </span>
-         {{ formattedGroup }}
-        </v-list-item-title>
-       </v-list-item-content>
-      </v-list-item>
-     </template>
-
-     <template #item="{ item, on }">
-      <v-list-item :ripple="false" v-on="on">
-       <v-list-item-avatar style="margin-left:1px">
+     <template #item="{ item, on, attrs }">
+      <v-list-item :ripple="false" :class="{ coloredBorder: attrs.inputValue }" v-on="on">
+       <v-list-item-action>
         <v-avatar class="white--text" tile size="30" color="primary">
          <h6>{{ countComponentsInGroup(item.id) }}</h6>
         </v-avatar>
-       </v-list-item-avatar>
+       </v-list-item-action>
        <v-list-item-content>
         <v-list-item-title> {{ item.name }} </v-list-item-title>
        </v-list-item-content>
@@ -93,6 +78,23 @@
         </template>
         <span>Remove group</span>
        </v-tooltip>
+      </v-list-item>
+     </template>
+
+     <template v-slot:no-data>
+      <v-list-item @click="addGroupDialog()">
+       <v-list-item-action>
+        <v-icon>
+         mdi-plus
+        </v-icon>
+       </v-list-item-action>
+
+       <v-list-item-content>
+        <v-list-item-title>
+         <span>Create group </span>
+         {{ formattedGroup }}
+        </v-list-item-title>
+       </v-list-item-content>
       </v-list-item>
      </template>
     </v-autocomplete>
@@ -190,6 +192,8 @@ export default {
  data() {
   return {
    removeAlert: true,
+   dropDownValue: false,
+   persistenDropdown: false,
    headers: [
     {
      text: "Avatar",
@@ -223,7 +227,13 @@ export default {
   ...sync("componentManagement", ["componentsLinkedToGroupDialog", "componentsLinkedToGroup", "groupNameBeingRemoved"])
  },
  methods: {
-  ...call("componentManagement/*")
+  ...call("componentManagement/*"),
+
+  setValue() {
+   if (this.persistenDropdown) {
+    return { value: this.dropDownValue };
+   } else this.dropDownValue = true;
+  }
  }
 };
 </script>
@@ -249,5 +259,14 @@ export default {
  color: white !important;
  border-radius: 8px;
  height: 50px;
+}
+
+.v-list-item--link:before {
+ background-color: unset !important;
+}
+
+.coloredBorder {
+ border-left: solid 2px #6453dced;
+ background: #3c3c42;
 }
 </style>

@@ -2,7 +2,7 @@
  <div>
   <v-item-group mandatory v-model="componentCardGroup">
    <transition-group class="gallery-card-container pa-2" appear css name="slide-x-transition">
-    <v-item :key="`${index}`" v-for="(component, index) in allComponentsFiltered" v-slot="{ active, toggle }">
+    <v-item :key="`${index}`" v-for="(component, index) in allComponentsFilteredSorted" v-slot="{ active, toggle }">
      <v-hover v-slot="{ hover }">
       <v-card
        :ref="`SEL${componentCardGroup}ID${index}`"
@@ -140,6 +140,10 @@ export default {
    "isActiveIcon",
    "allGroups"
   ]),
+
+  allComponentsFilteredSorted() {
+   return this.allComponentsFiltered;
+  },
 
   ...sync("componentManagement", ["componentCardGroup", "dialogs", "cardGroupKey"]),
 

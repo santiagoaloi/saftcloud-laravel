@@ -1,32 +1,42 @@
 <template>
  <div>
+  <!-- <v-list-group v-if="!menuItem.items">
+   <template v-slot:activator> -->
   <v-list-item v-if="!menuItem.items" :input-value="menuItem.value" :to="menuItem.link" :exact="menuItem.exact" :disabled="menuItem.disabled" link>
-   <v-list-item-icon>
-    <v-icon :class="{ 'grey--text': menuItem.disabled }">
-     {{ menuItem.icon ? menuItem.icon : "mdi-folder-outline" }}
-    </v-icon>
-   </v-list-item-icon>
-   <v-list-item-content>
-    <v-list-item-title>
-     {{ menuItem.title || menuItem.name }}
-    </v-list-item-title>
-   </v-list-item-content>
+   <div class="d-flex">
+    <v-list-item-icon>
+     <v-icon :class="{ 'grey--text': menuItem.disabled }">
+      {{ menuItem.icon ? menuItem.icon : "mdi-folder-outline" }}
+     </v-icon>
+    </v-list-item-icon>
+    <v-list-item-content>
+     <v-list-item-title>
+      {{ menuItem.title || menuItem.name }}
+     </v-list-item-title>
+    </v-list-item-content>
+   </div>
   </v-list-item>
-
+  <!-- </template>
+  </v-list-group> -->
   <v-list-group
+   no-action
    v-else
    :value="menuItem.regex ? menuItem.regex.test($route.path) : false"
    :disabled="menuItem.disabled"
    :sub-group="subgroup"
-   :to="menuItem.link"
-   link
    color="primary lighten-2"
    ref="group"
+   :prepend-icon="subgroup ? false : ''"
   >
    <template v-slot:activator>
     <v-list-item-icon v-if="!subgroup">
      <v-icon>{{ icon }}</v-icon>
     </v-list-item-icon>
+
+    <slot v-if="subgroup" name="prependIcon">
+     <v-icon class="ml-n4 mr-3">{{ icon }}</v-icon>
+    </slot>
+
     <v-list-item-content>
      <v-list-item-title>
       {{ menuItem.name }}
@@ -79,3 +89,8 @@ export default {
  }
 };
 </script>
+<style scoped>
+.v-application--is-ltr .v-list-group__items .v-list-item {
+ padding-left: 18px !important;
+}
+</style>
