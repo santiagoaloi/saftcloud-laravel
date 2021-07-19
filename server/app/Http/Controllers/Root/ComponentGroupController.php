@@ -55,7 +55,7 @@ class ComponentGroupController extends Controller {
                 foreach($query as $tes => $val){
                     $icon = str_replace('"', "", $val->icon);
                     $url = '/'.$val->name;
-                    $title = $val->title;
+                    $title = str_replace('"', "", $val->title);
                     $components[$tes]['title'] = $title;
                     $components[$tes]['icon'] = $icon;
                     $components[$tes]['link'] = $url;
@@ -71,7 +71,7 @@ class ComponentGroupController extends Controller {
                         }
                     }
                 }
-                if(isset($childs)){
+                if(isset($childs) && !empty($query)){
                     foreach($childs as $child){
                         if($parent->id === $child->component_group_id){
                             $parent->items[] = $child;
