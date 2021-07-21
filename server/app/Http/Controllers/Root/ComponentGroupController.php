@@ -90,7 +90,6 @@ class ComponentGroupController extends Controller {
                 $array['menu'][]['items'][] = $parent;
             }
 
-
             return response([
                 'navigationStructure' => $array
             ], 200);
