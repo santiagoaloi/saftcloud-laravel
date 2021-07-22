@@ -196,6 +196,19 @@ class ComponentController extends Controller {
         return $this->showAll();
     }
 
+    public function forceDestroy($id){
+        $query = Component::find($id);
+        $pathDeleted = resource_path("js/views/Deleted/{$query->name}");
+        if(!file_exists($pathDeleted)){
+            FileManager::deleteDirectory($pathDeleted);
+        }
+
+        // delete row in db
+        $query->forceDelete();
+
+        return $this->showAll();
+    }
+
     public function parseComponent($component){
         $component_group_id = $component->component_group_id;
         $name = $component->name;

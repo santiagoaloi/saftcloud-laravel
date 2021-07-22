@@ -8,4 +8,11 @@ class FileManager{
             File::makeDirectory($request);
         }
     }
+
+    static function deleteDirectory($request){
+        if (! File::exists($request)) {
+            File::unlink($request);
+        }
+    }
+
 }
