@@ -58,7 +58,8 @@ mix.vuetify();
 if (mix.inProduction()) {
  mix.version();
 } else {
- mix.sourceMaps();
+ //  mix.sourceMaps();
+ // https://laravel.com/docs/8.x/mix#css-source-maps
 }
 
 /*

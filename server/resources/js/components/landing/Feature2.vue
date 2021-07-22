@@ -38,10 +38,10 @@
       </div>
      </v-col>
      <v-col cols="12" lg="6">
-      <video class="float-right" autoplay muted loop>
+      <!-- <video class="float-right" autoplay muted loop>
        <source src="storage/videos/woman_sd.mp4" type="video/mp4" />
        Your browser does not support the video element. Kindly update it to latest version.
-      </video>
+      </video> -->
      </v-col>
     </v-row>
    </v-card>

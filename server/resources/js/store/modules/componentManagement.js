@@ -82,15 +82,15 @@ const getters = {
 
  filteredFormFields: (state, getters) => {
   const searchFields = state.searchFields.toString().toLowerCase();
-  return getters.selectedComponent.config.form_fields.filter(item => {
-   return item.label.toLowerCase().match(searchFields);
+  return getters.selectedComponent.config.form_fields.filter(field => {
+   return field.label.toLowerCase().match(searchFields);
   });
  },
 
  filteredSelectedFields: (state, getters) => {
   const searchFields = state.searchFields.toString().toLowerCase();
-  return getters.selectedComponent.config.form_fields.filter(item => {
-   return item.label.toLowerCase().match(searchFields) && item.displayField;
+  return getters.selectedComponent.config.form_fields.filter(field => {
+   return field.label.toLowerCase().match(searchFields) && field.displayField;
   });
  },
 
@@ -101,7 +101,7 @@ const getters = {
    return (
     (search === "" || component.config.general_config.title.toLowerCase().match(search)) &&
     (getters.activeStatusTabName === "all" || component.status[getters.activeStatusTabName]) &&
-    state.selectedComponentGroups.some(g => g.id === component.component_group_id)
+    state.selectedComponentGroups.some(group => group.id === component.component_group_id)
    );
   });
  },

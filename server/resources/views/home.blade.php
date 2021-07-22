@@ -13,8 +13,8 @@
         <noscript>
             <strong>We're sorry but SaftCloud doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
         </noscript>
-        <div id="app"></div>
-        <script defer src="{{ mix('dist/js/app.js') }}"></script>
-        <script defer src="{{ mix('dist/js/vendor.js') }}"></script>
+        <div id="app"/>
         <script defer src="{{ mix('dist/js/manifest.js') }}"></script>
+        <script defer src="{{ mix('dist/js/vendor.js') }}"></script>
+        <script defer src="{{ mix('dist/js/app.js') }}"></script>
 

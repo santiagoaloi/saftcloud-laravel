@@ -5,17 +5,16 @@
     <baseFieldLabel label="Component groups" />
     <v-autocomplete
      @update:search-input="syncGroupInputValue($event)"
+     @keydown="!dropDownValue ? (dropDownValue = true) : ''"
      v-model="selectedComponentGroups"
-     :items="allGroups"
      multiple
-     :maxlength="25"
      item-value="id"
      item-text="name"
+     item-color="primary"
      return-object
      placeholder="Select or create groups"
-     item-color="primary"
-     @click="persistenDropdown ? (dropDownValue = !dropDownValue) : ''"
-     @keydown="!dropDownValue ? (dropDownValue = true) : ''"
+     :maxlength="25"
+     :items="allGroups"
      :menu-props="setValue()"
      :outlined="isDark"
      :solo="!isDark"
@@ -23,7 +22,7 @@
      :background-color="isDark ? '#28292b' : 'grey lighten-5'"
     >
      <template v-if="allGroups.length" v-slot:prepend-item>
-      <v-list-item :ripple="false" @click.stop="selectAllGroups">
+      <v-list-item dense :ripple="false" @click.stop="selectAllGroups">
        <v-list-item-action>
         <v-icon class="ml-1">
          {{ icon }}
@@ -32,18 +31,18 @@
        <v-list-item-content>
         <v-list-item-title> {{ selectedAllGroups ? "Unselect all groups" : "Select all groups" }} </v-list-item-title>
        </v-list-item-content>
-       <v-lisit-item-actions>
-        <v-switch style="margin-top:20px" @click.stop v-model="persistenDropdown" label="Persist" :ripple="false" />
-       </v-lisit-item-actions>
+       <v-list-item-action>
+        <v-switch hide-details @click.stop v-model="persistenDropdown" :ripple="false" />
+       </v-list-item-action>
       </v-list-item>
       <v-divider></v-divider>
      </template>
 
      <template v-slot:selection="data">
       <v-chip
+       small
        v-if="data.index === 0"
        :style="isDark ? 'color: white' : 'color:black'"
-       small
        :color="isDark ? 'grey-darken-4' : 'blue-grey lighten-4'"
       >
        {{ selectedComponentGroups.length }} groups selected.</v-chip
@@ -51,7 +50,7 @@
      </template>
 
      <template #item="{ item, on, attrs }">
-      <v-list-item :ripple="false" :class="{ coloredBorder: attrs.inputValue }" v-on="on">
+      <v-list-item dense :ripple="false" :class="{ coloredBorder: attrs.inputValue }" v-on="on">
        <v-list-item-action>
         <v-avatar class="white--text" tile size="30" color="primary">
          <h6>{{ countComponentsInGroup(item.id) }}</h6>
@@ -174,8 +173,9 @@
      </v-menu>
     </template>
     <template v-slot:[`item.deleted_at`]="{ item }">
-     <v-chip v-if="item.deleted_at">Removed</v-chip>
-     <v-chip color="primary" v-else>Active</v-chip>
+     {{ item.deleted_at }}
+     <!-- <v-chip v-if="item.deleted_at">Removed</v-chip>
+     <v-chip color="primary" v-else>Active</v-chip> -->
     </template>
    </v-data-table>
   </baseDialog>
