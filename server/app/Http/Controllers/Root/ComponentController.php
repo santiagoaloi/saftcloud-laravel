@@ -100,7 +100,7 @@ class ComponentController extends Controller {
         $arrayComponent = [];
 
         foreach($components as $component){
-            $arrayComponent[] = $component->name;
+            $arrayComponent[] = ucfirst($component->name);
         };
 
         return response([
