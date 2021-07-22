@@ -58,9 +58,10 @@ class TestFunctionController extends Controller {
         echo json_encode(['status' => 'Success', 'rows' => $users]);exit();
     }
 
-    public function test2(Request $request){
-        $test = new UserController;
-        return $test->store($request);
+    public function test2(){
+        $query = New ComponentController;
+        return $query->getComponentNames();
+
     }
 
     function probarFormFieldStructure(){

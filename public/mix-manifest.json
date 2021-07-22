@@ -18,7 +18,7 @@
     "/dist/js/public-footer.js": "/dist/js/public-footer.js",
     "/dist/js/secure-appbar.js": "/dist/js/secure-appbar.js",
     "/dist/js/secure-drawer.js": "/dist/js/secure-drawer.js",
-    "/dist/js/secure-component-drawer.js": "/dist/js/secure-component-drawer.js",
+    "/dist/js/secure-cdrawer.js": "/dist/js/secure-cdrawer.js",
     "/dist/js/secure-view.js": "/dist/js/secure-view.js",
     "/dist/js/components-tabs.js": "/dist/js/components-tabs.js",
     "/dist/js/components-grid.js": "/dist/js/components-grid.js",
@@ -41,5 +41,6 @@
     "/dist/js/signup-step3.js": "/dist/js/signup-step3.js",
     "/dist/js/signup-step4.js": "/dist/js/signup-step4.js",
     "/dist/css/app.css": "/dist/css/app.css",
-    "/dist/js/vendor.js": "/dist/js/vendor.js"
+    "/dist/js/vendor.js": "/dist/js/vendor.js",
+    "/dist/js/secure-component-drawer.js": "/dist/js/secure-component-drawer.js"
 }

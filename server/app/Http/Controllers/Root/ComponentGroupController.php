@@ -174,7 +174,7 @@ class ComponentGroupController extends Controller {
             foreach($components as $component){
                 $arrayComponent[] = $funcComponentController->parseComponent($component);
             };
-    
+
             return response([
                 'components' => $arrayComponent
             ], 200);

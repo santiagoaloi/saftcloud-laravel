@@ -95,6 +95,19 @@ class ComponentController extends Controller {
         ], 200);
     }
 
+    public function getComponentNames(){
+        $components = Component::all();
+        $arrayComponent = [];
+
+        foreach($components as $component){
+            $arrayComponent[] = $component->name;
+        };
+
+        return response([
+            'components' => $arrayComponent
+        ], 200);
+    }
+
     //  Para mostrar los elementos eliminados
     public function getTrashed() {
         return response([
@@ -225,6 +238,7 @@ class ComponentController extends Controller {
             'status'            => $status,
             'created_at'        => $component->created_at,
             'updated_at'        => $component->updated_at,
+            'deleted_at'        => $component->deleted_at,
         ];
 
         $result = [
@@ -237,6 +251,7 @@ class ComponentController extends Controller {
             'origin'            => $origin,
             'created_at'        => $component->created_at,
             'updated_at'        => $component->updated_at,
+            'deleted_at'        => $component->deleted_at,
         ];
         return $result;
     }
