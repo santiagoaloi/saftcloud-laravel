@@ -16,7 +16,7 @@
 
 <script>
 export default {
-    name: "Ddaa",
+    name: "TestGroupTestgroup",
     mounted() {
         console.log('Component mounted.')
     }

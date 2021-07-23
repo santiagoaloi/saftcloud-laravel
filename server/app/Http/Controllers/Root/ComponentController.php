@@ -265,11 +265,10 @@ class ComponentController extends Controller {
     }
 
     function makeNewComponentFile($request){
-        $name = new Convert($request);
+        $name = ucfirst(strtolower($request));
+        $data = ['name' => $name];
 
-        $data = ['name' => $name->fromCamel()->toPascal()];
-
-        $vue_folder = resource_path("js/views/Protected/{$name->fromCamel()->toPascal()}");
+        $vue_folder = resource_path("js/views/Protected/{$name}");
 
         FileManager::makeNewDirectory($vue_folder);
         $tmp_vue = file_get_contents(resource_path("js/templates/componentBoilerplate.vue"));
