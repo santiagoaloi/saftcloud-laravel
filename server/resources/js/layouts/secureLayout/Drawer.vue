@@ -1,7 +1,7 @@
 <template>
  <div>
   <!-- Navigation -->
-  <v-navigation-drawer src="storage/barbg3.jpg" dark width="250" v-model="secureDefaultDrawer" app class="elevation-1">
+  <v-navigation-drawer src="storage/sidebar/sidebar.svg" dark width="250" v-model="secureDefaultDrawer" app class="elevation-1">
    <!-- Navigation menu fixed  -->
    <template v-slot:prepend>
     <div class="px-4 my-2">
@@ -17,7 +17,6 @@
 </template>
 
 <script>
-// navigation menu configurations
 import nav from "@/configs/navigation";
 import axios from "axios";
 import Vue from "vue";

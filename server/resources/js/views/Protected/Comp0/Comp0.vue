@@ -16,7 +16,7 @@
 
 <script>
 export default {
-    name: "Www",
+    name: "Comp0",
     mounted() {
         console.log('Component mounted.')
     }

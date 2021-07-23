@@ -48,10 +48,6 @@ export default {
   ComponentEditSheet: () => import(/* webpackChunkName: 'components-edit-sheet' */ "./ComponentsEdit/ComponentsEditSheet")
  },
 
- data() {
-  return {};
- },
-
  computed: {
   ...get("componentManagement", ["isAllFilteredComponentsEmpty", "selectedComponent"]),
   ...sync("componentManagement", ["dialogComponent", "isTableLayout"]),
