@@ -269,7 +269,7 @@ class ComponentController extends Controller {
 
         $data = ['name' => $name->fromCamel()->toPascal()];
 
-        $vue_folder = resource_path("js/views/Protected/{$name->fromCamel()->toKebab()}");
+        $vue_folder = resource_path("js/views/Protected/{$name->fromCamel()->toPascal()}");
 
         FileManager::makeNewDirectory($vue_folder);
         $tmp_vue = file_get_contents(resource_path("js/templates/componentBoilerplate.vue"));
