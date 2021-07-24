@@ -115,7 +115,6 @@
 
 <script>
 import { store } from "@/store";
-import globalMixin from "@/mixins/globalMixin";
 import { sync, call, get } from "vuex-pathify";
 export default {
  name: "ComponentsGridView",

@@ -50,7 +50,12 @@
      </template>
 
      <template #item="{ item, on, attrs }">
-      <v-list-item dense :ripple="false" :class="{ coloredBorder: attrs.inputValue }" v-on="on">
+      <v-list-item
+       dense
+       :ripple="false"
+       :class="{ backgroundSelected: !attrs.inputValue && isDark, backgroundSelectedLight: attrs.inputValue && !isDark }"
+       v-on="on"
+      >
        <v-list-item-action>
         <v-avatar class="white--text" tile size="30" color="primary">
          <h6>{{ countComponentsInGroup(item.id) }}</h6>
@@ -71,7 +76,7 @@
 
        <v-tooltip transition="false" color="black" bottom>
         <template v-slot:activator="{ on }">
-         <v-btn v-on="on" :ripple="false" @click.stop="removeGroupWarning(item.id, item.name)" small depressed>
+         <v-btn v-on="on" :ripple="false" @click.stop="removeGroupWarning(item.id, item.name, 'delete')" small depressed>
           <v-icon small>mdi-delete-outline</v-icon>
          </v-btn>
         </template>
@@ -138,7 +143,7 @@
      </v-avatar>
     </template>
 
-    <template v-slot:[`item.actions`]>
+    <template v-slot:[`item.actions`]="{ item }">
      <v-menu rounded="lg" origin="center center" transition="scale-transition" :nudge-bottom="10" offset-y>
       <template v-slot:activator="{ on }">
        <v-btn icon v-on="on">
@@ -147,7 +152,7 @@
       </template>
 
       <v-list class="pa-2" rounded="xl" outlined>
-       <v-list-item @click.stop>
+       <v-list-item>
         <v-list-item-action>
          <v-btn small icon dark color="#4C4C4C">
           <v-icon color="grey darken-2" small class="mx-2">
@@ -155,10 +160,10 @@
           </v-icon>
          </v-btn>
         </v-list-item-action>
-        <v-list-item-title>Editar</v-list-item-title>
+        <v-list-item-title>Restore </v-list-item-title>
        </v-list-item>
 
-       <v-list-item @click.stop>
+       <v-list-item @click.stop="removeComponentWarning(item.id, item.config.general_config.title, 'post')">
         <v-list-item-action>
          <v-btn small icon dark color="#4C4C4C">
           <v-icon color="red lighten-2" small class="mx-2">
@@ -167,15 +172,14 @@
          </v-btn>
         </v-list-item-action>
 
-        <v-list-item-title>Eliminar</v-list-item-title>
+        <v-list-item-title>Remove permanently</v-list-item-title>
        </v-list-item>
       </v-list>
      </v-menu>
     </template>
     <template v-slot:[`item.deleted_at`]="{ item }">
-     {{ item.deleted_at }}
-     <!-- <v-chip v-if="item.deleted_at">Removed</v-chip>
-     <v-chip color="primary" v-else>Active</v-chip> -->
+     <v-chip v-if="item.deleted_at">Removed</v-chip>
+     <v-chip color="primary" v-else>Active</v-chip>
     </template>
    </v-data-table>
   </baseDialog>
@@ -185,10 +189,10 @@
 <script>
 import { sync, get, call } from "vuex-pathify";
 import componentGroups from "@/mixins/componentGroups";
+import componentActions from "@/mixins/componentActions";
 export default {
  name: "ComponentsGroups",
- mixins: [componentGroups],
-
+ mixins: [componentGroups, componentActions],
  data() {
   return {
    removeAlert: true,
@@ -263,10 +267,5 @@ export default {
 
 .v-list-item--link:before {
  background-color: unset !important;
-}
-
-.coloredBorder {
- border-left: solid 2px #6453dced;
- background: #3c3c42;
 }
 </style>

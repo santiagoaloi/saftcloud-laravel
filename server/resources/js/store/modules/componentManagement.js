@@ -378,9 +378,8 @@ const actions = {
   store.set(`componentManagement/allComponents@${index}`, { ...origin, origin: cloneDeep(origin) });
  },
 
- removeComponent({ dispatch }, id) {
-  axios
-   .delete(`api/component/${id}`)
+ removeComponent({ dispatch }, { id, mode }) {
+  axios[mode](`api/forceDestroy/${id}`)
    .then(response => {
     if (response.status === 200) {
      store.set("componentManagement/allComponents", response.data.components);
@@ -400,7 +399,7 @@ const actions = {
  },
 
  createComponent({ state, getters, dispatch }) {
-  axios
+  return axios
    .post("api/component", state.componentSettings)
    .then(response => {
     if (response.status === 200) {
@@ -422,6 +421,7 @@ const actions = {
      store.set("componentManagement/selectedComponentIndex", state.allComponents.length - 1);
      store.set("componentManagement/componentSettings", initialComponentSettings());
      dispatch("getNavigationStructure");
+     return true;
     }
    })
    .catch(error => {
@@ -429,6 +429,7 @@ const actions = {
     store.set("snackbar/value", true);
     store.set("snackbar/text", `${error.response.status} ${error.response.statusText}`);
     store.set("snackbar/color", "pink darken-1");
+    return false;
    });
  },
 

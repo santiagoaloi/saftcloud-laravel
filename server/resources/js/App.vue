@@ -10,7 +10,6 @@ import { sync } from "vuex-pathify";
 
 export default {
  name: "AppVue",
-
  computed: {
   ...sync("theme", ["isDark"]),
 
@@ -30,6 +29,38 @@ export default {
 
  head: {
   link: [...config.icons.map(href => ({ rel: "stylesheet", href }))]
+ },
+
+ created() {
+  window.eventBus = this;
+  window.eventBus.$on("BUS_BUILD_ROUTES", () => {
+   this.buildRoutes();
+  });
+ },
+
+ mounted() {
+  this.buildRoutes();
+ },
+
+ methods: {
+  buildRoutes() {
+   axios.get("/api/getComponentNames/").then(response => {
+    if (response.status === 200) {
+     const components = response.data.components;
+     if (!components.length) {
+      components.push("Blank");
+     }
+     for (const component of components) {
+      this.$router.addRoute({
+       path: `/${component}`,
+       name: component,
+       meta: { layout: "secure_layout" },
+       component: () => import(`./views/Protected/${component}/${component}.vue`)
+      });
+     }
+    }
+   });
+  }
  }
 };
 </script>

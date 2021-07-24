@@ -35,7 +35,7 @@
    </template>
 
    <v-toolbar-title>
-    <span class="accent--text text--lighten-4"> {{ title }} </span>
+    <span class="accent--text text--lighten-5"> {{ title }} </span>
    </v-toolbar-title>
 
    <div class="flex-grow-1" />

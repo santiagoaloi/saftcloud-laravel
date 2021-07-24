@@ -2,7 +2,7 @@ import { store } from "@/store";
 import { sync, call, get } from "vuex-pathify";
 
 export default {
- name: "globalMixin",
+ name: "ComponentGroupsMmixin",
  data() {
   return {
    loading: true,
@@ -171,13 +171,16 @@ export default {
    this.$swal({
     title: `<span style="color:${this.isDark ? "lightgrey" : ""} "> Delete ${name} group? </span>`,
     allowOutsideClick: false,
-    html: `<span style="color:${this.isDark ? "lightgrey" : ""} ">  If no components are linked to this group, this group will be removed. </span>`,
+    html: `<span style="color:${
+     this.isDark ? "lightgrey" : ""
+    } ">  If no components are linked to this group, this group will be removed inmediately, otherwise you can choose to remove the associated components permanently.  </span>`,
     showCancelButton: true,
     confirmButtonText: "Delete",
     cancelButtonText: "Cancel",
     confirmButtonColor: "#EC407A",
     backdrop: `${this.isDark ? "rgba(0, 0, 0, 0.6)" : "rgba(108, 122, 137, 0.8)"}`,
-    background: `${this.isDark ? "#2f3136" : ""}`
+    background: `${this.isDark ? "#2f3136" : ""}`,
+    width: 600
    }).then(result => {
     if (result.value) {
      this.removeGroup(id);
