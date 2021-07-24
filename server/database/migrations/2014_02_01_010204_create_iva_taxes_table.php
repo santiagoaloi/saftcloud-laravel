@@ -4,18 +4,19 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSellStatusTable extends Migration {
+class CreateIvaTaxesTable extends Migration {
     /**
      * Run the migrations.
      *
      * @return void
      */
     public function up() {
-        Schema::create('sell_status', function (Blueprint $table) {
+        Schema::create('iva_taxes', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('branch_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
+            $table->foreignId('country_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
+            $table->smallInteger('code');
             $table->string('name');
-            $table->string('short_name');
+            $table->decimal('value', 5, 3);
             $table->softDeletes();
             $table->timestamps();
         });
@@ -27,6 +28,6 @@ class CreateSellStatusTable extends Migration {
      * @return void
      */
     public function down() {
-        Schema::dropIfExists('sell_status');
+        Schema::dropIfExists('iva_taxes');
     }
 }

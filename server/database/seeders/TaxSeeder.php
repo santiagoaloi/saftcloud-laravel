@@ -5,16 +5,15 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class MeasurementUnitSystemSeeder extends Seeder {
+class TaxSeeder extends Seeder {
     /**
      * Run the database seeds.
      *
      * @return void
      */
     public function run() {
-        DB::table('measurement_unit_systems')->insert([
-            ["id"=>1, "name"=>"Sistema Internacional"],
-            ["id"=>2, "name"=>"Sistema Imperial"]
+        DB::table('taxes')->insert([
+            ["id"=> 1, "country_id"=>12, "code"=>3, "name"=> "IIBB", "value"=>0.35]
         ]);
     }
 }

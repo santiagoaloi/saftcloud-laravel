@@ -13,7 +13,7 @@ class AccountSeeder extends Seeder {
      */
     public function run() {
         DB::table('accounts')->insert([
-            ["id"=>1, "license"=>1234567890, "account_plan_id"=>1, "payment_status"=>"999", "email"=>"info@saftcloud.com", "doc_type_id"=>25, "doc_number"=>20324501364, "name"=>"SAFTcloud"]
+            ["id"=>1, "license"=>1234567890, "account_plan_id"=>1, "payment_status"=>"999", "email"=>"info@saftcloud.com", "document_type_id"=>1, "doc_number"=>20324501364, "name"=>"SAFTcloud"]
         ]);
     }
 }
