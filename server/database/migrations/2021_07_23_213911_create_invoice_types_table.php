@@ -4,17 +4,19 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePaymentMethodsTable extends Migration {
+class CreateInvoiceTypesTable extends Migration {
     /**
      * Run the migrations.
      *
      * @return void
      */
     public function up() {
-        Schema::create('payment_methods', function (Blueprint $table) {
+        Schema::create('invoice_types', function (Blueprint $table) {
             $table->id();
             $table->foreignId('country_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
-            $table->string('description');
+            $table->string('name');
+            $table->string('short_name');
+            $table->smallInteger('value');
             $table->softDeletes();
             $table->timestamps();
         });
@@ -26,6 +28,6 @@ class CreatePaymentMethodsTable extends Migration {
      * @return void
      */
     public function down() {
-        Schema::dropIfExists('payment_methods');
+        Schema::dropIfExists('invoice_types');
     }
 }
