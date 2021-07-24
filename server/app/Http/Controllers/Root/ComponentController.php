@@ -100,7 +100,7 @@ class ComponentController extends Controller {
         $arrayComponent = [];
 
         foreach($components as $component){
-            $arrayComponent[] = ucfirst($component->name);
+            $arrayComponent[] = $component->name;
         };
 
         return response([
@@ -210,7 +210,8 @@ class ComponentController extends Controller {
     }
 
     public function forceDestroy($id){
-        $query = Component::find($id);
+        $query = Component::onlyTrashed()->find($id);
+        return $query;
         $pathDeleted = resource_path("js/views/Deleted/{$query->name}");
         if(!file_exists($pathDeleted)){
             FileManager::deleteDirectory($pathDeleted);
