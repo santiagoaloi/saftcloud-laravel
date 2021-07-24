@@ -211,7 +211,6 @@ class ComponentController extends Controller {
 
     public function forceDestroy($id){
         $query = Component::onlyTrashed()->find($id);
-        return $query;
         $pathDeleted = resource_path("js/views/Deleted/{$query->name}");
         if(!file_exists($pathDeleted)){
             FileManager::deleteDirectory($pathDeleted);
