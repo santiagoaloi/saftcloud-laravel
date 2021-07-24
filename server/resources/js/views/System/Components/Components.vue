@@ -63,7 +63,7 @@ export default {
  methods: {
   ...call("componentManagement/*"),
   calculateHeight() {
-   return Number(this.$vuetify.breakpoint.height - 310);
+   return Number(this.$vuetify.breakpoint.height - 315);
   }
  }
 };

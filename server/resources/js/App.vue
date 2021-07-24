@@ -10,7 +10,6 @@ import { sync } from "vuex-pathify";
 
 export default {
  name: "AppVue",
-
  computed: {
   ...sync("theme", ["isDark"]),
 
@@ -32,16 +31,25 @@ export default {
   link: [...config.icons.map(href => ({ rel: "stylesheet", href }))]
  },
 
+ created() {
+  window.eventBus = this;
+  window.eventBus.$on("BUS_BUILD_ROUTES", () => {
+   this.buildRoutes();
+  });
+ },
+
  mounted() {
   this.buildRoutes();
  },
 
  methods: {
   buildRoutes() {
-   let post = { entity_id: 1, role_id: 1, email: "facu.ft@gmail.com" };
-   axios.post("/api/testFunction/", post).then(response => {
+   axios.get("/api/getComponentNames/").then(response => {
     if (response.status === 200) {
      const components = response.data.components;
+     if (!components.length) {
+      components.push("Blank");
+     }
      for (const component of components) {
       this.$router.addRoute({
        path: `/${component}`,

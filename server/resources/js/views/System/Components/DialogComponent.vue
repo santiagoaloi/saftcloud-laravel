@@ -28,7 +28,6 @@
        :color="isDark ? '#208ad6' : 'grey'"
        :background-color="isDark ? '#28292b' : 'grey lighten-5'"
        :error="errors.length > 0"
-       :item-color="isDark ? 'indigo lighten-3' : 'primary'"
        :menu-props="{
         transition: 'slide-y-transition',
         closeOnContentClick: true
@@ -169,7 +168,11 @@ export default {
   validateComponentForm() {
    this.$refs.createComponentForm.validate().then(success => {
     if (success) {
-     this.createComponent();
+     this.createComponent().then(response => {
+      if (response) {
+       window.eventBus.$emit("BUS_BUILD_ROUTES");
+      }
+     });
     }
    });
   }

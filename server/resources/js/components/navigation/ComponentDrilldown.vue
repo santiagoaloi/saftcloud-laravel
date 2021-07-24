@@ -36,7 +36,7 @@
 
     <v-list-item-icon>
      <v-tooltip transition="false" color="black" bottom>
-      <template v-slot:activator="{ on, attrs }">
+      <template v-slot:activator="{ on }">
        <v-btn v-on="on" @click="setStarred(selectedComponent)" color="white" small icon :ripple="false">
         <v-icon :color="isStarredColor(selectedComponent)"> {{ isStarredIcon(selectedComponent) }} </v-icon></v-btn
        >
@@ -51,10 +51,9 @@
    <div class="text--primary">
     <baseFieldLabel label="Description" />
     <v-textarea
-     :outlined="isDark"
+     outlined
      :color="isDark ? '#208ad6' : 'grey'"
      :background-color="isDark ? '#28292b' : 'grey lighten-5'"
-     outlined
      spellcheck="false"
      :rows="2"
      autogrow
@@ -67,11 +66,10 @@
      <baseFieldLabel label="Change component group " />
      <small></small>
      <v-autocomplete
-      :outlined="isDark"
+      outlined
       :color="isDark ? '#208ad6' : 'grey'"
       :background-color="isDark ? '#28292b' : 'grey lighten-5'"
       v-model="selectedComponent.component_group_id"
-      outlined
       hide-selected
       dense
       :items="allGroups"
@@ -87,9 +85,9 @@
 
   <div class="text-center mb-3">
    <v-tooltip transition="false" color="black" bottom>
-    <template v-slot:activator="{ on, attrs }">
+    <template v-slot:activator="{ on }">
      <v-btn @click="componentEditSheet = !componentEditSheet" v-on="on" depressed dark large small :color="isDark ? '' : 'white'">
-      <v-icon color="#6453DCED" dark>
+      <v-icon color="#208ad6" dark>
        mdi-pencil-outline
       </v-icon>
      </v-btn>
@@ -98,8 +96,8 @@
    </v-tooltip>
 
    <v-tooltip transition="false" color="black" bottom>
-    <template v-slot:activator="{ on, attrs }">
-     <v-btn v-on="on" depressed dark large small :color="isDark ? '' : 'white'">
+    <template v-slot:activator="{ on }">
+     <v-btn :to="`/${selectedComponent.name}`" v-on="on" depressed dark large small :color="isDark ? '' : 'white'">
       <v-icon :color="isDark ? '' : 'black'" dark>
        mdi-link
       </v-icon>
@@ -109,10 +107,10 @@
    </v-tooltip>
 
    <v-tooltip transition="false" color="black" bottom>
-    <template v-slot:activator="{ on, attrs }">
+    <template v-slot:activator="{ on }">
      <v-btn
       v-on="on"
-      @click="removeComponentWarning(selectedComponent.id, selectedComponent.config.title)"
+      @click="removeComponentWarning(selectedComponent.id, selectedComponent.config.title, 'delete')"
       depressed
       dark
       large
@@ -128,7 +126,7 @@
    </v-tooltip>
 
    <v-tooltip transition="false" color="black" bottom>
-    <template v-slot:activator="{ on, attrs }">
+    <template v-slot:activator="{ on }">
      <v-btn
       :disabled="!hasUnsavedChanges(selectedComponent)"
       @click="saveComponent(selectedComponent)"
@@ -149,7 +147,6 @@
 
   <v-list subheader two-line>
    <v-subheader>Database</v-subheader>
-
    <v-list-item>
     <v-list-item-icon>
      <v-icon>
@@ -214,12 +211,11 @@
 import { sync, call, get } from "vuex-pathify";
 import { store } from "@/store";
 import isEqual from "lodash/isEqual";
+import componentActions from "@/mixins/componentActions";
 
 export default {
  name: "ComponentDrilldown",
-
- data: () => ({}),
-
+ mixins: [componentActions],
  computed: {
   ...sync("theme", ["isDark"]),
   ...sync("drawers", ["secureComponentDrawer"]),
@@ -261,25 +257,6 @@ export default {
    component.status.starred = !component.status.starred;
    component.origin.status.starred = !component.origin.status.starred;
    this.setComponentStatus(component);
-  },
-
-  removeComponentWarning(id, title) {
-   this.$swal({
-    title: `<span style="color:${this.isDark ? "lightgrey" : ""} "> Delete ${title}? </span>`,
-    html: `<span style="color:${this.isDark ? "lightgrey" : ""} ">  This action cannot be undone. </span>`,
-    color: "white",
-    showCancelButton: true,
-    confirmButtonText: "Delete",
-    cancelButtonText: "Cancel",
-    confirmButtonColor: "#EC407A",
-    backdrop: `${this.isDark ? "rgba(0, 0, 0, 0.6)" : "rgba(108, 122, 137, 0.8)"}`,
-    background: `${this.isDark ? "#2f3136" : ""}`,
-    width: 600
-   }).then(result => {
-    if (result.value) {
-     this.removeComponent(id);
-    }
-   });
   }
  }
 };

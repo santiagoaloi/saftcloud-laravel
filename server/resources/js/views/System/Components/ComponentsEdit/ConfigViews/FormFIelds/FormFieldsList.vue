@@ -15,8 +15,8 @@
    :background-color="isDark ? '#28292b' : 'grey lighten-5'"
    :outlined="isDark"
   />
-  <v-list-item-group v-model="selectedFieldItemGroup" mandatory active-class="blue-grey lighten-4">
-   <v-list class="fieldListHeight" color="transparent">
+  <v-list-item-group v-model="selectedFieldItemGroup" mandatory>
+   <v-list class="fieldListHeight ">
     <draggable
      v-model="selectedComponent.config.form_fields"
      :delay="100"
@@ -28,19 +28,19 @@
      <transition-group appear name="slide-y-transition">
       <v-list-item
        dense
-       :active-class="isDark ? 'indigo darken-3' : ''"
        v-for="(item, i) in displayEnabledFormFieldsOnly ? filteredSelectedFields : filteredFormFields"
        :key="i"
        two-line
        :ripple="false"
        @click="setActiveField(item.field)"
+       :active-class="isDark ? 'accent' : 'accent lighten-4'"
       >
        <v-list-item-action v-if="!displayEnabledFormFieldsOnly">
-        <v-switch :ripple="false" v-model="item.displayField" :color="isDark ? 'indigo lighten-3' : 'primary accent-1'" />
+        <v-switch :ripple="false" v-model="item.displayField" color="accent lighten-1" />
        </v-list-item-action>
 
        <v-list-item-content>
-        <v-list-item-title>{{ item.label }}</v-list-item-title>
+        <v-list-item-title> {{ item.label }}</v-list-item-title>
 
         <v-list-item-subtitle class="mt-2">
          {{ item.field }}

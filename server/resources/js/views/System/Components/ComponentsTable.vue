@@ -60,12 +60,11 @@
 
 <script>
 import { store } from "@/store";
-import globalMixin from "@/mixins/globalMixin";
 import { sync, call, get } from "vuex-pathify";
-
+import componentActions from "@/mixins/componentActions";
 export default {
  name: "ComponentsTableView",
-
+ mixins: [componentActions],
  data() {
   return {
    headers: [
@@ -103,7 +102,7 @@ export default {
  methods: {
   ...call("componentManagement/*"),
   calculateHeight() {
-   return Number(this.$vuetify.breakpoint.height - 370);
+   return Number(this.$vuetify.breakpoint.height - 375);
   }
  }
 };
