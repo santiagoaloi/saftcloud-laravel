@@ -8,7 +8,7 @@
   :headers="headers"
   :items="allComponentsFiltered"
  >
-  <template #item.avatar="{item}">
+  <template v-slot:[`item.avatar`]>
    <v-avatar class="cursor-pointer" size="30" rounded color="indigo">
     <v-icon size="25" dark>
      mdi-apps
@@ -16,9 +16,9 @@
    </v-avatar>
   </template>
 
-  <template #item.actions="{item}">
+  <template v-slot:[`item.actions`]>
    <v-tooltip transition="false" color="black" bottom>
-    <template v-slot:activator="{ on, attrs }">
+    <template v-slot:activator="{ on }">
      <v-btn v-on="on" @click.stop="setStarred(component)" color="white" small icon :ripple="false">
       <v-icon :color="isStarredColor(component)"> {{ isStarredIcon(component) }} </v-icon>
      </v-btn>

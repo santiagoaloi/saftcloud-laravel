@@ -53,7 +53,7 @@
     <v-textarea
      outlined
      :color="isDark ? '#208ad6' : 'grey'"
-     :background-color="isDark ? '#28292b' : 'grey lighten-5'"
+     :background-color="isDark ? '#28292b' : 'white'"
      spellcheck="false"
      :rows="2"
      autogrow
@@ -68,7 +68,7 @@
      <v-autocomplete
       outlined
       :color="isDark ? '#208ad6' : 'grey'"
-      :background-color="isDark ? '#28292b' : 'grey lighten-5'"
+      :background-color="isDark ? '#28292b' : 'white'"
       v-model="selectedComponent.component_group_id"
       hide-selected
       dense
@@ -110,7 +110,7 @@
     <template v-slot:activator="{ on }">
      <v-btn
       v-on="on"
-      @click="removeComponentWarning(selectedComponent.id, selectedComponent.config.title, 'delete')"
+      @click.stop="removeComponentWarning(selectedComponent.id, 'delete', 'component', selectedComponent.config.general_config.title)"
       depressed
       dark
       large
@@ -143,6 +143,20 @@
     </template>
     <span>Save</span>
    </v-tooltip>
+  </div>
+
+  <div class="mt-2">
+   <v-list-item two-line>
+    <v-list-item-icon>
+     <v-switch :ripple="false" hide-details class="mt-2" v-model="selectedComponent.config.general_config.isVisibleInSidebar" />
+    </v-list-item-icon>
+    <v-list-item-content>
+     <v-list-item-title>Sidebar</v-list-item-title>
+     <v-list-item-subtitle>
+      Display in navigation
+     </v-list-item-subtitle>
+    </v-list-item-content>
+   </v-list-item>
   </div>
 
   <v-list subheader two-line>

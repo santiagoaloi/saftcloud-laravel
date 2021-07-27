@@ -2,27 +2,8 @@
  <div>
   <div class="d-flex justify-end align-center">
    <div class="d-flex">
-    <v-text-field
-     v-model.lazy="search"
-     spellcheck="false"
-     :outlined="isDark"
-     :solo="!isDark"
-     :color="isDark ? '#208ad6' : 'grey'"
-     :background-color="isDark ? '#28292b' : 'grey lighten-5'"
-     dense
-     hide-details
-     placeholder="Search components..."
-     prepend-inner-icon="mdi-magnify"
-     :class="expand ? 'expanded' : 'shrinked'"
-     class="mx-2"
-     @focus="expand = true"
-     @blur="expand = false"
-    />
-
-    <v-btn :color="isDark ? '#28292b' : ''" @click="dialogEditor = true" class="mx-2 ">
-     <v-icon class="mr-2" small> mdi-code-json </v-icon>Config Structure
-    </v-btn>
-    <v-btn class="mx-2 " :color="isDark ? '#28292b' : ''"> <v-icon class="mr-2" small> mdi-arrow-top-right </v-icon>Export </v-btn>
+    <v-btn plain @click="dialogEditor = true" class="mx-2 "> <v-icon class="mr-2" small> mdi-code-json </v-icon>Config Structure </v-btn>
+    <v-btn plain class="mx-2 "> <v-icon class="mr-2" small> mdi-arrow-top-right </v-icon>Export </v-btn>
     <v-btn class="ml-2" :color="isDark ? 'accent' : 'primary'" @click.stop="dialogComponent = true">
      <v-icon class="mr-2" small> mdi-plus </v-icon>Create component
     </v-btn>

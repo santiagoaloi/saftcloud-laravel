@@ -26,13 +26,12 @@
        hide-no-data
        solo
        :color="isDark ? '#208ad6' : 'grey'"
-       :background-color="isDark ? '#28292b' : 'grey lighten-5'"
+       :background-color="isDark ? '#28292b' : 'white'"
        :error="errors.length > 0"
        :menu-props="{
         transition: 'slide-y-transition',
         closeOnContentClick: true
        }"
-       hide-details
        :outlined="isDark"
       >
        <template #item="{ item, on }">
@@ -54,7 +53,6 @@
      <validation-provider v-slot="{ errors }" name="component title" rules="required">
       <v-text-field
        spellcheck="false"
-       hide-details
        v-model="componentSettings.title"
        solo
        :outlined="isDark"
@@ -62,7 +60,7 @@
        counter
        maxlength="35"
        :color="isDark ? '#208ad6' : 'grey'"
-       :background-color="isDark ? '#28292b' : 'grey lighten-5'"
+       :background-color="isDark ? '#28292b' : 'white'"
        :error="errors.length > 0"
       />
      </validation-provider>
@@ -70,19 +68,19 @@
 
     <v-col cols="12" lg="6">
      <baseFieldLabel label="Component name" />
-     <validation-provider v-slot="{ errors }" name="component name" rules="required">
+     <validation-provider v-slot="{ errors }" name="component name" rules="required|alpha">
       <v-text-field
        spellcheck="false"
-       hide-details
        v-model="componentSettings.name"
        solo
        prepend-inner-icon="mdi-comment"
        counter
        maxlength="35"
        :color="isDark ? '#208ad6' : 'grey'"
-       :background-color="isDark ? '#28292b' : 'grey lighten-5'"
+       :background-color="isDark ? '#28292b' : 'white'"
        :error="errors.length > 0"
        :outlined="isDark"
+       :error-messages="errors[0]"
       />
      </validation-provider>
     </v-col>
@@ -92,7 +90,6 @@
      <validation-provider v-slot="{ errors }" name="component desc" rules="required">
       <v-text-field
        spellcheck="false"
-       hide-details
        v-model="componentSettings.note"
        prepend-inner-icon="mdi-file"
        counter
@@ -101,7 +98,7 @@
        placeholder="Description"
        solo
        :color="isDark ? '#208ad6' : 'grey'"
-       :background-color="isDark ? '#28292b' : 'grey lighten-5'"
+       :background-color="isDark ? '#28292b' : 'white'"
        :error="errors.length > 0"
        :outlined="isDark"
       />
@@ -113,7 +110,6 @@
       <v-autocomplete
        :outlined="isDark"
        spellcheck="false"
-       hide-details
        v-model="componentSettings.table"
        :menu-props="{
         transition: 'slide-y-transition'
@@ -123,7 +119,7 @@
        :items="dbTables"
        :item-color="isDark ? 'indigo lighten-3' : 'primary'"
        :color="isDark ? '#208ad6' : 'grey'"
-       :background-color="isDark ? '#28292b' : 'grey lighten-5'"
+       :background-color="isDark ? '#28292b' : 'white'"
        :error="errors.length > 0"
       >
        <template v-slot:item="data">

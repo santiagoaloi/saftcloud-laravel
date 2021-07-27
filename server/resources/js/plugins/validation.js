@@ -1,6 +1,6 @@
 import Vue from "vue";
 import { ValidationObserver, ValidationProvider, extend, localize, setInteractionMode } from "vee-validate";
-import sv from "vee-validate/dist/locale/sv.json";
+// import sv from "vee-validate/dist/locale/sv.json";
 import * as rules from "vee-validate/dist/rules";
 
 // add url validation, removed in version 3.
@@ -27,7 +27,7 @@ Object.keys(rules).forEach(rule => {
  extend(rule, rules[rule]);
 });
 
-localize("sv", sv);
+// localize("sv", sv);
 
 // Install components globally
 Vue.component("ValidationObserver", ValidationObserver);

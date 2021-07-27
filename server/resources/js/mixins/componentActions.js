@@ -5,11 +5,12 @@ export default {
  methods: {
   ...call("componentManagement/*"),
 
-  removeComponentWarning(id, title, mode) {
-   console.log(id, title, mode);
+  removeComponentWarning(id, method, apiPath, title) {
    this.$swal({
-    title: `<span style="color:${this.isDark ? "lightgrey" : ""} "> Delete ${title}? </span>`,
-    html: `<span style="color:${this.isDark ? "lightgrey" : ""} ">  This action cannot be undone. </span>`,
+    title: `<span style="color:${this.isDark ? "lightgrey" : ""} "> Delete ${title} component? </span>`,
+    html: `<span style="color:${
+     this.isDark ? "lightgrey" : ""
+    } "> This component will be deleted, you can recover it later if needed. A copy will be stored in the server.</span>`,
     color: "white",
     showCancelButton: true,
     confirmButtonText: "Delete",
@@ -20,7 +21,7 @@ export default {
     width: 600
    }).then(result => {
     if (result.value) {
-     this.removeComponent({ id, mode });
+     this.removeComponent({ id, method, apiPath });
     }
    });
   }

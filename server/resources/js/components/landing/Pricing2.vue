@@ -20,7 +20,7 @@
        <div class="grey--text justify-end overline">/ month</div>
       </v-sheet>
       <v-divider></v-divider>
-      <v-sheet class="pa-4" color="grey lighten-5">
+      <v-sheet class="pa-4" color="white">
        <div class="my-6 text-h6">
         <div v-for="(feat, j) in plan.features" :key="j" class="d-flex align-center my-1">
          <v-icon color="success" class="mr-2">mdi-check</v-icon>

@@ -7,7 +7,8 @@ export default {
   return {
    loading: true,
    workspace: this.$route.name,
-   elements: []
+   elements: [],
+   groupBeingRemoved: ""
   };
  },
 
@@ -167,6 +168,7 @@ export default {
   },
 
   removeGroupWarning(id, name) {
+   this.groupBeingRemoved = id;
    this.groupNameBeingRemoved = name;
    this.$swal({
     title: `<span style="color:${this.isDark ? "lightgrey" : ""} "> Delete ${name} group? </span>`,
