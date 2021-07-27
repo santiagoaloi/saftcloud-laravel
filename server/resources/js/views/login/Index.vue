@@ -286,12 +286,14 @@ export default {
   loginSanctum: call("authentication/login"),
   login() {
    this.loading = true;
-   this.loginSanctum(this.auth).then(response => {
-    if (!response) {
+   this.loginSanctum(this.auth).then(success => {
+    if (!success) {
      this.loading = false;
      store.set("snackbar/value", true);
      store.set("snackbar/text", "Invalid credentials, please try again.");
      store.set("snackbar/color", "pink darken-1");
+    } else {
+     this.$router.push("/components");
     }
    });
   }

@@ -2,6 +2,7 @@
 import axios from "axios";
 import router from "@/router";
 import { make } from "vuex-pathify";
+const axiosDefaults = require("axios/lib/defaults");
 
 const state = {
  session: {}
@@ -18,8 +19,7 @@ const actions = {
    .then(response => {
     if (response.status === 200) {
      commit("session", response.data.data);
-     axios.defaults.headers.common["authorization"] = `Bearer ${response.data.data.token}`;
-     router.push("/components");
+     axiosDefaults.headers.common["Authorization"] = `Bearer ${response.data.data.token}`;
      return true;
     } else {
      return false;
@@ -35,6 +35,7 @@ const actions = {
    .post("api/logout", data)
    .then(response => {
     if (response.status === 200) {
+     axiosDefaults.headers.common["Authorization"] = undefined;
      commit("session", {});
      router.push("/login");
      return true;
