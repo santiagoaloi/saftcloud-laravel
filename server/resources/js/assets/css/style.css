@@ -9,7 +9,7 @@ html {
 }
 
 .expanded {
- width: 24em;
+ width: 12em;
  -webkit-transition: all 0.7s ease 0s;
  -moz-transition: all 0.7s ease 0s;
  -o-transition: all 0.7s ease 0s;
@@ -17,7 +17,7 @@ html {
 }
 
 .shrinked {
- width: 16em;
+ width: 1em;
  -webkit-transition: all 0.7s ease 0s;
  -moz-transition: all 0.7s ease 0s;
  -o-transition: all 0.7s ease 0s;
@@ -60,19 +60,6 @@ html {
  transition: unset !important;
 }
 
-/* .v-application code {
- background-color: transparent !important;
- color: inherit !important;
- padding: 0 0rem;
-} */
-
-.v-application code,
-.v-application kbd {
- border-radius: 0px;
- font-size: 100%;
- font-weight: 100;
-}
-
 .swal2-popup {
  font-family: "Open Sans", Sans-serif !important;
 }
@@ -97,6 +84,7 @@ select:-webkit-autofill:focus {
 .v-list {
  padding: 0px 0 !important;
 }
+
 .v-text-field input {
  border-bottom: solid 0px;
 }
@@ -107,10 +95,10 @@ input[type="number"] {
  -moz-appearance: textfield;
 }
 ::selection {
- background: #8c93be !important; /* WebKit/Blink Browsers */
+ /* background: #8c93be !important;  WebKit/Blink Browsers */
 }
 ::-moz-selection {
- background: #8c93be !important; /* WebKit/Blink Browsers */
+ /*background: #8c93be !important;  WebKit/Blink Browsers */
 }
 /* HIDE INPUT TYPE NUMBER INNER ARROWS
   /* Chrome, Safari, Edge, Opera */
@@ -155,9 +143,9 @@ input::-webkit-inner-spin-button {
 }
 
 .backgroundSelected {
- background: #353846;
+ background: #46484e;
 }
 
 .backgroundSelectedLight {
- background: #d7dbf1;
+ background: #e3e3f0;
 }

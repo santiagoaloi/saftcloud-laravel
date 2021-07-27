@@ -8,7 +8,7 @@
 
   <v-fade-transition>
    <div v-if="hasUnsavedChanges(selectedComponent)">
-    <v-btn rounded :color="isDark ? 'grey darken-3' : 'grey lighten-5'" class="mx-2" small @click="rollbackChanges(selectedComponent)"
+    <v-btn rounded :color="isDark ? 'grey darken-3' : 'white'" class="mx-2" small @click="rollbackChanges(selectedComponent)"
      ><span class="pink--text text--lighten-2  mr-2"> Unsaved </span>
      <v-chip style="pointer-events:none" x-small>rollback </v-chip>
     </v-btn>

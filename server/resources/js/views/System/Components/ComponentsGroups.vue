@@ -19,7 +19,7 @@
      :outlined="isDark"
      :solo="!isDark"
      :color="isDark ? '#208ad6' : 'grey'"
-     :background-color="isDark ? '#28292b' : 'grey lighten-5'"
+     :background-color="isDark ? '#28292b' : 'white'"
     >
      <template v-if="allGroups.length" v-slot:prepend-item>
       <v-list-item dense :ripple="false" @click.stop="selectAllGroups">
@@ -53,7 +53,7 @@
       <v-list-item
        dense
        :ripple="false"
-       :class="{ backgroundSelected: !attrs.inputValue && isDark, backgroundSelectedLight: attrs.inputValue && !isDark }"
+       :class="{ backgroundSelected: attrs.inputValue && isDark, backgroundSelectedLight: attrs.inputValue && !isDark }"
        v-on="on"
       >
        <v-list-item-action>
@@ -67,7 +67,7 @@
 
        <v-tooltip transition="false" color="black" bottom>
         <template v-slot:activator="{ on }">
-         <v-btn v-on="on" class="mr-2" :ripple="false" @click.stop="renameGroupDialog(item.id, item.name)" small depressed>
+         <v-btn plain v-on="on" class="mr-2" :ripple="false" @click.stop="renameGroupDialog(item.id, item.name)" small depressed>
           <v-icon small>mdi-pencil-outline</v-icon>
          </v-btn>
         </template>
@@ -76,7 +76,7 @@
 
        <v-tooltip transition="false" color="black" bottom>
         <template v-slot:activator="{ on }">
-         <v-btn v-on="on" :ripple="false" @click.stop="removeGroupWarning(item.id, item.name, 'delete')" small depressed>
+         <v-btn plain v-on="on" :ripple="false" @click.stop="removeGroupWarning(item.id, item.name, 'delete')" small depressed>
           <v-icon small>mdi-delete-outline</v-icon>
          </v-btn>
         </template>
@@ -126,7 +126,7 @@
    v-if="componentsLinkedToGroupDialog"
   >
    <v-expand-transition appear>
-    <v-sheet v-model="removeAlert" color="transparent" v-if="removeAlert">
+    <v-sheet v-if="componentsLinkedToGroup.length" color="transparent">
      <v-alert dismissible border="left" colored-border color="grey darken-2" elevation="2" class="text-left ">
       <div>These componets are still associated with the group "{{ groupNameBeingRemoved }}"</div>
       <div>You can remove the components permanently and then remove the group.</div>
@@ -134,7 +134,15 @@
     </v-sheet>
    </v-expand-transition>
 
-   <v-data-table checkbox-color="primary" item-key="id" show-select :headers="headers" :items="componentsLinkedToGroup" :items-per-page="-1">
+   <v-data-table
+    v-if="componentsLinkedToGroup.length"
+    checkbox-color="accent lighten-2"
+    item-key="id"
+    show-select
+    :headers="headers"
+    :items="componentsLinkedToGroup"
+    :items-per-page="-1"
+   >
     <template v-slot:[`item.avatar`]="{ item }">
      <v-avatar class="cursor-pointer" size="30" rounded :color="item.config_settings.icon.color">
       <v-icon size="25" dark>
@@ -163,7 +171,7 @@
         <v-list-item-title>Restore </v-list-item-title>
        </v-list-item>
 
-       <v-list-item @click.stop="removeComponentWarning(item.id, item.config.general_config.title, 'post')">
+       <v-list-item v-if="!item.deleted_at" @click.stop="removeComponentWarning(item.id, 'delete', 'component', item.config.general_config.title)">
         <v-list-item-action>
          <v-btn small icon dark color="#4C4C4C">
           <v-icon color="red lighten-2" small class="mx-2">
@@ -171,7 +179,17 @@
           </v-icon>
          </v-btn>
         </v-list-item-action>
+        <v-list-item-title>Remove</v-list-item-title>
+       </v-list-item>
 
+       <v-list-item v-if="item.deleted_at" @click.stop="removeComponentWarning(item.id, 'post', 'forceDestroy', item.config.general_config.title)">
+        <v-list-item-action>
+         <v-btn small icon dark color="#4C4C4C">
+          <v-icon color="red lighten-2" small class="mx-2">
+           mdi-delete-outline
+          </v-icon>
+         </v-btn>
+        </v-list-item-action>
         <v-list-item-title>Remove permanently</v-list-item-title>
        </v-list-item>
       </v-list>
@@ -182,6 +200,9 @@
      <v-chip color="primary" v-else>Active</v-chip>
     </template>
    </v-data-table>
+   <v-btn @click="removeGroup(groupBeingRemoved), (componentsLinkedToGroupDialog = false)" v-if="!componentsLinkedToGroup.length" color="primary"
+    >Try removing "{{ groupNameBeingRemoved }}" group again.
+   </v-btn>
   </baseDialog>
  </div>
 </template>

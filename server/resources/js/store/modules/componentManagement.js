@@ -64,8 +64,10 @@ const getters = {
  },
 
  selectedComponentFormField: (state, getters) => {
-  const index = getters.selectedComponent.config.form_fields.findIndex(f => f.field == state.selectedComponentActiveField);
-  return getters.selectedComponent.config.form_fields[index];
+  if (getters.selectedComponent) {
+   const index = getters.selectedComponent.config.form_fields.findIndex(f => f.field == state.selectedComponentActiveField);
+   return getters.selectedComponent.config.form_fields[index];
+  }
  },
 
  previousComponentDisabled: state => {
@@ -81,17 +83,21 @@ const getters = {
  },
 
  filteredFormFields: (state, getters) => {
-  const searchFields = state.searchFields.toString().toLowerCase();
-  return getters.selectedComponent.config.form_fields.filter(field => {
-   return field.label.toLowerCase().match(searchFields);
-  });
+  if (getters.selectedComponent) {
+   const searchFields = state.searchFields.toString().toLowerCase();
+   return getters.selectedComponent.config.form_fields.filter(field => {
+    return field.label.toLowerCase().match(searchFields);
+   });
+  }
  },
 
  filteredSelectedFields: (state, getters) => {
-  const searchFields = state.searchFields.toString().toLowerCase();
-  return getters.selectedComponent.config.form_fields.filter(field => {
-   return field.label.toLowerCase().match(searchFields) && field.displayField;
-  });
+  if (getters.selectedComponent) {
+   const searchFields = state.searchFields.toString().toLowerCase();
+   return getters.selectedComponent.config.form_fields.filter(field => {
+    return field.label.toLowerCase().match(searchFields) && field.displayField;
+   });
+  }
  },
 
  allComponentsFiltered: (state, getters) => {
@@ -261,9 +267,10 @@ const actions = {
      if (response.data.components && response.data.components.length) {
       store.set("componentManagement/componentsLinkedToGroup", response.data.components);
       store.set("componentManagement/componentsLinkedToGroupDialog", true);
+     } else {
+      dispatch("unselectGroup", id);
      }
      if (response.data.groups) {
-      alert("hey");
       store.set("componentManagement/allGroups", response.data.groups);
       store.set("snackbar/value", true);
       store.set("snackbar/text", "Group removed");
@@ -378,10 +385,11 @@ const actions = {
   store.set(`componentManagement/allComponents@${index}`, { ...origin, origin: cloneDeep(origin) });
  },
 
- removeComponent({ dispatch }, { id, mode }) {
-  axios[mode](`api/forceDestroy/${id}`)
+ removeComponent({ dispatch }, { id, method, apiPath }) {
+  axios[method](`api/${apiPath}/${id}`)
    .then(response => {
     if (response.status === 200) {
+     store.set("componentManagement/componentsLinkedToGroup", response.data.components);
      store.set("componentManagement/allComponents", response.data.components);
      store.set("snackbar/value", true);
      store.set("snackbar/text", "Component removed");

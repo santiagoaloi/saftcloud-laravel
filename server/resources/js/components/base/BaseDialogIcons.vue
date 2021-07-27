@@ -15,7 +15,7 @@
        item-value="name"
        label="Search mdi icons..."
        :color="isDark ? 'white' : ''"
-       :background-color="isDark ? '#28292b' : 'grey lighten-5'"
+       :background-color="isDark ? '#28292b' : 'white'"
       >
        <template slot="selection" slot-scope="data">
         <v-icon class="mr-3"> {{ data.item.name }} </v-icon>
@@ -42,7 +42,7 @@
        v-model="icon.color"
        hide-details
        :color="isDark ? 'white' : ''"
-       :background-color="isDark ? '#28292b' : 'grey lighten-5'"
+       :background-color="isDark ? '#28292b' : 'white'"
       ></v-text-field>
      </v-col>
     </v-row>
