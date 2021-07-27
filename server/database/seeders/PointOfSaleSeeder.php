@@ -5,16 +5,15 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class MeasurementUnitSystemSeeder extends Seeder {
+class PointOfSaleSeeder extends Seeder {
     /**
      * Run the database seeds.
      *
      * @return void
      */
     public function run() {
-        DB::table('measurement_unit_systems')->insert([
-            ["id"=>1, "name"=>"Sistema Internacional"],
-            ["id"=>2, "name"=>"Sistema Imperial"]
+        DB::table('point_of_sales')->insert([
+            ["id"=>1, "branch_id"=>1, "ptoVta"=>1, "name"=>"Sucursal 1", "status"=>1]
         ]);
     }
 }

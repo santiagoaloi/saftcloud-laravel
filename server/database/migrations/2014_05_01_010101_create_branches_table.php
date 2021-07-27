@@ -16,8 +16,8 @@ class CreateBranchesTable extends Migration {
             $table->foreignId('entity_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
             $table->foreignId('address_id')->nullable()->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
             $table->foreignId('phone_id')->nullable()->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
-            $table->string('email', 100)->nullable();
-            $table->string('description', 100)->nullable();
+            $table->string('email')->nullable();
+            $table->string('name')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

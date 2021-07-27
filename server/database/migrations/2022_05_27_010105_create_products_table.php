@@ -21,17 +21,18 @@ class CreateProductsTable extends Migration {
             $table->foreignId('product_brand_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
             $table->string('product_name');
             $table->string('quantity');
-            $table->unsignedBigInteger('unimed_id');
-            $table->foreign('unimed_id')->references('id')->on('look_up_list_values')->onDelete('RESTRICT')->onUpdate('CASCADE');
+            $table->foreignId('measurement_unit_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
             $table->decimal('cost_net', 20, 2);
             $table->decimal('cost_untaxed', 20, 2);
-            $table->unsignedBigInteger('iva_id');
-            $table->foreign('iva_id')->references('id')->on('look_up_list_values')->onDelete('RESTRICT')->onUpdate('CASCADE');
+            $table->foreignId('iva_tax_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
+
             $table->unsignedBigInteger('mkup_id');
             $table->foreign('mkup_id')->references('id')->on('look_up_list_values')->onDelete('RESTRICT')->onUpdate('CASCADE');
             $table->decimal('price', 20, 2);
+
             $table->unsignedBigInteger('commission_id');
             $table->foreign('commission_id')->references('id')->on('look_up_list_values')->onDelete('RESTRICT')->onUpdate('CASCADE');
+
             $table->decimal('stock', 11, 2);
             $table->decimal('inventory', 11, 2);
             $table->smallInteger('can_have_promotion')->default('1');

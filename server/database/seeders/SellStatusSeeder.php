@@ -5,14 +5,14 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class UserSeeder extends Seeder {
+class SellStatusSeeder extends Seeder {
     /**
      * Run the database seeds.
      *
      * @return void
      */
     public function run() {
-        DB::table('sell_status')->insert([
+        DB::table('sell_statuses')->insert([
             ["id"=>1, "branch_id"=> 1, "name"=>"Pedido tomado"],
             ["id"=>2, "branch_id"=> 1, "name"=>"En preparacion"],
             ["id"=>3, "branch_id"=> 1, "name"=>"Facturado"],

@@ -4,19 +4,19 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateIvaConditionsTable extends Migration {
+class CreateTaxesTable extends Migration {
     /**
      * Run the migrations.
      *
      * @return void
      */
     public function up() {
-        Schema::create('iva_conditions', function (Blueprint $table) {
+        Schema::create('taxes', function (Blueprint $table) {
             $table->id();
             $table->foreignId('country_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
+            $table->smallInteger('code');
             $table->string('name');
-            $table->string('short_name');
-            $table->smallInteger('value');
+            $table->decimal('value', 5, 3);
             $table->softDeletes();
             $table->timestamps();
         });
@@ -28,6 +28,6 @@ class CreateIvaConditionsTable extends Migration {
      * @return void
      */
     public function down() {
-        Schema::dropIfExists('iva_conditions');
+        Schema::dropIfExists('taxes');
     }
 }

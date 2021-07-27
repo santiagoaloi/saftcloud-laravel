@@ -18,10 +18,8 @@ class CreateEntitiesTable extends Migration {
             $table->foreign('entity_type_id')->references('id')->on('look_up_list_values')->onDelete('RESTRICT')->onUpdate('CASCADE');
             $table->string('first_name', 100);
             $table->string('last_name', 100);
-            $table->unsignedBigInteger('iva_cond_id')->nullable();
-            $table->foreign('iva_cond_id')->references('id')->on('look_up_list_values')->onDelete('RESTRICT')->onUpdate('CASCADE');
-            $table->unsignedBigInteger('doc_type_id')->nullable();
-            $table->foreign('doc_type_id')->references('id')->on('look_up_list_values')->onDelete('RESTRICT')->onUpdate('CASCADE');
+            $table->foreignId('iva_condition_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
+            $table->foreignId('document_type_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
             $table->bigInteger('doc_number')->nullable();
             $table->bigInteger('ing_brutos_number')->nullable();
             $table->date('birthday')->nullable();;

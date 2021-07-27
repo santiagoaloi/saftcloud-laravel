@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class UserSeeder extends Seeder {
+class IvaConditionSeeder extends Seeder {
     /**
      * Run the database seeds.
      *
@@ -23,8 +23,8 @@ class UserSeeder extends Seeder {
             ["id"=>8, "country_id"=> 12, "name"=>"Proveedor del Exterior", "short_name"=>"PDE", "value"=>8],
             ["id"=>9, "country_id"=> 12, "name"=>"Cliente del Exterior", "short_name"=>"CDE", "value"=>9],
             ["id"=>10, "country_id"=> 12, "name"=>"IVA Liberado – Ley Nº 19.640", "short_name"=>"IL", "value"=>10],
-            ["id"=>11, "country_id"=> 12, "name"=>"IVA Responsable Inscripto – Agente de Percepción", "short_name"=>"", "value"=>11],
-            ["id"=>12, "country_id"=> 12, "name"=>"Pequeño Contribuyente Eventual", "short_name"=>"", "value"=>12],
+            ["id"=>11, "country_id"=> 12, "name"=>"IVA Responsable Inscripto – Agente de Percepción", "short_name"=>"RIAP", "value"=>11],
+            ["id"=>12, "country_id"=> 12, "name"=>"Pequeño Contribuyente Eventual", "short_name"=>"PCE", "value"=>12],
             ["id"=>13, "country_id"=> 12, "name"=>"Monotributista Social", "short_name"=>"MS", "value"=>13],
             ["id"=>14, "country_id"=> 12, "name"=>"Pequeño Contribuyente Eventual Social", "short_name"=>"PCES", "value"=>14]
         ]);

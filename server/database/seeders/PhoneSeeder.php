@@ -5,16 +5,15 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class MeasurementUnitSystemSeeder extends Seeder {
+class PhoneSeeder extends Seeder {
     /**
      * Run the database seeds.
      *
      * @return void
      */
     public function run() {
-        DB::table('measurement_unit_systems')->insert([
-            ["id"=>1, "name"=>"Sistema Internacional"],
-            ["id"=>2, "name"=>"Sistema Imperial"]
+        DB::table('phones')->insert([
+            ["id"=>1, "entity_id"=>1, "description"=>"Negocio", "country_id"=>1, "phone_number"=>4589779]
         ]);
     }
 }
