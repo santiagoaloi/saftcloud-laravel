@@ -172,7 +172,7 @@ export default {
 
  methods: {
   testFunction() {
-   let post = { entity_id: 1, role_id: 1, email: "facu.ft@gmail.com" };
+   let post = { email: "facu.ft@gmail.com", password:"password"};
    axios
     .post("/api/testFunction/", post)
     .then(response => {

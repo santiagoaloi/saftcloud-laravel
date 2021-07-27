@@ -1,6 +1,7 @@
 <?php
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\RegionController;
 
 use App\Http\Controllers\Public\StateController;
 use App\Http\Controllers\Public\IconController;
@@ -36,6 +37,8 @@ use App\Http\Controllers\Root\ComponentDefaultController;
 //Testing
 use App\Http\Controllers\TestFunctionController;
 
+use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -43,7 +46,10 @@ use App\Http\Controllers\TestFunctionController;
 */
 
 // Public routes
+// Route::post('/login', [AuthController::class, 'login']);
 Route::post('/login', [AuthController::class, 'login']);
+
+Route::get('/region', [RegionController::class, 'ip_info']);
 
 Route::resource('/country', CountryController::class);
 Route::get('/countries', [CountryController::class, 'showAll']);
@@ -107,4 +113,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 });
 
 //Testing
-Route::post('/testFunction', [TestFunctionController::class, 'test2']);
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::post('/testFunction', [AuthenticatedSessionController::class, 'store']);
+});

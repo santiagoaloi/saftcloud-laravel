@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Laravel\Fortify\Fortify;
 
 class AuthController extends Controller {
     public function register(Request $request) {
@@ -48,7 +50,7 @@ class AuthController extends Controller {
             ], 401);
         }
 
-        $token = $user->createToken($fields['email'])->plainTextToken;
+        $token = $user->createToken($fields['email'], ['component.show'])->plainTextToken;
 
         $response = [
             'user' => $user,
@@ -58,15 +60,14 @@ class AuthController extends Controller {
         return response([
             'data' => $response
         ], 200);
-
     }
 
     public function logout(Request $request) {
-        auth()->user()->tokens()->delete();
 
         return [
             'message' => 'Logged out',
             'status' => true
         ];
     }
+
 }
