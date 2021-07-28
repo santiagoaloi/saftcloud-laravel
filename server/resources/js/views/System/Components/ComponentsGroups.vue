@@ -39,12 +39,7 @@
      </template>
 
      <template v-slot:selection="data">
-      <v-chip
-       small
-       v-if="data.index === 0"
-       :style="isDark ? 'color: white' : 'color:black'"
-       :color="isDark ? 'grey-darken-4' : 'blue-grey lighten-4'"
-      >
+      <v-chip small v-if="data.index === 0" :style="isDark ? 'color: white' : 'color:black'" :color="isDark ? 'grey-darken-4' : 'blue-white'">
        {{ selectedComponentGroups.length }} groups selected.</v-chip
       >
      </template>
@@ -104,11 +99,11 @@
     </v-autocomplete>
    </v-col>
    <v-col cols="12" sm="8">
-    <v-chip-group class="mt-n1" showArrows centerActive>
+    <v-chip-group class="mt-n1" show-arrows>
      <transition-group appear name="scale-transition">
       <v-chip :ripple="false" close @click:close="unselectGroup(item.id)" v-for="(item, index) in selectedComponentGroups" :key="`${index}`">
        <v-avatar left>
-        <v-btn style="pointer-events:none" :color="isDark ? 'grey darken-3' : 'grey lighten-4'"> {{ countComponentsInGroup(item.id) }}</v-btn>
+        <v-btn style="pointer-events:none" :color="isDark ? 'grey darken-3' : 'white'"> {{ countComponentsInGroup(item.id) }}</v-btn>
        </v-avatar>
        {{ item.name }}
       </v-chip>
@@ -246,6 +241,10 @@ export default {
     }
    ]
   };
+ },
+
+ mounted() {
+  this.getGroups();
  },
 
  computed: {

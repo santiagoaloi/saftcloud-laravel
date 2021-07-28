@@ -1,9 +1,7 @@
 import axios from "axios";
 import { store } from "@/store";
 import { make } from "vuex-pathify";
-import isEqual from "lodash/isEqual";
-import isEmpty from "lodash/isEmpty";
-import cloneDeep from "lodash/cloneDeep";
+import { isEqual, isEmpty, cloneDeep } from "lodash";
 
 const initialComponentSettings = () => {
  return {
@@ -16,7 +14,6 @@ const initialComponentSettings = () => {
 };
 
 const state = {
- search: "",
  dbTables: [],
  dbTablesAndColumns: {},
  dbGroupNames: [],
@@ -27,6 +24,7 @@ const state = {
  searchFields: "",
  allComponents: [],
  dialogComponent: false,
+ dialogEditor: false,
  dialogIcons: false,
  activeStatusTab: 0,
  isTableLayout: false,
@@ -100,9 +98,9 @@ const getters = {
   }
  },
 
- allComponentsFiltered: (state, getters) => {
+ allComponentsFiltered: (state, getters, rootState) => {
   if (!getters.hasSelectedComponentGroups) return [];
-  const search = state.search.toLowerCase();
+  const search = rootState.application.search.toLowerCase();
   return state.allComponents.filter(component => {
    return (
     (search === "" || component.config.general_config.title.toLowerCase().match(search)) &&
@@ -175,6 +173,10 @@ const getters = {
 
 const actions = {
  ...make.actions(state),
+
+ resetDialogComponentForm() {
+  store.set("componentManagement/componentSettings", initialComponentSettings());
+ },
 
  closeComponentDialog({}) {
   store.set("componentManagement/dialogComponent", false);

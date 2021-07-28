@@ -19,19 +19,10 @@
    color="#36393f 
 "
   >
-   <template>
-    <!-- <v-btn
-     v-if="$vuetify.breakpoint.mdAndUp && !noMaximize"
-     x-small
-     color="white"
-     outlined
-     text
-     fab
-     class="ml-n3 mr-4"
-     @click.stop="isMaximized = !isMaximized"
-    >
-     <v-icon>mdi-window-maximize</v-icon>
-    </v-btn> -->
+   <template v-if="icon">
+    <v-btn x-small color="white" text fab class="mr-3">
+     <v-icon>{{ icon }}</v-icon>
+    </v-btn>
    </template>
 
    <v-toolbar-title>
@@ -87,6 +78,11 @@ export default {
   value: {
    type: [Boolean],
    default: false
+  },
+
+  icon: {
+   type: [String],
+   default: null
   },
 
   filled: {

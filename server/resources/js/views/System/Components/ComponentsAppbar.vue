@@ -10,24 +10,7 @@
    </div>
   </div>
   <v-divider class="mt-3"></v-divider>
-
-  <baseDialog
-   v-model="dialogEditor"
-   fullscreen
-   transition="dialog-bottom-transition"
-   @save="saveComponentsConfigStructure()"
-   @close="dialogEditor = false"
-   width="60vw"
-   no-gutters
-   absoluteToolbar
-   title="Components config structure"
-   filled
-   fluid
-  >
-   <v-card flat width="100%" class="dialogHeight pt-14">
-    <base-editor v-model="ComponentsConfigStructure" mode="json" />
-   </v-card>
-  </baseDialog>
+  <dialog-config-editor />
  </div>
 </template>
 
@@ -36,25 +19,16 @@ import { sync, call } from "vuex-pathify";
 
 export default {
  name: "ComponentsAppbar",
-
- data() {
-  return {
-   expand: false,
-   dialogEditor: false
-  };
+ components: {
+  DialogConfigEditor: () => import(/* webpackChunkName: 'components-dialog-config-editor' */ "./DialogConfigEditor")
  },
-
  methods: {
   ...call("componentManagement/*")
  },
 
- mounted() {
-  this.getComponentsConfigStructure();
- },
-
  computed: {
   ...sync("theme", ["isDark"]),
-  ...sync("componentManagement", ["dialogComponent", "search", "ComponentsConfigStructure"])
+  ...sync("componentManagement", ["dialogComponent", "dialogEditor"])
  }
 };
 </script>

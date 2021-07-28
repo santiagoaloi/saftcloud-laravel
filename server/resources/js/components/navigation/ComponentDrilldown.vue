@@ -1,7 +1,7 @@
 <template>
  <div v-if="selectedComponent">
   <v-expand-transition>
-   <v-sheet :color="isDark ? '#2C2F33' : 'grey lighten-4'" v-if="hasUnsavedChanges(selectedComponent)" class="px-2">
+   <v-sheet :color="isDark ? '#2C2F33' : 'white'" v-if="hasUnsavedChanges(selectedComponent)" class="px-2">
     <v-alert class="mt-3" elevation="2" coloredBorder color="pink" border="right" dense>
      <div class="d-flex justify-space-between align-center">
       Unsaved
@@ -12,7 +12,7 @@
   </v-expand-transition>
 
   <v-list>
-   <v-list-item>
+   <v-list-item class="pa-1">
     <v-list-item-avatar>
      <v-icon :color="isDark ? '#ccc' : 'black'">
       {{ selectedComponent.config_settings.icon.name }}
@@ -34,7 +34,7 @@
      ></v-list-item-title>
     </v-list-item-content>
 
-    <v-list-item-icon>
+    <v-list-item-icon class="mr-1">
      <v-tooltip transition="false" color="black" bottom>
       <template v-slot:activator="{ on }">
        <v-btn v-on="on" @click="setStarred(selectedComponent)" color="white" small icon :ripple="false">
@@ -47,7 +47,7 @@
    </v-list-item>
   </v-list>
 
-  <v-card-text>
+  <v-card-text class="pa-2">
    <div class="text--primary">
     <baseFieldLabel label="Description" />
     <v-textarea
@@ -59,6 +59,7 @@
      autogrow
      dense
      v-model="selectedComponent.config.general_config.note"
+     hide-details
     >
     </v-textarea>
 
@@ -137,7 +138,7 @@
       :color="isDark ? '' : 'white'"
      >
       <v-icon color="green" dark>
-       mdi-check-all
+       {{ hasUnsavedChanges(selectedComponent) ? "mdi-check" : "mdi-check-all" }}
       </v-icon>
      </v-btn>
     </template>

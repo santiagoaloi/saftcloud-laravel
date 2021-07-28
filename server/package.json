@@ -17,6 +17,7 @@
   "vue-country-flag": "^2.0.4",
   "vue-diagonal": "^0.1.0",
   "vue-head": "^2.2.0",
+  "vue-lazy-input": "^1.1.0",
   "vue-sweetalert2": "^4.3.1",
   "vue-typer": "^1.2.0",
   "vuedraggable": "^2.24.3",

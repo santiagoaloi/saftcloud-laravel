@@ -11,7 +11,7 @@
 
   <div class="d-flex">
    <!-- <v-switch v-model="multipleSelect" label="Multiple selection" class="mt-1 mx-4"> </v-switch> -->
-   <v-btn :disabled="isAllFilteredComponentsEmpty" @click="isTableLayout = !isTableLayout"
+   <v-btn plain :disabled="isAllFilteredComponentsEmpty" @click="isTableLayout = !isTableLayout"
     ><v-icon left> {{ isTableLayout ? " mdi-view-grid-outline" : " mdi-format-list-bulleted-square" }} </v-icon>
     {{ isTableLayout ? "Switch to grid view" : "Switch to list view" }}</v-btn
    >

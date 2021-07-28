@@ -8,7 +8,7 @@
     <v-row justify="center">
      <v-col sm="12">
       <baseFieldLabel label="Country" />
-      <validation-provider v-slot="{ errors }" name="Country" rules="required">
+      <validation-provider v-slot="{ errors, reset }" name="Country" rules="required">
        <v-autocomplete
         :items="countryCodes"
         v-model="signupForm.country"
@@ -20,9 +20,12 @@
         @keydown.enter.prevent="validateAndProceed()"
         :outlined="isDark"
         :color="isDark ? '#208ad6' : 'grey'"
-        :background-color="isDark ? '#28292b' : 'grey lighten-4'"
+        :background-color="isDark ? '#28292b' : 'white'"
         :error="errors.length > 0"
         @change="getStates({ id: $event })"
+        @focus="reset"
+        @input="reset"
+        @blur="reset"
        >
         <template slot="selection" slot-scope="data">
          <country-flag class="mr-2" :country="data.item.iso2" />
@@ -45,7 +48,7 @@
 
      <v-col sm="6">
       <baseFieldLabel label="State, Province, or Region " />
-      <validation-provider v-slot="{ errors }" name="State" rules="required">
+      <validation-provider v-slot="{ errors, reset }" name="State" rules="required">
        <v-autocomplete
         :disabled="!states.length"
         :items="states"
@@ -58,8 +61,11 @@
         @keydown.enter.prevent="validateAndProceed()"
         :outlined="isDark"
         :color="isDark ? '#208ad6' : 'grey'"
-        :background-color="isDark ? '#28292b' : 'grey lighten-4'"
+        :background-color="isDark ? '#28292b' : 'white'"
         :error="errors.length > 0"
+        @focus="reset"
+        @input="reset"
+        @blur="reset"
        >
        </v-autocomplete>
       </validation-provider>
@@ -67,7 +73,7 @@
 
      <v-col sm="6">
       <baseFieldLabel label="City" />
-      <validation-provider v-slot="{ errors }" name="City" rules="required">
+      <validation-provider v-slot="{ errors, reset }" name="City" rules="required">
        <v-text-field
         :disabled="!states.length"
         v-model="signupForm.city"
@@ -77,15 +83,18 @@
         prepend-inner-icon="mdi-city"
         :outlined="isDark"
         :color="isDark ? '#208ad6' : 'grey'"
-        :background-color="isDark ? '#28292b' : 'grey lighten-4'"
+        :background-color="isDark ? '#28292b' : 'white'"
         :error="errors.length > 0"
+        @focus="reset"
+        @input="reset"
+        @blur="reset"
        ></v-text-field>
       </validation-provider>
      </v-col>
 
      <v-col sm="8">
       <baseFieldLabel label="Address" />
-      <validation-provider v-slot="{ errors }" name="Address" rules="required">
+      <validation-provider v-slot="{ errors, reset }" name="Address" rules="required">
        <v-text-field
         v-model="signupForm.address"
         solo
@@ -94,15 +103,18 @@
         prepend-inner-icon="mdi-map-marker"
         :outlined="isDark"
         :color="isDark ? '#208ad6' : 'grey'"
-        :background-color="isDark ? '#28292b' : 'grey lighten-4'"
+        :background-color="isDark ? '#28292b' : 'white'"
         :error="errors.length > 0"
+        @focus="reset"
+        @input="reset"
+        @blur="reset"
        ></v-text-field>
       </validation-provider>
      </v-col>
 
      <v-col sm="4">
       <baseFieldLabel label="Postal code" />
-      <validation-provider v-slot="{ errors }" name="Zipcode" rules="required">
+      <validation-provider v-slot="{ errors, reset }" name="Zipcode" rules="required">
        <v-text-field
         v-model="signupForm.zipcode"
         solo
@@ -111,8 +123,11 @@
         prepend-inner-icon="mdi-map-marker"
         :outlined="isDark"
         :color="isDark ? '#208ad6' : 'grey'"
-        :background-color="isDark ? '#28292b' : 'grey lighten-4'"
+        :background-color="isDark ? '#28292b' : 'white'"
         :error="errors.length > 0"
+        @focus="reset"
+        @input="reset"
+        @blur="reset"
        ></v-text-field>
       </validation-provider>
      </v-col>

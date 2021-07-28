@@ -36,10 +36,6 @@ export default {
   }
  },
 
- mounted() {
-  this.getGroups();
- },
-
  methods: {
   ...call("componentManagement/*"),
 

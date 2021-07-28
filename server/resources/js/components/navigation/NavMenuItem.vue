@@ -80,7 +80,7 @@ export default {
  mounted() {
   this.$watch(
    () => {
-    return this.$refs.group.isActive;
+    if (this.$refs.group) return this.$refs.group.isActive;
    },
    val => {
     this.icon = val ? "mdi-folder-open-outline" : "mdi-folder-outline";

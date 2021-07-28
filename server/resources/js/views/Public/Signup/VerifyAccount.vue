@@ -10,7 +10,7 @@
     data-aos-duration="400"
    >
     <v-col cols="12" lg="6">
-     <v-sheet color="grey lighten-4" class="text-center" height="400px">
+     <v-sheet color="white" class="text-center" height="400px">
       <v-scroll-x-transition hide-on-leave>
        <div v-if="step === 0">
         <v-card-text>

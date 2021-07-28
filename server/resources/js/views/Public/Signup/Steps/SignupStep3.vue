@@ -7,7 +7,7 @@
    <ValidationObserver ref="step3" slim>
     <v-row justify="center">
      <v-col sm="6">
-      <validation-provider v-slot="{ errors }" name="Company name" rules="required">
+      <validation-provider v-slot="{ errors, reset }" name="Company name" rules="required">
        <baseFieldLabel label="Account" />
        <v-text-field
         autofocus
@@ -19,14 +19,17 @@
         prepend-inner-icon="mdi-account"
         :outlined="isDark"
         :color="isDark ? '#208ad6' : 'grey'"
-        :background-color="isDark ? '#28292b' : 'grey lighten-4'"
+        :background-color="isDark ? '#28292b' : 'white'"
         :error="errors.length > 0"
+        @focus="reset"
+        @input="reset"
+        @blur="reset"
        ></v-text-field>
       </validation-provider>
      </v-col>
      <v-col sm="6">
       <baseFieldLabel label="Company Alias" />
-      <validation-provider v-slot="{ errors }" name="Company name alias" rules="required">
+      <validation-provider v-slot="{ errors, reset }" name="Company name alias" rules="required">
        <v-text-field
         v-model="signupForm.companyNameAlias"
         hint="Public company name alias"
@@ -36,8 +39,11 @@
         prepend-inner-icon="mdi-account"
         :outlined="isDark"
         :color="isDark ? '#208ad6' : 'grey'"
-        :background-color="isDark ? '#28292b' : 'grey lighten-4'"
+        :background-color="isDark ? '#28292b' : 'white'"
         :error="errors.length > 0"
+        @focus="reset"
+        @input="reset"
+        @blur="reset"
        ></v-text-field>
       </validation-provider>
      </v-col>

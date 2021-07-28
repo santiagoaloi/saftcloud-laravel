@@ -9,7 +9,7 @@
      <v-col sm="12">
       <baseFieldLabel label="Email" />
       <span></span>
-      <validation-provider v-slot="{ errors }" name="Email" rules="required|email">
+      <validation-provider v-slot="{ errors, reset }" name="Email" rules="required|email">
        <v-text-field
         autofocus
         type="email"
@@ -20,14 +20,17 @@
         prepend-inner-icon="mdi-email"
         :outlined="isDark"
         :color="isDark ? '#208ad6' : 'grey'"
-        :background-color="isDark ? '#28292b' : 'grey lighten-4'"
+        :background-color="isDark ? '#28292b' : 'white'"
         :error="errors.length > 0"
+        @focus="reset"
+        @input="reset"
+        @blur="reset"
        ></v-text-field>
       </validation-provider>
      </v-col>
      <v-col sm="6">
       <baseFieldLabel label="Country Code" />
-      <validation-provider v-slot="{ errors }" name="CountryCode" rules="required">
+      <validation-provider v-slot="{ errors, reset }" name="CountryCode" rules="required">
        <v-autocomplete
         :items="countryCodes"
         v-model="signupForm.phone_code"
@@ -39,8 +42,11 @@
         hide-no-data
         :outlined="isDark"
         :color="isDark ? '#208ad6' : 'grey'"
-        :background-color="isDark ? '#28292b' : 'grey lighten-4'"
+        :background-color="isDark ? '#28292b' : 'white'"
         :error="errors.length > 0"
+        @focus="reset"
+        @input="reset"
+        @blur="reset"
        >
         <template slot="selection" slot-scope="data">
          <country-flag :country="data.item.iso2" />
@@ -70,7 +76,7 @@
      <v-col sm="6">
       <baseFieldLabel label="Phone number" />
       <span></span>
-      <validation-provider v-slot="{ errors }" name="Phone mumber" rules="required">
+      <validation-provider v-slot="{ errors, reset }" name="Phone mumber" rules="required">
        <v-text-field
         type="number"
         v-model="signupForm.phoneNumber"
@@ -80,8 +86,11 @@
         prepend-inner-icon="mdi-phone"
         :outlined="isDark"
         :color="isDark ? '#208ad6' : 'grey'"
-        :background-color="isDark ? '#28292b' : 'grey lighten-4'"
+        :background-color="isDark ? '#28292b' : 'white'"
         :error="errors.length > 0"
+        @focus="reset"
+        @input="reset"
+        @blur="reset"
        ></v-text-field>
       </validation-provider>
      </v-col>

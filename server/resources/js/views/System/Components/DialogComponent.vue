@@ -6,12 +6,13 @@
   max-width="900"
   @save="validateComponentForm()"
   @close="dialogComponent = !dialogComponent"
+  icon="mdi-plus"
  >
   <ValidationObserver ref="createComponentForm" slim>
    <v-row>
     <v-col cols="12" lg="6">
      <baseFieldLabel label="Group" />
-     <validation-provider v-slot="{ errors }" name="component group" rules="required">
+     <validation-provider v-slot="{ errors, reset }" name="component group" rules="required">
       <v-autocomplete
        spellcheck="false"
        prepend-inner-icon="mdi-folder-outline"
@@ -27,12 +28,17 @@
        solo
        :color="isDark ? '#208ad6' : 'grey'"
        :background-color="isDark ? '#28292b' : 'white'"
+       :error-messages="errors[0]"
        :error="errors.length > 0"
        :menu-props="{
         transition: 'slide-y-transition',
         closeOnContentClick: true
        }"
        :outlined="isDark"
+       @focus="reset"
+       @input="reset"
+       @blur="reset"
+       @keydown.enter.prevent="validateComponentForm()"
       >
        <template #item="{ item, on }">
         <v-list-item :ripple="false" v-on="on">
@@ -50,7 +56,7 @@
 
     <v-col cols="12" lg="6">
      <baseFieldLabel label="Component title" />
-     <validation-provider v-slot="{ errors }" name="component title" rules="required">
+     <validation-provider v-slot="{ errors, reset }" name="component title" rules="required">
       <v-text-field
        spellcheck="false"
        v-model="componentSettings.title"
@@ -61,14 +67,19 @@
        maxlength="35"
        :color="isDark ? '#208ad6' : 'grey'"
        :background-color="isDark ? '#28292b' : 'white'"
+       @keydown.enter.prevent="validateComponentForm()"
        :error="errors.length > 0"
+       :error-messages="errors[0]"
+       @focus="reset"
+       @input="reset"
+       @blur="reset"
       />
      </validation-provider>
     </v-col>
 
     <v-col cols="12" lg="6">
      <baseFieldLabel label="Component name" />
-     <validation-provider v-slot="{ errors }" name="component name" rules="required|alpha">
+     <validation-provider v-slot="{ errors, reset }" name="component name" rules="alpha|required">
       <v-text-field
        spellcheck="false"
        v-model="componentSettings.name"
@@ -80,14 +91,18 @@
        :background-color="isDark ? '#28292b' : 'white'"
        :error="errors.length > 0"
        :outlined="isDark"
+       @keydown.enter.prevent="validateComponentForm()"
        :error-messages="errors[0]"
+       @focus="reset"
+       @input="reset"
+       @blur="reset"
       />
      </validation-provider>
     </v-col>
 
     <v-col cols="12" lg="6">
      <baseFieldLabel label="Component description" />
-     <validation-provider v-slot="{ errors }" name="component desc" rules="required">
+     <validation-provider v-slot="{ errors, reset }" name="component desc" rules="required">
       <v-text-field
        spellcheck="false"
        v-model="componentSettings.note"
@@ -99,14 +114,19 @@
        solo
        :color="isDark ? '#208ad6' : 'grey'"
        :background-color="isDark ? '#28292b' : 'white'"
+       @keydown.enter.prevent="validateComponentForm()"
        :error="errors.length > 0"
+       :error-messages="errors[0]"
        :outlined="isDark"
+       @focus="reset"
+       @input="reset"
+       @blur="reset"
       />
      </validation-provider>
     </v-col>
     <v-col cols="12" lg="6">
      <baseFieldLabel label="Database table" />
-     <validation-provider v-slot="{ errors }" name="component table" rules="required">
+     <validation-provider v-slot="{ errors, reset }" name="component table" rules="required">
       <v-autocomplete
        :outlined="isDark"
        spellcheck="false"
@@ -120,7 +140,12 @@
        :item-color="isDark ? 'indigo lighten-3' : 'primary'"
        :color="isDark ? '#208ad6' : 'grey'"
        :background-color="isDark ? '#28292b' : 'white'"
+       @keydown.enter.prevent="validateComponentForm()"
+       :error-messages="errors[0]"
        :error="errors.length > 0"
+       @focus="reset"
+       @input="reset"
+       @blur="reset"
       >
        <template v-slot:item="data">
         <template>
@@ -167,6 +192,7 @@ export default {
      this.createComponent().then(response => {
       if (response) {
        window.eventBus.$emit("BUS_BUILD_ROUTES");
+       this.resetDialogComponentForm();
       }
      });
     }

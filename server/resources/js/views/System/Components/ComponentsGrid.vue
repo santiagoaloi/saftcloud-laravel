@@ -74,7 +74,7 @@
           <v-chip
            style="pointer-events:none"
            :dark="isDark"
-           :color="isDark ? 'rgb(54, 57, 63)' : 'grey lighten-4'"
+           :color="isDark ? 'rgb(54, 57, 63)' : 'white'"
            :text-color="isDark ? 'grey lighten-1' : 'indigo darken-4'"
            label
            class="col-12"

@@ -1,13 +1,5 @@
 <template>
- <v-navigation-drawer
-  src="storage/sidebar/sidebar.svg"
-  color="#2f3136"
-  v-model="componentEditSheet"
-  mobileBreakpoint="0"
-  hideOverlay
-  width="250"
-  clipped
- >
+ <v-navigation-drawer src="storage/sidebar/bg1.jpg" color="#2f3136" v-model="componentEditSheet" mobileBreakpoint="0" hideOverlay width="250" clipped>
   <components-edit-sheet-menu />
  </v-navigation-drawer>
 </template>

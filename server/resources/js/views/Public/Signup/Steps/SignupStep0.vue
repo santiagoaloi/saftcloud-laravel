@@ -6,7 +6,7 @@
     <v-row>
      <v-col sm="6">
       <baseFieldLabel label="Name" />
-      <validation-provider v-slot="{ errors }" name="First name" rules="required">
+      <validation-provider v-slot="{ errors, reset }" name="First name" rules="required">
        <v-text-field
         autofocus
         v-model="signupForm.name"
@@ -16,14 +16,17 @@
         prepend-inner-icon="mdi-account"
         :outlined="isDark"
         :color="isDark ? '#208ad6' : 'grey'"
-        :background-color="isDark ? '#28292b' : 'grey lighten-4'"
+        :background-color="isDark ? '#28292b' : 'white'"
         :error="errors.length > 0"
+        @focus="reset"
+        @input="reset"
+        @blur="reset"
        ></v-text-field>
       </validation-provider>
      </v-col>
      <v-col sm="6">
       <baseFieldLabel label="Last name" />
-      <validation-provider v-slot="{ errors }" name="Last name" rules="required">
+      <validation-provider v-slot="{ errors, reset }" name="Last name" rules="required">
        <v-text-field
         v-model="signupForm.lastname"
         solo
@@ -32,8 +35,11 @@
         prepend-inner-icon="mdi-account"
         :outlined="isDark"
         :color="isDark ? '#208ad6' : 'grey'"
-        :background-color="isDark ? '#28292b' : 'grey lighten-4'"
+        :background-color="isDark ? '#28292b' : 'white'"
         :error="errors.length > 0"
+        @focus="reset"
+        @input="reset"
+        @blur="reset"
        ></v-text-field>
       </validation-provider>
      </v-col>

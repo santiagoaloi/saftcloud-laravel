@@ -25,7 +25,7 @@
       :outlined="isDark"
       :solo="!isDark"
       :color="isDark ? '#208ad6' : 'grey'"
-      :background-color="isDark ? '#28292b' : 'grey lighten-4'"
+      :background-color="isDark ? '#28292b' : 'white'"
       spellcheck="false"
       hide-details
       v-model="selectedComponent.config.general_config.title"
@@ -38,7 +38,7 @@
       :outlined="isDark"
       :solo="!isDark"
       :color="isDark ? '#208ad6' : 'grey'"
-      :background-color="isDark ? '#28292b' : 'grey lighten-4'"
+      :background-color="isDark ? '#28292b' : 'white'"
       spellcheck="false"
       :rows="2"
       autogrow
@@ -51,7 +51,6 @@
     <v-divider class="my-5"></v-divider>
     <div class="mt-2">
      <baseFieldLabel class="mb-n3" label="Navigation drawer settings" />
-
      <v-list-item two-line>
       <v-list-item-icon>
        <v-switch hide-details class="mt-2" v-model="selectedComponent.config.general_config.isVisibleInSidebar" />

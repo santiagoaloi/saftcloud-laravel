@@ -102,7 +102,7 @@ export default {
  methods: {
   ...call("componentManagement/*"),
   calculateHeight() {
-   return Number(this.$vuetify.breakpoint.height - 375);
+   return Number(this.$vuetify.breakpoint.height - 378);
   }
  }
 };

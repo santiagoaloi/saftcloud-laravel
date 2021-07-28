@@ -7,11 +7,13 @@
 <script>
 import config from "./configs";
 import { sync } from "vuex-pathify";
+import axios from "axios";
 
 export default {
  name: "AppVue",
  computed: {
   ...sync("theme", ["isDark"]),
+  ...sync("authentication", ["session"]),
 
   layout() {
    return this.$route.meta.layout;
@@ -44,22 +46,26 @@ export default {
 
  methods: {
   buildRoutes() {
-   axios.get("/api/getComponentNames/").then(response => {
-    if (response.status === 200) {
-     const components = response.data.components;
-     if (!components.length) {
-      components.push("Blank");
+   if (this.session.token) {
+    axios.get("/api/getComponentNames/").then(response => {
+     if (response.status === 200) {
+      const components = response.data.components;
+
+      // Dummy component to avoid webpack error about not finding the path.
+      if (!components.length) {
+       components.push("Blank");
+      }
+      for (const component of components) {
+       this.$router.addRoute({
+        path: `/${component}`,
+        name: component,
+        meta: { layout: "secure_layout" },
+        component: () => import(`./views/Protected/${component}/${component}.vue`)
+       });
+      }
      }
-     for (const component of components) {
-      this.$router.addRoute({
-       path: `/${component}`,
-       name: component,
-       meta: { layout: "secure_layout" },
-       component: () => import(`./views/Protected/${component}/${component}.vue`)
-      });
-     }
-    }
-   });
+    });
+   }
   }
  }
 };

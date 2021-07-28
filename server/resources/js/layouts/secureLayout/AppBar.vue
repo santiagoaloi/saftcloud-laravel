@@ -1,5 +1,5 @@
 <template>
- <v-app-bar :class="{ darkBorder: isDark }" :flat="isDark" clipped-right dense app>
+ <v-app-bar :class="{ darkBorder: isDark }" :flat="isDark" clipped-right short app>
   <v-container fluid class="py-0 px-0 px-sm-2 fill-height">
    <v-app-bar-nav-icon class="ml-n2 mr-3" text xSmall fab @click="secureDefaultDrawer = !secureDefaultDrawer" />
 
@@ -8,7 +8,8 @@
    <div class="flex-grow-1" />
 
    <v-text-field
-    v-model.lazy="search"
+    v-lazy-input:debounce="200"
+    v-model="search"
     spellcheck="false"
     :outlined="isDark"
     :solo="!isDark"
@@ -16,7 +17,7 @@
     :background-color="isDark ? '#28292b' : 'white'"
     dense
     hide-details
-    placeholder="Search components..."
+    placeholder="Search..."
     prepend-inner-icon="mdi-magnify"
     :class="expand ? 'expanded' : 'shrinked'"
     class="mx-5"
@@ -257,7 +258,8 @@ export default {
 
  computed: {
   ...sync("drawers", ["secureDefaultDrawer"]),
-  ...sync("theme", ["isDark"])
+  ...sync("theme", ["isDark"]),
+  ...sync("application", ["search"])
  },
 
  methods: {
