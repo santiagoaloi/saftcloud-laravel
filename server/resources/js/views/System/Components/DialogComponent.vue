@@ -166,9 +166,7 @@
 </template>
 <script>
 import { sync, call } from "vuex-pathify";
-import { store } from "@/store";
 import componentGroups from "@/mixins/componentGroups";
-
 export default {
  name: "DialogComponent",
  mixins: [componentGroups],

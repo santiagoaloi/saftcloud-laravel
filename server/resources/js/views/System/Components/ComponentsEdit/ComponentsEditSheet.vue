@@ -25,18 +25,13 @@
 </template>
 
 <script>
-import axios from "axios";
 import { sync, get } from "vuex-pathify";
-
 export default {
  name: "ComponentsEdit",
-
  components: {
   ComponentsEditSheetAppbar: () => import(/* webpackChunkName: 'components-edit-sheet-appbar' */ "./ComponentsEditSheetAppbar"),
   ComponentsEditSheetDrawer: () => import(/* webpackChunkName: 'components-edit-sheet-drawer' */ "./ComponentsEditSheetDrawer")
  },
-
- data: () => ({}),
 
  computed: {
   ...sync("componentManagement", ["componentEditSheet"]),

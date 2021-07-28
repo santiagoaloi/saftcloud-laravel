@@ -16,7 +16,6 @@
 
 <script>
 import { sync, call } from "vuex-pathify";
-
 export default {
  name: "ComponentsAppbar",
  components: {

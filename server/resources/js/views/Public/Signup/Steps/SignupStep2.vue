@@ -143,7 +143,6 @@
 <script>
 import { sync, get, call } from "vuex-pathify";
 import CountryFlag from "vue-country-flag";
-
 export default {
  name: "SignupStep2",
  components: {

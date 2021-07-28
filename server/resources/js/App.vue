@@ -59,7 +59,7 @@ export default {
        this.$router.addRoute({
         path: `/${component}`,
         name: component,
-        meta: { layout: "secure_layout" },
+        meta: { layout: "secure_layout", title: "Hello" },
         component: () => import(`./views/Protected/${component}/${component}.vue`)
        });
       }

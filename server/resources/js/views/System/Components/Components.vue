@@ -32,9 +32,7 @@
 </template>
 
 <script>
-import { store } from "@/store";
 import { sync, call, get } from "vuex-pathify";
-
 export default {
  name: "ComponentsManagement",
  components: {

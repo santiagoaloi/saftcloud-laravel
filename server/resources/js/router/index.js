@@ -3,14 +3,7 @@ import Router from "vue-router";
 import routes from "@/router/routes";
 import auth from "@/util/auth";
 
-//Removes the error of duplicate routes.
-const originalPush = Router.prototype.push;
-Router.prototype.push = function push(location) {
- return originalPush.call(this, location).catch(err => err);
-};
-
 Vue.use(Router);
-
 const router = new Router({
  base: "/",
  mode: "hash",

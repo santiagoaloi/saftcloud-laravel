@@ -151,11 +151,11 @@ export default {
   ...call("authentication/*"),
 
   validatelogin() {
-   this.$refs.loginForm.validate().then(success => {
-    if (success) {
+   this.$refs.loginForm.validate().then(validated => {
+    if (validated) {
      this.loading = true;
-     this.login(this.auth).then(success => {
-      if (!success) {
+     this.login(this.auth).then(authenticated => {
+      if (!authenticated) {
        this.loading = false;
        store.set("snackbar/value", true);
        store.set("snackbar/text", "Invalid credentials, please try again.");
