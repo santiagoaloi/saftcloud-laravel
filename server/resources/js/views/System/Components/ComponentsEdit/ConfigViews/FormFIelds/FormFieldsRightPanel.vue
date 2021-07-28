@@ -12,7 +12,7 @@
 
    <v-row>
     <v-col cols="6">
-     <baseFieldLabel label="label" />
+     <BaseFieldLabel label="label" />
      <!-- <v-icon style="margin-top:-2px" :color="selectedComponentFormField.icon.color" class="ml-2" small>mdi-palette-outline</v-icon> -->
      <v-text-field
       :outlined="isDark"
@@ -26,7 +26,7 @@
      </v-text-field>
     </v-col>
     <v-col cols="6">
-     <baseFieldLabel label="Input type" />
+     <BaseFieldLabel label="Input type" />
      <v-select
       :outlined="isDark"
       :solo="!isDark"

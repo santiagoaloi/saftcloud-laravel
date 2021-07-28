@@ -52,24 +52,15 @@
 <script>
 import { sync, get } from "vuex-pathify";
 import CountryFlag from "vue-country-flag";
-
 export default {
  name: "SignupStep4",
  components: {
   CountryFlag
  },
- data() {
-  return {};
- },
-
  computed: {
   ...sync("theme", ["isDark"]),
   ...sync("signup", ["signupForm", "step", "terms", "loading"]),
   ...get("signup", ["getCountryNameAndCode", "getCountryName"])
- },
-
- mounted() {},
-
- methods: {}
+ }
 };
 </script>

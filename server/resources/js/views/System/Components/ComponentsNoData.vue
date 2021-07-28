@@ -13,16 +13,9 @@
 </template>
 
 <script>
-import { store } from "@/store";
 import { sync } from "vuex-pathify";
-
 export default {
  name: "ComponentNoData",
-
- data() {
-  return {};
- },
-
  computed: {
   ...sync("theme", ["isDark"]),
   ...sync("componentManagement", ["dialogComponent"])

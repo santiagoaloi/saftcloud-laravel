@@ -11,7 +11,7 @@
   <ValidationObserver ref="createComponentForm" slim>
    <v-row>
     <v-col cols="12" lg="6">
-     <baseFieldLabel label="Group" />
+     <BaseFieldLabel label="Group" />
      <validation-provider v-slot="{ errors, reset }" name="component group" rules="required">
       <v-autocomplete
        spellcheck="false"
@@ -55,7 +55,7 @@
     </v-col>
 
     <v-col cols="12" lg="6">
-     <baseFieldLabel label="Component title" />
+     <BaseFieldLabel label="Component title" />
      <validation-provider v-slot="{ errors, reset }" name="component title" rules="required">
       <v-text-field
        spellcheck="false"
@@ -78,7 +78,7 @@
     </v-col>
 
     <v-col cols="12" lg="6">
-     <baseFieldLabel label="Component name" />
+     <BaseFieldLabel label="Component name" />
      <validation-provider v-slot="{ errors, reset }" name="component name" rules="alpha|required">
       <v-text-field
        spellcheck="false"
@@ -101,7 +101,7 @@
     </v-col>
 
     <v-col cols="12" lg="6">
-     <baseFieldLabel label="Component description" />
+     <BaseFieldLabel label="Component description" />
      <validation-provider v-slot="{ errors, reset }" name="component desc" rules="required">
       <v-text-field
        spellcheck="false"
@@ -125,7 +125,7 @@
      </validation-provider>
     </v-col>
     <v-col cols="12" lg="6">
-     <baseFieldLabel label="Database table" />
+     <BaseFieldLabel label="Database table" />
      <validation-provider v-slot="{ errors, reset }" name="component table" rules="required">
       <v-autocomplete
        :outlined="isDark"
@@ -172,7 +172,6 @@ import componentGroups from "@/mixins/componentGroups";
 export default {
  name: "DialogComponent",
  mixins: [componentGroups],
- inheritAttrs: false,
 
  mounted() {
   this.getDbTables();
@@ -187,10 +186,10 @@ export default {
   ...call("componentManagement/*"),
 
   validateComponentForm() {
-   this.$refs.createComponentForm.validate().then(success => {
-    if (success) {
-     this.createComponent().then(response => {
-      if (response) {
+   this.$refs.createComponentForm.validate().then(validated => {
+    if (validated) {
+     this.createComponent().then(created => {
+      if (created) {
        window.eventBus.$emit("BUS_BUILD_ROUTES");
        this.resetDialogComponentForm();
       }

@@ -15,7 +15,6 @@ import { get, sync } from "vuex-pathify";
 
 export default {
  name: "DefaultSnackbar",
-
  computed: {
   snackbar: sync("snackbar"),
   snack: sync("snackbar/value")

@@ -13,15 +13,10 @@
 <script>
 export default {
  name: "SignupAlert",
-
  data() {
   return {
    alert: true
   };
- },
-
- mounted() {},
-
- methods: {}
+ }
 };
 </script>

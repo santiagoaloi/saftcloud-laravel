@@ -128,10 +128,8 @@
 import axios from "axios";
 import { sync, get, call } from "vuex-pathify";
 import { store } from "@/store";
-
 export default {
  name: "Login",
-
  data() {
   return {
    auth: { email: "", password: "" },

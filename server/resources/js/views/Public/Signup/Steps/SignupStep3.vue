@@ -8,7 +8,7 @@
     <v-row justify="center">
      <v-col sm="6">
       <validation-provider v-slot="{ errors, reset }" name="Company name" rules="required">
-       <baseFieldLabel label="Account" />
+       <BaseFieldLabel label="Account" />
        <v-text-field
         autofocus
         v-model="signupForm.companyName"
@@ -28,7 +28,7 @@
       </validation-provider>
      </v-col>
      <v-col sm="6">
-      <baseFieldLabel label="Company Alias" />
+      <BaseFieldLabel label="Company Alias" />
       <validation-provider v-slot="{ errors, reset }" name="Company name alias" rules="required">
        <v-text-field
         v-model="signupForm.companyNameAlias"
@@ -58,23 +58,15 @@
 <script>
 import { sync, get } from "vuex-pathify";
 import CountryFlag from "vue-country-flag";
-
 export default {
  name: "SignupStep3",
  components: {
   CountryFlag
  },
- data() {
-  return {};
- },
-
  computed: {
   ...sync("theme", ["isDark"]),
   ...sync("signup", ["signupForm", "step"])
  },
-
- mounted() {},
-
  methods: {
   validateAndProceed() {
    this.$refs.step3.validate().then(success => {

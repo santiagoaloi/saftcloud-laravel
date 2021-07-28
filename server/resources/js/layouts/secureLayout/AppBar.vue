@@ -160,7 +160,7 @@ import { call, sync } from "vuex-pathify";
 import CountryFlag from "vue-country-flag";
 
 export default {
- name: "DefaultBar",
+ name: "SecureAppbar",
  components: {
   CountryFlag
  },
