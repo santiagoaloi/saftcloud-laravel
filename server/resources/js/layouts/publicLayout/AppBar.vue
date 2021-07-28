@@ -118,7 +118,6 @@
 import { store } from "@/store";
 import axios from "axios";
 import { sync, get, call } from "vuex-pathify";
-
 export default {
  name: "PublicAppbar",
 

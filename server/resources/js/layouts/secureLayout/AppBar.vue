@@ -226,16 +226,6 @@ export default {
   };
  },
 
- mounted() {
-  // this.fetchNotificationCount();
-  // window.getApp.$on("APP_SIDEBAR_HAMBURGER", () => {
-  //   this.miniVariant = true;
-  // });
-  // window.getApp.$on("APP_REFRESH_NOTIFICATIONS", () => {
-  //   this.fetchNotificationCount();
-  // });
- },
-
  computed: {
   ...sync("drawers", ["secureDefaultDrawer"]),
   ...sync("theme", ["isDark"]),

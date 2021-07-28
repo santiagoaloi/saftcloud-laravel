@@ -8,6 +8,8 @@
 import config from "./configs";
 import { sync } from "vuex-pathify";
 import axios from "axios";
+import auth from "@/util/auth";
+import { store } from "@/store";
 
 export default {
  name: "AppVue",
@@ -46,7 +48,8 @@ export default {
 
  methods: {
   buildRoutes() {
-   if (this.session.token) {
+   // Waits for indexeddb to be ready.
+   setTimeout(() => {
     axios.get("/api/getComponentNames/").then(response => {
      if (response.status === 200) {
       const components = response.data.components;
@@ -65,7 +68,7 @@ export default {
       }
      }
     });
-   }
+   }, 500);
   }
  }
 };
