@@ -19,8 +19,6 @@ class ComponentController extends Controller {
 
     public function store(Request $request) {
 
-        dump ($request);
-
         $json_data['table'] = $request['table'];
 
         $sql_query = "SELECT {$request['table']}.* FROM {$request['table']}";
