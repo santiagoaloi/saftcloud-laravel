@@ -5,7 +5,7 @@
    <ValidationObserver ref="step0" slim>
     <v-row>
      <v-col sm="6">
-      <baseFieldLabel label="Name" />
+      <BaseFieldLabel label="Name" />
       <validation-provider v-slot="{ errors, reset }" name="First name" rules="required">
        <v-text-field
         autofocus
@@ -25,7 +25,7 @@
       </validation-provider>
      </v-col>
      <v-col sm="6">
-      <baseFieldLabel label="Last name" />
+      <BaseFieldLabel label="Last name" />
       <validation-provider v-slot="{ errors, reset }" name="Last name" rules="required">
        <v-text-field
         v-model="signupForm.lastname"
@@ -54,17 +54,10 @@
 import { sync, get } from "vuex-pathify";
 export default {
  name: "SignupStep0",
-
- data() {
-  return {};
- },
-
  computed: {
   ...sync("theme", ["isDark"]),
   ...sync("signup", ["signupForm", "step"])
  },
-
- mounted() {},
 
  methods: {
   validateAndProceed() {

@@ -18,7 +18,6 @@
 
 <script>
 import nav from "@/configs/navigation";
-import axios from "axios";
 import Vue from "vue";
 import { sync, call } from "vuex-pathify";
 
@@ -26,15 +25,9 @@ Vue.component("MainMenu", () => import(/* webpackChunkName: 'components-drawer-m
 
 export default {
  name: "SecureDrawer",
-
- data() {
-  return {};
- },
-
  mounted() {
   this.getNavigationStructure();
  },
-
  computed: {
   ...sync("drawers", ["secureDefaultDrawer"]),
   ...sync("componentManagement", ["navigationStructure"])

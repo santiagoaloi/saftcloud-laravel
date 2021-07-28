@@ -59,7 +59,6 @@
 </template>
 
 <script>
-import { store } from "@/store";
 import { sync, call, get } from "vuex-pathify";
 import componentActions from "@/mixins/componentActions";
 export default {

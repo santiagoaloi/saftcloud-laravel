@@ -20,7 +20,6 @@
 </template>
 <script>
 import { sync, call } from "vuex-pathify";
-import { store } from "@/store";
 
 export default {
  name: "DialogComponent",

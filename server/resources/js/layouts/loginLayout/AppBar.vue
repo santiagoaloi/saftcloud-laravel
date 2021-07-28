@@ -39,11 +39,6 @@ import { sync, get, call } from "vuex-pathify";
 
 export default {
  name: "PublicAppbar",
-
- data() {
-  return {};
- },
-
  computed: {
   ...sync("theme", ["isDark"])
  }

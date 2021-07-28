@@ -11,17 +11,13 @@ import "codemirror/addon/lint/lint.css";
 import "codemirror/lib/codemirror.css";
 import "codemirror/theme/material-palenight.css";
 import "codemirror/theme/elegant.css";
-
 import "codemirror/mode/javascript/javascript";
 import "codemirror/mode/markdown/markdown";
 import "codemirror/addon/lint/lint";
 import "codemirror/addon/lint/json-lint";
-
 import "codemirror/addon/edit/matchBrackets";
-
 import "codemirror/addon/hint/show-hint";
 import "codemirror/addon/hint/show-hint.css";
-
 import "codemirror/addon/hint/sql-hint";
 import "codemirror/mode/sql/sql";
 
@@ -30,7 +26,6 @@ require("script-loader!jsonlint");
 export default {
  name: "Editor",
  props: ["value", "mode"],
-
  data() {
   return {
    editor: {},
@@ -69,7 +64,6 @@ export default {
  },
 
  mounted() {
-  console.log(this.tables), console.log(this.dbTablesAndColumns);
   this.editor = CodeMirror.fromTextArea(this.$refs.textarea, {
    spellcheck: false,
    autocorrect: false,

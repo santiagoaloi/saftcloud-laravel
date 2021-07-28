@@ -49,7 +49,7 @@
 
   <v-card-text class="pa-2">
    <div class="text--primary">
-    <baseFieldLabel label="Description" />
+    <BaseFieldLabel label="Description" />
     <v-textarea
      outlined
      :color="isDark ? '#208ad6' : 'grey'"
@@ -64,7 +64,7 @@
     </v-textarea>
 
     <div class="mt-2">
-     <baseFieldLabel label="Change component group " />
+     <BaseFieldLabel label="Change component group " />
      <small></small>
      <v-autocomplete
       outlined

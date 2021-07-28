@@ -101,7 +101,7 @@
     </template>
 
     <v-tooltip transition="false" color="black" bottom>
-     <template v-slot:activator="{ on, attrs }">
+     <template v-slot:activator="{ on }">
       <v-btn v-on="on" @click="isDark = !isDark" fab class="mr-3" color="white" text dark small plain>
        <v-icon v-if="isDark">mdi-lightbulb-on-outline</v-icon>
        <v-icon v-else>mdi-lightbulb-outline</v-icon></v-btn
@@ -172,7 +172,7 @@ export default {
 
  methods: {
   testFunction() {
-   let post = { email: "facu.ft@gmail.com", password:"password"};
+   let post = { email: "facu.ft@gmail.com", password: "password" };
    axios
     .post("/api/testFunction/", post)
     .then(response => {

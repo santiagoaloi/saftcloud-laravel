@@ -7,7 +7,7 @@
    <ValidationObserver ref="step1" slim>
     <v-row justify="center">
      <v-col sm="12">
-      <baseFieldLabel label="Email" />
+      <BaseFieldLabel label="Email" />
       <span></span>
       <validation-provider v-slot="{ errors, reset }" name="Email" rules="required|email">
        <v-text-field
@@ -29,7 +29,7 @@
       </validation-provider>
      </v-col>
      <v-col sm="6">
-      <baseFieldLabel label="Country Code" />
+      <BaseFieldLabel label="Country Code" />
       <validation-provider v-slot="{ errors, reset }" name="CountryCode" rules="required">
        <v-autocomplete
         :items="countryCodes"
@@ -74,7 +74,7 @@
       </validation-provider>
      </v-col>
      <v-col sm="6">
-      <baseFieldLabel label="Phone number" />
+      <BaseFieldLabel label="Phone number" />
       <span></span>
       <validation-provider v-slot="{ errors, reset }" name="Phone mumber" rules="required">
        <v-text-field
@@ -112,10 +112,6 @@ export default {
  components: {
   CountryFlag
  },
- data() {
-  return {};
- },
-
  computed: {
   ...sync("theme", ["isDark"]),
   ...sync("signup", ["signupForm", "step", "countriesLoading", "countryCodes"]),

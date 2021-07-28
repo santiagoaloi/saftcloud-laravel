@@ -20,7 +20,7 @@
   <v-row>
    <v-col sm="4">
     <div class="mt-2">
-     <baseFieldLabel label="component name" />
+     <BaseFieldLabel label="component name" />
      <v-text-field
       :outlined="isDark"
       :solo="!isDark"
@@ -33,7 +33,7 @@
     </div>
 
     <div class="mt-2">
-     <baseFieldLabel label="component description" />
+     <BaseFieldLabel label="component description" />
      <v-textarea
       :outlined="isDark"
       :solo="!isDark"
@@ -50,7 +50,7 @@
 
     <v-divider class="my-5"></v-divider>
     <div class="mt-2">
-     <baseFieldLabel class="mb-n3" label="Navigation drawer settings" />
+     <BaseFieldLabel class="mb-n3" label="Navigation drawer settings" />
      <v-list-item two-line>
       <v-list-item-icon>
        <v-switch hide-details class="mt-2" v-model="selectedComponent.config.general_config.isVisibleInSidebar" />

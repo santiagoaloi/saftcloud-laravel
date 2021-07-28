@@ -7,7 +7,7 @@
    <ValidationObserver ref="step2" slim>
     <v-row justify="center">
      <v-col sm="12">
-      <baseFieldLabel label="Country" />
+      <BaseFieldLabel label="Country" />
       <validation-provider v-slot="{ errors, reset }" name="Country" rules="required">
        <v-autocomplete
         :items="countryCodes"
@@ -47,7 +47,7 @@
      </v-col>
 
      <v-col sm="6">
-      <baseFieldLabel label="State, Province, or Region " />
+      <BaseFieldLabel label="State, Province, or Region " />
       <validation-provider v-slot="{ errors, reset }" name="State" rules="required">
        <v-autocomplete
         :disabled="!states.length"
@@ -72,7 +72,7 @@
      </v-col>
 
      <v-col sm="6">
-      <baseFieldLabel label="City" />
+      <BaseFieldLabel label="City" />
       <validation-provider v-slot="{ errors, reset }" name="City" rules="required">
        <v-text-field
         :disabled="!states.length"
@@ -93,7 +93,7 @@
      </v-col>
 
      <v-col sm="8">
-      <baseFieldLabel label="Address" />
+      <BaseFieldLabel label="Address" />
       <validation-provider v-slot="{ errors, reset }" name="Address" rules="required">
        <v-text-field
         v-model="signupForm.address"
@@ -113,7 +113,7 @@
      </v-col>
 
      <v-col sm="4">
-      <baseFieldLabel label="Postal code" />
+      <BaseFieldLabel label="Postal code" />
       <validation-provider v-slot="{ errors, reset }" name="Zipcode" rules="required">
        <v-text-field
         v-model="signupForm.zipcode"
@@ -149,9 +149,6 @@ export default {
  components: {
   CountryFlag
  },
- data() {
-  return {};
- },
 
  computed: {
   ...sync("theme", ["isDark"]),
@@ -167,9 +164,6 @@ export default {
      this.step++;
     }
    });
-  },
-  test(e) {
-   console.log(e);
   }
  }
 };

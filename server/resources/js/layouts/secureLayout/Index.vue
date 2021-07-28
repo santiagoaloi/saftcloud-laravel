@@ -1,9 +1,9 @@
 <template>
  <v-app>
-  <auth-bar />
-  <auth-drawer />
-  <auth-cdrawer />
-  <auth-view />
+  <secure-bar />
+  <secure-drawer />
+  <secure-cdrawer />
+  <secure-view />
   <snackbar />
  </v-app>
 </template>
@@ -12,10 +12,10 @@
 export default {
  name: "Securelayout",
  components: {
-  AuthBar: () => import(/* webpackChunkName: 'secure-appbar' */ "./AppBar"),
-  AuthDrawer: () => import(/* webpackChunkName: 'secure-drawer' */ "./Drawer"),
-  AuthCdrawer: () => import(/* webpackChunkName: 'secure-component-drawer' */ "./ComponentDrawer"),
-  AuthView: () => import(/* webpackChunkName: 'secure-view' */ "./View"),
+  SecureBar: () => import(/* webpackChunkName: 'secure-appbar' */ "./AppBar"),
+  SecureDrawer: () => import(/* webpackChunkName: 'secure-drawer' */ "./Drawer"),
+  SecureCdrawer: () => import(/* webpackChunkName: 'secure-component-drawer' */ "./ComponentDrawer"),
+  SecureView: () => import(/* webpackChunkName: 'secure-view' */ "./View"),
   Snackbar: () =>
    import(
     /* webpackChunkName: 'public-snackbar' */

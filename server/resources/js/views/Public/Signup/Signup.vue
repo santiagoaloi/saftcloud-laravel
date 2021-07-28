@@ -40,7 +40,6 @@ export default {
  components: {
   steps: () => import(/* webpackChunkName: 'signup-steps' */ "./Steps/Steps"),
   signupAlert: () => import(/* webpackChunkName: 'signup-steps-alert' */ "./Steps/SignupAlert"),
-
   Pricing,
   Faq
  },
@@ -50,17 +49,8 @@ export default {
    default: false
   }
  },
-
- data() {
-  return {};
- },
-
  computed: {
   ...sync("theme", ["isDark"])
- },
-
- mounted() {},
-
- methods: {}
+ }
 };
 </script>
