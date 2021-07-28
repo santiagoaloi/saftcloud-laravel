@@ -71,7 +71,6 @@ export default {
  components: {
   draggable
  },
- data: () => ({}),
 
  methods: {
   ...call("componentManagement/*")

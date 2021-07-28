@@ -3,7 +3,7 @@
   <v-container fluid class="py-0 px-0 px-sm-2 fill-height">
    <v-app-bar-nav-icon class="ml-n2 mr-3" text xSmall fab @click="secureDefaultDrawer = !secureDefaultDrawer" />
 
-   <h4>{{ title }}</h4>
+   <h4>{{ routeTitle }}</h4>
 
    <div class="flex-grow-1" />
 
@@ -170,7 +170,6 @@ export default {
    expand: false,
    imageLoadingFailed: false,
    notificationCount: 0,
-   title: this.$route.meta.title,
 
    languages: [
     {
@@ -228,38 +227,13 @@ export default {
  },
 
  computed: {
-  // profileAvatar() {
-  //   if (this.profile.avatar == null || this.imageLoadingFailed) {
-  //     return `${this.lazy}avatar.png`;
-  //   } else {
-  //     return this.profile.avatar;
-  //   }
-  // }
-  // siteInfo() {
-  //   return store.state.appData.siteInfo;
-  // },
-  // profile() {
-  //   return store.state.sessionData.userProfile;
-  // },
-  // groupId() {
-  //   return store.state.sessionData.login.group_id;
-  // }
- },
-
- mounted() {
-  // this.fetchNotificationCount();
-  // window.getApp.$on("APP_SIDEBAR_HAMBURGER", () => {
-  //   this.miniVariant = true;
-  // });
-  // window.getApp.$on("APP_REFRESH_NOTIFICATIONS", () => {
-  //   this.fetchNotificationCount();
-  // });
- },
-
- computed: {
   ...sync("drawers", ["secureDefaultDrawer"]),
   ...sync("theme", ["isDark"]),
-  ...sync("application", ["search"])
+  ...sync("application", ["search"]),
+
+  routeTitle() {
+   return this.$route.meta.title;
+  }
  },
 
  methods: {

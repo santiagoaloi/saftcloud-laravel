@@ -13,7 +13,6 @@
    <v-row>
     <v-col cols="6">
      <BaseFieldLabel label="label" />
-     <!-- <v-icon style="margin-top:-2px" :color="selectedComponentFormField.icon.color" class="ml-2" small>mdi-palette-outline</v-icon> -->
      <v-text-field
       :outlined="isDark"
       :solo="!isDark"
@@ -46,8 +45,6 @@
 </template>
 
 <script>
-import axios from "axios";
-
 import { sync, get } from "vuex-pathify";
 export default {
  name: "ComponentsEditViewsBasic",

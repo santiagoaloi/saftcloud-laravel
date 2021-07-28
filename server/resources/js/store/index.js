@@ -2,30 +2,21 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import pathify from "@/plugins/vuex-pathify";
-
-import createPersistedState from "vuex-persistedstate";
-import SecureLS from "secure-ls";
-let ls = new SecureLS({ isCompression: false });
+import VuexPersist from "vuex-persist";
+import localforage from "localforage";
 
 // Modules
 import * as modules from "./modules";
 
 Vue.use(Vuex);
 
+const vuexLocal = new VuexPersist({
+ key: "vuex-store",
+ storage: localforage,
+ asyncStorage: true
+});
+
 export const store = new Vuex.Store({
- plugins: [
-  //   createMultiTabState(),
-  createPersistedState({
-   storage: {
-    getItem: key => ls.get(key),
-    setItem: (key, value) => ls.set(key, value),
-    removeItem: key => ls.remove(key)
-   },
-   // Persist the following vuex modules.
-   // If left empty, all modules are persisted.
-   paths: ["authentication", "theme.isDark"]
-  }),
-  pathify.plugin
- ],
- modules
+ modules,
+ plugins: [pathify.plugin, vuexLocal.plugin]
 });

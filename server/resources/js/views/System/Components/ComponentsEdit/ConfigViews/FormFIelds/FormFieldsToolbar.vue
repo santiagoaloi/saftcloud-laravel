@@ -68,8 +68,6 @@ export default {
   }
  },
 
- mounted() {},
-
  methods: {
   unselectAllFormFieldsFromFields() {
    this.selectedComponent.config.form_fields.forEach(field => {

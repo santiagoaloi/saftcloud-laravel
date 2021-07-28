@@ -16,7 +16,7 @@
   </v-fade-transition>
 
   <v-tooltip transition="false" color="black" bottom>
-   <template v-slot:activator="{ on, attrs }">
+   <template v-slot:activator="{ on }">
     <v-btn
      :disabled="!hasUnsavedChanges(selectedComponent)"
      v-on="on"
@@ -34,8 +34,8 @@
   </v-tooltip>
 
   <v-tooltip transition="false" color="black" bottom>
-   <template v-slot:activator="{ on, attrs }">
-    <v-btn v-on="on" @click="isDark = !isDark" fab class="mx-2" color="white" text x-small fab>
+   <template v-slot:activator="{ on }">
+    <v-btn v-on="on" @click="isDark = !isDark" fab class="mx-2" color="white" text x-small>
      <v-icon v-if="isDark">mdi-lightbulb-on-outline</v-icon>
      <v-icon v-else>mdi-lightbulb-outline</v-icon></v-btn
     >
@@ -46,7 +46,7 @@
   <v-divider inset vertical class="mx-3 grey" />
 
   <v-tooltip transition="false" color="black" bottom>
-   <template v-slot:activator="{ on, attrs }">
+   <template v-slot:activator="{ on }">
     <v-btn v-on="on" dark :disabled="previousComponentDisabled" @click="previousComponent()" class="mr-2" fab text x-small>
      <v-icon>mdi-chevron-left</v-icon>
     </v-btn>
@@ -55,7 +55,7 @@
   </v-tooltip>
 
   <v-tooltip transition="false" color="black" bottom>
-   <template v-slot:activator="{ on, attrs }">
+   <template v-slot:activator="{ on }">
     <v-btn v-on="on" dark :disabled="nextComponentDisabled" @click="nextComponent()" fab text x-small>
      <v-icon>mdi-chevron-right</v-icon>
     </v-btn>
@@ -64,7 +64,7 @@
   </v-tooltip>
 
   <v-tooltip transition="false" color="black" bottom>
-   <template v-slot:activator="{ on, attrs }">
+   <template v-slot:activator="{ on }">
     <v-btn v-on="on" dark class="mr-2" @click="close()" fab text x-small>
      <v-icon>mdi-chevron-down</v-icon>
     </v-btn>
@@ -75,13 +75,9 @@
 </template>
 
 <script>
-import axios from "axios";
 import { sync, get, call } from "vuex-pathify";
 export default {
  name: "ComponentsEditAppbar",
-
- data: () => ({}),
-
  computed: {
   ...sync("theme", ["isDark"]),
   ...sync("componentManagement", ["componentEditSheet"]),

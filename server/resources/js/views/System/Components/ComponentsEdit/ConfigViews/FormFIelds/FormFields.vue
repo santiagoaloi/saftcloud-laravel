@@ -24,11 +24,9 @@ import { sync, get } from "vuex-pathify";
 export default {
  name: "ComponentsEditViewsBasic",
  components: {
-  FormFieldsToolbar: () => import("./FormFieldsToolbar"),
   FormFieldsList: () => import("./FormFieldsList"),
+  FormFieldsToolbar: () => import("./FormFieldsToolbar"),
   FormFieldsRightPanel: () => import("./FormFieldsRightPanel")
- },
-
- data: () => ({})
+ }
 };
 </script>
