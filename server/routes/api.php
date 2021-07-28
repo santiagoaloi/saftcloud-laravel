@@ -37,8 +37,6 @@ use App\Http\Controllers\Root\ComponentDefaultController;
 //Testing
 use App\Http\Controllers\TestFunctionController;
 
-use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -112,7 +110,11 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/logout', [AuthController::class, 'logout']);
 });
 
+Route::post('/testFunction', [TestFunctionController::class, 'test2']);
+
 //Testing
-Route::group(['middleware' => ['auth:sanctum']], function () {
-    Route::post('/testFunction', [AuthenticatedSessionController::class, 'store']);
-});
+Route::post('/testFunction', [TestFunctionController::class, 'test2']);
+
+// Route::group(['middleware' => ['auth:sanctum']], function () {
+//     Route::post('/testFunction', [AuthenticatedSessionController::class, 'store']);
+// });

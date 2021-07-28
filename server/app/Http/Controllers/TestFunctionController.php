@@ -59,6 +59,12 @@ class TestFunctionController extends Controller {
     }
 
     public function test2(){
+        $tata = explode(',', env(
+            'SANCTUM_STATEFUL_DOMAINS',
+            'localhost,localhost:3000,127.0.0.1,127.0.0.1:8000,::1,'.parse_url(env('APP_URL'), PHP_URL_HOST)
+        ));
+
+        return $tata;
         $query = New ComponentController;
         return $query->getComponentNames();
 

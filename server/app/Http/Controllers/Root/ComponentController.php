@@ -101,7 +101,12 @@ class ComponentController extends Controller {
         $arrayComponent = [];
 
         foreach($components as $component){
-            $arrayComponent[] = $component->name;
+            $general_config = json_decode($component->config, true);
+            $title = $general_config['general_config']['title'];
+            $arrayComponent[] = [
+                'name' => $component->name,
+                'title'=> $title,
+            ];
         };
 
         return response([
