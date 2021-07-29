@@ -4,7 +4,7 @@ import pathify from "vuex-pathify";
 
 // options
 pathify.options.mapping = "simple";
-pathify.options.strict = true;
+pathify.options.strict = false;
 pathify.options.cache = true; // cache generated functions for faster re-use
 
 export default pathify;

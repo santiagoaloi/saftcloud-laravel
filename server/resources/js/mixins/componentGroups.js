@@ -5,9 +5,6 @@ export default {
  name: "ComponentGroupsMmixin",
  data() {
   return {
-   loading: true,
-   workspace: this.$route.name,
-   elements: [],
    groupBeingRemoved: ""
   };
  },

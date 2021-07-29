@@ -41,7 +41,7 @@
       :background-color="isDark ? '#28292b' : 'white'"
       spellcheck="false"
       :rows="2"
-      autogrow
+      auto-grow
       hide-details
       v-model="selectedComponent.config.general_config.note"
      >

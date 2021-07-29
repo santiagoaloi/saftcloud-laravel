@@ -5,15 +5,25 @@ import pathify from "@/plugins/vuex-pathify";
 import VuexPersist from "vuex-persist";
 import localforage from "localforage";
 
-// Modules
+// All Vuex Modules
 import * as modules from "./modules";
 
 Vue.use(Vuex);
-
 const vuexLocal = new VuexPersist({
  key: "vuex-store",
  storage: localforage,
- asyncStorage: true
+ asyncStorage: true,
+ reducer: state => ({
+  theme: {
+   isDark: state.theme.isDark
+  },
+  authentication: {
+   ...state.authentication
+  },
+  componentManagement: {
+   ...state.componentManagement
+  }
+ })
 });
 
 export const store = new Vuex.Store({

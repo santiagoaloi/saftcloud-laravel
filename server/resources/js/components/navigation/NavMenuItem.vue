@@ -4,12 +4,12 @@
    <template v-slot:activator> -->
   <v-list-item v-if="!menuItem.items" :input-value="menuItem.value" :to="menuItem.link" :exact="menuItem.exact" :disabled="menuItem.disabled" link>
    <div class="d-flex">
-    <v-list-item-icon>
+    <v-list-item-icon class="mr-1">
      <v-icon :class="{ 'grey--text': menuItem.disabled }">
       {{ menuItem.icon ? menuItem.icon : "mdi-folder-outline" }}
      </v-icon>
     </v-list-item-icon>
-    <v-list-item-content>
+    <v-list-item-content class="ml-2">
      <v-list-item-title>
       {{ menuItem.title || menuItem.name }}
      </v-list-item-title>
@@ -29,9 +29,9 @@
    :prepend-icon="subgroup ? false : ''"
   >
    <template v-slot:activator>
-    <v-list-item-icon v-if="!subgroup">
-     <v-icon>{{ icon }}</v-icon>
-    </v-list-item-icon>
+    <slot v-if="!subgroup" name="prependIcon">
+     <v-icon class="mr-3">{{ icon }}</v-icon>
+    </slot>
 
     <slot v-if="subgroup" name="prependIcon">
      <v-icon class="ml-n4 mr-3">{{ icon }}</v-icon>
@@ -50,19 +50,10 @@
 </template>
 
 <script>
-/*
-|---------------------------------------------------------------------
-| Navigation Menu Item Component
-|---------------------------------------------------------------------
-|
-| Navigation items for the NavMenu component
-|
-*/
 export default {
  data: () => ({
   icon: "mdi-folder-outline"
  }),
-
  props: {
   menuItem: {
    type: Object,

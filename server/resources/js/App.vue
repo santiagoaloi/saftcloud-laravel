@@ -5,11 +5,11 @@
 </template>
 
 <script>
-import config from "./configs";
-import { sync } from "vuex-pathify";
 import axios from "axios";
-import auth from "@/util/auth";
+import config from "./configs";
 import { store } from "@/store";
+import { sync } from "vuex-pathify";
+import { router, resetRouter } from "@/router";
 
 export default {
  name: "AppVue",
@@ -36,7 +36,10 @@ export default {
  },
 
  created() {
+  //Define event bus
   window.eventBus = this;
+
+  //Build routes on request.
   window.eventBus.$on("BUS_BUILD_ROUTES", () => {
    this.buildRoutes();
   });
@@ -48,6 +51,9 @@ export default {
 
  methods: {
   buildRoutes() {
+   //Clear routes and routes matcher.
+   resetRouter();
+
    // Waits for indexeddb to be ready.
    setTimeout(() => {
     axios.get("/api/getComponentNames/").then(response => {
@@ -58,12 +64,14 @@ export default {
       if (!components.length) {
        components.push("Blank");
       }
+
+      //Add new routes
       for (const component of components) {
        this.$router.addRoute({
-        path: `/${component}`,
-        name: component,
-        meta: { layout: "secure_layout", title: "Hello" },
-        component: () => import(`./views/Protected/${component}/${component}.vue`)
+        path: `/${component.name}`,
+        name: `/${component.name}`,
+        meta: { layout: "secure_layout", title: component.title },
+        component: () => import(`./views/Protected/${component.name}/${component.name}.vue`)
        });
       }
      }

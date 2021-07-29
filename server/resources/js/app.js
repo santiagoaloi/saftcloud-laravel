@@ -1,26 +1,26 @@
 require("./bootstrap");
 
-import Vue from "vue";
-import App from "./App.vue";
-
 import "@/plugins";
+import Vue from "vue";
+import AOS from "aos";
+import App from "./App.vue";
 import router from "@/router";
 import { store } from "@/store";
 import vuetify from "@/plugins/vuetify";
 
-import AOS from "aos";
+// styles
 import "aos/dist/aos.css";
-
-import VueDiagonal from "vue-diagonal";
-Vue.component("vue-diagonal", VueDiagonal);
-
-// STYLES
 import "../sass/theme.scss";
 import "./assets/css/style.css";
 
 Vue.component("login_layout", () => import(/* webpackChunkName: 'login-Layout' */ "@/layouts/loginLayout/Index"));
 Vue.component("public_layout", () => import(/* webpackChunkName: 'public-Layout' */ "@/layouts/publicLayout/Index"));
 Vue.component("secure_layout", () => import(/* webpackChunkName: 'public-Layout' */ "@/layouts/secureLayout/Index"));
+
+export function resetRouter() {
+ const newRouter = createRouter();
+ router.matcher = newRouter.matcher;
+}
 
 new Vue({
  store,

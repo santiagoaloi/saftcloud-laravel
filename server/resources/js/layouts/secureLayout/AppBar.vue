@@ -20,7 +20,7 @@
     placeholder="Search..."
     prepend-inner-icon="mdi-magnify"
     :class="expand ? 'expanded' : 'shrinked'"
-    class="mx-5"
+    class="mx-15 pr-1"
     @focus="expand = true"
     @blur="expand = false"
     rounded
@@ -34,13 +34,13 @@
     <v-icon>mdi-desktop-mac</v-icon>
    </v-btn>
 
-   <v-menu rounded="xl" origin="center center" transition="scale-transition" :nudge-bottom="10" offset-y>
+   <v-menu origin="center center" transition="scroll-y-transition" :nudge-bottom="10" offset-y>
     <template v-slot:activator="{ on, attrs }">
      <v-btn class="mr-3  " text x-small fab v-bind="attrs" v-on="on">
       <v-icon>mdi-dots-vertical</v-icon>
      </v-btn>
     </template>
-    <v-list class="pa-2" rounded="xl" outlined>
+    <v-list class="pa-2" outlined>
      <v-list-item v-for="(item, i) in settingsMenu" :key="i" :to="item.href">
       <v-icon class="mr-5">
        {{ item.icon }}
@@ -60,13 +60,13 @@
     </v-badge>
    </template>
 
-   <v-menu rounded="xl" origin="center center" transition="scale-transition" :nudge-bottom="10" offset-y>
+   <v-menu origin="center center" transition="scroll-y-transition" :nudge-bottom="10" offset-y>
     <template v-slot:activator="{ on, attrs }">
      <v-btn class="mr-3" text x-small fab v-bind="attrs" v-on="on">
       <v-icon>mdi-earth</v-icon>
      </v-btn>
     </template>
-    <v-list class="pa-2" rounded="xl" outlined>
+    <v-list class="pa-2" outlined>
      <v-list-item v-for="(language, i) in languages" :key="i" :to="language.name">
       <country-flag class="mr-0" :country="language.flag" />
       <v-list-item-content>
@@ -86,7 +86,7 @@
     </v-btn>
    </template>
 
-   <v-menu rounded="xl" origin="center center" transition="scale-transition" :nudge-bottom="10" offset-y>
+   <v-menu origin="center center" transition="scroll-y-transition" :nudge-bottom="10" offset-y>
     <template v-slot:activator="{ on, attrs }">
      <v-btn v-bind="attrs" x-small fab icon class="mr-2" v-on="on">
       <v-avatar size="33px">
@@ -101,7 +101,7 @@
      </v-btn>
     </template>
 
-    <v-list class="pa-2" rounded="xl" outlined>
+    <v-list class="pa-2" outlined>
      <v-list-item style="cursor: pointer">
       <v-list-item-content>
        <v-list-item-title style="font-size: 130%; font-weight: 600">
@@ -186,25 +186,25 @@ export default {
     {
      icon: "mdi-arrow-expand",
      href: "/appconfig/general",
-     title: "Konfiguration"
+     title: "Configuration"
     },
 
     {
      icon: "mdi-security",
      href: "/users",
-     title: "Konton"
+     title: "Accounts"
     },
 
     {
      icon: "mdi-puzzle-outline",
      href: "/components",
-     title: "Komponenter"
+     title: "Components"
     },
 
     {
      icon: "mdi-database-search",
      href: "/SystemSettings/activitylogs",
-     title: "Aktivitetsloggar"
+     title: "Logs"
     }
    ],
 
@@ -212,13 +212,13 @@ export default {
     {
      icon: "mdi-cogs",
      href: "/secure/config/general",
-     title: "Konfiguration"
+     title: "Configuration"
     },
 
     {
      icon: "mdi-security",
      href: "/core/users",
-     title: "Användare & Grupper"
+     title: "Users and Groups"
     }
    ],
 

@@ -285,11 +285,6 @@ const actions = {
    })
    .catch(error => {
     console.log({ ...error });
-    // store.set("snackbar/value", true);
-    // store.set("snackbar/text", `${error.response.data.message}`);
-    // store.set("snackbar/color", "pink darken-1");
-    // store.set("componentManagement/componentsLinkedToGroup", error.response.data.components);
-    // store.set("componentManagement/componentsLinkedToGroupDialog", true);
    });
  },
 
@@ -373,6 +368,7 @@ const actions = {
     store.set("snackbar/text", "Component saved");
     store.set("snackbar/color", "grey darken-2");
     dispatch("getNavigationStructure");
+    window.eventBus.$emit("BUS_BUILD_ROUTES");
    } else {
     store.set("snackbar/value", true);
     store.set("snackbar/text", response.data.message);
@@ -416,7 +412,7 @@ const actions = {
      store.set("componentManagement/allComponents", response.data.components);
      store.set("snackbar/value", true);
      store.set("snackbar/text", `"${state.componentSettings.title}" component created`);
-     store.set("snackbar/color", "indigo darken-2");
+     store.set("snackbar/color", "grey darken-2");
 
      // Autoselect latest created component
      store.set("drawers/secureComponentDrawer", true);
@@ -428,7 +424,8 @@ const actions = {
      if (!groupExists) state.selectedComponentGroups.push(activeGroup);
 
      store.set("componentManagement/componentCardGroup", getters.allComponentsFiltered.length - 1);
-     store.set("componentManagement/selectedComponentIndex", state.allComponents.length - 1);
+     store.set("componentManagement/selectedComponentIndex", getters.allComponentsFiltered.length - 1);
+
      store.set("componentManagement/componentSettings", initialComponentSettings());
      dispatch("getNavigationStructure");
      return true;

@@ -48,7 +48,6 @@
 import { sync, get } from "vuex-pathify";
 export default {
  name: "ComponentsEditViewsBasic",
-
  data: () => ({
   dialogIcon: false,
   fieldsOptionsTabs: [

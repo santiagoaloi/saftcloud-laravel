@@ -20,7 +20,7 @@
 import nav from "@/configs/navigation";
 import Vue from "vue";
 import { sync, call } from "vuex-pathify";
-Vue.component("MainMenu", () => import(/* webpackChunkName: 'components-drawer-menu' */ "@/components/navigation/MainMenu"));
+Vue.component("MainMenu", () => import(/* webpackChunkName: 'components-drawer-menu' */ "@/components/Navigation/MainMenu"));
 
 export default {
  name: "SecureDrawer",

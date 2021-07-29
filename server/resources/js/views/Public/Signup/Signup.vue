@@ -2,25 +2,27 @@
  <div>
   <v-container class="fill-height">
    <signup-alert />
-   <v-card width="100%">
-    <v-row justify="center" class="my-4 mx-1">
-     <v-col class="text-center" cols="12" lg="6">
-      <steps />
-     </v-col>
-     <v-col cols="12" lg="6">
-      <v-list two-line flat>
-       <v-list-item>
-        <v-list-item-avatar>
-         <v-icon> mdi-check</v-icon>
-        </v-list-item-avatar>
-        <v-list-item-content>
-         <v-list-item-title>Notifications</v-list-item-title>
-         <v-list-item-subtitle>Allow notifications</v-list-item-subtitle>
-        </v-list-item-content>
-       </v-list-item>
-      </v-list>
-     </v-col>
-    </v-row>
+   <v-card class="d-flex justify-center align-center" min-height="300" width="100%">
+    <v-container>
+     <v-row>
+      <v-col class="text-center" cols="12" lg="6">
+       <steps />
+      </v-col>
+      <v-col cols="12" lg="6">
+       <v-list two-line flat>
+        <v-list-item>
+         <v-list-item-avatar>
+          <v-icon> mdi-check</v-icon>
+         </v-list-item-avatar>
+         <v-list-item-content>
+          <v-list-item-title>Notifications</v-list-item-title>
+          <v-list-item-subtitle>Allow notifications</v-list-item-subtitle>
+         </v-list-item-content>
+        </v-list-item>
+       </v-list>
+      </v-col>
+     </v-row>
+    </v-container>
    </v-card>
    <Faq />
   </v-container>
@@ -32,9 +34,9 @@
 
 <script>
 import { sync, get } from "vuex-pathify";
-import Pricing from "@/components/landing/Pricing.vue";
-import Faq from "@/components/landing/Faq.vue";
-import axios from "axios";
+import Faq from "@/components/Landing/Faq.vue";
+import Pricing from "@/components/Landing/Pricing.vue";
+
 export default {
  name: "Signup",
  components: {

@@ -56,7 +56,7 @@
      :background-color="isDark ? '#28292b' : 'white'"
      spellcheck="false"
      :rows="2"
-     autogrow
+     auto-grow
      dense
      v-model="selectedComponent.config.general_config.note"
      hide-details
@@ -160,6 +160,8 @@
    </v-list-item>
   </div>
 
+  <v-divider />
+
   <v-list subheader two-line>
    <v-subheader>Database</v-subheader>
    <v-list-item>
@@ -187,7 +189,7 @@
     </v-list-item-content>
    </v-list-item>
 
-   <v-divider></v-divider>
+   <v-divider />
 
    <v-list-item>
     <v-list-item-icon>
@@ -217,7 +219,7 @@
     </v-list-item-content>
    </v-list-item>
 
-   <v-divider></v-divider>
+   <v-divider />
   </v-list>
  </div>
 </template>

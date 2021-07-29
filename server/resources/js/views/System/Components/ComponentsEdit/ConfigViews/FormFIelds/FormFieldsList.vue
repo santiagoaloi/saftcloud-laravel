@@ -82,13 +82,7 @@ export default {
 
  computed: {
   ...sync("theme", ["isDark"]),
-  ...sync("componentManagement", [
-   "searchFields",
-   "displayEnabledFormFieldsOnly",
-   "selectedComponentActiveField",
-   "selectedFieldItemGroup",
-   "showSelectedFieldsOnly"
-  ]),
+  ...sync("componentManagement", ["searchFields", "displayEnabledFormFieldsOnly", "selectedFieldItemGroup"]),
   ...get("componentManagement", ["selectedComponent", "filteredFormFields", "filteredSelectedFields"])
  }
 };
