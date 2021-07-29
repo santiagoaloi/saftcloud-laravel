@@ -57,10 +57,25 @@ const state = {
 const mutations = make.mutations(state);
 
 const getters = {
+ // Show the group where this component belongs.
+ mapComponentGroup: (state, getters) => component => {
+  if (getters.isAllGroupsEmpty) return;
+  return state.allGroups.find(g => g.id === component.component_group_id);
+ },
+
+ // Show the parent group where this component belongs.
+ mapGroupParent: (state, getters) => component => {
+  if (getters.isAllGroupsEmpty) return;
+  const parentGroupId = state.allGroups.find(g => g.id === component.component_group_id).component_group_id;
+  return state.allGroups.find(g => g.id === parentGroupId).name;
+ },
+
+ // Loads all the configuration of the selected component.
  selectedComponent: (state, getters) => {
   return getters.allComponentsFiltered[state.selectedComponentIndex];
  },
 
+ // Loads all the field settings of the selected field in component configuration.
  selectedComponentFormField: (state, getters) => {
   if (getters.selectedComponent) {
    const index = getters.selectedComponent.config.form_fields.findIndex(f => f.field == state.selectedComponentActiveField);
@@ -68,14 +83,17 @@ const getters = {
   }
  },
 
+ // Disables the right panel navigation arrows if the first component in the array is selected.
  previousComponentDisabled: state => {
   return state.componentCardGroup === 0;
  },
 
+ // Disables the right panel navigation arrows if the last component in the array is selected.
  nextComponentDisabled: (state, getters) => {
   return state.componentCardGroup === getters.allComponentsFiltered.length - 1;
  },
 
+ // Returns true if all groups in the group dropdown are selected.
  selectedAllGroups: state => {
   return state.selectedComponentGroups.length === state.allGroups.length;
  },
@@ -143,11 +161,8 @@ const getters = {
  },
 
  isStarredColor: () => component => (component.status.starred ? "orange" : "grey darken-1"),
-
  isStarredIcon: () => component => (component.status.starred ? "mdi-star" : "mdi-star-outline"),
-
  isActiveIcon: () => component => (component.status.active ? "mdi-lightbulb-on" : "mdi-lightbulb-on-outline"),
-
  isModularIcon: () => component => (component.status.modular ? "mdi-view-module" : "mdi-view-module-outline"),
 
  isActiveColor: (_, __, rootState) => component =>
@@ -337,16 +352,6 @@ const actions = {
   }
  },
 
- setActiveField({ state }, field) {
-  if (state.selectedComponentActiveField != field) {
-   store.set("componentManagement/selectedComponentActiveField", field);
-  }
- },
-
- setComponentStatus({}, component) {
-  axios.patch(`api/component/${component.id}`, { status: component.status });
- },
-
  saveComponent({ state, dispatch }, component) {
   //Remove strange characters, add space instead.
   component.config.general_config.sql_query = component.config.general_config.sql_query
@@ -452,6 +457,34 @@ const actions = {
    store.set("componentManagement/componentCardGroup", state.componentCardGroup + 1);
    store.set("componentManagement/selectedComponentIndex", state.selectedComponentIndex + 1);
   }
+ },
+
+ setActiveField({ state }, field) {
+  if (state.selectedComponentActiveField != field) {
+   store.set("componentManagement/selectedComponentActiveField", field);
+  }
+ },
+
+ setComponentStatus({}, component) {
+  axios.patch(`api/component/${component.id}`, { status: component.status });
+ },
+
+ setStarred({ dispatch }, component) {
+  component.status.starred = !component.status.starred;
+  component.origin.status.starred = !component.origin.status.starred;
+  dispatch("setComponentStatus", component);
+ },
+
+ setModular({ dispatch }, component) {
+  component.status.modular = !component.status.modular;
+  component.origin.status.modular = !component.origin.status.modular;
+  dispatch("setComponentStatus", component);
+ },
+
+ setActive({ dispatch }, component) {
+  component.status.active = !component.status.active;
+  component.origin.status.active = !component.origin.status.active;
+  dispatch("setComponentStatus", component);
  }
 };
 

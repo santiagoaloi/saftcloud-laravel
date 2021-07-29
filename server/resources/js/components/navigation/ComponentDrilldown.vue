@@ -64,8 +64,7 @@
     </v-textarea>
 
     <div class="mt-2">
-     <BaseFieldLabel label="Change component group " />
-     <small></small>
+     <BaseFieldLabel label="Component group " />
      <v-autocomplete
       outlined
       :color="isDark ? '#208ad6' : 'grey'"

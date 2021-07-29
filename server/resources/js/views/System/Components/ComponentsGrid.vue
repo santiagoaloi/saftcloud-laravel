@@ -139,11 +139,12 @@ export default {
    "allGroups"
   ]),
 
+  ...sync("componentManagement", ["componentCardGroup", "dialogs", "cardGroupKey"]),
+  ...get("componentManagement", ["mapComponentGroup", "mapGroupParent"]),
+
   allComponentsFilteredSorted() {
    return this.allComponentsFiltered;
   },
-
-  ...sync("componentManagement", ["componentCardGroup", "dialogs", "cardGroupKey"]),
 
   componentIcon() {
    if (!this.selectedComponent) return;
@@ -156,35 +157,6 @@ export default {
 
   getComponentCardColor(active) {
    return this.isDark ? (active ? "#51555e" : "#40434a") : active ? "indigo lighten-5" : "white";
-  },
-
-  setStarred(component) {
-   component.status.starred = !component.status.starred;
-   component.origin.status.starred = !component.origin.status.starred;
-   this.setComponentStatus(component);
-  },
-
-  setModular(component) {
-   component.status.modular = !component.status.modular;
-   component.origin.status.modular = !component.origin.status.modular;
-   this.setComponentStatus(component);
-  },
-
-  setActive(component) {
-   component.status.active = !component.status.active;
-   component.origin.status.active = !component.origin.status.active;
-   this.setComponentStatus(component);
-  },
-
-  mapComponentGroup(component) {
-   if (!this.allGroups.length) return;
-   return this.allGroups.find(g => g.id === component.component_group_id);
-  },
-
-  mapGroupParent(component) {
-   if (!this.allGroups.length) return;
-   const parentGroupId = this.allGroups.find(g => g.id === component.component_group_id).component_group_id;
-   return this.allGroups.find(g => g.id === parentGroupId).name;
   }
  }
 };

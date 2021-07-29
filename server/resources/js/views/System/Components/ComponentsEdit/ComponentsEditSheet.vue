@@ -10,8 +10,26 @@
       </v-col>
       <v-col>
        <v-card-text style="overflow:auto">
-        <v-icon small>mdi-folder</v-icon> Products > {{ selectedComponent.config.general_config.name }}
+        <v-chip
+         class="ml-n2"
+         style="pointer-events:none"
+         :color="'transparent'"
+         :text-color="isDark ? 'grey lighten-1' : 'indigo darken-4'"
+         label
+         small
+        >
+         <v-icon x-small> mdi-folder-outline</v-icon>
+         <div class="col-12 text-truncate">
+          <template v-if="mapComponentGroup(selectedComponent).component_group_id">
+           {{ mapGroupParent(selectedComponent) }} <v-icon small>mdi-menu-right</v-icon>
+          </template>
+          {{ mapComponentGroup(selectedComponent).name }}
+          <v-icon small>mdi-menu-right</v-icon> {{ selectedComponent.config.general_config.title }}
+         </div>
+        </v-chip>
+
         <v-divider class="mt-2"></v-divider>
+
         <v-scroll-y-transition hide-on-leave>
          <router-view />
         </v-scroll-y-transition>
@@ -34,8 +52,10 @@ export default {
  },
 
  computed: {
+  ...sync("theme", ["isDark"]),
+
   ...sync("componentManagement", ["componentEditSheet"]),
-  ...get("componentManagement", ["selectedComponent"]),
+  ...get("componentManagement", ["selectedComponent", "mapComponentGroup", "mapGroupParent"]),
 
   height() {
    return `height:${this.$vuetify.breakpoint.height - this.$vuetify.application.top}px;overflow:auto`;

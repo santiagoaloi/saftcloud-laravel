@@ -48,6 +48,23 @@
      </v-textarea>
     </div>
 
+    <div class="mt-2">
+     <BaseFieldLabel label="Component group " />
+     <v-autocomplete
+      solo
+      :color="isDark ? '#208ad6' : 'grey'"
+      :background-color="isDark ? '#28292b' : 'white'"
+      v-model="selectedComponent.component_group_id"
+      hide-selected
+      :items="allGroups"
+      :maxlength="25"
+      item-value="id"
+      item-text="name"
+      hide-no-data
+     >
+     </v-autocomplete>
+    </div>
+
     <v-divider class="my-5"></v-divider>
     <div class="mt-2">
      <BaseFieldLabel class="mb-n3" label="Navigation drawer settings" />
@@ -83,7 +100,7 @@ export default {
  },
  computed: {
   ...sync("theme", ["isDark"]),
-  ...sync("componentManagement", ["componentEditSheet"]),
+  ...sync("componentManagement", ["componentEditSheet", "allGroups"]),
   ...get("componentManagement", ["selectedComponent"]),
   componentIcon() {
    if (!this.selectedComponent) return;
