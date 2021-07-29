@@ -1,7 +1,5 @@
 <template>
  <div>
-  <!-- <v-list-group v-if="!menuItem.items">
-   <template v-slot:activator> -->
   <v-list-item v-if="!menuItem.items" :input-value="menuItem.value" :to="menuItem.link" :exact="menuItem.exact" :disabled="menuItem.disabled" link>
    <div class="d-flex">
     <v-list-item-icon class="mr-1">
@@ -16,8 +14,7 @@
     </v-list-item-content>
    </div>
   </v-list-item>
-  <!-- </template>
-  </v-list-group> -->
+
   <v-list-group
    no-action
    v-else

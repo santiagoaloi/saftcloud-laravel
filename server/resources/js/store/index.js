@@ -1,8 +1,8 @@
 // Vue
 import Vue from "vue";
 import Vuex from "vuex";
-import pathify from "@/plugins/vuex-pathify";
 import VuexPersist from "vuex-persist";
+import pathify from "@/plugins/vuex-pathify";
 import localforage from "localforage";
 
 // All Vuex Modules

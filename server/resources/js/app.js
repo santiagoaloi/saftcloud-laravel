@@ -17,11 +17,6 @@ Vue.component("login_layout", () => import(/* webpackChunkName: 'login-Layout' *
 Vue.component("public_layout", () => import(/* webpackChunkName: 'public-Layout' */ "@/layouts/publicLayout/Index"));
 Vue.component("secure_layout", () => import(/* webpackChunkName: 'public-Layout' */ "@/layouts/secureLayout/Index"));
 
-export function resetRouter() {
- const newRouter = createRouter();
- router.matcher = newRouter.matcher;
-}
-
 new Vue({
  store,
  vuetify,
