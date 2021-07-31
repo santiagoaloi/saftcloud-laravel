@@ -56,13 +56,13 @@ const state = {
 const mutations = make.mutations(state);
 
 const getters = {
- // Show the group where this component belongs.
+ // returns the group name where this component belongs.
  mapComponentGroup: (state, getters) => component => {
   if (getters.isAllGroupsEmpty) return;
   return state.allGroups.find(g => g.id === component.component_group_id);
  },
 
- // Show the parent group where this component belongs.
+ // returns the parent group name where this component belongs.
  mapGroupParent: (state, getters) => component => {
   if (getters.isAllGroupsEmpty) return;
   const parentGroupId = state.allGroups.find(g => g.id === component.component_group_id).component_group_id;
@@ -74,7 +74,7 @@ const getters = {
   return getters.allComponentsFiltered[state.selectedComponentIndex];
  },
 
- // Loads all the field settings of the selected field in component configuration.
+ // Loads all the field settings of the selected field in component form field tab.
  selectedComponentFormField: (state, getters) => {
   if (getters.selectedComponent) {
    const index = getters.selectedComponent.config.form_fields.findIndex(f => f.field == state.selectedComponentActiveField);
@@ -90,11 +90,6 @@ const getters = {
  // Disables the right panel navigation arrows if the last component in the array is selected.
  nextComponentDisabled: (state, getters) => {
   return state.componentCardGroup === getters.allComponentsFiltered.length - 1;
- },
-
- // Returns true if all groups in the component group dropdown are selected.
- selectedAllGroups: state => {
-  return state.selectedComponentGroups.length === state.allGroups.length;
  },
 
  // Returns form fields matching the search string typed.
@@ -119,7 +114,7 @@ const getters = {
 
  // Returns components that either belong to the selected group or that matches the search string.
  allComponentsFiltered: (state, getters, rootState) => {
-  if (!getters.hasSelectedComponentGroups) return [];
+  if (!getters.hasSelectedSomeGroups) return [];
   const search = rootState.application.search.toLowerCase();
   return state.allComponents.filter(component => {
    return (
@@ -135,14 +130,14 @@ const getters = {
   return isEmpty(state.allComponents);
  },
 
- // Returns true if the are component groups selected.
- hasSelectedComponentGroups: state => {
-  return !isEmpty(state.selectedComponentGroups);
+ // Returns true if all groups in the component group dropdown are selected.
+ hasSelectedAllGroups: state => {
+  return state.selectedComponentGroups.length === state.allGroups.length;
  },
 
- // Returns true if the are one or more component groups selected.
+ // Returns true if one or more component groups in the component group dropdown are selected.
  hasSelectedSomeGroups: (_, getters) => {
-  if (getters.hasSelectedComponentGroups) return true;
+  if (isEmpty(state.selectedComponentGroups)) return true;
   return false;
  },
 
@@ -153,7 +148,7 @@ const getters = {
 
  // Returns true if the component has unsaved changes.
  hasUnsavedChanges: (_, getters) => component => {
-  if (getters.hasSelectedComponentGroups) {
+  if (getters.hasSelectedSomeGroups) {
    const { origin, ...current } = component;
    return !isEqual(origin, current);
   }
@@ -201,21 +196,19 @@ const getters = {
    ? "grey darken-1"
    : "black",
 
- // Returns the count of components belonging to a specific group
+ // Returns the count of components belonging to a specific group.
  countComponentsInGroup: state => id => state.allComponents.filter(component => component.component_group_id === id).length
 };
 
 const actions = {
  ...make.actions(state),
 
+ // Resets the component creation dialog form.
  resetDialogComponentForm() {
   store.set("componentManagement/componentSettings", initialComponentSettings());
  },
 
- closeComponentDialog({}) {
-  store.set("componentManagement/dialogComponent", false);
- },
-
+ // Saves the component configuration structure as a new version of the configuration (version control).
  saveComponentsConfigStructure({ state, dispatch }) {
   axios.post("api/componentDefault", { config_structure: JSON.parse(state.ComponentsConfigStructure) }).then(response => {
    dispatch("getComponents");
@@ -226,24 +219,28 @@ const actions = {
   });
  },
 
+ // Retrieves the last record of the component configuration structure.
  getComponentsConfigStructure({}) {
   axios.get("api/componentDefaultLast").then(response => {
    store.set("componentManagement/ComponentsConfigStructure", JSON.stringify(response.data, null, 2));
   });
  },
 
+ // Retrieves all avaiable tables from the database.
  getDbTables({}) {
   axios.get("api/showAllTables").then(response => {
    store.set("componentManagement/dbTables", response.data);
   });
  },
 
+ // Retrieves all avaiable tables and its corresponding columns from the database.
  getDbTablesAndColumns({}) {
   axios.get("api/showAllTablesAndColumns").then(response => {
    store.set("componentManagement/dbTablesAndColumns", response.data.tableAndColumns);
   });
  },
 
+ // Retrieves all avaiable group names from the database.
  getDbGroupNames({}) {
   axios
    .get("api/showAllGroupNames")
@@ -255,6 +252,7 @@ const actions = {
    });
  },
 
+ // Retrieves the navigation structure used in the left side of the secure drawer.
  getNavigationStructure({}) {
   axios
    .get("api/getNavigationStructure")
@@ -266,6 +264,7 @@ const actions = {
    });
  },
 
+ // Retrieves the component groups.
  getGroups({}) {
   axios.get("api/showAllGroups").then(response => {
    if (response.status === 200) {
@@ -274,19 +273,22 @@ const actions = {
   });
  },
 
+ // Unselects a group in the components view.
  unselectGroup({ state }, id) {
   const selectedComponentGroups = state.selectedComponentGroups.filter(cg => cg.id !== id);
   store.set("componentManagement/selectedComponentGroups", selectedComponentGroups);
  },
 
+ // Selects all the available groups in the components view.
  selectAllGroups({ state, getters }) {
-  if (getters.selectedAllGroups) {
+  if (getters.hasSelectedAllGroups) {
    store.set("componentManagement/selectedComponentGroups", []);
   } else {
    store.set("componentManagement/selectedComponentGroups", state.allGroups.slice());
   }
  },
 
+ // Retrieves all available componentes from the database.
  getComponents({}) {
   axios.get("api/showAllComponents").then(response => {
    if (response.status === 200) {
@@ -295,6 +297,7 @@ const actions = {
   });
  },
 
+ // Soft removes a group (it can be restored).
  removeGroup({ dispatch }, id) {
   axios
    .delete(`api/componentGroup/${id}`)
@@ -322,6 +325,7 @@ const actions = {
    });
  },
 
+ // Saves the component group configuration settings.
  saveGroup({ state, dispatch }) {
   parent = state.allGroups.find(g => g.name === state.dbGroupNames[state.groupParent - 1]);
   axios
@@ -348,6 +352,7 @@ const actions = {
    });
  },
 
+ // Renames the component group name.
  renameGroup({ dispatch, state }, id) {
   parent = state.allGroups.find(g => g.name === state.dbGroupNames[state.groupParent - 1]);
   axios.put(`api/componentGroup/${id}`, { name: state.groupName, component_group_id: parent ? parent.id : null }).then(response => {
@@ -362,6 +367,7 @@ const actions = {
   });
  },
 
+ // When a component is selected in the components view, it loads its configuration.
  setSelectedComponent({ rootState, state }, index) {
   if (!rootState.drawers.secureComponentDrawer) {
    store.set("drawers/secureComponentDrawer", true);
@@ -371,6 +377,7 @@ const actions = {
   }
  },
 
+ // Saves component configuration.
  saveComponent({ state, dispatch }, component) {
   //Remove strange characters, add space instead.
   component.config.general_config.sql_query = component.config.general_config.sql_query
@@ -401,12 +408,14 @@ const actions = {
   });
  },
 
+ // Rollback changes before saving component configuration.
  rollbackChanges({ state }, component) {
   const { origin } = component;
   const index = state.allComponents.findIndex(c => c.id === component.id);
   store.set(`componentManagement/allComponents@${index}`, { ...origin, origin: cloneDeep(origin) });
  },
 
+ // Soft removes a component (it can be restored).
  removeComponent({ dispatch }, { id, method, apiPath }) {
   axios[method](`api/${apiPath}/${id}`)
    .then(response => {
@@ -428,6 +437,7 @@ const actions = {
    });
  },
 
+ // Creates a new component in the database.
  createComponent({ state, getters, dispatch }) {
   return axios
    .post("api/component", state.componentSettings)
@@ -464,6 +474,7 @@ const actions = {
    });
  },
 
+ // Moves to the previous component in the array ( navigation arrows)
  previousComponent({ state }) {
   if (state.componentCardGroup > 0) {
    store.set("componentManagement/componentCardGroup", state.componentCardGroup - 1);
@@ -471,6 +482,7 @@ const actions = {
   }
  },
 
+ // Moves to the next component in the array ( navigation arrows)
  nextComponent({ state, getters }) {
   if (state.componentCardGroup < getters.allComponentsFiltered.length - 1) {
    store.set("componentManagement/componentCardGroup", state.componentCardGroup + 1);
@@ -478,28 +490,33 @@ const actions = {
   }
  },
 
+ // Retrieves form field settings of the selected field  in component form field tab.
  setActiveField({ state }, field) {
   if (state.selectedComponentActiveField != field) {
    store.set("componentManagement/selectedComponentActiveField", field);
   }
  },
 
+ // Sets the component as starred, modular or active.
  setComponentStatus({}, component) {
   axios.patch(`api/component/${component.id}`, { status: component.status });
  },
 
+ // Sets the component as starred.
  setStarred({ dispatch }, component) {
   component.status.starred = !component.status.starred;
   component.origin.status.starred = !component.origin.status.starred;
   dispatch("setComponentStatus", component);
  },
 
+ // Sets the component as modular.
  setModular({ dispatch }, component) {
   component.status.modular = !component.status.modular;
   component.origin.status.modular = !component.origin.status.modular;
   dispatch("setComponentStatus", component);
  },
 
+ // Sets the component as active.
  setActive({ dispatch }, component) {
   component.status.active = !component.status.active;
   component.origin.status.active = !component.origin.status.active;

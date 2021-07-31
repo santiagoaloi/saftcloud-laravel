@@ -20,14 +20,14 @@ export default {
    "dbGroupNames",
    "groupNameBeingRemoved"
   ]),
-  ...get("componentManagement", ["selectedAllGroups", "hasSelectedSomeGroups", "hasSelectedComponentGroups", "countComponentsInGroup"]),
+  ...get("componentManagement", ["hasSelectedAllGroups", "hasSelectedSomeGroups", "countComponentsInGroup"]),
 
   formattedGroup() {
    if (this.groupName) return `"${this.groupName}"`;
   },
 
   icon() {
-   if (this.selectedAllGroups) return "mdi-close-box";
+   if (this.hasSelectedAllGroups) return "mdi-close-box";
    if (this.hasSelectedSomeGroups) return "mdi-minus-box";
    return "mdi-checkbox-blank-outline";
   }

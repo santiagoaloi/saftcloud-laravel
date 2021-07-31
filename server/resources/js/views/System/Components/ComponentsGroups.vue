@@ -29,7 +29,7 @@
         </v-icon>
        </v-list-item-action>
        <v-list-item-content>
-        <v-list-item-title> {{ selectedAllGroups ? "Unselect all groups" : "Select all groups" }} </v-list-item-title>
+        <v-list-item-title> {{ hasSelectedAllGroups ? "Unselect all groups" : "Select all groups" }} </v-list-item-title>
        </v-list-item-content>
        <v-list-item-action>
         <v-switch hide-details @click.stop v-model="persistenDropdown" :ripple="false" />
