@@ -17,13 +17,13 @@
    </v-row>
 
    <v-row class="mt-10" no-gutters align="center" justify="center">
-    <div class="topFont topSlide shadows mx-10" style="color: white">
+    <div class="topFont topSlide shadows mx-10 white--text">
      <h1>SaftCloud</h1>
     </div>
    </v-row>
 
    <v-row class="mt-2" no-gutters align="center" justify="center">
-    <div class="subFont topSlide shadows mx-10 text-center" style="color: white">
+    <div class="subFont topSlide shadows mx-10 text-center white--text">
      <h2>Point of sales made easy for everyone.</h2>
     </div>
    </v-row>
@@ -43,12 +43,12 @@
        </v-btn>
       </v-card-subtitle>
 
-      <div style="width: 100%" class="px-4">
+      <div class="px-4 width-full">
        <v-row>
         <v-col cols="12" sm="12" md="12" />
 
         <v-col cols="12" sm="6" md="12">
-         <validation-provider v-slot="{ errors, reset }" name="Username" rules="required">
+         <validation-provider v-slot="{ errors, reset }" name="account name" rules="required">
           <v-text-field
            ref="username"
            v-model.trim="auth.email"
@@ -74,7 +74,7 @@
 
         <v-col cols="12" sm="6" md="12">
          <div id="passwordField">
-          <validation-provider v-slot="{ errors, reset }" name="Användarnamn" rules="required">
+          <validation-provider v-slot="{ errors, reset }" name="account password" rules="required">
            <v-text-field
             v-model.trim="auth.password"
             hide-details
@@ -108,8 +108,6 @@
 
         <v-col cols="12" sm="12" md="12">
          <v-card-actions class="mt-n7">
-          <!-- <div class="flex-grow-1" /> -->
-
           <v-btn width="40%" color="primary" class="mr-n2 white--text" large :loading="loading" @click.prevent="validatelogin()">
            Login
           </v-btn>

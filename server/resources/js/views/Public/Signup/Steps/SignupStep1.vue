@@ -9,7 +9,7 @@
      <v-col sm="12">
       <BaseFieldLabel label="Email" />
       <span></span>
-      <validation-provider v-slot="{ errors, reset }" name="Email" rules="required|email">
+      <validation-provider v-slot="{ errors, reset }" name="email" rules="required|email">
        <v-text-field
         autofocus
         type="email"
@@ -30,7 +30,7 @@
      </v-col>
      <v-col sm="6">
       <BaseFieldLabel label="Country Code" />
-      <validation-provider v-slot="{ errors, reset }" name="CountryCode" rules="required">
+      <validation-provider v-slot="{ errors, reset }" name="country code" rules="required">
        <v-autocomplete
         :items="countryCodes"
         v-model="signupForm.phone_code"
@@ -76,7 +76,7 @@
      <v-col sm="6">
       <BaseFieldLabel label="Phone number" />
       <span></span>
-      <validation-provider v-slot="{ errors, reset }" name="Phone mumber" rules="required">
+      <validation-provider v-slot="{ errors, reset }" name="phone number" rules="required">
        <v-text-field
         type="number"
         v-model="signupForm.phoneNumber"

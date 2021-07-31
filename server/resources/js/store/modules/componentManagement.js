@@ -3,6 +3,7 @@ import { store } from "@/store";
 import { make } from "vuex-pathify";
 import { isEqual, isEmpty, cloneDeep } from "lodash";
 
+// When this function is called, the component settings form is back to default values.
 const initialComponentSettings = () => {
  return {
   note: "",
@@ -15,41 +16,39 @@ const initialComponentSettings = () => {
 
 const state = {
  dbTables: [],
- dbTablesAndColumns: {},
- dbGroupNames: [],
  allGroups: [],
  groupName: "",
  groupParent: 0,
  tableColumns: [],
  searchFields: "",
+ dbGroupNames: [],
  allComponents: [],
- dialogComponent: false,
- dialogEditor: false,
  dialogIcons: false,
  activeStatusTab: 0,
+ dialogEditor: false,
  isTableLayout: false,
+ activeFormFieldTab: 0,
+ dialogComponent: false,
+ dbTablesAndColumns: {},
  componentEditSheet: false,
+ groupNameBeingRemoved: "",
  selectedFieldItemGroup: 0,
  selectedComponentIndex: 0,
- showSelectedFieldsOnly: false,
+ componentsLinkedToGroup: [],
  selectedComponentGroups: [],
+ showSelectedFieldsOnly: false,
  ComponentsConfigStructure: {},
  componentCardGroup: undefined,
  selectedComponentActiveField: "",
  displayEnabledFormFieldsOnly: false,
  componentEditDrawerActiveMenu: undefined,
- componentsLinkedToGroup: [],
  componentSettings: initialComponentSettings(),
-
- groupNameBeingRemoved: "",
-
  componentStatusTabs: [
   { name: "All", value: "all", icon: "mdi-all-inclusive", color: "" },
   { name: "Starred", value: "starred", icon: "mdi-star", color: "" },
   { name: "Modular", value: "modular", icon: "mdi-view-module", color: "" },
   { name: "Active", value: "active", icon: "mdi-lightbulb-on", color: "" }
  ],
-
  navigationStructure: {},
  componentsLinkedToGroupDialog: false
 };
@@ -93,11 +92,12 @@ const getters = {
   return state.componentCardGroup === getters.allComponentsFiltered.length - 1;
  },
 
- // Returns true if all groups in the group dropdown are selected.
+ // Returns true if all groups in the component group dropdown are selected.
  selectedAllGroups: state => {
   return state.selectedComponentGroups.length === state.allGroups.length;
  },
 
+ // Returns form fields matching the search string typed.
  filteredFormFields: (state, getters) => {
   if (getters.selectedComponent) {
    const searchFields = state.searchFields.toString().toLowerCase();
@@ -107,6 +107,7 @@ const getters = {
   }
  },
 
+ // Returns form fields that are set to be displayed in the component.
  filteredSelectedFields: (state, getters) => {
   if (getters.selectedComponent) {
    const searchFields = state.searchFields.toString().toLowerCase();
@@ -116,31 +117,41 @@ const getters = {
   }
  },
 
+ // Returns components that either belong to the selected group or that matches the search string.
  allComponentsFiltered: (state, getters, rootState) => {
   if (!getters.hasSelectedComponentGroups) return [];
   const search = rootState.application.search.toLowerCase();
   return state.allComponents.filter(component => {
    return (
     (search === "" || component.config.general_config.title.toLowerCase().match(search)) &&
-    (getters.activeStatusTabName === "all" || component.status[getters.activeStatusTabName]) &&
+    (getters.activeComponentEditFormFieldsStatusTabName === "all" || component.status[getters.activeComponentEditFormFieldsStatusTabName]) &&
     state.selectedComponentGroups.some(group => group.id === component.component_group_id)
    );
   });
  },
 
+ // Returns true if the are no components returned from the backend.
  isComponentsEmpty: state => {
   return isEmpty(state.allComponents);
  },
 
+ // Returns true if the are component groups selected.
  hasSelectedComponentGroups: state => {
   return !isEmpty(state.selectedComponentGroups);
  },
 
- selectedSomeGroups: (_, getters) => {
+ // Returns true if the are one or more component groups selected.
+ hasSelectedSomeGroups: (_, getters) => {
   if (getters.hasSelectedComponentGroups) return true;
   return false;
  },
 
+ // Returns true if there are no component groups defined in the groups array.
+ isAllGroupsEmpty: state => {
+  return state.allGroups.length === 0;
+ },
+
+ // Returns true if the component has unsaved changes.
  hasUnsavedChanges: (_, getters) => component => {
   if (getters.hasSelectedComponentGroups) {
    const { origin, ...current } = component;
@@ -148,23 +159,26 @@ const getters = {
   }
  },
 
- isAllGroupsEmpty: state => {
-  return state.allGroups.length === 0;
- },
-
+ // Returns true if the current groups selected do not contain any components associated to them.
  isAllFilteredComponentsEmpty: (_, getters) => {
   return getters.allComponentsFiltered.length === 0;
  },
 
- activeStatusTabName: state => {
+ // Returns the name of the tab name selected within the form field editor
+ activeComponentEditFormFieldsStatusTabName: state => {
   return state.componentStatusTabs[state.activeStatusTab].value;
  },
 
+ // Returns the color of the star icon depending on its state.
  isStarredColor: () => component => (component.status.starred ? "orange" : "grey darken-1"),
- isStarredIcon: () => component => (component.status.starred ? "mdi-star" : "mdi-star-outline"),
- isActiveIcon: () => component => (component.status.active ? "mdi-lightbulb-on" : "mdi-lightbulb-on-outline"),
- isModularIcon: () => component => (component.status.modular ? "mdi-view-module" : "mdi-view-module-outline"),
 
+ // Returns the star icon depending on its state.
+ isStarredIcon: () => component => (component.status.starred ? "mdi-star" : "mdi-star-outline"),
+
+ // Returns the active icon depending on its state.
+ isActiveIcon: () => component => (component.status.active ? "mdi-lightbulb-on" : "mdi-lightbulb-on-outline"),
+
+ // Returns color of the compoment card in the grid view, depending on the theme settings.
  isActiveColor: (_, __, rootState) => component =>
   rootState.theme.isDark && component.status.active
    ? "indigo lighten-4"
@@ -174,6 +188,10 @@ const getters = {
    ? "grey darken-1"
    : "black",
 
+ // Returns the modular icon depending on its state.
+ isModularIcon: () => component => (component.status.modular ? "mdi-view-module" : "mdi-view-module-outline"),
+
+ // Returns color of the card modular icon in the grid view, depending on the theme settings.
  isModularColor: (_, __, rootState) => component =>
   rootState.theme.isDark && component.status.modular
    ? "indigo lighten-4"
@@ -183,6 +201,7 @@ const getters = {
    ? "grey darken-1"
    : "black",
 
+ // Returns the count of components belonging to a specific group
  countComponentsInGroup: state => id => state.allComponents.filter(component => component.component_group_id === id).length
 };
 

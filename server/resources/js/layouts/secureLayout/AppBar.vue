@@ -102,7 +102,7 @@
     </template>
 
     <v-list class="pa-2" outlined>
-     <v-list-item style="cursor: pointer">
+     <v-list-item class="cursor-pointer">
       <v-list-item-content>
        <v-list-item-title style="font-size: 130%; font-weight: 600">
         firstname lastname
@@ -110,7 +110,7 @@
       </v-list-item-content>
      </v-list-item>
 
-     <v-list-item style="cursor: pointer; margin-top: -20px">
+     <v-list-item class="cursor-pointer" style="margin-top: -20px">
       <v-list-item-content>
        <v-list-item-title>email</v-list-item-title>
       </v-list-item-content>

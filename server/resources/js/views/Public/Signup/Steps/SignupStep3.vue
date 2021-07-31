@@ -7,7 +7,7 @@
    <ValidationObserver ref="step3" slim>
     <v-row justify="center">
      <v-col sm="6">
-      <validation-provider v-slot="{ errors, reset }" name="Company name" rules="required">
+      <validation-provider v-slot="{ errors, reset }" name="company name" rules="required">
        <BaseFieldLabel label="Account" />
        <v-text-field
         autofocus
@@ -29,7 +29,7 @@
      </v-col>
      <v-col sm="6">
       <BaseFieldLabel label="Company Alias" />
-      <validation-provider v-slot="{ errors, reset }" name="Company name alias" rules="required">
+      <validation-provider v-slot="{ errors, reset }" name="company alias" rules="required">
        <v-text-field
         v-model="signupForm.companyNameAlias"
         hint="Public company name alias"

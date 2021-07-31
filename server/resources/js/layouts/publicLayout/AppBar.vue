@@ -1,6 +1,6 @@
 <template>
  <div>
-  <v-app-bar :color="$route.name == '/homepage' ? 'transparent' : '#202225'" absolute app flat height="80">
+  <v-app-bar :color="$route.name === '/homepage' ? 'transparent' : '#202225'" absolute app flat height="80">
    <v-container style="background-color:transparent" class="py-0 px-0 px-sm-2 fill-height">
     <div
      data-aos="fade"

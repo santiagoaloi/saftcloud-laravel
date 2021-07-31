@@ -72,12 +72,11 @@
         <div class="gallery-card-subtitle-wrapper">
          <h5 class="gallery-card-subtitle">
           <v-chip
-           style="pointer-events:none"
            :dark="isDark"
            :color="isDark ? 'rgb(54, 57, 63)' : 'white'"
            :text-color="isDark ? 'grey lighten-1' : 'indigo darken-4'"
            label
-           class="col-12"
+           class="col-12 pointer-events-none"
            small
           >
            <v-icon x-small> mdi-folder-outline</v-icon>
@@ -126,7 +125,10 @@ export default {
  computed: {
   ...sync("theme", ["isDark"]),
   ...sync("drawers", ["secureComponentDrawer"]),
+  ...sync("componentManagement", ["componentCardGroup"]),
   ...get("componentManagement", [
+   "mapComponentGroup",
+   "mapGroupParent",
    "allComponentsFiltered",
    "hasUnsavedChanges",
    "isModularIcon",
@@ -138,9 +140,6 @@ export default {
    "isActiveIcon",
    "allGroups"
   ]),
-
-  ...sync("componentManagement", ["componentCardGroup", "dialogs", "cardGroupKey"]),
-  ...get("componentManagement", ["mapComponentGroup", "mapGroupParent"]),
 
   allComponentsFilteredSorted() {
    return this.allComponentsFiltered;

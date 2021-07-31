@@ -5,7 +5,7 @@
     <div :key="i" v-if="item.header" class="pa-1 mt-2 overline">
      {{ item.header }}
     </div>
-    <v-list-item :key="i" @click="componentEditDrawerActiveMenu = item.link" v-else :to="item.link" :disabled="item.disabled" link>
+    <v-list-item v-else :key="i" @click="componentEditDrawerActiveMenu = item.link" :to="item.link" :disabled="item.disabled" link>
      <v-list-item-icon>
       <v-icon small :class="{ 'grey--text': item.disabled }">
        {{ item.icon || "mdi-circle-medium" }}
@@ -17,8 +17,6 @@
      </v-list-item-content>
     </v-list-item>
    </template>
-
-   <!-- </v-list-item-group> -->
   </v-list>
  </div>
 </template>
@@ -28,16 +26,15 @@ import { sync, get } from "vuex-pathify";
 export default {
  name: "ComponentsEditSheetMenu",
  data: () => ({
-  listItem: 5,
   menuItems: [
    { header: "Component Settings" },
-   { icon: "mdi-view-dashboard-outline", key: "menu.dashboard", text: "Basic", link: "/components/basic" },
-   { icon: "mdi-view-dashboard-outline", key: "menu.dashboard", text: "Toolbar", link: "", disabled: true },
-   { icon: "mdi-view-dashboard-outline", key: "menu.dashboard", text: "Permissions", link: "", disabled: true },
+   { icon: "mdi-view-dashboard-outline", text: "Basic", link: "/components/basic" },
+   { icon: "mdi-view-dashboard-outline", text: "Toolbar", link: "", disabled: true },
+   { icon: "mdi-view-dashboard-outline", text: "Permissions", link: "", disabled: true },
    { header: "Database" },
-   { icon: "mdi-view-dashboard-outline", key: "menu.dashboard", text: "Query", link: "/components/query", disabled: false },
-   { icon: "mdi-view-dashboard-outline", key: "menu.dashboard", text: "Columns", link: "", disabled: true },
-   { icon: "mdi-view-dashboard-outline", key: "menu.dashboard", text: "Fields", link: "/components/formFields", disabled: false }
+   { icon: "mdi-view-dashboard-outline", text: "Query", link: "/components/query", disabled: false },
+   { icon: "mdi-view-dashboard-outline", text: "Columns", link: "", disabled: true },
+   { icon: "mdi-view-dashboard-outline", text: "Fields", link: "/components/formFields", disabled: false }
   ]
  }),
 

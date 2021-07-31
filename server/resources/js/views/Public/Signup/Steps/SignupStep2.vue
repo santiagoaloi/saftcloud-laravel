@@ -8,7 +8,7 @@
     <v-row justify="center">
      <v-col sm="12">
       <BaseFieldLabel label="Country" />
-      <validation-provider v-slot="{ errors, reset }" name="Country" rules="required">
+      <validation-provider v-slot="{ errors, reset }" name="country" rules="required">
        <v-autocomplete
         :items="countryCodes"
         v-model="signupForm.country"
@@ -48,7 +48,7 @@
 
      <v-col sm="6">
       <BaseFieldLabel label="State, Province, or Region " />
-      <validation-provider v-slot="{ errors, reset }" name="State" rules="required">
+      <validation-provider v-slot="{ errors, reset }" name="state" rules="required">
        <v-autocomplete
         :disabled="!states.length"
         :items="states"
@@ -73,7 +73,7 @@
 
      <v-col sm="6">
       <BaseFieldLabel label="City" />
-      <validation-provider v-slot="{ errors, reset }" name="City" rules="required">
+      <validation-provider v-slot="{ errors, reset }" name="city" rules="required">
        <v-text-field
         :disabled="!states.length"
         v-model="signupForm.city"
@@ -94,7 +94,7 @@
 
      <v-col sm="8">
       <BaseFieldLabel label="Address" />
-      <validation-provider v-slot="{ errors, reset }" name="Address" rules="required">
+      <validation-provider v-slot="{ errors, reset }" name="address" rules="required">
        <v-text-field
         v-model="signupForm.address"
         solo
@@ -114,7 +114,7 @@
 
      <v-col sm="4">
       <BaseFieldLabel label="Postal code" />
-      <validation-provider v-slot="{ errors, reset }" name="Zipcode" rules="required">
+      <validation-provider v-slot="{ errors, reset }" name="zipcode" rules="required">
        <v-text-field
         v-model="signupForm.zipcode"
         solo

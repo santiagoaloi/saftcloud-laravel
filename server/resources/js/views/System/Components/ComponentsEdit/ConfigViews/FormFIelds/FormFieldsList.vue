@@ -3,7 +3,7 @@
   <v-text-field
    v-model="searchFields"
    hide-details
-   label="Buscar"
+   label="Search"
    prepend-inner-icon="mdi-magnify"
    autocomplete="off"
    autocorrect="off"

@@ -10,7 +10,7 @@
    <div v-if="hasUnsavedChanges(selectedComponent)">
     <v-btn rounded :color="isDark ? 'grey darken-3' : 'white'" class="mx-2" small @click="rollbackChanges(selectedComponent)"
      ><span class="pink--text text--lighten-2  mr-2"> Unsaved </span>
-     <v-chip style="pointer-events:none" x-small>rollback </v-chip>
+     <v-chip class="pointer-events-none" x-small>rollback </v-chip>
     </v-btn>
    </div>
   </v-fade-transition>
@@ -20,7 +20,7 @@
     <v-btn
      :disabled="!hasUnsavedChanges(selectedComponent)"
      v-on="on"
-     @click="saveComponent(selectedComponent)"
+     @click="validateComponentEditor(selectedComponent)"
      class="mr-2"
      x-small
      color="white"
@@ -65,7 +65,7 @@
 
   <v-tooltip transition="false" color="black" bottom>
    <template v-slot:activator="{ on }">
-    <v-btn v-on="on" dark class="mr-2" @click="close()" fab text x-small>
+    <v-btn v-on="on" dark class="mr-2" @click="componentEditSheet = false" fab text x-small>
      <v-icon>mdi-chevron-down</v-icon>
     </v-btn>
    </template>
@@ -80,15 +80,49 @@ export default {
  name: "ComponentsEditAppbar",
  computed: {
   ...sync("theme", ["isDark"]),
-  ...sync("componentManagement", ["componentEditSheet"]),
-  ...get("componentManagement", ["previousComponentDisabled", "nextComponentDisabled", "selectedComponent", "hasUnsavedChanges"])
+  ...sync("componentManagement", ["componentEditSheet", "componentEditDrawerActiveMenu"]),
+  ...get("componentManagement", ["previousComponentDisabled", "nextComponentDisabled", "selectedComponent", "hasUnsavedChanges"]),
+  ...sync("refs", ["componentsEditBasic", "componentsEditQuery"])
  },
 
  methods: {
   ...call("componentManagement/*"),
 
-  close() {
-   this.componentEditSheet = false;
+  validateComponentEditor(selectedComponent) {
+   let validators = [this.validateComponentsEditBasic(), this.validateComponentsEditQuery()];
+
+   Promise.all([...validators]).then(result => {
+    const errors = result.filter(validation => validation.value === false);
+    if (errors.length) {
+     if (this.$route.name != errors[0].route) {
+      this.$router.push(errors[0].route);
+     }
+    } else {
+     this.saveComponent(selectedComponent);
+    }
+   });
+  },
+
+  validateComponentsEditBasic() {
+   if (!this.componentsEditBasic) return { value: null };
+   return this.componentsEditBasic.validate().then(success => {
+    if (success) {
+     return { value: true };
+    } else {
+     return { value: false, route: "/components/basic" };
+    }
+   });
+  },
+
+  validateComponentsEditQuery() {
+   if (!this.componentsEditQuery) return { value: null };
+   return this.componentsEditQuery.validate().then(success => {
+    if (success) {
+     return { value: true };
+    } else {
+     return { value: false, route: "/components/query" };
+    }
+   });
   }
  }
 };

@@ -11,7 +11,7 @@
   <ValidationObserver ref="createComponentForm" slim>
    <v-row>
     <v-col cols="12" lg="6">
-     <BaseFieldLabel label="Group" />
+     <BaseFieldLabel required label="Group" />
      <validation-provider v-slot="{ errors, reset }" name="component group" rules="required">
       <v-autocomplete
        spellcheck="false"
@@ -22,7 +22,6 @@
        :maxlength="25"
        item-value="id"
        item-text="name"
-       placeholder="Select or create groups"
        hide-selected
        hide-no-data
        solo
@@ -55,7 +54,7 @@
     </v-col>
 
     <v-col cols="12" lg="6">
-     <BaseFieldLabel label="Component title" />
+     <BaseFieldLabel required label="Component title" />
      <validation-provider v-slot="{ errors, reset }" name="component title" rules="required">
       <v-text-field
        spellcheck="false"
@@ -78,7 +77,7 @@
     </v-col>
 
     <v-col cols="12" lg="6">
-     <BaseFieldLabel label="Component name" />
+     <BaseFieldLabel required label="Component name" />
      <validation-provider v-slot="{ errors, reset }" name="component name" rules="alpha|required">
       <v-text-field
        spellcheck="false"
@@ -101,31 +100,7 @@
     </v-col>
 
     <v-col cols="12" lg="6">
-     <BaseFieldLabel label="Component description" />
-     <validation-provider v-slot="{ errors, reset }" name="component desc" rules="required">
-      <v-text-field
-       spellcheck="false"
-       v-model="componentSettings.note"
-       prepend-inner-icon="mdi-file"
-       counter
-       maxlength="35"
-       label
-       placeholder="Description"
-       solo
-       :color="isDark ? '#208ad6' : 'grey'"
-       :background-color="isDark ? '#28292b' : 'white'"
-       @keydown.enter.prevent="validateComponentForm()"
-       :error="errors.length > 0"
-       :error-messages="errors[0]"
-       :outlined="isDark"
-       @focus="reset"
-       @input="reset"
-       @blur="reset"
-      />
-     </validation-provider>
-    </v-col>
-    <v-col cols="12" lg="6">
-     <BaseFieldLabel label="Database table" />
+     <BaseFieldLabel required label="Database table" />
      <validation-provider v-slot="{ errors, reset }" name="component table" rules="required">
       <v-autocomplete
        :outlined="isDark"
@@ -159,6 +134,20 @@
        </template>
       </v-autocomplete>
      </validation-provider>
+    </v-col>
+    <v-col cols="12" lg="12">
+     <BaseFieldLabel label="Component description" />
+     <v-textarea
+      spellcheck="false"
+      v-model="componentSettings.note"
+      prepend-inner-icon="mdi-file"
+      label
+      solo
+      :rows="4"
+      :color="isDark ? '#208ad6' : 'grey'"
+      :background-color="isDark ? '#28292b' : 'white'"
+      :outlined="isDark"
+     />
     </v-col>
    </v-row>
   </ValidationObserver>

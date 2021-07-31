@@ -6,7 +6,7 @@
 
   <v-divider />
 
-  <v-card color="transparent" flat :height="calculateHeight()" style="overflow-y:auto">
+  <v-card color="transparent" flat :height="calculateHeight()" class="overflow-y-auto">
    <template v-if="!isAllFilteredComponentsEmpty">
     <v-scroll-y-transition hide-on-leave>
      <components-table v-if="isTableLayout" />

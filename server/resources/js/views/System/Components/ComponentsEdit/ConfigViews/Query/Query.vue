@@ -1,7 +1,11 @@
 <template>
  <div>
-  <v-card flat width="100%" class="queryHeight">
-   <base-editor :key="editorKey" v-model="selectedComponent.config.general_config.sql_query" mode="sql" />
+  <v-card flat width="100%" class="queryHeight mx-auto ">
+   <ValidationObserver ref="componentsEditQuery" slim>
+    <validation-provider name="component query" rules="required">
+     <base-editor :key="editorKey" v-model="selectedComponent.config.general_config.sql_query" mode="sql" />
+    </validation-provider>
+   </ValidationObserver>
   </v-card>
  </div>
 </template>
@@ -26,11 +30,17 @@ export default {
 
  computed: {
   ...sync("theme", ["isDark"]),
-  ...get("componentManagement", ["selectedComponent"])
+  ...get("componentManagement", ["selectedComponent"]),
+  ...sync("refs", ["componentsEditQuery"])
  },
 
  methods: {
   ...call("componentManagement/*")
+ },
+
+ mounted() {
+  // Sync refs with Vuex for cross-validation
+  this.componentsEditQuery = this.$refs.componentsEditQuery;
  }
 };
 </script>

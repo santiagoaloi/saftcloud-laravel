@@ -103,7 +103,7 @@
      <transition-group appear name="scale-transition">
       <v-chip :ripple="false" close @click:close="unselectGroup(item.id)" v-for="(item, index) in selectedComponentGroups" :key="`${index}`">
        <v-avatar left>
-        <v-btn style="pointer-events:none" :color="isDark ? 'grey darken-3' : 'white'"> {{ countComponentsInGroup(item.id) }}</v-btn>
+        <v-btn class="pointer-events-none" :color="isDark ? 'grey darken-3' : 'white'"> {{ countComponentsInGroup(item.id) }}</v-btn>
        </v-avatar>
        {{ item.name }}
       </v-chip>

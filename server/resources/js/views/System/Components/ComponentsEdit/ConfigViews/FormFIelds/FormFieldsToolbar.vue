@@ -50,7 +50,7 @@ import draggable from "vuedraggable";
 
 import { sync, get } from "vuex-pathify";
 export default {
- name: "ComponentsEditViewsBasic",
+ name: "ComponentsEditViewsFormFieldsToolbar",
  components: {
   draggable
  },

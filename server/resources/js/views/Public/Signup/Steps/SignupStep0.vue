@@ -6,7 +6,7 @@
     <v-row>
      <v-col sm="6">
       <BaseFieldLabel label="Name" />
-      <validation-provider v-slot="{ errors, reset }" name="First name" rules="required">
+      <validation-provider v-slot="{ errors, reset }" name="first name" rules="required">
        <v-text-field
         autofocus
         v-model="signupForm.name"
@@ -26,7 +26,7 @@
      </v-col>
      <v-col sm="6">
       <BaseFieldLabel label="Last name" />
-      <validation-provider v-slot="{ errors, reset }" name="Last name" rules="required">
+      <validation-provider v-slot="{ errors, reset }" name="last name" rules="required">
        <v-text-field
         v-model="signupForm.lastname"
         solo

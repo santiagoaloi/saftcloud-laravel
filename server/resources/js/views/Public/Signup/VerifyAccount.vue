@@ -26,7 +26,7 @@
            </v-col>
            <v-col sm="6">
             <span>Verification Code</span>
-            <validation-provider v-slot="{ errors }" name="Last name" rules="required">
+            <validation-provider v-slot="{ errors }" name="token" rules="required">
              <v-text-field
               v-model="token"
               solo
@@ -60,7 +60,7 @@
            </v-col>
            <v-col sm="6">
             <span>Password</span>
-            <validation-provider v-slot="{ errors }" name="Last name" rules="required">
+            <validation-provider v-slot="{ errors }" name="account password" rules="required">
              <v-text-field
               type="password"
               solo
@@ -71,7 +71,7 @@
             </validation-provider> </v-col
            ><v-col sm="6">
             <span>Repeat password</span>
-            <validation-provider v-slot="{ errors }" name="Last name" rules="required">
+            <validation-provider v-slot="{ errors }" name="account password repeat" rules="required">
              <v-text-field
               type="password"
               solo

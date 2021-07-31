@@ -1,8 +1,8 @@
 <template>
  <div v-if="selectedComponent">
   <v-expand-transition>
-   <v-sheet :color="isDark ? '#2C2F33' : 'white'" v-if="hasUnsavedChanges(selectedComponent)" class="px-2">
-    <v-alert class="mt-3" elevation="2" coloredBorder color="pink" border="right" dense>
+   <v-sheet :color="isDark ? '#2C2F33' : 'transparent'" v-if="hasUnsavedChanges(selectedComponent)" class="px-2">
+    <v-alert class="mt-3" elevation="1" coloredBorder color="pink" border="right" dense>
      <div class="d-flex justify-space-between align-center">
       Unsaved
       <v-btn small @click="rollbackChanges(selectedComponent)">rollback</v-btn>
@@ -64,7 +64,7 @@
     </v-textarea>
 
     <div class="mt-2">
-     <BaseFieldLabel label="Component group " />
+     <BaseFieldLabel required label="Component group " />
      <v-autocomplete
       outlined
       :color="isDark ? '#208ad6' : 'grey'"
@@ -238,7 +238,6 @@ export default {
   ...sync("componentManagement", ["componentCardGroup", "allComponents", "allGroups", "selectedComponentIndex", "componentEditSheet"]),
   ...get("componentManagement", [
    "hasUnsavedChanges",
-   "hasSelectedComponent",
    "previousComponentDisabled",
    "nextComponentDisabled",
    "selectedComponent",

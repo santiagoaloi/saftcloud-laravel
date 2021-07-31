@@ -9,15 +9,8 @@
        <components-edit-sheet-drawer />
       </v-col>
       <v-col>
-       <v-card-text style="overflow:auto">
-        <v-chip
-         class="ml-n2"
-         style="pointer-events:none"
-         :color="'transparent'"
-         :text-color="isDark ? 'grey lighten-1' : 'indigo darken-4'"
-         label
-         small
-        >
+       <v-card-text class="overflow-auto">
+        <v-chip class="ml-n2 pointer-events-none" :color="'transparent'" :text-color="isDark ? 'grey lighten-1' : 'indigo darken-4'" label small>
          <v-icon x-small> mdi-folder-outline</v-icon>
          <div class="col-12 text-truncate">
           <template v-if="mapComponentGroup(selectedComponent).component_group_id">
@@ -30,8 +23,11 @@
 
         <v-divider class="mt-2"></v-divider>
 
+        <!-- keep alive is important to cross-validate compoment edit list sections -->
         <v-scroll-y-transition hide-on-leave>
-         <router-view />
+         <keep-alive>
+          <router-view />
+         </keep-alive>
         </v-scroll-y-transition>
        </v-card-text>
       </v-col>
