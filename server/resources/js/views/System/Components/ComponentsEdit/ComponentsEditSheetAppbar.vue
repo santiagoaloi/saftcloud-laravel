@@ -80,19 +80,20 @@ export default {
  name: "ComponentsEditAppbar",
  computed: {
   ...sync("theme", ["isDark"]),
+  ...sync("refs", ["componentsEditBasic", "componentsEditQuery"]),
   ...sync("componentManagement", ["componentEditSheet", "componentEditDrawerActiveMenu"]),
-  ...get("componentManagement", ["previousComponentDisabled", "nextComponentDisabled", "selectedComponent", "hasUnsavedChanges"]),
-  ...sync("refs", ["componentsEditBasic", "componentsEditQuery"])
+  ...get("componentManagement", ["previousComponentDisabled", "nextComponentDisabled", "selectedComponent", "hasUnsavedChanges"])
  },
 
  methods: {
   ...call("componentManagement/*"),
 
+  // cross-validate compoment edit navigation drawer sections
   validateComponentEditor(selectedComponent) {
    let validators = [this.validateComponentsEditBasic(), this.validateComponentsEditQuery()];
 
    Promise.all([...validators]).then(result => {
-    const errors = result.filter(validation => validation.value === false);
+    const errors = result.filter(validation => validation.valid === false);
     if (errors.length) {
      if (this.$route.name != errors[0].route) {
       this.$router.push(errors[0].route);
@@ -104,23 +105,23 @@ export default {
   },
 
   validateComponentsEditBasic() {
-   if (!this.componentsEditBasic) return { value: null };
+   if (!this.componentsEditBasic) return { valid: null };
    return this.componentsEditBasic.validate().then(success => {
     if (success) {
-     return { value: true };
+     return { valid: true };
     } else {
-     return { value: false, route: "/components/basic" };
+     return { valid: false, route: "/components/basic" };
     }
    });
   },
 
   validateComponentsEditQuery() {
-   if (!this.componentsEditQuery) return { value: null };
+   if (!this.componentsEditQuery) return { valid: null };
    return this.componentsEditQuery.validate().then(success => {
     if (success) {
-     return { value: true };
+     return { valid: true };
     } else {
-     return { value: false, route: "/components/query" };
+     return { valid: false, route: "/components/query" };
     }
    });
   }

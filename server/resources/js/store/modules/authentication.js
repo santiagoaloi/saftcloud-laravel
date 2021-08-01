@@ -13,6 +13,7 @@ const mutations = make.mutations(state);
 const actions = {
  ...make.actions(state),
 
+ //Sends login form payload to backend.
  login({ commit }, data) {
   return axios
    .post("api/login", data)
@@ -30,6 +31,7 @@ const actions = {
    });
  },
 
+ //Logs out the user.
  logout({ commit }, data) {
   return axios
    .post("api/logout", data)

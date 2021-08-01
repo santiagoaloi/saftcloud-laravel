@@ -1,33 +1,36 @@
 <template>
- <v-row>
-  <v-col cols="6">
-   <BaseFieldLabel label="label" />
-   <v-text-field
-    :outlined="isDark"
-    :solo="!isDark"
-    :color="isDark ? '#208ad6' : 'grey'"
-    :background-color="isDark ? '#28292b' : 'white'"
-    v-model="selectedComponentFormField.label"
-    :prepend-inner-icon="selectedComponentFormField.icon.name"
-    @click:prepend-inner="dialogIcon = true"
-   >
-   </v-text-field>
-  </v-col>
-  <v-col cols="6">
-   <BaseFieldLabel label="Input type" />
-   <v-select
-    :outlined="isDark"
-    :solo="!isDark"
-    v-model="selectedComponentFormField.inputType"
-    :item-color="isDark ? 'indigo lighten-3' : 'primary'"
-    :color="isDark ? '#208ad6' : 'grey'"
-    :background-color="isDark ? '#28292b' : 'white'"
-    :menu-props="{ transition: 'slide-y-transition' }"
-    :items="inputTypes"
-    hide-details
-   />
-  </v-col>
- </v-row>
+ <div>
+  <v-row>
+   <v-col cols="6">
+    <BaseFieldLabel required label="label" />
+    <v-text-field
+     :outlined="isDark"
+     :solo="!isDark"
+     :color="isDark ? '#208ad6' : 'grey'"
+     :background-color="isDark ? '#28292b' : 'white'"
+     v-model="selectedComponentFormField.label"
+     :prepend-inner-icon="selectedComponentFormField.icon.name"
+     @click:prepend-inner="dialogIcons = true"
+    >
+    </v-text-field>
+   </v-col>
+   <v-col cols="6">
+    <BaseFieldLabel required label="Input type" />
+    <v-select
+     :outlined="isDark"
+     :solo="!isDark"
+     v-model="selectedComponentFormField.inputType"
+     :item-color="isDark ? 'indigo lighten-3' : 'primary'"
+     :color="isDark ? '#208ad6' : 'grey'"
+     :background-color="isDark ? '#28292b' : 'white'"
+     :menu-props="{ transition: 'slide-y-transition' }"
+     :items="inputTypes"
+     hide-details
+    />
+   </v-col>
+  </v-row>
+  <base-dialog-icons v-if="dialogIcons" :icon="componentIcon" v-model="dialogIcons" />
+ </div>
 </template>
 
 <script>
@@ -37,6 +40,7 @@ export default {
  name: "ComponentsEditViewsFormFieldsTabsBasic",
  data() {
   return {
+   dialogIcons: false,
    inputTypes: [
     { value: "text", text: "Text" },
     { value: "number", text: "Number" },
@@ -51,7 +55,12 @@ export default {
 
  computed: {
   ...sync("theme", ["isDark"]),
-  ...get("componentManagement", ["selectedComponentFormField"])
+  ...get("componentManagement", ["selectedComponentFormField"]),
+
+  componentIcon() {
+   if (!this.selectedComponentFormField) return;
+   return this.selectedComponentFormField.icon;
+  }
  }
 };
 </script>

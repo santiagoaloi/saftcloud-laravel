@@ -63,7 +63,6 @@
 </template>
 
 <script>
-import axios from "axios";
 import draggable from "vuedraggable";
 import { sync, get, call } from "vuex-pathify";
 export default {

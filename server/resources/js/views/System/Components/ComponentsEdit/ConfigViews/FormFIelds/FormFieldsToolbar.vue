@@ -17,7 +17,7 @@
      </v-list-item-content>
     </v-list-item>
 
-    <v-list-item dense @click="unselectAllFormFieldsFromFields()">
+    <v-list-item dense @click="unselectAllFormFields()">
      <v-list-item-action>
       <v-icon>mdi-collapse-all-outline</v-icon>
      </v-list-item-action>
@@ -47,7 +47,6 @@
 <script>
 import axios from "axios";
 import draggable from "vuedraggable";
-
 import { sync, get } from "vuex-pathify";
 export default {
  name: "ComponentsEditViewsFormFieldsToolbar",
@@ -69,7 +68,7 @@ export default {
  },
 
  methods: {
-  unselectAllFormFieldsFromFields() {
+  unselectAllFormFields() {
    this.selectedComponent.config.form_fields.forEach(field => {
     field.displayField = false;
    });

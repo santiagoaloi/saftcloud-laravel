@@ -22,7 +22,6 @@
 </template>
 
 <script>
-import axios from "axios";
 import { sync, get } from "vuex-pathify";
 export default {
  name: "ComponentsEditViewsFormFields",

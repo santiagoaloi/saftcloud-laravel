@@ -23,7 +23,6 @@ const state = {
  searchFields: "",
  dbGroupNames: [],
  allComponents: [],
- dialogIcons: false,
  activeStatusTab: 0,
  dialogEditor: false,
  isTableLayout: false,
@@ -297,7 +296,7 @@ const actions = {
   });
  },
 
- // Soft removes a group (it can be restored).
+ // Soft removes a component group (it can be restored).
  removeGroup({ dispatch }, id) {
   axios
    .delete(`api/componentGroup/${id}`)
@@ -352,7 +351,7 @@ const actions = {
    });
  },
 
- // Renames the component group name.
+ // Renames the component group.
  renameGroup({ dispatch, state }, id) {
   parent = state.allGroups.find(g => g.name === state.dbGroupNames[state.groupParent - 1]);
   axios.put(`api/componentGroup/${id}`, { name: state.groupName, component_group_id: parent ? parent.id : null }).then(response => {
@@ -474,7 +473,7 @@ const actions = {
    });
  },
 
- // Moves to the previous component in the array ( navigation arrows)
+ // Moves to the previous component in the array (navigation arrows).
  previousComponent({ state }) {
   if (state.componentCardGroup > 0) {
    store.set("componentManagement/componentCardGroup", state.componentCardGroup - 1);
@@ -482,7 +481,7 @@ const actions = {
   }
  },
 
- // Moves to the next component in the array ( navigation arrows)
+ // Moves to the next component in the array (navigation arrows).
  nextComponent({ state, getters }) {
   if (state.componentCardGroup < getters.allComponentsFiltered.length - 1) {
    store.set("componentManagement/componentCardGroup", state.componentCardGroup + 1);

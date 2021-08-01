@@ -48,8 +48,6 @@ export default {
   } else {
    this.$router.push(this.componentEditDrawerActiveMenu);
   }
- },
-
- methods: {}
+ }
 };
 </script>

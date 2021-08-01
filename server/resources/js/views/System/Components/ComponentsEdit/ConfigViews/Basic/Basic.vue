@@ -97,7 +97,6 @@
 </template>
 
 <script>
-import axios from "axios";
 import { sync, get } from "vuex-pathify";
 export default {
  name: "ComponentsEditViewsBasic",
@@ -109,9 +108,9 @@ export default {
  },
  computed: {
   ...sync("theme", ["isDark"]),
+  ...sync("refs", ["componentsEditBasic"]),
   ...sync("componentManagement", ["componentEditSheet", "allGroups"]),
   ...get("componentManagement", ["selectedComponent"]),
-  ...sync("refs", ["componentsEditBasic"]),
 
   componentIcon() {
    if (!this.selectedComponent) return;

@@ -1,3 +1,4 @@
+//Vuex registered modules
 export { default as theme } from "./theme";
 export { default as signup } from "./signup";
 export { default as drawers } from "./drawers";

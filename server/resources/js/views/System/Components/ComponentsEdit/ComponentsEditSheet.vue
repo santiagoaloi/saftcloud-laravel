@@ -23,7 +23,7 @@
 
         <v-divider class="mt-2"></v-divider>
 
-        <!-- keep alive is important to cross-validate compoment edit list sections -->
+        <!-- keep alive is important to cross-validate compoment edit navigation drawer sections -->
         <v-scroll-y-transition hide-on-leave>
          <keep-alive>
           <router-view />
@@ -49,7 +49,6 @@ export default {
 
  computed: {
   ...sync("theme", ["isDark"]),
-
   ...sync("componentManagement", ["componentEditSheet"]),
   ...get("componentManagement", ["selectedComponent", "mapComponentGroup", "mapGroupParent"]),
 

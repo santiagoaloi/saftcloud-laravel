@@ -15,7 +15,6 @@
     <component :is="activeTabComponentName" />
    </v-fade-transition>
   </v-sheet>
-  <base-dialog-icons v-if="dialogIcon" :icon="fieldIcon" v-model="dialogIcon" />
  </div>
 </template>
 
@@ -28,13 +27,7 @@ export default {
  },
  data: () => ({
   dialogIcon: false,
-  formFieldTabs: [
-   { name: "Basic", value: "all", icon: "mdi-note-outline", color: "" },
-   { name: "Slots", value: "starred", icon: "mdi-code-brackets", color: "" },
-   { name: "Validation", value: "modular", icon: "mdi-check-bold", color: "" },
-   { name: "Options", value: "active", icon: "mdi-apple-keyboard-option", color: "" },
-   { name: "Evevnts", value: "active", icon: "mdi-cursor-default-click-outline", color: "" }
-  ]
+  formFieldTabs: [{ name: "Basic", value: "all", icon: "mdi-note-outline", color: "" }]
  }),
 
  computed: {

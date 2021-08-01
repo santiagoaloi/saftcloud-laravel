@@ -29,6 +29,9 @@
     "/dist/js/components-no-data.js": "/dist/js/components-no-data.js",
     "/dist/js/components-appbar.js": "/dist/js/components-appbar.js",
     "/dist/js/components-edit-sheet.js": "/dist/js/components-edit-sheet.js",
+    "/dist/js/form-fields-list.js": "/dist/js/form-fields-list.js",
+    "/dist/js/form-fields-toolbar.js": "/dist/js/form-fields-toolbar.js",
+    "/dist/js/form-fields-right-panel.js": "/dist/js/form-fields-right-panel.js",
     "/dist/js/signup-steps.js": "/dist/js/signup-steps.js",
     "/dist/js/signup-steps-alert.js": "/dist/js/signup-steps-alert.js",
     "/dist/js/components-drawer-menu.js": "/dist/js/components-drawer-menu.js",
@@ -37,15 +40,12 @@
     "/dist/js/components-dialog-config-editor.js": "/dist/js/components-dialog-config-editor.js",
     "/dist/js/components-edit-sheet-appbar.js": "/dist/js/components-edit-sheet-appbar.js",
     "/dist/js/components-edit-sheet-drawer.js": "/dist/js/components-edit-sheet-drawer.js",
+    "/dist/js/form-fields-tabs-basic.js": "/dist/js/form-fields-tabs-basic.js",
     "/dist/js/signup-step0.js": "/dist/js/signup-step0.js",
     "/dist/js/signup-step1.js": "/dist/js/signup-step1.js",
     "/dist/js/signup-step2.js": "/dist/js/signup-step2.js",
     "/dist/js/signup-step3.js": "/dist/js/signup-step3.js",
     "/dist/js/signup-step4.js": "/dist/js/signup-step4.js",
     "/dist/css/app.css": "/dist/css/app.css",
-    "/dist/js/vendor.js": "/dist/js/vendor.js",
-    "/dist/js/form-fields-list.js": "/dist/js/form-fields-list.js",
-    "/dist/js/form-fields-toolbar.js": "/dist/js/form-fields-toolbar.js",
-    "/dist/js/form-fields-right-panel.js": "/dist/js/form-fields-right-panel.js",
-    "/dist/js/form-fields-tabs-basic.js": "/dist/js/form-fields-tabs-basic.js"
+    "/dist/js/vendor.js": "/dist/js/vendor.js"
 }
