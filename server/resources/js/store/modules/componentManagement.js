@@ -413,10 +413,14 @@ const actions = {
  },
 
  // Rollback changes before saving component configuration.
- rollbackChanges({ state }, component) {
+ rollbackChanges({ state, dispatch }, component) {
   const { origin } = component;
   const index = state.allComponents.findIndex(c => c.id === component.id);
   store.set(`componentManagement/allComponents@${index}`, { ...origin, origin: cloneDeep(origin) });
+
+  // Dispatch resetValidationStates action in validationStates module.
+  // This sets the validations to initial state values.
+  dispatch("validationStates/resetValidationStates", null, { root: true });
  },
 
  // Soft removes a component (it can be restored).

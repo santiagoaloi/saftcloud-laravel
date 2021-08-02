@@ -46,10 +46,12 @@ export default {
  },
 
  mounted() {
-  if (!this.componentEditDrawerActiveMenu) {
+  if (!this.componentEditDrawerActiveMenu && this.$route.name != "/components/basic") {
    this.$router.push("/components/basic");
   } else {
-   this.$router.push(this.componentEditDrawerActiveMenu);
+   if (this.$route.name != this.componentEditDrawerActiveMenu) {
+    this.$router.push(this.componentEditDrawerActiveMenu);
+   }
   }
  }
 };
