@@ -18,7 +18,6 @@ use Illuminate\Database\QueryException;
 class ComponentController extends Controller {
 
     public function store(Request $request) {
-
         $json_data['table'] = $request['table'];
 
         $sql_query = "SELECT {$request['table']}.* FROM {$request['table']}";
