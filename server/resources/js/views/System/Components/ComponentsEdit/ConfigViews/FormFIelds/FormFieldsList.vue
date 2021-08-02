@@ -1,5 +1,5 @@
 <template>
- <div>
+ <v-card flat :disabled="hasValidationErrors">
   <v-text-field
    v-model="searchFields"
    hide-details
@@ -27,8 +27,8 @@
     >
      <transition-group appear name="slide-y-transition">
       <v-list-item
-       dense
        v-for="(item, i) in displayEnabledFormFieldsOnly ? filteredSelectedFields : filteredFormFields"
+       dense
        :key="i"
        two-line
        :ripple="false"
@@ -59,7 +59,7 @@
     </draggable>
    </v-list>
   </v-list-item-group>
- </div>
+ </v-card>
 </template>
 
 <script>
@@ -71,10 +71,6 @@ export default {
   draggable
  },
 
- methods: {
-  ...call("componentManagement/*")
- },
-
  mounted() {
   this.setActiveField(this.filteredFormFields[0].field);
  },
@@ -82,7 +78,11 @@ export default {
  computed: {
   ...sync("theme", ["isDark"]),
   ...sync("componentManagement", ["searchFields", "displayEnabledFormFieldsOnly", "selectedFieldItemGroup"]),
-  ...get("componentManagement", ["selectedComponent", "filteredFormFields", "filteredSelectedFields"])
+  ...get("componentManagement", ["selectedComponent", "filteredFormFields", "filteredSelectedFields", "hasValidationErrors"])
+ },
+
+ methods: {
+  ...call("componentManagement/*")
  }
 };
 </script>

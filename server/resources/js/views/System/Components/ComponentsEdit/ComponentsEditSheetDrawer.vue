@@ -5,14 +5,15 @@
 </template>
 
 <script>
-import { sync } from "vuex-pathify";
+import { sync, get } from "vuex-pathify";
 export default {
  name: "ComponentsEditSheetDrawer",
  components: {
   ComponentsEditSheetMenu: () => import("./ComponentsEditSheetMenu")
  },
  computed: {
-  ...sync("componentManagement", ["componentEditSheet"])
+  ...sync("componentManagement", ["componentEditSheet"]),
+  ...get("componentManagement", ["hasValidationErrors"])
  }
 };
 </script>

@@ -22,7 +22,7 @@
     <v-col sm="4">
      <div class="mt-2">
       <BaseFieldLabel required label="component name" />
-      <validation-provider v-slot="{ errors, reset }" name="component name" rules="required">
+      <validation-provider immediate mode="aggressive" v-slot="{ errors, invalid }" name="field label" rules="required">
        <v-text-field
         :outlined="isDark"
         :solo="!isDark"
@@ -32,9 +32,7 @@
         v-model="selectedComponent.config.general_config.title"
         :error-messages="errors[0]"
         :error="errors.length > 0"
-        @focus="reset"
-        @input="reset"
-        @blur="reset"
+        @change="setInvalid(invalid, 'componentName')"
        />
       </validation-provider>
      </div>
@@ -97,6 +95,7 @@
 </template>
 
 <script>
+import { store } from "@/store";
 import { sync, get } from "vuex-pathify";
 export default {
  name: "ComponentsEditViewsBasic",
@@ -108,7 +107,6 @@ export default {
  },
  computed: {
   ...sync("theme", ["isDark"]),
-  ...sync("refs", ["componentsEditBasic"]),
   ...sync("componentManagement", ["componentEditSheet", "allGroups"]),
   ...get("componentManagement", ["selectedComponent"]),
 
@@ -118,20 +116,12 @@ export default {
   }
  },
 
- mounted() {
-  // Sync refs with Vuex for cross-validation
-  this.componentsEditBasic = this.$refs.componentsEditBasic;
+ methods: {
+  setInvalid(invalid, field) {
+   store.set(`validationStates/componentsEditBasic@${field}`, invalid);
+  }
  }
 };
 </script>
 
-<style scoped>
-.v-card--reveal {
- align-items: center;
- bottom: 0;
- justify-content: center;
- opacity: 0.5;
- position: absolute;
- width: 100%;
-}
-</style>
+<style scoped></style>

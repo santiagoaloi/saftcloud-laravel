@@ -1,10 +1,16 @@
 // Utilities
 import { make } from "vuex-pathify";
-
 const state = {
- componentsEditBasic: "",
- componentsEditQuery: "",
- componentsEditFormFields: ""
+ componentsEditBasic: {
+  componentName: false
+ },
+ componentsEditFormFieldsBasicTab: {
+  label: false
+ },
+ componentsEditFormFieldsSettingsTab: {
+  tooltip: false,
+  color: false
+ }
 };
 
 const mutations = make.mutations(state);

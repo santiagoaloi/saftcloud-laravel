@@ -9,25 +9,15 @@
   <v-fade-transition>
    <div v-if="hasUnsavedChanges(selectedComponent)">
     <v-btn rounded :color="isDark ? 'grey darken-3' : 'white'" class="mx-2" small @click="rollbackChanges(selectedComponent)"
-     ><span class="pink--text text--lighten-2  mr-2"> Unsaved </span>
-     <v-chip class="pointer-events-none" x-small>rollback </v-chip>
+     ><span> Rollback changes</span>
     </v-btn>
    </div>
   </v-fade-transition>
 
   <v-tooltip transition="false" color="black" bottom>
    <template v-slot:activator="{ on }">
-    <v-btn
-     :disabled="!hasUnsavedChanges(selectedComponent)"
-     v-on="on"
-     @click="validateComponentEditor(selectedComponent)"
-     class="mr-2"
-     x-small
-     color="white"
-     text
-     fab
-    >
-     <v-icon color="green lighten-2"> mdi-check </v-icon>
+    <v-btn color="green lighten-2" v-on="on" @click="validateBeforeSave(selectedComponent)" class="mr-2" x-small text fab>
+     <v-icon> mdi-check </v-icon>
     </v-btn>
    </template>
    <span>Save changes</span>
@@ -47,7 +37,7 @@
 
   <v-tooltip transition="false" color="black" bottom>
    <template v-slot:activator="{ on }">
-    <v-btn v-on="on" dark :disabled="previousComponentDisabled" @click="previousComponent()" class="mr-2" fab text x-small>
+    <v-btn v-on="on" dark :disabled="previousComponentDisabled" @click="validateBeforePrevious()" class="mr-2" fab text x-small>
      <v-icon>mdi-chevron-left</v-icon>
     </v-btn>
    </template>
@@ -56,7 +46,7 @@
 
   <v-tooltip transition="false" color="black" bottom>
    <template v-slot:activator="{ on }">
-    <v-btn v-on="on" dark :disabled="nextComponentDisabled" @click="nextComponent()" fab text x-small>
+    <v-btn v-on="on" dark :disabled="nextComponentDisabled" @click="validateBeforeNext()" fab text x-small>
      <v-icon>mdi-chevron-right</v-icon>
     </v-btn>
    </template>
@@ -65,7 +55,7 @@
 
   <v-tooltip transition="false" color="black" bottom>
    <template v-slot:activator="{ on }">
-    <v-btn v-on="on" dark class="mr-2" @click="componentEditSheet = false" fab text x-small>
+    <v-btn v-on="on" dark class="mx-2" @click="validateBeforeHide()" fab text x-small>
      <v-icon>mdi-chevron-down</v-icon>
     </v-btn>
    </template>
@@ -75,55 +65,63 @@
 </template>
 
 <script>
+import { store } from "@/store";
 import { sync, get, call } from "vuex-pathify";
 export default {
  name: "ComponentsEditAppbar",
  computed: {
   ...sync("theme", ["isDark"]),
-  ...sync("refs", ["componentsEditBasic", "componentsEditQuery"]),
   ...sync("componentManagement", ["componentEditSheet", "componentEditDrawerActiveMenu"]),
-  ...get("componentManagement", ["previousComponentDisabled", "nextComponentDisabled", "selectedComponent", "hasUnsavedChanges"])
+  ...get("componentManagement", [
+   "previousComponentDisabled",
+   "nextComponentDisabled",
+   "selectedComponent",
+   "hasUnsavedChanges",
+   "hasValidationErrors"
+  ])
  },
 
  methods: {
   ...call("componentManagement/*"),
 
-  // cross-validate compoment edit navigation drawer sections
-  validateComponentEditor(selectedComponent) {
-   let validators = [this.validateComponentsEditBasic(), this.validateComponentsEditQuery()];
-
-   Promise.all([...validators]).then(result => {
-    const errors = result.filter(validation => validation.valid === false);
-    if (errors.length) {
-     if (this.$route.name != errors[0].route) {
-      this.$router.push(errors[0].route);
-     }
-    } else {
-     this.saveComponent(selectedComponent);
-    }
-   });
+  validateBeforeSave(selectedComponent) {
+   if (!this.hasValidationErrors) {
+    this.saveComponent(selectedComponent);
+   } else {
+    store.set("snackbar/value", true);
+    store.set("snackbar/text", "There are input validation errors, check it out and try again");
+    store.set("snackbar/color", "pink darken-1");
+   }
   },
 
-  validateComponentsEditBasic() {
-   if (!this.componentsEditBasic) return { valid: null };
-   return this.componentsEditBasic.validate().then(success => {
-    if (success) {
-     return { valid: true };
-    } else {
-     return { valid: false, route: "/components/basic" };
-    }
-   });
+  validateBeforePrevious() {
+   if (!this.hasValidationErrors) {
+    this.previousComponent();
+   } else {
+    store.set("snackbar/value", true);
+    store.set("snackbar/text", "There are input validation errors, check it out and try again");
+    store.set("snackbar/color", "pink darken-1");
+   }
   },
 
-  validateComponentsEditQuery() {
-   if (!this.componentsEditQuery) return { valid: null };
-   return this.componentsEditQuery.validate().then(success => {
-    if (success) {
-     return { valid: true };
-    } else {
-     return { valid: false, route: "/components/query" };
-    }
-   });
+  validateBeforeNext() {
+   if (!this.hasValidationErrors) {
+    this.nextComponent();
+   } else {
+    store.set("snackbar/value", true);
+    store.set("snackbar/text", "There are input validation errors, check it out and try again");
+    store.set("snackbar/color", "pink darken-1");
+   }
+  },
+
+  validateBeforeHide() {
+   if (!this.hasValidationErrors) {
+    this.componentEditSheet = false;
+   } else {
+    store.set("snackbar/value", true);
+    store.set("snackbar/text", "There are input validation errors, check it out and try again");
+    store.set("snackbar/color", "pink darken-1");
+   }
   }
  }
 };

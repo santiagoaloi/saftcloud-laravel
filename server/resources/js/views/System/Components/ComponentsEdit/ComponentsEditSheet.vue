@@ -21,7 +21,7 @@
          </div>
         </v-chip>
 
-        <v-divider class="mt-2"></v-divider>
+        <v-divider class="mt-2" />
 
         <!-- keep alive is important to cross-validate compoment edit navigation drawer sections -->
         <v-scroll-y-transition hide-on-leave>
@@ -55,10 +55,6 @@ export default {
   height() {
    return `height:${this.$vuetify.breakpoint.height - this.$vuetify.application.top}px;overflow:auto`;
   }
- },
-
- mounted() {},
-
- methods: {}
+ }
 };
 </script>

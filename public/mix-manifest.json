@@ -41,6 +41,7 @@
     "/dist/js/components-edit-sheet-appbar.js": "/dist/js/components-edit-sheet-appbar.js",
     "/dist/js/components-edit-sheet-drawer.js": "/dist/js/components-edit-sheet-drawer.js",
     "/dist/js/form-fields-tabs-basic.js": "/dist/js/form-fields-tabs-basic.js",
+    "/dist/js/form-fields-tabs-settings.js": "/dist/js/form-fields-tabs-settings.js",
     "/dist/js/signup-step0.js": "/dist/js/signup-step0.js",
     "/dist/js/signup-step1.js": "/dist/js/signup-step1.js",
     "/dist/js/signup-step2.js": "/dist/js/signup-step2.js",

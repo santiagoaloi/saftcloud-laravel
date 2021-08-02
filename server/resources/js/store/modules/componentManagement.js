@@ -55,6 +55,11 @@ const state = {
 const mutations = make.mutations(state);
 
 const getters = {
+ // returns true if at least one validation did not succeed.
+ hasValidationErrors: (_, __, rootState) => {
+  return Object.values(rootState.validationStates).some(innerObj => Object.values(innerObj).includes(true));
+ },
+
  // returns the group name where this component belongs.
  mapComponentGroup: (state, getters) => component => {
   if (getters.isAllGroupsEmpty) return;
@@ -82,7 +87,7 @@ const getters = {
  },
 
  // Disables the right panel navigation arrows if the first component in the array is selected.
- previousComponentDisabled: state => {
+ previousComponentDisabled: (state, getters) => {
   return state.componentCardGroup === 0;
  },
 

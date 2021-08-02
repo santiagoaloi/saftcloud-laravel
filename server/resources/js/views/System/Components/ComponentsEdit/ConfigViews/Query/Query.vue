@@ -30,17 +30,11 @@ export default {
 
  computed: {
   ...sync("theme", ["isDark"]),
-  ...get("componentManagement", ["selectedComponent"]),
-  ...sync("refs", ["componentsEditQuery"])
+  ...get("componentManagement", ["selectedComponent"])
  },
 
  methods: {
   ...call("componentManagement/*")
- },
-
- mounted() {
-  // Sync refs with Vuex for cross-validation
-  this.componentsEditQuery = this.$refs.componentsEditQuery;
  }
 };
 </script>
