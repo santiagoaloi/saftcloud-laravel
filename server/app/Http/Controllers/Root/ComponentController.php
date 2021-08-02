@@ -50,7 +50,7 @@ class ComponentController extends Controller {
 
         $data = [
             'component_group_id'    => $request['component_group_id'],
-            'name'                  => ucfirst($request['name']),
+            'name'                  => ucfirst(strtolower($request['name'])),
             'config'                => json_encode($config),
             'config_settings'       => json_encode($configSettings),
             'status'                => json_encode($status),
