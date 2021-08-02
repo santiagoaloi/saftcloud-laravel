@@ -66,7 +66,9 @@
         </div>
        </v-card-actions>
 
-       <span class="gallery-card-title pl-1"> {{ component.config.general_config.title }} </span>
+       <span class="gallery-card-title pl-2">
+        {{ component.config.general_config.title === "" ? ". . ." : component.config.general_config.title }}
+       </span>
 
        <div class="gallery-card-subtitle-container">
         <div class="gallery-card-subtitle-wrapper">
@@ -94,7 +96,7 @@
           <h5 class="gallery-card-subtitle">
            <v-tooltip transition="false" color="black" bottom>
             <template v-slot:activator="{ on }">
-             <v-icon v-on="on" :color="isDark ? 'white' : '#28292b'">mdi-content-save-alert-outline</v-icon>
+             <v-icon v-on="on" :color="isDark ? 'white' : '#28292b'">mdi-alert-outline</v-icon>
             </template>
             <span>Unsaved</span>
            </v-tooltip>
@@ -132,13 +134,12 @@ export default {
    "allComponentsFiltered",
    "hasUnsavedChanges",
    "isModularIcon",
-   "isStarredIcon",
    "selectedComponent",
    "isStarredColor",
-   "isActiveColor",
+   "isStarredIcon",
    "isModularColor",
-   "isActiveIcon",
-   "allGroups"
+   "isActiveColor",
+   "isActiveIcon"
   ]),
 
   allComponentsFilteredSorted() {

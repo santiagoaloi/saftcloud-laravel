@@ -1,16 +1,16 @@
 <template>
  <div>
   <v-hover v-slot="{ hover }">
-   <v-avatar class="mt-4 cursor-pointer" size="110" @click="dialogIcons = true" rounded :color="selectedComponent.config_settings.icon.color">
+   <v-avatar class="cursor-pointer mt-4" size="65" @click="dialogIcons = true" rounded :color="selectedComponent.config_settings.icon.color">
     <v-expand-transition>
-     <div v-if="hover" class="d-flex black v-card--reveal white--text height-full">
-      <v-icon size="50" dark>
+     <div v-if="hover" class="d-flex black v-card--reveal white--text" style="height: 100%;">
+      <v-icon size="30" dark>
        mdi-pencil
       </v-icon>
      </div>
     </v-expand-transition>
     <v-fade-transition hide-on-leave>
-     <v-icon v-if="!hover" size="50" dark>
+     <v-icon v-if="!hover" size="30" dark>
       {{ selectedComponent.config_settings.icon.name }}
      </v-icon>
     </v-fade-transition>
@@ -124,4 +124,13 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.v-card--reveal {
+ align-items: center;
+ bottom: 0;
+ justify-content: center;
+ opacity: 0.5;
+ position: absolute;
+ width: 100%;
+}
+</style>

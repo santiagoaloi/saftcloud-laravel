@@ -1,4 +1,3 @@
-// Utilities
 import { make } from "vuex-pathify";
 
 //Default validation states definitions (they should all have validation errors to false)

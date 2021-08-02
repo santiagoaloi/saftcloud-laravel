@@ -11,82 +11,74 @@
    </v-sheet>
   </v-expand-transition>
 
-  <v-list>
-   <v-list-item class="pa-1">
-    <v-list-item-avatar>
-     <v-icon :color="isDark ? '#ccc' : 'black'">
-      {{ selectedComponent.config_settings.icon.name }}
-     </v-icon>
-    </v-list-item-avatar>
-
-    <v-list-item-content>
-     <v-list-item-title>
+  <ValidationObserver ref="componentDrilldown" slim>
+   <v-card-text class="pa-2">
+    <div class="text--primary">
+     <BaseFieldLabel required label="Component name" />
+     <validation-provider immediate mode="aggressive" v-slot="{ errors }" name="component name" rules="required">
       <v-text-field
-       backgroundColor="transparent"
+       :color="isDark ? 'white' : 'black'"
+       :background-color="isDark ? '#28292b' : 'white'"
+       :prepend-inner-icon="selectedComponent.config_settings.icon.name"
        spellcheck="false"
        flat
        solo
-       hide-details
-       dense
        v-model="selectedComponent.config.general_config.title"
+       :error-messages="errors[0]"
+       :error="errors.length > 0"
       >
-      </v-text-field
-     ></v-list-item-title>
-    </v-list-item-content>
+       <template v-slot:append>
+        <v-tooltip transition="false" color="black" bottom>
+         <template v-slot:activator="{ on }">
+          <v-btn v-on="on" @click="setStarred(selectedComponent)" small icon :ripple="false">
+           <v-icon :color="isStarredColor(selectedComponent)"> {{ isStarredIcon(selectedComponent) }} </v-icon></v-btn
+          >
+         </template>
+         <span>Favourite</span>
+        </v-tooltip>
+       </template>
+      </v-text-field>
+     </validation-provider>
 
-    <v-list-item-icon class="mr-1">
-     <v-tooltip transition="false" color="black" bottom>
-      <template v-slot:activator="{ on }">
-       <v-btn v-on="on" @click="setStarred(selectedComponent)" color="white" small icon :ripple="false">
-        <v-icon :color="isStarredColor(selectedComponent)"> {{ isStarredIcon(selectedComponent) }} </v-icon></v-btn
-       >
-      </template>
-      <span>Favourite</span>
-     </v-tooltip>
-    </v-list-item-icon>
-   </v-list-item>
-  </v-list>
-
-  <v-card-text class="pa-2">
-   <div class="text--primary">
-    <BaseFieldLabel label="Description" />
-    <v-textarea
-     outlined
-     :color="isDark ? '#208ad6' : 'grey'"
-     :background-color="isDark ? '#28292b' : 'white'"
-     spellcheck="false"
-     :rows="2"
-     auto-grow
-     dense
-     v-model="selectedComponent.config.general_config.note"
-     hide-details
-    >
-    </v-textarea>
-
-    <div class="mt-2">
-     <BaseFieldLabel required label="Component group " />
-     <v-autocomplete
+     <BaseFieldLabel label="Description" />
+     <v-textarea
       outlined
       :color="isDark ? '#208ad6' : 'grey'"
       :background-color="isDark ? '#28292b' : 'white'"
-      v-model="selectedComponent.component_group_id"
-      hide-selected
+      spellcheck="false"
+      :rows="2"
+      auto-grow
       dense
-      :items="allGroups"
-      :maxlength="25"
-      item-value="id"
-      item-text="name"
-      hide-no-data
+      v-model="selectedComponent.config.general_config.note"
+      hide-details
      >
-     </v-autocomplete>
+     </v-textarea>
+
+     <div class="mt-2">
+      <BaseFieldLabel required label="Component group " />
+      <v-autocomplete
+       outlined
+       :color="isDark ? '#208ad6' : 'grey'"
+       :background-color="isDark ? '#28292b' : 'white'"
+       v-model="selectedComponent.component_group_id"
+       hide-selected
+       dense
+       :items="allGroups"
+       :maxlength="25"
+       item-value="id"
+       item-text="name"
+       hide-no-data
+      >
+      </v-autocomplete>
+     </div>
     </div>
-   </div>
-  </v-card-text>
+   </v-card-text>
+  </ValidationObserver>
 
   <div class="text-center mb-3">
    <v-tooltip transition="false" color="black" bottom>
     <template v-slot:activator="{ on }">
-     <v-btn @click="componentEditSheet = !componentEditSheet" v-on="on" depressed dark large small :color="isDark ? '' : 'white'">
+     <v-btn @click="validateBeforeEdit()" v-on="on" depressed dark large small :color="isDark ? '' : 'white'">
       <v-icon color="#208ad6" dark>
        mdi-pencil-outline
       </v-icon>
@@ -129,7 +121,7 @@
     <template v-slot:activator="{ on }">
      <v-btn
       :disabled="!hasUnsavedChanges(selectedComponent)"
-      @click="saveComponent(selectedComponent)"
+      @click="validateBeforeSave(selectedComponent)"
       v-on="on"
       depressed
       large
@@ -267,6 +259,30 @@ export default {
 
  methods: {
   ...call("componentManagement/*"),
+
+  validateBeforeSave(selectedComponent) {
+   this.$refs.componentDrilldown.validate().then(success => {
+    if (success) {
+     this.saveComponent(selectedComponent);
+    } else {
+     store.set("snackbar/value", true);
+     store.set("snackbar/text", "There are input validation errors, check them out before saving");
+     store.set("snackbar/color", "pink darken-1");
+    }
+   });
+  },
+
+  validateBeforeEdit(selectedComponent) {
+   this.$refs.componentDrilldown.validate().then(success => {
+    if (success) {
+     this.componentEditSheet = !this.componentEditSheet;
+    } else {
+     store.set("snackbar/value", true);
+     store.set("snackbar/text", "There are input validation errors, check them out before editing");
+     store.set("snackbar/color", "pink darken-1");
+    }
+   });
+  },
 
   setStarred(component) {
    component.status.starred = !component.status.starred;

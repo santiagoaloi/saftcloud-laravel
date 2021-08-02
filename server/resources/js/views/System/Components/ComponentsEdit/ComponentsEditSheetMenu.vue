@@ -6,7 +6,15 @@
      <div :key="i" v-if="item.header" class="pa-1 mt-2 overline">
       {{ item.header }}
      </div>
-     <v-list-item v-else :key="i" @click="componentEditDrawerActiveMenu = item.link" :to="item.link" :disabled="item.disabled" link>
+     <v-list-item
+      active-class="indigo lighten-1"
+      v-else
+      :key="i"
+      @click="componentEditDrawerActiveMenu = item.link"
+      :to="item.link"
+      :disabled="item.disabled"
+      link
+     >
       <v-list-item-icon>
        <v-icon small :class="{ 'grey--text': item.disabled }">
         {{ item.icon || "mdi-circle-medium" }}

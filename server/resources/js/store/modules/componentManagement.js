@@ -219,7 +219,7 @@ const actions = {
    dispatch("getNavigationStructure");
    store.set("snackbar/value", true);
    store.set("snackbar/text", "Config structure updated");
-   store.set("snackbar/color", "grey darken-2");
+   store.set("snackbar/color", "teal darken-1");
   });
  },
 
@@ -317,7 +317,7 @@ const actions = {
       store.set("componentManagement/allGroups", response.data.groups);
       store.set("snackbar/value", true);
       store.set("snackbar/text", "Group removed");
-      store.set("snackbar/color", "pink darken-1");
+      store.set("snackbar/color", "teal darken-1");
       dispatch("getDbGroupNames");
       dispatch("getNavigationStructure");
       dispatch("getGroups");
@@ -339,7 +339,7 @@ const actions = {
      store.set("componentManagement/allGroups", response.data.groups);
      store.set("snackbar/value", true);
      store.set("snackbar/text", `Group "${state.groupName}" created`);
-     store.set("snackbar/color", "grey darken-2");
+     store.set("snackbar/color", "teal darken-1");
      store.set("componentManagement/groupName", "");
      store.set("componentManagement/groupChild", "");
      store.set("componentManagement/groupParent", 0);
@@ -365,7 +365,7 @@ const actions = {
     store.set("componentManagement/groupName", "");
     store.set("snackbar/value", true);
     store.set("snackbar/text", "Group renamed");
-    store.set("snackbar/color", "grey darken-2");
+    store.set("snackbar/color", "teal darken-1");
     dispatch("getNavigationStructure");
    }
   });
@@ -401,7 +401,7 @@ const actions = {
     store.set(`componentManagement/allComponents@${index}`, response.data.component);
     store.set("snackbar/value", true);
     store.set("snackbar/text", "Component saved");
-    store.set("snackbar/color", "grey darken-2");
+    store.set("snackbar/color", "teal darken-1");
     dispatch("getNavigationStructure");
     window.eventBus.$emit("BUS_BUILD_ROUTES");
    } else {
@@ -432,7 +432,7 @@ const actions = {
      store.set("componentManagement/allComponents", response.data.components);
      store.set("snackbar/value", true);
      store.set("snackbar/text", "Component removed");
-     store.set("snackbar/color", "pink darken-1");
+     store.set("snackbar/color", "teal darken-1");
      dispatch("getNavigationStructure");
      store.set("drawers/secureComponentDrawer", false);
     }
@@ -454,7 +454,7 @@ const actions = {
      store.set("componentManagement/allComponents", response.data.components);
      store.set("snackbar/value", true);
      store.set("snackbar/text", `"${state.componentSettings.title}" component created`);
-     store.set("snackbar/color", "grey darken-2");
+     store.set("snackbar/color", "teal darken-1");
 
      // Autoselect latest created component
      store.set("drawers/secureComponentDrawer", true);

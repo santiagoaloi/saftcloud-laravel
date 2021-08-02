@@ -1,7 +1,10 @@
 <template>
  <v-app-bar color="#24292e" flat dense>
   <v-toolbar-title class="white--text"
-   >Editing <span class="accent--text text--lighten-4"> {{ selectedComponent.config.general_config.title }} </span></v-toolbar-title
+   >Editing
+   <span class="accent--text text--lighten-4">
+    {{ selectedComponent.config.general_config.title === "" ? ". . ." : selectedComponent.config.general_config.title }}
+   </span></v-toolbar-title
   >
 
   <v-spacer></v-spacer>
@@ -89,7 +92,7 @@ export default {
     this.saveComponent(selectedComponent);
    } else {
     store.set("snackbar/value", true);
-    store.set("snackbar/text", "There are input validation errors, check it out and try again");
+    store.set("snackbar/text", "There are input validation errors, check them out and try again");
     store.set("snackbar/color", "pink darken-1");
    }
   },
@@ -99,7 +102,7 @@ export default {
     this.previousComponent();
    } else {
     store.set("snackbar/value", true);
-    store.set("snackbar/text", "There are input validation errors, check it out and try again");
+    store.set("snackbar/text", "There are input validation errors, check them out and try again");
     store.set("snackbar/color", "pink darken-1");
    }
   },
@@ -109,7 +112,7 @@ export default {
     this.nextComponent();
    } else {
     store.set("snackbar/value", true);
-    store.set("snackbar/text", "There are input validation errors, check it out and try again");
+    store.set("snackbar/text", "There are input validation errors, check them out and try again");
     store.set("snackbar/color", "pink darken-1");
    }
   },
@@ -119,7 +122,7 @@ export default {
     this.componentEditSheet = false;
    } else {
     store.set("snackbar/value", true);
-    store.set("snackbar/text", "There are input validation errors, check it out and try again");
+    store.set("snackbar/text", "There are input validation errors, check them out and try again");
     store.set("snackbar/color", "pink darken-1");
    }
   }
