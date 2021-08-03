@@ -1,22 +1,24 @@
 <template>
- <v-navigation-drawer
-  mobileBreakpoint="0"
-  clipped
-  :color="isDark ? '#2C2F33' : '#f0f3f5'"
-  width="350"
-  v-model="secureComponentDrawer"
-  hideOverlay
-  right
-  app
-  v-if="$route.name.startsWith('/components') && selectedComponent"
- >
-  <!-- Navigation menu fixed  -->
-  <template v-slot:prepend>
-   <component-drilldown-bar />
-  </template>
+ <v-fade-transition>
+  <v-navigation-drawer
+   mobileBreakpoint="0"
+   clipped
+   :color="isDark ? '#2C2F33' : '#f0f3f5'"
+   width="350"
+   v-model="secureComponentDrawer"
+   hideOverlay
+   right
+   app
+   v-if="$route.name.startsWith('/components') && selectedComponent"
+  >
+   <!-- Navigation menu fixed  -->
+   <template v-slot:prepend>
+    <component-drilldown-bar />
+   </template>
 
-  <component-drilldown />
- </v-navigation-drawer>
+   <component-drilldown />
+  </v-navigation-drawer>
+ </v-fade-transition>
 </template>
 
 <script>

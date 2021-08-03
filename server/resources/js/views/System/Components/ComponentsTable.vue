@@ -119,7 +119,7 @@ export default {
      text: "Component",
      align: "start",
      sortable: true,
-     value: "name"
+     value: "config.general_config.title"
     },
 
     {
@@ -158,8 +158,13 @@ export default {
   ])
  },
 
- mounted() {
-  this.selectedComponentTableRow = [this.allComponentsFiltered[this.componentCardGroup]];
+ watch: {
+  componentCardGroup: {
+   immediate: true,
+   handler(value) {
+    this.selectedComponentTableRow = [this.allComponentsFiltered[this.componentCardGroup]];
+   }
+  }
  },
 
  methods: {
@@ -167,7 +172,6 @@ export default {
 
   rowClicked(row) {
    this.toggleSelection(row.id, row);
-
    let index = this.allComponentsFiltered.findIndex(component => component.id === row.id);
    this.componentCardGroup = index;
    this.setSelectedComponent(index);
