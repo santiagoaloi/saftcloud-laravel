@@ -173,7 +173,7 @@ export default {
   testFunction() {
    let post = { email: "facu.ft@gmail.com", password: "password" };
    axios
-    .post("/api/testFunction/", post)
+    .post("/testFunction/", post)
     .then(response => {
      if (response.status === 200) {
       console.log(response.data.rows);

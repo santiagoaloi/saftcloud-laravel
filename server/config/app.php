@@ -170,7 +170,6 @@ return [
         /*
          * Auth Service Providers...
          */
-        App\Providers\FortifyServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
 
         /*
