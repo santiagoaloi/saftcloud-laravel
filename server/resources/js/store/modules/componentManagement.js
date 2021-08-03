@@ -37,6 +37,7 @@ const state = {
  selectedComponentGroups: [],
  showSelectedFieldsOnly: false,
  ComponentsConfigStructure: {},
+ selectedComponentTableRow: [],
  componentCardGroup: undefined,
  selectedComponentActiveField: "",
  displayEnabledFormFieldsOnly: false,
@@ -376,6 +377,7 @@ const actions = {
   if (!rootState.drawers.secureComponentDrawer) {
    store.set("drawers/secureComponentDrawer", true);
   }
+
   if (state.selectedComponentIndex != index) {
    store.set("componentManagement/selectedComponentIndex", index);
   }

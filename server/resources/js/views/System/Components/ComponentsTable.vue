@@ -8,6 +8,9 @@
    :height="calculateHeight()"
    :headers="headers"
    :items="allComponentsFiltered"
+   v-model="selectedComponentTableRow"
+   @click:row="rowClicked"
+   single-select
   >
    <template v-slot:[`item.avatar`]="{ item }">
     <v-hover v-slot="{ hover }">
@@ -65,7 +68,7 @@
 
     <v-menu origin="center center" transition="scale-transition" :nudge-bottom="10" offset-y>
      <template v-slot:activator="{ on }">
-      <v-btn icon v-on="on">
+      <v-btn color="white" small icon :ripple="false" v-on="on">
        <v-icon>mdi-dots-vertical</v-icon>
       </v-btn>
      </template>
@@ -123,7 +126,8 @@ export default {
      text: "Group",
      align: "end",
      sortable: false,
-     value: "group"
+     value: "group",
+     divider: true
     },
 
     {
@@ -131,17 +135,16 @@ export default {
      align: "end",
      sortable: false,
      value: "actions",
-     width: 210
+     width: 170
     }
    ],
    dialogIcons: false
   };
-  allComponentsFiltered;
  },
 
  computed: {
   ...sync("theme", ["isDark"]),
-  ...sync("componentManagement", ["tableHeaders"]),
+  ...sync("componentManagement", ["selectedComponentTableRow", "componentCardGroup"]),
   ...get("componentManagement", [
    "allComponentsFiltered",
    "isStarredColor",
@@ -155,8 +158,25 @@ export default {
   ])
  },
 
+ mounted() {
+  this.selectedComponentTableRow = [this.allComponentsFiltered[this.componentCardGroup]];
+ },
+
  methods: {
   ...call("componentManagement/*"),
+
+  rowClicked(row) {
+   this.toggleSelection(row.id, row);
+
+   let index = this.allComponentsFiltered.findIndex(component => component.id === row.id);
+   this.componentCardGroup = index;
+   this.setSelectedComponent(index);
+  },
+
+  toggleSelection(id, row) {
+   this.selectedComponentTableRow = [row];
+  },
+
   calculateHeight() {
    return Number(this.$vuetify.breakpoint.height - 378);
   }
