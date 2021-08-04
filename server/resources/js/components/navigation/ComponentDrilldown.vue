@@ -26,6 +26,7 @@
        v-model="selectedComponent.config.general_config.title"
        :error-messages="errors[0]"
        :error="errors.length > 0"
+       v-lazy-input:debounce="100"
       >
        <template v-slot:append>
         <v-tooltip transition="false" color="black" bottom>
@@ -51,6 +52,7 @@
       dense
       v-model="selectedComponent.config.general_config.note"
       hide-details
+      v-lazy-input:debounce="100"
      >
      </v-textarea>
 
@@ -282,12 +284,6 @@ export default {
      store.set("snackbar/color", "pink darken-1");
     }
    });
-  },
-
-  setStarred(component) {
-   component.status.starred = !component.status.starred;
-   component.origin.status.starred = !component.origin.status.starred;
-   this.setComponentStatus(component);
   }
  }
 };

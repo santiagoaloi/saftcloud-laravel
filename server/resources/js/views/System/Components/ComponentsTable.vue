@@ -4,17 +4,22 @@
    fixed-header
    checkbox-color="primary"
    item-key="id"
-   show-select
    :height="calculateHeight()"
    :headers="headers"
    :items="allComponentsFiltered"
    v-model="selectedComponentTableRow"
    @click:row="rowClicked"
-   single-select
+   style="cursor:pointer"
   >
    <template v-slot:[`item.avatar`]="{ item }">
     <v-hover v-slot="{ hover }">
-     <v-avatar @click="dialogIcons = true" class="cursor-pointer " size="35" rounded :color="item.config_settings.icon.color">
+     <v-avatar
+      @click="setComponentTableIcon(item), (dialogIcons = true)"
+      class="cursor-pointer "
+      size="35"
+      rounded
+      :color="item.config_settings.icon.color"
+     >
       <v-expand-transition>
        <div v-if="hover" class="d-flex black v-card--reveal white--text" style="height: 100%;">
         <v-icon size="20" dark>
@@ -29,7 +34,6 @@
       </v-fade-transition>
      </v-avatar>
     </v-hover>
-    <base-dialog-icons :icon="item.config_settings.icon" v-if="dialogIcons" v-model="dialogIcons" />
    </template>
 
    <template v-slot:[`item.group`]="{ item }">
@@ -38,7 +42,20 @@
     {{ mapComponentGroup(item).name }}
    </template>
 
+   <template v-slot:[`item.config.general_config.title`]="{ item }">
+    {{ item.config.general_config.title || ". . ." }}
+   </template>
+
    <template v-slot:[`item.actions`]="{ item }">
+    <v-tooltip v-if="hasUnsavedChanges(item)" transition="false" color="black" bottom>
+     <template v-slot:activator="{ on }">
+      <v-btn v-on="on" color="white" small icon :ripple="false">
+       <v-icon :color="isDark ? 'white' : '#28292b'">mdi-alert-outline </v-icon>
+      </v-btn>
+     </template>
+     <span>Unsaved</span>
+    </v-tooltip>
+
     <v-tooltip transition="false" color="black" bottom>
      <template v-slot:activator="{ on }">
       <v-btn v-on="on" @click.stop="setStarred(item)" color="white" small icon :ripple="false">
@@ -65,37 +82,9 @@
      </template>
      <span>Active</span>
     </v-tooltip>
-
-    <v-menu origin="center center" transition="scale-transition" :nudge-bottom="10" offset-y>
-     <template v-slot:activator="{ on }">
-      <v-btn color="white" small icon :ripple="false" v-on="on">
-       <v-icon>mdi-dots-vertical</v-icon>
-      </v-btn>
-     </template>
-
-     <v-list class="pa-2" outlined>
-      <v-list-item @click.stop>
-       <v-list-item-action>
-        <v-icon color="grey darken-2" small class="mx-2">
-         mdi-pencil-outline
-        </v-icon>
-       </v-list-item-action>
-       <v-list-item-title>Edit</v-list-item-title>
-      </v-list-item>
-
-      <v-list-item @click.stop>
-       <v-list-item-action>
-        <v-icon color="red lighten-2" small class="mx-2">
-         mdi-delete-outline
-        </v-icon>
-       </v-list-item-action>
-
-       <v-list-item-title>Remove</v-list-item-title>
-      </v-list-item>
-     </v-list>
-    </v-menu>
    </template>
   </v-data-table>
+  <base-dialog-icons :icon="componentIcon" v-if="dialogIcons" v-model="dialogIcons" />
  </div>
 </template>
 
@@ -135,10 +124,11 @@ export default {
      align: "end",
      sortable: false,
      value: "actions",
-     width: 170
+     width: 160
     }
    ],
-   dialogIcons: false
+   dialogIcons: false,
+   componentIcon: ""
   };
  },
 
@@ -154,21 +144,28 @@ export default {
    "isActiveColor",
    "isActiveIcon",
    "mapComponentGroup",
-   "mapGroupParent"
+   "mapGroupParent",
+   "hasUnsavedChanges"
   ])
  },
 
  watch: {
   componentCardGroup: {
    immediate: true,
-   handler(value) {
-    this.selectedComponentTableRow = [this.allComponentsFiltered[this.componentCardGroup]];
+   handler(newValue, oldValue) {
+    if (newValue != oldValue) {
+     this.selectedComponentTableRow = [this.allComponentsFiltered[this.componentCardGroup]];
+    }
    }
   }
  },
 
  methods: {
   ...call("componentManagement/*"),
+
+  setComponentTableIcon(item) {
+   this.componentIcon = item.config_settings.icon;
+  },
 
   rowClicked(row) {
    this.toggleSelection(row.id, row);

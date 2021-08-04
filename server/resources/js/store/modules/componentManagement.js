@@ -44,10 +44,11 @@ const state = {
  componentEditDrawerActiveMenu: undefined,
  componentSettings: initialComponentSettings(),
  componentStatusTabs: [
-  { name: "All", value: "all", icon: "mdi-all-inclusive", color: "" },
-  { name: "Starred", value: "starred", icon: "mdi-star", color: "" },
-  { name: "Modular", value: "modular", icon: "mdi-view-module", color: "" },
-  { name: "Active", value: "active", icon: "mdi-lightbulb-on", color: "" }
+  { name: "All", value: "all", icon: "mdi-all-inclusive" },
+  { name: "Starred", value: "starred", icon: "mdi-star" },
+  { name: "Modular", value: "modular", icon: "mdi-view-module" },
+  { name: "Active", value: "active", icon: "mdi-lightbulb-on" },
+  { name: "Inactive", value: "inactive", icon: "mdi-lightbulb-off" }
  ],
  navigationStructure: {},
  componentsLinkedToGroupDialog: false
@@ -88,7 +89,7 @@ const getters = {
  },
 
  // Disables the right panel navigation arrows if the first component in the array is selected.
- previousComponentDisabled: (state, getters) => {
+ previousComponentDisabled: state => {
   return state.componentCardGroup === 0;
  },
 
@@ -117,14 +118,21 @@ const getters = {
   }
  },
 
- // Returns components that either belong to the selected group or that matches the search string.
+ // Returns the name of the tab name selected within the form field editor
+ activeComponentEditFormFieldsStatusTabName: state => {
+  return state.componentStatusTabs[state.activeStatusTab].value;
+ },
+
+ // Returns components that  belong to a group, status or matching search.
  allComponentsFiltered: (state, getters, rootState) => {
   if (!getters.hasSelectedSomeGroups) return [];
   const search = rootState.application.search.toLowerCase();
   return state.allComponents.filter(component => {
    return (
     (search === "" || component.config.general_config.title.toLowerCase().match(search)) &&
-    (getters.activeComponentEditFormFieldsStatusTabName === "all" || component.status[getters.activeComponentEditFormFieldsStatusTabName]) &&
+    (getters.activeComponentEditFormFieldsStatusTabName === "all" ||
+     (getters.activeComponentEditFormFieldsStatusTabName === "inactive" && !component.status.active) ||
+     component.status[getters.activeComponentEditFormFieldsStatusTabName]) &&
     state.selectedComponentGroups.some(group => group.id === component.component_group_id)
    );
   });
@@ -141,7 +149,7 @@ const getters = {
  },
 
  // Returns true if one or more component groups in the component group dropdown are selected.
- hasSelectedSomeGroups: (_, getters) => {
+ hasSelectedSomeGroups: () => {
   if (isEmpty(state.selectedComponentGroups)) return true;
   return false;
  },
@@ -162,11 +170,6 @@ const getters = {
  // Returns true if the current groups selected do not contain any components associated to them.
  isAllFilteredComponentsEmpty: (_, getters) => {
   return getters.allComponentsFiltered.length === 0;
- },
-
- // Returns the name of the tab name selected within the form field editor
- activeComponentEditFormFieldsStatusTabName: state => {
-  return state.componentStatusTabs[state.activeStatusTab].value;
  },
 
  // Returns the color of the star icon depending on its state.
@@ -208,11 +211,6 @@ const getters = {
 const actions = {
  ...make.actions(state),
 
- // Resets the component creation dialog form.
- resetDialogComponentForm() {
-  store.set("componentManagement/componentSettings", initialComponentSettings());
- },
-
  // Saves the component configuration structure as a new version of the configuration (version control).
  saveComponentsConfigStructure({ state, dispatch }) {
   axios.post("api/componentDefault", { config_structure: JSON.parse(state.ComponentsConfigStructure) }).then(response => {
@@ -220,7 +218,7 @@ const actions = {
    dispatch("getNavigationStructure");
    store.set("snackbar/value", true);
    store.set("snackbar/text", "Config structure updated");
-   store.set("snackbar/color", "teal darken-1");
+   store.set("snackbar/color", "primary");
   });
  },
 
@@ -318,7 +316,7 @@ const actions = {
       store.set("componentManagement/allGroups", response.data.groups);
       store.set("snackbar/value", true);
       store.set("snackbar/text", "Group removed");
-      store.set("snackbar/color", "teal darken-1");
+      store.set("snackbar/color", "primary");
       dispatch("getDbGroupNames");
       dispatch("getNavigationStructure");
       dispatch("getGroups");
@@ -340,7 +338,7 @@ const actions = {
      store.set("componentManagement/allGroups", response.data.groups);
      store.set("snackbar/value", true);
      store.set("snackbar/text", `Group "${state.groupName}" created`);
-     store.set("snackbar/color", "teal darken-1");
+     store.set("snackbar/color", "primary");
      store.set("componentManagement/groupName", "");
      store.set("componentManagement/groupChild", "");
      store.set("componentManagement/groupParent", 0);
@@ -366,7 +364,7 @@ const actions = {
     store.set("componentManagement/groupName", "");
     store.set("snackbar/value", true);
     store.set("snackbar/text", "Group renamed");
-    store.set("snackbar/color", "teal darken-1");
+    store.set("snackbar/color", "primary");
     dispatch("getNavigationStructure");
    }
   });
@@ -403,7 +401,7 @@ const actions = {
     store.set(`componentManagement/allComponents@${index}`, response.data.component);
     store.set("snackbar/value", true);
     store.set("snackbar/text", "Component saved");
-    store.set("snackbar/color", "teal darken-1");
+    store.set("snackbar/color", "primary");
     dispatch("getNavigationStructure");
     window.eventBus.$emit("BUS_BUILD_ROUTES");
    } else {
@@ -434,7 +432,7 @@ const actions = {
      store.set("componentManagement/allComponents", response.data.components);
      store.set("snackbar/value", true);
      store.set("snackbar/text", "Component removed");
-     store.set("snackbar/color", "teal darken-1");
+     store.set("snackbar/color", "primary");
      dispatch("getNavigationStructure");
      store.set("drawers/secureComponentDrawer", false);
     }
@@ -456,7 +454,7 @@ const actions = {
      store.set("componentManagement/allComponents", response.data.components);
      store.set("snackbar/value", true);
      store.set("snackbar/text", `"${state.componentSettings.title}" component created`);
-     store.set("snackbar/color", "teal darken-1");
+     store.set("snackbar/color", "primary");
 
      // Autoselect latest created component
      store.set("drawers/secureComponentDrawer", true);

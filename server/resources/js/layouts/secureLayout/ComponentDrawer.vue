@@ -1,5 +1,5 @@
 <template>
- <v-fade-transition>
+ <v-fade-transition hide-on-leave>
   <v-navigation-drawer
    mobileBreakpoint="0"
    clipped
