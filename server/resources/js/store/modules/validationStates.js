@@ -17,8 +17,8 @@ const getDefaultState = () => {
 };
 
 const state = getDefaultState();
-const mutations = make.mutations(state);
 const getters = {};
+const mutations = make.mutations(state);
 
 const actions = {
  ...make.actions(state),

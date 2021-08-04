@@ -46,9 +46,10 @@ const state = {
  componentStatusTabs: [
   { name: "All", value: "all", icon: "mdi-all-inclusive" },
   { name: "Starred", value: "starred", icon: "mdi-star" },
-  { name: "Modular", value: "modular", icon: "mdi-view-module" },
   { name: "Active", value: "active", icon: "mdi-lightbulb-on" },
-  { name: "Inactive", value: "inactive", icon: "mdi-lightbulb-off" }
+  { name: "Inactive", value: "inactive", icon: "mdi-lightbulb-off" },
+  { name: "Modular", value: "modular", icon: "mdi-view-module" },
+  { name: "Drawer", value: "navigation", icon: "mdi-menu" }
  ],
  navigationStructure: {},
  componentsLinkedToGroupDialog: false
@@ -123,16 +124,19 @@ const getters = {
   return state.componentStatusTabs[state.activeStatusTab].value;
  },
 
- // Returns components that  belong to a group, status or matching search.
+ // Returns components that belongs to a group, status or matching search.
  allComponentsFiltered: (state, getters, rootState) => {
   if (!getters.hasSelectedSomeGroups) return [];
-  const search = rootState.application.search.toLowerCase();
   return state.allComponents.filter(component => {
+   const search = rootState.application.search.toLowerCase();
+   const title = component.config.general_config.title.toLowerCase();
+   const status = getters.activeComponentEditFormFieldsStatusTabName;
    return (
-    (search === "" || component.config.general_config.title.toLowerCase().match(search)) &&
-    (getters.activeComponentEditFormFieldsStatusTabName === "all" ||
-     (getters.activeComponentEditFormFieldsStatusTabName === "inactive" && !component.status.active) ||
-     component.status[getters.activeComponentEditFormFieldsStatusTabName]) &&
+    (!search || title.match(search)) &&
+    (status === "all" ||
+     (status === "inactive" && !component.status.active) ||
+     (status === "navigation" && component.config.general_config.isVisibleInSidebar) ||
+     component.status[status]) &&
     state.selectedComponentGroups.some(group => group.id === component.component_group_id)
    );
   });

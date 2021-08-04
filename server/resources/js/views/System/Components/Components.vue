@@ -34,22 +34,22 @@ export default {
   ComponentsGrid: () => import(/* webpackChunkName: 'components-grid' */ "./ComponentsGrid"),
   ComponentsTable: () => import(/* webpackChunkName: 'components-table' */ "./ComponentsTable"),
   ComponentsGroups: () => import(/* webpackChunkName: 'components-groups' */ "./ComponentsGroups"),
-  DialogComponent: () => import(/* webpackChunkName: 'components-dialog-new-component' */ "./DialogComponent"),
-  ComponentsNoData: () => import(/* webpackChunkName: 'components-no-data' */ "./ComponentsNoData"),
   ComponentsAppbar: () => import(/* webpackChunkName: 'components-appbar' */ "./ComponentsAppbar"),
+  ComponentsNoData: () => import(/* webpackChunkName: 'components-no-data' */ "./ComponentsNoData"),
+  DialogComponent: () => import(/* webpackChunkName: 'components-dialog-new-component' */ "./DialogComponent"),
   ComponentEditSheet: () => import(/* webpackChunkName: 'components-edit-sheet' */ "./ComponentsEdit/ComponentsEditSheet")
  },
 
  computed: {
-  ...get("componentManagement", ["isAllFilteredComponentsEmpty", "selectedComponent"]),
+  ...sync("theme", ["isDark"]),
   ...sync("componentManagement", ["dialogComponent", "isTableLayout"]),
-  ...sync("theme", ["isDark"])
+  ...get("componentManagement", ["isAllFilteredComponentsEmpty", "selectedComponent"])
  },
 
  mounted() {
   this.getComponents();
-  this.getDbTablesAndColumns();
   this.getDbGroupNames();
+  this.getDbTablesAndColumns();
  },
 
  methods: {

@@ -7,7 +7,7 @@ export default {
 
   removeComponentWarning(id, method, apiPath, title) {
    this.$swal({
-    title: `<span style="color:${this.isDark ? "lightgrey" : ""} "> Delete ${title} component? </span>`,
+    title: `<span style="color:${this.isDark ? "lightgrey" : ""} "> Delete component? </span>`,
     html: `<span style="color:${
      this.isDark ? "lightgrey" : ""
     } "> This component will be deleted, you can recover it later if needed. A copy will be stored in the server.</span>`,

@@ -4,7 +4,11 @@
    <div class="d-flex">
     <v-btn plain @click="dialogEditor = true" class="mx-2 "> <v-icon class="mr-2" small> mdi-code-json </v-icon>Config Structure </v-btn>
     <v-btn plain class="mx-2 "> <v-icon class="mr-2" small> mdi-arrow-top-right </v-icon>Export </v-btn>
+<<<<<<< Updated upstream
     <v-btn class="ml-2" :color="isDark ? 'red' : 'primary'" @click.stop="dialogComponent = true">
+=======
+    <v-btn class="ml-2" :color="isDark ? 'accent' : 'primary'" @click.stop="dialogComponent = true">
+>>>>>>> Stashed changes
      <v-icon class="mr-2" small> mdi-plus </v-icon>Create component
     </v-btn>
    </div>

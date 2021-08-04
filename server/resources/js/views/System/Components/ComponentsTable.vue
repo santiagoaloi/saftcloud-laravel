@@ -10,6 +10,7 @@
    v-model="selectedComponentTableRow"
    @click:row="rowClicked"
    style="cursor:pointer"
+   calculate-widths
   >
    <template v-slot:[`item.avatar`]="{ item }">
     <v-hover v-slot="{ hover }">
@@ -36,6 +37,8 @@
     </v-hover>
    </template>
 
+   <template v-slot:[`item.name`]="{ item }"> /{{ item.name }} </template>
+
    <template v-slot:[`item.group`]="{ item }">
     <v-icon style="margin-top:-2px;" class="mr-1" small> mdi-folder-outline</v-icon>
     <template v-if="mapComponentGroup(item).component_group_id"> {{ mapGroupParent(item) }} <v-icon small>mdi-menu-right</v-icon> </template>
@@ -46,7 +49,7 @@
     {{ item.config.general_config.title || ". . ." }}
    </template>
 
-   <template v-slot:[`item.actions`]="{ item }">
+   <template v-slot:[`item.status`]="{ item }">
     <v-tooltip v-if="hasUnsavedChanges(item)" transition="false" color="black" bottom>
      <template v-slot:activator="{ on }">
       <v-btn v-on="on" color="white" small icon :ripple="false">
@@ -112,18 +115,24 @@ export default {
     },
 
     {
+     text: "Route",
+     align: "end",
+     value: "name",
+     divider: true
+    },
+
+    {
      text: "Group",
      align: "end",
-     sortable: false,
      value: "group",
      divider: true
     },
 
     {
-     text: "Actions",
+     text: "Status",
      align: "end",
      sortable: false,
-     value: "actions",
+     value: "status",
      width: 160
     }
    ],

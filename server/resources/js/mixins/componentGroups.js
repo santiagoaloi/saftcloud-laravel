@@ -56,6 +56,11 @@ export default {
      input: `${this.isDark ? "swalDarkTitle" : ""}`,
      validationMessage: `${this.isDark ? "swalDarkValidation" : ""}`
     },
+    inputAttributes: {
+     maxlength: 20,
+     autocapitalize: "off",
+     autocorrect: "off"
+    },
     input: "text",
     inputPlaceholder: "Group name goes here...",
     inputValue: this.groupName,
@@ -115,6 +120,11 @@ export default {
     confirmButtonColor: "#5469d4",
     customClass: {
      input: `${this.isDark ? "swalDarkTitle" : ""}`
+    },
+    inputAttributes: {
+     maxlength: 20,
+     autocapitalize: "off",
+     autocorrect: "off"
     },
     input: "text",
     inputValue: name,

@@ -1,8 +1,8 @@
 <template>
  <div class="d-flex justify-space-between align-center">
-  <v-tabs color="accent" v-model="activeStatusTab" showArrows class="col-6 mt-n3" background-color="transparent" sliderSize="1">
+  <v-tabs color="accent" v-model="activeStatusTab" showArrows class="col-10 mt-n3" background-color="transparent" sliderSize="1">
    <v-tab :activeClass="isDark ? 'white--text' : ''" :disabled="isComponentsEmpty" :key="i" v-for="(tab, i) in componentStatusTabs" :ripple="false">
-    <v-icon :color="tab.color" small left>
+    <v-icon small left>
      {{ tab.icon }}
     </v-icon>
     {{ tab.name }}
@@ -11,9 +11,9 @@
 
   <div class="d-flex">
    <!-- <v-switch v-model="multipleSelect" label="Multiple selection" class="mt-1 mx-4"> </v-switch> -->
-   <v-btn plain :disabled="isAllFilteredComponentsEmpty" @click="isTableLayout = !isTableLayout"
+   <v-btn class="mt-n3" plain :disabled="isAllFilteredComponentsEmpty" @click="isTableLayout = !isTableLayout"
     ><v-icon left> {{ isTableLayout ? " mdi-view-grid-outline" : " mdi-format-list-bulleted-square" }} </v-icon>
-    {{ isTableLayout ? "Switch to grid view" : "Switch to list view" }}</v-btn
+    {{ isTableLayout ? "Grid" : "List" }}</v-btn
    >
   </div>
  </div>

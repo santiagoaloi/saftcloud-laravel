@@ -97,12 +97,3 @@ export default {
  }
 };
 </script>
-
-<style lang="scss" scoped>
-// @include media("md-and-up") {
-//   .pricing-highlight {
-//     z-index: 1;
-//     transform: scale(1.1);
-//   }
-// }
-</style>
