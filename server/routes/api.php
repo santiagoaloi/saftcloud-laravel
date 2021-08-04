@@ -44,7 +44,6 @@ use App\Http\Controllers\TestFunctionController;
 */
 
 // Public routes
-// Route::post('/login', [AuthController::class, 'login']);
 Route::post('/login', [AuthController::class, 'login']);
 
 Route::get('/region', [RegionController::class, 'ip_info']);
@@ -110,11 +109,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/logout', [AuthController::class, 'logout']);
 });
 
-Route::post('/testFunction', [TestFunctionController::class, 'test2']);
-
 //Testing
 Route::post('/testFunction', [TestFunctionController::class, 'test2']);
 
-// Route::group(['middleware' => ['auth:sanctum']], function () {
+// Route::group(['middleware' => ['web']], function () {
 //     Route::post('/testFunction', [AuthenticatedSessionController::class, 'store']);
 // });
