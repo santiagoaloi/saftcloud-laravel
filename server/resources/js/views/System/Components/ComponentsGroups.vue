@@ -13,7 +13,7 @@
      item-color="primary"
      return-object
      placeholder="Select or create groups"
-     :maxlength="25"
+     :maxlength="20"
      :items="allGroups"
      :menu-props="setValue()"
      :outlined="isDark"
@@ -283,9 +283,5 @@ export default {
  color: white !important;
  border-radius: 8px;
  height: 50px;
-}
-
-.v-list-item--link:before {
- background-color: unset !important;
 }
 </style>

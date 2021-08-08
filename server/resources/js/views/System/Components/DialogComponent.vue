@@ -19,7 +19,7 @@
        @update:search-input="syncGroupInputValue($event)"
        v-model="componentSettings.component_group_id"
        :items="allGroups"
-       :maxlength="25"
+       :maxlength="20"
        item-value="id"
        item-text="name"
        hide-selected
@@ -63,7 +63,7 @@
        :outlined="isDark"
        prepend-inner-icon="mdi-comment"
        counter
-       maxlength="35"
+       maxlength="20"
        :color="isDark ? '#208ad6' : 'grey'"
        :background-color="isDark ? '#28292b' : 'white'"
        @keydown.enter.prevent="validateComponentForm()"
@@ -85,7 +85,7 @@
        solo
        prepend-inner-icon="mdi-comment"
        counter
-       maxlength="35"
+       maxlength="20"
        :color="isDark ? '#208ad6' : 'grey'"
        :background-color="isDark ? '#28292b' : 'white'"
        :error="errors.length > 0"
@@ -136,7 +136,7 @@
      </validation-provider>
     </v-col>
     <v-col cols="12" lg="12">
-     <BaseFieldLabel label="Component description" />
+     <BaseFieldLabel label="Component description / notes" />
      <v-textarea
       spellcheck="false"
       v-model="componentSettings.note"

@@ -25,8 +25,8 @@ Vue.component("secure_layout", () => import(/* webpackChunkName: 'public-Layout'
 
 new Vue({
  store,
- vuetify,
  router,
+ vuetify,
  created() {
   AOS.init({});
  },

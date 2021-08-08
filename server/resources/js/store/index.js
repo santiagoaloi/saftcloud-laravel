@@ -23,10 +23,10 @@ const vuexLocal = new VuexPersist({
   },
   authentication: {
    ...state.authentication
-  },
-  componentManagement: {
-   ...state.componentManagement
   }
+  //   componentManagement: {
+  //    ...state.componentManagement
+  //   }
  })
 });
 

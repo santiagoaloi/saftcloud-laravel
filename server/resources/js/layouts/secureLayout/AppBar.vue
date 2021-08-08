@@ -8,7 +8,7 @@
    <div class="flex-grow-1" />
 
    <v-text-field
-    v-lazy-input:debounce="200"
+    v-lazy-input:debounce="100"
     v-model="search"
     spellcheck="false"
     :outlined="isDark"
@@ -26,17 +26,13 @@
     rounded
    />
 
-   <v-btn class="mr-2 " text x-small fab to="/">
+   <v-btn class="mr-3" text x-small fab to="/">
     <v-icon>mdi-home-variant</v-icon>
-   </v-btn>
-
-   <v-btn class="mr-2 " text x-small fab @click="pushDesktop">
-    <v-icon>mdi-desktop-mac</v-icon>
    </v-btn>
 
    <v-menu origin="center center" transition="scroll-y-transition" :nudge-bottom="10" offset-y>
     <template v-slot:activator="{ on, attrs }">
-     <v-btn class="mr-3  " text x-small fab v-bind="attrs" v-on="on">
+     <v-btn class="mr-3" text x-small fab v-bind="attrs" v-on="on">
       <v-icon>mdi-dots-vertical</v-icon>
      </v-btn>
     </template>
@@ -54,7 +50,7 @@
 
    <template>
     <v-badge :color="notificationCount > 0 ? 'teal accent-4' : 'transparent'" :content="notificationCount" overlap offset-x="20" offset-y="18">
-     <v-btn class="mr-2 " text x-small fab @click="pushNotifications()">
+     <v-btn class="mr-3 " text x-small fab @click="pushNotifications()">
       <v-icon>mdi-bell-ring-outline</v-icon>
      </v-btn>
     </v-badge>
@@ -66,7 +62,7 @@
       <v-icon>mdi-earth</v-icon>
      </v-btn>
     </template>
-    <v-list class="pa-2" outlined>
+    <v-list link class="pa-2" outlined>
      <v-list-item v-for="(language, i) in languages" :key="i" :to="language.name">
       <country-flag class="mr-0" :country="language.flag" />
       <v-list-item-content>
@@ -227,9 +223,9 @@ export default {
  },
 
  computed: {
-  ...sync("drawers", ["secureDefaultDrawer"]),
   ...sync("theme", ["isDark"]),
   ...sync("application", ["search"]),
+  ...sync("drawers", ["secureDefaultDrawer"]),
 
   routeTitle() {
    return this.$route.meta.title;

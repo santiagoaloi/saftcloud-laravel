@@ -1,5 +1,5 @@
 <template>
- <v-fade-transition>
+ <v-fade-transition hide-on-leave>
   <v-navigation-drawer
    mobileBreakpoint="0"
    clipped
@@ -11,7 +11,7 @@
    app
    v-if="$route.name.startsWith('/components') && selectedComponent"
   >
-   <!-- Navigation menu fixed  -->
+   <!-- Navigation menu fixed on top -->
    <template v-slot:prepend>
     <component-drilldown-bar />
    </template>

@@ -12,12 +12,13 @@
   </v-expand-transition>
 
   <ValidationObserver ref="componentDrilldown" slim>
-   <v-card-text class="pa-2">
+   <v-card-text class="pa-3">
     <div class="text--primary">
      <BaseFieldLabel required label="Component name" />
      <validation-provider immediate mode="aggressive" v-slot="{ errors }" name="component name" rules="required">
       <v-text-field
-       :color="isDark ? 'white' : 'black'"
+       outlined
+       :color="isDark ? '#208ad6' : 'grey'"
        :background-color="isDark ? '#28292b' : 'white'"
        :prepend-inner-icon="selectedComponent.config_settings.icon.name"
        spellcheck="false"
@@ -26,6 +27,7 @@
        v-model="selectedComponent.config.general_config.title"
        :error-messages="errors[0]"
        :error="errors.length > 0"
+       v-lazy-input:debounce="100"
       >
        <template v-slot:append>
         <v-tooltip transition="false" color="black" bottom>
@@ -40,17 +42,17 @@
       </v-text-field>
      </validation-provider>
 
-     <BaseFieldLabel label="Description" />
+     <BaseFieldLabel label="Description / Notes" />
      <v-textarea
       outlined
       :color="isDark ? '#208ad6' : 'grey'"
       :background-color="isDark ? '#28292b' : 'white'"
       spellcheck="false"
       :rows="2"
-      auto-grow
       dense
       v-model="selectedComponent.config.general_config.note"
       hide-details
+      v-lazy-input:debounce="100"
      >
      </v-textarea>
 
@@ -62,7 +64,6 @@
        :background-color="isDark ? '#28292b' : 'white'"
        v-model="selectedComponent.component_group_id"
        hide-selected
-       dense
        :items="allGroups"
        :maxlength="25"
        item-value="id"
@@ -248,11 +249,9 @@ export default {
   },
 
   componentCardGroup(val) {
-   if (val === undefined) {
-    setTimeout(() => {
-     this.secureComponentDrawer = false;
-     this.componentCardGroup = undefined;
-    }, 0);
+   if (!val) {
+    this.secureComponentDrawer = false;
+    this.componentCardGroup = undefined;
    }
   }
  },
@@ -282,12 +281,6 @@ export default {
      store.set("snackbar/color", "pink darken-1");
     }
    });
-  },
-
-  setStarred(component) {
-   component.status.starred = !component.status.starred;
-   component.origin.status.starred = !component.origin.status.starred;
-   this.setComponentStatus(component);
   }
  }
 };

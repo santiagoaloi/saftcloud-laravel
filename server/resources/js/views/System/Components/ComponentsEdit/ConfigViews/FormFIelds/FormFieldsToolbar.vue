@@ -8,7 +8,7 @@
    </template>
 
    <v-list>
-    <v-list-item dense @click="selectAllFormFields()">
+    <v-list-item dense @click="formFIeldsSwitch(true)">
      <v-list-item-action>
       <v-icon>mdi-expand-all-outline</v-icon>
      </v-list-item-action>
@@ -17,7 +17,7 @@
      </v-list-item-content>
     </v-list-item>
 
-    <v-list-item dense @click="unselectAllFormFields()">
+    <v-list-item dense @click="formFIeldsSwitch(false)">
      <v-list-item-action>
       <v-icon>mdi-collapse-all-outline</v-icon>
      </v-list-item-action>
@@ -45,14 +45,9 @@
 </template>
 
 <script>
-import axios from "axios";
-import draggable from "vuedraggable";
 import { sync, get } from "vuex-pathify";
 export default {
  name: "ComponentsEditViewsFormFieldsToolbar",
- components: {
-  draggable
- },
  data: () => ({
   selectedFieldItem: 0
  }),
@@ -68,16 +63,9 @@ export default {
  },
 
  methods: {
-  unselectAllFormFields() {
-   this.selectedComponent.config.form_fields.forEach(field => {
-    field.displayField = false;
-   });
-  },
-
-  selectAllFormFields() {
-   this.selectedComponent.config.form_fields.forEach(field => {
-    field.displayField = true;
-   });
+  formFIeldsSwitch(value) {
+   const fields = this.selectedComponent.config.form_fields;
+   for (const field of fields) field.displayField = value;
   }
  }
 };

@@ -1,5 +1,5 @@
 <template>
- <v-card flat :disabled="hasValidationErrors">
+ <div>
   <v-text-field
    v-model="searchFields"
    hide-details
@@ -27,6 +27,7 @@
     >
      <transition-group appear name="slide-y-transition">
       <v-list-item
+       :disabled="hasValidationErrors"
        v-for="(item, i) in displayEnabledFormFieldsOnly ? filteredSelectedFields : filteredFormFields"
        dense
        :key="i"
@@ -59,7 +60,7 @@
     </draggable>
    </v-list>
   </v-list-item-group>
- </v-card>
+ </div>
 </template>
 
 <script>

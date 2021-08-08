@@ -6,24 +6,18 @@
 
   <v-divider />
 
-  <v-card color="transparent" flat :height="calculateHeight()" class="overflow-y-auto">
-   <template v-if="!isAllFilteredComponentsEmpty">
-    <v-scroll-y-transition hide-on-leave>
-     <components-table v-if="isTableLayout" />
-    </v-scroll-y-transition>
-   </template>
+  <v-card color="transparent" flat :height="calculateHeight()" class="overflow-y-scroll">
+   <v-scroll-y-transition hide-on-leave>
+    <components-table v-if="isTableLayout && !isAllFilteredComponentsEmpty" />
+   </v-scroll-y-transition>
 
-   <template v-if="!isAllFilteredComponentsEmpty">
-    <v-scroll-x-transition hide-on-leave>
-     <components-grid v-if="!isTableLayout" />
-    </v-scroll-x-transition>
-   </template>
+   <v-scroll-x-transition hide-on-leave>
+    <components-grid v-if="!isTableLayout && !isAllFilteredComponentsEmpty" />
+   </v-scroll-x-transition>
 
-   <template v-if="isAllFilteredComponentsEmpty">
-    <v-scroll-y-transition hide-on-leave>
-     <components-no-data />
-    </v-scroll-y-transition>
-   </template>
+   <v-scroll-y-transition hide-on-leave>
+    <components-no-data v-if="isAllFilteredComponentsEmpty" />
+   </v-scroll-y-transition>
   </v-card>
 
   <dialog-component />
@@ -40,22 +34,22 @@ export default {
   ComponentsGrid: () => import(/* webpackChunkName: 'components-grid' */ "./ComponentsGrid"),
   ComponentsTable: () => import(/* webpackChunkName: 'components-table' */ "./ComponentsTable"),
   ComponentsGroups: () => import(/* webpackChunkName: 'components-groups' */ "./ComponentsGroups"),
-  DialogComponent: () => import(/* webpackChunkName: 'components-dialog-new-component' */ "./DialogComponent"),
-  ComponentsNoData: () => import(/* webpackChunkName: 'components-no-data' */ "./ComponentsNoData"),
   ComponentsAppbar: () => import(/* webpackChunkName: 'components-appbar' */ "./ComponentsAppbar"),
+  ComponentsNoData: () => import(/* webpackChunkName: 'components-no-data' */ "./ComponentsNoData"),
+  DialogComponent: () => import(/* webpackChunkName: 'components-dialog-new-component' */ "./DialogComponent"),
   ComponentEditSheet: () => import(/* webpackChunkName: 'components-edit-sheet' */ "./ComponentsEdit/ComponentsEditSheet")
  },
 
  computed: {
-  ...get("componentManagement", ["isAllFilteredComponentsEmpty", "selectedComponent"]),
+  ...sync("theme", ["isDark"]),
   ...sync("componentManagement", ["dialogComponent", "isTableLayout"]),
-  ...sync("theme", ["isDark"])
+  ...get("componentManagement", ["isAllFilteredComponentsEmpty", "selectedComponent"])
  },
 
  mounted() {
   this.getComponents();
-  this.getDbTablesAndColumns();
   this.getDbGroupNames();
+  this.getDbTablesAndColumns();
  },
 
  methods: {

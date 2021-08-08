@@ -23,9 +23,9 @@ extend("url", {
 // Won't validate on blur, but when the form is submitted.
 setInteractionMode("passive");
 
-Object.keys(rules).forEach(rule => {
+for (const rule in rules) {
  extend(rule, rules[rule]);
-});
+}
 
 localize("en", en);
 

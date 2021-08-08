@@ -3,9 +3,9 @@
   <v-toolbar-title class="white--text"
    >Editing
    <span class="accent--text text--lighten-4">
-    {{ selectedComponent.config.general_config.title === "" ? ". . ." : selectedComponent.config.general_config.title }}
-   </span></v-toolbar-title
-  >
+    {{ selectedComponent.config.general_config.title || ". . ." }}
+   </span>
+  </v-toolbar-title>
 
   <v-spacer></v-spacer>
 
