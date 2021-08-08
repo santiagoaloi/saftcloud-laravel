@@ -17,4 +17,3 @@
         <script defer src="{{ mix('dist/js/manifest.js') }}"></script>
         <script defer src="{{ mix('dist/js/vendor.js') }}"></script>
         <script defer src="{{ mix('dist/js/app.js') }}"></script>
-

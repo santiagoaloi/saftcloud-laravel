@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\Private\UserController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\TestFunctionController;
 
 /*
 |--------------------------------------------------------------------------

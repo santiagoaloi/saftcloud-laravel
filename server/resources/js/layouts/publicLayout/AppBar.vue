@@ -170,10 +170,11 @@ export default {
  },
 
  methods: {
-  testFunction() {
-   let post = { email: "facu.ft@gmail.com", password: "password" };
+  async testFunction() {
+   let post = { email: "facupepe.ft@gmail.com", password: "password321" };
+   await axios.get("/sanctum/csrf-cookie");
    axios
-    .post("/testFunction/", post)
+    .post("login/", post)
     .then(response => {
      if (response.status === 200) {
       console.log(response.data.rows);
