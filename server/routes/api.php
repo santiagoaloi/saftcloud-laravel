@@ -110,7 +110,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 });
 
 //Testing
-Route::post('/testFunction', [TestFunctionController::class, 'test2']);
+Route::post('/testFunction', [TestFunctionController::class, 'test3']);
 
 // Route::group(['middleware' => ['web']], function () {
 //     Route::post('/testFunction', [AuthenticatedSessionController::class, 'store']);

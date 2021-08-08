@@ -55,7 +55,7 @@ return [
     'url' => env('APP_URL'),
     'mix_url' => env('APP_URL'),
 
-    // 'asset_url' => env('ASSET_URL', null),
+    'asset_url' => env('ASSET_URL', null),
 
     /*
     |--------------------------------------------------------------------------
@@ -168,17 +168,14 @@ return [
          */
 
         /*
-         * Auth Service Providers...
-         */
-        App\Providers\AuthServiceProvider::class,
-
-        /*
          * Application Service Providers...
          */
         App\Providers\AppServiceProvider::class,
+        App\Providers\AuthServiceProvider::class,
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        App\Providers\FortifyServiceProvider::class,
 
     ],
 

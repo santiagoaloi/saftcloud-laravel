@@ -67,7 +67,12 @@ class TestFunctionController extends Controller {
         return $tata;
         $query = New ComponentController;
         return $query->getComponentNames();
+    }
 
+    public function test3(){
+        return "hola";
+        // var_dump(csrf_token());
+        // var_dump($request->header('X-CSRF-TOKEN'));
     }
 
     function probarFormFieldStructure(){
@@ -75,4 +80,6 @@ class TestFunctionController extends Controller {
         $pepe =  json_decode($test->getLast(), true);
         return $pepe['form_fields'];
     }
+
+
 }
