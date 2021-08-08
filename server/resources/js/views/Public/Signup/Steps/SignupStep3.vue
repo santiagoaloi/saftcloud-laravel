@@ -8,7 +8,7 @@
     <v-row justify="center">
      <v-col sm="6">
       <validation-provider v-slot="{ errors, reset }" name="company name" rules="required">
-       <BaseFieldLabel label="Account" />
+       <baseFieldLabel label="Account" />
        <v-text-field
         autofocus
         v-model="signupForm.companyName"
@@ -28,7 +28,7 @@
       </validation-provider>
      </v-col>
      <v-col sm="6">
-      <BaseFieldLabel label="Company Alias" />
+      <baseFieldLabel label="Company Alias" />
       <validation-provider v-slot="{ errors, reset }" name="company alias" rules="required">
        <v-text-field
         v-model="signupForm.companyNameAlias"

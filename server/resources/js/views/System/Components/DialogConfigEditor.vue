@@ -14,7 +14,7 @@
   icon="mdi-code-json"
  >
   <v-card flat width="100%" class="dialogHeight pt-13 ">
-   <base-editor v-model="ComponentsConfigStructure" mode="json" />
+   <base-editor v-model="componentsConfigStructure" mode="json" />
   </v-card>
  </baseDialog>
 </template>
@@ -29,7 +29,7 @@ export default {
 
  computed: {
   ...sync("theme", ["isDark"]),
-  ...sync("componentManagement", ["dialogEditor", "ComponentsConfigStructure"])
+  ...sync("componentManagement", ["dialogEditor", "componentsConfigStructure"])
  },
 
  methods: {

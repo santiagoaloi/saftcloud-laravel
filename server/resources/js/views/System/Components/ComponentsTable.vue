@@ -37,7 +37,9 @@
     </v-hover>
    </template>
 
-   <template v-slot:[`item.name`]="{ item }"> /{{ item.name }} </template>
+   <template v-slot:[`item.name`]="{ item }">
+    <router-link :class="{ 'grey--text': isDark }" :to="`/${item.name}`">{{ item.name }}</router-link>
+   </template>
 
    <template v-slot:[`item.group`]="{ item }">
     <v-icon style="margin-top:-2px;" class="mr-1" small> mdi-folder-outline</v-icon>
@@ -181,6 +183,7 @@ export default {
    let index = this.allComponentsFiltered.findIndex(component => component.id === row.id);
    this.componentCardGroup = index;
    this.setSelectedComponent(index);
+   console.log(index);
   },
 
   toggleSelection(id, row) {

@@ -3,7 +3,7 @@
   <ValidationObserver ref="componentsEditFormFieldsBasicTab" slim>
    <v-row>
     <v-col cols="6">
-     <BaseFieldLabel required label="Label" />
+     <baseFieldLabel required label="Label" />
      <validation-provider immediate mode="aggressive" v-slot="{ errors, invalid }" name="field label" rules="required">
       <v-text-field
        :outlined="isDark"
@@ -21,7 +21,7 @@
      </validation-provider>
     </v-col>
     <v-col cols="6">
-     <BaseFieldLabel required label="Input type" />
+     <baseFieldLabel required label="Input type" />
      <validation-provider v-slot="{ errors }" name="field input type" rules="required">
       <v-select
        :outlined="isDark"

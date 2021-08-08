@@ -14,7 +14,7 @@
   <ValidationObserver ref="componentDrilldown" slim>
    <v-card-text class="pa-3">
     <div class="text--primary">
-     <BaseFieldLabel required label="Component name" />
+     <baseFieldLabel required label="Component name" />
      <validation-provider immediate mode="aggressive" v-slot="{ errors }" name="component name" rules="required">
       <v-text-field
        outlined
@@ -42,7 +42,7 @@
       </v-text-field>
      </validation-provider>
 
-     <BaseFieldLabel label="Description / Notes" />
+     <baseFieldLabel label="Description / Notes" />
      <v-textarea
       outlined
       :color="isDark ? '#208ad6' : 'grey'"
@@ -57,7 +57,7 @@
      </v-textarea>
 
      <div class="mt-2">
-      <BaseFieldLabel required label="Component group " />
+      <baseFieldLabel required label="Component group " />
       <v-autocomplete
        outlined
        :color="isDark ? '#208ad6' : 'grey'"
@@ -146,7 +146,7 @@
     <v-list-item-content>
      <v-list-item-title>Sidebar</v-list-item-title>
      <v-list-item-subtitle>
-      Display in navigation
+      Display in navigation drawer
      </v-list-item-subtitle>
     </v-list-item-content>
    </v-list-item>

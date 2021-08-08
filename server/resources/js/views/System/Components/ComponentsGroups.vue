@@ -2,7 +2,7 @@
  <div>
   <v-row align="center" class="mt-2">
    <v-col cols="12" sm="4">
-    <BaseFieldLabel label="Component groups" />
+    <baseFieldLabel label="Component groups" />
     <v-autocomplete
      @update:search-input="syncGroupInputValue($event)"
      @keydown="!dropDownValue ? (dropDownValue = true) : ''"

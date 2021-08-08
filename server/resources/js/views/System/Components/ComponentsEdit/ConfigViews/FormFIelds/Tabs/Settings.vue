@@ -3,7 +3,7 @@
   <ValidationObserver ref="componentsEditFormFieldsSettingsTab" slim>
    <v-row>
     <v-col cols="12">
-     <BaseFieldLabel required label="Tooltip" />
+     <baseFieldLabel required label="Tooltip" />
      <validation-provider v-slot="{ errors }" name="tooltip text">
       <v-text-field
        :outlined="isDark"

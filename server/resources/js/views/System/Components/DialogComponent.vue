@@ -11,7 +11,7 @@
   <ValidationObserver ref="createComponentForm" slim>
    <v-row>
     <v-col cols="12" lg="6">
-     <BaseFieldLabel required label="Group" />
+     <baseFieldLabel required label="Group" />
      <validation-provider v-slot="{ errors, reset }" name="component group" rules="required">
       <v-autocomplete
        spellcheck="false"
@@ -54,7 +54,7 @@
     </v-col>
 
     <v-col cols="12" lg="6">
-     <BaseFieldLabel required label="Component title" />
+     <baseFieldLabel required label="Component title" />
      <validation-provider v-slot="{ errors, reset }" name="component title" rules="required">
       <v-text-field
        spellcheck="false"
@@ -77,7 +77,7 @@
     </v-col>
 
     <v-col cols="12" lg="6">
-     <BaseFieldLabel required label="Component name" />
+     <baseFieldLabel required label="Component name" />
      <validation-provider v-slot="{ errors, reset }" name="component name" rules="alpha|required">
       <v-text-field
        spellcheck="false"
@@ -100,7 +100,7 @@
     </v-col>
 
     <v-col cols="12" lg="6">
-     <BaseFieldLabel required label="Database table" />
+     <baseFieldLabel required label="Database table" />
      <validation-provider v-slot="{ errors, reset }" name="component table" rules="required">
       <v-autocomplete
        :outlined="isDark"
@@ -136,7 +136,7 @@
      </validation-provider>
     </v-col>
     <v-col cols="12" lg="12">
-     <BaseFieldLabel label="Component description / notes" />
+     <baseFieldLabel label="Component description / notes" />
      <v-textarea
       spellcheck="false"
       v-model="componentSettings.note"

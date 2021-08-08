@@ -7,7 +7,7 @@
    <ValidationObserver ref="step1" slim>
     <v-row justify="center">
      <v-col sm="12">
-      <BaseFieldLabel label="Email" />
+      <baseFieldLabel label="Email" />
       <span></span>
       <validation-provider v-slot="{ errors, reset }" name="email" rules="required|email">
        <v-text-field
@@ -29,7 +29,7 @@
       </validation-provider>
      </v-col>
      <v-col sm="6">
-      <BaseFieldLabel label="Country Code" />
+      <baseFieldLabel label="Country Code" />
       <validation-provider v-slot="{ errors, reset }" name="country code" rules="required">
        <v-autocomplete
         :items="countryCodes"
@@ -74,7 +74,7 @@
       </validation-provider>
      </v-col>
      <v-col sm="6">
-      <BaseFieldLabel label="Phone number" />
+      <baseFieldLabel label="Phone number" />
       <span></span>
       <validation-provider v-slot="{ errors, reset }" name="phone number" rules="required">
        <v-text-field

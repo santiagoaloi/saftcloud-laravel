@@ -7,7 +7,7 @@
    <ValidationObserver ref="step2" slim>
     <v-row justify="center">
      <v-col sm="12">
-      <BaseFieldLabel label="Country" />
+      <baseFieldLabel label="Country" />
       <validation-provider v-slot="{ errors, reset }" name="country" rules="required">
        <v-autocomplete
         :items="countryCodes"
@@ -47,7 +47,7 @@
      </v-col>
 
      <v-col sm="6">
-      <BaseFieldLabel label="State, Province, or Region " />
+      <baseFieldLabel label="State, Province, or Region " />
       <validation-provider v-slot="{ errors, reset }" name="state" rules="required">
        <v-autocomplete
         :disabled="!states.length"
@@ -72,7 +72,7 @@
      </v-col>
 
      <v-col sm="6">
-      <BaseFieldLabel label="City" />
+      <baseFieldLabel label="City" />
       <validation-provider v-slot="{ errors, reset }" name="city" rules="required">
        <v-text-field
         :disabled="!states.length"
@@ -93,7 +93,7 @@
      </v-col>
 
      <v-col sm="8">
-      <BaseFieldLabel label="Address" />
+      <baseFieldLabel label="Address" />
       <validation-provider v-slot="{ errors, reset }" name="address" rules="required">
        <v-text-field
         v-model="signupForm.address"
@@ -113,7 +113,7 @@
      </v-col>
 
      <v-col sm="4">
-      <BaseFieldLabel label="Postal code" />
+      <baseFieldLabel label="Postal code" />
       <validation-provider v-slot="{ errors, reset }" name="zipcode" rules="required">
        <v-text-field
         v-model="signupForm.zipcode"

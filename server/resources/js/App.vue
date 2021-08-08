@@ -46,7 +46,7 @@ export default {
  },
 
  mounted() {
-  this.buildRoutes();
+  //   this.buildRoutes();
  },
 
  methods: {
