@@ -8,10 +8,11 @@
       <baseFieldLabel label="Name" />
       <validation-provider v-slot="{ errors, reset }" name="first name" rules="required">
        <v-text-field
+        counter
+        maxlength="30"
         autofocus
         v-model="signupForm.name"
         solo
-        hide-details
         @keydown.enter.prevent="validateAndProceed()"
         prepend-inner-icon="mdi-account"
         :outlined="isDark"
@@ -28,9 +29,10 @@
       <baseFieldLabel label="Last name" />
       <validation-provider v-slot="{ errors, reset }" name="last name" rules="required">
        <v-text-field
+        counter
+        maxlength="30"
         v-model="signupForm.lastname"
         solo
-        hide-details
         @keydown.enter.prevent="validateAndProceed()"
         prepend-inner-icon="mdi-account"
         :outlined="isDark"

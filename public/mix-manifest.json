@@ -37,6 +37,7 @@
     "/dist/js/components-drawer-menu.js": "/dist/js/components-drawer-menu.js",
     "/dist/js/components-navigation-drilldown.js": "/dist/js/components-navigation-drilldown.js",
     "/dist/js/components-navigation-drilldown-bar.js": "/dist/js/components-navigation-drilldown-bar.js",
+    "/dist/js/components-status-bar.js": "/dist/js/components-status-bar.js",
     "/dist/js/components-dialog-config-editor.js": "/dist/js/components-dialog-config-editor.js",
     "/dist/js/components-edit-sheet-appbar.js": "/dist/js/components-edit-sheet-appbar.js",
     "/dist/js/components-edit-sheet-drawer.js": "/dist/js/components-edit-sheet-drawer.js",

@@ -16,8 +16,7 @@
      :maxlength="20"
      :items="allGroups"
      :menu-props="setValue()"
-     :outlined="isDark"
-     :solo="!isDark"
+     solo
      :color="isDark ? '#208ad6' : 'grey'"
      :background-color="isDark ? '#28292b' : 'white'"
     >

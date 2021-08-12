@@ -19,7 +19,7 @@
       </h3>
       <div class="mt-8">
        <v-btn class="hoverElevationSoft" to="/signup" dark x-large color="primary">Try it for free</v-btn>
-       <v-btn x-large class="my-1 mx-sm-1 hoverElevationSoft">Contact Sales</v-btn>
+       <v-btn dark x-large class="my-1 mx-sm-1 hoverElevationSoft">Contact Sales</v-btn>
       </div>
      </v-card>
      <div style="position:absolute;top:85%;right:10%" class=" text-right align-end justify-end">

@@ -1,6 +1,6 @@
 <template>
  <div>
-  <v-app-bar :color="$route.name === '/homepage' ? 'transparent' : '#202225'" absolute app flat height="80">
+  <v-app-bar :color="$route.name === '/homepage' ? 'transparent' : '#36393f'" absolute app flat height="80">
    <v-container style="background-color:transparent" class="py-0 px-0 px-sm-2 fill-height">
     <div
      data-aos="fade"
@@ -171,10 +171,10 @@ export default {
 
  methods: {
   async testFunction() {
-   let post = { email: "facupepe.ft@gmail.com", password: "password321" };
    await axios.get("/sanctum/csrf-cookie");
+   let post = { email: "santiagoaloi@gmail.com", password: "password" };
    axios
-    .post("login/", post)
+    .post("register", post)
     .then(response => {
      if (response.status === 200) {
       console.log(response.data.rows);

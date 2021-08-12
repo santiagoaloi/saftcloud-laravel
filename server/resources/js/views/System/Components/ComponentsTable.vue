@@ -48,7 +48,14 @@
    </template>
 
    <template v-slot:[`item.config.general_config.title`]="{ item }">
-    {{ item.config.general_config.title || ". . ." }}
+    <span class="gallery-card-title pl-2">
+     <template v-if="item.config.general_config.title">
+      {{ item.config.general_config.title }}
+     </template>
+     <template v-else>
+      <base-typing-indicator class="ml-1 mt-2" style="zoom:0.7" />
+     </template>
+    </span>
    </template>
 
    <template v-slot:[`item.status`]="{ item }">
@@ -191,7 +198,7 @@ export default {
   },
 
   calculateHeight() {
-   return Number(this.$vuetify.breakpoint.height - 378);
+   return Number(this.$vuetify.breakpoint.height - 430);
   }
  }
 };

@@ -2,7 +2,7 @@
  <v-app>
   <secure-bar />
   <secure-drawer />
-  <secure-cdrawer />
+  <secure-cdrawer v-if="$route.name.startsWith('/components')" />
   <secure-view />
   <snackbar />
  </v-app>

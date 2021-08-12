@@ -120,7 +120,7 @@ const getters = {
  },
 
  // Returns the name of the tab name selected within the form field editor
- activeComponentEditFormFieldsStatusTabName: state => {
+ activeComponentTabName: state => {
   return state.componentStatusTabs[state.activeStatusTab].value;
  },
 
@@ -130,7 +130,7 @@ const getters = {
   return state.allComponents.filter(component => {
    const search = rootState.application.search.toLowerCase();
    const title = component.config.general_config.title.toLowerCase();
-   const status = getters.activeComponentEditFormFieldsStatusTabName;
+   const status = getters.activeComponentTabName;
    return (
     (!search || title.match(search)) &&
     (status === "all" ||
@@ -209,7 +209,11 @@ const getters = {
    : "black",
 
  // Returns the count of components belonging to a specific group.
- countComponentsInGroup: state => id => state.allComponents.filter(component => component.component_group_id === id).length
+ countComponentsInGroup: state => id => state.allComponents.filter(component => component.component_group_id === id).length,
+
+ countComponentsFiltered: (_, getters) => {
+  return getters.allComponentsFiltered.length;
+ }
 };
 
 const actions = {

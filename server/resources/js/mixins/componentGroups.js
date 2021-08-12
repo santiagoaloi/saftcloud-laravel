@@ -44,7 +44,7 @@ export default {
 
   addGroupDialog() {
    this.$swal({
-    title: `<span style="color:${this.isDark ? "lightgrey" : "black"} "> add group </span>`,
+    title: `<span style="color:${this.isDark ? "lightgrey" : "black"} "> Create new group </span>`,
     allowOutsideClick: false,
     allowEscapeKey: false,
     allowEnterKey: false,
@@ -62,7 +62,7 @@ export default {
      autocorrect: "off"
     },
     input: "text",
-    inputPlaceholder: "Group name goes here...",
+    inputPlaceholder: ". . .",
     inputValue: this.groupName,
     backdrop: `${this.isDark ? "rgba(0, 0, 0, 0.6)" : "rgba(108, 122, 137, 0.8)"}`,
     background: `${this.isDark ? "#2f3136" : ""}`,

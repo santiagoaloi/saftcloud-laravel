@@ -5,7 +5,7 @@
     <v-alert class="mt-3" elevation="1" coloredBorder color="pink" border="right" dense>
      <div class="d-flex justify-space-between align-center">
       Unsaved
-      <v-btn small @click="rollbackChanges(selectedComponent)">rollback</v-btn>
+      <v-btn dark small @click="rollbackChanges(selectedComponent)">rollback</v-btn>
      </div>
     </v-alert>
    </v-sheet>
@@ -217,9 +217,9 @@
 </template>
 
 <script>
-import { sync, call, get } from "vuex-pathify";
 import { store } from "@/store";
 import isEqual from "lodash/isEqual";
+import { sync, call, get } from "vuex-pathify";
 import componentActions from "@/mixins/componentActions";
 
 export default {
@@ -227,8 +227,6 @@ export default {
  mixins: [componentActions],
  computed: {
   ...sync("theme", ["isDark"]),
-  ...sync("drawers", ["secureComponentDrawer"]),
-  ...sync("componentManagement", ["componentCardGroup", "allComponents", "allGroups", "selectedComponentIndex", "componentEditSheet"]),
   ...get("componentManagement", [
    "hasUnsavedChanges",
    "previousComponentDisabled",
@@ -237,21 +235,15 @@ export default {
    "isAllFilteredComponentsEmpty",
    "isStarredColor",
    "isStarredIcon"
-  ])
+  ]),
+  ...sync("drawers", ["secureComponentDrawer"]),
+  ...sync("componentManagement", ["componentCardGroup", "allComponents", "allGroups", "selectedComponentIndex", "componentEditSheet"])
  },
 
  watch: {
-  isAllFilteredComponentsEmpty(val) {
-   if (val) {
-    this.secureComponentDrawer = false;
-    this.componentCardGroup = undefined;
-   }
-  },
-
-  componentCardGroup(val) {
-   if (!val) {
-    this.secureComponentDrawer = false;
-    this.componentCardGroup = undefined;
+  selectedComponent(newVal, oldVal) {
+   if (newVal) {
+    this.secureComponentDrawer = true;
    }
   }
  },
