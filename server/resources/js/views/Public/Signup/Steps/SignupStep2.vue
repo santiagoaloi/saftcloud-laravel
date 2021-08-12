@@ -7,16 +7,16 @@
    <ValidationObserver ref="step2" slim>
     <v-row justify="center">
      <v-col sm="12">
-      <BaseFieldLabel label="Country" />
+      <baseFieldLabel label="Country" />
       <validation-provider v-slot="{ errors, reset }" name="country" rules="required">
        <v-autocomplete
+        maxlength="30"
         :items="countryCodes"
         v-model="signupForm.country"
         solo
         attach
         item-text="name"
         item-value="id"
-        hide-details
         @keydown.enter.prevent="validateAndProceed()"
         :outlined="isDark"
         :color="isDark ? '#208ad6' : 'grey'"
@@ -47,9 +47,10 @@
      </v-col>
 
      <v-col sm="6">
-      <BaseFieldLabel label="State, Province, or Region " />
+      <baseFieldLabel label="State, Province, or Region " />
       <validation-provider v-slot="{ errors, reset }" name="state" rules="required">
        <v-autocomplete
+        maxlength="30"
         :disabled="!states.length"
         :items="states"
         v-model="signupForm.state"
@@ -57,7 +58,6 @@
         attach
         item-text="name"
         item-value="id"
-        hide-details
         @keydown.enter.prevent="validateAndProceed()"
         :outlined="isDark"
         :color="isDark ? '#208ad6' : 'grey'"
@@ -72,13 +72,14 @@
      </v-col>
 
      <v-col sm="6">
-      <BaseFieldLabel label="City" />
+      <baseFieldLabel label="City" />
       <validation-provider v-slot="{ errors, reset }" name="city" rules="required">
        <v-text-field
+        counter
+        maxlength="30"
         :disabled="!states.length"
         v-model="signupForm.city"
         solo
-        hide-details
         @keydown.enter.prevent="validateAndProceed()"
         prepend-inner-icon="mdi-city"
         :outlined="isDark"
@@ -93,12 +94,13 @@
      </v-col>
 
      <v-col sm="8">
-      <BaseFieldLabel label="Address" />
+      <baseFieldLabel label="Address" />
       <validation-provider v-slot="{ errors, reset }" name="address" rules="required">
        <v-text-field
+        counter
+        maxlength="45"
         v-model="signupForm.address"
         solo
-        hide-details
         @keydown.enter.prevent="validateAndProceed()"
         prepend-inner-icon="mdi-map-marker"
         :outlined="isDark"
@@ -113,12 +115,13 @@
      </v-col>
 
      <v-col sm="4">
-      <BaseFieldLabel label="Postal code" />
+      <baseFieldLabel label="Postal code" />
       <validation-provider v-slot="{ errors, reset }" name="zipcode" rules="required">
        <v-text-field
+        counter
+        maxlength="15"
         v-model="signupForm.zipcode"
         solo
-        hide-details
         @keydown.enter.prevent="validateAndProceed()"
         prepend-inner-icon="mdi-map-marker"
         :outlined="isDark"

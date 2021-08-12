@@ -1,5 +1,5 @@
 <template>
- <v-row align="center" justify="space-between" class="mb-0">
+ <v-row data-aos="fade" data-aos-delay="400" data-aos-once="true" data-aos-duration="250" align="center" justify="space-between" class="mb-0">
   <v-col cols="12" lg="6">
    <v-row no-gutters align="center" justify="center">
     <div>
@@ -32,13 +32,13 @@
   <v-fade-transition hide-on-leave>
    <ValidationObserver ref="loginForm" slim>
     <v-col v-if="!resetPasswordScreen && !forgot" cols="12" sm="12" md="12" lg="6" xl="5">
-     <v-card :color="$vuetify.theme.dark ? '#2f3136' : '#f6f8fa'">
+     <v-card :class="{ shake: shake }" class="pa-4" :color="$vuetify.theme.dark ? '#2f3136' : '#f6f8fa'">
       <v-card-title class=" py-10">
        <h1>Login</h1>
       </v-card-title>
       <v-card-subtitle class=" mb-n10">
        <span v-if="$vuetify.breakpoint.mdAndUp">Don't have an account?</span>
-       <v-btn style="margin-top: -2.9px" small @click="signup = !signup" :class="{ 'ml-3': !$vuetify.breakpoint.smAndDown }" to="/signup">
+       <v-btn dark style="margin-top: -2.9px" small @click="signup = !signup" :class="{ 'ml-3': !$vuetify.breakpoint.smAndDown }" to="/signup">
         Sign up
        </v-btn>
       </v-card-subtitle>
@@ -108,7 +108,7 @@
 
         <v-col cols="12" sm="12" md="12">
          <v-card-actions class="mt-n7">
-          <v-btn width="40%" color="primary" class="mr-n2 white--text" large :loading="loading" @click.prevent="validatelogin()">
+          <v-btn width="40%" color="primary" class="ml-n2 white--text" large :loading="loading" @click.prevent="validatelogin()">
            Login
           </v-btn>
          </v-card-actions>
@@ -137,7 +137,8 @@ export default {
    resetPasswordScreen: false,
    forgot: false,
    loading: false,
-   password_visible: false
+   password_visible: false,
+   shake: false
   };
  },
 
@@ -155,14 +156,20 @@ export default {
      this.login(this.auth).then(authenticated => {
       if (!authenticated) {
        this.loading = false;
-       store.set("snackbar/value", true);
-       store.set("snackbar/text", "Invalid credentials, please try again.");
-       store.set("snackbar/color", "pink darken-1");
+       this.shake = true;
+       setTimeout(() => {
+        this.shake = false;
+       }, 500);
       } else {
        this.$router.push("/components");
        window.eventBus.$emit("BUS_BUILD_ROUTES");
       }
      });
+    } else {
+     this.shake = true;
+     setTimeout(() => {
+      this.shake = false;
+     }, 500);
     }
    });
   }

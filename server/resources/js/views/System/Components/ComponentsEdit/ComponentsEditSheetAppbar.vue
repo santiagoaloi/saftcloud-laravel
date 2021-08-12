@@ -1,11 +1,15 @@
 <template>
  <v-app-bar color="#24292e" flat dense>
-  <v-toolbar-title class="white--text"
-   >Editing
-   <span class="accent--text text--lighten-4">
-    {{ selectedComponent.config.general_config.title || ". . ." }}
-   </span>
-  </v-toolbar-title>
+  <v-toolbar-title class="white--text">Editing </v-toolbar-title>
+
+  <span class="ml-3">
+   <template v-if="selectedComponent.config.general_config.title">
+    {{ selectedComponent.config.general_config.title }}
+   </template>
+   <template v-else>
+    <base-typing-indicator />
+   </template>
+  </span>
 
   <v-spacer></v-spacer>
 

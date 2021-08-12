@@ -21,7 +21,7 @@
    <v-row>
     <v-col sm="4">
      <div class="mt-2">
-      <BaseFieldLabel required label="component name" />
+      <baseFieldLabel required label="component name" />
       <validation-provider immediate mode="aggressive" v-slot="{ errors, invalid }" name="field label" rules="required">
        <v-text-field
         :outlined="isDark"
@@ -38,7 +38,7 @@
      </div>
 
      <div class="mt-2">
-      <BaseFieldLabel label="component description" />
+      <baseFieldLabel label="component description" />
       <v-textarea
        :outlined="isDark"
        :solo="!isDark"
@@ -54,7 +54,7 @@
      </div>
 
      <div class="mt-2">
-      <BaseFieldLabel required label="Component group " />
+      <baseFieldLabel required label="Component group " />
       <v-autocomplete
        solo
        :color="isDark ? '#208ad6' : 'grey'"
@@ -72,7 +72,7 @@
 
      <v-divider class="my-5"></v-divider>
      <div class="mt-2">
-      <BaseFieldLabel class="mb-n3" label="Navigation drawer settings" />
+      <baseFieldLabel class="mb-n3" label="Navigation drawer settings" />
       <v-list-item two-line>
        <v-list-item-icon>
         <v-switch hide-details class="mt-2" v-model="selectedComponent.config.general_config.isVisibleInSidebar" />

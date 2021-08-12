@@ -5,7 +5,7 @@
     <v-alert class="mt-3" elevation="1" coloredBorder color="pink" border="right" dense>
      <div class="d-flex justify-space-between align-center">
       Unsaved
-      <v-btn small @click="rollbackChanges(selectedComponent)">rollback</v-btn>
+      <v-btn dark small @click="rollbackChanges(selectedComponent)">rollback</v-btn>
      </div>
     </v-alert>
    </v-sheet>
@@ -14,7 +14,7 @@
   <ValidationObserver ref="componentDrilldown" slim>
    <v-card-text class="pa-3">
     <div class="text--primary">
-     <BaseFieldLabel required label="Component name" />
+     <baseFieldLabel required label="Component name" />
      <validation-provider immediate mode="aggressive" v-slot="{ errors }" name="component name" rules="required">
       <v-text-field
        outlined
@@ -42,7 +42,7 @@
       </v-text-field>
      </validation-provider>
 
-     <BaseFieldLabel label="Description / Notes" />
+     <baseFieldLabel label="Description / Notes" />
      <v-textarea
       outlined
       :color="isDark ? '#208ad6' : 'grey'"
@@ -57,7 +57,7 @@
      </v-textarea>
 
      <div class="mt-2">
-      <BaseFieldLabel required label="Component group " />
+      <baseFieldLabel required label="Component group " />
       <v-autocomplete
        outlined
        :color="isDark ? '#208ad6' : 'grey'"
@@ -146,7 +146,7 @@
     <v-list-item-content>
      <v-list-item-title>Sidebar</v-list-item-title>
      <v-list-item-subtitle>
-      Display in navigation
+      Display in navigation drawer
      </v-list-item-subtitle>
     </v-list-item-content>
    </v-list-item>
@@ -217,9 +217,9 @@
 </template>
 
 <script>
-import { sync, call, get } from "vuex-pathify";
 import { store } from "@/store";
 import isEqual from "lodash/isEqual";
+import { sync, call, get } from "vuex-pathify";
 import componentActions from "@/mixins/componentActions";
 
 export default {
@@ -227,8 +227,6 @@ export default {
  mixins: [componentActions],
  computed: {
   ...sync("theme", ["isDark"]),
-  ...sync("drawers", ["secureComponentDrawer"]),
-  ...sync("componentManagement", ["componentCardGroup", "allComponents", "allGroups", "selectedComponentIndex", "componentEditSheet"]),
   ...get("componentManagement", [
    "hasUnsavedChanges",
    "previousComponentDisabled",
@@ -237,21 +235,15 @@ export default {
    "isAllFilteredComponentsEmpty",
    "isStarredColor",
    "isStarredIcon"
-  ])
+  ]),
+  ...sync("drawers", ["secureComponentDrawer"]),
+  ...sync("componentManagement", ["componentCardGroup", "allComponents", "allGroups", "selectedComponentIndex", "componentEditSheet"])
  },
 
  watch: {
-  isAllFilteredComponentsEmpty(val) {
-   if (val) {
-    this.secureComponentDrawer = false;
-    this.componentCardGroup = undefined;
-   }
-  },
-
-  componentCardGroup(val) {
-   if (!val) {
-    this.secureComponentDrawer = false;
-    this.componentCardGroup = undefined;
+  selectedComponent(newVal, oldVal) {
+   if (newVal) {
+    this.secureComponentDrawer = true;
    }
   }
  },

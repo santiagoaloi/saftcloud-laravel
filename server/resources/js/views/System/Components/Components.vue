@@ -6,7 +6,7 @@
 
   <v-divider />
 
-  <v-card color="transparent" flat :height="calculateHeight()" class="overflow-y-scroll">
+  <v-card color="transparent" flat :height="calculateHeight()" :class="{ dottedBackground: !isTableLayout }" class="overflow-y-scroll ">
    <v-scroll-y-transition hide-on-leave>
     <components-table v-if="isTableLayout && !isAllFilteredComponentsEmpty" />
    </v-scroll-y-transition>
@@ -55,8 +55,10 @@ export default {
  methods: {
   ...call("componentManagement/*"),
   calculateHeight() {
-   return Number(this.$vuetify.breakpoint.height - 318);
+   return Number(this.$vuetify.breakpoint.height - 371);
   }
  }
 };
 </script>
+
+<style></style>

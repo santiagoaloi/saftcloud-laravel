@@ -7,15 +7,16 @@
    <ValidationObserver ref="step1" slim>
     <v-row justify="center">
      <v-col sm="12">
-      <BaseFieldLabel label="Email" />
+      <baseFieldLabel label="Email" />
       <span></span>
       <validation-provider v-slot="{ errors, reset }" name="email" rules="required|email">
        <v-text-field
+        counter
+        maxlength="70"
         autofocus
         type="email"
         v-model="signupForm.email"
         solo
-        hide-details
         @keydown.enter.prevent="validateAndProceed()"
         prepend-inner-icon="mdi-email"
         :outlined="isDark"
@@ -29,15 +30,15 @@
       </validation-provider>
      </v-col>
      <v-col sm="6">
-      <BaseFieldLabel label="Country Code" />
+      <baseFieldLabel label="Country Code" />
       <validation-provider v-slot="{ errors, reset }" name="country code" rules="required">
        <v-autocomplete
+        maxlength="30"
         :items="countryCodes"
         v-model="signupForm.phone_code"
         solo
         item-text="phone_code"
         :filter="filterCountries"
-        hide-details
         @keydown.enter.prevent="validateAndProceed()"
         hide-no-data
         :outlined="isDark"
@@ -74,10 +75,12 @@
       </validation-provider>
      </v-col>
      <v-col sm="6">
-      <BaseFieldLabel label="Phone number" />
+      <baseFieldLabel label="Phone number" />
       <span></span>
       <validation-provider v-slot="{ errors, reset }" name="phone number" rules="required">
        <v-text-field
+        oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+        maxlength="25"
         type="number"
         v-model="signupForm.phoneNumber"
         solo

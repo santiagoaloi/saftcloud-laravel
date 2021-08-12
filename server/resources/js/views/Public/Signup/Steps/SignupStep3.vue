@@ -8,13 +8,14 @@
     <v-row justify="center">
      <v-col sm="6">
       <validation-provider v-slot="{ errors, reset }" name="company name" rules="required">
-       <BaseFieldLabel label="Account" />
+       <baseFieldLabel label="Account" />
        <v-text-field
+        counter
+        maxlength="25"
         autofocus
         v-model="signupForm.companyName"
         hint="Oficial registed company name"
         solo
-        hide-details
         @keydown.enter.prevent="validateAndProceed()"
         prepend-inner-icon="mdi-account"
         :outlined="isDark"
@@ -28,13 +29,14 @@
       </validation-provider>
      </v-col>
      <v-col sm="6">
-      <BaseFieldLabel label="Company Alias" />
+      <baseFieldLabel label="Company Alias" />
       <validation-provider v-slot="{ errors, reset }" name="company alias" rules="required">
        <v-text-field
+        counter
+        maxlength="25"
         v-model="signupForm.companyNameAlias"
         hint="Public company name alias"
         solo
-        hide-details
         @keydown.enter.prevent="validateAndProceed()"
         prepend-inner-icon="mdi-account"
         :outlined="isDark"

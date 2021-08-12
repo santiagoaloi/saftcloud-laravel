@@ -2,7 +2,7 @@
  <div>
   <v-row align="center" class="mt-2">
    <v-col cols="12" sm="4">
-    <BaseFieldLabel label="Component groups" />
+    <baseFieldLabel label="Component groups" />
     <v-autocomplete
      @update:search-input="syncGroupInputValue($event)"
      @keydown="!dropDownValue ? (dropDownValue = true) : ''"
@@ -16,8 +16,7 @@
      :maxlength="20"
      :items="allGroups"
      :menu-props="setValue()"
-     :outlined="isDark"
-     :solo="!isDark"
+     solo
      :color="isDark ? '#208ad6' : 'grey'"
      :background-color="isDark ? '#28292b' : 'white'"
     >

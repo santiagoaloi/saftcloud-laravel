@@ -166,11 +166,12 @@ class ComponentGroupController extends Controller {
                   ->whereRaw("components.component_group_id = component_groups.id");
         })->get();
 
-        if(count($exist) < 1){
+        if(!count($exist) ){
+
             $query = ComponentGroup::find($id);
             $query->delete();
-
             return $this->showAll();
+
         } else {
             $components = DB::table('components')->where('component_group_id', '=', $id)->get();
 

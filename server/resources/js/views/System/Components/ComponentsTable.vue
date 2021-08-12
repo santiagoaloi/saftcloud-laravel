@@ -37,7 +37,9 @@
     </v-hover>
    </template>
 
-   <template v-slot:[`item.name`]="{ item }"> /{{ item.name }} </template>
+   <template v-slot:[`item.name`]="{ item }">
+    <router-link :class="{ 'grey--text': isDark }" :to="`/${item.name}`">{{ item.name }}</router-link>
+   </template>
 
    <template v-slot:[`item.group`]="{ item }">
     <v-icon style="margin-top:-2px;" class="mr-1" small> mdi-folder-outline</v-icon>
@@ -46,7 +48,14 @@
    </template>
 
    <template v-slot:[`item.config.general_config.title`]="{ item }">
-    {{ item.config.general_config.title || ". . ." }}
+    <span class="gallery-card-title pl-2">
+     <template v-if="item.config.general_config.title">
+      {{ item.config.general_config.title }}
+     </template>
+     <template v-else>
+      <base-typing-indicator class="ml-1 mt-2" style="zoom:0.7" />
+     </template>
+    </span>
    </template>
 
    <template v-slot:[`item.status`]="{ item }">
@@ -181,6 +190,7 @@ export default {
    let index = this.allComponentsFiltered.findIndex(component => component.id === row.id);
    this.componentCardGroup = index;
    this.setSelectedComponent(index);
+   console.log(index);
   },
 
   toggleSelection(id, row) {
@@ -188,7 +198,7 @@ export default {
   },
 
   calculateHeight() {
-   return Number(this.$vuetify.breakpoint.height - 378);
+   return Number(this.$vuetify.breakpoint.height - 430);
   }
  }
 };

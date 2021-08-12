@@ -36,10 +36,10 @@ export default {
  },
 
  created() {
-  //Define event bus
+  // ** Define event bus
   window.eventBus = this;
 
-  //Build routes on request.
+  // ** Build routes on request.
   window.eventBus.$on("BUS_BUILD_ROUTES", () => {
    this.buildRoutes();
   });
@@ -51,21 +51,21 @@ export default {
 
  methods: {
   buildRoutes() {
-   //Clear routes and routes matcher.
+   // * Clear routes and routes matcher.
    resetRouter();
 
-   // Waits for indexeddb to be ready.
+   // * Waits for indexeddb to be ready.
    setTimeout(() => {
     axios.get("/api/getComponentNames/").then(response => {
      if (response.status === 200) {
       const components = response.data.components;
 
-      // Dummy component to avoid webpack error about not finding the path.
+      // * Dummy component to avoid webpack error about not finding the path.
       if (!components.length) {
        components.push("Blank");
       }
 
-      //Add new routes
+      // * Add new routes
       for (const component of components) {
        this.$router.addRoute({
         path: `/${component.name}`,

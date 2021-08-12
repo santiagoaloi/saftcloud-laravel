@@ -23,7 +23,7 @@ export default [
     name: "/components/formFields",
     meta: { layout: "secure_layout", title: "Manage components" },
     component: () =>
-     import(/* webpackChunkName: 'components-formFields' */ "@/views/System/Components/ComponentsEdit/ConfigViews/FormFields/FormFields.vue")
+     import(/* webpackChunkName: 'components-form-fields' */ "@/views/System/Components/ComponentsEdit/ConfigViews/FormFields/FormFields.vue")
    },
    {
     path: "/components/query",

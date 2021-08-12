@@ -67,7 +67,12 @@
        </v-card-actions>
 
        <span class="gallery-card-title pl-2">
-        {{ component.config.general_config.title || ". . ." }}
+        <template v-if="component.config.general_config.title">
+         {{ component.config.general_config.title }}
+        </template>
+        <template v-else>
+         <base-typing-indicator class="ml-n2" />
+        </template>
        </span>
 
        <div class="gallery-card-subtitle-container">
@@ -126,7 +131,6 @@ export default {
 
  computed: {
   ...sync("theme", ["isDark"]),
-  ...sync("drawers", ["secureComponentDrawer"]),
   ...sync("componentManagement", ["componentCardGroup"]),
   ...get("componentManagement", [
    "mapComponentGroup",
@@ -156,7 +160,7 @@ export default {
   ...call("componentManagement/*"),
 
   getComponentCardColor(active) {
-   return this.isDark ? (active ? "#51555e" : "#40434a") : active ? "indigo lighten-5" : "white";
+   return this.isDark ? (active ? "#51555e" : "#40434a") : active ? "#edeef2" : "white";
   }
  }
 };
