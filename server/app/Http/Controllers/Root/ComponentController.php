@@ -217,19 +217,21 @@ class ComponentController extends Controller {
     public function forceDestroy($id){
         $query = Component::withTrashed()->find($id);
         $pathDeleted = resource_path("js/views/Deleted/{$query->name}");
-        if(!file_exists($pathDeleted)){
+        if(file_exists($pathDeleted)){
             FileManager::deleteDirectory($pathDeleted);
         }
 
         $pathProtected = resource_path("js/views/Protected/{$query->name}");
-        if(!file_exists($pathProtected)){
+        if(file_exists($pathProtected)){
             FileManager::deleteDirectory($pathProtected);
         }
 
         // delete row in db
         $query->forceDelete();
 
-        return $this->showAll();
+        return response([
+            'status'=> true
+        ], 200);
     }
 
     public function parseComponent($component){
