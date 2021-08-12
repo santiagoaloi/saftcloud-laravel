@@ -1,7 +1,7 @@
 <template>
  <div>
   <v-row align="center" class="mt-2">
-   <v-col cols="12" sm="4">
+   <v-col cols="12" sm="6" xl="4">
     <baseFieldLabel label="Component groups" />
     <v-autocomplete
      @update:search-input="syncGroupInputValue($event)"
@@ -28,7 +28,7 @@
         </v-icon>
        </v-list-item-action>
        <v-list-item-content>
-        <v-list-item-title> {{ hasSelectedAllGroups ? "Unselect all groups" : "Select all groups" }} </v-list-item-title>
+        <v-list-item-title> {{ hasSelectedAllGroups ? "Unselect all" : "Select all" }} </v-list-item-title>
        </v-list-item-content>
        <v-list-item-action>
         <v-switch hide-details @click.stop v-model="persistenDropdown" :ripple="false" />
@@ -97,7 +97,7 @@
      </template>
     </v-autocomplete>
    </v-col>
-   <v-col cols="12" sm="8">
+   <v-col cols="12" sm="6" xl="8">
     <v-chip-group class="mt-n1" show-arrows>
      <transition-group appear name="scale-transition">
       <v-chip :ripple="false" close @click:close="unselectGroup(item.id)" v-for="(item, index) in selectedComponentGroups" :key="`${index}`">
@@ -164,7 +164,7 @@
         </v-list-item-action>
         <v-list-item-title>Restore </v-list-item-title>
        </v-list-item>
-
+       <!-- 
        <v-list-item v-if="!item.deleted_at" @click.stop="removeComponentWarning(item.id, 'delete', 'component', item.config.general_config.title)">
         <v-list-item-action>
          <v-btn small icon dark color="#4C4C4C">
@@ -174,9 +174,9 @@
          </v-btn>
         </v-list-item-action>
         <v-list-item-title>Remove</v-list-item-title>
-       </v-list-item>
+       </v-list-item> -->
 
-       <v-list-item v-if="item.deleted_at" @click.stop="removeComponentWarning(item.id, 'post', 'forceDestroy', item.config.general_config.title)">
+       <v-list-item @click.stop="removeComponentWarning(item.id, 'post', 'forceDestroy', item.config.general_config.title)">
         <v-list-item-action>
          <v-btn small icon dark color="#4C4C4C">
           <v-icon color="red lighten-2" small class="mx-2">

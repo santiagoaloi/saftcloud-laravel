@@ -236,16 +236,7 @@ export default {
    "isStarredColor",
    "isStarredIcon"
   ]),
-  ...sync("drawers", ["secureComponentDrawer"]),
   ...sync("componentManagement", ["componentCardGroup", "allComponents", "allGroups", "selectedComponentIndex", "componentEditSheet"])
- },
-
- watch: {
-  selectedComponent(newVal, oldVal) {
-   if (newVal) {
-    this.secureComponentDrawer = true;
-   }
-  }
  },
 
  methods: {

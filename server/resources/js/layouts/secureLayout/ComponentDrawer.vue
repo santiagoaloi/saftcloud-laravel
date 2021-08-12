@@ -36,5 +36,15 @@ export default {
   ...sync("drawers", ["secureComponentDrawer"]),
   ...get("componentManagement", ["selectedComponent"])
  }
+
+ //  watch: {
+ //   selectedComponent(newVal, oldVal) {
+ //    if (newVal) {
+ //     this.secureComponentDrawer = true;
+ //    } else {
+ //     this.secureComponentDrawer = false;
+ //    }
+ //   }
+ //  }
 };
 </script>

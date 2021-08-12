@@ -265,14 +265,17 @@ const actions = {
 
  // Retrieves the navigation structure used in the left side of the secure drawer.
  getNavigationStructure({}) {
-  axios
-   .get("api/getNavigationStructure")
-   .then(response => {
-    store.set("componentManagement/navigationStructure", response.data.navigationStructure);
-   })
-   .catch(_ => {
-    store.set("componentManagement/navigationStructure", {});
-   });
+  axios.get("api/getNavigationStructure").then(response => {
+   store.set("componentManagement/navigationStructure", response.data.navigationStructure);
+  });
+
+  //  .catch(error => {
+  //   // store.set("componentManagement/navigationStructure", {});
+  //   if (error.response.data.message === "Unauthenticated.") {
+  //    store.set("authentication/session", {});
+  //    router.push("/login");
+  //   }
+  //  });
  },
 
  // Retrieves the component groups.
@@ -348,7 +351,7 @@ const actions = {
      store.set("snackbar/text", `Group "${state.groupName}" created`);
      store.set("snackbar/color", "primary");
      store.set("componentManagement/groupName", "");
-     store.set("componentManagement/groupChild", "");
+     //  store.set("componentManagement/groupChild", "");
      store.set("componentManagement/groupParent", 0);
      dispatch("getNavigationStructure");
      dispatch("getDbGroupNames");
@@ -464,8 +467,10 @@ const actions = {
      store.set("snackbar/text", `"${state.componentSettings.title}" component created`);
      store.set("snackbar/color", "primary");
 
+     // Set the status tab as "all"
+     state.activeStatusTab = 0;
+
      // Autoselect latest created component
-     store.set("drawers/secureComponentDrawer", true);
      store.set("componentManagement/dialogComponent", false);
 
      const activeGroup = state.allGroups.find(item => item.id === state.componentSettings.component_group_id);
