@@ -130,7 +130,7 @@ export default {
  name: "Login",
  data() {
   return {
-   auth: { email: "", password: "" },
+   auth: { email: "", password: "" , remember: false},
    signup: false,
    newPassword: "",
    newPasswordRepeat: "",

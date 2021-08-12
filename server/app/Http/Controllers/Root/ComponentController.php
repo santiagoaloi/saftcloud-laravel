@@ -215,10 +215,15 @@ class ComponentController extends Controller {
     }
 
     public function forceDestroy($id){
-        $query = Component::onlyTrashed()->find($id);
+        $query = Component::withTrashed()->find($id);
         $pathDeleted = resource_path("js/views/Deleted/{$query->name}");
         if(!file_exists($pathDeleted)){
             FileManager::deleteDirectory($pathDeleted);
+        }
+
+        $pathProtected = resource_path("js/views/Protected/{$query->name}");
+        if(!file_exists($pathProtected)){
+            FileManager::deleteDirectory($pathProtected);
         }
 
         // delete row in db

@@ -7,16 +7,17 @@ use App\Exceptions\Handler;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\DB;
-use App\Models\GeneralConfig\LookUpList;
+use Illuminate\Support\Facades\Session;
 
+use App\Models\GeneralConfig\LookUpList;
 use App\Http\Controllers\Private\RoleController;
 use App\Http\Controllers\Private\UserController;
 use App\Http\Controllers\Public\StateController;
 use App\Http\Controllers\Private\BranchController;
 use App\Http\Controllers\Root\ComponentController;
 use App\Http\Controllers\Root\ComponentGroupController;
-use App\Http\Controllers\Root\ComponentDefaultController;
 Use Exception;
+use App\Http\Controllers\Root\ComponentDefaultController;
 use App\Http\Controllers\GeneralConfig\LookUpListController;
 use App\Http\Controllers\GeneralConfig\LookUpListValueController;
 
@@ -70,7 +71,17 @@ class TestFunctionController extends Controller {
     }
 
     public function test3(){
-        return "hola";
+        return session();
+        // var_dump(csrf_token());
+        // var_dump($request->header('X-CSRF-TOKEN'));
+    }
+
+    public function test4(Request $request){
+        return $request->session()->all();
+
+        return Session::getId();
+
+        return session()->all();
         // var_dump(csrf_token());
         // var_dump($request->header('X-CSRF-TOKEN'));
     }
@@ -80,6 +91,5 @@ class TestFunctionController extends Controller {
         $pepe =  json_decode($test->getLast(), true);
         return $pepe['form_fields'];
     }
-
 
 }

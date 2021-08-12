@@ -3,13 +3,43 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Laravel\Fortify\Fortify;
+use Illuminate\Auth\AuthenticationException;
+use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller {
+
+    public function pepe(Request $request) {
+        $credentials = $request->validate([
+            'email' => 'required|string|email',
+            'password' => 'required|string'
+        ]);
+
+        $remember = $request->filled('remember');
+
+        if(Auth::attempt($credentials, $remember)){
+            $user = User::where('email', $credentials['email'])->first();
+            $token = $user->createToken($credentials['email'], ['component.show'])->plainTextToken;
+
+            $response = [
+                'user' => $user,
+                'token' => $token
+            ];
+    
+            return response([
+                'data' => $response
+            ], 200);
+        }
+
+        throw ValidationException::withMessages([
+            'email'=> __('auth.failed')
+        ]);
+        // throw new AuthenticationException();
+    }
+
     public function register(Request $request) {
         $fields = $request->validate([
             'name' => 'required|string',
@@ -20,50 +50,47 @@ class AuthController extends Controller {
         $user = User::create([
             'name' => $fields['name'],
             'email' => $fields['email'],
-            'password' => bcrypt($fields['password'])
+            'password' => Hash::make($fields['password'])
         ]);
 
-        $token = $user->createToken('myapptoken')->plainTextToken;
-
         $response = [
-            'user' => $user,
-            'token' => $token
+            'user' => $user
         ];
 
         return response($response, 201);
     }
 
     public function login(Request $request) {
-        $fields = $request->validate([
+        $credentials = $request->validate([
             'email' => 'required|string',
             'password' => 'required|string'
         ]);
 
-        // Check email
-        $user = User::where('email', $fields['email'])->first();
+        if (Auth::attempt(['email' => $request->email, 'password' => $request->password])){
+            $user = User::where('email', $credentials['email'])->first();
+            $token = $user->createToken($user['email'], ['component.show'])->plainTextToken;
 
-        // Check password
-        if(!$user || !Hash::check($fields['password'], $user->password)) {
+            $response = [
+                'user' => $user,
+                'token' => $token
+            ];
+    
             return response([
-                'message' => 'Invalid Credentials',
-                'status' => false
-            ], 401);
+                'data' => $response
+            ], 200);
         }
 
-        $token = $user->createToken($fields['email'], ['component.show'])->plainTextToken;
-
-        $response = [
-            'user' => $user,
-            'token' => $token
-        ];
-
         return response([
-            'data' => $response
-        ], 200);
+            'message' => 'Invalid Credentials',
+            'status' => false
+        ], 401);
+
     }
 
     public function logout(Request $request) {
         $request->user()->currentAccessToken()->delete();
+        Auth::logout();
+
         return [
             'message' => 'Logged out',
             'status' => true

@@ -14,7 +14,7 @@ const actions = {
  ...make.actions(state),
 
  //Sends login form payload to backend.
- login({ commit }, data) {
+ async login({ commit }, data) {
   return axios
    .post("api/login", data)
    .then(response => {
