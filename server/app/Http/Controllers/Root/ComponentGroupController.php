@@ -167,29 +167,31 @@ class ComponentGroupController extends Controller {
         })->get();
 
         if(!count($exist) ){
-
             $query = ComponentGroup::find($id);
             $query->delete();
             return $this->showAll();
-
         } else {
-            $components = DB::table('components')->where('component_group_id', '=', $id)->get();
-
-            $funcComponentController = New ComponentController;
-            foreach($components as $component){
-                $arrayComponent[] = $funcComponentController->parseComponent($component);
-            };
-
-            return response([
-                'components' => $arrayComponent
-            ], 200);
-
-            return response([
-                'message' => 'Hay un componente vinculado a este grupo',
-                'components' => $arrayComponent,
-                'status'=> false
-            ], 404);
+            return $this->getExistComponents($id);
         }
+    }
+
+    public function getExistComponents($id){
+        $components = DB::table('components')->where('component_group_id', '=', $id)->get();
+
+        $funcComponentController = New ComponentController;
+        foreach($components as $component){
+            $arrayComponent[] = $funcComponentController->parseComponent($component);
+        };
+
+        return response([
+            'components' => $arrayComponent
+        ], 200);
+
+        return response([
+            'message' => 'Hay un componente vinculado a este grupo',
+            'components' => $arrayComponent,
+            'status'=> false
+        ], 404);
     }
 
 }
