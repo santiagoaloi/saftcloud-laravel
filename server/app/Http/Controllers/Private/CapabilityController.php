@@ -2,29 +2,17 @@
 
 namespace App\Http\Controllers\Private;
 
-use App\Models\User;
+use App\Models\Roles\Capability;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Database\QueryException;
 
-use Spatie\Permission\Models\Role;
-use Spatie\Permission\Models\Permission;
-
-class UserController extends Controller {
-
-    public function __construct() {
-        $this->middleware(['permission:user.edit']);
-    }
+class CapabilityController extends Controller {
 
     public function store(Request $request) {
-        //** TEST PARA SUBIR ARCHIVOS AL CREAR UN USUARIO */
-        // if($request->hasFile('picture')){
-        //     $query['picture']=$request->file('picture')->store('avatars', 'public');
-        // };
         try{
-            $query = User::create($request->all());
+            $query = Capability::create($request->all());
         }
-
         catch(QueryException $e){
             if($e->errorInfo[1]){
                 return response([
@@ -39,8 +27,8 @@ class UserController extends Controller {
         ], 200);
     }
 
-    public function show($id) {
-        $result = User::find($id);
+    public function show(Request $id) {
+        $result = Capability::find($id);
 
         return response([
             'row'=> $result
@@ -49,21 +37,21 @@ class UserController extends Controller {
 
     public function showAll() {
         return response([
-            'rows'=> User::get()
+            'rows'=> Capability::get()
         ], 200);
     }
 
     //  Para mostrar los elementos eliminados
     public function getTrashed() {
         return response([
-            'rows'=> User::onlyTrashed()->get()
+            'rows'=> Capability::onlyTrashed()->get()
         ], 200);
     }
 
     //  Para mostrar un elemento eliminado
     public function recoveryTrashed($id) {
         return response([
-            'row'=> User::onlyTrashed()->find($id)->recovery()
+            'row'=> Capability::onlyTrashed()->find($id)->recovery()
         ], 200);
     }
 
@@ -72,7 +60,7 @@ class UserController extends Controller {
     }
 
     public function update(Request $request, $id) {
-        $query = User::find($id);
+        $query = Capability::find($id);
         try{
             $query->fill($request->all())->save();
         }
@@ -99,37 +87,13 @@ class UserController extends Controller {
     }
 
     public function destroy($id) {
-        $query = User::find($id);
+        $query = Capability::find($id);
         $query->delete();
 
         return $this->showAll();
     }
 
-    public function testRoles(){
-        // User::first()->assignRole('user');
-        $user = User::first();
-        $user->getAllPermissions();
-
-        dd($user);
-
-        // Role::find(3)->givePermissionTo(Permission::find(3));
-
-        // Role::create(['name' => 'User']);
-        // Permission::create(['name' => 'user.edit']);
-    }
-
-    // AGREGA TODOS LOS ROLES QUE ENVIAMOS EN LA VARIABLE ROLE
-    public function attachRole(Request $request, $role){
-        $request->role()->attach($role);
-    }
-
-    // ELIMINA TODOS LOS ROLES QUE ENVIAMOS EN LA VARIABLE ROLE
-    public function detachRole(Request $request, $role){
-        $request->role()->detach($role);
-    }
-
-    // ELIMINA TODOS LOS ROLES Y AGREGA LOS NUEVOS
-    public function syncRole(Request $request, $role){
-        $request->role()->sync($role);
+    public function getUserRol(){
+        $query = '';
     }
 }

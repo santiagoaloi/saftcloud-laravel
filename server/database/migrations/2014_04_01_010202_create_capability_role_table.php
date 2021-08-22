@@ -4,18 +4,16 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePaymentStatusesTable extends Migration {
+class CreateCapabilityRoleTable extends Migration {
     /**
      * Run the migrations.
      *
      * @return void
      */
     public function up() {
-        Schema::create('payment_statuses', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('branch_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
-            $table->string('name');
-            $table->string('short_name');
+        Schema::create('capability_role', function (Blueprint $table) {
+            $table->foreignId('capability_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
+            $table->foreignId('role_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
             $table->softDeletes();
             $table->timestamps();
         });
@@ -27,6 +25,6 @@ class CreatePaymentStatusesTable extends Migration {
      * @return void
      */
     public function down() {
-        Schema::dropIfExists('payment_statuses');
+        Schema::dropIfExists('capability_role');
     }
 }

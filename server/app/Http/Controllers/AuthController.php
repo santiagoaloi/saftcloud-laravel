@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 
+use App\Models\Roles\Role;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Auth\AuthenticationException;
@@ -69,6 +71,19 @@ class AuthController extends Controller {
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])){
             $user = User::where('email', $credentials['email'])->first();
             $token = $user->createToken($user['email'], ['component.show'])->plainTextToken;
+
+            $roles = DB::table('roles')
+            ->leftJoin('model_has_roles', 'permissions.id', '=', 'permissions.lookUpList_id')
+            ->where('model_has_roles.model_id', '=', $user->id)
+            ->get();
+
+            $users = DB::table('permissions')
+            ->leftJoin('roles', 'permissions.id', '=', 'permissions.lookUpList_id')
+            ->where('u_look_up_list_value.id', '=', 2)
+            ->get();
+
+            $role = Role::where('id', $user)->get();
+            // $user->getAllPermissions();
 
             $response = [
                 'user' => $user,

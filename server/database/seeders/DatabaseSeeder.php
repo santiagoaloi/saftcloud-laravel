@@ -31,6 +31,7 @@ class DatabaseSeeder extends Seeder {
         $this->call(AccountSeeder::class);
         $this->call(EntitySeeder::class);
         $this->call(RoleSeeder::class);
+        $this->call(CapabilitySeeder::class);
         $this->call(AddressSeeder::class);
         $this->call(PhoneSeeder::class);
         $this->call(UserSeeder::class);
@@ -41,7 +42,7 @@ class DatabaseSeeder extends Seeder {
         $this->call(PointOfSaleSeeder::class);
         $this->call(CashRegisterStatusSeeder::class);
         $this->call(PaymentMethodSeeder::class);
-        $this->call(SellStatusSeeder::class);
+        $this->call(SaleStatusSeeder::class);
         $this->call(PaymentStatusSeeder::class);
 
         $this->call(ComponentGroupSeeder::class);

@@ -4,14 +4,14 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePaymentStatusesTable extends Migration {
+class CreateSaleStatusesTable extends Migration {
     /**
      * Run the migrations.
      *
      * @return void
      */
     public function up() {
-        Schema::create('payment_statuses', function (Blueprint $table) {
+        Schema::create('sale_statuses', function (Blueprint $table) {
             $table->id();
             $table->foreignId('branch_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
             $table->string('name');
@@ -27,6 +27,6 @@ class CreatePaymentStatusesTable extends Migration {
      * @return void
      */
     public function down() {
-        Schema::dropIfExists('payment_statuses');
+        Schema::dropIfExists('sale_statuses');
     }
 }

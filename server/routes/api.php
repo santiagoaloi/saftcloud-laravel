@@ -110,8 +110,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 });
 
 //Testing
-Route::post('/testFunction', [TestFunctionController::class, 'test3api']);
-Route::get('/testFunction', [TestFunctionController::class, 'test4api']);
+Route::post('/testFunction', [UserController::class, 'testRoles']);
+Route::get('/testFunction', [TestFunctionController::class, 'test3']);
 
 // Route::group(['middleware' => ['web']], function () {
 //     Route::post('/testFunction', [AuthenticatedSessionController::class, 'store']);
