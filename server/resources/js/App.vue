@@ -10,6 +10,7 @@ import config from "./configs";
 import { store } from "@/store";
 import { sync } from "vuex-pathify";
 import { router, resetRouter } from "@/router";
+import auth from "@/util/auth";
 
 export default {
  name: "AppVue",
@@ -46,7 +47,9 @@ export default {
  },
 
  mounted() {
-  this.buildRoutes();
+  if (auth.loggedIn()) {
+   this.buildRoutes();
+  }
  },
 
  methods: {

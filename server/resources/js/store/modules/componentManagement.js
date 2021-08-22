@@ -1,7 +1,7 @@
-import axios from "axios";
 import { store } from "@/store";
 import { make } from "vuex-pathify";
 import { isEqual, isEmpty, cloneDeep } from "lodash";
+import axios from "axios";
 
 // When this function is called, the component settings form is back to default values.
 const initialComponentSettings = () => {
@@ -268,14 +268,6 @@ const actions = {
   axios.get("api/getNavigationStructure").then(response => {
    store.set("componentManagement/navigationStructure", response.data.navigationStructure);
   });
-
-  //  .catch(error => {
-  //   // store.set("componentManagement/navigationStructure", {});
-  //   if (error.response.data.message === "Unauthenticated.") {
-  //    store.set("authentication/session", {});
-  //    router.push("/login");
-  //   }
-  //  });
  },
 
  // Retrieves the component groups.
