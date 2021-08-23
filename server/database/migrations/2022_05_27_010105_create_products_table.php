@@ -13,7 +13,7 @@ class CreateProductsTable extends Migration {
     public function up() {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('entity_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
+            $table->foreignId('branch_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
             $table->string('bar_code');
             $table->string('sku');
             $table->foreignId('product_category_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');

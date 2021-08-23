@@ -13,6 +13,7 @@ class CreateProductFamiliesTable extends Migration {
     public function up() {
         Schema::create('product_families', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('branch_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
             $table->string('name');
             $table->foreignId('product_category_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
             $table->softDeletes();

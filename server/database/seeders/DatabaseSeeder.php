@@ -40,7 +40,7 @@ class DatabaseSeeder extends Seeder {
 
         $this->call(BranchSeeder::class);
         $this->call(PointOfSaleSeeder::class);
-        $this->call(CashRegisterStatusSeeder::class);
+        $this->call(CashregStatusSeeder::class);
         $this->call(PaymentMethodSeeder::class);
         $this->call(SaleStatusSeeder::class);
         $this->call(PaymentStatusSeeder::class);
