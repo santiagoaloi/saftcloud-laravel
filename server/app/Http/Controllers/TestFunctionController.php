@@ -2,21 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Helpers\Helper;
+use App\Models\Roles\Role;
+
 use App\Exceptions\Handler;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
-
 use App\Models\GeneralConfig\LookUpList;
 use App\Http\Controllers\Private\RoleController;
 use App\Http\Controllers\Private\UserController;
 use App\Http\Controllers\Public\StateController;
 use App\Http\Controllers\Private\BranchController;
+Use Exception;
 use App\Http\Controllers\Root\ComponentController;
 use App\Http\Controllers\Root\ComponentGroupController;
-Use Exception;
 use App\Http\Controllers\Root\ComponentDefaultController;
 use App\Http\Controllers\GeneralConfig\LookUpListController;
 use App\Http\Controllers\GeneralConfig\LookUpListValueController;
@@ -71,7 +73,20 @@ class TestFunctionController extends Controller {
     }
 
     public function test3(){
-        return session();
+        $user = User::first();
+
+        foreach ($user->roles as $role) {
+            foreach ($role->capabilities as $capability){
+                $role['capabilities'] = $capability;
+                $capabilities[] = $capability;
+            }
+            $user['capabilities'] = $capabilities;
+            $user['roles'] = $role;
+        };
+
+        return $user;
+
+        // return session();
         // var_dump(csrf_token());
         // var_dump($request->header('X-CSRF-TOKEN'));
     }

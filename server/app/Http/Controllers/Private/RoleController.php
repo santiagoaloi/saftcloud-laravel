@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Private;
 
-use App\Models\Private\Role;
+use App\Models\Roles\Role;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Database\QueryException;
@@ -91,5 +91,9 @@ class RoleController extends Controller {
         $query->delete();
 
         return $this->showAll();
+    }
+
+    public function getUserRol(){
+        $query = '';
     }
 }

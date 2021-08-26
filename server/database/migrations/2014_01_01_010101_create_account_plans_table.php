@@ -15,7 +15,7 @@ class CreateAccountPlansTable extends Migration {
             $table->id();
             $table->integer('users');
             $table->text('modules')->nullable();
-            $table->integer('locations');
+            $table->integer('branches');
             $table->integer('cash_registers');
             $table->softDeletes();
             $table->timestamps();

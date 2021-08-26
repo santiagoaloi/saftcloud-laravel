@@ -16,6 +16,7 @@ class CreatePointOfSalesTable extends Migration {
             $table->foreignId('branch_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
             $table->integer('ptoVta');
             $table->string('name');
+            $table->string('short_name');
             $table->smallInteger('status');
             $table->softDeletes();
             $table->timestamps();

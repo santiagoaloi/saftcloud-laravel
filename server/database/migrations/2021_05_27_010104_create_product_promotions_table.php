@@ -13,6 +13,8 @@ class CreateProductPromotionsTable extends Migration {
     public function up() {
         Schema::create('product_promotions', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('branch_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
+            $table->string('name');
             $table->softDeletes();
             $table->timestamps();
         });

@@ -4,18 +4,16 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRolesTable extends Migration {
+class CreateCapabilitiesTable extends Migration {
     /**
      * Run the migrations.
      *
      * @return void
      */
     public function up() {
-        Schema::create('roles', function (Blueprint $table) {
+        Schema::create('capabilities', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('account_id')->nullable()->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
-            $table->foreignId('role_id')->nullable()->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
-            $table->string('description');
+            $table->string('name');
             $table->softDeletes();
             $table->timestamps();
         });
@@ -27,6 +25,6 @@ class CreateRolesTable extends Migration {
      * @return void
      */
     public function down() {
-        Schema::dropIfExists('roles');
+        Schema::dropIfExists('capabilities');
     }
 }

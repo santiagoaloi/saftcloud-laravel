@@ -13,8 +13,8 @@ class UserSeeder extends Seeder {
      */
     public function run() {
         DB::table('users')->insert([
-            ["id"=>1, "entity_id"=>1,"role_id"=>1,"email"=>"facu.ft@gmail.com","password"=>bcrypt('password')],
-            ["id"=>2, "entity_id"=>1,"role_id"=>1,"email"=>"santiagoaloi@gmail.com","password"=>bcrypt('password')]
+            ["id"=>1, "entity_id"=>1,"email"=>"facu.ft@gmail.com","password"=>bcrypt('password')],
+            ["id"=>2, "entity_id"=>1,"email"=>"santiagoaloi@gmail.com","password"=>bcrypt('password')]
         ]);
     }
 }
