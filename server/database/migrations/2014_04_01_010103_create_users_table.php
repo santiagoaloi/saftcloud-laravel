@@ -13,7 +13,7 @@ class CreateUsersTable extends Migration {
     public function up() {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('entity_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
+            $table->foreignId('entity_id')->constrained()->unique()->onDelete('RESTRICT')->onUpdate('CASCADE');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

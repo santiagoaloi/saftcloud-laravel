@@ -2,13 +2,23 @@
 
 namespace App\Models\Private;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Address extends Model {
-    use HasFactory;
     use SoftDeletes;
 
-    protected $fillable = ['entity_id', 'description', 'state_id', 'city', 'neighborhood', 'street', 'street_number', 'floor', 'streetX', 'streetY'];
+    protected $fillable = ['name', 'state_id', 'city', 'neighborhood', 'street', 'street_number', 'floor', 'streetX', 'streetY'];
+
+    public function addreseable(){
+        return $this->MorphTo();
+    }
+
+    public function entity(){
+        return $this->belongsTo('App\Models\Private\Entity');
+    }
+
+    public function state(){
+        return $this->belongsTo('App\Models\Public\state');
+    }
 }

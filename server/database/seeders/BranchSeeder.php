@@ -13,7 +13,9 @@ class BranchSeeder extends Seeder {
      */
     public function run() {
         DB::table('branches')->insert([
-            ["id"=>1, "entity_id"=>1, "address_id"=>1, "phone_id"=>1, "email"=>"email@email.com", "name"=>"Sucursal 1"]
+            ["id"=>1, "entity_id"=>1, "email"=>"email@email.com", "name"=>"Sucursal 1"],
+            ["id"=>2, "entity_id"=>4, "email"=>"email@email.com", "name"=>"Sucursal 1"],
+            ["id"=>3, "entity_id"=>1, "email"=>"email@email.com", "name"=>"Sucursal 2"]
         ]);
     }
 }

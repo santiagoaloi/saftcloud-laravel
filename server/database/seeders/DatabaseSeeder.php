@@ -36,7 +36,7 @@ class DatabaseSeeder extends Seeder {
         $this->call(PhoneSeeder::class);
         $this->call(UserSeeder::class);
         // $this->call(UserSettingSeeder::class);
-        $this->call(SocialSeeder::class);
+        $this->call(SocialsSeeder::class);
 
         $this->call(BranchSeeder::class);
         $this->call(PointOfSaleSeeder::class);

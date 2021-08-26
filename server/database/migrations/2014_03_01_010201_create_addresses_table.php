@@ -13,8 +13,9 @@ class CreateAddressesTable extends Migration {
     public function up() {
         Schema::create('addresses', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('entity_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
-            $table->string('description')->nullable();
+            $table->unsignedBigInteger('addreseable_id');
+            $table->string('addreseable_type');
+            $table->string('name')->nullable();
             $table->foreignId('state_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
             $table->string('city');
             $table->string('neighborhood')->nullable();
