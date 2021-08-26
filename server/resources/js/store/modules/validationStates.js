@@ -17,7 +17,6 @@ const getDefaultState = () => {
 };
 
 const state = getDefaultState();
-const getters = {};
 const mutations = make.mutations(state);
 
 const actions = {
@@ -33,6 +32,5 @@ export default {
  namespaced: true,
  state,
  mutations,
- actions,
- getters
+ actions
 };

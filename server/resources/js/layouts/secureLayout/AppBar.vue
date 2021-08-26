@@ -2,7 +2,7 @@
  <v-app-bar :class="{ darkBorder: isDark }" :flat="isDark" clipped-right app height="80">
   <v-app-bar-nav-icon dark class="ml-n2 mr-3" text xSmall fab @click="secureDefaultDrawer = !secureDefaultDrawer" />
 
-  <h4 class="white--text">{{ routeTitle }}</h4>
+  <h4 style="position:absolute" class="white--text ml-9">{{ routeTitle }}</h4>
 
   <div class="flex-grow-1" />
 
@@ -185,7 +185,7 @@ export default {
 
     {
      icon: "mdi-security",
-     href: "/users",
+     href: "/accounts",
      title: "Accounts"
     },
 

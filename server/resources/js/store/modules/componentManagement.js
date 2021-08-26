@@ -375,12 +375,12 @@ const actions = {
 
  // When a component is selected in the components view, it loads its configuration.
  setSelectedComponent({ rootState, state }, index) {
-  if (!rootState.drawers.secureComponentDrawer) {
-   store.set("drawers/secureComponentDrawer", true);
-  }
-
   if (state.selectedComponentIndex != index) {
    store.set("componentManagement/selectedComponentIndex", index);
+  }
+
+  if (!rootState.drawers.secureComponentDrawer) {
+   store.set("drawers/secureComponentDrawer", true);
   }
  },
 
@@ -450,41 +450,32 @@ const actions = {
 
  // Creates a new component in the database.
  createComponent({ state, getters, dispatch }) {
-  return axios
-   .post("api/component", state.componentSettings)
-   .then(response => {
-    if (response.status === 200) {
-     store.set("componentManagement/allComponents", response.data.components);
-     store.set("snackbar/value", true);
-     store.set("snackbar/text", `"${state.componentSettings.title}" component created`);
-     store.set("snackbar/color", "primary");
-
-     // Set the status tab as "all"
-     state.activeStatusTab = 0;
-
-     // Autoselect latest created component
-     store.set("componentManagement/dialogComponent", false);
-
-     const activeGroup = state.allGroups.find(item => item.id === state.componentSettings.component_group_id);
-     const groupExists = state.selectedComponentGroups.find(item => item.id === activeGroup.id);
-
-     if (!groupExists) state.selectedComponentGroups.push(activeGroup);
-
-     store.set("componentManagement/componentCardGroup", getters.allComponentsFiltered.length - 1);
-     store.set("componentManagement/selectedComponentIndex", getters.allComponentsFiltered.length - 1);
-
-     store.set("componentManagement/componentSettings", initialComponentSettings());
-     dispatch("getNavigationStructure");
-     return true;
-    }
-   })
-   .catch(error => {
-    console.log({ ...error });
+  return axios.post("api/component", state.componentSettings).then(response => {
+   if (response.status === 200) {
+    store.set("componentManagement/allComponents", response.data.components);
     store.set("snackbar/value", true);
-    store.set("snackbar/text", `${error.response.status} ${error.response.statusText}`);
-    store.set("snackbar/color", "pink darken-1");
-    return false;
-   });
+    store.set("snackbar/text", `"${state.componentSettings.title}" component created`);
+    store.set("snackbar/color", "primary");
+
+    // Set the status tab as "all"
+    state.activeStatusTab = 0;
+
+    // Autoselect latest created component
+    store.set("componentManagement/dialogComponent", false);
+
+    const activeGroup = state.allGroups.find(item => item.id === state.componentSettings.component_group_id);
+    const groupExists = state.selectedComponentGroups.find(item => item.id === activeGroup.id);
+
+    if (!groupExists) state.selectedComponentGroups.push(activeGroup);
+
+    store.set("componentManagement/componentCardGroup", getters.allComponentsFiltered.length - 1);
+    store.set("componentManagement/selectedComponentIndex", getters.allComponentsFiltered.length - 1);
+
+    store.set("componentManagement/componentSettings", initialComponentSettings());
+    dispatch("getNavigationStructure");
+    return true;
+   }
+  });
  },
 
  // Moves to the previous component in the array (navigation arrows).

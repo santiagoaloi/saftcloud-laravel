@@ -5,7 +5,9 @@ import { make } from "vuex-pathify";
 const axiosDefaults = require("axios/lib/defaults");
 
 const state = {
- session: {}
+ session: {},
+ dialogTImeoutWarning: false,
+ hasSessionExpired: false
 };
 
 const mutations = make.mutations(state);

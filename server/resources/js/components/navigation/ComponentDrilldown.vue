@@ -225,6 +225,7 @@ import componentActions from "@/mixins/componentActions";
 export default {
  name: "ComponentDrilldown",
  mixins: [componentActions],
+
  computed: {
   ...sync("theme", ["isDark"]),
   ...get("componentManagement", [

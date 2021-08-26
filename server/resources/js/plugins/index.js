@@ -1,5 +1,6 @@
 import "./base";
 import "./preventContextMenu";
+import "./vIdle";
 import "./swal2";
 import "./lazyImput";
 import "./validation";

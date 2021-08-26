@@ -47,7 +47,17 @@
      </v-col>
     </v-row>
 
-    <base-dialog v-if="colorPicker" @save="() => (colorPicker = false)" noGutters noMaximize dense width="300" saveOnly v-model="colorPicker">
+    <base-dialog
+     v-if="colorPicker"
+     @save="() => (colorPicker = false)"
+     noGutters
+     noMaximize
+     noOverlay
+     dense
+     width="300"
+     saveOnly
+     v-model="colorPicker"
+    >
      <v-card class="mx-auto" width="300">
       <v-color-picker v-model="icon.color" flat></v-color-picker>
      </v-card>

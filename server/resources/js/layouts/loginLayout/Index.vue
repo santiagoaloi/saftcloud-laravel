@@ -17,6 +17,8 @@ export default {
     /* webpackChunkName: 'public-snackbar' */
     "@/components/base/Snackbar"
    )
- }
+ },
+
+ computed: {}
 };
 </script>

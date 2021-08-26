@@ -124,7 +124,7 @@
 import { store } from "@/store";
 import { sync, call, get } from "vuex-pathify";
 export default {
- name: "ComponentsGridView",
+ name: "AccountsGridView",
  data() {
   return {
    dialogIcons: false

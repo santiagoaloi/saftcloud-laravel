@@ -3,7 +3,7 @@
   <v-col cols="12" lg="6">
    <v-row no-gutters align="center" justify="center">
     <div>
-     <v-avatar :size="$vuetify.breakpoint.smAndDown ? '8em' : '18em'">
+     <v-avatar :size="$vuetify.breakpoint.smAndDown ? '8em' : '16em'">
       <v-img class="rounded" aspect-ratio="2" src="storage/logo2.png" :transition="false">
        <!-- Spinner loader -->
        <template v-slot:placeholder>
@@ -32,7 +32,11 @@
   <v-fade-transition hide-on-leave>
    <ValidationObserver ref="loginForm" slim>
     <v-col v-if="!resetPasswordScreen && !forgot" cols="12" sm="12" md="12" lg="6" xl="5">
-     <v-card :class="{ shake: shake }" class="pa-4" :color="$vuetify.theme.dark ? '#2f3136' : '#f6f8fa'">
+     <v-alert dismissible v-model="hasSessionExpired" dense text color="white" type="info">
+      Your session has expired <strong> due to inactivity.</strong>
+     </v-alert>
+
+     <v-card elevation="4" :class="{ shake: shake }" class="pa-4" :color="$vuetify.theme.dark ? '#2f3136' : '#f6f8fa'">
       <v-card-title class=" py-10">
        <h1>Login</h1>
       </v-card-title>
@@ -130,7 +134,7 @@ export default {
  name: "Login",
  data() {
   return {
-   auth: { email: "", password: "" , remember: false},
+   auth: { email: "", password: "", remember: false },
    signup: false,
    newPassword: "",
    newPasswordRepeat: "",
@@ -143,7 +147,8 @@ export default {
  },
 
  computed: {
-  ...sync("theme", ["isDark"])
+  ...sync("theme", ["isDark"]),
+  ...sync("authentication", ["hasSessionExpired"])
  },
 
  methods: {
@@ -161,6 +166,7 @@ export default {
         this.shake = false;
        }, 500);
       } else {
+       this.hasSessionExpired = false;
        this.$router.push("/components");
        window.eventBus.$emit("BUS_BUILD_ROUTES");
       }

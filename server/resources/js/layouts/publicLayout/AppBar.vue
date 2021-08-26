@@ -1,20 +1,20 @@
 <template>
  <div>
   <v-app-bar :color="$route.name === '/homepage' ? 'transparent' : '#36393f'" absolute app flat height="80">
-   <v-container style="background-color:transparent" class="py-0 px-0 px-sm-2 fill-height">
-    <div
-     data-aos="fade"
-     data-aos-anchor-placement="center-bottom"
-     data-aos-delay="300"
-     data-aos-once="true"
-     data-aos-easing="linear"
-     data-aos-duration="400"
-    >
-     <router-link to="/" class="d-flex align-center text-decoration-none ml-3">
-      <img class="mr-4" src="storage/logo2.png" height="45" />
-      <span class="font-weight-black headline white--text"> SaftCloud</span>
-     </router-link>
-    </div>
+   <v-container
+    data-aos="fade"
+    data-aos-anchor-placement="center-bottom"
+    data-aos-delay="300"
+    data-aos-once="true"
+    data-aos-easing="linear"
+    data-aos-duration="400"
+    style="background-color:transparent"
+    class="py-0 px-0 px-sm-2 fill-height"
+   >
+    <router-link to="/" class="d-flex align-center  text-decoration-none ml-3">
+     <img class="mr-4" src="storage/logo2.png" height="45" />
+     <span class="font-weight-black headline white--text"> SaftCloud</span>
+    </router-link>
 
     <v-spacer></v-spacer>
 
@@ -171,7 +171,7 @@ export default {
 
  methods: {
   async testFunction() {
-   let post = { email: "facu.ft@gmail.com", password: "password", 'entity_id': 1, 'role_id': 1 };
+   let post = { email: "facu.ft@gmail.com", password: "password", entity_id: 1, role_id: 1 };
    axios
     .get("api/testFunction/")
     .then(response => {

@@ -47,9 +47,12 @@ export default {
  },
 
  mounted() {
-  if (auth.loggedIn()) {
-   this.buildRoutes();
-  }
+  // * Waits for auth util to be ready.
+  setTimeout(() => {
+   if (auth.loggedIn()) {
+    this.buildRoutes();
+   }
+  }, 500);
  },
 
  methods: {

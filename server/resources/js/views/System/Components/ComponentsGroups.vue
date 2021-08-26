@@ -118,6 +118,7 @@
    v-model="componentsLinkedToGroupDialog"
    title="Components still linked to this group"
    v-if="componentsLinkedToGroupDialog"
+   icon="mdi-apps"
   >
    <v-expand-transition appear>
     <v-sheet v-if="componentsLinkedToGroup.length" color="transparent">
@@ -132,7 +133,6 @@
     v-if="componentsLinkedToGroup.length"
     checkbox-color="accent lighten-2"
     item-key="id"
-    show-select
     :headers="headers"
     :items="componentsLinkedToGroup"
     :items-per-page="-1"
@@ -146,14 +146,14 @@
     </template>
 
     <template v-slot:[`item.actions`]="{ item }">
-     <v-menu rounded="lg" origin="center center" transition="scale-transition" :nudge-bottom="10" offset-y>
+     <v-menu origin="center center" transition="scale-transition" :nudge-bottom="10" offset-y>
       <template v-slot:activator="{ on }">
        <v-btn icon v-on="on">
         <v-icon>mdi-dots-vertical</v-icon>
        </v-btn>
       </template>
 
-      <v-list class="pa-2" rounded="xl" outlined>
+      <v-list class="pa-2" outlined>
        <v-list-item>
         <v-list-item-action>
          <v-btn small icon dark color="#4C4C4C">
@@ -164,17 +164,6 @@
         </v-list-item-action>
         <v-list-item-title>Restore </v-list-item-title>
        </v-list-item>
-       <!-- 
-       <v-list-item v-if="!item.deleted_at" @click.stop="removeComponentWarning(item.id, 'delete', 'component', item.config.general_config.title)">
-        <v-list-item-action>
-         <v-btn small icon dark color="#4C4C4C">
-          <v-icon color="red lighten-2" small class="mx-2">
-           mdi-delete-outline
-          </v-icon>
-         </v-btn>
-        </v-list-item-action>
-        <v-list-item-title>Remove</v-list-item-title>
-       </v-list-item> -->
 
        <v-list-item @click.stop="removeComponentWarning(item.id, 'post', 'forceDestroy', item.config.general_config.title)">
         <v-list-item-action>

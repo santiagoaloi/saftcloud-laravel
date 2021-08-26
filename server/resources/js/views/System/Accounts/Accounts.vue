@@ -1,22 +1,22 @@
 <template>
  <div>
-  <components-appbar />
-  <components-groups />
-  <components-tabs />
+  <accounts-appbar />
+  <accounts-groups />
+  <accounts-tabs />
 
   <v-divider />
 
   <v-card color="transparent" flat :height="calculateHeight()" :class="{ dottedBackground: !isTableLayout }" class="overflow-y-scroll ">
    <v-scroll-y-transition hide-on-leave>
-    <components-table v-if="isTableLayout && !isAllFilteredComponentsEmpty" />
+    <accounts-table v-if="isTableLayout && !isAllFilteredComponentsEmpty" />
    </v-scroll-y-transition>
 
    <v-scroll-x-transition hide-on-leave>
-    <components-grid v-if="!isTableLayout && !isAllFilteredComponentsEmpty" />
+    <accounts-grid v-if="!isTableLayout && !isAllFilteredComponentsEmpty" />
    </v-scroll-x-transition>
 
    <v-scroll-y-transition hide-on-leave>
-    <components-no-data v-if="isAllFilteredComponentsEmpty" />
+    <accounts-no-data v-if="isAllFilteredComponentsEmpty" />
    </v-scroll-y-transition>
   </v-card>
 
@@ -28,14 +28,14 @@
 <script>
 import { sync, call, get } from "vuex-pathify";
 export default {
- name: "ComponentsManagement",
+ name: "AccountsManagement",
  components: {
-  ComponentsTabs: () => import(/* webpackChunkName: 'components-tabs' */ "./ComponentsTabs"),
-  ComponentsGrid: () => import(/* webpackChunkName: 'components-grid' */ "./ComponentsGrid"),
-  ComponentsTable: () => import(/* webpackChunkName: 'components-table' */ "./ComponentsTable"),
-  ComponentsGroups: () => import(/* webpackChunkName: 'components-groups' */ "./ComponentsGroups"),
-  ComponentsAppbar: () => import(/* webpackChunkName: 'components-appbar' */ "./ComponentsAppbar"),
-  ComponentsNoData: () => import(/* webpackChunkName: 'components-no-data' */ "./ComponentsNoData"),
+  AccountsTabs: () => import(/* webpackChunkName: 'components-tabs' */ "./AccountsTabs"),
+  AccountsGrid: () => import(/* webpackChunkName: 'components-grid' */ "./AccountsGrid"),
+  AccountsTable: () => import(/* webpackChunkName: 'components-table' */ "./AccountsTable"),
+  AccountsGroups: () => import(/* webpackChunkName: 'components-groups' */ "./AccountsGroups"),
+  AccountsAppbar: () => import(/* webpackChunkName: 'components-appbar' */ "./AccountsAppbar"),
+  AccountsNoData: () => import(/* webpackChunkName: 'components-no-data' */ "./AccountsNoData"),
   DialogComponent: () => import(/* webpackChunkName: 'components-dialog-new-component' */ "./DialogComponent"),
   ComponentEditSheet: () => import(/* webpackChunkName: 'components-edit-sheet' */ "./ComponentsEdit/ComponentsEditSheet")
  },
@@ -55,7 +55,7 @@ export default {
  methods: {
   ...call("componentManagement/*"),
   calculateHeight() {
-   return Number(this.$vuetify.breakpoint.height - 367);
+   return Number(this.$vuetify.breakpoint.height - 366);
   }
  }
 };

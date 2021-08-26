@@ -1,5 +1,5 @@
 <template>
- <v-scroll-x-transition leave-absolute>
+ <v-scroll-x-transition hide-on-leave>
   <component :is="`step${step}`" />
  </v-scroll-x-transition>
 </template>

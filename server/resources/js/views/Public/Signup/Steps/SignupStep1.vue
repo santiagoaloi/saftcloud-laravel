@@ -17,12 +17,12 @@
         type="email"
         v-model="signupForm.email"
         solo
-        @keydown.enter.prevent="validateAndProceed()"
         prepend-inner-icon="mdi-email"
         :outlined="isDark"
         :color="isDark ? '#208ad6' : 'grey'"
         :background-color="isDark ? '#28292b' : 'white'"
         :error="errors.length > 0"
+        @keydown.enter.prevent="validateAndProceed()"
         @focus="reset"
         @input="reset"
         @blur="reset"
@@ -85,12 +85,12 @@
         v-model="signupForm.phoneNumber"
         solo
         hide-details
-        @keydown.enter.prevent="validateAndProceed()"
         prepend-inner-icon="mdi-phone"
         :outlined="isDark"
         :color="isDark ? '#208ad6' : 'grey'"
         :background-color="isDark ? '#28292b' : 'white'"
         :error="errors.length > 0"
+        @keydown.enter.prevent="validateAndProceed()"
         @focus="reset"
         @input="reset"
         @blur="reset"

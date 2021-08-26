@@ -9,7 +9,7 @@ html {
 }
 
 .expanded {
- width: 12em;
+ width: 7em;
  -webkit-transition: all 0.7s ease 0s;
  -moz-transition: all 0.7s ease 0s;
  -o-transition: all 0.7s ease 0s;
@@ -17,7 +17,7 @@ html {
 }
 
 .shrinked {
- width: 1em;
+ width: 0px;
  -webkit-transition: all 0.7s ease 0s;
  -moz-transition: all 0.7s ease 0s;
  -o-transition: all 0.7s ease 0s;
@@ -147,7 +147,7 @@ input::-webkit-inner-spin-button {
 }
 
 .backgroundSelectedLight {
- background: #e3e3f0;
+ background: #e2e2e2;
 }
 
 .shake {

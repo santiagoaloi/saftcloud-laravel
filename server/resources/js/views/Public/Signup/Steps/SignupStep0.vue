@@ -13,12 +13,12 @@
         autofocus
         v-model="signupForm.name"
         solo
-        @keydown.enter.prevent="validateAndProceed()"
         prepend-inner-icon="mdi-account"
         :outlined="isDark"
         :color="isDark ? '#208ad6' : 'grey'"
         :background-color="isDark ? '#28292b' : 'white'"
         :error="errors.length > 0"
+        @keydown.enter.prevent="validateAndProceed()"
         @focus="reset"
         @input="reset"
         @blur="reset"
@@ -33,12 +33,12 @@
         maxlength="30"
         v-model="signupForm.lastname"
         solo
-        @keydown.enter.prevent="validateAndProceed()"
         prepend-inner-icon="mdi-account"
         :outlined="isDark"
         :color="isDark ? '#208ad6' : 'grey'"
         :background-color="isDark ? '#28292b' : 'white'"
         :error="errors.length > 0"
+        @keydown.enter.prevent="validateAndProceed()"
         @focus="reset"
         @input="reset"
         @blur="reset"

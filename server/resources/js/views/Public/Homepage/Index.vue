@@ -13,7 +13,7 @@
       </h1>
 
       <h3 data-aos="fade-right" data-aos-once="true" class=" text-shadow white--text mt-10" style="font-weight:100">
-       Saft is a cloud-based retail software platform that enables retailers speed up sales, manage inventories, reward customer loyalty, and garner
+       Saft is a cloud-based retail software platform that enables retailers speed up sales, manage inZventories, reward customer loyalty, and garner
        insights into their businesses in real-time. The platform makes it easy to add new outlets and registers as your business grows. Designed for
        multi-outlet retailers, Vend ensures that your business operates as one cohesive operation.
       </h3>

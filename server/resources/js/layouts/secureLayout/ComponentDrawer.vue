@@ -35,16 +35,19 @@ export default {
   ...sync("theme", ["isDark"]),
   ...sync("drawers", ["secureComponentDrawer"]),
   ...get("componentManagement", ["selectedComponent"])
- }
+ },
 
- //  watch: {
- //   selectedComponent(newVal, oldVal) {
- //    if (newVal) {
- //     this.secureComponentDrawer = true;
- //    } else {
- //     this.secureComponentDrawer = false;
- //    }
- //   }
- //  }
+ watch: {
+  selectedComponent: {
+   immediate: false,
+   handler(val) {
+    if (val || !this.secureComponentDrawer) {
+     this.secureComponentDrawer = true;
+    } else {
+     this.secureComponentDrawer = false;
+    }
+   }
+  }
+ }
 };
 </script>
