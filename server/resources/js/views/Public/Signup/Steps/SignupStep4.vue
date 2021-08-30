@@ -50,13 +50,17 @@
 </template>
 
 <script>
-import { sync, get } from "vuex-pathify";
+import { sync, get, call } from "vuex-pathify";
 export default {
  name: "SignupStep4",
  computed: {
   ...sync("theme", ["isDark"]),
   ...sync("signup", ["signupForm", "step", "terms", "loading"]),
-  ...get("signup", ["getCountryNameAndCode", "getCountryName"])
+  ...get("signup", ["getCountryNameAndCode", "getCountryName", ""])
+ },
+
+ methods: {
+  ...call("signup/*")
  }
 };
 </script>

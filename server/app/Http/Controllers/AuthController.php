@@ -72,18 +72,18 @@ class AuthController extends Controller {
             $user = User::where('email', $credentials['email'])->first();
             $token = $user->createToken($user['email'], ['component.show'])->plainTextToken;
 
-            $roles = DB::table('roles')
-            ->leftJoin('model_has_roles', 'permissions.id', '=', 'permissions.lookUpList_id')
-            ->where('model_has_roles.model_id', '=', $user->id)
-            ->get();
+    // $roles = DB::table('roles')
+    // ->leftJoin('model_has_roles', 'permissions.id', '=', 'permissions.lookUpList_id')
+    // ->where('model_has_roles.model_id', '=', $user->id)
+    // ->get();
 
-            $users = DB::table('permissions')
-            ->leftJoin('roles', 'permissions.id', '=', 'permissions.lookUpList_id')
-            ->where('u_look_up_list_value.id', '=', 2)
-            ->get();
+    // $users = DB::table('permissions')
+    // ->leftJoin('roles', 'permissions.id', '=', 'permissions.lookUpList_id')
+    // ->where('u_look_up_list_value.id', '=', 2)
+    // ->get();
 
-            $role = Role::where('id', $user)->get();
-            // $user->getAllPermissions();
+    // $role = Role::where('id', $user)->get();
+    // // $user->getAllPermissions();
 
             $response = [
                 'user' => $user,

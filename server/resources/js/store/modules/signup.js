@@ -55,7 +55,7 @@ const actions = {
 
  accountCreation({ state }) {
   state.loading = true;
-  axios.post("api/makeAccount", this.signupForm).then(response => {
+  axios.post("api/makeAccount", state.signupForm).then(response => {
    if (response.status === 200) {
     this.$router.push("/VerifyAccount");
    } else {
