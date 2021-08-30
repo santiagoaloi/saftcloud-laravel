@@ -5,16 +5,14 @@ namespace App\Models\Pos;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class ProductPromotion extends Model {
+class MeasurementUnitSystem extends Model {
     use SoftDeletes;
 
-    protected $fillable = [];
-
-    public function Branch(){
+    public function branch(){
         return $this->belongsTo('App\Models\Private\Branch');
     }
 
-    public function product(){
-        return $this->belongsTo('App\Models\Pos\Product');
+    public function measurementUnits(){
+        return $this->hasMany('App\Models\Pos\MeasurementUnit');
     }
 }

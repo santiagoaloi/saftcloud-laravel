@@ -13,9 +13,10 @@ class CreatePhonesTable extends Migration {
     public function up() {
         Schema::create('phones', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('entity_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
-            $table->string('description')->nullable();
-            $table->foreignId('country_id')->nullable()->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
+            $table->unsignedBigInteger('phoneable_id');
+            $table->string('phoneable_type');
+            $table->string('name')->nullable();
+            $table->smallInteger('country_code')->nullable();
             $table->integer('phone_number')->nullable();
             $table->softDeletes();
             $table->timestamps();

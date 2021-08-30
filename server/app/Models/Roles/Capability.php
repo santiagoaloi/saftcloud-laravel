@@ -8,13 +8,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Capability extends Model {
     use SoftDeletes;
 
-    protected $fillable = ['account_id', 'name'];
+    protected $fillable = ['name'];
 
     public function users(){
         return $this->belongsToMany('App\Models\User');
     }
 
     public function roles(){
-       return $this->belongsToMany('App\Models\Role');
+       return $this->belongsToMany('App\Models\Roles\Role');
     }
 }

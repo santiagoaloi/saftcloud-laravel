@@ -9,14 +9,17 @@ use App\Models\Roles\Role;
 use App\Exceptions\Handler;
 use Illuminate\Http\Request;
 
+use App\Models\Private\Entity;
+use App\Models\Private\Account;
+use App\Models\Roles\Capability;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use App\Models\GeneralConfig\LookUpList;
 use App\Http\Controllers\Private\RoleController;
+Use Exception;
 use App\Http\Controllers\Private\UserController;
 use App\Http\Controllers\Public\StateController;
 use App\Http\Controllers\Private\BranchController;
-Use Exception;
 use App\Http\Controllers\Root\ComponentController;
 use App\Http\Controllers\Root\ComponentGroupController;
 use App\Http\Controllers\Root\ComponentDefaultController;
@@ -73,7 +76,27 @@ class TestFunctionController extends Controller {
     }
 
     public function test3(){
+        $entity = Entity::find(2);
+        $user = $entity->user;
+
+        foreach ($user->roles as $role) {
+            foreach ($role->capabilities as $capability){
+                $role['capabilities'] = $capability;
+                $capabilities[] = $capability;
+            }
+            $user['capabilities'] = $capabilities;
+            $user['roles'] = $role;
+        };
+
+        return $entity->user->roles->capabilities;
+
+        // $user = Entity::first();
+        // $user->addresses()->create(['name'=>'test', 'state_id'=>1, 'city'=>'punta alta', 'neighborhood'=>'pepe']);
+        // exit;
+
         $user = User::first();
+
+        // return $user->entity;
 
         foreach ($user->roles as $role) {
             foreach ($role->capabilities as $capability){

@@ -2,13 +2,19 @@
 
 namespace App\Models\Private;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Phone extends Model {
-    use HasFactory;
     use SoftDeletes;
 
-    protected $fillable = ['entity_id', 'description', 'country_id', 'phone_number'];
+    protected $fillable = ['name', 'country_code', 'phone_number'];
+
+    public function phoneable(){
+        return $this->MorphTo();
+    }
+
+    public function entity(){
+        return $this->belongsTo('App\Models\Private\Entity');
+    }
 }

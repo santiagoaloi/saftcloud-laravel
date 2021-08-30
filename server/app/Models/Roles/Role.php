@@ -6,15 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Role extends Model {
-    use SoftDeletes;
+   use SoftDeletes;
 
-    protected $fillable = ['account_id', 'name'];
+   protected $fillable = ['entity_id', 'name'];
 
-    public function users(){
-       return $this->belongsToMany('App\Models\User');
-    }
+   public function users(){
+      return $this->belongsToMany('App\Models\User');
+   }
 
-    public function capabilities(){
-        return $this->belongsToMany('App\Models\Roles\Capability');
-     }
+   public function capabilities(){
+      return $this->belongsToMany('App\Models\Roles\Capability');
+   }
 }

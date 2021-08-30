@@ -2,13 +2,31 @@
 
 namespace App\Models\Private;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Branch extends Model {
-    use HasFactory;
     use SoftDeletes;
 
-    protected $fillable = ['entity_id', 'address_id', 'phone_id', 'email', 'description'];
+    protected $fillable = ['entity_id', 'email', 'description'];
+
+    public function addresses(){
+        return $this->morphMany('App\Models\Private\Address', 'addreseable');
+    }
+
+    public function phones(){
+        return $this->morphMany('App\Models\Private\Phone', 'phoneable');
+    }
+
+    public function entity(){
+        return $this->belongsTo('App\Models\Private\Entity');
+    }
+
+    public function paymentMethod(){
+        return $this->hasMany('App\Models\GeneralConfig\PaymentMethod');
+    }
+
+    public function socials(){
+        return $this->morphMany('App\Models\Private\Social', 'socialable');
+    }
 }

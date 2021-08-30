@@ -4,16 +4,17 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSocialTable extends Migration {
+class CreateSocialsTable extends Migration {
     /**
      * Run the migrations.
      *
      * @return void
      */
     public function up() {
-        Schema::create('social', function (Blueprint $table) {
+        Schema::create('socials', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('entity_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
+            $table->unsignedBigInteger('socialable_id');
+            $table->string('socialable_type');
             $table->string('description', 100)->nullable();
             $table->string('url')->nullable();
             $table->softDeletes();
@@ -27,6 +28,6 @@ class CreateSocialTable extends Migration {
      * @return void
      */
     public function down() {
-        Schema::dropIfExists('social');
+        Schema::dropIfExists('socials');
     }
 }
