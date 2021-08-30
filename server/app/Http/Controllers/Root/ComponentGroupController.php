@@ -129,10 +129,6 @@ class ComponentGroupController extends Controller {
         ], 200);
     }
 
-    public function edit($id) {
-        
-    }
-
     public function update(Request $request, $id) {
         $query = ComponentGroup::find($id);
         try{

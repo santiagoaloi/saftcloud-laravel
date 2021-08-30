@@ -13,7 +13,7 @@ class CreateEntitiesTable extends Migration {
     public function up() {
         Schema::create('entities', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('account_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
+            $table->foreignId('root_account_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
             $table->unsignedBigInteger('entity_type_id');
             $table->foreign('entity_type_id')->references('id')->on('look_up_list_values')->onDelete('RESTRICT')->onUpdate('CASCADE');
             $table->string('first_name', 100);

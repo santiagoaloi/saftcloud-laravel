@@ -127,10 +127,6 @@ class ComponentController extends Controller {
         ], 200);
     }
 
-    public function edit($id) {
-
-    }
-
     public function update(Request $request, $id) {
         $query = Component::find($id);
 

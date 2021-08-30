@@ -4,17 +4,17 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAccountPaymentsTable extends Migration {
+class CreateCapabilityUserTable extends Migration {
     /**
      * Run the migrations.
      *
      * @return void
      */
     public function up() {
-        Schema::create('account_payments', function (Blueprint $table) {
+        Schema::create('capability_user', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('root_account_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
-            $table->decimal('amount', 8, 2);
+            $table->foreignId('capability_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
+            $table->foreignId('user_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
             $table->softDeletes();
             $table->timestamps();
         });
@@ -26,6 +26,6 @@ class CreateAccountPaymentsTable extends Migration {
      * @return void
      */
     public function down() {
-        Schema::dropIfExists('account_payments');
+        Schema::dropIfExists('capability_user');
     }
 }

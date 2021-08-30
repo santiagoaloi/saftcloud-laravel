@@ -8,11 +8,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Entity extends Model {
     use SoftDeletes;
 
-    protected $fillable = ['account_id', 'entity_type_id', 'first_name', 'last_name', 'iva_condition', 'doc_type_id', 
-    'doc_num', 'ing_brutos', 'birthday'];
+    protected $fillable = ['root_account_id', 'entity_type_id', 'first_name', 'last_name', 'iva_condition_id', 'document_type_id', 
+    'doc_number', 'ing_brutos_number', 'birthday'];
 
     public function account(){
-        return $this->belongsTo('App\Models\Private\Account');
+        return $this->belongsTo('App\Models\Private\RootAccount');
     }
 
     public function entityType(){
@@ -21,6 +21,10 @@ class Entity extends Model {
 
     public function user(){
         return $this->hasOne('App\Models\User');
+    }
+
+    public function branches(){
+        return $this->hasmany('App\Models\Private\Branch');
     }
 
     public function addresses(){

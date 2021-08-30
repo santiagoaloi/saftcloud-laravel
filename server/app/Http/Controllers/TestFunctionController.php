@@ -28,6 +28,8 @@ use App\Http\Controllers\GeneralConfig\LookUpListValueController;
 
 class TestFunctionController extends Controller {
 
+    private $model = 'test';
+
     function getIP(Request $request){
         return $request->ip();
     }
@@ -75,39 +77,19 @@ class TestFunctionController extends Controller {
         return $query->getComponentNames();
     }
 
-    public function test3(){
-        $entity = Entity::find(2);
-        $user = $entity->user;
-
-        foreach ($user->roles as $role) {
-            foreach ($role->capabilities as $capability){
-                $role['capabilities'] = $capability;
-                $capabilities[] = $capability;
-            }
-            $user['capabilities'] = $capabilities;
-            $user['roles'] = $role;
-        };
-
-        return $entity->user->roles->capabilities;
-
-        // $user = Entity::first();
-        // $user->addresses()->create(['name'=>'test', 'state_id'=>1, 'city'=>'punta alta', 'neighborhood'=>'pepe']);
-        // exit;
+    public function test3(User $user){
+        return $user;
 
         $user = User::first();
 
-        // return $user->entity;
+        // $user = UserController::attachUser($user, 1);
+        // return $user;
 
-        foreach ($user->roles as $role) {
-            foreach ($role->capabilities as $capability){
-                $role['capabilities'] = $capability;
-                $capabilities[] = $capability;
-            }
-            $user['capabilities'] = $capabilities;
-            $user['roles'] = $role;
-        };
+        return $this->model;
 
-        return $user;
+        $entity = Entity::first();
+        $entity->addresses()->create(['name'=>'test', 'state_id'=>1, 'city'=>'punta alta', 'neighborhood'=>'pepe']);
+        exit;
 
         // return session();
         // var_dump(csrf_token());

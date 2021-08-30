@@ -55,10 +55,6 @@ class RoleController extends Controller {
         ], 200);
     }
 
-    public function edit($id) {
-        //
-    }
-
     public function update(Request $request, $id) {
         $query = Role::find($id);
         try{
@@ -93,7 +89,18 @@ class RoleController extends Controller {
         return $this->showAll();
     }
 
-    public function getUserRol(){
-        $query = '';
+    // AGREGA TODOS LOS ROLES QUE ENVIAMOS EN LA VARIABLE ROLE
+    public function attachRole(Request $request, $role){
+        $request->role()->attach($role);
+    }
+
+    // ELIMINA TODOS LOS ROLES QUE ENVIAMOS EN LA VARIABLE ROLE
+    public function detachRole(Request $request, $role){
+        $request->role()->detach($role);
+    }
+
+    // ELIMINA TODOS LOS ROLES Y AGREGA LOS NUEVOS
+    public function syncRole(Request $request, $role){
+        $request->role()->sync($role);
     }
 }

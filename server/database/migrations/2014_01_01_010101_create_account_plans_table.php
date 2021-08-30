@@ -14,7 +14,7 @@ class CreateAccountPlansTable extends Migration {
         Schema::create('account_plans', function (Blueprint $table) {
             $table->id();
             $table->integer('users');
-            $table->text('modules')->nullable();
+            $table->text('modules');
             $table->integer('branches');
             $table->integer('cash_registers');
             $table->softDeletes();
