@@ -26,8 +26,16 @@ class ComponentController extends Controller {
         $config = ComponentManager::constructConfig($query->config);
 
         $records = DB::SELECT($config['general_config']['sql_query']);
-        $configFormFields = $config['form_fields'];
 
+        foreach($records as $record){
+            foreach($record as $key=>$val){
+                $origin[$key] = $val;
+            }
+            $record->origin = $origin;
+            $newRecords[]   = $record;
+        }
+
+        $configFormFields   = $config['form_fields'];
         foreach($configFormFields as $formField){
             if($formField['displayField'] == 'true'){
                 foreach($formField as $value=>$v){
@@ -45,13 +53,14 @@ class ComponentController extends Controller {
             }
         };
 
-        $result['columns'] = $config['columns'];
-        $result['formFields'] = $formFields;
-        $result['recordItem'] = $recordItem;
-        $result['records'] = $records;
+        $component['columns']            = $config['columns'];
+        $component['configSettings']     = $result['config_settings'];
+        $component['formFields']         = $formFields;
+        $component['recordItem']         = $recordItem;
+        $component['records']            = $newRecords;
 
         return response([
-            'component' => $result
+            'component' => $component
         ], 200);
 
     }
