@@ -10,13 +10,15 @@ use App\Exceptions\Handler;
 use Illuminate\Http\Request;
 
 use App\Models\Private\Entity;
+use App\Models\Public\Country;
 use App\Models\Private\Account;
 use App\Models\Roles\Capability;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+Use Exception;
 use App\Models\GeneralConfig\LookUpList;
 use App\Http\Controllers\Private\RoleController;
-Use Exception;
 use App\Http\Controllers\Private\UserController;
 use App\Http\Controllers\Public\StateController;
 use App\Http\Controllers\Private\BranchController;
@@ -27,6 +29,8 @@ use App\Http\Controllers\GeneralConfig\LookUpListController;
 use App\Http\Controllers\GeneralConfig\LookUpListValueController;
 
 class TestFunctionController extends Controller {
+
+    private $model = 'test';
 
     function getIP(Request $request){
         return $request->ip();
@@ -75,51 +79,52 @@ class TestFunctionController extends Controller {
         return $query->getComponentNames();
     }
 
-    public function test3(){
-        $entity = Entity::find(2);
-        $user = $entity->user;
+    public function test3(Request $request){
 
-        foreach ($user->roles as $role) {
-            foreach ($role->capabilities as $capability){
-                $role['capabilities'] = $capability;
-                $capabilities[] = $capability;
-            }
-            $user['capabilities'] = $capabilities;
-            $user['roles'] = $role;
-        };
+        // session(['juana'=>'estudi']);
+        // $request->session()->put(['pepe'=>'admin']);
 
-        return $entity->user->roles->capabilities;
+        // $request->session()->forget('juana');
+        // $request->session()->flush(); // elimina toda la session
 
-        // $user = Entity::first();
-        // $user->addresses()->create(['name'=>'test', 'state_id'=>1, 'city'=>'punta alta', 'neighborhood'=>'pepe']);
+        $request->session()->keep(['email']); // evita que se borre este it em de la session
+
+        // cuando conviene usar regenerate???
+        $request->session()->regenerate(); // regenera el token de la sesion
+
+        return $request->session()->all();
+
+        // return $user;
+        // return session()->all();
+        // dd($user->id);exit;
+
+        // $user = User::first();
+
+        // // $user = UserController::attachUser($user, 1);
+        // // return $user;
+
+        // return $this->model;
+
+        // $entity = Entity::first();
+        // $entity->addresses()->create(['name'=>'test', 'state_id'=>1, 'city'=>'punta alta', 'neighborhood'=>'pepe']);
         // exit;
-
-        $user = User::first();
-
-        // return $user->entity;
-
-        foreach ($user->roles as $role) {
-            foreach ($role->capabilities as $capability){
-                $role['capabilities'] = $capability;
-                $capabilities[] = $capability;
-            }
-            $user['capabilities'] = $capabilities;
-            $user['roles'] = $role;
-        };
-
-        return $user;
 
         // return session();
         // var_dump(csrf_token());
         // var_dump($request->header('X-CSRF-TOKEN'));
     }
 
-    public function test4(Request $request){
-        return $request->session()->all();
+    public function test4(Request $request, Country $country){
+        return Auth::user()->id;
 
-        return Session::getId();
+        // return $this->authorize('update', $country);
 
-        return session()->all();
+        return $request->session::get('email');
+        // return $request->session()->all();
+
+        // return Session::getId();
+
+        // return session()->all();
         // var_dump(csrf_token());
         // var_dump($request->header('X-CSRF-TOKEN'));
     }

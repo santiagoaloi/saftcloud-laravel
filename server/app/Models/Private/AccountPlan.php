@@ -11,6 +11,6 @@ class AccountPlan extends Model {
     protected $fillable = ['users', 'modules', 'locations', 'cash_registers'];
 
     public function Account(){
-        return $this->belongsTo('App\Models\Private\Account');
+        return $this->belongsTo('App\Models\Private\RootAccount');
     }
 }

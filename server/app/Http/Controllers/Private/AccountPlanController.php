@@ -55,10 +55,6 @@ class AccountPlanController extends Controller {
         ], 200);
     }
 
-    public function edit($id) {
-        //
-    }
-
     public function update(Request $request, $id) {
         $query = AccountPlan::find($id);
         try{

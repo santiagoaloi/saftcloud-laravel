@@ -10,6 +10,7 @@
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "jawira/case-converter": "^3.4",
+        "laravel/fortify": "^1.8",
         "laravel/framework": "^8.12",
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5"
@@ -30,7 +31,8 @@
         },
         "files":[
             "app/Helpers/Helper.php",
-            "app/Helpers/FileManager_Helper.php"
+            "app/Helpers/FileManager_Helper.php",
+            "app/Helpers/ComponentManager_Helper.php"
         ]
     },
     "autoload-dev": {

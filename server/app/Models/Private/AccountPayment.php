@@ -8,9 +8,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class AccountPayment extends Model {
     use SoftDeletes;
 
-    protected $fillable = ['account_id', 'amount'];
+    protected $fillable = ['root_account_id', 'amount'];
 
     public function Account(){
-        return $this->belongsTo('App\Models\Private\Account');
+        return $this->belongsTo('App\Models\Private\RootAccount');
     }
 }

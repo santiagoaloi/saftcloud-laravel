@@ -15,9 +15,10 @@ class CreateDocumentTypesTable extends Migration
         Schema::create('document_types', function (Blueprint $table) {
             $table->id();
             $table->foreignId('country_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
-            $table->string('name')->unique();
-            $table->string('short_name')->unique();
-            $table->smallInteger('value')->unique();
+            $table->string('name');
+            $table->string('short_name');
+            $table->unique(['country_id', 'name']);
+            $table->smallInteger('value')->default('0');
             $table->softDeletes();
             $table->timestamps();
         });

@@ -21,7 +21,7 @@ use App\Http\Controllers\Private\PhoneController;
 use App\Http\Controllers\Private\BranchController;
 use App\Http\Controllers\Private\EntityController;
 use App\Http\Controllers\Private\SocialController;
-use App\Http\Controllers\Private\AccountController;
+use App\Http\Controllers\Private\RootAccountController;
 use App\Http\Controllers\Private\AddressController;
 use App\Http\Controllers\Private\ConstructController;
 use App\Http\Controllers\Private\PointOfSaleController;
@@ -54,7 +54,7 @@ Route::get('/countries', [CountryController::class, 'showAll']);
 Route::resource('/state', StateController::class);
 Route::post('/states/{country_id}', [StateController::class, 'showAll']);
 
-Route::resource('/account', AccountController::class);
+Route::resource('/account', RootAccountController::class);
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/makeAccount', [MakeAccountController::class, 'accountCreation']);
 Route::get('/listIcons', [IconController::class, 'listIcons']);
@@ -71,7 +71,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::resource('/productPromotion', ProductPromotionController::class);
 
     // PRIVATE CONTROLLERS
-    Route::resource('/account', AccountController::class);
+    Route::resource('/account', RootAccountController::class);
     Route::resource('/accountPayment', AccountPaymentController::class);
     Route::resource('/accountPlan', AccountPlanController::class);
     Route::resource('/address', AddressController::class);
@@ -110,8 +110,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 });
 
 //Testing
-Route::post('/testFunction', [UserController::class, 'testRoles']);
-Route::get('/testFunction', [TestFunctionController::class, 'test3']);
+Route::post('/testFunction', [TestFunctionController::class, 'test3']);
+Route::get('/componentConstructor/{id}', [ComponentController::class, 'componentConstructor']);
 
 // Route::group(['middleware' => ['web']], function () {
 //     Route::post('/testFunction', [AuthenticatedSessionController::class, 'store']);

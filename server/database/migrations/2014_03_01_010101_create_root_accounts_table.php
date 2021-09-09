@@ -4,14 +4,14 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAccountsTable extends Migration {
+class CreateRootAccountsTable extends Migration {
     /**
      * Run the migrations.
      *
      * @return void
      */
     public function up() {
-        Schema::create('accounts', function (Blueprint $table) {
+        Schema::create('root_accounts', function (Blueprint $table) {
             $table->id();
             $table->integer('license')->unique();
             $table->foreignId('account_plan_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
@@ -31,6 +31,6 @@ class CreateAccountsTable extends Migration {
      * @return void
      */
     public function down() {
-        Schema::dropIfExists('accounts');
+        Schema::dropIfExists('root_accounts');
     }
 }

@@ -89,7 +89,7 @@ class AuthController extends Controller {
                 'user' => $user,
                 'token' => $token
             ];
-    
+
             return response([
                 'data' => $response
             ], 200);
@@ -99,7 +99,6 @@ class AuthController extends Controller {
             'message' => 'Invalid Credentials',
             'status' => false
         ], 401);
-
     }
 
     public function logout(Request $request) {

@@ -5,6 +5,8 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Private\UserController;
 use App\Http\Controllers\TestFunctionController;
 
+use App\Http\Controllers\Root\ComponentController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -17,3 +19,5 @@ use App\Http\Controllers\TestFunctionController;
 */
 
 Route::get('/', function () { return view('home'); });
+Route::get('/testFunction', [TestFunctionController::class, 'test3']);
+Route::post('/testFunction', [TestFunctionController::class, 'test3']);

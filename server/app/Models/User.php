@@ -31,12 +31,16 @@ class User extends Authenticatable {
      */
     protected $casts = ['email_verified_at' => 'datetime'];
 
+    public function userSettings(){
+        return $this->hasOne('App\Models\Private\UserSettings');
+    }
+
     public function entity(){
         return $this->belongsTo('App\Models\Private\Entity');
     }
 
-    public function userSettings(){
-        return $this->hasOne('App\Models\Private\UserSettings');
+    public function branch(){
+        return $this->belongsToMany('App\Models\Private\Branch');
     }
 
     public function roles(){

@@ -55,10 +55,6 @@ class EntityController extends Controller {
         ], 200);
     }
 
-    public function edit($id) {
-        //
-    }
-
     public function update(Request $request, $id) {
         $query = Entity::find($id);
         try{

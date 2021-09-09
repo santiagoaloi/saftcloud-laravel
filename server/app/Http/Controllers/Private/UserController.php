@@ -12,6 +12,8 @@ use Spatie\Permission\Models\Permission;
 
 class UserController extends Controller {
 
+    private $model = 'user';
+
     public function __construct() {
         $this->middleware(['permission:user.edit']);
     }
@@ -40,10 +42,20 @@ class UserController extends Controller {
     }
 
     public function show($id) {
-        $result = User::find($id);
+        $user = User::findOrFail($id);
+        $user['entity'] = $user->entity;
+
+        foreach ($user->roles as $role) {
+            foreach ($role->capabilities as $capability){
+                $role['capabilities'] = $capability;
+                $capabilities[] = $capability;
+            }
+            $user['capabilities'] = $capabilities;
+            $user['roles'] = $role;
+        };
 
         return response([
-            'row'=> $result
+            'row'=> $user
         ], 200);
     }
 
@@ -65,10 +77,6 @@ class UserController extends Controller {
         return response([
             'row'=> User::onlyTrashed()->find($id)->recovery()
         ], 200);
-    }
-
-    public function edit($id) {
-        //
     }
 
     public function update(Request $request, $id) {
@@ -118,18 +126,18 @@ class UserController extends Controller {
         // Permission::create(['name' => 'user.edit']);
     }
 
-    // AGREGA TODOS LOS ROLES QUE ENVIAMOS EN LA VARIABLE ROLE
-    public function attachRole(Request $request, $role){
-        $request->role()->attach($role);
+    // AGREGA TODOS LOS USUARIOS QUE ENVIAMOS EN LA VARIABLE ROLE
+    public function attachUser(Request $request, $role){
+        $request->$this->user()->attach($role);
     }
 
-    // ELIMINA TODOS LOS ROLES QUE ENVIAMOS EN LA VARIABLE ROLE
-    public function detachRole(Request $request, $role){
-        $request->role()->detach($role);
+    // ELIMINA TODOS LOS USUARIOS QUE ENVIAMOS EN LA VARIABLE ROLE
+    public function detachUser(Request $request, $user){
+        $request->user()->detach($user);
     }
 
-    // ELIMINA TODOS LOS ROLES Y AGREGA LOS NUEVOS
-    public function syncRole(Request $request, $role){
-        $request->role()->sync($role);
+    // ELIMINA TODOS LOS USUARIOS Y AGREGA LOS NUEVOS
+    public function syncUser(Request $request, $user){
+        $request->user()->sync($user);
     }
 }

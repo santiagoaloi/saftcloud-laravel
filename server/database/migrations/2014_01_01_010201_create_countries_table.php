@@ -13,10 +13,10 @@ class CreateCountriesTable extends Migration {
     public function up() {
         Schema::create('countries', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre', 100);
-            $table->string('name', 100);
-            $table->string('iso2', 10);
-            $table->string('iso3', 10);
+            $table->string('nombre', 100)->unique();
+            $table->string('name', 100)->unique();
+            $table->string('iso2', 10)->unique();
+            $table->string('iso3', 10)->unique();
             $table->string('phone_code', 25);
             $table->softDeletes();
             $table->timestamps();

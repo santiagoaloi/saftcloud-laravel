@@ -15,7 +15,7 @@ class CreateSocialsTable extends Migration {
             $table->id();
             $table->unsignedBigInteger('socialable_id');
             $table->string('socialable_type');
-            $table->string('description', 100)->nullable();
+            $table->string('description')->nullable();
             $table->string('url')->nullable();
             $table->softDeletes();
             $table->timestamps();

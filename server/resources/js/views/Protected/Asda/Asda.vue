@@ -16,9 +16,13 @@
 
 <script>
 export default {
-    name: "Asda",
-    mounted() {
-        console.log('Component mounted.')
-    }
-}
+ name: "Asda",
+ mounted() {
+  this.callApi();
+ },
+
+ methods: {
+  callApi() {}
+ }
+};
 </script>
