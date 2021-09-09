@@ -25,30 +25,30 @@ class ComponentController extends Controller {
 
         $config = ComponentManager::constructConfig($query->config);
 
-        $rows = DB::SELECT($config['general_config']['sql_query']);
-        $config_form_fields = $config['form_fields'];
+        $records = DB::SELECT($config['general_config']['sql_query']);
+        $configFormFields = $config['form_fields'];
 
-        foreach($config_form_fields as $form_field){
-            if($form_field['displayField'] == 'true'){
-                foreach($form_field as $value=>$v){
+        foreach($configFormFields as $form_field){
+            if($formField['displayField'] == 'true'){
+                foreach($formField as $value=>$v){
                     if($value == 'field'){
-                        $rowItem[$v] = '';
+                        $recordItem[$v] = '';
                     }
                 }
             }
         };
 
-        foreach($config_form_fields as $form_field){
-            if($form_field['displayField'] == 'true'){
-                $field = $form_field['field'];
-                $form_fields[$field] = $form_field;
+        foreach($configFormFields as $formField){
+            if($formField['displayField'] == 'true'){
+                $field = $formField['field'];
+                $formFields[$field] = $formField;
             }
         };
 
         $result['columns'] = $config['columns'];
-        $result['form_fields'] = $form_fields;
-        $result['rowItem'] = $rowItem;
-        $result['rows'] = $rows;
+        $result['formFields'] = $formFields;
+        $result['recordItem'] = $recordItem;
+        $result['records'] = $records;
 
         return response([
             'component' => $result
