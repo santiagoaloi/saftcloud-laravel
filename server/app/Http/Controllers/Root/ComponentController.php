@@ -292,7 +292,7 @@ class ComponentController extends Controller {
     function buildColumnsAndFields($columns){
         foreach ($columns as $column) {
             if($column != 'id' && $column != 'temp'){
-                $ArrayColumns[] = ['column' => $column, 'label'=>$column];
+                $ArrayColumns[] = ['value' => $column, 'text'=>$column];
 
                 $ArrayFields[] = (object)$this->formFieldStructure($column);
             }
