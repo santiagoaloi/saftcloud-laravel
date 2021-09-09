@@ -28,7 +28,7 @@ class ComponentController extends Controller {
         $records = DB::SELECT($config['general_config']['sql_query']);
         $configFormFields = $config['form_fields'];
 
-        foreach($configFormFields as $form_field){
+        foreach($configFormFields as $formField){
             if($formField['displayField'] == 'true'){
                 foreach($formField as $value=>$v){
                     if($value == 'field'){
