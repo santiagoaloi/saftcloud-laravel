@@ -4,7 +4,7 @@
    <v-row no-gutters align="center" justify="center">
     <div>
      <v-avatar :size="$vuetify.breakpoint.smAndDown ? '8em' : '16em'">
-      <v-img class="rounded" aspect-ratio="2" src="storage/logo2.png" :transition="false">
+      <v-img class="rounded" aspect-ratio="2" src="storage/logo.png" :transition="false">
        <!-- Spinner loader -->
        <template v-slot:placeholder>
         <v-row class="fill-height ma-0" align="center" justify="center">

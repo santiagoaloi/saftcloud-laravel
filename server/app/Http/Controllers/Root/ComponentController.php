@@ -4,11 +4,12 @@ namespace App\Http\Controllers\Root;
 
 use App\Helpers\Helper;
 use App\Helpers\FileManager;
+use App\Helpers\ComponentManager;
 use Illuminate\Http\Request;
 
 Use Exception;
 use App\Models\Root\Component;
-use Jawira\CaseConverter\Convert;
+use Jawira\CaseConverter\Convert; // borrar
 use Illuminate\Support\Facades\DB;
 
 use App\Http\Controllers\Controller;
@@ -16,6 +17,44 @@ use App\Models\Root\ComponentDefault;
 use Illuminate\Database\QueryException;
 
 class ComponentController extends Controller {
+
+    public function componentConstructor($id) {
+        $query = Component::find($id);
+
+        $result = ComponentManager::parseComponent($query);
+
+        $config = ComponentManager::constructConfig($query->config);
+
+        $rows = DB::SELECT($config['general_config']['sql_query']);
+        $config_form_fields = $config['form_fields'];
+
+        foreach($config_form_fields as $form_field){
+            if($form_field['displayField'] == 'true'){
+                foreach($form_field as $value=>$v){
+                    if($value == 'field'){
+                        $rowItem[$v] = '';
+                    }
+                }
+            }
+        };
+
+        foreach($config_form_fields as $form_field){
+            if($form_field['displayField'] == 'true'){
+                $field = $form_field['field'];
+                $form_fields[$field] = $form_field;
+            }
+        };
+
+        $result['columns'] = $config['columns'];
+        $result['form_fields'] = $form_fields;
+        $result['rowItem'] = $rowItem;
+        $result['rows'] = $rows;
+
+        return response([
+            'component' => $result
+        ], 200);
+
+    }
 
     public function store(Request $request) {
         $json_data['table'] = $request['table'];
@@ -27,7 +66,7 @@ class ComponentController extends Controller {
         $formColumnsAndFields = $this->buildColumnsAndFields($object);  // TRAE LOS VALORES POR DEFECTO DE 
         $general_config       = $this->buildGeneralConfig();
 
-        $config['general_config'] = $general_config;
+        $config['general_config']               = $general_config;
         $config['general_config']->sql_table    = $request['table'];
         $config['general_config']->sql_query    = $sql_query;
         $config['general_config']->title        = $request['title'];
@@ -75,7 +114,7 @@ class ComponentController extends Controller {
 
     public function show($id) {
         $query = Component::find($id);
-        $result = $this->parseComponent($query);
+        $result = ComponentManager::parseComponent($query);
 
         return response([
             'component' => $result
@@ -87,7 +126,7 @@ class ComponentController extends Controller {
         $arrayComponent = [];
 
         foreach($components as $component){
-            $arrayComponent[] = $this->parseComponent($component);
+            $arrayComponent[] = ComponentManager::parseComponent($component);
         };
 
         return response([
@@ -103,8 +142,9 @@ class ComponentController extends Controller {
             $general_config = json_decode($component->config, true);
             $title = $general_config['general_config']['title'];
             $arrayComponent[] = [
-                'name' => $component->name,
-                'title'=> $title,
+                'id'    => $component->id,
+                'name'  => $component->name,
+                'title' => $title,
             ];
         };
 
@@ -230,48 +270,6 @@ class ComponentController extends Controller {
         ], 200);
     }
 
-    public function parseComponent($component){
-        $component_group_id = $component->component_group_id;
-        $name = $component->name;
-        $config = $this->constructConfig($component->config);
-        $configSettings = $this->constructConfig($component->config_settings);
-        $status = $this->constructConfig($component->status);
-
-        $origin = [
-            'id'                => $component->id,
-            'component_group_id'=> $component_group_id,
-            'name'              => $name,
-            'config'            => $config,
-            'config_settings'   => $configSettings,
-            'status'            => $status,
-            'created_at'        => $component->created_at,
-            'updated_at'        => $component->updated_at,
-            'deleted_at'        => $component->deleted_at,
-        ];
-
-        $result = [
-            'id'                => $component->id,
-            'component_group_id'=> $component_group_id,
-            'name'              => $name,
-            'config'            => $config,
-            'config_settings'   => $configSettings,
-            'status'            => $status,
-            'origin'            => $origin,
-            'created_at'        => $component->created_at,
-            'updated_at'        => $component->updated_at,
-            'deleted_at'        => $component->deleted_at,
-        ];
-        return $result;
-    }
-
-    public function constructConfig($config){
-        return json_decode($config, true);
-    }
-
-    public function constructConfigSettings($configSettings){
-        return json_decode($configSettings, true);
-    }
-
     function makeNewComponentFile($request){
         $name = ucfirst(strtolower($request));
         $data = ['name' => $name];
@@ -294,7 +292,7 @@ class ComponentController extends Controller {
     function buildColumnsAndFields($columns){
         foreach ($columns as $column) {
             if($column != 'id' && $column != 'temp'){
-                $ArrayColumns[] = ['name' => $column];
+                $ArrayColumns[] = ['column' => $column, 'label'=>$column];
 
                 $ArrayFields[] = (object)$this->formFieldStructure($column);
             }

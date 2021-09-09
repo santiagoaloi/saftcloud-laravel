@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Public;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\Public\Country;
 use App\Http\Controllers\Controller;
@@ -35,7 +36,11 @@ class CountryController extends Controller {
         ], 200);
     }
 
-    public function showAll() {
+    public function showAll(Request $user) {
+        $this->user = User::find($user->id);
+
+        return $this->authorize('showAll');
+
         return response([
             'rows'=> Country::get()
         ], 200);

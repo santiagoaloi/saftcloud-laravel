@@ -71,29 +71,27 @@ class Helper{
     }
 
 
-
-    
-    function getEachTable($string){
+    static function getEachTable($string){
         if (str_contains($string, ',')){
             $string = explode(',', $string);
         }
         if(is_object($string)){
             foreach ($string as $item){
-                $columns = $this->getColumnsFromString($item);
+                $columns = Helper::getColumnsFromString($item);
             }
         } else {
-            $columns = $this->getColumnsFromString($string);
+            $columns = Helper::getColumnsFromString($string);
         }
         return $columns;
     }
 
-    function getColumnsFromString($item){
+    static function getColumnsFromString($item){
         return $item;
         $item = trim($item);
-        $column = $this->after('.', $item);
+        $column = Helper::after('.', $item);
         if($column == '*'){
-            $table = $this->before('.', $item);
-            $arrayColumns = $this->getAllColumnsFromTable($table);
+            $table = Helper::before('.', $item);
+            $arrayColumns = Helper::getAllColumnsFromTable($table);
             foreach($arrayColumns as $item){
                 $columns[] = $item;
             }
@@ -103,7 +101,7 @@ class Helper{
         return $columns;
     }
 
-    function getAllColumnsFromTable($table){
+    static function getAllColumnsFromTable($table){
         $query = DB::select("SELECT COLUMN_NAME from INFORMATION_SCHEMA.COLUMNS where TABLE_SCHEMA = 'laravel_vue' AND TABLE_NAME = '$table'");
         foreach($query as $key => $value){
             $columns[] = $value->COLUMN_NAME;
@@ -111,7 +109,7 @@ class Helper{
         return $columns;
     }
 
-    function getStringBetween($string, $start, $end){
+    static function getStringBetween($string, $start, $end){
         $string = ' ' . $string;
         $ini = strpos($string, $start);
         if ($ini == 0) return '';
@@ -121,12 +119,12 @@ class Helper{
     }
 
     //** CUT A STRING RETURING THE STRING AFTER SPECIFIED CHARACTER **//
-    function after ($string, $inthat){
+    static function after ($string, $inthat){
         if (!is_bool(strpos($inthat, $string)))
         return substr($inthat, strpos($inthat,$string)+strlen($string));
     }
 
-    function before($string, $inthat){
+    static function before($string, $inthat){
         return substr($inthat, 0, strpos($inthat, $string));
     }
 }

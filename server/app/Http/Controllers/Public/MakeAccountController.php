@@ -27,7 +27,6 @@ class MakeAccountController extends Controller {
 
         // // CREACION DE EMPRESA
         $entity = $account->entity()->create([
-            'root_account_id'   => $account->id,
             'entity_type_id'    => 1,
             'first_name'        => $postdata['companyName'],
             'last_name'         => $postdata['companyNameAlias'],
@@ -37,7 +36,6 @@ class MakeAccountController extends Controller {
 
         // CREACION DE PERSONA
         $person = $account->entity()->create([
-            'root_account_id'   => $account->id,
             'entity_type_id'    => 2,
             'first_name'        => $postdata['name'],
             'last_name'         => $postdata['lastname'],
@@ -53,7 +51,6 @@ class MakeAccountController extends Controller {
 
         // CREACION DE PUNTO DE VENTA
         $company_branch->pointOfSales()->create([
-            'branch_id'             => $company_branch->id,
             'ptoVta'                => 1,
             'look_up_list_value_id' => 44,
             'name'                  => 'caja 1',
@@ -61,8 +58,7 @@ class MakeAccountController extends Controller {
         ]);
 
         // CREACION DE USUARIO
-        User::create([
-            'entity_id'             =>  $person->id,
+        $person->user()->create([
             'role_id'               =>  2,
             'email'                 =>  $postdata['email'],
             'password'              =>  bcrypt('password')

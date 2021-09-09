@@ -7,7 +7,7 @@ use App\Models\Private\RootAccount;
 use App\Http\Controllers\Controller;
 use Illuminate\Database\QueryException;
 
-class AccountController extends Controller {
+class RootAccountController extends Controller {
 
     public function store(Request $request) {
         try{

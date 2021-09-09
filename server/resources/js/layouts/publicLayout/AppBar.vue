@@ -12,7 +12,7 @@
     class="py-0 px-0 px-sm-2 fill-height"
    >
     <router-link to="/" class="d-flex align-center  text-decoration-none ml-3">
-     <img class="mr-4" src="storage/logo2.png" height="45" />
+     <img class="mr-4" src="storage/logo.png" height="45" />
      <span class="font-weight-black headline white--text"> SaftCloud</span>
     </router-link>
 
@@ -26,7 +26,7 @@
      <template>
       <v-btn min-width="100px" to="/login" height="36" class="mr-3" rounded dark color="primary" x-large>
        <v-avatar class="ml-n4 mr-3" size="28" left>
-        <v-img src="storage/avatars/avatar.png"></v-img>
+        <v-img src="storage/defaults/avatar.png"></v-img>
        </v-avatar>
        Login</v-btn
       >
@@ -171,12 +171,12 @@ export default {
 
  methods: {
   async testFunction() {
-   let post = { email: "facu.ft@gmail.com", password: "password", entity_id: 1, role_id: 1 };
+   let post = { email: "facu.ft@gmail.com", password: 'password'};
    axios
-    .post("api/testFunction/2")
+    .get("api/testFunction/2", post)
     .then(response => {
      if (response.status === 200) {
-      console.log(response.data.rows);
+      console.log(response);
      }
     })
     .catch(error => {
