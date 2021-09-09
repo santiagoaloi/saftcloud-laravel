@@ -1,7 +1,7 @@
 <template>
- <v-fade-transition hide-on-leave>
-  <component :is="layout"> </component>
- </v-fade-transition>
+ <keep-alive>
+  <component :is="layout" />
+ </keep-alive>
 </template>
 
 <script>

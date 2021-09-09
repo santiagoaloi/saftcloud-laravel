@@ -1,15 +1,18 @@
 <template>
- <v-main>
-  <keep-alive>
-   <v-fade-transition hide-on-leave>
-    <router-view />
-   </v-fade-transition>
-  </keep-alive>
+ <v-main style="min-height:90vh">
+  <v-fade-transition>
+   <router-view />
+  </v-fade-transition>
  </v-main>
 </template>
 
 <script>
 export default {
- name: "Publicview"
+ name: "Publicview",
+ data() {
+  return {
+   booted: false
+  };
+ }
 };
 </script>

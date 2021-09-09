@@ -1,7 +1,7 @@
 <template>
- <v-scroll-x-transition hide-on-leave>
+ <v-fade-transition hide-on-leave>
   <component :is="`step${step}`" />
- </v-scroll-x-transition>
+ </v-fade-transition>
 </template>
 
 <script>

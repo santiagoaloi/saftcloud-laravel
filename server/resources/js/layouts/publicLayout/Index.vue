@@ -1,7 +1,7 @@
 <template>
- <v-app>
+ <v-app :style="bg">
   <public-bar />
-  <public-view />
+   <public-view />
   <snackbar />
   <public-footer />
  </v-app>
@@ -19,6 +19,16 @@ export default {
     /* webpackChunkName: 'public-snackbar' */
     "@/components/base/Snackbar"
    )
+ },
+ computed: {
+  bg() {
+   return {
+    "background-image": `linear-gradient(rgba(100, 100, 100, 0.5),rgba(0, 0, 0, 0.8)), url(storage/11.png)`,
+    "background-repeat": "no-repeat",
+    "background-size": "cover",
+    "background-attachment": "fixed"
+   };
+  }
  }
 };
 </script>

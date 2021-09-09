@@ -40,7 +40,7 @@ router.beforeEach(waitForStorageToBeReady);
 router.beforeResolve((to, from, next) => {
  // If the user is already logged in
  if (auth.loggedIn()) {
-  if (to.matched.some(record => record.name === "/login")) {
+  if (to.matched.some(record => record.name === "login")) {
    // Redirect to the home page instead
    next({ path: "/components" });
   } else {

@@ -19,16 +19,21 @@ import "../sass/theme.scss";
 import "./assets/css/style.css";
 
 //Layouts
-Vue.component("login_layout", () => import(/* webpackChunkName: 'login-Layout' */ "@/layouts/loginLayout/Index"));
 Vue.component("public_layout", () => import(/* webpackChunkName: 'public-Layout' */ "@/layouts/publicLayout/Index"));
-Vue.component("secure_layout", () => import(/* webpackChunkName: 'public-Layout' */ "@/layouts/secureLayout/Index"));
+Vue.component("secure_layout", () => import(/* webpackChunkName: 'secure-Layout' */ "@/layouts/secureLayout/Index"));
 
-new Vue({
+Vue.prototype.$aos = AOS;
+
+const root = new Vue({
  store,
  router,
  vuetify,
  created() {
-  AOS.init({});
+  this.$aos.init({});
  },
  render: h => h(App)
-}).$mount("#app");
+});
+
+document.addEventListener("DOMContentLoaded", function() {
+ root.$mount("#app");
+});

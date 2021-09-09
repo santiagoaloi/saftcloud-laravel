@@ -1,5 +1,5 @@
 <template>
- <v-idle style="display:none" @idle="onidle" :loop="false" :duration="300" />
+ <v-idle style="display:none" @idle="onidle" :loop="false" :duration="3000000000" />
 </template>
 
 <script>
