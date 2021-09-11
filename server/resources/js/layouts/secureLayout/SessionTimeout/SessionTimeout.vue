@@ -6,7 +6,7 @@
 import Vue from "vue";
 import router from "@/router";
 import { store } from "@/store";
-import { sync, get, call } from "vuex-pathify";
+import { sync } from "vuex-pathify";
 
 export default {
  name: "SessionTimeout",
@@ -19,8 +19,8 @@ export default {
  methods: {
   onidle(time) {
    router.push("/login");
-   store.set("authentication/session", {});
    this.hasSessionExpired = true;
+   store.set("authentication/session", {});
   }
  }
 };

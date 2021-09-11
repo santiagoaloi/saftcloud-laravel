@@ -47,7 +47,6 @@
        spellcheck="false"
        :rows="2"
        auto-grow
-       hide-details
        v-model="selectedComponent.config.general_config.note"
       >
       </v-textarea>

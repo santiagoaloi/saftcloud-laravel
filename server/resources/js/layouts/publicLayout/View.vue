@@ -1,8 +1,6 @@
 <template>
  <v-main style="min-height:90vh">
-  <v-fade-transition>
-   <router-view />
-  </v-fade-transition>
+  <router-view></router-view>
  </v-main>
 </template>
 

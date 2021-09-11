@@ -7,17 +7,16 @@
 <script>
 import axios from "axios";
 import config from "./configs";
+import auth from "@/util/auth";
 import { store } from "@/store";
 import { sync } from "vuex-pathify";
 import { router, resetRouter } from "@/router";
-import auth from "@/util/auth";
 
 export default {
  name: "AppVue",
  computed: {
   ...sync("theme", ["isDark"]),
   ...sync("authentication", ["session"]),
-
   layout() {
    return this.$route.meta.layout;
   }
@@ -75,7 +74,7 @@ export default {
       for (const component of components) {
        this.$router.addRoute({
         path: `/${component.name}`,
-        name: `/${component.name}`,
+        name: `${component.name}`,
         meta: { layout: "secure_layout", title: component.title, id: component.id },
         component: () => import(`./views/Protected/${component.name}/${component.name}.vue`)
        });

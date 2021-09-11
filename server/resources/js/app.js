@@ -1,8 +1,8 @@
 import Vue from "vue";
 
 // Bootstrap
-require("./bootstrap");
 import "@/plugins";
+require("./bootstrap");
 import router from "@/router";
 import { store } from "@/store";
 import vuetify from "@/plugins/vuetify";
@@ -22,18 +22,12 @@ import "./assets/css/style.css";
 Vue.component("public_layout", () => import(/* webpackChunkName: 'public-Layout' */ "@/layouts/publicLayout/Index"));
 Vue.component("secure_layout", () => import(/* webpackChunkName: 'secure-Layout' */ "@/layouts/secureLayout/Index"));
 
-Vue.prototype.$aos = AOS;
-
-const root = new Vue({
+new Vue({
+ created() {
+  AOS.init({});
+ },
  store,
  router,
  vuetify,
- created() {
-  this.$aos.init({});
- },
  render: h => h(App)
-});
-
-document.addEventListener("DOMContentLoaded", function() {
- root.$mount("#app");
-});
+}).$mount("#app");

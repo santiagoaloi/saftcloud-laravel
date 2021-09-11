@@ -1,7 +1,7 @@
 <template>
  <v-app :style="bg">
   <public-bar />
-   <public-view />
+  <public-view />
   <snackbar />
   <public-footer />
  </v-app>
@@ -11,8 +11,8 @@
 export default {
  name: "Publiclayout",
  components: {
-  PublicBar: () => import(/* webpackChunkName: 'public-appbar' */ "./AppBar"),
   PublicView: () => import(/* webpackChunkName: 'public-view' */ "./View"),
+  PublicBar: () => import(/* webpackChunkName: 'public-appbar' */ "./AppBar"),
   PublicFooter: () => import(/* webpackChunkName: 'public-footer' */ "./Footer"),
   Snackbar: () =>
    import(
@@ -23,10 +23,10 @@ export default {
  computed: {
   bg() {
    return {
-    "background-image": `linear-gradient(rgba(100, 100, 100, 0.5),rgba(0, 0, 0, 0.8)), url(storage/11.png)`,
-    "background-repeat": "no-repeat",
     "background-size": "cover",
-    "background-attachment": "fixed"
+    "background-attachment": "fixed",
+    "background-repeat": "no-repeat",
+    "background-image": `linear-gradient(rgba(84, 120,170, 0.5),rgba(0, 0,0, 1)), url(storage/backgrounds/main4.jpg)`
    };
   }
  }

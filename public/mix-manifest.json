@@ -30,7 +30,9 @@
     "/dist/js/form-fields-list.js": "/dist/js/form-fields-list.js",
     "/dist/js/form-fields-toolbar.js": "/dist/js/form-fields-toolbar.js",
     "/dist/js/form-fields-right-panel.js": "/dist/js/form-fields-right-panel.js",
+    "/dist/js/faq.js": "/dist/js/faq.js",
     "/dist/js/signup-steps.js": "/dist/js/signup-steps.js",
+    "/dist/js/pricing.js": "/dist/js/pricing.js",
     "/dist/js/signup-steps-alert.js": "/dist/js/signup-steps-alert.js",
     "/dist/js/components-drawer-menu.js": "/dist/js/components-drawer-menu.js",
     "/dist/js/components-navigation-drilldown.js": "/dist/js/components-navigation-drilldown.js",
@@ -47,7 +49,5 @@
     "/dist/js/signup-step3.js": "/dist/js/signup-step3.js",
     "/dist/js/signup-step4.js": "/dist/js/signup-step4.js",
     "/dist/css/app.css": "/dist/css/app.css",
-    "/dist/js/vendor.js": "/dist/js/vendor.js",
-    "/dist/js/faq.js": "/dist/js/faq.js",
-    "/dist/js/pricing.js": "/dist/js/pricing.js"
+    "/dist/js/vendor.js": "/dist/js/vendor.js"
 }

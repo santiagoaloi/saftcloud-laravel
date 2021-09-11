@@ -2,7 +2,7 @@
  <v-navigation-drawer
   mobileBreakpoint="0"
   clipped
-  :color="isDark ? '#2C2F33' : '#edeff0'"
+  :color="isDark ? '#2E3139' : '#edeff0'"
   width="350"
   v-model="secureComponentDrawer"
   hideOverlay

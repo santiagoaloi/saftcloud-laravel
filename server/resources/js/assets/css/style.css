@@ -41,13 +41,13 @@ html {
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
- background: rgb(71, 71, 71);
+ background: rgb(173, 171, 171);
  border-radius: 0px;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
- background: rgb(98, 98, 98);
+ background: rgb(129, 129, 129);
 }
 
 /* Removes transition delay and color transition from black to primary.*/

@@ -10,7 +10,7 @@
   </div>
   <v-divider class="mt-3"></v-divider>
 
-  <v-data-table fixed-header :headers="columns" :items="records" style="cursor:pointer" calculate-widths> </v-data-table>
+  <v-data-table :search="search" fixed-header :headers="columns" :items="records" style="cursor:pointer" calculate-widths> </v-data-table>
 
   <base-dialog width="50vw" @save="addRecord()" @close="dialog = false" title="add record" v-model="dialog">
    <v-form @submit.prevent="addRecord()">
@@ -34,39 +34,9 @@
 </template>
 
 <script>
-import axios from "axios";
-import { sync, call } from "vuex-pathify";
-
+import activeView from "@/mixins/activeView";
 export default {
  name: "cacacaca",
-
- mounted() {
-  this.loadView(this.$route.meta.id);
- },
-
- computed: {
-  ...sync("theme", ["isDark"]),
-  ...sync("activeView/*")
- },
-
- methods: {
-  ...call("activeView/*"),
-
-  addRecord() {
-   this.records.push(this.recordItem);
-   this.recordItem = this.recordItemInitial;
-   this.dialog = false;
-
-   axios.post(`api/componentConstructor/`, this.recordItem).then(response => {
-    if (response.status === 200) {
-     this.records = response.data.component.records;
-     this.recordItem = response.data.component.recordItem;
-     this.columns = response.data.component.columns;
-     this.formFields = response.data.component.formFields;
-     this.formFieldsInitial = response.data.component.formFields;
-    }
-   });
-  }
- }
+ mixins: [activeView]
 };
 </script>
