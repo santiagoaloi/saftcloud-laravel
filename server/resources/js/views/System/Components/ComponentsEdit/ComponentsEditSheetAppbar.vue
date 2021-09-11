@@ -45,6 +45,17 @@
 
   <v-tooltip transition="false" color="black" bottom>
    <template v-slot:activator="{ on }">
+    <v-btn :to="`/${selectedComponent.name}`" v-on="on" fab class="mx-2" color="white" text x-small>
+     <v-icon>
+      mdi-link
+     </v-icon>
+    </v-btn>
+   </template>
+   <span>Open</span>
+  </v-tooltip>
+
+  <v-tooltip transition="false" color="black" bottom>
+   <template v-slot:activator="{ on }">
     <v-btn v-on="on" dark :disabled="previousComponentDisabled" @click="validateBeforePrevious()" class="mr-2" fab text x-small>
      <v-icon>mdi-chevron-left</v-icon>
     </v-btn>
