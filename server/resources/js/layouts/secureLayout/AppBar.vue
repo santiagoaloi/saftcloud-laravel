@@ -7,7 +7,7 @@
   <div class="flex-grow-1" />
 
   <v-text-field
-   v-lazy-input:debounce="100"
+   v-lazy-input:debounce="200"
    v-model="search"
    spellcheck="false"
    :outlined="isDark"
