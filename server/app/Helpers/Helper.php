@@ -2,6 +2,7 @@
 namespace App\Helpers;
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class Helper{
     static function blend($filePath, $data){
@@ -127,4 +128,5 @@ class Helper{
     static function before($string, $inthat){
         return substr($inthat, 0, strpos($inthat, $string));
     }
+
 }

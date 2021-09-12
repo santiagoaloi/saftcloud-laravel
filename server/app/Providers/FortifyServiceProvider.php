@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Http\Responses\LoginResponse;
+use Laravel\Fortify\Contracts\LoginResponse as LoginResponseContract;
+
 use App\Models\User;
 use Illuminate\Http\Request;
 use Laravel\Fortify\Fortify;
@@ -30,6 +33,8 @@ class FortifyServiceProvider extends ServiceProvider {
      * @return void
      */
     public function boot() {
+        $this->app->singleton(LoginResponseContract::class, LoginResponse::class);
+
         Fortify::createUsersUsing(CreateNewUser::class);
         Fortify::updateUserProfileInformationUsing(UpdateUserProfileInformation::class);
         Fortify::updateUserPasswordsUsing(UpdateUserPassword::class);
@@ -45,10 +50,11 @@ class FortifyServiceProvider extends ServiceProvider {
 
         Fortify::authenticateUsing(function (Request $request) {
             $user = User::where('email', $request->email)->first();
-    
+
             if ($user && Hash::check($request->password, $user->password)) {
                 return $user;
             }
         });
+
     }
 }

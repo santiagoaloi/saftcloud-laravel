@@ -19,5 +19,8 @@ use App\Http\Controllers\Root\ComponentController;
 */
 
 Route::get('/', function () { return view('home'); });
-Route::get('/testFunction', [TestFunctionController::class, 'test3']);
-Route::post('/testFunction', [TestFunctionController::class, 'test3']);
+
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('/testFunction', [TestFunctionController::class, 'test4']);
+    Route::post('/testFunction', [TestFunctionController::class, 'test3']);
+});
