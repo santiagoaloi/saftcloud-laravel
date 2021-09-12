@@ -1,7 +1,7 @@
 <template>
  <div class="ml-1 mb-1">
-  <div class="d-flex grey--text text--darken-1 label-text">
-   {{ label | uppercase }}
+  <div class="d-flex grey--text text--darken-1 font-weight-bold label-text">
+   <span :class="`${color}--text`"> {{ lowerCase ? labelLowercase : labelUppercase }} </span>
    <div v-if="required" class="ml-1 pink--text text--accent-2">▪</div>
   </div>
  </div>
@@ -18,12 +18,23 @@ export default {
   required: {
    type: Boolean,
    default: false
+  },
+  color: {
+   type: String,
+   default: null
+  },
+  lowerCase: {
+   type: Boolean,
+   default: false
   }
  },
- filters: {
-  uppercase: function(value) {
-   if (!value) return "";
-   value = value.toString();
+ computed: {
+  labelLowercase() {
+   let value = this.label.toString();
+   return value.toLowerCase();
+  },
+  labelUppercase() {
+   let value = this.label.toString();
    return value.toUpperCase();
   }
  }

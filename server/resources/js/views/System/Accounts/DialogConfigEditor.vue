@@ -13,7 +13,7 @@
   fluid
   icon="mdi-code-json"
  >
-  <v-card flat width="100%" class="dialogHeight pt-13 ">
+  <v-card flat width="100%" class="dialogHeight">
    <base-editor v-model="componentsConfigStructure" mode="json" />
   </v-card>
  </baseDialog>

@@ -6,19 +6,11 @@
   :fullscreen="$vuetify.breakpoint.smAndDown || isMaximized || fullscreen"
   :hide-overlay="noOverlay || fullscreen"
   :overlay-opacity="0.7"
-  :overlay-color="$vuetify.theme.dark ? 'rgba(0, 0, 0)' : 'rgba(108, 122, 137)'"
+  :overlay-color="$vuetify.theme.dark ? '#1f1f24' : 'rgba(108, 122, 137)'"
   scrollable
   class="d-flex flex-column"
  >
-  <v-toolbar
-   :absolute="absoluteToolbar"
-   class="pr-3"
-   flat
-   :dense="dense"
-   dark
-   color="#36393f 
-"
-  >
+  <v-toolbar class="pr-3" flat :dense="dense" dark color="#36393f">
    <template v-if="icon">
     <v-btn x-small color="white" text fab class="mr-3">
      <v-icon>{{ icon }}</v-icon>
@@ -26,7 +18,7 @@
    </template>
 
    <v-toolbar-title>
-    <span class="accent--text text--lighten-5"> {{ title }} </span>
+    <h5 class="accent--text text--lighten-5">{{ title }}</h5>
    </v-toolbar-title>
 
    <div class="flex-grow-1" />
@@ -62,12 +54,13 @@
    </template>
   </v-toolbar>
   <v-card width="100%" :class="{ 'pa-2': !noGutters }" style="overflow: auto" flat tile>
-   <v-container :fluid="fluid" :class="{ 'fill-height': filled }">
+   <v-container v-if="!noContainer" :fluid="fluid" :class="{ 'fill-height': filled }">
     <slot />
    </v-container>
+   <template v-if="noContainer">
+    <slot />
+   </template>
   </v-card>
-
-  <!-- <slot :parentData="$data" name="footer" /> -->
  </v-dialog>
 </template>
 
@@ -146,6 +139,10 @@ export default {
    default: false
   },
   loading: {
+   type: [Boolean],
+   default: false
+  },
+  noContainer: {
    type: [Boolean],
    default: false
   }

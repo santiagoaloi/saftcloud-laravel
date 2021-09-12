@@ -22,6 +22,9 @@
        <v-btn dark x-large class="my-1 mx-sm-1 hoverElevationSoft">Contact Sales</v-btn>
       </div>
      </v-card>
+     <div style="position:absolute;margin-left:380px">
+      <v-img src="storage/header/1.png" height="580" contain> </v-img>
+     </div>
     </div>
    </v-container>
   </v-sheet>
@@ -92,5 +95,9 @@ export default {
 #inner_remaining {
  background-color: #dddddd;
  flex-grow: 1;
+}
+
+.imageHeader {
+ box-shadow: inset 0 1px 1px 0 hsl(0deg 0% 100% / 10%), 0 50px 100px -20px rgb(50 50 93 / 25%), 0 30px 60px -30px rgb(0 0 0 / 30%);
 }
 </style>

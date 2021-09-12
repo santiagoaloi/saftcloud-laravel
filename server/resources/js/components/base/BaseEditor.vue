@@ -9,7 +9,10 @@ import { sync } from "vuex-pathify";
 import CodeMirror from "codemirror";
 import "codemirror/addon/lint/lint.css";
 import "codemirror/lib/codemirror.css";
-import "codemirror/theme/material-palenight.css";
+// import "codemirror/theme/material-palenight.css";
+// import "codemirror/theme/duotone-dark.css";
+import "codemirror/theme/material-darker.css";
+
 import "codemirror/theme/elegant.css";
 import "codemirror/mode/javascript/javascript";
 import "codemirror/mode/markdown/markdown";
@@ -75,7 +78,7 @@ export default {
    autofocus: true,
    showCursorWhenSelecting: true,
    gutters: ["CodeMirror-lint-markers"],
-   theme: this.isDark ? "material-palenight" : "elegant",
+   theme: this.isDark ? "material-darker" : "elegant",
    lint: true,
    hintOptions: {
     completeSingle: false,

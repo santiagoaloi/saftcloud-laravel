@@ -4,7 +4,7 @@
    <div class="d-flex">
     <v-btn plain class="mr-2"> <v-icon class="mr-2" small> mdi-arrow-top-right </v-icon>Export </v-btn>
     <v-btn @click="dialogCustomize = true" plain class="mr-2"> <v-icon class="mr-2" small> mdi-arrow-top-right </v-icon>Customize </v-btn>
-    <!-- <v-select :menu-props="{ 'offset-y': true }" v-model="visibleColumns" item-color="primary lighten-4" solo multiple :items="columns"></v-select> -->
+    <!-- <v-select item-color="primary lighten-4" :menu-props="{ 'offset-y': true }" v-model="visibleColumns"  solo multiple :items="columns"></v-select> -->
     <v-btn @click="dialogCrud = true" :color="isDark ? 'accent' : 'primary'"> <v-icon small> mdi-plus </v-icon>Add records </v-btn>
    </div>
   </div>

@@ -1,19 +1,19 @@
 <template>
  <baseDialog
   v-model="dialogEditor"
-  fullscreen
-  transition="dialog-bottom-transition"
+  transition="fade-transition"
   @save="saveComponentsConfigStructure()"
   @close="dialogEditor = false"
-  width="60vw"
+  width="70vw"
   no-gutters
   absoluteToolbar
   title="Components config structure"
   filled
   fluid
   icon="mdi-code-json"
+  noContainer
  >
-  <v-card flat width="100%" class="dialogHeight pt-13 ">
+  <v-card flat width="100%" class="dialogHeight">
    <base-editor v-model="componentsConfigStructure" mode="json" />
   </v-card>
  </baseDialog>
@@ -37,3 +37,9 @@ export default {
  }
 };
 </script>
+<style>
+.dialogHeight {
+ height: calc(100vh - 300px);
+ overflow-y: auto;
+}
+</style>

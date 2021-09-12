@@ -11,10 +11,21 @@
      space-after
      space-before
     >
-     <v-card flat height="100" class="transparent px-4 my-2">
+     <v-card flat min-height="100" class="transparent px-4 my-2">
       <v-container>
        <div class="title font-weight-bold">SaftCloud ™</div>
        <div class="overline white--text">v5.0.2</div>
+       <div class="mt-4" style="margin-left:-4px;">
+        <baseFieldLabel color="white" lowerCase label="Company - Branch" />
+        <v-select
+         :menu-props="{ 'offset-y': true }"
+         item-color="primary lighten-4"
+         hide-details
+         :items="['MyCompany', 'MyOtherCompany']"
+         dense
+         solo
+        ></v-select>
+       </div>
       </v-container>
      </v-card>
     </vue-diagonal>
