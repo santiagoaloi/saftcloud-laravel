@@ -6,15 +6,17 @@
    <template v-slot:prepend>
     <vue-diagonal
      class="mt-n5"
-     :deg="7"
-     background="linear-gradient(331deg, rgba(209, 31, 171, 0.6) 0%, rgba(136, 160, 247, 0.6) 50%)"
+     :deg="-7"
+     background="linear-gradient(331deg, rgba(44, 91, 122, 1) 0%, rgba(109, 115, 135, 1) 0%)"
      space-after
      space-before
     >
-     <div class="px-4 my-2">
-      <div class="title font-weight-bold">SaftCloud ™</div>
-      <div class="overline grey--text">v5.0.2</div>
-     </div>
+     <v-card flat height="100" class="transparent px-4 my-2">
+      <v-container>
+       <div class="title font-weight-bold">SaftCloud ™</div>
+       <div class="overline white--text">v5.0.2</div>
+      </v-container>
+     </v-card>
     </vue-diagonal>
    </template>
 

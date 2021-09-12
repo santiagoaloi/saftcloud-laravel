@@ -2,11 +2,6 @@ html {
  /* overflow: auto; */
 }
 
-.v-application .error--text {
- color: #ffa0a0 !important;
- caret-color: #ffa0a0 !important;
-}
-
 .v-dialog--scrollable,
 .v-dialog--scrollable > form {
  display: flex;
