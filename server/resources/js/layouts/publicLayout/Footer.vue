@@ -53,7 +53,7 @@
    </v-row>
    <v-divider class="my-3"></v-divider>
    <div class="text-center caption">
-    © SaftCloud 2021. All Rights Reserved.
+    © SaftCloud™ 2021. All Rights Reserved.
    </div>
   </v-container>
  </v-footer>

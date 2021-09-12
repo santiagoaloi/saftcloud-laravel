@@ -34,7 +34,7 @@
        two-line
        :ripple="false"
        @click="setActiveField(item.field)"
-       active-class="primary--text text--lighten-2"
+       active-class="primary--text text--lighten-5"
       >
        <v-list-item-action v-if="!displayEnabledFormFieldsOnly">
         <v-switch :ripple="false" v-model="item.displayField" color="accent lighten-1" />

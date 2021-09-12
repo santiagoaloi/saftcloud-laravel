@@ -66,14 +66,15 @@ $fab-icon-sizes: (
 );
 
 // List
-$list-item-dense-title-font-size: 0.875rem;
-$list-item-dense-title-font-weight: 600;
+$list-item-title-font-weight: 200;
+$list-item-title-font-size: 0.8rem;
 
 // Table
 $data-table-expanded-content-box-shadow: inset 0px 4px 10px -5px rgba(50, 50, 50, 0.1), inset 0px -4px 6px -5px rgba(50, 50, 50, 0.1);
 
 // Tabs
-$tab-font-weight: 700;
+$tab-font-weight: 300;
+$tab-font-size: 0.8rem;
 
 // Toolbar
 $toolbar-transition: 0.2s map-get($transition, "fast-out-slow-in") transform, 0.2s map-get($transition, "fast-out-slow-in") left,

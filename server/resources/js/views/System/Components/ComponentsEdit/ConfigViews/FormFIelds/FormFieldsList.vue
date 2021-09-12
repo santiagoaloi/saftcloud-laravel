@@ -16,7 +16,7 @@
    :outlined="isDark"
   />
   <v-list-item-group v-model="selectedFieldItemGroup" mandatory>
-   <v-list nav dense class="fieldListHeight ">
+   <v-list dense class="fieldListHeight ">
     <draggable
      v-model="selectedComponent.config.form_fields"
      :delay="100"
@@ -89,7 +89,7 @@ export default {
 </script>
 <style scoped>
 .fieldListHeight {
- height: calc(100vh - 230px);
+ height: calc(100vh - 260px);
  overflow-y: auto;
 }
 </style>

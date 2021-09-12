@@ -12,7 +12,7 @@
     >
      <router-link to="/" class="d-flex align-center text-decoration-none">
       <img class="mr-4" src="storage/logo.png" height="40" />
-      <span class="font-weight-black headline white--text"> SaftCloud</span>
+      <span class="font-weight-black headline white--text"> SaftCloud ™</span>
      </router-link>
     </div>
 

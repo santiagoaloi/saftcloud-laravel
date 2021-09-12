@@ -5,9 +5,9 @@ export default {
  },
 
  computed: {
+  ...sync("activeView/*"),
   ...sync("theme", ["isDark"]),
-  ...sync("application", ["search"]),
-  ...sync("activeView/*")
+  ...sync("application", ["search"])
  },
 
  methods: {

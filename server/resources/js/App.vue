@@ -86,3 +86,9 @@ export default {
  }
 };
 </script>
+<style>
+.v-application .error--text {
+ color: #ffa0a0 !important;
+ caret-color: #ffa0a0 !important;
+}
+</style>

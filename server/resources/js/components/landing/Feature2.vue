@@ -12,7 +12,7 @@
        <h2 class="text-h3 mb-2 mb-5">
         We want to talk to you
        </h2>
-       <div class="text-h6 text-lg-h5 ">
+       <div class="text-h6  ">
         We will hire hundreds of people who read these words. We cannot possibly succeed in our goals without doing so. We would be
        </div>
        <v-btn x-large class="mt-6 white--text" color="blue-grey darken-2">Write to us</v-btn>
@@ -29,10 +29,10 @@
       <div class="text-uppercase body-2 primary--text mb-2 mt-0 mt-xl-10">
        Organize your products and sale workflows
       </div>
-      <h2 class="text-h3">
+      <h2>
        Get your startup ready for business
       </h2>
-      <div class="text-h6 text-lg-h5 mt-5">
+      <div class="text-h6 mt-5">
        Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus impedit error labore doloremque fugit! Dolor fugit molestiae vero quos quisquam
        nobis, eos debitis magni omnis ea incidunt amet voluptate dignissimos!
       </div>

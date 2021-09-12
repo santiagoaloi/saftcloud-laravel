@@ -20,7 +20,7 @@
 
      <v-row class="mt-10" no-gutters align="center" justify="center">
       <div class="topFont topSlide shadows mx-10 white--text">
-       <h1>SaftCloud</h1>
+       <h1>SaftCloud ™</h1>
       </div>
      </v-row>
 

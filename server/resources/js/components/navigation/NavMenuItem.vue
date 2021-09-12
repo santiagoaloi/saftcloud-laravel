@@ -21,7 +21,7 @@
    :value="menuItem.regex ? menuItem.regex.test($route.path) : false"
    :disabled="menuItem.disabled"
    :sub-group="subgroup"
-   color="primary lighten-2"
+   color="primary lighten-5"
    ref="group"
    :prepend-icon="subgroup ? false : ''"
    @click="showId(menuItem)"

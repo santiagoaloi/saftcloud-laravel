@@ -6,7 +6,7 @@
      {{ item.header }}
     </div>
     <v-list-item
-     active-class="primary--text text--lighten-2"
+     active-class="primary--text text--lighten-5"
      v-else
      :key="i"
      @click="componentEditDrawerActiveMenu = item.link"

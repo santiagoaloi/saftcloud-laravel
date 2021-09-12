@@ -16,7 +16,7 @@
 
   <v-fade-transition>
    <div v-if="hasUnsavedChanges(selectedComponent)">
-    <v-btn rounded :color="isDark ? 'grey darken-3' : 'white'" class="mx-2" small @click="rollbackChanges(selectedComponent)"
+    <v-btn large rounded :color="isDark ? 'grey darken-2' : 'white'" class="mx-2" @click="rollbackChanges(selectedComponent)"
      ><span> Rollback changes</span>
     </v-btn>
    </div>
