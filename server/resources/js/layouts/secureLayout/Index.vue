@@ -2,8 +2,7 @@
  <v-app>
   <secure-bar />
   <secure-drawer />
-  <!-- <warning-dialog /> -->
-  <secure-cdrawer v-if="$route.name.startsWith('/components')" />
+  <secure-cdrawer v-if="$route.name.startsWith('components')" />
   <secure-view />
   <snackbar />
   <session-timeout />
@@ -17,7 +16,6 @@ export default {
  name: "Securelayout",
  components: {
   SessionTimeout: () => import(/* webpackChunkName: 'secure-session-timeout' */ "./SessionTimeout/SessionTimeout"),
-  // WarningDialog: () => import(/* webpackChunkName: 'secure-session-timeout-warning-dialog' */ "./SessionTimeout/WarningDialog"),
   SecureBar: () => import(/* webpackChunkName: 'secure-appbar' */ "./AppBar"),
   SecureDrawer: () => import(/* webpackChunkName: 'secure-drawer' */ "./Drawer"),
   SecureCdrawer: () => import(/* webpackChunkName: 'secure-component-drawer' */ "./ComponentDrawer"),

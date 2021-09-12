@@ -1,44 +1,36 @@
 <template>
- <div>
-  <v-app-bar :color="$route.name === '/homepage' ? 'transparent' : '#36393f'" absolute app flat height="80">
-   <v-container
-    data-aos="fade"
-    data-aos-anchor-placement="center-bottom"
-    data-aos-delay="300"
-    data-aos-once="true"
-    data-aos-easing="linear"
-    data-aos-duration="400"
-    style="background-color:transparent"
-    class="py-0 px-0 px-sm-2 fill-height"
-   >
-    <router-link to="/" class="d-flex align-center  text-decoration-none ml-3">
-     <img class="mr-4" src="storage/logo.png" height="45" />
-     <span class="font-weight-black headline white--text"> SaftCloud</span>
-    </router-link>
+ <!-- <v-app-bar :color="$route.name === '/homepage' ? 'transparent' : '#36393f'" absolute flat height="80"> -->
 
-    <v-spacer></v-spacer>
+ <v-app-bar color="transparent" flat height="80">
+  <v-container fill-height>
+   <router-link to="/" class="d-flex align-center  text-decoration-none ml-3">
+    <img class="mr-4" src="storage/logo.png" height="45" />
+    <span class="font-weight-black headline white--text"> SaftCloud</span>
+   </router-link>
 
-    <template v-if="$vuetify.breakpoint.mdAndUp">
-     <v-btn rounded height="36" class="mr-3" color="white" text dark x-large plain @click="testFunction()"> Test</v-btn>
-     <v-btn rounded to="/signup" height="36" class="mr-3" color="white" text dark x-large plain> Team</v-btn>
-     <v-btn rounded to="/signup" height="36" class="mr-3" color="white" text dark x-large plain> Company</v-btn>
-     <v-btn rounded to="/signup" height="36" class="mr-3" dark x-large plain> <v-icon left> mdi-account-plus</v-icon>Sign up</v-btn>
-     <template>
-      <v-btn min-width="100px" to="/login" height="36" class="mr-3" rounded dark color="primary" x-large>
-       <v-avatar class="ml-n4 mr-3" size="28" left>
-        <v-img src="storage/defaults/avatar.png"></v-img>
-       </v-avatar>
-       Login</v-btn
-      >
+   <v-spacer></v-spacer>
 
-      <!-- <v-chip to="/login" link>
+   <template v-if="$vuetify.breakpoint.mdAndUp">
+    <v-btn rounded height="36" class="mr-3" color="white" text dark x-large plain @click="testFunction()"> Test</v-btn>
+    <v-btn rounded to="/signup" height="36" class="mr-3" color="white" text dark x-large plain> Team</v-btn>
+    <v-btn rounded to="/signup" height="36" class="mr-3" color="white" text dark x-large plain> Company</v-btn>
+    <v-btn rounded to="/signup" height="36" class="mr-3" dark x-large plain> <v-icon left> mdi-account-plus</v-icon>Sign up</v-btn>
+    <template>
+     <v-btn min-width="100px" to="/login" height="36" class="mr-3" rounded dark color="primary" x-large>
+      <v-avatar class="ml-n4 mr-3" size="28" left>
+       <v-img src="storage/avatars/avatar.png"></v-img>
+      </v-avatar>
+      Login</v-btn
+     >
+
+     <!-- <v-chip to="/login" link>
             <v-avatar left>
               <v-img :src="getAvatarSoruce()"></v-img>
             </v-avatar>
             Login
           </v-chip> -->
-     </template>
-     <!-- 
+    </template>
+    <!-- 
           <v-menu
             v-if="isLoggedIn"
             rounded="xl"
@@ -93,25 +85,24 @@
               </v-list>
             </v-card>
           </v-menu> -->
-    </template>
-    <template v-else>
-     <v-btn fab class="mr-3" color="white" text small dark>
-      <v-icon> mdi-menu</v-icon>
-     </v-btn>
-    </template>
+   </template>
+   <template v-else>
+    <v-btn fab class="mr-3" color="white" text small dark>
+     <v-icon> mdi-menu</v-icon>
+    </v-btn>
+   </template>
 
-    <v-tooltip transition="false" color="black" bottom>
-     <template v-slot:activator="{ on }">
-      <v-btn v-on="on" @click="isDark = !isDark" fab class="mr-3" color="white" text dark small plain>
-       <v-icon v-if="isDark">mdi-lightbulb-on-outline</v-icon>
-       <v-icon v-else>mdi-lightbulb-outline</v-icon></v-btn
-      >
-     </template>
-     <span> {{ isDark ? " Light mode" : "Dark mode" }}</span>
-    </v-tooltip>
-   </v-container>
-  </v-app-bar>
- </div>
+   <v-tooltip transition="false" color="black" bottom>
+    <template v-slot:activator="{ on }">
+     <v-btn v-on="on" @click="isDark = !isDark" fab class="mr-3" color="white" text dark small plain>
+      <v-icon v-if="isDark">mdi-lightbulb-on-outline</v-icon>
+      <v-icon v-else>mdi-lightbulb-outline</v-icon></v-btn
+     >
+    </template>
+    <span> {{ isDark ? " Light mode" : "Dark mode" }}</span>
+   </v-tooltip>
+  </v-container>
+ </v-app-bar>
 </template>
 
 <script>
@@ -171,7 +162,7 @@ export default {
 
  methods: {
   async testFunction() {
-   let post = { email: "facu.ft@gmail.com", password: 'password'};
+   let post = { email: "facu.ft@gmail.com", password: "password" };
    axios
     .get("testFunction")
     .then(response => {
@@ -309,11 +300,6 @@ export default {
   display: flex;
   justify-content: flex-end;
  }
-}
-
-::v-deep .v-toolbar__content,
-.v-toolbar__extension {
- border-bottom: 1px solid #ccc;
 }
 
 @media screen and (min-width: 960px) {

@@ -1,5 +1,5 @@
 <template>
- <vue-diagonal :deg="-7" background="linear-gradient(331deg, rgba(101, 235, 235, 1) 0%, rgba(54, 49, 125, 1) 50%)" space-after space-before>
+ <vue-diagonal :deg="-7" background="linear-gradient(331deg, rgba(209, 31, 171, 0.6) 0%, rgba(136, 160, 247, 0.6) 50%)" space-after space-before>
   <v-container>
    <div class="d-flex justify-center py-10">
     <v-card class=" cursor-pointer" data-aos="zoom-in" data-aos-once="true" data-aos-offset="400" width="100%">

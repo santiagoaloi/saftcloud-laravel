@@ -1,5 +1,5 @@
 <template>
- <v-bottom-sheet no-click-animation persistent fullscreen v-model="componentEditSheet">
+ <v-bottom-sheet transition="fade-transition" eager no-click-animation persistent fullscreen v-model="componentEditSheet">
   <v-card tile>
    <template v-if="componentEditSheet">
     <components-edit-sheet-appbar />

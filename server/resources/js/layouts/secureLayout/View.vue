@@ -5,7 +5,7 @@
     <router-view />
    </v-fade-transition>
   </v-container>
-  <status-bar v-if="$route.name.startsWith('/components')" />
+  <status-bar v-if="$route.name.startsWith('    components')" />
  </v-main>
 </template>
 

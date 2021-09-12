@@ -9,6 +9,7 @@
    :items="allComponentsFiltered"
    v-model="selectedComponentTableRow"
    @click:row="rowClicked"
+   @dblclick:row="validateBeforeEdit"
    style="cursor:pointer"
    calculate-widths
   >
@@ -101,6 +102,7 @@
 </template>
 
 <script>
+import { store } from "@/store";
 import { sync, call, get } from "vuex-pathify";
 import componentActions from "@/mixins/componentActions";
 export default {
@@ -152,7 +154,6 @@ export default {
 
  computed: {
   ...sync("theme", ["isDark"]),
-  ...sync("componentManagement", ["selectedComponentTableRow", "componentCardGroup"]),
   ...get("componentManagement", [
    "allComponentsFiltered",
    "isStarredColor",
@@ -163,8 +164,10 @@ export default {
    "isActiveIcon",
    "mapComponentGroup",
    "mapGroupParent",
-   "hasUnsavedChanges"
-  ])
+   "hasUnsavedChanges",
+   "selectedComponent"
+  ]),
+  ...sync("componentManagement", ["selectedComponentTableRow", "componentCardGroup", "componentEditSheet"])
  },
 
  watch: {
@@ -181,6 +184,16 @@ export default {
  methods: {
   ...call("componentManagement/*"),
 
+  validateBeforeEdit() {
+   if (this.selectedComponent.config.general_config.title) {
+    this.componentEditSheet = !this.componentEditSheet;
+   } else {
+    store.set("snackbar/value", true);
+    store.set("snackbar/text", "There are input validation errors, check them out before editing");
+    store.set("snackbar/color", "pink darken-1");
+   }
+  },
+
   setComponentTableIcon(item) {
    this.componentIcon = item.config_settings.icon;
   },
@@ -190,7 +203,6 @@ export default {
    let index = this.allComponentsFiltered.findIndex(component => component.id === row.id);
    this.componentCardGroup = index;
    this.setSelectedComponent(index);
-   console.log(index);
   },
 
   toggleSelection(id, row) {

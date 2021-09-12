@@ -1,15 +1,16 @@
 <template>
- <v-app-bar color="#36393f" flat>
-  <span class="white--text">Editing</span>
+ <v-app-bar :class="{ darkBorder: isDark }" :flat="isDark" height="80">
+  <v-icon dark class="mr-4">mdi-pencil</v-icon>
 
-  <span class="ml-2">
+  <h4 class="white--text">Editing</h4>
+  <h4 class="ml-2 white--text">
    <template v-if="selectedComponent.config.general_config.title">
     {{ selectedComponent.config.general_config.title }}
    </template>
    <template v-else>
     <base-typing-indicator />
    </template>
-  </span>
+  </h4>
 
   <v-spacer></v-spacer>
 
@@ -41,6 +42,17 @@
   </v-tooltip>
 
   <v-divider inset vertical class="mx-3 grey" />
+
+  <v-tooltip transition="false" color="black" bottom>
+   <template v-slot:activator="{ on }">
+    <v-btn :to="`/${selectedComponent.name}`" v-on="on" fab class="mx-2" color="white" text x-small>
+     <v-icon>
+      mdi-link
+     </v-icon>
+    </v-btn>
+   </template>
+   <span>Open</span>
+  </v-tooltip>
 
   <v-tooltip transition="false" color="black" bottom>
    <template v-slot:activator="{ on }">
@@ -133,3 +145,8 @@ export default {
  }
 };
 </script>
+<style scoped>
+.darkBorder {
+ border-bottom: solid 1px #404859;
+}
+</style>

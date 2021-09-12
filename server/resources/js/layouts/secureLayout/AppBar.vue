@@ -7,7 +7,7 @@
   <div class="flex-grow-1" />
 
   <v-text-field
-   v-lazy-input:debounce="100"
+   v-lazy-input:debounce="200"
    v-model="search"
    spellcheck="false"
    :outlined="isDark"
@@ -233,10 +233,8 @@ export default {
  methods: {
   ...call("authentication/*"),
 
-  fetchNotificationCount() {
-   axios.get("site/fetchNotificationCount").then(response => {
-    this.notificationCount = response.data.total;
-   });
+  pushDesktop() {
+   this.$router.push("/desktop");
   },
 
   pushprofile() {
@@ -246,8 +244,11 @@ export default {
   pushNotifications() {
    this.$router.push("/notifications");
   },
-  pushDesktop() {
-   this.$router.push("/desktop");
+
+  fetchNotificationCount() {
+   axios.get("site/fetchNotificationCount").then(response => {
+    this.notificationCount = response.data.total;
+   });
   }
  }
 };

@@ -1,15 +1,15 @@
 export default [
  {
   path: "/login",
-  name: "/login",
+  name: "login",
   meta: {
-   layout: "login_layout"
+   layout: "public_layout"
   },
-  component: () => import(/* webpackChunkName: 'login-page' */ "@/views/Login/Index.vue")
+  component: () => import(/* webpackChunkName: 'public-login-view' */ "@/views/Login/Index.vue")
  },
  {
   path: "/homepage",
-  name: "/homepage",
+  name: "homepage",
   meta: {
    layout: "public_layout"
   },
@@ -18,18 +18,19 @@ export default [
 
  {
   path: "/signup",
-  name: "/signup",
+  name: "signup",
   meta: {
    layout: "public_layout"
   },
-  component: () => import(/* webpackChunkName: 'signup' */ "@/views/Public/Signup/Signup.vue")
+  component: () => import(/* webpackChunkName: 'public-signup', webpackPrefetch: true */ "@/views/Public/Signup/Signup.vue")
  },
+
  {
   path: "/verifyAccount",
-  name: "/verifyAccount",
+  name: "verifyAccount",
   meta: {
    layout: "public_layout"
   },
-  component: () => import(/* webpackChunkName: 'signup-verify-account' */ "@/views/Public/Signup/VerifyAccount.vue")
+  component: () => import(/* webpackChunkName: 'public-signup-verify-account' */ "@/views/Public/Signup/VerifyAccount.vue")
  }
 ];
