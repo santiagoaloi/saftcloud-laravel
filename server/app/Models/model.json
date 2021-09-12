@@ -1,6 +1,6 @@
 {
  "form_fields": {
-  "field": null,
+  "field": 2,
   "label": null,
   "inputType": "number",
   "fieldType": "text",
@@ -10,8 +10,6 @@
   "inputParametersPreview": [],
   "inputParametersDefault": null,
   "icon": { "color": "#6453DCED", "name": "mdi-folder" },
-  "icon2": { "color": null, "name": null },
-  "icon3": { "color": null, "name": null },
   "textareaRows": 3,
   "responsiveGrid": 6,
   "inputPlaceholder": null,
@@ -55,5 +53,5 @@
   }
  },
  "columns": { "value": null, "text": null },
- "general_config": { "sql_table": null, "sql_select": null, "note": null, "isVisibleInSidebar": false, "title": null }
+ "general_config": { "sql_query": null, "sql_table": null, "sql_select": null, "note": null, "isVisibleInSidebar": false, "title": null }
 }
