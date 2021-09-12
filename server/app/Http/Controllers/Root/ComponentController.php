@@ -206,7 +206,7 @@ class ComponentController extends Controller {
                 $formColumnsAndFields = $this->buildColumnsAndFields($object);
                 $newFormFields = $formColumnsAndFields['ArrayFields'];
 
-                $originalFormFields = json_decode($query->config, true)['form_fields'];
+                $originalFormFields = json_decode($query->config, true);
 
                 $result = Helper::compareItems($originalFormFields, $newFormFields);
 

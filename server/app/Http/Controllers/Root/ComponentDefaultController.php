@@ -29,11 +29,11 @@ class ComponentDefaultController extends Controller {
 
         $getComponents = new ComponentController;
         $components = $getComponents->showAll();
-
+        $result = '';
         if(count($components->original['components'])){
             foreach ($components->original['components'] as $component){
                 $result = $this->compareComponentConfig($component);
-                $component['config']['form_fields'] = $result;
+                $component['config'] = $result;
                 $newComponents[]=$component;
             };
             return $getComponents->updateAll($newComponents);
@@ -134,7 +134,8 @@ class ComponentDefaultController extends Controller {
         // return ComponentDefault::pluck('config_structure')->last();
     }
 
-    public function compareComponentConfig($request){
+    
+    public function compareComponentTeta($request){
         $model = $this->getLast();
 
         $items = $request['config']['form_fields'];
@@ -145,6 +146,31 @@ class ComponentDefaultController extends Controller {
         foreach($items as $item){
             $result[] = Helper::compareItems($item, $modelo);
         };
+        return $result;
+    }
+
+    public function compareComponentConfig($request){
+        $model = $this->getLast();
+
+        $itemsformFields    = $request['config']['form_fields'];
+        $itemsColumns       = $request['config']['columns'];
+        $itemsGeneralConfig = $request['config']['general_config'];
+
+        $mod = json_decode($model, true);
+        $modelFormFields    = $mod['form_fields'];
+        $modelColumns       = $mod['columns'];
+        $modelGeneralConfig = $mod['general_config'];
+
+        foreach($itemsformFields as $item){
+            $result['form_fields'][] = Helper::compareItems($item, $modelFormFields);
+        };
+
+        foreach($itemsColumns as $item){
+            $result['columns'][] = Helper::compareItems($item, $modelColumns);
+        }
+
+        $result['general_config'] = Helper::compareItems($itemsGeneralConfig, $modelGeneralConfig);
+        
         return $result;
     }
 
