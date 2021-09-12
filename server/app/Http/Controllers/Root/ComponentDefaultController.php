@@ -121,13 +121,15 @@ class ComponentDefaultController extends Controller {
         return $this->showAll(true);
     }
 
+    // Obtiene el ultimo registro de config_structure
     function getLastJson(){
         return ComponentDefault::get('config_structure')->last();
     }
 
+    // Obtiene el modelo de config_Structure
     function getLast(){
-        $getJsonFile2 = app_path("Models/model.json");
-        return file_get_contents($getJsonFile2);
+        $getJsonFile = app_path("Models/model.json");
+        return file_get_contents($getJsonFile);
 
         // return ComponentDefault::pluck('config_structure')->last();
     }
