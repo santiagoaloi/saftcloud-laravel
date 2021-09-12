@@ -80,6 +80,14 @@ class TestFunctionController extends Controller {
     }
 
     public function test3(Request $request){
+        // session()->regenerate(); // regenera el token de la sesion
+        
+        if (Auth::check()) {
+            return 'hola';
+        }
+
+        $users = $this->user->all();
+        return Auth::user();
 
         // session(['juana'=>'estudi']);
         // $request->session()->put(['pepe'=>'admin']);
@@ -115,6 +123,8 @@ class TestFunctionController extends Controller {
     }
 
     public function test4(Request $request, Country $country){
+        return auth()->User();
+
         return Auth::user()->id;
 
         // return $this->authorize('update', $country);
