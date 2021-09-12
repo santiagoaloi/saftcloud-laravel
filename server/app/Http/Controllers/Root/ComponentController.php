@@ -149,11 +149,13 @@ class ComponentController extends Controller {
 
         foreach($components as $component){
             $general_config = json_decode($component->config, true);
+            $config_settings = json_decode($component->config_settings, true);
             $title = $general_config['general_config']['title'];
             $arrayComponent[] = [
                 'id'    => $component->id,
                 'name'  => $component->name,
                 'title' => $title,
+                'configSettings' => $config_settings
             ];
         };
 
@@ -301,7 +303,7 @@ class ComponentController extends Controller {
     function buildColumnsAndFields($columns){
         foreach ($columns as $column) {
             if($column != 'id' && $column != 'temp'){
-                $ArrayColumns[] = ['value' => $column, 'text'=>$column];
+                $ArrayColumns[] = (object)$this->columnStructure($column);
 
                 $ArrayFields[] = (object)$this->formFieldStructure($column);
             }
@@ -320,4 +322,12 @@ class ComponentController extends Controller {
         return $model->form_fields;
     }
 
+    public function columnStructure($field) {
+        $model = json_decode(ComponentDefault::pluck('config_structure')->last());
+
+        $model->columns->value = $field;
+        $model->columns->text = $field;
+
+        return $model->columns;
+    }
 }

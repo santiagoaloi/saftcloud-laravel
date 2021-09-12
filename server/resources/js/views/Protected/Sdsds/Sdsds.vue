@@ -16,7 +16,7 @@
 
 <script>
 export default {
-    name: "Sss",
+    name: "Sdsds",
     mounted() {
         console.log('Component mounted.')
     }
