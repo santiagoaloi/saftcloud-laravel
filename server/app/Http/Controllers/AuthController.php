@@ -75,7 +75,7 @@ class AuthController extends Controller {
 
             $user->userSettings;
             $user->entity;
-            $user->branches;
+            $user->branches[0]->entity;
             $UserController = New UserController;
             $user->privileges = $UserController->getRolCapabilities($user);
 

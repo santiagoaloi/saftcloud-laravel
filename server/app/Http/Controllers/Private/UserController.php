@@ -147,7 +147,6 @@ class UserController extends Controller {
                     $capabilities[] = $capability->name;
                 }
             }
-
         };
         return $this->getCapabilities($user, $capabilities);
     }
