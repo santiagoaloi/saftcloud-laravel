@@ -24,6 +24,31 @@ class UserController extends Controller {
         // if($request->hasFile('picture')){
         //     $query['picture']=$request->file('picture')->store('avatars', 'public');
         // };
+
+        $admin = auth()->User();
+        $account = $admin->Entity->RootAccount;
+
+        // CREACION DE PERSONA
+        $person = $account->entity()->create([
+            'entity_type_id'    => 2,
+            'first_name'        => $request['name'],
+            'last_name'         => $request['lastname'],
+            'iva_condition_id'  => 5,
+            'document_type_id'  => 6
+        ]);
+
+        // CREACION DE USUARIO
+        $person->user()->create([
+            'role_id'          =>  2,
+            'email'            =>  $request['email'],
+            'password'         =>  bcrypt('password')
+        ]);
+        $user = $person->user;
+        $user->entity;
+        return response([
+            'row'=> $user
+        ], 200);
+
         try{
             $query = User::create($request->all());
         }
