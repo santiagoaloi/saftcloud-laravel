@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Validation\ValidationException;
+use App\Http\Controllers\Private\UserController;
 
 class AuthController extends Controller {
 
@@ -71,6 +72,12 @@ class AuthController extends Controller {
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])){
             $user = User::where('email', $credentials['email'])->first();
             $token = $user->createToken($user['email'], ['component.show'])->plainTextToken;
+
+            $user->userSettings;
+            $user->entity;
+            $user->branches;
+            $UserController = New UserController;
+            $user->privileges = $UserController->getRolCapabilities($user);
 
             // $roles = DB::table('roles')
             // ->leftJoin('model_has_roles', 'permissions.id', '=', 'permissions.lookUpList_id')
