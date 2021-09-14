@@ -95,7 +95,7 @@ export default {
  },
 
  methods: {
-  ...call("componentManagement/*"),
+  ...call("accountsManagement/*"),
 
   validateAccountForm() {
    this.$refs.createAccountForm.validate().then(validated => {

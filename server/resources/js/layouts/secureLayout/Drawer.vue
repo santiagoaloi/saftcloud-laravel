@@ -21,7 +21,10 @@
          :menu-props="{ 'offset-y': true }"
          item-color="primary lighten-4"
          hide-details
-         :items="['MyCompany', 'MyOtherCompany']"
+         :items="session.user.branches"
+         item-text="name"
+         item-value="entity_id"
+         v-model="session.activeBranch"
          dense
          solo
         ></v-select>
@@ -51,7 +54,8 @@ export default {
  },
  computed: {
   ...sync("drawers", ["secureDefaultDrawer"]),
-  ...sync("componentManagement", ["navigationStructure"])
+  ...sync("componentManagement", ["navigationStructure"]),
+  ...sync("authentication", ["session"])
  },
 
  methods: {

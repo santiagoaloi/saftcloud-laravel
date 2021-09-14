@@ -6,6 +6,7 @@ const axiosDefaults = require("axios/lib/defaults");
 
 const state = {
  session: {},
+ activeBranch: "",
  dialogTImeoutWarning: false,
  hasSessionExpired: false
 };
