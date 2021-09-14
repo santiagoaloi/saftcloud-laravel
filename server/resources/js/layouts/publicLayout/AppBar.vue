@@ -3,7 +3,7 @@
 
  <v-app-bar color="transparent" flat height="80">
   <v-container fill-height>
-   <router-link to="/" class="d-flex align-center  text-decoration-none ml-3">
+   <router-link to="/" class="d-flex align-center  text-decoration-none ">
     <img class="mr-4" src="storage/logo.png" height="45" />
     <span class="font-weight-black headline white--text"> SaftCloud ™</span>
    </router-link>

@@ -8,7 +8,9 @@ const state = {
  recordItemInitial: {},
  columns: [],
  formFields: {},
- dialog: false,
+ visibleColumns: [],
+ dialogCrud: false,
+ dialogCustomize: false,
  isBooted: undefined
 };
 
@@ -19,7 +21,7 @@ const actions = {
  ...make.actions(state),
 
  // Loads all the neccesary data to hydrate the active view.
- loadView({}, id) {
+ loadView({ dispatch }, id) {
   axios.get(`api/componentConstructor/${id}`).then(response => {
    if (response.status === 200) {
     store.set("activeView/records", response.data.component.records);
@@ -27,14 +29,22 @@ const actions = {
     store.set("activeView/columns", response.data.component.columns);
     store.set("activeView/formFields", response.data.component.formFields);
     store.set("activeView/isBooted", true);
+    dispatch("pushAllColumnNames");
    }
   });
+ },
+
+ pushAllColumnNames({ state }) {
+  state.visibleColumns = [];
+  for (const column of state.columns) {
+   state.visibleColumns.push(column.value);
+  }
  },
 
  addRecord({ state }) {
   state.records.push(state.recordItem);
   store.set("activeView/recordItem", {});
-  store.set("activeView/dialog", false);
+  store.set("activeView/dialogCrud", false);
  }
 };
 

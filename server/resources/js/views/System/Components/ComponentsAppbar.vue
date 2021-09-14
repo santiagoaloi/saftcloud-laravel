@@ -31,9 +31,3 @@ export default {
  }
 };
 </script>
-<style>
-.dialogHeight {
- height: calc(100vh - 18px);
- overflow-y: auto;
-}
-</style>

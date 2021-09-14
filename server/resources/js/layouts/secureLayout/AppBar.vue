@@ -2,7 +2,15 @@
  <v-app-bar :class="{ darkBorder: isDark }" :flat="isDark" clipped-right app height="80">
   <v-app-bar-nav-icon dark class="ml-n2 mr-3" text xSmall fab @click="secureDefaultDrawer = !secureDefaultDrawer" />
 
-  <h4 style="position:absolute" class="white--text ml-9">{{ routeTitle }}</h4>
+  <template v-if="routeIcon">
+   <v-avatar class="cursor-pointer my-4" size="40" rounded :color="routeIcon.color">
+    <v-icon size="30" dark>
+     {{ routeIcon.name || null }}
+    </v-icon>
+   </v-avatar>
+  </template>
+
+  <h4 class="white--text ml-2">{{ routeTitle }}</h4>
 
   <div class="flex-grow-1" />
 
@@ -227,6 +235,10 @@ export default {
 
   routeTitle() {
    return this.$route.meta.title;
+  },
+
+  routeIcon() {
+   return this.$route.meta.icon;
   }
  },
 

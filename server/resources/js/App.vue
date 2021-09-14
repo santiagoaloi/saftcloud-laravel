@@ -75,7 +75,7 @@ export default {
        this.$router.addRoute({
         path: `/${component.name}`,
         name: `${component.name}`,
-        meta: { layout: "secure_layout", title: component.title, id: component.id },
+        meta: { layout: "secure_layout", title: component.title, id: component.id, icon: component.configSettings.icon },
         component: () => import(`./views/Protected/${component.name}/${component.name}.vue`)
        });
       }
@@ -86,9 +86,3 @@ export default {
  }
 };
 </script>
-<style>
-.v-application .error--text {
- color: #ffa0a0 !important;
- caret-color: #ffa0a0 !important;
-}
-</style>
