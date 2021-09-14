@@ -72,6 +72,11 @@ class AuthController extends Controller {
             $user = User::where('email', $credentials['email'])->first();
             $token = $user->createToken($user['email'], ['component.show'])->plainTextToken;
 
+            $user->userSettings;
+            $user->entity;
+            $user->branches;
+            $user->roles;
+
             // $roles = DB::table('roles')
             // ->leftJoin('model_has_roles', 'permissions.id', '=', 'permissions.lookUpList_id')
             // ->where('model_has_roles.model_id', '=', $user->id)

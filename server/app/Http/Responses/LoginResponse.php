@@ -13,7 +13,7 @@ class LoginResponse implements LoginResponseContract {
         // $home = auth()->user()->is_admin ? '/admin' : '/dashboard';
  
         // return redirect()->intended($home);
-
+        
         return $request;
     }
 }
