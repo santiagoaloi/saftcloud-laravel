@@ -28,6 +28,7 @@ class UserController extends Controller {
 
         $admin = auth()->User();
         $account = $admin->Entity->RootAccount;
+        $branch = $admin->Branches[0];
 
         // CREACION DE PERSONA
         $person = $account->entity()->create([
@@ -48,6 +49,7 @@ class UserController extends Controller {
         $roleS = New Role;
         $role = $roleS->findOrFail(3);
         $this->attachUser($role, $user);
+        $this->attachUserS($branch, $user);
 
         $user->entity;
 
@@ -159,6 +161,11 @@ class UserController extends Controller {
     // AGREGA TODOS LOS USUARIOS QUE ENVIAMOS EN LA VARIABLE ROLE
     public function attachUser($request, $user){
         $request->users()->attach($user);
+    }
+
+    // AGREGA TODOS LOS USUARIOS QUE ENVIAMOS EN LA VARIABLE ROLE
+    public function attachUserS($request, $user){
+        $request->user()->attach($user);
     }
 
     // ELIMINA TODOS LOS USUARIOS QUE ENVIAMOS EN LA VARIABLE ROLE

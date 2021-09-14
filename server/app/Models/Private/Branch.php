@@ -15,7 +15,7 @@ class Branch extends Model {
     }
 
     public function user(){
-        return $this->belongsToMany('App\Models\GeneralConfig\User');
+        return $this->belongsToMany('App\Models\User');
     }
 
     public function pointOfSales(){
