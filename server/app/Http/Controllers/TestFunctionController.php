@@ -79,9 +79,10 @@ class TestFunctionController extends Controller {
         return $query->getComponentNames();
     }
 
-    public function test3(Request $request){
+    public function test3(User $pepe){
+        return $pepe;
         // session()->regenerate(); // regenera el token de la sesion
-        
+
         if (Auth::check()) {
             return 'hola';
         }
@@ -123,18 +124,17 @@ class TestFunctionController extends Controller {
     }
 
     public function test4(Request $request, Country $country){
-        return auth()->User();
 
-        return Auth::user()->id;
+        // return auth()->User();
+        // return Auth::user();
 
         // return $this->authorize('update', $country);
 
-        return $request->session::get('email');
-        // return $request->session()->all();
-
+        return session()->all();
+        return $request->session()->all();
         // return Session::getId();
 
-        // return session()->all();
+
         // var_dump(csrf_token());
         // var_dump($request->header('X-CSRF-TOKEN'));
     }

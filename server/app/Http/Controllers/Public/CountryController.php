@@ -36,10 +36,10 @@ class CountryController extends Controller {
         ], 200);
     }
 
-    public function showAll(Request $user) {
-        $this->user = User::find($user->id);
-
-        return $this->authorize('showAll');
+    public function showAll() {
+        // $this->user = User::find($user->id);
+        // $this->authorize('showAll', [$country, 'Country.show'] );
+        // return "si";
 
         return response([
             'rows'=> Country::get()

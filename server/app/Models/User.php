@@ -39,7 +39,7 @@ class User extends Authenticatable {
         return $this->belongsTo('App\Models\Private\Entity');
     }
 
-    public function branch(){
+    public function branches(){
         return $this->belongsToMany('App\Models\Private\Branch');
     }
 

@@ -15,8 +15,18 @@ class CountryPolicy {
      * @param  \App\Models\User  $user
      * @return mixed
      */
-    public function showAll() {
-        return true;
+    public function showAll(User $user, Country $country, $perm=null) {
+        
+        dd($user);
+
+        dd($user->roles->capabilities);
+        if ($user->cannot($perm, $country)){
+            return false;
+        } else {
+            return true;
+        }
+
+        return $user->id > 0;
     }
 
     /**

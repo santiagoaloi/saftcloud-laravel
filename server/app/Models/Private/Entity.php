@@ -11,12 +11,16 @@ class Entity extends Model {
     protected $fillable = ['root_account_id', 'entity_type_id', 'first_name', 'last_name', 'iva_condition_id', 'document_type_id', 
     'doc_number', 'ing_brutos_number', 'birthday'];
 
-    public function account(){
+    public function rootAccount(){
         return $this->belongsTo('App\Models\Private\RootAccount');
     }
 
     public function entityType(){
-        return $this->hasmany('App\Models\GeneralConfig\LookUpListValue');
+        return $this->hasMany('App\Models\GeneralConfig\LookUpListValue');
+    }
+
+    public function ivaCondition(){
+        return $this->belongsTo('App\Models\Taxes\IvaCondition');
     }
 
     public function user(){
@@ -24,7 +28,7 @@ class Entity extends Model {
     }
 
     public function branches(){
-        return $this->hasmany('App\Models\Private\Branch');
+        return $this->hasMany('App\Models\Private\Branch');
     }
 
     public function addresses(){

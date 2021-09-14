@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Private;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Private\Entity;
 use Illuminate\Database\QueryException;
 
 use Spatie\Permission\Models\Role;
@@ -12,11 +13,11 @@ use Spatie\Permission\Models\Permission;
 
 class UserController extends Controller {
 
-    private $model = 'user';
+    // private $model = 'user';
 
-    public function __construct() {
-        $this->middleware(['permission:user.edit']);
-    }
+    // public function __construct() {
+    //     $this->middleware(['permission:user.edit']);
+    // }
 
     public function store(Request $request) {
         //** TEST PARA SUBIR ARCHIVOS AL CREAR UN USUARIO */
@@ -43,17 +44,15 @@ class UserController extends Controller {
 
     public function show($id) {
         $user = User::findOrFail($id);
-        $user['entity'] = $user->entity;
 
-        foreach ($user->roles as $role) {
-            foreach ($role->capabilities as $capability){
-                $role['capabilities'] = $capability;
-                $capabilities[] = $capability;
-            }
-            $user['capabilities'] = $capabilities;
-            $user['roles'] = $role;
-        };
+        $roles = $user->roles[0];
+        return $roles->capabilities;
 
+        $user['capabilitiesList'] = $this->getRolCapabilities($user);
+
+        // $user['branches'] = $user->branches[0]->entity->rootAccount;
+
+        return $user;
         return response([
             'row'=> $user
         ], 200);
@@ -139,5 +138,26 @@ class UserController extends Controller {
     // ELIMINA TODOS LOS USUARIOS Y AGREGA LOS NUEVOS
     public function syncUser(Request $request, $user){
         $request->user()->sync($user);
+    }
+
+    public function getRolCapabilities($user){
+        foreach ($user->roles as $value) {
+            if($value){
+                foreach ($value->capabilities as $capability){
+                    $capabilities[] = $capability->name;
+                }
+            }
+
+        };
+        return $this->getCapabilities($user, $capabilities);
+    }
+
+    public function getCapabilities($user, $capabilities){
+        foreach ($user->capabilities as $value) {
+            if($value){
+                $capabilities[] = $value->name;
+            }
+        }
+        return $capabilities;
     }
 }

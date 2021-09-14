@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class RootAccount extends Model {
     use SoftDeletes;
 
-    protected $cast = [];
+    // protected $cast = [];
     protected $fillable = ['license', 'account_plan_id', 'payment_status', 'email', 'document_type_id', 'doc_number', 'name'];
 
     public function AccountPlan(){
@@ -20,7 +20,7 @@ class RootAccount extends Model {
     }
 
     public function entity(){
-        return $this->hasOne('App\Models\Private\Entity');
+        return $this->hasMany('App\Models\Private\Entity');
     }
 
     public function documentType(){

@@ -110,9 +110,10 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 });
 
 //Testing
-Route::get('/testFunction', [TestFunctionController::class, 'test3']);
-Route::get('/componentConstructor/{id}', [ComponentController::class, 'componentConstructor']);
-
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::get('/testFunction/{pepe}', [TestFunctionController::class, 'test3']);
+    Route::get('/componentConstructor/{id}', [ComponentController::class, 'componentConstructor']);
+});
 // Route::group(['middleware' => ['web']], function () {
 //     Route::post('/testFunction', [AuthenticatedSessionController::class, 'store']);
 // });

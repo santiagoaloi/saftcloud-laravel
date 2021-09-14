@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Private\UserController;
+use App\Http\Controllers\Public\CountryController;
 use App\Http\Controllers\TestFunctionController;
 
 use App\Http\Controllers\Root\ComponentController;
@@ -21,6 +22,6 @@ use App\Http\Controllers\Root\ComponentController;
 Route::get('/', function () { return view('home'); });
 
 Route::group(['middleware' => ['auth']], function () {
-    Route::get('/testFunction', [TestFunctionController::class, 'test4']);
-    Route::post('/testFunction', [TestFunctionController::class, 'test3']);
+    // Route::get('/testFunction', [CountryController::class, 'showAll']);
+    Route::get('/testFunction/{user}', [TestFunctionController::class, 'test3']);
 });
