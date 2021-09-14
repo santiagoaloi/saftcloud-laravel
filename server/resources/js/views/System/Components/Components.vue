@@ -42,7 +42,7 @@ export default {
 
  computed: {
   ...sync("theme", ["isDark"]),
-  ...sync("componentManagement", ["dialogComponent", "isTableLayout"]),
+  ...sync("componentManagement", ["isTableLayout"]),
   ...get("componentManagement", ["isAllFilteredComponentsEmpty", "selectedComponent"])
  },
 

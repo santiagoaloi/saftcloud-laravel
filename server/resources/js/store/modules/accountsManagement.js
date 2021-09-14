@@ -6,11 +6,9 @@ import axios from "axios";
 // When this function is called, the component settings form is back to default values.
 const initialComponentSettings = () => {
  return {
-  note: "",
   name: "",
-  table: "",
-  title: "",
-  component_group_id: ""
+  lastName: "",
+  email: ""
  };
 };
 
@@ -28,7 +26,7 @@ const state = {
  isTableLayout: false,
  activeFormFieldTab: 0,
  componentCardGroup: 0,
- dialogComponent: false,
+ dialogAccount: false,
  dbTablesAndColumns: {},
  componentEditSheet: false,
  groupNameBeingRemoved: "",
@@ -42,7 +40,7 @@ const state = {
  selectedComponentActiveField: "",
  displayEnabledFormFieldsOnly: false,
  componentEditDrawerActiveMenu: undefined,
- componentSettings: initialComponentSettings(),
+ account: initialComponentSettings(),
  componentStatusTabs: [
   { name: "All", value: "all", icon: "mdi-all-inclusive" },
   { name: "Starred", value: "starred", icon: "mdi-star" },
@@ -449,30 +447,30 @@ const actions = {
  },
 
  //* Creates a new component in the database.
- createComponent({ state, getters, dispatch }) {
-  return axios.post("api/component", state.componentSettings).then(response => {
+ createAccount({ state, getters, dispatch }) {
+  return axios.post("api/user", state.account).then(response => {
    if (response.status === 200) {
-    store.set("componentManagement/allComponents", response.data.components);
+    // store.set("componentManagement/allComponents", response.data.components);
     store.set("snackbar/value", true);
-    store.set("snackbar/text", `"${state.componentSettings.title}" component created`);
+    store.set("snackbar/text", "account created");
     store.set("snackbar/color", "primary");
 
     //* Set the status tab as "all"
-    state.activeStatusTab = 0;
+    // state.activeStatusTab = 0;
 
     //* Autoselect latest created component
-    store.set("componentManagement/dialogComponent", false);
+    store.set("componentManagement/dialogAccount", false);
 
-    const activeGroup = state.allGroups.find(item => item.id === state.componentSettings.component_group_id);
-    const groupExists = state.selectedComponentGroups.find(item => item.id === activeGroup.id);
+    // const activeGroup = state.allGroups.find(item => item.id === state.componentSettings.component_group_id);
+    // const groupExists = state.selectedComponentGroups.find(item => item.id === activeGroup.id);
 
-    if (!groupExists) state.selectedComponentGroups.push(activeGroup);
+    // if (!groupExists) state.selectedComponentGroups.push(activeGroup);
 
-    store.set("componentManagement/componentCardGroup", getters.allComponentsFiltered.length - 1);
-    store.set("componentManagement/selectedComponentIndex", getters.allComponentsFiltered.length - 1);
+    // store.set("componentManagement/componentCardGroup", getters.allComponentsFiltered.length - 1);
+    // store.set("componentManagement/selectedComponentIndex", getters.allComponentsFiltered.length - 1);
 
-    store.set("componentManagement/componentSettings", initialComponentSettings());
-    dispatch("getNavigationStructure");
+    // store.set("componentManagement/componentSettings", initialComponentSettings());
+    // dispatch("getNavigationStructure");
     return true;
    }
   });

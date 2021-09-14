@@ -1,14 +1,14 @@
 import { make } from "vuex-pathify";
-import { ACTIVE, ALL, INACTIVE, MODULAR, STARRED, NAVIGATION } from "../constants/statusBarConstants";
+import * as status from "../constants/statusBarConstants";
 
 const state = {
  statusMessages: {
-  all: ALL,
-  active: ACTIVE,
-  starred: STARRED,
-  modular: MODULAR,
-  inactive: INACTIVE,
-  navigation: NAVIGATION
+  all: status.ALL,
+  active: status.ACTIVE,
+  starred: status.STARRED,
+  modular: status.MODULAR,
+  inactive: status.INACTIVE,
+  navigation: status.NAVIGATION
  }
 };
 const mutations = make.mutations(state);

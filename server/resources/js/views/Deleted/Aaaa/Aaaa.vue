@@ -36,7 +36,7 @@
 <script>
 import activeView from "@/mixins/activeView";
 export default {
- name: "Aaa",
+ name: "Aaaa",
  mixins: [activeView]
 };
 </script>

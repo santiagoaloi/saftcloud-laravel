@@ -23,7 +23,7 @@
   </div> -->
 
   <div class="py-10">
-   <v-card data-aos="zoom-in" data-aos-once="true" data-aos-offset="220" class="pa-10 cursor-pointer" width="100%">
+   <v-card data-aos="zoom-in" data-aos-once="true" class="pa-10 cursor-pointer" width="100%">
     <v-row align="center">
      <v-col cols="12" lg="6">
       <div class="text-uppercase body-2 primary--text mb-2 mt-0 mt-xl-10">

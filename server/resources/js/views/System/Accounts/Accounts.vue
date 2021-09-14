@@ -20,7 +20,7 @@
    </v-scroll-y-transition>
   </v-card>
 
-  <dialog-component />
+  <dialog-account />
   <component-edit-sheet />
  </div>
 </template>
@@ -36,14 +36,14 @@ export default {
   AccountsGroups: () => import(/* webpackChunkName: 'components-groups' */ "./AccountsGroups"),
   AccountsAppbar: () => import(/* webpackChunkName: 'components-appbar' */ "./AccountsAppbar"),
   AccountsNoData: () => import(/* webpackChunkName: 'components-no-data' */ "./AccountsNoData"),
-  DialogComponent: () => import(/* webpackChunkName: 'components-dialog-new-component' */ "./DialogComponent"),
+  DialogAccount: () => import(/* webpackChunkName: 'components-dialog-account' */ "./DialogAccount"),
   ComponentEditSheet: () => import(/* webpackChunkName: 'components-edit-sheet' */ "./ComponentsEdit/ComponentsEditSheet")
  },
 
  computed: {
   ...sync("theme", ["isDark"]),
-  ...sync("componentManagement", ["dialogComponent", "isTableLayout"]),
-  ...get("componentManagement", ["isAllFilteredComponentsEmpty", "selectedComponent"])
+  ...sync("accountsManagement", ["isTableLayout"]),
+  ...get("accountsManagement", ["isAllFilteredComponentsEmpty", "selectedComponent"])
  },
 
  mounted() {

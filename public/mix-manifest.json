@@ -49,5 +49,7 @@
     "/dist/js/signup-step3.js": "/dist/js/signup-step3.js",
     "/dist/js/signup-step4.js": "/dist/js/signup-step4.js",
     "/dist/css/app.css": "/dist/css/app.css",
-    "/dist/js/vendor.js": "/dist/js/vendor.js"
+    "/dist/js/vendor.js": "/dist/js/vendor.js",
+    "/dist/js/secure-accounts-drawer.js": "/dist/js/secure-accounts-drawer.js",
+    "/dist/js/components-dialog-account.js": "/dist/js/components-dialog-account.js"
 }

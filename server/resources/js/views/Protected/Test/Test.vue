@@ -12,7 +12,7 @@
 
   <v-data-table :search="search" fixed-header :headers="tableColumns" :items="records" style="cursor:pointer" calculate-widths> </v-data-table>
 
-  <base-dialog width="50vw" @save="addRecord()" @close="dialogCrud = false" title="add record" v-model="dialogCrud">
+  <base-dialog width="50vw" @save="addRecord()" @close="dialogCrud = false" title="Add record" v-model="dialogCrud">
    <v-form @submit.prevent="addRecord()">
     <v-row>
      <v-col sm="6" v-for="(field, i) in formFields" :key="i">

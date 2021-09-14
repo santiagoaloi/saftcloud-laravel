@@ -36,9 +36,9 @@
 
 <script>
 import { VueTyper } from "vue-typer";
+import Feature2 from "@/components/Landing/Feature2.vue";
 import Feature1 from "@/components/Landing/Feature1.vue";
 import CallToAction from "@/components/Landing/CallToAction.vue";
-import Feature2 from "@/components/Landing/Feature2.vue";
 
 export default {
  name: "Homepage",

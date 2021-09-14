@@ -2,7 +2,7 @@
  <vue-diagonal :deg="-7" background="linear-gradient(331deg, rgba(209, 31, 171, 0.6) 0%, rgba(136, 160, 247, 0.6) 50%)" space-after space-before>
   <v-container>
    <div class="d-flex justify-center py-10">
-    <v-card class=" cursor-pointer" data-aos="zoom-in" data-aos-once="true" data-aos-offset="400" width="100%">
+    <v-card class="cursor-pointer" data-aos="zoom-in" data-aos-once="true" width="100%">
      <v-row align="center" justify="start">
       <v-col cols="12" lg="4">
        <v-img src="storage/img4.jpg" height="280"></v-img>
@@ -25,7 +25,7 @@
    </div>
 
    <div class="d-flex justify-center py-10">
-    <v-card data-aos="zoom-in" data-aos-once="true" data-aos-offset="400" class="pa-10   cursor-pointer" flat width="100%">
+    <v-card data-aos="zoom-in" data-aos-once="true" class="pa-10 cursor-pointer" flat width="100%">
      <v-row align="center" justify="center">
       <v-col cols="12" lg="6">
        <div class="text-uppercase font-weight-bold body-2 primary--text mb-2 mt-0 mt-xl-10">
@@ -47,11 +47,11 @@
    </div>
 
    <div class="d-flex justify-center py-10">
-    <v-card color="transparent" data-aos="zoom-in" data-aos-once="true" flat data-aos-offset="400" width="100%">
+    <v-card color="transparent" data-aos="zoom-in" data-aos-once="true" flat width="100%">
      <v-row>
       <v-col sm="6">
        <div class="d-flex justify-center py-10">
-        <v-card class="  cursor-pointer" data-aos="zoom-in" data-aos-once="true" data-aos-offset="400" width="100%">
+        <v-card class="  cursor-pointer" data-aos="zoom-in" data-aos-once="true" width="100%">
          <v-row align="center" justify="start">
           <v-col cols="12" lg="5">
            <v-img src="storage/img4.jpg" height="280"></v-img>
