@@ -15,26 +15,26 @@ class Branch extends Model {
     }
 
     public function user(){
-        return $this->belongsToMany('App\Models\GeneralConfig\User')->withTimestamps();
+        return $this->belongsToMany('App\Models\GeneralConfig\User');
     }
 
     public function pointOfSales(){
-        return $this->hasmany('App\Models\Private\PointOfSale')->withTimestamps();
+        return $this->hasmany('App\Models\Private\PointOfSale');
     }
 
     public function paymentMethod(){
-        return $this->hasMany('App\Models\GeneralConfig\PaymentMethod')->withTimestamps();
+        return $this->hasMany('App\Models\GeneralConfig\PaymentMethod');
     }
 
     public function addresses(){
-        return $this->morphMany('App\Models\Private\Address', 'addreseable')->withTimestamps();
+        return $this->morphMany('App\Models\Private\Address', 'addreseable');
     }
 
     public function phones(){
-        return $this->morphMany('App\Models\Private\Phone', 'phoneable')->withTimestamps();
+        return $this->morphMany('App\Models\Private\Phone', 'phoneable');
     }
 
     public function socials(){
-        return $this->morphMany('App\Models\Private\Social', 'socialable')->withTimestamps();
+        return $this->morphMany('App\Models\Private\Social', 'socialable');
     }
 }
