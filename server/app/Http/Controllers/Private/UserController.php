@@ -3,12 +3,13 @@
 namespace App\Http\Controllers\Private;
 
 use App\Models\User;
+use App\Models\Roles\Role;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Models\Private\Entity;
-use Illuminate\Database\QueryException;
+use App\Http\Controllers\Controller;
 
-use Spatie\Permission\Models\Role;
+// use Spatie\Permission\Models\Role;
+use Illuminate\Database\QueryException;
 use Spatie\Permission\Models\Permission;
 
 class UserController extends Controller {
@@ -44,7 +45,12 @@ class UserController extends Controller {
             'password'         =>  bcrypt('password')
         ]);
         $user = $person->user;
+        $roleS = New Role;
+        $role = $roleS->findOrFail(3);
+        $this->attachUser($role, $user);
+
         $user->entity;
+
         return response([
             'row'=> $user
         ], 200);
@@ -151,18 +157,18 @@ class UserController extends Controller {
     }
 
     // AGREGA TODOS LOS USUARIOS QUE ENVIAMOS EN LA VARIABLE ROLE
-    public function attachUser(Request $request, $role){
-        $request->$this->user()->attach($role);
+    public function attachUser($request, $user){
+        $request->users()->attach($user);
     }
 
     // ELIMINA TODOS LOS USUARIOS QUE ENVIAMOS EN LA VARIABLE ROLE
-    public function detachUser(Request $request, $user){
-        $request->user()->detach($user);
+    public function detachUser($request, $user){
+        $request->users()->detach($user);
     }
 
     // ELIMINA TODOS LOS USUARIOS Y AGREGA LOS NUEVOS
-    public function syncUser(Request $request, $user){
-        $request->user()->sync($user);
+    public function syncUser($request, $user){
+        $request->users()->sync($user);
     }
 
     public function getRolCapabilities($user){

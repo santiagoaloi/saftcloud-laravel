@@ -2,10 +2,6 @@
 
 namespace App\Http\Controllers\Public;
 use App\Models\Private\RootAccount;
-use App\Models\Private\Entity;
-use App\Models\Private\Branch;
-use App\Models\Private\PointOfSale;
-use App\Models\User;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;

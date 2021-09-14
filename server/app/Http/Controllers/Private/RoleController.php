@@ -90,17 +90,17 @@ class RoleController extends Controller {
     }
 
     // AGREGA TODOS LOS ROLES QUE ENVIAMOS EN LA VARIABLE ROLE
-    public function attachRole(Request $request, $role){
-        $request->role()->attach($role);
+    public function attachRoles(Request $request, $role){
+        $request->roles()->attach($role);
     }
 
     // ELIMINA TODOS LOS ROLES QUE ENVIAMOS EN LA VARIABLE ROLE
-    public function detachRole(Request $request, $role){
-        $request->role()->detach($role);
+    public function detachRoles(Request $request, $role){
+        $request->roles()->detach($role);
     }
 
     // ELIMINA TODOS LOS ROLES Y AGREGA LOS NUEVOS
-    public function syncRole(Request $request, $role){
-        $request->role()->sync($role);
+    public function syncRoles($request, $role){
+        $request->roles()->sync($role);
     }
 }
