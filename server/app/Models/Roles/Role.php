@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Role extends Model {
    use SoftDeletes;
 
-   protected $fillable = ['entity_id', 'name'];
+   protected $fillable = ['entity_id', 'name', 'description'];
 
    public function users(){
       return $this->belongsToMany('App\Models\User');
