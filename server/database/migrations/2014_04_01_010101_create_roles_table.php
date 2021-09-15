@@ -15,6 +15,7 @@ class CreateRolesTable extends Migration {
             $table->id();
             $table->foreignId('entity_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
             $table->string('name');
+            $table->string('description');
             $table->softDeletes();
             $table->timestamps();
         });
