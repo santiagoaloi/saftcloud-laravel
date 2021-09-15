@@ -16,6 +16,7 @@ use App\Http\Controllers\Pos\ProductController;
 use App\Http\Controllers\Pos\ProductPromotionController;
 
 use App\Http\Controllers\Private\RoleController;
+use App\Http\Controllers\Private\CapabilityController;
 use App\Http\Controllers\Private\UserController;
 use App\Http\Controllers\Private\PhoneController;
 use App\Http\Controllers\Private\BranchController;
@@ -80,6 +81,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::resource('/phone', PhoneController::class);
     Route::resource('/pointOfSale', PointOfSaleController::class);
     Route::resource('/role', RoleController::class);
+    Route::resource('/capability', CapabilityController::class);
     Route::resource('/social', SocialController::class);
     Route::resource('/user', UserController::class);
     Route::resource('/userSettings', UserSettingsController::class);
