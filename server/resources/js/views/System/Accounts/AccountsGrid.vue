@@ -133,8 +133,8 @@ export default {
 
  computed: {
   ...sync("theme", ["isDark"]),
-  ...sync("componentManagement", ["componentCardGroup", "componentEditSheet"]),
-  ...get("componentManagement", [
+  ...sync("accountsManagement", ["componentCardGroup", "componentEditSheet"]),
+  ...get("accountsManagement", [
    "mapComponentGroup",
    "mapGroupParent",
    "allComponentsFiltered",

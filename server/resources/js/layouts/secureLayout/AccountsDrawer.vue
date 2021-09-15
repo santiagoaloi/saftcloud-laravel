@@ -4,7 +4,7 @@
   clipped
   :color="isDark ? '#2E3139' : '#edeff0'"
   width="350"
-  v-model="secureComponentDrawer"
+  v-model="secureAccountsDrawer"
   hideOverlay
   right
   app
@@ -22,29 +22,27 @@
 import Vue from "vue";
 import { sync, get } from "vuex-pathify";
 
-Vue.component("ComponentDrilldown", () =>
- import(/* webpackChunkName: 'components-navigation-drilldown' */ "@/components/Navigation/ComponentDrilldown")
-);
-Vue.component("ComponentDrilldownBar", () =>
- import(/* webpackChunkName: 'components-navigation-drilldown-bar' */ "@/components/Navigation/ComponentDrilldownBar")
+Vue.component("AccountsDrilldown", () => import(/* webpackChunkName: 'accounts-navigation-drilldown' */ "@/components/Navigation/AccountsDrilldown"));
+Vue.component("AccountsDrilldownBar", () =>
+ import(/* webpackChunkName: 'accounts-navigation-drilldown-bar' */ "@/components/Navigation/AccountsDrilldownBar")
 );
 
 export default {
- name: "SecureComponentDrawer",
+ name: "AccountComponentDrawer",
  computed: {
   ...sync("theme", ["isDark"]),
-  ...sync("drawers", ["secureComponentDrawer"]),
-  ...get("componentManagement", ["selectedComponent"])
+  ...sync("drawers", ["secureAccountsDrawer"]),
+  ...get("accountsManagement", ["selectedComponent"])
  },
 
  watch: {
   selectedComponent: {
    immediate: false,
    handler(val) {
-    if (val || !this.secureComponentDrawer) {
-     this.secureComponentDrawer = true;
+    if (val || !this.secureAccountsDrawer) {
+     this.secureAccountsDrawer = true;
     } else {
-     this.secureComponentDrawer = false;
+     this.secureAccountsDrawer = false;
     }
    }
   }

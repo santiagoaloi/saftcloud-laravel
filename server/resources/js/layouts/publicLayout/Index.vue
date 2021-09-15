@@ -3,7 +3,7 @@
   <public-bar />
   <public-view />
   <snackbar />
-  <public-footer />
+  <public-footer v-if="!$route.name.startsWith('login')" />
  </v-app>
 </template>
 

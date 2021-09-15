@@ -16,7 +16,23 @@
        <div class="title font-weight-bold">SaftCloud ™</div>
        <div class="overline white--text">v5.0.2</div>
        <div class="mt-4" style="margin-left:-4px;">
-        <baseFieldLabel color="white" lowerCase label="Company - Branch" />
+        <v-card-actions class="px-0">
+         <v-list-item class="pa-0">
+          <v-list-item-avatar color="grey darken-3">
+           <v-img
+            class="elevation-6"
+            alt=""
+            src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light"
+           ></v-img>
+          </v-list-item-avatar>
+
+          <v-list-item-content>
+           <v-list-item-title>{{ session.user.branches[0].entity.first_name }} </v-list-item-title>
+          </v-list-item-content>
+         </v-list-item>
+        </v-card-actions>
+
+        <baseFieldLabel color="white" label="Branch" />
         <v-select
          :menu-props="{ 'offset-y': true }"
          item-color="primary lighten-4"
@@ -24,10 +40,21 @@
          :items="session.user.branches"
          item-text="name"
          item-value="entity_id"
-         v-model="session.activeBranch"
+         v-model="activeBranch"
          dense
          solo
-        ></v-select>
+        >
+         <template v-slot:item="data">
+          <template>
+           <v-list-item-avatar color="indigo" size="24">
+            <v-icon small color="blue lighten-3">mdi-map-marker</v-icon>
+           </v-list-item-avatar>
+           <v-list-item-content>
+            <v-list-item-title>{{ data.item.name }}</v-list-item-title>
+           </v-list-item-content>
+          </template>
+         </template>
+        </v-select>
        </div>
       </v-container>
      </v-card>
@@ -55,7 +82,7 @@ export default {
  computed: {
   ...sync("drawers", ["secureDefaultDrawer"]),
   ...sync("componentManagement", ["navigationStructure"]),
-  ...sync("authentication", ["session"])
+  ...sync("authentication", ["session", "activeBranch"])
  },
 
  methods: {

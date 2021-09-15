@@ -27,8 +27,8 @@ export default {
  name: "AccountsTabs",
  computed: {
   ...sync("theme", ["isDark"]),
-  ...sync("componentManagement", ["activeStatusTab", "componentStatusTabs", "isTableLayout"]),
-  ...get("componentManagement", ["isComponentsEmpty", "isAllFilteredComponentsEmpty"])
+  ...sync("accountsManagement", ["activeStatusTab", "componentStatusTabs", "isTableLayout"]),
+  ...get("accountsManagement", ["isComponentsEmpty", "isAllFilteredComponentsEmpty"])
  }
 };
 </script>

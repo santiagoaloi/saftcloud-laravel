@@ -45,9 +45,7 @@ const state = {
   { name: "All", value: "all", icon: "mdi-all-inclusive" },
   { name: "Starred", value: "starred", icon: "mdi-star" },
   { name: "Active", value: "active", icon: "mdi-lightbulb-on" },
-  { name: "Inactive", value: "inactive", icon: "mdi-lightbulb-off" },
-  { name: "Modular", value: "modular", icon: "mdi-view-module" },
-  { name: "Sidebar", value: "navigation", icon: "mdi-menu" }
+  { name: "Inactive", value: "inactive", icon: "mdi-lightbulb-off" }
  ],
  navigationStructure: {},
  componentsLinkedToGroupDialog: false

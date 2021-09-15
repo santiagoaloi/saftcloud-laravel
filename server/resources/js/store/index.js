@@ -22,7 +22,8 @@ const vuexLocal = new VuexPersist({
    isDark: state.theme.isDark
   },
   authentication: {
-   session: state.authentication.session
+   session: state.authentication.session,
+   activeBranch: state.authentication.activeBranch
   }
   //   componentManagement: {
   //    ...state.componentManagement

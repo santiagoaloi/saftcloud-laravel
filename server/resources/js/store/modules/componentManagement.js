@@ -15,6 +15,8 @@ const initialComponentSettings = () => {
 };
 
 const state = {
+ editingCapability: false,
+ capability: {},
  dbTables: [],
  allGroups: [],
  groupName: "",
@@ -29,6 +31,7 @@ const state = {
  activeFormFieldTab: 0,
  componentCardGroup: 0,
  dialogComponent: false,
+ dialogCapability: false,
  dbTablesAndColumns: {},
  componentEditSheet: false,
  groupNameBeingRemoved: "",
@@ -476,6 +479,36 @@ const actions = {
     return true;
    }
   });
+ },
+
+ //* Creates a new component in the database.
+ createCapability({ getters }, capability) {
+  return axios.post("api/capability", capability).then(response => {
+   if (response.status === 200) {
+    store.set("snackbar/value", true);
+    store.set("snackbar/text", "Capability added");
+    store.set("snackbar/color", "primary");
+    return true;
+   }
+  });
+ },
+
+ //* Creates a new component in the database.
+ editCapabilitySaveChanges({}, capability) {
+  return axios.put(`api/capability/${capability.id}`, capability).then(response => {
+   if (response.status === 200) {
+    store.set("snackbar/value", true);
+    store.set("snackbar/text", "Capability edited");
+    store.set("snackbar/color", "primary");
+    return true;
+   }
+  });
+ },
+
+ editCapability({ state }, item) {
+  // state.capability = Object.assign({}, item);
+  state.editingCapability = true;
+  state.capability = item;
  },
 
  //* Moves to the previous component in the array (navigation arrows).

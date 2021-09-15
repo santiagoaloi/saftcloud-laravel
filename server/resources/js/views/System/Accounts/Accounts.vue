@@ -21,7 +21,6 @@
   </v-card>
 
   <dialog-account />
-  <component-edit-sheet />
  </div>
 </template>
 
@@ -30,14 +29,13 @@ import { sync, call, get } from "vuex-pathify";
 export default {
  name: "AccountsManagement",
  components: {
-  AccountsTabs: () => import(/* webpackChunkName: 'components-tabs' */ "./AccountsTabs"),
-  AccountsGrid: () => import(/* webpackChunkName: 'components-grid' */ "./AccountsGrid"),
-  AccountsTable: () => import(/* webpackChunkName: 'components-table' */ "./AccountsTable"),
-  AccountsGroups: () => import(/* webpackChunkName: 'components-groups' */ "./AccountsGroups"),
-  AccountsAppbar: () => import(/* webpackChunkName: 'components-appbar' */ "./AccountsAppbar"),
-  AccountsNoData: () => import(/* webpackChunkName: 'components-no-data' */ "./AccountsNoData"),
-  DialogAccount: () => import(/* webpackChunkName: 'components-dialog-account' */ "./DialogAccount"),
-  ComponentEditSheet: () => import(/* webpackChunkName: 'components-edit-sheet' */ "./ComponentsEdit/ComponentsEditSheet")
+  AccountsTabs: () => import(/* webpackChunkName: 'accounts-tabs' */ "./AccountsTabs"),
+  AccountsGrid: () => import(/* webpackChunkName: 'accounts-grid' */ "./AccountsGrid"),
+  AccountsTable: () => import(/* webpackChunkName: 'accounts-table' */ "./AccountsTable"),
+  AccountsGroups: () => import(/* webpackChunkName: 'accounts-groups' */ "./AccountsGroups"),
+  AccountsAppbar: () => import(/* webpackChunkName: 'accounts-appbar' */ "./AccountsAppbar"),
+  AccountsNoData: () => import(/* webpackChunkName: 'accounts-no-data' */ "./AccountsNoData"),
+  DialogAccount: () => import(/* webpackChunkName: 'accounts-dialog-account' */ "./DialogAccount")
  },
 
  computed: {
@@ -47,13 +45,13 @@ export default {
  },
 
  mounted() {
-  this.getComponents();
-  this.getDbGroupNames();
-  this.getDbTablesAndColumns();
+  //   this.getComponents();
+  //   this.getDbGroupNames();
+  //   this.getDbTablesAndColumns();
  },
 
  methods: {
-  ...call("componentManagement/*"),
+  ...call("accountsManagement/*"),
   calculateHeight() {
    return Number(this.$vuetify.breakpoint.height - 366);
   }

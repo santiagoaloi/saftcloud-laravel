@@ -4,17 +4,28 @@ import router from "@/router";
 import { make } from "vuex-pathify";
 const axiosDefaults = require("axios/lib/defaults");
 
-const state = {
- session: {},
- activeBranch: "",
- dialogTImeoutWarning: false,
- hasSessionExpired: false
+//Default validation states definitions (they should all have validation errors to false)
+const getDefaultState = () => {
+ return {
+  session: {},
+  activeBranch: undefined,
+  dialogTImeoutWarning: false,
+  hasSessionExpired: false
+ };
 };
+
+const state = getDefaultState();
 
 const mutations = make.mutations(state);
 
 const actions = {
  ...make.actions(state),
+
+ // Reset state to default values.
+ resetState({ state }) {
+  Object.assign(state, getDefaultState());
+  console.log("authentication state reseted");
+ },
 
  //Sends login form payload to backend.
  async login({ commit }, data) {
@@ -35,23 +46,23 @@ const actions = {
  },
 
  //Logs out the user.
- logout({ commit }, data) {
+ logout({ dispatch }, data) {
   return axios
    .post("api/logout", data)
    .then(response => {
     if (response.status === 200) {
      axiosDefaults.headers.common["Authorization"] = undefined;
-     commit("session", {});
+     dispatch("resetState");
      router.push("/login");
      return true;
     } else {
-     commit("session", {});
+     dispatch("resetState");
      router.push("/login");
      return false;
     }
    })
    .catch(_ => {
-    commit("session", {});
+    dispatch("resetState");
     router.push("/login");
     return false;
    });

@@ -58,10 +58,10 @@ export default {
  },
 
  computed: {
-  ...sync("componentManagement", ["componentsLinkedToGroupDialog", "componentsLinkedToGroup", "groupNameBeingRemoved"])
+  ...sync("accountsManagement", ["componentsLinkedToGroupDialog", "componentsLinkedToGroup", "groupNameBeingRemoved"])
  },
  methods: {
-  ...call("componentManagement/*")
+  ...call("accountsManagement/*")
  }
 };
 </script>

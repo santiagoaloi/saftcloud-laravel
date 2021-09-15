@@ -37,7 +37,7 @@ export default {
    { header: "Component Settings" },
    { icon: "mdi-view-dashboard-outline", text: "Basic", link: "/components/basic" },
    { icon: "mdi-view-dashboard-outline", text: "Toolbar", link: "", disabled: true },
-   { icon: "mdi-view-dashboard-outline", text: "Permissions", link: "", disabled: true },
+   { icon: "mdi-view-dashboard-outline", text: "Capabilities", link: "/components/capabilities", disabled: false },
    { header: "Database" },
    { icon: "mdi-view-dashboard-outline", text: "Query", link: "/components/query", disabled: false },
    { icon: "mdi-view-dashboard-outline", text: "Columns", link: "", disabled: true },

@@ -30,6 +30,13 @@ export default [
     name: "components/query",
     meta: { layout: "secure_layout", title: "Manage components" },
     component: () => import(/* webpackChunkName: 'components-query' */ "@/views/System/Components/ComponentsEdit/ConfigViews/Query/Query.vue")
+   },
+   {
+    path: "/components/capabilities",
+    name: "components/capabilities",
+    meta: { layout: "secure_layout", title: "Manage components" },
+    component: () =>
+     import(/* webpackChunkName: 'components-capabilities' */ "@/views/System/Components/ComponentsEdit/ConfigViews/Capabilities/Capabilities.vue")
    }
   ]
  },
