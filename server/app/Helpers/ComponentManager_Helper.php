@@ -12,9 +12,8 @@ class ComponentManager {
         $configSettings = ComponentManager::constructConfig($component->config_settings);
         $status = ComponentManager::constructConfig($component->status);
 
-        // str_replace('SELECT', 'SELECT count(*) as temp, ', $sql_query);
-        $query = "SELECT * FROM capabilities WHERE name LIKE '$name.%'";
-        $capabilities = DB::SELECT($query);
+        $capabilities = DB::SELECT("SELECT * FROM capabilities WHERE name LIKE '$name.%' AND deleted_at is NULL");
+        $roles = DB::SELECT("SELECT * FROM roles WHERE entity_id = 1 or entity_id = 2");
 
         $origin = [
             'id'                => $component->id,
@@ -26,7 +25,8 @@ class ComponentManager {
             'created_at'        => $component->created_at,
             'updated_at'        => $component->updated_at,
             'deleted_at'        => $component->deleted_at,
-            'capabilities'      => $capabilities
+            'capabilities'      => $capabilities,
+            'roles'             => $roles
         ];
 
         $result = [
@@ -40,7 +40,8 @@ class ComponentManager {
             'created_at'        => $component->created_at,
             'updated_at'        => $component->updated_at,
             'deleted_at'        => $component->deleted_at,
-            'capabilities'      => $capabilities
+            'capabilities'      => $capabilities,
+            'roles'             => $roles
         ];
         return $result;
     }

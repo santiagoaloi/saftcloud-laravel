@@ -62,7 +62,6 @@ class ComponentController extends Controller {
         return response([
             'component' => $component
         ], 200);
-
     }
 
     public function store(Request $request) {

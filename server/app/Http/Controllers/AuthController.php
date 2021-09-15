@@ -79,19 +79,6 @@ class AuthController extends Controller {
             $UserController = New UserController;
             $user->privileges = $UserController->getRolCapabilities($user);
 
-            // $roles = DB::table('roles')
-            // ->leftJoin('model_has_roles', 'permissions.id', '=', 'permissions.lookUpList_id')
-            // ->where('model_has_roles.model_id', '=', $user->id)
-            // ->get();
-
-            // $users = DB::table('permissions')
-            // ->leftJoin('roles', 'permissions.id', '=', 'permissions.lookUpList_id')
-            // ->where('u_look_up_list_value.id', '=', 2)
-            // ->get();
-
-            // $role = Role::where('id', $user)->get();
-            // // $user->getAllPermissions();
-
             $response = [
                 'user' => $user,
                 'token' => $token
@@ -110,7 +97,8 @@ class AuthController extends Controller {
 
     public function logout(Request $request) {
         $request->user()->currentAccessToken()->delete();
-        Auth::logout();
+        // Auth::logout();        
+        // Auth::guard('web')->logout();
 
         return [
             'message' => 'Logged out',
