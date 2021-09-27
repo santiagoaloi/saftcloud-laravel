@@ -5,7 +5,7 @@ namespace App\Models\Private;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class UserSettings extends Model {
+class UserSetting extends Model {
     use SoftDeletes;
 
     protected $fillable = ['user_id', 'view_config'];

@@ -173,7 +173,7 @@ export default {
   async testFunction() {
    let post = { email: "facu.ft@gmail.com", password: 'password'};
    axios
-    .post("login", post)
+    .get("api/testFunction")
     .then(response => {
      if (response.status === 200) {
       console.log(response);

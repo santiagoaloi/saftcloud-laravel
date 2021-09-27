@@ -6,11 +6,15 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\Public\Country;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\QueryException;
+use App\Http\Controllers\Private\UserController;
+use App\Models\Roles\Capability;
 
 class CountryController extends Controller {
 
     public function store(Request $request) {
+        $this->authorize('store', Country::class);
         try{
             $query = Country::create($request->all());
         }
@@ -29,6 +33,7 @@ class CountryController extends Controller {
     }
 
     public function show(Request $id) {
+        $this->authorize('show', Country::class);
         $result = Country::find($id);
 
         return response([
@@ -37,30 +42,30 @@ class CountryController extends Controller {
     }
 
     public function showAll() {
-        // $this->user = User::find($user->id);
-        // $this->authorize('showAll', [$country, 'Country.show'] );
-        // return "si";
-
+        $this->authorize('showAll', Country::class);
         return response([
             'rows'=> Country::get()
         ], 200);
     }
 
     //  Para mostrar los elementos eliminados
-    public function getTrashed() {
+    public function showTrashed() {
+        $this->showTrashed('restore', Country::class);
         return response([
             'rows'=> Country::onlyTrashed()->get()
         ], 200);
     }
 
     //  Para mostrar un elemento eliminado
-    public function recoveryTrashed($id) {
+    public function restore($id) {
+        $this->authorize('restore', Country::class);
         return response([
             'row'=> Country::onlyTrashed()->find($id)->recovery()
         ], 200);
     }
 
     public function update(Request $request, $id) {
+        $this->authorize('update', Country::class);
         $query = Country::find($id);
         try{
             $query->fill($request->all())->save();
@@ -80,6 +85,7 @@ class CountryController extends Controller {
     }
 
     public function updateAll(Request $request) {
+        $this->authorize('updateAll', Country::class);
         foreach($request as $item){
             $this->update($item, $item->id);
         };
@@ -88,6 +94,7 @@ class CountryController extends Controller {
     }
 
     public function destroy($id) {
+        $this->authorize('destroy', Country::class);
         $query = Country::find($id);
         $query->delete();
 

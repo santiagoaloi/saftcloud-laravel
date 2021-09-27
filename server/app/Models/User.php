@@ -31,8 +31,8 @@ class User extends Authenticatable {
      */
     protected $casts = ['email_verified_at' => 'datetime'];
 
-    public function userSettings(){
-        return $this->hasOne('App\Models\Private\UserSettings');
+    public function userSetting(){
+        return $this->hasOne('App\Models\Private\UserSetting');
     }
 
     public function entity(){
@@ -50,4 +50,9 @@ class User extends Authenticatable {
     public function capabilities(){
         return $this->belongsToMany('App\Models\Roles\Capability');
     }
+
+    public function isAdmin(User $user){
+        return $this->roles->name('Admin');
+    }
+
 }

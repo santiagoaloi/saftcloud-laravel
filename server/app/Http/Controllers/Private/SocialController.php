@@ -10,6 +10,7 @@ use Illuminate\Database\QueryException;
 class SocialController extends Controller {
 
     public function store(Request $request) {
+        $this->authorize('store', Social::class);
         try{
             $query = Social::create($request->all());
         }
@@ -28,6 +29,7 @@ class SocialController extends Controller {
     }
 
     public function show(Request $id) {
+        $this->authorize('show', Social::class);
         $result = Social::find($id);
 
         return response([
@@ -36,6 +38,7 @@ class SocialController extends Controller {
     }
 
     public function showAll() {
+        $this->authorize('showAll', Social::class);
         return response([
             'rows'=> Social::get()
         ], 200);
@@ -43,19 +46,22 @@ class SocialController extends Controller {
 
     //  Para mostrar los elementos eliminados
     public function getTrashed() {
+        $this->authorize('getTrashed', Social::class);
         return response([
             'rows'=> Social::onlyTrashed()->get()
         ], 200);
     }
 
     //  Para mostrar un elemento eliminado
-    public function recoveryTrashed($id) {
+    public function restore($id) {
+        $this->authorize('restore', Social::class);
         return response([
             'row'=> Social::onlyTrashed()->find($id)->recovery()
         ], 200);
     }
 
     public function update(Request $request, $id) {
+        $this->authorize('update', Social::class);
         $query = Social::find($id);
         try{
             $query->fill($request->all())->save();
@@ -75,6 +81,7 @@ class SocialController extends Controller {
     }
 
     public function updateAll(Request $request) {
+        $this->authorize('updateAll', Social::class);
         foreach($request as $item){
             $this->update($item, $item->id);
         };
@@ -83,9 +90,19 @@ class SocialController extends Controller {
     }
 
     public function destroy($id) {
+        $this->authorize('destroy', Social::class);
         $query = Social::find($id);
         $query->delete();
 
         return $this->showAll();
+    }
+
+    public function forceDestroy($id){
+        $this->authorize('forceDestroy', Social::class);
+        $query = Social::withTrashed()->find($id);
+        $query->forceDelete();
+        return response([
+            'status'=> true
+        ], 200);
     }
 }

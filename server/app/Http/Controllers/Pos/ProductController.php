@@ -10,6 +10,7 @@ use Illuminate\Database\QueryException;
 class ProductController extends Controller {
 
     public function store(Request $request) {
+        $this->authorize('store', Product::class);
         try{
             $query = Product::create($request->all());
         }
@@ -28,12 +29,14 @@ class ProductController extends Controller {
     }
 
     public function show(Request $id, $local = false) {
+        $this->authorize('show', Product::class);
         return response([
             'row'=> Product::find($id)
         ], 200);
     }
 
     public function showAll() {
+        $this->authorize('showAll', Product::class);
         return response([
             'rows'=> Product::get()
         ], 200);
@@ -41,19 +44,22 @@ class ProductController extends Controller {
 
     //  Para mostrar los elementos eliminados
     public function getTrashed() {
+        $this->authorize('getTrashed', Product::class);
         return response([
             'rows'=> Product::onlyTrashed()->get()
         ], 200);
     }
 
     //  Para mostrar un elemento eliminado
-    public function recoveryTrashed($id) {
+    public function restore($id) {
+        $this->authorize('restore', Product::class);
         return response([
             'row'=> Product::onlyTrashed()->find($id)->recovery()
         ], 200);
     }
 
     public function update(Request $request, $id) {
+        $this->authorize('update', Product::class);
         $query = Product::find($id);
         try{
             $query->fill($request->all())->save();
@@ -73,6 +79,7 @@ class ProductController extends Controller {
     }
 
     public function updateAll(Request $request) {
+        $this->authorize('updateAll', Product::class);
         foreach($request as $item){
             $this->update($item, $item->id);
         };
@@ -80,9 +87,19 @@ class ProductController extends Controller {
     }
 
     public function destroy($id) {
+        $this->authorize('destroy', Product::class);
         $query = Product::find($id);
         $query->delete();
 
         return $this->showAll();
+    }
+
+    public function forceDestroy($id){
+        $this->authorize('forceDestroy', Product::class);
+        $query = Product::withTrashed()->find($id);
+        $query->forceDelete();
+        return response([
+            'status'=> true
+        ], 200);
     }
 }

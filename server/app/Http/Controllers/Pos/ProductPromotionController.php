@@ -10,6 +10,7 @@ use Illuminate\Database\QueryException;
 class ProductPromotionController extends Controller {
 
     public function store(Request $request) {
+        $this->authorize('store', ProductPromotion::class);
         try{
             $query = ProductPromotion::create($request->all());
         }
@@ -28,14 +29,15 @@ class ProductPromotionController extends Controller {
     }
 
     public function show(Request $id) {
+        $this->authorize('show', ProductPromotion::class);
         $result = ProductPromotion::find($id);
-
         return response([
             'row'=> $result
         ], 200);
     }
 
     public function showAll() {
+        $this->authorize('showAll', ProductPromotion::class);
         return response([
             'rows'=> ProductPromotion::get()
         ], 200);
@@ -43,19 +45,22 @@ class ProductPromotionController extends Controller {
 
     //  Para mostrar los elementos eliminados
     public function getTrashed() {
+        $this->authorize('getTrashed', ProductPromotion::class);
         return response([
             'rows'=> ProductPromotion::onlyTrashed()->get()
         ], 200);
     }
 
     //  Para mostrar un elemento eliminado
-    public function recoveryTrashed($id) {
+    public function restore($id) {
+        $this->authorize('restore', ProductPromotion::class);
         return response([
             'row'=> ProductPromotion::onlyTrashed()->find($id)->recovery()
         ], 200);
     }
 
     public function update(Request $request, $id) {
+        $this->authorize('update', ProductPromotion::class);
         $query = ProductPromotion::find($id);
         try{
             $query->fill($request->all())->save();
@@ -75,6 +80,7 @@ class ProductPromotionController extends Controller {
     }
 
     public function updateAll(Request $request) {
+        $this->authorize('updateAll', ProductPromotion::class);
         foreach($request as $item){
             $this->update($item, $item->id);
         };
@@ -83,9 +89,19 @@ class ProductPromotionController extends Controller {
     }
 
     public function destroy($id) {
+        $this->authorize('destroy', ProductPromotion::class);
         $query = ProductPromotion::find($id);
         $query->delete();
 
         return $this->showAll();
+    }
+
+    public function forceDestroy($id){
+        $this->authorize('forceDestroy', ProductPromotion::class);
+        $query = ProductPromotion::withTrashed()->find($id);
+        $query->forceDelete();
+        return response([
+            'status'=> true
+        ], 200);
     }
 }

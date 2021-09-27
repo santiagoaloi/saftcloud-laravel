@@ -15,8 +15,8 @@ use App\Http\Controllers\GeneralConfig\LookUpListValueController;
 use App\Http\Controllers\Pos\ProductController;
 use App\Http\Controllers\Pos\ProductPromotionController;
 
-use App\Http\Controllers\Private\RoleController;
-use App\Http\Controllers\Private\CapabilityController;
+use App\Http\Controllers\Roles\RoleController;
+use App\Http\Controllers\Roles\CapabilityController;
 use App\Http\Controllers\Private\UserController;
 use App\Http\Controllers\Private\PhoneController;
 use App\Http\Controllers\Private\BranchController;
@@ -26,7 +26,7 @@ use App\Http\Controllers\Private\RootAccountController;
 use App\Http\Controllers\Private\AddressController;
 use App\Http\Controllers\Private\ConstructController;
 use App\Http\Controllers\Private\PointOfSaleController;
-use App\Http\Controllers\Private\UserSettingsController;
+use App\Http\Controllers\Private\UserSettingController;
 use App\Http\Controllers\Private\AccountPlanController;
 use App\Http\Controllers\Private\AccountPaymentController;
 
@@ -50,7 +50,7 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::get('/region', [RegionController::class, 'ip_info']);
 
 Route::resource('/country', CountryController::class);
-Route::get('/countries', [CountryController::class, 'showAll']);
+// Route::get('/countries', [CountryController::class, 'showAll']);
 
 Route::resource('/state', StateController::class);
 Route::post('/states/{country_id}', [StateController::class, 'showAll']);
@@ -84,7 +84,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::resource('/capability', CapabilityController::class);
     Route::resource('/social', SocialController::class);
     Route::resource('/user', UserController::class);
-    Route::resource('/userSettings', UserSettingsController::class);
+    Route::resource('/userSetting', UserSettingController::class);
 
     // ROOT CONTROLLERS
     Route::resource('/component', ComponentController::class);
@@ -109,11 +109,12 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/showAllTablesAndColumns', [MysqlController::class, 'showAllTablesAndColumns']);
 
     Route::post('/logout', [AuthController::class, 'logout']);
+    Route::get('/countries', [CountryController::class, 'showAll']);
 });
 
 //Testing
 Route::group(['middleware' => ['auth:sanctum']], function () {
-    Route::get('/testFunction/{pepe}', [TestFunctionController::class, 'test3']);
+    Route::get('/testFunction', [TestFunctionController::class, 'test4']);
     Route::get('/componentConstructor/{id}', [ComponentController::class, 'componentConstructor']);
 });
 // Route::group(['middleware' => ['web']], function () {

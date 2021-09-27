@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 Use Exception;
 use App\Models\GeneralConfig\LookUpList;
-use App\Http\Controllers\Private\RoleController;
+use App\Http\Controllers\Roles\RoleController;
 use App\Http\Controllers\Private\UserController;
 use App\Http\Controllers\Public\StateController;
 use App\Http\Controllers\Private\BranchController;
@@ -124,20 +124,38 @@ class TestFunctionController extends Controller {
     }
 
     public function test4(Request $request, Country $country){
+        $user = User::findOrFail(1);
 
-        // return auth()->User();
-        // return Auth::user();
+        $roles = [];
+        $capabilities = [];
 
-        // return $this->authorize('update', $country);
+        foreach ($user->roles as $value) {
+            if($value){
+                $roles[] = $value->name;
+                foreach ($value->capabilities as $capability){
+                    $capabilities[] = $capability->name;
+                }
+            }
+        };
+        $user->privilege = ['roles'=>$roles, 'capabilities'=>$capabilities];
 
-        return session()->all();
-        return $request->session()->all();
-        // return Session::getId();
-
-
-        // var_dump(csrf_token());
-        // var_dump($request->header('X-CSRF-TOKEN'));
+        return $user;
     }
+
+        // AGREGA TODOS LOS ROLES QUE ENVIAMOS EN LA VARIABLE ROLE
+        public function attachRoles(Request $request, $role){
+            $request->roles()->attach($role);
+        }
+    
+        // ELIMINA TODOS LOS ROLES QUE ENVIAMOS EN LA VARIABLE ROLE
+        public function detachRoles(Request $request, $role){
+            $request->roles()->detach($role);
+        }
+    
+        // ELIMINA TODOS LOS ROLES Y AGREGA LOS NUEVOS
+        public function syncRoles($request, $role){
+            $request->roles()->sync($role);
+        }
 
     function probarFormFieldStructure(){
         $test = new ComponentDefaultController;

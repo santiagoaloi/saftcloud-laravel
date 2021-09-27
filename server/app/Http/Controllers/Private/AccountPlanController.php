@@ -10,6 +10,7 @@ use Illuminate\Database\QueryException;
 class AccountPlanController extends Controller {
     
     public function store(Request $request) {
+        $this->authorize('store', AccountPlan::class);
         try{
             $query = AccountPlan::create($request->all());
         }
@@ -28,6 +29,7 @@ class AccountPlanController extends Controller {
     }
 
     public function show(Request $id) {
+        $this->authorize('show', AccountPlan::class);
         $result = AccountPlan::find($id);
 
         return response([
@@ -36,6 +38,7 @@ class AccountPlanController extends Controller {
     }
 
     public function showAll() {
+        $this->authorize('showAll', AccountPlan::class);
         return response([
             'rows' => AccountPlan::get()
         ], 200);
@@ -43,19 +46,22 @@ class AccountPlanController extends Controller {
 
     //  Para mostrar los elementos eliminados
     public function getTrashed() {
+        $this->showTrashed('restore', AccountPlan::class);
         return response([
             'rows' => AccountPlan::onlyTrashed()->get()
         ], 200);
     }
 
     //  Para mostrar un elemento eliminado
-    public function recoveryTrashed($id) {
+    public function restore($id) {
+        $this->authorize('restore', AccountPlan::class);
         return response([
             'row' => AccountPlan::onlyTrashed()->find($id)->recovery()
         ], 200);
     }
 
     public function update(Request $request, $id) {
+        $this->authorize('update', AccountPlan::class);
         $query = AccountPlan::find($id);
         try{
             $query->fill($request->all())->save();
@@ -75,6 +81,7 @@ class AccountPlanController extends Controller {
     }
 
     public function updateAll(Request $request) {
+        $this->authorize('updateAll', AccountPlan::class);
         foreach($request as $item){
             $this->update($item, $item->id);
         };
@@ -83,9 +90,19 @@ class AccountPlanController extends Controller {
     }
 
     public function destroy($id) {
+        $this->authorize('destroy', AccountPlan::class);
         $query = AccountPlan::find($id);
         $query->delete();
 
         return $this->showAll();
+    }
+
+    public function forceDestroy($id){
+        $this->authorize('forceDestroy', Capability::class);
+        $query = AccountPlan::withTrashed()->find($id);
+        $query->forceDelete();
+        return response([
+            'status'=> true
+        ], 200);
     }
 }

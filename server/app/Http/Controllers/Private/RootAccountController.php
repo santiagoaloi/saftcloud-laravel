@@ -10,6 +10,7 @@ use Illuminate\Database\QueryException;
 class RootAccountController extends Controller {
 
     public function store(Request $request) {
+        $this->authorize('store', RootAccount::class);
         try{
             $query = RootAccount::create($request->all());
         }
@@ -28,6 +29,7 @@ class RootAccountController extends Controller {
     }
 
     public function show(Request $id) {
+        $this->authorize('show', RootAccount::class);
         $result = RootAccount::find($id);
 
         return response([
@@ -36,6 +38,7 @@ class RootAccountController extends Controller {
     }
 
     public function showAll() {
+        $this->authorize('showAll', RootAccount::class);
         return response([
             'rows'=> RootAccount::get()
         ], 200);
@@ -43,19 +46,22 @@ class RootAccountController extends Controller {
 
     //  Para mostrar los elementos eliminados
     public function getTrashed() {
+        $this->authorize('getTrashed', RootAccount::class);
         return response([
             'rows'=> RootAccount::onlyTrashed()->get()
         ], 200);
     }
 
     //  Para mostrar un elemento eliminado
-    public function recoveryTrashed($id) {
+    public function restore($id) {
+        $this->authorize('restore', RootAccount::class);
         return response([
             'row'=> RootAccount::onlyTrashed()->find($id)->recovery()
         ], 200);
     }
 
     public function update(Request $request, $id) {
+        $this->authorize('update', RootAccount::class);
         $query = RootAccount::find($id);
         try{
             $query->fill($request->all())->save();
@@ -75,6 +81,7 @@ class RootAccountController extends Controller {
     }
 
     public function updateAll(Request $request) {
+        $this->authorize('updateAll', RootAccount::class);
         foreach($request as $item){
             $this->update($item, $item->id);
         };
@@ -83,9 +90,19 @@ class RootAccountController extends Controller {
     }
 
     public function destroy($id) {
+        $this->authorize('destroy', RootAccount::class);
         $query = RootAccount::find($id);
         $query->delete();
 
         return $this->showAll();
+    }
+
+    public function forceDestroy($id){
+        $this->authorize('forceDestroy', RootAccount::class);
+        $query = RootAccount::withTrashed()->find($id);
+        $query->forceDelete();
+        return response([
+            'status'=> true
+        ], 200);
     }
 }

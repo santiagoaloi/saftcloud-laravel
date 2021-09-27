@@ -8,8 +8,9 @@ use App\Models\Private\AccountPayment;
 use Illuminate\Database\QueryException;
 
 class AccountPaymentController extends Controller {
-    
+
     public function store(Request $request) {
+        $this->authorize('store', AccountPayment::class);
         try{
             $query = AccountPayment::create($request->all());
         }
@@ -28,6 +29,7 @@ class AccountPaymentController extends Controller {
     }
 
     public function show(Request $id) {
+        $this->authorize('show', AccountPayment::class);
         $result = AccountPayment::find($id);
 
         return response([
@@ -36,6 +38,7 @@ class AccountPaymentController extends Controller {
     }
 
     public function showAll() {
+        $this->authorize('showAll', AccountPayment::class);
         return response([
             'rows' => AccountPayment::get()
         ], 200);
@@ -43,19 +46,22 @@ class AccountPaymentController extends Controller {
 
     //  Para mostrar los elementos eliminados
     public function getTrashed() {
+        $this->showTrashed('restore', AccountPayment::class);
         return response([
             'rows' => AccountPayment::onlyTrashed()->get()
         ], 200);
     }
 
     //  Para mostrar un elemento eliminado
-    public function recoveryTrashed($id) {
+    public function restore($id) {
+        $this->authorize('restore', AccountPayment::class);
         return response([
             'row' => AccountPayment::onlyTrashed()->find($id)->recovery()
         ], 200);
     }
 
     public function update(Request $request, $id) {
+        $this->authorize('update', AccountPayment::class);
         $query = AccountPayment::find($id);
         try{
             $query->fill($request->all())->save();
@@ -75,6 +81,7 @@ class AccountPaymentController extends Controller {
     }
 
     public function updateAll(Request $request) {
+        $this->authorize('updateAll', AccountPayment::class);
         foreach($request as $item){
             $this->update($item, $item->id);
         };
@@ -83,9 +90,19 @@ class AccountPaymentController extends Controller {
     }
 
     public function destroy($id) {
+        $this->authorize('destroy', AccountPayment::class);
         $query = AccountPayment::find($id);
         $query->delete();
 
         return $this->showAll();
+    }
+
+    public function forceDestroy($id){
+        $this->authorize('forceDestroy', AccountPayment::class);
+        $query = AccountPayment::withTrashed()->find($id);
+        $query->forceDelete();
+        return response([
+            'status'=> true
+        ], 200);
     }
 }
