@@ -1,7 +1,6 @@
 <template>
  <div>
   <components-appbar />
-  <!-- <components-groups /> -->
   <components-tabs />
 
   <v-divider />

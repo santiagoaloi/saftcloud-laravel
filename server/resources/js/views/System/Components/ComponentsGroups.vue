@@ -1,15 +1,5 @@
 <template>
   <div>
-    <!-- <v-row
-      align="center"
-      class="mt-2"
-    >
-      <v-col
-        cols="12"
-        sm="6"
-        xl="4"
-      > -->
-        <!-- <baseFieldLabel label="Component groups" /> -->
 
         <v-responsive width="500"> 
         <v-autocomplete

@@ -20,6 +20,7 @@ const state = {
   isTableLayout: false,
   entityCardGroup: 0,
   dialogAccount: false,
+  selectedEntityType: "",
   selectedEntityIndex: 0,
   selectedEntityTableRow: [],
   account: initialUserSettings(),
@@ -53,18 +54,12 @@ const getters = {
 
   //* Returns components that belongs to a group, status or matching search.
   allEntitiesFiltered: (state, getters, rootState) => {
-    if (!getters.hasSelectedSomeGroups) return [];
-    return state.allComponents.filter((component) => {
+    return state.allUsers.filter((ent) => {
       const search = rootState.application.search.toLowerCase();
-      const title = component.config.general_config.title.toLowerCase();
-      const status = getters.activeEntityTabName;
+      const title = ent.email.toLowerCase();
       return (
         (!search || title.match(search))
-    && (status === 'all'
-     || (status === 'inactive' && !component.status.active)
-     || (status === 'navigation' && component.config.general_config.isVisibleInSidebar)
-     || component.status[status])
-    && state.selectedEntityGroups.some((group) => group.id === component.component_group_id)
+
       );
     });
   },
@@ -81,7 +76,7 @@ const getters = {
   },
 
   //* Returns true if the current groups selected do not contain any components associated to them.
-  isAllFilteredComponentsEmpty: (_, getters) => getters.allEntitiesFiltered.length === 0,
+  isAllFilteredEntitiesEmpty: (_, getters) => getters.allEntitiesFiltered.length === 0,
 
   //* Returns the color of the star icon depending on its state.
   isStarredColor: () => (component) => (component.status.starred ? 'orange' : 'grey darken-1'),
@@ -115,24 +110,31 @@ const actions = {
   getUsers({}) {
     axios.get('api/getAllUsers').then((response) => {
       if (response.status === 200) {
-        store.set('componentManagement/allUsers', response.data.groups);
+        store.set('accountsManagement/allUsers', response.data.records);
       }
     });
   },
 
+    //* Retrieves the component groups.
+    getRoles({}) {
+      axios.get('api/getAllRoles').then((response) => {
+        if (response.status === 200) {
+          store.set('accountsManagement/allRoles', response.data.records);
+        }
+      });
+    },
 
-  //* Retrieves all available componentes from the database.
-  getRoles({}) {
-    axios.get('api/showAllComponents').then((response) => {
-      if (response.status === 200) {
-        store.set('componentManagement/allComponents', response.data.components);
-      }
-    });
-  },
+    
+    //* Retrieves the component groups.
+    getCapabilities({}) {
+      axios.get('api/getAllCapabilities').then((response) => {
+        if (response.status === 200) {
+          store.set('accountsManagement/allCapabilities', response.data.records);
+        }
+      });
+    },
 
-
-
-
+    
 
   //* When a component is selected in the components view, it loads its configuration.
   setselectedEntity({ rootState, state }, index) {

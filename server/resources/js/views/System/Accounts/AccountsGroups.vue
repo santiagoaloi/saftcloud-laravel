@@ -1,16 +1,8 @@
 <template>
   <div>
-    <v-row
-      align="center"
-      class="mt-2"
-    >
-      <v-col
-        cols="12"
-        sm="6"
-        xl="4"
-      >
-        <baseFieldLabel label="Identity type" />
+         <v-responsive width="500"> 
         <v-autocomplete
+        v-model="selectedEntityType"
           item-value="id"
           item-text="name"
           item-color="primary"
@@ -19,19 +11,12 @@
           :items="['Roles', 'Accounts']"
           solo
           :color="isDark ? '#208ad6' : 'grey'"
-          :background-color="isDark ? '#28292b' : 'white'"
           hide-no-data
+          hide-details
+          chips
+          small-chips
         >
-          <template #selection="data">
-            <v-chip
-              small
-              :style="isDark ? 'color: white' : 'color:black'"
-              :color="isDark ? 'grey-darken-4' : 'blue-white'"
-            >
-              hello
-            </v-chip>
-          </template>
-
+        
           <template #item="{ item, on, attrs }">
             <v-list-item
               dense
@@ -55,8 +40,8 @@
             </v-list-item>
           </template>
         </v-autocomplete>
-      </v-col>
-    </v-row>
+         </v-responsive>
+
   </div>
 </template>
 
@@ -73,7 +58,7 @@ export default {
   },
 
   computed: {
-    ...sync('accountsManagement', []),
+    ...sync('accountsManagement', ['selectedEntityType']),
   },
   methods: {
     ...call('accountsManagement/*'),

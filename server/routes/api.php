@@ -89,7 +89,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     // ROOT CONTROLLERS
     Route::resource('/component', ComponentController::class);
-    Route::get('/showAllComponents', [ComponentController::class, 'showAll']);
+    Route::get('/getAllComponents', [ComponentController::class, 'showAll']);
     Route::post('/forceDestroy/{id}', [ComponentController::class, 'forceDestroy']);
     Route::get('/getComponentNames', [ComponentController::class, 'getComponentNames']);
 

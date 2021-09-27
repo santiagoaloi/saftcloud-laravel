@@ -1,6 +1,10 @@
 <template>
   <div>
-    <div class="d-flex justify-end align-center">
+      <div  class="d-flex justify-end transparent" >
+
+        <accounts-groups />
+
+   <div class="flex-grow-1" />
       <div class="d-flex">
         <v-btn
           plain
@@ -48,7 +52,10 @@ import { sync, call } from 'vuex-pathify';
 
 export default {
   name: 'AccountsAppbar',
+components: {
+    AccountsGroups: () => import(/* webpackChunkName: 'accounts-groups' */ "./AccountsGroups"),
 
+},
   methods: {
     ...call('accountManagement/*'),
   },

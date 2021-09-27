@@ -1,22 +1,21 @@
 <template>
  <div>
   <accounts-appbar />
-  <accounts-groups />
   <accounts-tabs />
 
   <v-divider />
 
   <v-card color="transparent" flat :height="calculateHeight()" :class="{ dottedBackground: !isTableLayout }" class="overflow-y-scroll ">
    <v-scroll-y-transition hide-on-leave>
-    <accounts-table v-if="isTableLayout && !isAllFilteredComponentsEmpty" />
+    <accounts-table v-if="isTableLayout && !isAllFilteredEntitiesEmpty" />
    </v-scroll-y-transition>
 
    <v-scroll-x-transition hide-on-leave>
-    <accounts-grid v-if="!isTableLayout && !isAllFilteredComponentsEmpty" />
+    <accounts-grid v-if="!isTableLayout && !isAllFilteredEntitiesEmpty" />
    </v-scroll-x-transition>
 
    <v-scroll-y-transition hide-on-leave>
-    <accounts-no-data v-if="isAllFilteredComponentsEmpty" />
+    <accounts-no-data v-if="isAllFilteredEntitiesEmpty" />
    </v-scroll-y-transition>
   </v-card>
 
@@ -32,7 +31,6 @@ export default {
   AccountsTabs: () => import(/* webpackChunkName: 'accounts-tabs' */ "./AccountsTabs"),
   AccountsGrid: () => import(/* webpackChunkName: 'accounts-grid' */ "./AccountsGrid"),
   AccountsTable: () => import(/* webpackChunkName: 'accounts-table' */ "./AccountsTable"),
-  AccountsGroups: () => import(/* webpackChunkName: 'accounts-groups' */ "./AccountsGroups"),
   AccountsAppbar: () => import(/* webpackChunkName: 'accounts-appbar' */ "./AccountsAppbar"),
   AccountsNoData: () => import(/* webpackChunkName: 'accounts-no-data' */ "./AccountsNoData"),
   DialogAccount: () => import(/* webpackChunkName: 'accounts-dialog-account' */ "./DialogAccount")
@@ -41,13 +39,13 @@ export default {
  computed: {
   ...sync("theme", ["isDark"]),
   ...sync("accountsManagement", ["isTableLayout"]),
-  ...get("accountsManagement", ["isAllFilteredComponentsEmpty"])
+  ...get("accountsManagement", ["isAllFilteredEntitiesEmpty"])
  },
 
  mounted() {
     this.getUsers();
-  //   this.getDbGroupNames();
-  //   this.getDbTablesAndColumns();
+     this.getRoles();
+
  },
 
  methods: {

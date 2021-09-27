@@ -4,7 +4,6 @@
   <secure-drawer />
   <secure-cdrawer v-if="$route.name.startsWith('components')" />
   <secure-accdrawer v-if="$route.name.startsWith('accounts')" />
-
   <secure-view />
   <snackbar />
   <session-timeout />

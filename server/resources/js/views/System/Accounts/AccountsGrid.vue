@@ -2,7 +2,7 @@
  <div>
   <v-item-group v-model="entityCardGroup" mandatory>
    <transition-group class="gallery-card-container pa-2" appear css name="slide-x-transition">
-    <v-item v-for="(component, index) in allComponentsFilteredSorted" :key="`${index}`" v-slot="{ active, toggle }">
+    <v-item v-for="(entity, index) in allEntitiesFilteredSorted" :key="`${index}`" v-slot="{ active, toggle }">
      <v-hover v-slot="{ hover }">
       <v-card
        :ref="`SEL${entityCardGroup}ID${index}`"
@@ -17,26 +17,17 @@
        "
       >
        <v-card-actions class="px-0">
-        <v-hover v-slot="{ hover }">
-         <v-avatar class="cursor-pointer" size="65" rounded :color="component.config_settings.icon.color" @click="dialogIcons = true">
-          <v-expand-transition>
-           <div v-if="hover" class="d-flex black v-card--reveal white--text" style="height: 100%;">
-            <v-icon size="30" dark>
-             mdi-pencil
-            </v-icon>
-           </div>
-          </v-expand-transition>
-          <v-fade-transition hide-on-leave>
-           <v-icon v-if="!hover" size="30" dark>
-            {{ component.config_settings.icon.name }}
+         <v-avatar class="cursor-pointer" size="65" rounded color="primary" >
+
+        
+           <v-icon  size="30" dark>
+            mdi-account
            </v-icon>
-          </v-fade-transition>
          </v-avatar>
-        </v-hover>
 
         <v-spacer />
 
-        <div :class="{ 'show-btns': hover, 'hide-btns': !hover }">
+        <!-- <div :class="{ 'show-btns': hover, 'hide-btns': !hover }">
          <v-tooltip transition="false" color="black" bottom>
           <template #activator="{ on }">
            <v-btn color="white" small icon :ripple="false" v-on="on" @click.stop="setModular(component)">
@@ -69,20 +60,20 @@
           </template>
           <span>Favourite</span>
          </v-tooltip>
-        </div>
+        </div> -->
        </v-card-actions>
 
        <span class="gallery-card-title pl-2">
-        <template v-if="component.config.general_config.title">
-         {{ component.config.general_config.title }}
+        <template > 
+         {{ entity.email }}
         </template>
-        <template v-else>
+        <!-- <template v-else>
          <base-typing-indicator class="ml-n2" />
-        </template>
+        </template> -->
        </span>
 
        <div class="gallery-card-subtitle-container">
-        <div class="gallery-card-subtitle-wrapper">
+        <!-- <div class="gallery-card-subtitle-wrapper">
          <h5 class="gallery-card-subtitle">
           <v-chip
            :dark="isDark"
@@ -106,7 +97,7 @@
            </div>
           </v-chip>
          </h5>
-        </div>
+        </div> -->
         <v-scale-transition e-transition>
          <div v-if="hasUnsavedChanges(component)" class="gallery-card-subtitle-wrapper">
           <h5 class="gallery-card-subtitle">
@@ -146,7 +137,7 @@ export default {
 
  computed: {
   ...sync("theme", ["isDark"]),
-  ...sync("accountsManagement", ["entityCardGroup"]),
+  ...sync("accountsManagement", ["entityCardGroup", "allUsers", "selectedEntityType"]),
   ...get("accountsManagement", [
    "allEntitiesFiltered",
    "hasUnsavedChanges",
@@ -159,8 +150,12 @@ export default {
    "isActiveIcon"
   ]),
 
-  allComponentsFilteredSorted() {
-   return this.allComponentsFiltered;
+   entityTypeData(){
+     return this.selectedEntityType === 'Roles' ? this.allRoles : this.allUsers
+   },
+
+  allEntitiesFilteredSorted() {
+   return this.allEntitiesFiltered;
   },
 
   componentIcon() {

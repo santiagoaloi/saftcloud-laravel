@@ -214,14 +214,14 @@ const actions = {
 
   //* Retrieves all avaiable tables from the database.
   getDbTables({}) {
-    axios.get('api/showAllTables').then((response) => {
+    axios.get('api/getAllTables').then((response) => {
       store.set('componentManagement/dbTables', response.data);
     });
   },
 
   //* Retrieves all avaiable tables and its corresponding columns from the database.
   getDbTablesAndColumns({}) {
-    axios.get('api/showAllTablesAndColumns').then((response) => {
+    axios.get('api/getAllTablesAndColumns').then((response) => {
       store.set('componentManagement/dbTablesAndColumns', response.data.tableAndColumns);
     });
   },
@@ -229,7 +229,7 @@ const actions = {
   //* Retrieves all avaiable group names from the database.
   getDbGroupNames({}) {
     axios
-      .get('api/showAllGroupNames')
+      .get('api/getAllGroupNames')
       .then((response) => {
         store.set('componentManagement/dbGroupNames', response.data);
       })
@@ -247,7 +247,7 @@ const actions = {
 
   //* Retrieves the component groups.
   getGroups({}) {
-    axios.get('api/showAllGroups').then((response) => {
+    axios.get('api/getAllGroups').then((response) => {
       if (response.status === 200) {
         store.set('componentManagement/allGroups', response.data.groups);
       }
@@ -271,7 +271,7 @@ const actions = {
 
   //* Retrieves all available componentes from the database.
   getComponents({}) {
-    axios.get('api/showAllComponents').then((response) => {
+    axios.get('api/getAllComponents').then((response) => {
       if (response.status === 200) {
         store.set('componentManagement/allComponents', response.data.components);
       }
