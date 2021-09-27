@@ -4,9 +4,9 @@
   title="Add new component"
   persistent
   max-width="900"
+  icon="mdi-plus"
   @save="validateComponentForm()"
   @close="dialogComponent = !dialogComponent"
-  icon="mdi-plus"
  >
   <ValidationObserver ref="createComponentForm" slim>
    <v-row>
@@ -14,10 +14,9 @@
      <baseFieldLabel required label="Group" />
      <validation-provider v-slot="{ errors, reset }" name="component group" rules="required">
       <v-autocomplete
+       v-model="componentSettings.component_group_id"
        spellcheck="false"
        prepend-inner-icon="mdi-folder-outline"
-       @update:search-input="syncGroupInputValue($event)"
-       v-model="componentSettings.component_group_id"
        :items="allGroups"
        :maxlength="20"
        item-value="id"
@@ -34,6 +33,7 @@
         closeOnContentClick: true
        }"
        :outlined="isDark"
+       @update:search-input="syncGroupInputValue($event)"
        @focus="reset"
        @input="reset"
        @blur="reset"
@@ -57,8 +57,8 @@
      <baseFieldLabel required label="Component title" />
      <validation-provider v-slot="{ errors, reset }" name="component title" rules="required">
       <v-text-field
-       spellcheck="false"
        v-model="componentSettings.title"
+       spellcheck="false"
        solo
        :outlined="isDark"
        prepend-inner-icon="mdi-comment"
@@ -66,9 +66,9 @@
        maxlength="20"
        :color="isDark ? '#208ad6' : 'grey'"
        :background-color="isDark ? '#28292b' : 'white'"
-       @keydown.enter.prevent="validateComponentForm()"
        :error="errors.length > 0"
        :error-messages="errors[0]"
+       @keydown.enter.prevent="validateComponentForm()"
        @focus="reset"
        @input="reset"
        @blur="reset"
@@ -80,8 +80,8 @@
      <baseFieldLabel required label="Component name" />
      <validation-provider v-slot="{ errors, reset }" name="component name" rules="alpha|required">
       <v-text-field
-       spellcheck="false"
        v-model="componentSettings.name"
+       spellcheck="false"
        solo
        prepend-inner-icon="mdi-comment"
        counter
@@ -90,8 +90,8 @@
        :background-color="isDark ? '#28292b' : 'white'"
        :error="errors.length > 0"
        :outlined="isDark"
-       @keydown.enter.prevent="validateComponentForm()"
        :error-messages="errors[0]"
+       @keydown.enter.prevent="validateComponentForm()"
        @focus="reset"
        @input="reset"
        @blur="reset"
@@ -103,9 +103,9 @@
      <baseFieldLabel required label="Database table" />
      <validation-provider v-slot="{ errors, reset }" name="component table" rules="required">
       <v-autocomplete
+       v-model="componentSettings.table"
        :outlined="isDark"
        spellcheck="false"
-       v-model="componentSettings.table"
        :menu-props="{
         transition: 'slide-y-transition'
        }"
@@ -115,17 +115,19 @@
        :item-color="isDark ? 'indigo lighten-3' : 'primary'"
        :color="isDark ? '#208ad6' : 'grey'"
        :background-color="isDark ? '#28292b' : 'white'"
-       @keydown.enter.prevent="validateComponentForm()"
        :error-messages="errors[0]"
        :error="errors.length > 0"
+       @keydown.enter.prevent="validateComponentForm()"
        @focus="reset"
        @input="reset"
        @blur="reset"
       >
-       <template v-slot:item="data">
+       <template #item="data">
         <template>
          <v-list-item-avatar>
-          <v-icon small> mdi-table </v-icon>
+          <v-icon small>
+           mdi-table
+          </v-icon>
          </v-list-item-avatar>
          <v-list-item-content>
           <v-list-item-title v-html="data.item" />
@@ -138,8 +140,8 @@
     <v-col cols="12" lg="12">
      <baseFieldLabel label="Component description / notes" />
      <v-textarea
-      spellcheck="false"
       v-model="componentSettings.note"
+      spellcheck="false"
       prepend-inner-icon="mdi-file"
       label
       solo
@@ -156,6 +158,7 @@
 <script>
 import { sync, call } from "vuex-pathify";
 import componentGroups from "@/mixins/componentGroups";
+
 export default {
  name: "DialogComponent",
  mixins: [componentGroups],
@@ -172,16 +175,19 @@ export default {
  methods: {
   ...call("componentManagement/*"),
 
-  validateComponentForm() {
-   this.$refs.createComponentForm.validate().then(validated => {
+  async validateComponentForm() {
+   try {
+    const validated = await this.$refs.createComponentForm.validate();
+
     if (validated) {
-     this.createComponent().then(created => {
-      if (created) {
-       window.eventBus.$emit("BUS_BUILD_ROUTES");
-      }
-     });
+     const created = await this.createComponent();
+     if (created) {
+      window.eventBus.$emit("BUS_BUILD_ROUTES");
+     }
     }
-   });
+   } catch (error) {
+    console.log(error);
+   }
   }
  }
 };

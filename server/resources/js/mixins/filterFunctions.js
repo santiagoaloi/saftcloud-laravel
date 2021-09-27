@@ -11,46 +11,42 @@ export default {
 
     getStock(id) {
       const index = this.dropdownProducts.findIndex(
-        product => product.product_id === id
+        (product) => product.product_id === id,
       );
       if (index > 0) {
         return parseFloat(this.dropdownProducts[index].stock);
-      } else {
-        return 0;
       }
+      return 0;
     },
 
     iconSelectedWeb(item) {
-      let result = this.selected.filter(
-        p => p.transaction_id === item.transaction_id
+      const result = this.selected.filter(
+        (p) => p.transaction_id === item.transaction_id,
       );
       if (result.length === 1) {
         return true;
-      } else {
-        return false;
       }
+      return false;
     },
 
     iconSelectedMobile(item) {
-      let result = this.selected.filter(
-        p => p.transaction_id === item.transaction_id
+      const result = this.selected.filter(
+        (p) => p.transaction_id === item.transaction_id,
       );
       if (result.length === 1) {
-        return "mdi-check-circle";
-      } else {
-        return "mdi-circle-outline";
+        return 'mdi-check-circle';
       }
+      return 'mdi-circle-outline';
     },
 
     iconSelectedMobileColor(item) {
-      let result = this.selected.filter(
-        p => p.transaction_id === item.transaction_id
+      const result = this.selected.filter(
+        (p) => p.transaction_id === item.transaction_id,
       );
       if (result.length === 1) {
-        return "green";
-      } else {
-        return "grey";
+        return 'green';
       }
+      return 'grey';
     },
 
     // Filtro para el dropdown que limita la busqueda por nombre y codigo de barra de producto.
@@ -60,10 +56,10 @@ export default {
         item.product_name,
         item.bar_code,
         item.sku,
-        item.product_brand
+        item.product_brand,
       ];
       return fields.some(
-        f => f != null && f.toLowerCase().includes(searchText)
+        (f) => f != null && f.toLowerCase().includes(searchText),
       );
     },
 
@@ -71,8 +67,8 @@ export default {
       const searchText = queryText.toLowerCase();
       const fields = [item.name, item.phone_code];
       return fields.some(
-        f => f != null && f.toLowerCase().includes(searchText)
+        (f) => f != null && f.toLowerCase().includes(searchText),
       );
-    }
-  }
+    },
+  },
 };

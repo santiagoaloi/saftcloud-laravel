@@ -1,10 +1,10 @@
 <template>
  <v-fade-transition>
   <div v-show="!delay">
-   <v-container>
+   <v-container style="background:#2C2F33;">
     <signup-alert ref="signupAlert" />
-    <v-card class="d-flex justify-center align-center" min-height="300" width="100%">
-     <v-container>
+    <v-card class="d-flex justify-center align- transparent" flat min-height="300" width="100%">
+     <v-container >
       <v-row>
        <v-col class="text-center" cols="12" lg="6">
         <steps />
@@ -27,7 +27,7 @@
     </v-card>
     <Faq />
    </v-container>
-   <vue-diagonal :deg="-7" background="linear-gradient(331deg, rgba(101, 235, 235, 1) 0%, rgba(54, 49, 125, 1) 50%)" space-after space-before>
+   <vue-diagonal style="margin-top:-100px" :deg="-7" background="linear-gradient(331deg, rgba(101, 235, 235, 1) 0%, rgba(54, 49, 125, 1) 50%)" space-after >
     <Pricing />
    </vue-diagonal>
   </div>

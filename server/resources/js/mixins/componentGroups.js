@@ -1,5 +1,5 @@
-import { store } from "@/store";
 import { sync, call, get } from "vuex-pathify";
+import { store } from "@/store";
 
 export default {
  name: "ComponentGroupsMmixin",
@@ -37,9 +37,7 @@ export default {
   ...call("componentManagement/*"),
 
   dbGroupNamesFiltered(editedGroupName) {
-   return this.dbGroupNames.filter(group => {
-    return group !== editedGroupName;
-   });
+   return this.dbGroupNames.filter(group => group !== editedGroupName);
   },
 
   addGroupDialog() {

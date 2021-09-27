@@ -4,7 +4,7 @@
   clipped
   :color="isDark ? '#2E3139' : '#edeff0'"
   width="350"
-  v-model="secureComponentDrawer"
+  :value="drawer"
   hideOverlay
   right
   app
@@ -19,6 +19,7 @@
 </template>
 
 <script>
+import { isEmpty} from 'lodash';
 import Vue from "vue";
 import { sync, get } from "vuex-pathify";
 
@@ -34,20 +35,32 @@ export default {
  computed: {
   ...sync("theme", ["isDark"]),
   ...sync("drawers", ["secureComponentDrawer"]),
-  ...get("componentManagement", ["selectedComponent"])
+  ...get("componentManagement", ["selectedComponent"]),
+
+  drawer(){
+
+      
+          if ( !this.selectedComponent || !this.secureComponentDrawer) {
+return false
+    } else {
+     return true
+
+    }
+  }
  },
 
- watch: {
-  selectedComponent: {
-   immediate: false,
-   handler(val) {
-    if (val || !this.secureComponentDrawer) {
-     this.secureComponentDrawer = true;
-    } else {
-     this.secureComponentDrawer = false;
-    }
-   }
-  }
- }
+//  watch: {
+//   selectedComponent: {
+//    immediate: false,
+//    handler(val) {
+//     if (isEmpty(val) || this.secureComponentDrawer) {
+//          this.secureComponentDrawer = false;
+
+//     } else {
+//      this.secureComponentDrawer = true;
+//     }
+//    }
+//   }
+//  }
 };
 </script>

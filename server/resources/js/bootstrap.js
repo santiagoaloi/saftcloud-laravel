@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import axios from "axios";
 import router from "@/router";
 import { store } from "@/store";
@@ -8,7 +10,7 @@ const csrf = document.head.querySelector('meta[name="csrf-token"]');
 axiosDefaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
 axiosDefaults.headers.common["X-CSRF-TOKEN"] = csrf.content;
 
-//Awaits for storage (indexedDB) to be ready.
+// Awaits for storage (indexedDB) to be ready.
 const getToken = async () => {
  await store.restored;
  return store.get("authentication@session.token");
@@ -16,16 +18,14 @@ const getToken = async () => {
 
 getToken().then(sessionToken => {
  if (sessionToken) {
-  axiosDefaults.headers.common["Authorization"] = "Bearer " + sessionToken;
+  axiosDefaults.headers.common.Authorization = `Bearer ${sessionToken}`;
  }
 });
 
 // Attaches catch to every axios request
 axios.interceptors.response.use(
- response => {
-  return response;
- },
- function(error) {
+ response => response,
+ error => {
   if (error.response) {
    // If session fails to validate the token, kill the session.
    if (error.response.data.message === "Unauthenticated.") {

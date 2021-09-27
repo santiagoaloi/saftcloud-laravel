@@ -1,53 +1,87 @@
 <template>
- <div>
-  <v-sheet class="d-flex flex-column justify-center transparent" min-height="90vh">
-   <v-container>
-    <div class="d-flex flex-column justify-center">
-     <div class="text-shadow font-weight-black text-h4 text-sm-h3 text-md-h2 text-lg-h1">
-      <vue-typer :pre-type-delay="1000" :type-delay="90" :repeat="0" caret-animation="smooth" text="SaftCloud POS"></vue-typer>
-     </div>
+  <div>
+    <v-sheet
+      class="d-flex flex-column justify-center transparent"
+      min-height="90vh"
+    >
+      <v-container>
+        <div class="d-flex flex-column justify-center">
+          <div class="text-shadow font-weight-black text-h4 text-sm-h3 text-md-h2 text-lg-h1">
+            <vue-typer
+              :pre-type-delay="1000"
+              :type-delay="90"
+              :repeat="0"
+              caret-animation="smooth"
+              text="SaftCloud POS"
+            />
+          </div>
 
-     <v-card flat color="transparent" width="600">
-      <h1 class=" text-shadow  white--text ">
-       Upgrade your business to the next-generation Point of Sales in the cloud.
-      </h1>
+          <v-card
+            flat
+            color="transparent"
+            width="600"
+          >
+            <h1 class=" text-shadow  white--text ">
+              Upgrade your business to the next-generation Point of Sales in the cloud.
+            </h1>
 
-      <h3 class=" text-shadow white--text mt-10" style="font-weight:100">
-       Saftcloud ™ is a cloud-based retail software platform that enables retailers speed up sales, manage inventories, reward customer loyalty, and
-       garner insights into their businesses in real-time. The platform makes it easy to add new outlets and registers as your business grows.
-       Designed for multi-outlet retailers, Saftcloud ™ ensures that your business operates as one cohesive operation.
-      </h3>
-      <div class="mt-8">
-       <v-btn class="hoverElevationSoft" to="/signup" dark x-large color="primary">Try it for free</v-btn>
-       <v-btn dark x-large class="my-1 mx-sm-1 hoverElevationSoft">Contact Sales</v-btn>
-      </div>
-     </v-card>
-     <div style="position:absolute;margin-left:380px">
-      <v-img src="storage/header/1.png" height="580" contain> </v-img>
-     </div>
-    </div>
-   </v-container>
-  </v-sheet>
-  <Feature2 />
-  <Feature1 />
-  <CallToAction />
- </div>
+            <h3
+              class=" text-shadow white--text mt-10"
+              style="font-weight:100"
+            >
+              Saftcloud ™ is a cloud-based retail software platform that enables retailers speed up sales, manage inventories, reward customer loyalty, and
+              garner insights into their businesses in real-time. The platform makes it easy to add new outlets and registers as your business grows.
+              Designed for multi-outlet retailers, Saftcloud ™ ensures that your business operates as one cohesive operation.
+            </h3>
+            <div class="mt-8">
+              <v-btn
+                class="hoverElevationSoft"
+                to="/signup"
+                dark
+                x-large
+                color="primary"
+              >
+                Try it for free
+              </v-btn>
+              <v-btn
+                dark
+                x-large
+                class="my-1 mx-sm-1 hoverElevationSoft"
+              >
+                Contact Sales
+              </v-btn>
+            </div>
+          </v-card>
+          <div style="position:absolute;margin-left:380px">
+            <v-img
+              src="storage/header/1.png"
+              height="580"
+              contain
+            />
+          </div>
+        </div>
+      </v-container>
+    </v-sheet>
+    <Feature2 />
+    <Feature1 />
+    <CallToAction />
+  </div>
 </template>
 
 <script>
-import { VueTyper } from "vue-typer";
-import Feature2 from "@/components/Landing/Feature2.vue";
-import Feature1 from "@/components/Landing/Feature1.vue";
-import CallToAction from "@/components/Landing/CallToAction.vue";
+import { VueTyper } from 'vue-typer';
+import Feature2 from '@/components/Landing/Feature2.vue';
+import Feature1 from '@/components/Landing/Feature1.vue';
+import CallToAction from '@/components/Landing/CallToAction.vue';
 
 export default {
- name: "Homepage",
- components: {
-  VueTyper,
-  Feature1,
-  Feature2,
-  CallToAction
- }
+  name: 'Homepage',
+  components: {
+    VueTyper,
+    Feature1,
+    Feature2,
+    CallToAction,
+  },
 };
 </script>
 

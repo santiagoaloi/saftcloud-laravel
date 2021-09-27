@@ -14,7 +14,7 @@
 
     <v-tooltip transition="false" color="black" bottom>
      <template v-slot:activator="{ on }">
-      <v-btn class="ml-3" v-on="on" color="white" small icon :ripple="false">
+      <v-btn @click="remove(item)" class="ml-3" v-on="on" color="white" small icon :ripple="false">
        <v-icon> mdi-delete </v-icon>
       </v-btn>
      </template>
@@ -72,6 +72,14 @@ export default {
   edit(item) {
    this.dialogCapability = true;
    this.editCapability(item);
+  },
+
+  remove(capability) {
+   this.removeCapability(capability).then(removed => {
+    if (removed) {
+     this.selectedComponent.capabilities = this.selectedComponent.capabilities.filter(item => item.id !== capability.id);
+    }
+   });
   }
  }
 };

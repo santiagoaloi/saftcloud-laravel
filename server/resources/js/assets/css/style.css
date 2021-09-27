@@ -1,7 +1,3 @@
-html {
- /* overflow: auto; */
-}
-
 .v-dialog--scrollable,
 .v-dialog--scrollable > form {
  display: flex;

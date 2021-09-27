@@ -1,5 +1,5 @@
-import icons from "./icons";
-import theme from "./theme";
+import icons from './icons';
+import theme from './theme';
 // import toolbar from './toolbar'
 // import locales from './locales'
 // import analytics from './analytics'
@@ -9,15 +9,15 @@ import theme from "./theme";
 export default {
   // product display information
   product: {
-    name: "SaftCloud",
-    version: "5"
+    name: 'SaftCloud',
+    version: '5',
   },
 
   // icon libraries
   icons,
 
   // // theme configs
-  theme
+  theme,
 
   // // toolbar configs
   // toolbar,

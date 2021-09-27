@@ -1,8 +1,8 @@
 <template>
  <div>
-  <v-item-group mandatory v-model="componentCardGroup">
+  <v-item-group v-model="componentCardGroup" mandatory>
    <transition-group class="gallery-card-container pa-2" appear css name="slide-x-transition">
-    <v-item :key="`${index}`" v-for="(component, index) in allComponentsFilteredSorted" v-slot="{ active, toggle }">
+    <v-item v-for="(component, index) in allComponentsFilteredSorted" :key="`${index}`" v-slot="{ active, toggle }">
      <v-hover v-slot="{ hover }">
       <v-card
        :ref="`SEL${componentCardGroup}ID${index}`"
@@ -19,7 +19,7 @@
       >
        <v-card-actions class="px-0">
         <v-hover v-slot="{ hover }">
-         <v-avatar class="cursor-pointer" size="65" @click="dialogIcons = true" rounded :color="component.config_settings.icon.color">
+         <v-avatar class="cursor-pointer" size="65" rounded :color="component.config_settings.icon.color" @click="dialogIcons = true">
           <v-expand-transition>
            <div v-if="hover" class="d-flex black v-card--reveal white--text" style="height: 100%;">
             <v-icon size="30" dark>
@@ -39,27 +39,33 @@
 
         <div :class="{ 'show-btns': hover, 'hide-btns': !hover }">
          <v-tooltip transition="false" color="black" bottom>
-          <template v-slot:activator="{ on }">
-           <v-btn v-on="on" @click.stop="setModular(component)" color="white" small icon :ripple="false">
-            <v-icon :color="isModularColor(component)"> {{ isModularIcon(component) }} </v-icon>
+          <template #activator="{ on }">
+           <v-btn color="white" small icon :ripple="false" v-on="on" @click.stop="setModular(component)">
+            <v-icon :color="isModularColor(component)">
+             {{ isModularIcon(component) }}
+            </v-icon>
            </v-btn>
           </template>
           <span>Modular</span>
          </v-tooltip>
 
          <v-tooltip transition="false" color="black" bottom>
-          <template v-slot:activator="{ on }">
-           <v-btn v-on="on" @click.stop="setActive(component)" color="white" small icon :ripple="false">
-            <v-icon :color="isActiveColor(component)"> {{ isActiveIcon(component) }} </v-icon>
+          <template #activator="{ on }">
+           <v-btn color="white" small icon :ripple="false" v-on="on" @click.stop="setActive(component)">
+            <v-icon :color="isActiveColor(component)">
+             {{ isActiveIcon(component) }}
+            </v-icon>
            </v-btn>
           </template>
           <span>Active</span>
          </v-tooltip>
 
          <v-tooltip transition="false" color="black" bottom>
-          <template v-slot:activator="{ on }">
-           <v-btn v-on="on" @click.stop="setStarred(component)" color="white" small icon :ripple="false">
-            <v-icon :color="isStarredColor(component)"> {{ isStarredIcon(component) }} </v-icon>
+          <template #activator="{ on }">
+           <v-btn color="white" small icon :ripple="false" v-on="on" @click.stop="setStarred(component)">
+            <v-icon :color="isStarredColor(component)">
+             {{ isStarredIcon(component) }}
+            </v-icon>
            </v-btn>
           </template>
           <span>Favourite</span>
@@ -87,10 +93,15 @@
            class="col-12 pointer-events-none"
            small
           >
-           <v-icon x-small> mdi-folder-outline</v-icon>
+           <v-icon x-small>
+            mdi-folder-outline
+           </v-icon>
            <div class="col-12 text-truncate">
             <template v-if="mapComponentGroup(component).component_group_id">
-             {{ mapGroupParent(component) }} <v-icon small>mdi-menu-right</v-icon>
+             {{ mapGroupParent(component) }}
+             <v-icon small>
+              mdi-menu-right
+             </v-icon>
             </template>
             {{ mapComponentGroup(component).name }}
            </div>
@@ -101,8 +112,10 @@
          <div v-if="hasUnsavedChanges(component)" class="gallery-card-subtitle-wrapper">
           <h5 class="gallery-card-subtitle">
            <v-tooltip transition="false" color="black" bottom>
-            <template v-slot:activator="{ on }">
-             <v-icon v-on="on" :color="isDark ? 'white' : '#28292b'">mdi-alert-outline</v-icon>
+            <template #activator="{ on }">
+             <v-icon :color="isDark ? 'white' : '#28292b'" v-on="on">
+              mdi-alert-outline
+             </v-icon>
             </template>
             <span>Unsaved</span>
            </v-tooltip>
@@ -116,13 +129,14 @@
    </transition-group>
   </v-item-group>
 
-  <base-dialog-icons :icon="componentIcon" v-if="dialogIcons" v-model="dialogIcons" />
+  <base-dialog-icons v-if="dialogIcons" v-model="dialogIcons" :icon="componentIcon" />
  </div>
 </template>
 
 <script>
-import { store } from "@/store";
 import { sync, call, get } from "vuex-pathify";
+import { store } from "@/store";
+
 export default {
  name: "ComponentsGridView",
  data() {
@@ -178,7 +192,7 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
+<style scoped>
 .show-btns {
  opacity: 1 !important;
  transition: opacity 0.3s ease-in-out;

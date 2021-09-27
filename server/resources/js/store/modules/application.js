@@ -1,20 +1,21 @@
-import { make } from "vuex-pathify";
+import { make } from 'vuex-pathify';
 
 const state = {
- search: ""
+  search: '',
+  isBooted : false
 };
 
 const mutations = make.mutations(state);
 const getters = {};
 
 const actions = {
- ...make.actions(state)
+  ...make.actions(state),
 };
 
 export default {
- namespaced: true,
- state,
- mutations,
- actions,
- getters
+  namespaced: true,
+  state,
+  mutations,
+  actions,
+  getters,
 };

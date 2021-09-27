@@ -1,36 +1,34 @@
-import { make } from "vuex-pathify";
+import { make } from 'vuex-pathify';
 
-//Default validation states definitions (they should all have validation errors to false)
-const getDefaultState = () => {
- return {
+// Default validation states definitions (they should all have validation errors to false)
+const getDefaultState = () => ({
   componentsEditBasic: {
-   componentName: false
+    componentName: false,
   },
   componentsEditFormFieldsBasicTab: {
-   label: false
+    label: false,
   },
   componentsEditFormFieldsSettingsTab: {
-   tooltip: false,
-   color: false
-  }
- };
-};
+    tooltip: false,
+    color: false,
+  },
+});
 
 const state = getDefaultState();
 const mutations = make.mutations(state);
 
 const actions = {
- ...make.actions(state),
+  ...make.actions(state),
 
- // Reset validations to default values.
- resetValidationStates({ state }) {
-  Object.assign(state, getDefaultState());
- }
+  // Reset validations to default values.
+  resetValidationStates({ state }) {
+    Object.assign(state, getDefaultState());
+  },
 };
 
 export default {
- namespaced: true,
- state,
- mutations,
- actions
+  namespaced: true,
+  state,
+  mutations,
+  actions,
 };

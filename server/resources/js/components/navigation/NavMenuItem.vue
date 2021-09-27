@@ -1,86 +1,103 @@
 <template>
- <div>
-  <v-list-item v-if="!menuItem.items" :input-value="menuItem.value" :to="menuItem.link" :exact="menuItem.exact" :disabled="menuItem.disabled" link>
-   <div class="d-flex">
-    <v-list-item-icon class="mr-1">
-     <v-icon :class="{ 'grey--text': menuItem.disabled }">
-      {{ menuItem.icon ? menuItem.icon : "mdi-folder-outline" }}
-     </v-icon>
-    </v-list-item-icon>
-    <v-list-item-content class="ml-2">
-     <v-list-item-title>
-      {{ menuItem.title || menuItem.name }}
-     </v-list-item-title>
-    </v-list-item-content>
-   </div>
-  </v-list-item>
+  <div>
+    <v-list-item
+      v-if="!menuItem.items"
+      :input-value="menuItem.value"
+      :to="menuItem.link"
+      :exact="menuItem.exact"
+      :disabled="menuItem.disabled"
+      link
+    >
+      <div class="d-flex">
+        <v-list-item-icon class="mr-1">
+          <v-icon :class="{ 'grey--text': menuItem.disabled }">
+            {{ menuItem.icon ? menuItem.icon : "mdi-folder-outline" }}
+          </v-icon>
+        </v-list-item-icon>
+        <v-list-item-content class="ml-2">
+          <v-list-item-title>
+            {{ menuItem.title || menuItem.name }}
+          </v-list-item-title>
+        </v-list-item-content>
+      </div>
+    </v-list-item>
 
-  <v-list-group
-   no-action
-   v-else
-   :value="menuItem.regex ? menuItem.regex.test($route.path) : false"
-   :disabled="menuItem.disabled"
-   :sub-group="subgroup"
-   color="primary lighten-5"
-   ref="group"
-   :prepend-icon="subgroup ? false : ''"
-   @click="showId(menuItem)"
-  >
-   <template v-slot:activator>
-    <slot v-if="!subgroup" name="prependIcon">
-     <v-icon class="mr-3">{{ icon }}</v-icon>
-    </slot>
+    <v-list-group
+      v-else
+      ref="group"
+      no-action
+      :value="menuItem.regex ? menuItem.regex.test($route.path) : false"
+      :disabled="menuItem.disabled"
+      :sub-group="subgroup"
+      color="primary lighten-5"
+      :prepend-icon="subgroup ? false : ''"
+      @click="showId(menuItem)"
+    >
+      <template #activator>
+        <slot
+          v-if="!subgroup"
+          name="prependIcon"
+        >
+          <v-icon class="mr-3">
+            {{ icon }}
+          </v-icon>
+        </slot>
 
-    <slot v-if="subgroup" name="prependIcon">
-     <v-icon class="ml-n4 mr-3">{{ icon }}</v-icon>
-    </slot>
+        <slot
+          v-if="subgroup"
+          name="prependIcon"
+        >
+          <v-icon class="ml-n4 mr-3">
+            {{ icon }}
+          </v-icon>
+        </slot>
 
-    <v-list-item-content>
-     <v-list-item-title>
-      {{ menuItem.name }}
-     </v-list-item-title>
-    </v-list-item-content>
-   </template>
+        <v-list-item-content>
+          <v-list-item-title>
+            {{ menuItem.name }}
+          </v-list-item-title>
+        </v-list-item-content>
+      </template>
 
-   <slot></slot>
-  </v-list-group>
- </div>
+      <slot />
+    </v-list-group>
+  </div>
 </template>
 
 <script>
 export default {
- data: () => ({
-  icon: "mdi-folder-outline"
- }),
- props: {
-  menuItem: {
-   type: Object,
-   default: () => {}
+  props: {
+    menuItem: {
+      type: Object,
+      default: () => {},
+    },
+    subgroup: {
+      type: Boolean,
+      default: false,
+    },
+    small: {
+      type: Boolean,
+      default: false,
+    },
   },
-  subgroup: {
-   type: Boolean,
-   default: false
+  data: () => ({
+    icon: 'mdi-folder-outline',
+  }),
+  mounted() {
+    this.$watch(
+      () => {
+        if (this.$refs.group) return this.$refs.group.isActive;
+      },
+      (val) => {
+        this.icon = val ? 'mdi-folder-open-outline' : 'mdi-folder-outline';
+      },
+    );
   },
-  small: {
-   type: Boolean,
-   default: false
-  }
- },
- mounted() {
-  this.$watch(
-   () => {
-    if (this.$refs.group) return this.$refs.group.isActive;
-   },
-   val => {
-    this.icon = val ? "mdi-folder-open-outline" : "mdi-folder-outline";
-   }
-  );
- },
- methods: {
-  showId(item) {
-   console.log(item);
-  }
- }
+  methods: {
+    showId(item) {
+      console.log(item);
+    },
+  },
 };
 </script>
 <style scoped>

@@ -1,6 +1,6 @@
 <template>
  <div>
-  <v-app-bar :color="$route.name === '/homepage' ? 'transparent' : '#36393f'" absolute app flat height="80">
+  <v-app-bar  :color="$route.name === '/homepage' ? 'transparent' : '#36393f'" elevate-on-scroll app flat height="80">
    <v-container
     data-aos="fade"
     data-aos-anchor-placement="center-bottom"
@@ -16,20 +16,30 @@
      <span class="font-weight-black headline white--text"> SaftCloud</span>
     </router-link>
 
-    <v-spacer></v-spacer>
+    <v-spacer />
 
     <template v-if="$vuetify.breakpoint.mdAndUp">
-     <v-btn rounded height="36" class="mr-3" color="white" text dark x-large plain @click="testFunction()"> Test</v-btn>
-     <v-btn rounded to="/signup" height="36" class="mr-3" color="white" text dark x-large plain> Team</v-btn>
-     <v-btn rounded to="/signup" height="36" class="mr-3" color="white" text dark x-large plain> Company</v-btn>
-     <v-btn rounded to="/signup" height="36" class="mr-3" dark x-large plain> <v-icon left> mdi-account-plus</v-icon>Sign up</v-btn>
+     <v-btn rounded height="36" class="mr-3" color="white" text dark x-large plain @click="testFunction()">
+      Test
+     </v-btn>
+     <v-btn rounded to="/signup" height="36" class="mr-3" color="white" text dark x-large plain>
+      Team
+     </v-btn>
+     <v-btn rounded to="/signup" height="36" class="mr-3" color="white" text dark x-large plain>
+      Company
+     </v-btn>
+     <v-btn rounded to="/signup" height="36" class="mr-3" dark x-large plain>
+      <v-icon left>
+       mdi-account-plus </v-icon
+      >Sign up
+     </v-btn>
      <template>
       <v-btn min-width="100px" to="/login" height="36" class="mr-3" rounded dark color="primary" x-large>
        <v-avatar class="ml-n4 mr-3" size="28" left>
-        <v-img src="storage/defaults/avatar.png"></v-img>
+        <v-img src="storage/defaults/avatar.png" />
        </v-avatar>
-       Login</v-btn
-      >
+       Login
+      </v-btn>
 
       <!-- <v-chip to="/login" link>
             <v-avatar left>
@@ -38,7 +48,7 @@
             Login
           </v-chip> -->
      </template>
-     <!-- 
+     <!--
           <v-menu
             v-if="isLoggedIn"
             rounded="xl"
@@ -101,11 +111,15 @@
     </template>
 
     <v-tooltip transition="false" color="black" bottom>
-     <template v-slot:activator="{ on }">
-      <v-btn v-on="on" @click="isDark = !isDark" fab class="mr-3" color="white" text dark small plain>
-       <v-icon v-if="isDark">mdi-lightbulb-on-outline</v-icon>
-       <v-icon v-else>mdi-lightbulb-outline</v-icon></v-btn
-      >
+     <template #activator="{ on }">
+      <v-btn fab class="mr-3" color="white" text dark small plain v-on="on" @click="isDark = !isDark">
+       <v-icon v-if="isDark">
+        mdi-lightbulb-on-outline
+       </v-icon>
+       <v-icon v-else>
+        mdi-lightbulb-outline
+       </v-icon>
+      </v-btn>
      </template>
      <span> {{ isDark ? " Light mode" : "Dark mode" }}</span>
     </v-tooltip>
@@ -115,16 +129,17 @@
 </template>
 
 <script>
-import { store } from "@/store";
 import axios from "axios";
 import { sync, get, call } from "vuex-pathify";
+import { store } from "@/store";
+
 export default {
  name: "PublicAppbar",
 
  data() {
   return {
    responsiveMenu: false,
-   store: store,
+   store,
    navMenu: [
     {
      name: "aktuellt",
@@ -171,7 +186,7 @@ export default {
 
  methods: {
   async testFunction() {
-   let post = { email: "facu.ft@gmail.com", password: 'password'};
+   const post = { email: "facu.ft@gmail.com", password: "password" };
    axios
     .get("api/testFunction")
     .then(response => {
@@ -187,7 +202,7 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
+<style scoped>
 .v-chip.v-size--default {
  height: 36px;
 }

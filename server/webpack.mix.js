@@ -23,20 +23,16 @@ mix.disableNotifications();
 */
 Mix.listen("configReady", config => {
  const scssRule = config.module.rules.find(r => r.test.toString() === /\.scss$/.toString());
-
  scssRule.oneOf.forEach(ruleset => {
-  const scssOptions = ruleset.use.find(l => l.loader === "sass-loader").options;
-
-  scssOptions.additionalData = "@import './resources/sass/vuetify/variables';";
- });
+  const scssOptions = ruleset.use.find(l => l.loader.includes("sass-loader")).options;
+  scssOptions.additionalData = '@import \'./resources/sass/vuetify/variables\';'
+});
 
  const sassRule = config.module.rules.find(r => r.test.toString() === /\.sass$/.toString());
-
  sassRule.oneOf.forEach(ruleset => {
-  const sassOptions = ruleset.use.find(l => l.loader === "sass-loader").options;
-
-  sassOptions.additionalData = "@import './resources/sass/vuetify/variables'";
- });
+  const sassOptions = ruleset.use.find(l => l.loader.includes("sass-loader")).options;
+  sassOptions.additionalData = '@import \'./resources/sass/vuetify/variables\''
+});
 });
 
 /*
@@ -92,23 +88,9 @@ mix
   }
  });
 
-mix.then(() => {
- process.nextTick(publishAssets);
-});
 
-function publishAssets() {
  if (mix.inProduction()) {
-  const dist = path.join(publicDir, "dist");
-
-  // clean dist folder
-  if (fs.existsSync(dist)) fs.removeSync(dist);
- }
-
- if (fs.existsSync(path.join(publicDir, "build", "dist"))) fs.copySync(path.join(publicDir, "build", "dist"), path.join(publicDir, "dist"));
- // if (fs.existsSync(path.join(publicDir, "build", "images")))
- //   fs.copySync(
- //     path.join(publicDir, "build", "images"),
- //     path.join(publicDir, "images")
- //   );
- if (fs.existsSync(path.join(publicDir, "build"))) fs.removeSync(path.join(publicDir, "build"));
+  mix.version()
+} else {
+  mix.sourceMaps()
 }

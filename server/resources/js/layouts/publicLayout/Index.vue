@@ -1,13 +1,18 @@
 <template>
  <v-app :style="bg">
   <public-bar />
-  <public-view />
-  <snackbar />
+
+  <div v-show="isBooted">
+ <public-view />
   <public-footer v-if="!$route.name.startsWith('login')" />
+ </div>
+    <snackbar />
+
  </v-app>
 </template>
 
 <script>
+import { sync } from "vuex-pathify"
 export default {
  name: "Publiclayout",
  components: {
@@ -17,10 +22,14 @@ export default {
   Snackbar: () =>
    import(
     /* webpackChunkName: 'public-snackbar' */
-    "@/components/base/Snackbar"
+    "@/components/Base/Snackbar"
    )
  },
  computed: {
+
+       ...sync("application", ["isBooted"]),
+
+
   bg() {
    return {
     "background-size": "cover",

@@ -1,10 +1,10 @@
 // Utilities
-import { make } from "vuex-pathify";
+import { make } from 'vuex-pathify';
 
 const state = {
-  color: "success",
-  text: "",
-  value: false
+  color: 'success',
+  text: '',
+  value: false,
 };
 
 const mutations = make.mutations(state);
@@ -16,5 +16,5 @@ export default {
   state,
   mutations,
   actions,
-  getters
+  getters,
 };

@@ -26,7 +26,7 @@ export default {
   Snackbar: () =>
    import(
     /* webpackChunkName: 'public-snackbar' */
-    "@/components/base/Snackbar"
+    "@/components/Base/Snackbar"
    )
  }
 };

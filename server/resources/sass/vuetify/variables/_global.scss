@@ -37,11 +37,11 @@ $container-max-widths: (
 
 // Transitions
 $transition: (
- "fast-out-linear-in": cubic-bezier(0.4, 0, 1, 1),
- "fast-in-fast-out": cubic-bezier(0.25, 0.8, 0.25, 1),
+//  "fast-out-linear-in": cubic-bezier(0.4, 0, 1, 1),
+//  "fast-in-fast-out": cubic-bezier(0.25, 0.8, 0.25, 1),
  "fast-out-slow-in": unset,
- "ease-in-out": cubic-bezier(0.4, 0, 0.6, 1),
- "swing": cubic-bezier(0.25, 0.8, 0.5, 1),
+//  "ease-in-out": cubic-bezier(0.4, 0, 0.6, 1),
+//  "swing": cubic-bezier(0.25, 0.8, 0.5, 1),
  /* Sidebars */ "linear-out-slow-in": unset,
  /* Component card flicker problem "fast-out-slow-in": cubic-bezier(0.69, 0.39, 0.51, 0.49) */
 );
@@ -77,6 +77,6 @@ $tab-font-weight: 300;
 $tab-font-size: 0.8rem;
 
 // Toolbar
-$toolbar-transition: 0.2s map-get($transition, "fast-out-slow-in") transform, 0.2s map-get($transition, "fast-out-slow-in") left,
- 0.2s map-get($transition, "fast-out-slow-in") right, 280ms map-get($transition, "fast-out-slow-in") box-shadow,
- 0.25s map-get($transition, "fast-out-slow-in") max-width, 0.25s map-get($transition, "fast-out-slow-in") width;
+// $toolbar-transition: 0.2s map-get($transition, "fast-out-slow-in") transform, 0.2s map-get($transition, "fast-out-slow-in") left,
+//  0.2s map-get($transition, "fast-out-slow-in") right, 280ms map-get($transition, "fast-out-slow-in") box-shadow,
+//  0.25s map-get($transition, "fast-out-slow-in") max-width, 0.25s map-get($transition, "fast-out-slow-in") width;

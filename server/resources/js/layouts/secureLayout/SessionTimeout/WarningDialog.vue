@@ -1,17 +1,30 @@
 <template>
- <base-dialog title="Your session has expired" noMaximize dense width="600" noActions v-model="dialogTImeoutWarning">
-  <v-card class="mx-auto" width="300"> hello </v-card>
- </base-dialog>
+  <base-dialog
+    v-model="dialogTImeoutWarning"
+    title="Your session has expired"
+    no-maximize
+    dense
+    width="600"
+    no-actions
+  >
+    <v-card
+      class="mx-auto"
+      width="300"
+    >
+      hello
+    </v-card>
+  </base-dialog>
 </template>
 <script>
-import { store } from "@/store";
-import { sync, get } from "vuex-pathify";
-export default {
- name: "DialogSessionTimeoutWarning",
+import { sync, get } from 'vuex-pathify';
+import { store } from '@/store';
 
- computed: {
-  ...sync("theme", ["isDark"]),
-  ...sync("authentication", ["dialogTImeoutWarning"])
- }
+export default {
+  name: 'DialogSessionTimeoutWarning',
+
+  computed: {
+    ...sync('theme', ['isDark']),
+    ...sync('authentication', ['dialogTImeoutWarning']),
+  },
 };
 </script>

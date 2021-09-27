@@ -1,8 +1,8 @@
 <template>
  <div class="typing-indicator">
-  <span></span>
-  <span></span>
-  <span></span>
+  <span />
+  <span />
+  <span />
  </div>
 </template>
 
@@ -11,16 +11,7 @@ export default {
  name: "BaseTypingIndicator"
 };
 </script>
-<style lang="scss">
-/*
-|--------------------------------------------------------------------------
-| Typing indicator
-|--------------------------------------------------------------------------
-| This is the typing indicator while your are not finished writing....
-| https://codepen.io/fusco/pen/XbpaYv
-|
-*/
-
+<style>
 .typing-indicator {
  float: left;
  background-color: transparent;

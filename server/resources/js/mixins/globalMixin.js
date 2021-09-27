@@ -6,12 +6,12 @@ export default {
 
       // Build an object with all the methods of the current component that only contains alpha characters.
       for (const method of componentFileName) {
-        if (typeof method[1] === "function" && method[0].match(/^[a-zA-Z]/)) {
+        if (typeof method[1] === 'function' && method[0].match(/^[a-zA-Z]/)) {
           provide[method[0]] = this[method[0]];
         }
       }
 
       return provide;
-    }
-  }
+    },
+  },
 };

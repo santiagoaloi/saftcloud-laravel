@@ -1,8 +1,9 @@
+/* eslint-disable */
 import Vue from "vue";
 
 // Bootstrap
 import "@/plugins";
-require("./bootstrap");
+import AOS from "aos";
 import router from "@/router";
 import { store } from "@/store";
 import vuetify from "@/plugins/vuetify";
@@ -10,17 +11,13 @@ import vuetify from "@/plugins/vuetify";
 // Application
 import App from "./App.vue";
 
-//Animations
-import AOS from "aos";
+// Animations
 
 // Styles
 import "aos/dist/aos.css";
-import "../sass/theme.scss";
 import "./assets/css/style.css";
 
-//Layouts
-Vue.component("public_layout", () => import(/* webpackChunkName: 'public-Layout' */ "@/layouts/publicLayout/Index"));
-Vue.component("secure_layout", () => import(/* webpackChunkName: 'secure-Layout' */ "@/layouts/secureLayout/Index"));
+require("./bootstrap");
 
 new Vue({
  created() {

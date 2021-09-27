@@ -41,7 +41,7 @@ export default {
  computed: {
   ...sync("theme", ["isDark"]),
   ...sync("accountsManagement", ["isTableLayout"]),
-  ...get("accountsManagement", ["isAllFilteredComponentsEmpty", "selectedComponent"])
+  ...get("accountsManagement", ["isAllFilteredComponentsEmpty"])
  },
 
  mounted() {

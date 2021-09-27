@@ -20,6 +20,8 @@
         </div>
        </v-chip>
 
+       <v-chip label small style="float:right">Basic view configuration</v-chip>
+
        <v-divider class="mt-2" />
 
        <!-- keep alive is important to cross-validate compoment edit navigation drawer sections -->
