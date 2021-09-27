@@ -25,33 +25,33 @@ class LookUpListController extends Controller {
         }
 
         return response([
-            'row'=> $query
+            'record'=> $query
         ], 200);
     }
 
     public function show(Request $id) {
         return response([
-            'row'=> LookUpList::find($id)
+            'record'=> LookUpList::find($id)
         ], 200);
     }
 
     public function showAll() {
         return response([
-            'rows'=> LookUpList::get()
+            'records'=> LookUpList::get()
         ], 200);
     }
 
     //  Para mostrar los elementos eliminados
     public function getTrashed() {
         return response([
-            'rows'=> LookUpList::onlyTrashed()->get()
+            'records'=> LookUpList::onlyTrashed()->get()
         ], 200);
     }
 
     //  Para mostrar un elemento eliminado
     public function recoveryTrashed($id) {
         return response([
-            'row'=> LookUpList::onlyTrashed()->find($id)->recovery()
+            'record'=> LookUpList::onlyTrashed()->find($id)->recovery()
         ], 200);
     }
 
@@ -70,7 +70,7 @@ class LookUpListController extends Controller {
         }
 
         return response([
-            'row'=> $query
+            'record'=> $query
         ], 200);
     }
 

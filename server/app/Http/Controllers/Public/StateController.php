@@ -23,33 +23,33 @@ class StateController extends Controller {
         }
 
         return response([
-            'state'=> $query
+            'record'=> $query
         ], 200);
     }
 
     public function show(Request $id) {
         return response([
-            'state'=> State::find($id)
+            'record'=> State::find($id)
         ], 200);
     }
 
     public function showAll($country_id) {
         return response([
-            'states'=> State::where('country_id', $country_id)->get()
+            'records'=> State::where('country_id', $country_id)->get()
         ], 200);
     }
 
     //  Para mostrar los elementos eliminados
     public function getTrashed() {
         return response([
-            'states'=> State::onlyTrashed()->get()
+            'records'=> State::onlyTrashed()->get()
         ], 200);
     }
 
     //  Para mostrar un elemento eliminado
     public function recoveryTrashed($id) {
         return response([
-            'state'=> State::onlyTrashed()->find($id)->recovery()
+            'record'=> State::onlyTrashed()->find($id)->recovery()
         ], 200);
     }
 
@@ -69,7 +69,7 @@ class StateController extends Controller {
         }
 
         return response([
-            'state'=> $query
+            'record'=> $query
         ], 200);
     }
 

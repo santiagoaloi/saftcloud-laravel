@@ -24,7 +24,7 @@ class SocialController extends Controller {
         }
 
         return response([
-            'row'=> $query
+            'record'=> $query
         ], 200);
     }
 
@@ -33,14 +33,14 @@ class SocialController extends Controller {
         $result = Social::find($id);
 
         return response([
-            'row'=> $result
+            'record'=> $result
         ], 200);
     }
 
     public function showAll() {
         $this->authorize('showAll', Social::class);
         return response([
-            'rows'=> Social::get()
+            'records'=> Social::get()
         ], 200);
     }
 
@@ -48,7 +48,7 @@ class SocialController extends Controller {
     public function getTrashed() {
         $this->authorize('getTrashed', Social::class);
         return response([
-            'rows'=> Social::onlyTrashed()->get()
+            'records'=> Social::onlyTrashed()->get()
         ], 200);
     }
 
@@ -56,7 +56,7 @@ class SocialController extends Controller {
     public function restore($id) {
         $this->authorize('restore', Social::class);
         return response([
-            'row'=> Social::onlyTrashed()->find($id)->recovery()
+            'record'=> Social::onlyTrashed()->find($id)->recovery()
         ], 200);
     }
 
@@ -76,7 +76,7 @@ class SocialController extends Controller {
         }
 
         return response([
-            'row'=> $query
+            'record'=> $query
         ], 200);
     }
 

@@ -24,7 +24,7 @@ class AccountPlanController extends Controller {
         }
 
         return response([
-            'row' => $query
+            'record' => $query
         ], 200);
     }
 
@@ -33,14 +33,14 @@ class AccountPlanController extends Controller {
         $result = AccountPlan::find($id);
 
         return response([
-            'row' => $result
+            'record' => $result
         ], 200);
     }
 
     public function showAll() {
         $this->authorize('showAll', AccountPlan::class);
         return response([
-            'rows' => AccountPlan::get()
+            'records' => AccountPlan::get()
         ], 200);
     }
 
@@ -48,7 +48,7 @@ class AccountPlanController extends Controller {
     public function getTrashed() {
         $this->showTrashed('restore', AccountPlan::class);
         return response([
-            'rows' => AccountPlan::onlyTrashed()->get()
+            'records' => AccountPlan::onlyTrashed()->get()
         ], 200);
     }
 
@@ -56,7 +56,7 @@ class AccountPlanController extends Controller {
     public function restore($id) {
         $this->authorize('restore', AccountPlan::class);
         return response([
-            'row' => AccountPlan::onlyTrashed()->find($id)->recovery()
+            'record' => AccountPlan::onlyTrashed()->find($id)->recovery()
         ], 200);
     }
 
@@ -76,7 +76,7 @@ class AccountPlanController extends Controller {
         }
 
         return response([
-            'row'=> $query
+            'record'=> $query
         ], 200);
     }
 

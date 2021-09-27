@@ -48,7 +48,7 @@ class ComponentDefaultController extends Controller {
             return $result;
         } else {
             return response([
-                'row'=> $result
+                'record'=> $result
             ], 200);
         }
     }
@@ -59,7 +59,7 @@ class ComponentDefaultController extends Controller {
             return $query;
         } else {
             return response([
-                'rows'=> $query
+                'records'=> $query
             ], 200);
         }
     }
@@ -69,7 +69,7 @@ class ComponentDefaultController extends Controller {
         $result = ComponentDefault::onlyTrashed()->get();
 
         return response([
-            'rows'=> $result
+            'records'=> $result
         ], 200);
     }
 
@@ -78,7 +78,7 @@ class ComponentDefaultController extends Controller {
         $result = ComponentDefault::onlyTrashed()->find($id)->recovery();
 
         return response([
-            'row'=> $result
+            'record'=> $result
         ], 200);
     }
 
@@ -97,7 +97,7 @@ class ComponentDefaultController extends Controller {
         }
 
         return response([
-            'row'=> $query
+            'record'=> $query
         ], 200);
     }
 
@@ -110,7 +110,7 @@ class ComponentDefaultController extends Controller {
         $result = $this->showAll(true);
 
         return response([
-            'rows'=> $result
+            'records'=> $result
         ], 200);
     }
 

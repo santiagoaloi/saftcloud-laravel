@@ -24,21 +24,21 @@ class ProductController extends Controller {
         }
 
         return response([
-            'row'=> $query
+            'record'=> $query
         ], 200);
     }
 
     public function show(Request $id, $local = false) {
         $this->authorize('show', Product::class);
         return response([
-            'row'=> Product::find($id)
+            'record'=> Product::find($id)
         ], 200);
     }
 
     public function showAll() {
         $this->authorize('showAll', Product::class);
         return response([
-            'rows'=> Product::get()
+            'records'=> Product::get()
         ], 200);
     }
 
@@ -46,7 +46,7 @@ class ProductController extends Controller {
     public function getTrashed() {
         $this->authorize('getTrashed', Product::class);
         return response([
-            'rows'=> Product::onlyTrashed()->get()
+            'records'=> Product::onlyTrashed()->get()
         ], 200);
     }
 
@@ -54,7 +54,7 @@ class ProductController extends Controller {
     public function restore($id) {
         $this->authorize('restore', Product::class);
         return response([
-            'row'=> Product::onlyTrashed()->find($id)->recovery()
+            'record'=> Product::onlyTrashed()->find($id)->recovery()
         ], 200);
     }
 
@@ -74,7 +74,7 @@ class ProductController extends Controller {
         }
 
         return response([
-            'row'=> $query
+            'record'=> $query
         ], 200);
     }
 

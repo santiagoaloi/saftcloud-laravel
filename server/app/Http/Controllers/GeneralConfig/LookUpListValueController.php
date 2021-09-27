@@ -23,7 +23,7 @@ class LookUpListValueController extends Controller {
         }
 
         return response([
-            'row'=> $query
+            'record'=> $query
         ], 200);
     }
 
@@ -34,7 +34,7 @@ class LookUpListValueController extends Controller {
             return $result;
         } else {
             return response([
-                'row'=> $result
+                'record'=> $result
             ], 200);
         }
     }
@@ -44,7 +44,7 @@ class LookUpListValueController extends Controller {
             return LookUpListValue::whereIn('look_up_list_id', $parentId)->get();
         } else {
             return response([
-                'rows'=> LookUpListValue::get()
+                'records'=> LookUpListValue::get()
             ], 200);
         }
     }
@@ -54,7 +54,7 @@ class LookUpListValueController extends Controller {
         $result = LookUpListValue::onlyTrashed()->get();
 
         return response([
-            'rows'=> $result
+            'records'=> $result
         ], 200);
     }
 
@@ -63,7 +63,7 @@ class LookUpListValueController extends Controller {
         $result = LookUpListValue::onlyTrashed()->find($id)->recovery();
 
         return response([
-            'row'=> $result
+            'record'=> $result
         ], 200);
     }
 
@@ -82,7 +82,7 @@ class LookUpListValueController extends Controller {
         }
 
         return response([
-            'row'=> $query
+            'record'=> $query
         ], 200);
     }
 
@@ -94,7 +94,7 @@ class LookUpListValueController extends Controller {
         $result = $this->showAll(true);
 
         return response([
-            'rows'=> $result
+            'records'=> $result
         ], 200);
     }
 

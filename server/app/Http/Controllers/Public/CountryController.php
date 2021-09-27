@@ -28,7 +28,7 @@ class CountryController extends Controller {
         }
 
         return response([
-            'row'=> $query
+            'record'=> $query
         ], 200);
     }
 
@@ -37,14 +37,14 @@ class CountryController extends Controller {
         $result = Country::find($id);
 
         return response([
-            'row'=> $result
+            'record'=> $result
         ], 200);
     }
 
     public function showAll() {
         // $this->authorize('showAll', Country::class);
         return response([
-            'rows'=> Country::get()
+            'records'=> Country::get()
         ], 200);
     }
 
@@ -52,7 +52,7 @@ class CountryController extends Controller {
     public function showTrashed() {
         $this->showTrashed('restore', Country::class);
         return response([
-            'rows'=> Country::onlyTrashed()->get()
+            'records'=> Country::onlyTrashed()->get()
         ], 200);
     }
 
@@ -60,7 +60,7 @@ class CountryController extends Controller {
     public function restore($id) {
         $this->authorize('restore', Country::class);
         return response([
-            'row'=> Country::onlyTrashed()->find($id)->recovery()
+            'record'=> Country::onlyTrashed()->find($id)->recovery()
         ], 200);
     }
 
@@ -80,7 +80,7 @@ class CountryController extends Controller {
         }
 
         return response([
-            'row'=> $query
+            'record'=> $query
         ], 200);
     }
 
