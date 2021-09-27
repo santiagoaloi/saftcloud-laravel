@@ -73,19 +73,32 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     // PRIVATE CONTROLLERS
     Route::resource('/account', RootAccountController::class);
+    Route::get('/getAllAccount', [RootAccountController::class, 'showAll']);
     Route::resource('/accountPayment', AccountPaymentController::class);
+    Route::get('/getAllAccountPayment', [AccountPaymentController::class, 'showAll']);
     Route::resource('/accountPlan', AccountPlanController::class);
+    Route::get('/getAllAccountPlan', [AccountPlanController::class, 'showAll']);
     Route::resource('/address', AddressController::class);
+    Route::get('/getAllAddress', [AddressController::class, 'showAll']);
     Route::resource('/branch', BranchController::class);
+    Route::get('/getAllBranch', [BranchController::class, 'showAll']);
     Route::resource('/entity', EntityController::class);
+    Route::get('/getAllEntity', [EntityController::class, 'showAll']);
     Route::resource('/phone', PhoneController::class);
+    Route::get('/getAllPhone', [RoleController::class, 'showAll']);
     Route::resource('/pointOfSale', PointOfSaleController::class);
+    Route::get('/getAllPointOfSale', [RoleController::class, 'showAll']);
+
+    Route::get('/getAllRoles', [RoleController::class, 'showAll']);
     Route::resource('/role', RoleController::class);
+    Route::get('/getAllRoles', [RoleController::class, 'showAll']);
     Route::resource('/capability', CapabilityController::class);
+    Route::get('/getAllCapabilities', [CapabilityController::class, 'showAll']);
     Route::resource('/social', SocialController::class);
     Route::resource('/user', UserController::class);
     Route::get('/getAllUsers', [UserController::class, 'showAll']);
     Route::resource('/userSetting', UserSettingController::class);
+    Route::get('/getAllUserSetting', [UserSettingController::class, 'showAll']);
 
     // ROOT CONTROLLERS
     Route::resource('/component', ComponentController::class);
@@ -98,16 +111,16 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/componentDefaultLastJson', [ComponentDefaultController::class, 'getLastJson']);
 
     Route::resource('/componentGroup', ComponentGroupController::class);
-    Route::get('/showAllGroups', [ComponentGroupController::class, 'showAll']);
-    Route::get('/showAllGroupNames', [ComponentGroupController::class, 'showAllGroupNames']);
+    Route::get('/getAllGroups', [ComponentGroupController::class, 'showAll']);
+    Route::get('/getAllGroupNames', [ComponentGroupController::class, 'showAllGroupNames']);
     Route::get('/getNavigationStructure', [ComponentGroupController::class, 'showAllWithChild']);
 
     Route::resource('/mysqlResource', MysqlController::class);
-    Route::get('/showAllTables', [MysqlController::class, 'showAll']);
+    Route::get('/getAllTables', [MysqlController::class, 'showAll']);
     Route::get('/getDbTables', [MysqlController::class, 'showAll']);
     Route::post('/getTableColumns', [MysqlController::class, 'showColumns']);
-    Route::get('/showColumns', [MysqlController::class, 'showColumns']);
-    Route::get('/showAllTablesAndColumns', [MysqlController::class, 'showAllTablesAndColumns']);
+    Route::get('/getAllColumns', [MysqlController::class, 'showColumns']);
+    Route::get('/getAllTablesAndColumns', [MysqlController::class, 'showAllTablesAndColumns']);
 
     Route::post('/logout', [AuthController::class, 'logout']);
     // Route::get('/countries', [CountryController::class, 'showAll']);

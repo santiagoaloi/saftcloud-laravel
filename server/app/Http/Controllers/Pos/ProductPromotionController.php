@@ -24,7 +24,7 @@ class ProductPromotionController extends Controller {
         }
 
         return response([
-            'row'=> $query
+            'record'=> $query
         ], 200);
     }
 
@@ -32,14 +32,14 @@ class ProductPromotionController extends Controller {
         $this->authorize('show', ProductPromotion::class);
         $result = ProductPromotion::find($id);
         return response([
-            'row'=> $result
+            'record'=> $result
         ], 200);
     }
 
     public function showAll() {
         $this->authorize('showAll', ProductPromotion::class);
         return response([
-            'rows'=> ProductPromotion::get()
+            'records'=> ProductPromotion::get()
         ], 200);
     }
 
@@ -47,7 +47,7 @@ class ProductPromotionController extends Controller {
     public function getTrashed() {
         $this->authorize('getTrashed', ProductPromotion::class);
         return response([
-            'rows'=> ProductPromotion::onlyTrashed()->get()
+            'records'=> ProductPromotion::onlyTrashed()->get()
         ], 200);
     }
 
@@ -55,7 +55,7 @@ class ProductPromotionController extends Controller {
     public function restore($id) {
         $this->authorize('restore', ProductPromotion::class);
         return response([
-            'row'=> ProductPromotion::onlyTrashed()->find($id)->recovery()
+            'record'=> ProductPromotion::onlyTrashed()->find($id)->recovery()
         ], 200);
     }
 
@@ -75,7 +75,7 @@ class ProductPromotionController extends Controller {
         }
 
         return response([
-            'row'=> $query
+            'record'=> $query
         ], 200);
     }
 

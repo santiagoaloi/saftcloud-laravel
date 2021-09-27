@@ -25,7 +25,7 @@ class PaymentMethodController extends Controller {
         
 
         return response([
-            'row'=> $query
+            'record'=> $query
         ], 200);
     }
 
@@ -34,14 +34,14 @@ class PaymentMethodController extends Controller {
         $result = PaymentMethod::find($id);
 
         return response([
-            'row'=> $result
+            'record'=> $result
         ], 200);
     }
 
     public function showAll() {
         $this->authorize('showAll', PaymentMethod::class);
         return response([
-            'rows'=> PaymentMethod::get()
+            'records'=> PaymentMethod::get()
         ], 200);
     }
 
@@ -49,7 +49,7 @@ class PaymentMethodController extends Controller {
     public function getTrashed() {
         $this->authorize('getTrashed', PaymentMethod::class);
         return response([
-            'rows'=> PaymentMethod::onlyTrashed()->get()
+            'records'=> PaymentMethod::onlyTrashed()->get()
         ], 200);
     }
 
@@ -57,7 +57,7 @@ class PaymentMethodController extends Controller {
     public function restore($id) {
         $this->authorize('restore', PaymentMethod::class);
         return response([
-            'row'=> PaymentMethod::onlyTrashed()->find($id)->recovery()
+            'record'=> PaymentMethod::onlyTrashed()->find($id)->recovery()
         ], 200);
     }
 
@@ -77,7 +77,7 @@ class PaymentMethodController extends Controller {
         }
 
         return response([
-            'row'=> $query
+            'record'=> $query
         ], 200);
     }
 

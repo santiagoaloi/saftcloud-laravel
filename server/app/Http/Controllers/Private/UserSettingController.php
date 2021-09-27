@@ -24,7 +24,7 @@ class UserSettingController extends Controller {
         }
 
         return response([
-            'row'=> $query
+            'record'=> $query
         ], 200);
     }
 
@@ -32,14 +32,14 @@ class UserSettingController extends Controller {
         $this->authorize('show', UserSetting::class);
         $result = UserSetting::find($id);
         return response([
-            'row'=> $result
+            'record'=> $result
         ], 200);
     }
 
     public function showAll() {
         $this->authorize('showAll', UserSetting::class);
         return response([
-            'rows'=> UserSetting::get()
+            'records'=> UserSetting::get()
         ], 200);
     }
 
@@ -47,7 +47,7 @@ class UserSettingController extends Controller {
     public function getTrashed() {
         $this->authorize('getTrashed', UserSetting::class);
         return response([
-            'rows'=> UserSetting::onlyTrashed()->get()
+            'records'=> UserSetting::onlyTrashed()->get()
         ], 200);
     }
 
@@ -55,7 +55,7 @@ class UserSettingController extends Controller {
     public function restore($id) {
         $this->authorize('restore', UserSetting::class);
         return response([
-            'row'=> UserSetting::onlyTrashed()->find($id)->recovery()
+            'record'=> UserSetting::onlyTrashed()->find($id)->recovery()
         ], 200);
     }
 
@@ -75,7 +75,7 @@ class UserSettingController extends Controller {
         }
 
         return response([
-            'row'=> $query
+            'record'=> $query
         ], 200);
     }
 

@@ -24,7 +24,7 @@ class RoleController extends Controller {
         }
 
         return response([
-            'row'=> $query
+            'record'=> $query
         ], 200);
     }
 
@@ -33,14 +33,14 @@ class RoleController extends Controller {
         $result = Role::find($id);
 
         return response([
-            'row'=> $result
+            'record'=> $result
         ], 200);
     }
 
     public function showAll() {
         $this->authorize('showAll', Role::class);
         return response([
-            'rows'=> Role::get()
+            'records'=> Role::get()
         ], 200);
     }
 
@@ -48,7 +48,7 @@ class RoleController extends Controller {
     public function getTrashed() {
         $this->authorize('getTrashed', Role::class);
         return response([
-            'rows'=> Role::onlyTrashed()->get()
+            'records'=> Role::onlyTrashed()->get()
         ], 200);
     }
 
@@ -56,7 +56,7 @@ class RoleController extends Controller {
     public function restore($id) {
         $this->authorize('restore', Role::class);
         return response([
-            'row'=> Role::onlyTrashed()->find($id)->recovery()
+            'record'=> Role::onlyTrashed()->find($id)->recovery()
         ], 200);
     }
 
@@ -76,7 +76,7 @@ class RoleController extends Controller {
         }
 
         return response([
-            'row'=> $query
+            'record'=> $query
         ], 200);
     }
 

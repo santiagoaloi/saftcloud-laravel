@@ -24,7 +24,7 @@ class CapabilityController extends Controller {
         }
 
         return response([
-            'row'=> $query
+            'record'=> $query
         ], 200);
     }
 
@@ -33,14 +33,14 @@ class CapabilityController extends Controller {
         $result = Capability::find($id);
 
         return response([
-            'row'=> $result
+            'record'=> $result
         ], 200);
     }
 
     public function showAll() {
         $this->authorize('showAll', Capability::class);
         return response([
-            'rows'=> Capability::get()
+            'records'=> Capability::get()
         ], 200);
     }
 
@@ -48,7 +48,7 @@ class CapabilityController extends Controller {
     public function getTrashed() {
         $this->authorize('store', Capability::class);
         return response([
-            'rows'=> Capability::onlyTrashed()->get()
+            'records'=> Capability::onlyTrashed()->get()
         ], 200);
     }
 
@@ -56,7 +56,7 @@ class CapabilityController extends Controller {
     public function restore($id) {
         $this->authorize('restore', Capability::class);
         return response([
-            'row'=> Capability::onlyTrashed()->find($id)->recovery()
+            'record'=> Capability::onlyTrashed()->find($id)->recovery()
         ], 200);
     }
 
@@ -76,7 +76,7 @@ class CapabilityController extends Controller {
         }
 
         return response([
-            'row'=> $query
+            'record'=> $query
         ], 200);
     }
 

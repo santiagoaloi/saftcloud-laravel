@@ -24,7 +24,7 @@ class RootAccountController extends Controller {
         }
 
         return response([
-            'row'=> $query
+            'record'=> $query
         ], 200);
     }
 
@@ -33,14 +33,14 @@ class RootAccountController extends Controller {
         $result = RootAccount::find($id);
 
         return response([
-            'row'=> $result
+            'record'=> $result
         ], 200);
     }
 
     public function showAll() {
         $this->authorize('showAll', RootAccount::class);
         return response([
-            'rows'=> RootAccount::get()
+            'records'=> RootAccount::get()
         ], 200);
     }
 
@@ -48,7 +48,7 @@ class RootAccountController extends Controller {
     public function getTrashed() {
         $this->authorize('getTrashed', RootAccount::class);
         return response([
-            'rows'=> RootAccount::onlyTrashed()->get()
+            'records'=> RootAccount::onlyTrashed()->get()
         ], 200);
     }
 
@@ -56,7 +56,7 @@ class RootAccountController extends Controller {
     public function restore($id) {
         $this->authorize('restore', RootAccount::class);
         return response([
-            'row'=> RootAccount::onlyTrashed()->find($id)->recovery()
+            'record'=> RootAccount::onlyTrashed()->find($id)->recovery()
         ], 200);
     }
 
@@ -76,7 +76,7 @@ class RootAccountController extends Controller {
         }
 
         return response([
-            'row'=> $query
+            'record'=> $query
         ], 200);
     }
 

@@ -114,7 +114,7 @@ class ComponentGroupController extends Controller {
         $result = ComponentGroup::onlyTrashed()->get();
 
         return response([
-            'rows' => $result,
+            'records' => $result,
             'status'=> true
         ], 200);
     }
@@ -124,7 +124,7 @@ class ComponentGroupController extends Controller {
         $result = ComponentGroup::onlyTrashed()->find($id)->recovery();
 
         return response([
-            'row' => $result,
+            'record' => $result,
             'status'=> true
         ], 200);
     }

@@ -24,7 +24,7 @@ class PointOfSaleController extends Controller {
         }
 
         return response([
-            'row'=> $query
+            'record'=> $query
         ], 200);
     }
 
@@ -33,14 +33,14 @@ class PointOfSaleController extends Controller {
         $result = PointOfSale::find($id);
 
         return response([
-            'row'=> $result
+            'record'=> $result
         ], 200);
     }
 
     public function showAll() {
         $this->authorize('forceDestroy', PointOfSale::class);
         return response([
-            'rows'=> PointOfSale::get()
+            'records'=> PointOfSale::get()
         ], 200);
     }
 
@@ -48,7 +48,7 @@ class PointOfSaleController extends Controller {
     public function getTrashed() {
         $this->authorize('forceDestroy', PointOfSale::class);
         return response([
-            'rows'=> PointOfSale::onlyTrashed()->get()
+            'records'=> PointOfSale::onlyTrashed()->get()
         ], 200);
     }
 
@@ -56,7 +56,7 @@ class PointOfSaleController extends Controller {
     public function recoveryTrashed($id) {
         $this->authorize('forceDestroy', PointOfSale::class);
         return response([
-            'row'=> PointOfSale::onlyTrashed()->find($id)->recovery()
+            'record'=> PointOfSale::onlyTrashed()->find($id)->recovery()
         ], 200);
     }
 
@@ -76,7 +76,7 @@ class PointOfSaleController extends Controller {
         }
 
         return response([
-            'row'=> $query
+            'record'=> $query
         ], 200);
     }
 

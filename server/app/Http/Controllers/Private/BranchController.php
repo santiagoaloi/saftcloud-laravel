@@ -24,7 +24,7 @@ class BranchController extends Controller {
         }
 
         return response([
-            'row'=> $query
+            'record'=> $query
         ], 200);
     }
 
@@ -33,14 +33,14 @@ class BranchController extends Controller {
         $result = Branch::find($id);
 
         return response([
-            'row'=> $result
+            'record'=> $result
         ], 200);
     }
 
     public function showAll() {
         $this->authorize('showAll', Branch::class);
         return response([
-            'rows'=> Branch::get()
+            'records'=> Branch::get()
         ], 200);
     }
 
@@ -48,7 +48,7 @@ class BranchController extends Controller {
     public function getTrashed() {
         $this->showTrashed('restore', Branch::class);
         return response([
-            'rows'=> Branch::onlyTrashed()->get()
+            'records'=> Branch::onlyTrashed()->get()
         ], 200);
     }
 
@@ -56,7 +56,7 @@ class BranchController extends Controller {
     public function restore($id) {
         $this->authorize('restore', Branch::class);
         return response([
-            'row'=> Branch::onlyTrashed()->find($id)->recovery()
+            'record'=> Branch::onlyTrashed()->find($id)->recovery()
         ], 200);
     }
 
@@ -76,7 +76,7 @@ class BranchController extends Controller {
         }
 
         return response([
-            'row'=> $query
+            'record'=> $query
         ], 200);
     }
 

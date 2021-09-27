@@ -24,7 +24,7 @@ class AddressController extends Controller {
         }
 
         return response([
-            'row' => $query
+            'record' => $query
         ], 200);
     }
 
@@ -33,14 +33,14 @@ class AddressController extends Controller {
         $result = Address::find($id);
 
         return response([
-            'row' => $result
+            'record' => $result
         ], 200);
     }
 
     public function showAll() {
         $this->authorize('showAll', Address::class);
         return response([
-            'rows' => Address::get()
+            'records' => Address::get()
         ], 200);
     }
 
@@ -48,7 +48,7 @@ class AddressController extends Controller {
     public function getTrashed() {
         $this->showTrashed('restore', Address::class);
         return response([
-            'rows' => Address::onlyTrashed()->get()
+            'records' => Address::onlyTrashed()->get()
         ], 200);
     }
 
@@ -56,7 +56,7 @@ class AddressController extends Controller {
     public function restore($id) {
         $this->authorize('restore', Address::class);
         return response([
-            'row' => Address::onlyTrashed()->find($id)->recovery()
+            'record' => Address::onlyTrashed()->find($id)->recovery()
         ], 200);
     }
 
@@ -76,7 +76,7 @@ class AddressController extends Controller {
         }
 
         return response([
-            'row'=> $query
+            'record'=> $query
         ], 200);
     }
 

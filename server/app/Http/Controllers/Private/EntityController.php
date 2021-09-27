@@ -24,7 +24,7 @@ class EntityController extends Controller {
         }
 
         return response([
-            'row'=> $query
+            'record'=> $query
         ], 200);
     }
 
@@ -33,14 +33,14 @@ class EntityController extends Controller {
         $result = Entity::find($id);
 
         return response([
-            'row'=> $result
+            'record'=> $result
         ], 200);
     }
 
     public function showAll() {
         $this->authorize('showAll', Entity::class);
         return response([
-            'rows'=> Entity::get()
+            'records'=> Entity::get()
         ], 200);
     }
 
@@ -48,7 +48,7 @@ class EntityController extends Controller {
     public function getTrashed() {
         $this->authorize('getTrashed', Entity::class);
         return response([
-            'rows'=> Entity::onlyTrashed()->get()
+            'records'=> Entity::onlyTrashed()->get()
         ], 200);
     }
 
@@ -56,7 +56,7 @@ class EntityController extends Controller {
     public function restore($id) {
         $this->authorize('restore', Entity::class);
         return response([
-            'row'=> Entity::onlyTrashed()->find($id)->recovery()
+            'record'=> Entity::onlyTrashed()->find($id)->recovery()
         ], 200);
     }
 
@@ -76,7 +76,7 @@ class EntityController extends Controller {
         }
 
         return response([
-            'row'=> $query
+            'record'=> $query
         ], 200);
     }
 

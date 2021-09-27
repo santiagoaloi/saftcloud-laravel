@@ -24,7 +24,7 @@ class AccountPaymentController extends Controller {
         }
 
         return response([
-            'row' => $query
+            'record' => $query
         ], 200);
     }
 
@@ -33,14 +33,14 @@ class AccountPaymentController extends Controller {
         $result = AccountPayment::find($id);
 
         return response([
-            'row' => $result
+            'record' => $result
         ], 200);
     }
 
     public function showAll() {
         $this->authorize('showAll', AccountPayment::class);
         return response([
-            'rows' => AccountPayment::get()
+            'records' => AccountPayment::get()
         ], 200);
     }
 
@@ -48,7 +48,7 @@ class AccountPaymentController extends Controller {
     public function getTrashed() {
         $this->showTrashed('restore', AccountPayment::class);
         return response([
-            'rows' => AccountPayment::onlyTrashed()->get()
+            'records' => AccountPayment::onlyTrashed()->get()
         ], 200);
     }
 
@@ -56,7 +56,7 @@ class AccountPaymentController extends Controller {
     public function restore($id) {
         $this->authorize('restore', AccountPayment::class);
         return response([
-            'row' => AccountPayment::onlyTrashed()->find($id)->recovery()
+            'record' => AccountPayment::onlyTrashed()->find($id)->recovery()
         ], 200);
     }
 
@@ -76,7 +76,7 @@ class AccountPaymentController extends Controller {
         }
 
         return response([
-            'row'=> $query
+            'record'=> $query
         ], 200);
     }
 
