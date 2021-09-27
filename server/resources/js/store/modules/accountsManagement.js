@@ -111,12 +111,11 @@ const actions = {
   ...make.actions(state),
 
 
-
   //* Retrieves the component groups.
   getUsers({}) {
-    axios.get('api/allUsers').then((response) => {
+    axios.get('api/getAllUsers').then((response) => {
       if (response.status === 200) {
-        store.set('componentManagement/allGroups', response.data.groups);
+        store.set('componentManagement/allUsers', response.data.groups);
       }
     });
   },

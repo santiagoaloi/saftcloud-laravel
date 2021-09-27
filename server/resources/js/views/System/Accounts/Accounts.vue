@@ -45,7 +45,7 @@ export default {
  },
 
  mounted() {
-  //   this.getComponents();
+    this.getUsers();
   //   this.getDbGroupNames();
   //   this.getDbTablesAndColumns();
  },
