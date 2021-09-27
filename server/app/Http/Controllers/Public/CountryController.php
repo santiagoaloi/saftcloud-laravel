@@ -33,7 +33,7 @@ class CountryController extends Controller {
     }
 
     public function show(Request $id) {
-        $this->authorize('show', Country::class);
+        // $this->authorize('show', Country::class);
         $result = Country::find($id);
 
         return response([
@@ -42,7 +42,7 @@ class CountryController extends Controller {
     }
 
     public function showAll() {
-        $this->authorize('showAll', Country::class);
+        // $this->authorize('showAll', Country::class);
         return response([
             'rows'=> Country::get()
         ], 200);

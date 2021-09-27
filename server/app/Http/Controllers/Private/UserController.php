@@ -90,7 +90,6 @@ class UserController extends Controller {
 
         // $user['branches'] = $user->branches[0]->entity->rootAccount;
 
-        return $user;
         return response([
             'row'=> $user
         ], 200);

@@ -79,6 +79,8 @@ class AuthController extends Controller {
             $UserController = New UserController;
             $user->privileges = $UserController->getRolCapabilities($user);
 
+            return $user;
+
             $response = [
                 'user' => $user,
                 'token' => $token

@@ -50,7 +50,7 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::get('/region', [RegionController::class, 'ip_info']);
 
 Route::resource('/country', CountryController::class);
-// Route::get('/countries', [CountryController::class, 'showAll']);
+Route::get('/countries', [CountryController::class, 'showAll']);
 
 Route::resource('/state', StateController::class);
 Route::post('/states/{country_id}', [StateController::class, 'showAll']);
@@ -84,6 +84,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::resource('/capability', CapabilityController::class);
     Route::resource('/social', SocialController::class);
     Route::resource('/user', UserController::class);
+    Route::get('/getAllUsers', [UserController::class, 'showAll']);
     Route::resource('/userSetting', UserSettingController::class);
 
     // ROOT CONTROLLERS
@@ -109,7 +110,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/showAllTablesAndColumns', [MysqlController::class, 'showAllTablesAndColumns']);
 
     Route::post('/logout', [AuthController::class, 'logout']);
-    Route::get('/countries', [CountryController::class, 'showAll']);
+    // Route::get('/countries', [CountryController::class, 'showAll']);
 });
 
 //Testing
