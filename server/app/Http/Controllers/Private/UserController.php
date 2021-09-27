@@ -75,7 +75,7 @@ class UserController extends Controller {
         }
 
         return response([
-            'row'=> $user
+            'record'=> $user
         ], 200);
     }
 
@@ -91,14 +91,14 @@ class UserController extends Controller {
         // $user['branches'] = $user->branches[0]->entity->rootAccount;
 
         return response([
-            'row'=> $user
+            'record'=> $user
         ], 200);
     }
 
     public function showAll() {
         $this->authorize('showAll', User::class);
         return response([
-            'rows'=> User::get()
+            'records'=> User::get()
         ], 200);
     }
 
@@ -106,7 +106,7 @@ class UserController extends Controller {
     public function getTrashed() {
         $this->authorize('getTrashed', User::class);
         return response([
-            'rows'=> User::onlyTrashed()->get()
+            'records'=> User::onlyTrashed()->get()
         ], 200);
     }
 
@@ -114,7 +114,7 @@ class UserController extends Controller {
     public function restore($id) {
         $this->authorize('restore', User::class);
         return response([
-            'row'=> User::onlyTrashed()->find($id)->recovery()
+            'record'=> User::onlyTrashed()->find($id)->recovery()
         ], 200);
     }
 
@@ -134,7 +134,7 @@ class UserController extends Controller {
         }
 
         return response([
-            'row'=> $query
+            'record'=> $query
         ], 200);
     }
 

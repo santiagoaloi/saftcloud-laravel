@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Public;
 use App\Models\Private\RootAccount;
+use App\Http\Controllers\Private\UserController;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -54,11 +55,15 @@ class MakeAccountController extends Controller {
         ]);
 
         // CREACION DE USUARIO
-        $person->user()->create([
+        $user = $person->user()->create([
             'role_id'               =>  2,
             'email'                 =>  $postdata['email'],
             'password'              =>  bcrypt('password')
         ]);
+
+
+        $funcUser = New UserController;
+        $funcUser->attachUserS($company_branch, $user);
 
         return response([
             'status' => 'Success',

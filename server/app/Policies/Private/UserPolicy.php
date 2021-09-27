@@ -31,7 +31,7 @@ class UserPolicy {
      * @param  \App\Models\User  $user
      * @return mixed
      */
-    public function show(user $user, $request) {
+    public function show(user $user) {
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
 
