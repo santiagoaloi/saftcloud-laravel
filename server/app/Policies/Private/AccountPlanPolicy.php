@@ -7,6 +7,7 @@ use App\Models\Private\AccountPlan;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Private\UserController;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use App\Helpers\AccountVerification;
 
 class AccountPlanPolicy {
     use HandlesAuthorization;
@@ -16,7 +17,7 @@ class AccountPlanPolicy {
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
 
-        if(in_array('AccountPlan.store', $capabilities)){
+        if(in_array('AccountPlan.store', $capabilities) OR AccountVerification::checkRootRole()) {
             return true;
         }
         return false;
@@ -33,7 +34,7 @@ class AccountPlanPolicy {
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
 
-        if(in_array('AccountPlan.show', $capabilities)){
+        if(in_array('AccountPlan.show', $capabilities) OR AccountVerification::checkRootRole()) {
             return true;
         }
         return false;
@@ -44,7 +45,7 @@ class AccountPlanPolicy {
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
 
-        if(in_array('AccountPlan.showAll', $capabilities)){
+        if(in_array('AccountPlan.showAll', $capabilities) OR AccountVerification::checkRootRole()) {
             return true;
         }
         return false;
@@ -55,7 +56,7 @@ class AccountPlanPolicy {
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
 
-        if(in_array('AccountPlan.showTrashed', $capabilities)){
+        if(in_array('AccountPlan.showTrashed', $capabilities) OR AccountVerification::checkRootRole()) {
             return true;
         }
         return false;
@@ -74,7 +75,7 @@ class AccountPlanPolicy {
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
 
-        if(in_array('AccountPlan.restore', $capabilities)){
+        if(in_array('AccountPlan.restore', $capabilities) OR AccountVerification::checkRootRole()) {
             return true;
         }
         return false;
@@ -92,7 +93,7 @@ class AccountPlanPolicy {
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
 
-        if(in_array('AccountPlan.update', $capabilities)){
+        if(in_array('AccountPlan.update', $capabilities) OR AccountVerification::checkRootRole()) {
             return true;
         }
         return false;
@@ -103,7 +104,7 @@ class AccountPlanPolicy {
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
 
-        if(in_array('AccountPlan.updateAll', $capabilities)){
+        if(in_array('AccountPlan.updateAll', $capabilities) OR AccountVerification::checkRootRole()) {
             return true;
         }
         return false;
@@ -121,7 +122,7 @@ class AccountPlanPolicy {
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
 
-        if(in_array('AccountPlan.destroy', $capabilities)){
+        if(in_array('AccountPlan.destroy', $capabilities) OR AccountVerification::checkRootRole()) {
             return true;
         }
         return false;
@@ -139,7 +140,7 @@ class AccountPlanPolicy {
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
 
-        if(in_array('AccountPlan.forceDelete', $capabilities)){
+        if(in_array('AccountPlan.forceDelete', $capabilities) OR AccountVerification::checkRootRole()) {
             return true;
         }
         return false;

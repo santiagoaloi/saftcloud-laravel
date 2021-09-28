@@ -7,6 +7,7 @@ use App\Models\Pos\Mkup;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Private\UserController;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use App\Helpers\AccountVerification;
 
 class MkupPolicy {
     use HandlesAuthorization;
@@ -16,7 +17,7 @@ class MkupPolicy {
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
 
-        if(in_array('Mkup.store', $capabilities)){
+        if(in_array('Mkup.store', $capabilities) OR AccountVerification::checkRootRole()) {
             return true;
         }
         return false;
@@ -33,7 +34,7 @@ class MkupPolicy {
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
 
-        if(in_array('Mkup.show', $capabilities)){
+        if(in_array('Mkup.show', $capabilities) OR AccountVerification::checkRootRole()) {
             return true;
         }
         return false;
@@ -44,7 +45,7 @@ class MkupPolicy {
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
 
-        if(in_array('Mkup.showAll', $capabilities)){
+        if(in_array('Mkup.showAll', $capabilities) OR AccountVerification::checkRootRole()) {
             return true;
         }
         return false;
@@ -55,7 +56,7 @@ class MkupPolicy {
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
 
-        if(in_array('Mkup.showTrashed', $capabilities)){
+        if(in_array('Mkup.showTrashed', $capabilities) OR AccountVerification::checkRootRole()) {
             return true;
         }
         return false;
@@ -74,7 +75,7 @@ class MkupPolicy {
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
 
-        if(in_array('Mkup.restore', $capabilities)){
+        if(in_array('Mkup.restore', $capabilities) OR AccountVerification::checkRootRole()) {
             return true;
         }
         return false;
@@ -92,7 +93,7 @@ class MkupPolicy {
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
 
-        if(in_array('Mkup.update', $capabilities)){
+        if(in_array('Mkup.update', $capabilities) OR AccountVerification::checkRootRole()) {
             return true;
         }
         return false;
@@ -103,7 +104,7 @@ class MkupPolicy {
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
 
-        if(in_array('Mkup.updateAll', $capabilities)){
+        if(in_array('Mkup.updateAll', $capabilities) OR AccountVerification::checkRootRole()) {
             return true;
         }
         return false;
@@ -121,7 +122,7 @@ class MkupPolicy {
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
 
-        if(in_array('Mkup.destroy', $capabilities)){
+        if(in_array('Mkup.destroy', $capabilities) OR AccountVerification::checkRootRole()) {
             return true;
         }
         return false;
@@ -139,7 +140,7 @@ class MkupPolicy {
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
 
-        if(in_array('Mkup.forceDelete', $capabilities)){
+        if(in_array('Mkup.forceDelete', $capabilities) OR AccountVerification::checkRootRole()) {
             return true;
         }
         return false;

@@ -7,6 +7,7 @@ use App\Models\Root\ComponentDefault;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Private\UserController;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use App\Helpers\AccountVerification;
 
 class ComponentDefaultPolicy {
     use HandlesAuthorization;
@@ -16,7 +17,7 @@ class ComponentDefaultPolicy {
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
 
-        if(in_array('ComponentDefault.store', $capabilities)){
+        if(in_array('ComponentDefault.store', $capabilities) OR AccountVerification::checkRootRole()) {
             return true;
         }
         return false;
@@ -33,7 +34,7 @@ class ComponentDefaultPolicy {
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
 
-        if(in_array('ComponentDefault.show', $capabilities)){
+        if(in_array('ComponentDefault.show', $capabilities) OR AccountVerification::checkRootRole()) {
             return true;
         }
         return false;
@@ -44,7 +45,7 @@ class ComponentDefaultPolicy {
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
 
-        if(in_array('ComponentDefault.showAll', $capabilities)){
+        if(in_array('ComponentDefault.showAll', $capabilities) OR AccountVerification::checkRootRole()) {
             return true;
         }
         return false;
@@ -55,7 +56,7 @@ class ComponentDefaultPolicy {
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
 
-        if(in_array('ComponentDefault.showTrashed', $capabilities)){
+        if(in_array('ComponentDefault.showTrashed', $capabilities) OR AccountVerification::checkRootRole()) {
             return true;
         }
         return false;
@@ -74,7 +75,7 @@ class ComponentDefaultPolicy {
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
 
-        if(in_array('ComponentDefault.restore', $capabilities)){
+        if(in_array('ComponentDefault.restore', $capabilities) OR AccountVerification::checkRootRole()) {
             return true;
         }
         return false;
@@ -92,7 +93,7 @@ class ComponentDefaultPolicy {
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
 
-        if(in_array('ComponentDefault.update', $capabilities)){
+        if(in_array('ComponentDefault.update', $capabilities) OR AccountVerification::checkRootRole()) {
             return true;
         }
         return false;
@@ -103,7 +104,7 @@ class ComponentDefaultPolicy {
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
 
-        if(in_array('ComponentDefault.updateAll', $capabilities)){
+        if(in_array('ComponentDefault.updateAll', $capabilities) OR AccountVerification::checkRootRole()) {
             return true;
         }
         return false;
@@ -121,7 +122,7 @@ class ComponentDefaultPolicy {
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
 
-        if(in_array('ComponentDefault.destroy', $capabilities)){
+        if(in_array('ComponentDefault.destroy', $capabilities) OR AccountVerification::checkRootRole()) {
             return true;
         }
         return false;
@@ -139,7 +140,7 @@ class ComponentDefaultPolicy {
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
 
-        if(in_array('ComponentDefault.forceDelete', $capabilities)){
+        if(in_array('ComponentDefault.forceDelete', $capabilities) OR AccountVerification::checkRootRole()) {
             return true;
         }
         return false;

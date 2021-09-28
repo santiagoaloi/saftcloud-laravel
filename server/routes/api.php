@@ -26,7 +26,7 @@ use App\Http\Controllers\Private\RootAccountController;
 use App\Http\Controllers\Private\AddressController;
 use App\Http\Controllers\Private\ConstructController;
 use App\Http\Controllers\Private\PointOfSaleController;
-use App\Http\Controllers\Private\UserSettingController;
+use App\Http\Controllers\Private\userSettingController;
 use App\Http\Controllers\Private\AccountPlanController;
 use App\Http\Controllers\Private\AccountPaymentController;
 
@@ -97,8 +97,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::resource('/social', SocialController::class);
     Route::resource('/user', UserController::class);
     Route::get('/getAllUsers', [UserController::class, 'showAll']);
-    Route::resource('/userSetting', UserSettingController::class);
-    Route::get('/getAllUserSetting', [UserSettingController::class, 'showAll']);
+    Route::resource('/userSetting', userSettingController::class);
+    Route::get('/getAlluserSetting', [userSettingController::class, 'showAll']);
 
     // ROOT CONTROLLERS
     Route::resource('/component', ComponentController::class);

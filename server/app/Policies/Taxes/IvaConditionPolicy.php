@@ -7,6 +7,7 @@ use App\Models\Taxes\IvaCondition;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Private\UserController;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use App\Helpers\AccountVerification;
 
 class IvaConditionPolicy {
     use HandlesAuthorization;
@@ -16,7 +17,7 @@ class IvaConditionPolicy {
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
 
-        if(in_array('IvaCondition.store', $capabilities)){
+        if(in_array('IvaCondition.store', $capabilities) OR AccountVerification::checkRootRole()) {
             return true;
         }
         return false;
@@ -33,7 +34,7 @@ class IvaConditionPolicy {
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
 
-        if(in_array('IvaCondition.show', $capabilities)){
+        if(in_array('IvaCondition.show', $capabilities) OR AccountVerification::checkRootRole()) {
             return true;
         }
         return false;
@@ -44,7 +45,7 @@ class IvaConditionPolicy {
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
 
-        if(in_array('IvaCondition.showAll', $capabilities)){
+        if(in_array('IvaCondition.showAll', $capabilities) OR AccountVerification::checkRootRole()) {
             return true;
         }
         return false;
@@ -55,7 +56,7 @@ class IvaConditionPolicy {
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
 
-        if(in_array('IvaCondition.showTrashed', $capabilities)){
+        if(in_array('IvaCondition.showTrashed', $capabilities) OR AccountVerification::checkRootRole()) {
             return true;
         }
         return false;
@@ -74,7 +75,7 @@ class IvaConditionPolicy {
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
 
-        if(in_array('IvaCondition.restore', $capabilities)){
+        if(in_array('IvaCondition.restore', $capabilities) OR AccountVerification::checkRootRole()) {
             return true;
         }
         return false;
@@ -92,7 +93,7 @@ class IvaConditionPolicy {
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
 
-        if(in_array('IvaCondition.update', $capabilities)){
+        if(in_array('IvaCondition.update', $capabilities) OR AccountVerification::checkRootRole()) {
             return true;
         }
         return false;
@@ -103,7 +104,7 @@ class IvaConditionPolicy {
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
 
-        if(in_array('IvaCondition.updateAll', $capabilities)){
+        if(in_array('IvaCondition.updateAll', $capabilities) OR AccountVerification::checkRootRole()) {
             return true;
         }
         return false;
@@ -121,7 +122,7 @@ class IvaConditionPolicy {
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
 
-        if(in_array('IvaCondition.destroy', $capabilities)){
+        if(in_array('IvaCondition.destroy', $capabilities) OR AccountVerification::checkRootRole()) {
             return true;
         }
         return false;
@@ -139,7 +140,7 @@ class IvaConditionPolicy {
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
 
-        if(in_array('IvaCondition.forceDelete', $capabilities)){
+        if(in_array('IvaCondition.forceDelete', $capabilities) OR AccountVerification::checkRootRole()) {
             return true;
         }
         return false;

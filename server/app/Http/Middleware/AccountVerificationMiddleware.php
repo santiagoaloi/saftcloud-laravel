@@ -15,7 +15,7 @@ class AccountVerificationMiddleware {
      * @return mixed
      */
     public function handle(Request $request, Closure $next) {
-        if(AccountVerification::lalaFunction())
+        if(AccountVerification::checkRootRole())
         return $next($request);
 
     }

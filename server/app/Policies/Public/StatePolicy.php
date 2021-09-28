@@ -7,6 +7,7 @@ use App\Models\Public\State;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Private\UserController;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use App\Helpers\AccountVerification;
 
 class StatePolicy {
     use HandlesAuthorization;
@@ -16,7 +17,7 @@ class StatePolicy {
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
 
-        if(in_array('State.store', $capabilities)){
+        if(in_array('State.store', $capabilities) OR AccountVerification::checkRootRole()) {
             return true;
         }
         return false;
@@ -55,7 +56,7 @@ class StatePolicy {
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
 
-        if(in_array('State.showTrashed', $capabilities)){
+        if(in_array('State.showTrashed', $capabilities) OR AccountVerification::checkRootRole()) {
             return true;
         }
         return false;
@@ -74,7 +75,7 @@ class StatePolicy {
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
 
-        if(in_array('State.restore', $capabilities)){
+        if(in_array('State.restore', $capabilities) OR AccountVerification::checkRootRole()) {
             return true;
         }
         return false;
@@ -92,7 +93,7 @@ class StatePolicy {
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
 
-        if(in_array('State.update', $capabilities)){
+        if(in_array('State.update', $capabilities) OR AccountVerification::checkRootRole()) {
             return true;
         }
         return false;
@@ -103,7 +104,7 @@ class StatePolicy {
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
 
-        if(in_array('State.updateAll', $capabilities)){
+        if(in_array('State.updateAll', $capabilities) OR AccountVerification::checkRootRole()) {
             return true;
         }
         return false;
@@ -121,7 +122,7 @@ class StatePolicy {
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
 
-        if(in_array('State.destroy', $capabilities)){
+        if(in_array('State.destroy', $capabilities) OR AccountVerification::checkRootRole()) {
             return true;
         }
         return false;
@@ -139,7 +140,7 @@ class StatePolicy {
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
 
-        if(in_array('State.forceDelete', $capabilities)){
+        if(in_array('State.forceDelete', $capabilities) OR AccountVerification::checkRootRole()) {
             return true;
         }
         return false;

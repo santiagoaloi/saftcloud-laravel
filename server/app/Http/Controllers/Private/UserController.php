@@ -7,6 +7,7 @@ use App\Models\Roles\Role;
 use Illuminate\Http\Request;
 use App\Models\Private\Entity;
 use App\Http\Controllers\Controller;
+use App\Helpers\RoleHelper;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\QueryException;
@@ -24,16 +25,6 @@ class UserController extends Controller {
         // if($request->hasFile('picture')){
         //     $query['picture']=$request->file('picture')->store('avatars', 'public');
         // };
-
-            $admin = auth()->user();
-            $admin->privileges = $this->getRolCapabilities($admin);
-            foreach($admin->roles as $role){
-                $rolesArr[] = $role['name'];
-                if(in_array('Root', $rolesArr)){
-                    return 'opo';
-                }
-            }
-            return $admin;
 
         $this->authorize('store', User::class);
         try{
@@ -82,13 +73,8 @@ class UserController extends Controller {
     public function show($id) {
         $this->authorize('show', User::class);
         $user = User::findOrFail($id);
-
-        // $roles = $user->roles[0];
-        // return $roles->capabilities;
-
-        $user['capabilitiesList'] = $this->getRolCapabilities($user);
-
-        // $user['branches'] = $user->branches[0]->entity->rootAccount;
+        $user->entity;
+        $user->privileges = RoleHelper::getRoles($user->roles);
 
         return response([
             'record'=> $user
@@ -99,7 +85,11 @@ class UserController extends Controller {
         $this->authorize('showAll', User::class);
         $users = User::get();
         foreach($users as $user){
-            $user['capabilitiesList'] = $this->getRolCapabilities($user);
+            $user->userSetting;
+            $user->entity;
+            $user->branches;
+            $user->privileges = RoleHelper::getRoles($user->roles);
+            
             $newUsers[] = $user;
         }
 
@@ -168,19 +158,6 @@ class UserController extends Controller {
         return response([
             'status'=> true
         ], 200);
-    }
-
-    public function testRoles(){
-        // User::first()->assignRole('user');
-        $user = User::first();
-        $user->getAllPermissions();
-
-        dd($user);
-
-        // Role::find(3)->givePermissionTo(Permission::find(3));
-
-        // Role::create(['name' => 'User']);
-        // Permission::create(['name' => 'user.edit']);
     }
 
     // AGREGA TODOS LOS USUARIOS QUE ENVIAMOS EN LA VARIABLE ROLE

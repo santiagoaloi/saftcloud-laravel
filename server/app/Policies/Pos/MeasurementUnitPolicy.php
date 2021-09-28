@@ -7,6 +7,7 @@ use App\Models\Pos\MeasurementUnit;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Private\UserController;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use App\Helpers\AccountVerification;
 
 class MeasurementUnitPolicy {
     use HandlesAuthorization;
@@ -16,7 +17,7 @@ class MeasurementUnitPolicy {
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
 
-        if(in_array('MeasurementUnit.store', $capabilities)){
+        if(in_array('MeasurementUnit.store', $capabilities) OR AccountVerification::checkRootRole()) {
             return true;
         }
         return false;
@@ -33,7 +34,7 @@ class MeasurementUnitPolicy {
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
 
-        if(in_array('MeasurementUnit.show', $capabilities)){
+        if(in_array('MeasurementUnit.show', $capabilities) OR AccountVerification::checkRootRole()) {
             return true;
         }
         return false;
@@ -44,7 +45,7 @@ class MeasurementUnitPolicy {
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
 
-        if(in_array('MeasurementUnit.showAll', $capabilities)){
+        if(in_array('MeasurementUnit.showAll', $capabilities) OR AccountVerification::checkRootRole()) {
             return true;
         }
         return false;
@@ -55,7 +56,7 @@ class MeasurementUnitPolicy {
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
 
-        if(in_array('MeasurementUnit.showTrashed', $capabilities)){
+        if(in_array('MeasurementUnit.showTrashed', $capabilities) OR AccountVerification::checkRootRole()) {
             return true;
         }
         return false;
@@ -74,7 +75,7 @@ class MeasurementUnitPolicy {
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
 
-        if(in_array('MeasurementUnit.restore', $capabilities)){
+        if(in_array('MeasurementUnit.restore', $capabilities) OR AccountVerification::checkRootRole()) {
             return true;
         }
         return false;
@@ -92,7 +93,7 @@ class MeasurementUnitPolicy {
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
 
-        if(in_array('MeasurementUnit.update', $capabilities)){
+        if(in_array('MeasurementUnit.update', $capabilities) OR AccountVerification::checkRootRole()) {
             return true;
         }
         return false;
@@ -103,7 +104,7 @@ class MeasurementUnitPolicy {
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
 
-        if(in_array('MeasurementUnit.updateAll', $capabilities)){
+        if(in_array('MeasurementUnit.updateAll', $capabilities) OR AccountVerification::checkRootRole()) {
             return true;
         }
         return false;
@@ -121,7 +122,7 @@ class MeasurementUnitPolicy {
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
 
-        if(in_array('MeasurementUnit.destroy', $capabilities)){
+        if(in_array('MeasurementUnit.destroy', $capabilities) OR AccountVerification::checkRootRole()) {
             return true;
         }
         return false;
@@ -139,7 +140,7 @@ class MeasurementUnitPolicy {
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
 
-        if(in_array('MeasurementUnit.forceDelete', $capabilities)){
+        if(in_array('MeasurementUnit.forceDelete', $capabilities) OR AccountVerification::checkRootRole()) {
             return true;
         }
         return false;

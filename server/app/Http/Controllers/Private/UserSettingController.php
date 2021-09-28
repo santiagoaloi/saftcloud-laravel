@@ -4,15 +4,15 @@ namespace App\Http\Controllers\Private;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Private\UserSetting;
+use App\Models\Private\userSetting;
 use Illuminate\Database\QueryException;
 
 class UserSettingController extends Controller {
 
     public function store(Request $request) {
-        $this->authorize('store', UserSetting::class);
+        $this->authorize('store', userSetting::class);
         try{
-            $query = UserSetting::create($request->all());
+            $query = userSetting::create($request->all());
         }
         catch(QueryException $e){
             if($e->errorInfo[1]){
@@ -29,39 +29,39 @@ class UserSettingController extends Controller {
     }
 
     public function show(Request $id) {
-        $this->authorize('show', UserSetting::class);
-        $result = UserSetting::find($id);
+        $this->authorize('show', userSetting::class);
+        $result = userSetting::find($id);
         return response([
             'record'=> $result
         ], 200);
     }
 
     public function showAll() {
-        $this->authorize('showAll', UserSetting::class);
+        $this->authorize('showAll', userSetting::class);
         return response([
-            'records'=> UserSetting::get()
+            'records'=> userSetting::get()
         ], 200);
     }
 
     //  Para mostrar los elementos eliminados
     public function getTrashed() {
-        $this->authorize('getTrashed', UserSetting::class);
+        $this->authorize('getTrashed', userSetting::class);
         return response([
-            'records'=> UserSetting::onlyTrashed()->get()
+            'records'=> userSetting::onlyTrashed()->get()
         ], 200);
     }
 
     //  Para mostrar un elemento eliminado
     public function restore($id) {
-        $this->authorize('restore', UserSetting::class);
+        $this->authorize('restore', userSetting::class);
         return response([
-            'record'=> UserSetting::onlyTrashed()->find($id)->recovery()
+            'record'=> userSetting::onlyTrashed()->find($id)->recovery()
         ], 200);
     }
 
     public function update(Request $request, $id) {
-        $this->authorize('update', UserSetting::class);
-        $query = UserSetting::find($id);
+        $this->authorize('update', userSetting::class);
+        $query = userSetting::find($id);
         try{
             $query->fill($request->all())->save();
         }
@@ -80,7 +80,7 @@ class UserSettingController extends Controller {
     }
 
     public function updateAll(Request $request) {
-        $this->authorize('updateAll', UserSetting::class);
+        $this->authorize('updateAll', userSetting::class);
         foreach($request as $item){
             $this->update($item, $item->id);
         };
@@ -89,16 +89,16 @@ class UserSettingController extends Controller {
     }
 
     public function destroy($id) {
-        $this->authorize('destroy', UserSetting::class);
-        $query = UserSetting::find($id);
+        $this->authorize('destroy', userSetting::class);
+        $query = userSetting::find($id);
         $query->delete();
 
         return $this->showAll();
     }
 
     public function forceDestroy($id){
-        $this->authorize('forceDestroy', UserSetting::class);
-        $query = UserSetting::withTrashed()->find($id);
+        $this->authorize('forceDestroy', userSetting::class);
+        $query = userSetting::withTrashed()->find($id);
         $query->forceDelete();
         return response([
             'status'=> true

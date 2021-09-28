@@ -6,23 +6,18 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Private\UserController;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use App\Helpers\AccountVerification;
 
 class UserPolicy {
     use HandlesAuthorization;
 
     public function store(user $user) {
-        if($user->email == 'santiagoaloi@gmail.com') {
+        $userC = New UserController;
+        $capabilities = $userC->getRolCapabilities($user);
+        if(in_array('User.store', $capabilities) OR AccountVerification::checkRootRole()) {
             return true;
         }
         return false;
-
-        // $userC = New UserController;
-        // $capabilities = $userC->getRolCapabilities($user);
-
-        // if(in_array('User.store', $capabilities)){
-        //     return true;
-        // }
-        // return false;
     }
 
     /**
@@ -35,7 +30,7 @@ class UserPolicy {
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
 
-        if(in_array('User.show', $capabilities)){
+        if(in_array('User.shows', $capabilities) OR !AccountVerification::checkRootRole()){
             return true;
         }
         return false;
@@ -45,7 +40,7 @@ class UserPolicy {
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
 
-        if(in_array('User.showAll', $capabilities)){
+        if(in_array('User.showAll', $capabilities) OR AccountVerification::checkRootRole()){
             return true;
         }
         return false;
@@ -55,7 +50,7 @@ class UserPolicy {
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
 
-        if(in_array('User.showTrashed', $capabilities)){
+        if(in_array('User.showTrashed', $capabilities) OR AccountVerification::checkRootRole()){
             return true;
         }
         return false;
@@ -72,7 +67,7 @@ class UserPolicy {
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
 
-        if(in_array('User.restore', $capabilities)){
+        if(in_array('User.restore', $capabilities) OR AccountVerification::checkRootRole()){
             return true;
         }
         return false;
@@ -89,7 +84,7 @@ class UserPolicy {
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
 
-        if(in_array('User.update', $capabilities)){
+        if(in_array('User.update', $capabilities) OR AccountVerification::checkRootRole()){
             return true;
         }
         return false;
@@ -100,7 +95,7 @@ class UserPolicy {
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
 
-        if(in_array('User.updateAll', $capabilities)){
+        if(in_array('User.updateAll', $capabilities) OR AccountVerification::checkRootRole()){
             return true;
         }
         return false;
@@ -117,7 +112,7 @@ class UserPolicy {
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
 
-        if(in_array('User.destroy', $capabilities)){
+        if(in_array('User.destroy', $capabilities) OR AccountVerification::checkRootRole()){
             return true;
         }
         return false;
@@ -134,7 +129,7 @@ class UserPolicy {
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
 
-        if(in_array('User.forceDelete', $capabilities)){
+        if(in_array('User.forceDelete', $capabilities) OR AccountVerification::checkRootRole()){
             return true;
         }
         return false;

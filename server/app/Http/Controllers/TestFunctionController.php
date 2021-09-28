@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Helpers\Helper;
+
 use App\Models\Roles\Role;
 
 use App\Exceptions\Handler;
@@ -124,6 +124,7 @@ class TestFunctionController extends Controller {
     }
 
     public function test4(Request $request, Country $country){
+        $this->authorize('shows', User::class) OR 
         $user = User::findOrFail(1);
 
         $roles = [];

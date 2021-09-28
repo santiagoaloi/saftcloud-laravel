@@ -73,7 +73,7 @@ class AuthController extends Controller {
             $user = User::where('email', $credentials['email'])->first();
             $token = $user->createToken($user['email'], ['component.show'])->plainTextToken;
 
-            // $user->userSetting;
+            $user->userSetting;
             $user->entity;
             $user->branches[0]->entity;
             $UserController = New UserController;

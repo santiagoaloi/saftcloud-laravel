@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Policies\Public;
+namespace App\Policies\Private;
 
 use App\Models\User;
 use App\Models\Private\AccountPayment;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Private\UserController;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use App\Helpers\AccountVerification;
 
 class AccountPaymentPolicy {
     use HandlesAuthorization;
@@ -16,7 +17,7 @@ class AccountPaymentPolicy {
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
 
-        if(in_array('AccountPayment.store', $capabilities)){
+        if(in_array('AccountPayment.store', $capabilities) OR AccountVerification::checkRootRole()) {
             return true;
         }
         return false;
@@ -33,7 +34,7 @@ class AccountPaymentPolicy {
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
 
-        if(in_array('AccountPayment.show', $capabilities)){
+        if(in_array('AccountPayment.show', $capabilities) OR AccountVerification::checkRootRole()) {
             return true;
         }
         return false;
@@ -44,7 +45,7 @@ class AccountPaymentPolicy {
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
 
-        if(in_array('AccountPayment.showAll', $capabilities)){
+        if(in_array('AccountPayment.showAll', $capabilities) OR AccountVerification::checkRootRole()) {
             return true;
         }
         return false;
@@ -55,7 +56,7 @@ class AccountPaymentPolicy {
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
 
-        if(in_array('AccountPayment.showTrashed', $capabilities)){
+        if(in_array('AccountPayment.showTrashed', $capabilities) OR AccountVerification::checkRootRole()) {
             return true;
         }
         return false;
@@ -74,7 +75,7 @@ class AccountPaymentPolicy {
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
 
-        if(in_array('AccountPayment.restore', $capabilities)){
+        if(in_array('AccountPayment.restore', $capabilities) OR AccountVerification::checkRootRole()) {
             return true;
         }
         return false;
@@ -92,7 +93,7 @@ class AccountPaymentPolicy {
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
 
-        if(in_array('AccountPayment.update', $capabilities)){
+        if(in_array('AccountPayment.update', $capabilities) OR AccountVerification::checkRootRole()) {
             return true;
         }
         return false;
@@ -103,7 +104,7 @@ class AccountPaymentPolicy {
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
 
-        if(in_array('AccountPayment.updateAll', $capabilities)){
+        if(in_array('AccountPayment.updateAll', $capabilities) OR AccountVerification::checkRootRole()) {
             return true;
         }
         return false;
@@ -121,7 +122,7 @@ class AccountPaymentPolicy {
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
 
-        if(in_array('AccountPayment.destroy', $capabilities)){
+        if(in_array('AccountPayment.destroy', $capabilities) OR AccountVerification::checkRootRole()) {
             return true;
         }
         return false;
@@ -139,7 +140,7 @@ class AccountPaymentPolicy {
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
 
-        if(in_array('AccountPayment.forceDelete', $capabilities)){
+        if(in_array('AccountPayment.forceDelete', $capabilities) OR AccountVerification::checkRootRole()) {
             return true;
         }
         return false;

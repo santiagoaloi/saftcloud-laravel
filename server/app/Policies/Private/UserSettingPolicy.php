@@ -3,10 +3,11 @@
 namespace App\Policies\Private;
 
 use App\Models\User;
-use App\Models\Private\UserSetting;
+use App\Models\Private\userSetting;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Private\UserController;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use App\Helpers\AccountVerification;
 
 class UserSettingPolicy {
     use HandlesAuthorization;
@@ -16,7 +17,7 @@ class UserSettingPolicy {
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
 
-        if(in_array('UserSetting.store', $capabilities)){
+        if(in_array('userSetting.store', $capabilities) OR AccountVerification::checkRootRole()) {
             return true;
         }
         return false;
@@ -33,7 +34,7 @@ class UserSettingPolicy {
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
 
-        if(in_array('UserSetting.show', $capabilities)){
+        if(in_array('userSetting.show', $capabilities) OR AccountVerification::checkRootRole()) {
             return true;
         }
         return false;
@@ -44,7 +45,7 @@ class UserSettingPolicy {
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
 
-        if(in_array('UserSetting.showAll', $capabilities)){
+        if(in_array('userSetting.showAll', $capabilities) OR AccountVerification::checkRootRole()) {
             return true;
         }
         return false;
@@ -55,7 +56,7 @@ class UserSettingPolicy {
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
 
-        if(in_array('UserSetting.showTrashed', $capabilities)){
+        if(in_array('userSetting.showTrashed', $capabilities) OR AccountVerification::checkRootRole()) {
             return true;
         }
         return false;
@@ -65,16 +66,16 @@ class UserSettingPolicy {
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Public\UserSetting  $UserSetting
+     * @param  \App\Models\Public\userSetting  $userSetting
      * @return mixed
      */
 
-    public function restore(User $user, UserSetting $UserSetting) {
+    public function restore(User $user, userSetting $userSetting) {
         $user = Auth::user();
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
 
-        if(in_array('UserSetting.restore', $capabilities)){
+        if(in_array('userSetting.restore', $capabilities) OR AccountVerification::checkRootRole()) {
             return true;
         }
         return false;
@@ -84,26 +85,26 @@ class UserSettingPolicy {
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Public\UserSetting  $UserSetting
+     * @param  \App\Models\Public\userSetting  $userSetting
      * @return mixed
      */
-    public function update(User $user, UserSetting $UserSetting) {
+    public function update(User $user, userSetting $userSetting) {
         $user = Auth::user();
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
 
-        if(in_array('UserSetting.update', $capabilities)){
+        if(in_array('userSetting.update', $capabilities) OR AccountVerification::checkRootRole()) {
             return true;
         }
         return false;
     }
 
-    public function updateAll(User $user, UserSetting $UserSetting) {
+    public function updateAll(User $user, userSetting $userSetting) {
         $user = Auth::user();
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
 
-        if(in_array('UserSetting.updateAll', $capabilities)){
+        if(in_array('userSetting.updateAll', $capabilities) OR AccountVerification::checkRootRole()) {
             return true;
         }
         return false;
@@ -113,15 +114,15 @@ class UserSettingPolicy {
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Public\UserSetting  $UserSetting
+     * @param  \App\Models\Public\userSetting  $userSetting
      * @return mixed
      */
-    public function destroy(User $user, UserSetting $UserSetting) {
+    public function destroy(User $user, userSetting $userSetting) {
         $user = Auth::user();
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
 
-        if(in_array('UserSetting.destroy', $capabilities)){
+        if(in_array('userSetting.destroy', $capabilities) OR AccountVerification::checkRootRole()) {
             return true;
         }
         return false;
@@ -131,15 +132,15 @@ class UserSettingPolicy {
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Public\UserSetting  $UserSetting
+     * @param  \App\Models\Public\userSetting  $userSetting
      * @return mixed
      */
-    public function forceDelete(User $user, UserSetting $UserSetting) {
+    public function forceDelete(User $user, userSetting $userSetting) {
         $user = Auth::user();
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
 
-        if(in_array('UserSetting.forceDelete', $capabilities)){
+        if(in_array('userSetting.forceDelete', $capabilities) OR AccountVerification::checkRootRole()) {
             return true;
         }
         return false;

@@ -4,6 +4,7 @@ namespace App\Policies\Pos;
 
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use App\Helpers\AccountVerification;
 
 class CommissionPolicy
 {

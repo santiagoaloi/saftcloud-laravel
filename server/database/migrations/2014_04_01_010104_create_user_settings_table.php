@@ -4,14 +4,14 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUserSettingTable extends Migration {
+class CreateUserSettingsTable extends Migration {
     /**
      * Run the migrations.
      *
      * @return void
      */
     public function up() {
-        Schema::create('user_setting', function (Blueprint $table) {
+        Schema::create('user_settings', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
             $table->longText('view_config');
@@ -26,6 +26,6 @@ class CreateUserSettingTable extends Migration {
      * @return void
      */
     public function down() {
-        Schema::dropIfExists('user_setting');
+        Schema::dropIfExists('user_settings');
     }
 }

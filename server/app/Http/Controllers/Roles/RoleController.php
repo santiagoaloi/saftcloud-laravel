@@ -39,9 +39,23 @@ class RoleController extends Controller {
 
     public function showAll() {
         $this->authorize('showAll', Role::class);
+        $roles = Role::get();
+
+        foreach($roles  as $role){
+            $role['privileges'] = $this->getCapabilities($role->capabilities);
+            $newRoles[] = $role;
+        };
+
         return response([
-            'records'=> Role::get()
+            'records'=> $newRoles
         ], 200);
+    }
+
+    public function getCapabilities($capabilities){
+        foreach ($capabilities as $capability){
+            $privilege[] = $capability->name;
+        };
+        return $privilege;
     }
 
     //  Para mostrar los elementos eliminados
