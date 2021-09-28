@@ -83,8 +83,8 @@ class UserController extends Controller {
         $this->authorize('show', User::class);
         $user = User::findOrFail($id);
 
-        $roles = $user->roles[0];
-        return $roles->capabilities;
+        // $roles = $user->roles[0];
+        // return $roles->capabilities;
 
         $user['capabilitiesList'] = $this->getRolCapabilities($user);
 
@@ -97,8 +97,14 @@ class UserController extends Controller {
 
     public function showAll() {
         $this->authorize('showAll', User::class);
+        $users = User::get();
+        foreach($users as $user){
+            $user['capabilitiesList'] = $this->getRolCapabilities($user);
+            $newUsers[] = $user;
+        }
+
         return response([
-            'records'=> User::get()
+            'records'=> $newUsers
         ], 200);
     }
 

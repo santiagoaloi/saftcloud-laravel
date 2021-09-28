@@ -32,7 +32,8 @@
         "files":[
             "app/Helpers/Helper.php",
             "app/Helpers/FileManager_Helper.php",
-            "app/Helpers/ComponentManager_Helper.php"
+            "app/Helpers/ComponentManager_Helper.php",
+            "app/Helpers/AccountVerification_Helper.php"
         ]
     },
     "autoload-dev": {
