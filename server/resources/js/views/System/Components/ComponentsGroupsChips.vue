@@ -8,6 +8,7 @@
               :ripple="false"
               class="mr-n3 mt-3 pointer-events-none"
               v-if="!selectedComponentGroups.length"
+              label
               
             >
 

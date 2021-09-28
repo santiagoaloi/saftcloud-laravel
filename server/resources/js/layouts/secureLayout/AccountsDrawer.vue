@@ -8,13 +8,14 @@
   hideOverlay
   right
   app
+
  >
   <!-- Navigation menu fixed on top -->
   <template v-slot:prepend>
-   <component-drilldown-bar />
+   <accounts-drilldown-bar />
   </template>
 
-  <component-drilldown />
+  <accounts-drilldown />
  </v-navigation-drawer>
 </template>
 
@@ -32,11 +33,11 @@ export default {
  computed: {
   ...sync("theme", ["isDark"]),
   ...sync("drawers", ["secureAccountsDrawer"]),
-  ...get("accountsManagement", ["selectedComponent"])
+  ...get("accountsManagement", ["selectedEntity"])
  },
 
  watch: {
-  selectedComponent: {
+  selectedEntity: {
    immediate: false,
    handler(val) {
     if (val || !this.secureAccountsDrawer) {

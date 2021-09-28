@@ -28,6 +28,17 @@
       </v-sheet>
     </v-expand-transition>
 
+   <v-card-title>
+      Edit Component View
+    </v-card-title>
+
+    <v-card-subtitle>
+
+   Edit your module quickly, change group, component name, description, enable sidebar visibility and more...
+    
+    </v-card-subtitle>
+
+
     <ValidationObserver
       ref="componentDrilldown"
       slim

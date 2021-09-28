@@ -6,14 +6,14 @@
      <v-hover v-slot="{ hover }">
       <v-card
        :ref="`SEL${entityCardGroup}ID${index}`"
-       :color="getComponentCardColor(active)"
+       :color="getCardColor(active)"
        height="210"
        width="100%"
        :ripple="false"
        class="d-flex flex-column justify-space-between pa-4 hoverElevationSoft"
        @click.stop="
         toggle();
-        setselectedEntity(index);
+        setSelectedEntity(index);
        "
       >
        <v-card-actions class="px-0">
@@ -21,85 +21,26 @@
 
         
            <v-icon  size="30" dark>
-            mdi-account
+          {{   selectedEntityType === 'Roles' ? 'mdi-lock-outline' :  'mdi-account'  }}
            </v-icon>
          </v-avatar>
 
         <v-spacer />
 
-        <!-- <div :class="{ 'show-btns': hover, 'hide-btns': !hover }">
-         <v-tooltip transition="false" color="black" bottom>
-          <template #activator="{ on }">
-           <v-btn color="white" small icon :ripple="false" v-on="on" @click.stop="setModular(component)">
-            <v-icon :color="isModularColor(component)">
-             {{ isModularIcon(component) }}
-            </v-icon>
-           </v-btn>
-          </template>
-          <span>Modular</span>
-         </v-tooltip>
-
-         <v-tooltip transition="false" color="black" bottom>
-          <template #activator="{ on }">
-           <v-btn color="white" small icon :ripple="false" v-on="on" @click.stop="setActive(component)">
-            <v-icon :color="isActiveColor(component)">
-             {{ isActiveIcon(component) }}
-            </v-icon>
-           </v-btn>
-          </template>
-          <span>Active</span>
-         </v-tooltip>
-
-         <v-tooltip transition="false" color="black" bottom>
-          <template #activator="{ on }">
-           <v-btn color="white" small icon :ripple="false" v-on="on" @click.stop="setStarred(component)">
-            <v-icon :color="isStarredColor(component)">
-             {{ isStarredIcon(component) }}
-            </v-icon>
-           </v-btn>
-          </template>
-          <span>Favourite</span>
-         </v-tooltip>
-        </div> -->
        </v-card-actions>
 
        <span class="gallery-card-title pl-2">
         <template > 
-         {{ entity.email }}
+          
+         {{   selectedEntityType === 'Roles' ? entity.name :  entity.email  }}
         </template>
-        <!-- <template v-else>
-         <base-typing-indicator class="ml-n2" />
-        </template> -->
+ 
        </span>
 
        <div class="gallery-card-subtitle-container">
-        <!-- <div class="gallery-card-subtitle-wrapper">
-         <h5 class="gallery-card-subtitle">
-          <v-chip
-           :dark="isDark"
-           :color="isDark ? 'rgb(54, 57, 63)' : 'white'"
-           :text-color="isDark ? 'grey lighten-1' : 'indigo darken-4'"
-           label
-           class="col-12 pointer-events-none"
-           small
-          >
-           <v-icon x-small>
-            mdi-folder-outline
-           </v-icon>
-           <div class="col-12 text-truncate">
-            <template v-if="mapComponentGroup(component).component_group_id">
-             {{ mapGroupParent(component) }}
-             <v-icon small>
-              mdi-menu-right
-             </v-icon>
-            </template>
-            {{ mapComponentGroup(component).name }}
-           </div>
-          </v-chip>
-         </h5>
-        </div> -->
+      
         <v-scale-transition e-transition>
-         <div v-if="hasUnsavedChanges(component)" class="gallery-card-subtitle-wrapper">
+         <div v-if="hasUnsavedChanges(entity)" class="gallery-card-subtitle-wrapper">
           <h5 class="gallery-card-subtitle">
            <v-tooltip transition="false" color="black" bottom>
             <template #activator="{ on }">
@@ -119,7 +60,6 @@
    </transition-group>
   </v-item-group>
 
-  <base-dialog-icons v-if="dialogIcons" v-model="dialogIcons" :icon="componentIcon" />
  </div>
 </template>
 
@@ -129,12 +69,6 @@ import { store } from "@/store";
 
 export default {
  name: "AccountsGridView",
- data() {
-  return {
-   dialogIcons: false
-  };
- },
-
  computed: {
   ...sync("theme", ["isDark"]),
   ...sync("accountsManagement", ["entityCardGroup", "allUsers", "selectedEntityType"]),
@@ -154,20 +88,18 @@ export default {
      return this.selectedEntityType === 'Roles' ? this.allRoles : this.allUsers
    },
 
+
   allEntitiesFilteredSorted() {
    return this.allEntitiesFiltered;
   },
 
-  componentIcon() {
-   if (!this.selectedEntity) return;
-   return this.selectedEntity.config_settings.icon;
-  }
+
  },
 
  methods: {
-  ...call("componentManagement/*"),
+  ...call("accountsManagement/*"),
 
-  getComponentCardColor(active) {
+  getCardColor(active) {
    return this.isDark ? (active ? "#51555e" : "#40434a") : active ? "#edeef2" : "white";
   }
  }

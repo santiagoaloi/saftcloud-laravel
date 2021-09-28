@@ -23,7 +23,11 @@ export default {
   ...sync("authentication", ["session"]),
   layout() {
    return this.$route.meta.layout;
+  },
+    vuetfiy() {
+   return this.$vuetify;
   }
+
  },
 
  name: "AppVue",

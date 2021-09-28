@@ -1,14 +1,13 @@
 <template>
  <div>
-      <div  class="d-flex justify-end transparent" >
+      <div  class="d-flex justify-end align-center transparent" >
 
         <components-groups/>      
 
       <div class="flex-grow-1" />
-    <v-btn plain @click="dialogEditor = true" class="mx-2 "> <v-icon class="mr-2" small> mdi-code-json </v-icon>Config Structure </v-btn>
-    <v-btn plain class="mx-2 "> <v-icon class="mr-2" small> mdi-arrow-top-right </v-icon>Export </v-btn>
+    <v-btn plain @click="dialogEditor = true" class="mx-2 "> <v-icon :left="$vuetify.breakpoint.lgAndUp"  small> mdi-code-json </v-icon>{{ configStructure}} </v-btn>
     <v-btn class="ml-2" :color="isDark ? 'accent' : 'primary'" @click.stop="dialogComponent = true">
-     <v-icon class="mr-2" small> mdi-plus </v-icon>Create component
+     <v-icon :left="$vuetify.breakpoint.lgAndUp" small> mdi-view-grid-plus </v-icon>{{ createComponent }}
     </v-btn>
 
 
@@ -47,7 +46,18 @@ export default {
 
  computed: {
   ...sync("theme", ["isDark"]),
-  ...sync("componentManagement", ["dialogComponent", "dialogEditor"])
+  ...sync("componentManagement", ["dialogComponent", "dialogEditor"]),
+
+   configStructure(){
+     return this.$vuetify.breakpoint.lgAndUp ? 'Config Structure' : ''
+   },
+
+   createComponent(){
+      return this.$vuetify.breakpoint.lgAndUp ? 'Create component' : ''
+
+   }
+
+
  }
 };
 </script>

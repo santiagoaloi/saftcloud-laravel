@@ -1,8 +1,7 @@
 <template>
   <div>
-
-        <v-responsive width="500"> 
-        <v-autocomplete
+        <v-responsive :width="$vuetify.breakpoint.mdAndUp ? 300 : null"> 
+        <v-select
           v-model="selectedComponentGroups"
           multiple
           item-value="id"
@@ -13,9 +12,14 @@
           :items="allGroups"
           solo
           :dark="isDark"
-          item-color="#208ad6"
-          @update:search-input="syncGroupInputValue($event)"
+           @update:search-input="syncGroupInputValue($event)"
           hide-details
+               :color="isDark ? '#208ad6' : 'grey'"
+              item-color="indigo lighten-4"
+              :background-color="isDark ? '#28292b' : 'white'"
+              outlined
+              dense
+                       :menu-props="{ bottom: true, offsetY: true }"
         >
           <template
             v-if="allGroups.length"
@@ -41,7 +45,7 @@
           <template #selection="data">
             <v-chip
               v-if="data.index === 0"
-              
+              small
               :style="isDark ? 'color: white' : 'color:black'"
               :color="isDark ? 'grey-darken-4' : 'blue-white'"
             >
@@ -126,7 +130,7 @@
               </v-list-item-content>
             </v-list-item>
           </template>
-        </v-autocomplete>
+        </v-select>
         </v-responsive>
 
 

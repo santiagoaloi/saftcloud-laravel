@@ -51,7 +51,6 @@
       prepend-inner-icon="mdi-magnify"
       :class="expand ? 'expanded' : 'shrinked'"
       class="mx-15 pr-1"
-      rounded
       @focus="expand = true"
       @blur="expand = false"
     />

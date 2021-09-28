@@ -27,8 +27,7 @@ const state = {
   entityStatusTabs: [
     { name: 'All', value: 'all', icon: 'mdi-all-inclusive' },
     { name: 'Starred', value: 'starred', icon: 'mdi-star' },
-    { name: 'Active', value: 'active', icon: 'mdi-lightbulb-on' },
-    { name: 'Inactive', value: 'inactive', icon: 'mdi-lightbulb-off' },
+    { name: 'Banned', value: 'banned', icon: 'mdi-lightbulb-on' },
   ],
 };
 
@@ -54,9 +53,12 @@ const getters = {
 
   //* Returns components that belongs to a group, status or matching search.
   allEntitiesFiltered: (state, getters, rootState) => {
-    return state.allUsers.filter((ent) => {
+    
+    let entity = state.selectedEntityType === 'Roles' ? 'allRoles' : 'allUsers'
+    let entityName = state.selectedEntityType === 'Roles' ? 'name' : 'email' 
+    return state[entity].filter((ent) => {
       const search = rootState.application.search.toLowerCase();
-      const title = ent.email.toLowerCase();
+      const title =   ent[entityName].toLowerCase();
       return (
         (!search || title.match(search))
 
@@ -65,7 +67,7 @@ const getters = {
   },
 
   //* Returns true if the are no components returned from the backend.
-  isUsersEmpty: (state) => isEmpty(state.allComponents),
+  isUsersEmpty: (state) => isEmpty(state.allUsers),
 
   //* Returns true if the component has unsaved changes.
   hasUnsavedChanges: (_, getters) => (component) => {
@@ -137,13 +139,13 @@ const actions = {
     
 
   //* When a component is selected in the components view, it loads its configuration.
-  setselectedEntity({ rootState, state }, index) {
+  setSelectedEntity({ rootState, state }, index) {
     if (state.selectedEntityIndex != index) {
-      store.set('componentManagement/selectedEntityIndex', index);
+      store.set('accountsManagement/selectedEntityIndex', index);
     }
 
-    if (!rootState.drawers.secureComponentDrawer) {
-      store.set('drawers/secureComponentDrawer', true);
+    if (!rootState.drawers.secureAccountsDrawer) {
+      store.set('drawers/secureAccountsDrawer', true);
     }
   },
 
@@ -180,16 +182,16 @@ const actions = {
   //* Moves to the previous component in the array (navigation arrows).
   previousEntity({ state }) {
     if (state.entityCardGroup > 0) {
-      store.set('componentManagement/entityCardGroup', state.entityCardGroup - 1);
-      store.set('componentManagement/selectedEntityIndex', state.selectedEntityIndex - 1);
+      store.set('accountsManagement/entityCardGroup', state.entityCardGroup - 1);
+      store.set('accountsManagement/selectedEntityIndex', state.selectedEntityIndex - 1);
     }
   },
 
   //* Moves to the next component in the array (navigation arrows).
   nextEntity({ state, getters }) {
     if (state.entityCardGroup < getters.allEntitiesFiltered.length - 1) {
-      store.set('componentManagement/entityCardGroup', state.entityCardGroup + 1);
-      store.set('componentManagement/selectedEntityIndex', state.selectedEntityIndex + 1);
+      store.set('accountsManagement/entityCardGroup', state.entityCardGroup + 1);
+      store.set('accountsManagement/selectedEntityIndex', state.selectedEntityIndex + 1);
     }
   },
 

@@ -1,21 +1,23 @@
 <template>
   <div>
-      <div  class="d-flex justify-end transparent" >
+      <div  class="d-flex justify-end align-center transparent" >
 
         <accounts-groups />
 
    <div class="flex-grow-1" />
       <div class="d-flex">
+       
         <v-btn
-          plain
-          class="mx-2 "
+          class="ml-2"
+          :color="isDark ? 'accent' : 'primary'"
+          @click.stop="dialogAccount = true"
         >
           <v-icon
-            class="mr-2"
+            :left="$vuetify.breakpoint.lgAndUp" 
             small
           >
-            mdi-arrow-top-right
-          </v-icon>Export
+            mdi-lock-plus
+          </v-icon> {{createRole}}
         </v-btn>
         <v-btn
           class="ml-2"
@@ -23,23 +25,11 @@
           @click.stop="dialogAccount = true"
         >
           <v-icon
-            class="mr-2"
+           :left="$vuetify.breakpoint.lgAndUp" 
             small
           >
-            mdi-plus
-          </v-icon>Create role
-        </v-btn>
-        <v-btn
-          class="ml-2"
-          :color="isDark ? 'accent' : 'primary'"
-          @click.stop="dialogAccount = true"
-        >
-          <v-icon
-            class="mr-2"
-            small
-          >
-            mdi-plus
-          </v-icon>Create user
+           mdi-account-plus
+          </v-icon>{{createUser}}
         </v-btn>
       </div>
     </div>
@@ -63,6 +53,16 @@ components: {
   computed: {
     ...sync('theme', ['isDark']),
     ...sync('accountsManagement', ['dialogAccount', 'dialogEditor']),
+
+   createUser(){
+     return this.$vuetify.breakpoint.lgAndUp ? 'Create User' : ''
+   },
+
+   createRole(){
+      return this.$vuetify.breakpoint.lgAndUp ? 'Create Role' : ''
+
+  },
+
   },
 };
 </script>

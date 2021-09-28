@@ -1,20 +1,25 @@
 <template>
   <div>
-         <v-responsive width="500"> 
-        <v-autocomplete
+        <v-responsive :width="$vuetify.breakpoint.mdAndUp ? 300 : null"> 
+        <v-select
         v-model="selectedEntityType"
           item-value="id"
           item-text="name"
-          item-color="primary"
-          placeholder="Select roles o users"
+           placeholder="Select roles o users"
           :maxlength="20"
           :items="['Roles', 'Accounts']"
           solo
-          :color="isDark ? '#208ad6' : 'grey'"
-          hide-no-data
+           hide-no-data
           hide-details
           chips
-          small-chips
+             :color="isDark ? '#208ad6' : 'grey'"
+              item-color="indigo lighten-4"
+              :background-color="isDark ? '#28292b' : 'white'"
+              outlined
+              dense
+              small-chips
+                      :menu-props="{ bottom: true, offsetY: true }"
+
         >
         
           <template #item="{ item, on, attrs }">
@@ -39,7 +44,7 @@
               </v-list-item-content>
             </v-list-item>
           </template>
-        </v-autocomplete>
+        </v-select>
          </v-responsive>
 
   </div>

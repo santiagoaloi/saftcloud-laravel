@@ -1,6 +1,6 @@
 <template>
   <div
-    v-if="selectedComponent"
+    v-if="selectedEntity"
     class="mt-3"
   >
     <v-app-bar
@@ -15,18 +15,18 @@
       >
         <template #activator="{ on }">
           <v-btn
-            :disabled="previousComponentDisabled"
+            :disabled="previousEntityDisabled"
             class="ml-n2 mr-2 mt-n2"
             fab
             text
             x-small
             v-on="on"
-            @click="previousComponent()"
+            @click="previousEntity()"
           >
             <v-icon>mdi-chevron-left</v-icon>
           </v-btn>
         </template>
-        <span>Previous component</span>
+        <span>Previous entity</span>
       </v-tooltip>
       <v-tooltip
         transition="false"
@@ -35,18 +35,18 @@
       >
         <template #activator="{ on }">
           <v-btn
-            :disabled="nextComponentDisabled"
+            :disabled="nextEntityDisabled"
             class=" mt-n2"
             fab
             text
             x-small
             v-on="on"
-            @click="nextComponent()"
+            @click="nextEntity()"
           >
             <v-icon>mdi-chevron-right</v-icon>
           </v-btn>
         </template>
-        <span>Next component</span>
+        <span>Next entity</span>
       </v-tooltip>
 
       <v-spacer />
@@ -63,7 +63,7 @@
             text
             x-small
             v-on="on"
-            @click.stop="secureComponentDrawer = false"
+            @click.stop="secureAccountsDrawer = false"
           >
             <v-icon>mdi-menu</v-icon>
           </v-btn>
@@ -84,11 +84,11 @@ export default {
     ...sync('theme', ['isDark']),
     ...sync('drawers', ['secureAccountsDrawer']),
     ...sync('accountsManagement', ['componentCardGroup']),
-    ...get('accountsManagement', ['previousComponentDisabled', 'nextComponentDisabled', 'selectedComponent']),
+    ...get('accountsManagement', ['previousEntityDisabled', 'nextEntityDisabled', 'selectedEntity']),
   },
 
   methods: {
-    ...call('accountManagement/*'),
+    ...call('accountsManagement/*'),
   },
 };
 </script>

@@ -1,7 +1,9 @@
 <template>
  <div>
   <!-- Navigation -->
-  <v-navigation-drawer src="storage/sidebar/bg1.jpg" dark width="250" v-model="secureDefaultDrawer" app class="elevation-1">
+  <v-navigation-drawer
+
+   src="storage/sidebar/bg1.jpg" dark width="250" v-model="secureDefaultDrawer" app class="elevation-1">
    <!-- Navigation menu fixed  -->
    <template v-slot:prepend>
     <vue-diagonal
