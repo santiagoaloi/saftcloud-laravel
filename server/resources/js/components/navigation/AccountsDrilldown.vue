@@ -34,7 +34,7 @@
     </v-card-title>
 
     <v-card-subtitle>
-     Each application module has its own set of capabilities that you can chose to be part of this or not.
+     Each application module has its own set of capabilities that you can  choose from to build your role in a more granular manner.
     </v-card-subtitle>
 
     </template>
@@ -45,7 +45,7 @@
     </v-card-title>
 
     <v-card-subtitle>
-     Assign roles, enforce security policies, monitor activiy among other settings that applies to each invdividual user account.
+     Assign roles, enforce security policies, monitor activiy logs among other settings that applies to each invdividual user account.
     </v-card-subtitle>
 
     </template>
@@ -113,7 +113,7 @@
   <div class="mt-2">
             <baseFieldLabel
               class="mb-n3"
-              label="Root account"
+              label="Root role"
             />
             <v-list-item two-line>
               <v-list-item-icon>
@@ -156,18 +156,55 @@
               hide-no-data
               hide-details
               multiple
+              dense
             >
 
                       <template #selection="data">
             <v-chip
               v-if="data.index === 0"
-              
               :style="isDark ? 'color: white' : 'color:black'"
               :color="isDark ? 'grey-darken-4' : 'blue-white'"
+              small
             >
               {{ selectedCapabilities.length }} capabilities selected.
             </v-chip>
           </template>
+
+                    <template #item="{ item, attrs}">
+            <v-list-item-action>
+
+          <v-icon> {{ attrs.inputValue ? 'mdi-checkbox-marked' : 'mdi-checkbox-blank-outline' }} </v-icon>   
+           
+            </v-list-item-action>
+            <v-list-item-content>
+              <v-list-item-title> <b class="indigo--text text--lighten-3">{{ extractPrefix(item.name)}}</b><span class="blue--text text--lighten-3" >{{ extractCapabilityName(item.name) }}</span> </v-list-item-title>
+            </v-list-item-content>
+
+            <v-tooltip
+              transition="false"
+              color="black"
+              bottom
+              max-width="250"
+              v-if="item.description"
+            >
+              <template #activator="{ on }">
+                <v-btn
+                  plain
+                  :ripple="false"
+                  small
+                  depressed
+                  v-on="on"
+                  @click.stop="removeGroupWarning(item.id, item.name, 'delete')"
+                >
+                  <v-icon small>
+                    mdi-help-box
+                  </v-icon>
+                </v-btn>
+              </template>
+              <span>{{  item.description  }}</span>
+            </v-tooltip>
+          </template>
+          
             </v-autocomplete>
           </div>
     </template>
@@ -179,7 +216,6 @@
 
       
             <div class="mt-n5">
-         
             <v-list-item >
               <v-list-item-icon>
                 <v-avatar >
@@ -198,6 +234,26 @@
             </v-list-item>
           </div>
 
+                      <div class="mt-n5">
+            <v-list-item >
+              <v-list-item-icon>
+                <v-avatar >
+                     <v-icon class="ml-n4 green--text text--lighten-3">
+                mdi-two-factor-authentication
+              </v-icon>
+                  </v-avatar>
+           
+              </v-list-item-icon>
+              <v-list-item-content>
+                <v-list-item-title>Two factor authentication</v-list-item-title>
+                <v-list-item-subtitle>
+                  <h5>Remove 2FA </h5>
+                </v-list-item-subtitle>
+              </v-list-item-content>
+            </v-list-item>
+          </div>
+
+
     <div class="mt-2">
       <v-list-item two-line>
         <v-list-item-icon>
@@ -205,16 +261,23 @@
             :ripple="false"
             hide-details
             class="mt-2"
+
+           v-model="accountStatus"
           />
         </v-list-item-icon>
         <v-list-item-content>
-          <v-list-item-title>Enable user account</v-list-item-title>
+          <v-list-item-title>User acccount status</v-list-item-title>
           <v-list-item-subtitle>
-           This account is disabled
+           This account is enabled
           </v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
     </div>
+
+    <v-container class="text-end">
+    <v-btn color="accent">Audit logs</v-btn>
+      <v-btn>Change password</v-btn>
+    </v-container>
     </template>
 
 
@@ -257,6 +320,15 @@
       </v-list-item>
 
       <v-divider />
+
+            <template v-if="selectedEntityType === 'Accounts'">
+
+
+      <v-container class="text-end accent--text text--lighten-3">
+<h5>      Export all user data</h5>
+      </v-container>
+            </template>
+
     </v-list>
   </div>
 </template>
@@ -273,7 +345,8 @@ export default {
 
   data() {
     return {
-      selectedCapabilities: []
+      selectedCapabilities: [],
+      accountStatus: true,
     }
   },
 
@@ -293,6 +366,17 @@ export default {
 
   methods: {
     ...call('accountsManagement/*'),
+
+    extractPrefix(item){
+      let prefix= item.substr(0, item.indexOf('.'))
+      return prefix
+    },
+
+        extractCapabilityName(item){
+      let suffix = item.substring(item.indexOf('.'));
+
+      return suffix
+    },
 
 
 
