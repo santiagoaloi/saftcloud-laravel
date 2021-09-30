@@ -6,8 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use App\Models\Root\ComponentGroup;
+use App\Helpers\ComponentManager;
 
-use App\Http\Controllers\Root\ComponentController;
 use App\Http\Controllers\Controller;
 use Illuminate\Database\QueryException;
 
@@ -174,9 +174,8 @@ class ComponentGroupController extends Controller {
     public function getExistComponents($id){
         $components = DB::table('components')->where('component_group_id', '=', $id)->get();
 
-        $funcComponentController = New ComponentController;
         foreach($components as $component){
-            $arrayComponent[] = $funcComponentController->parseComponent($component);
+            $arrayComponent[] = ComponentManager::parseComponent($component);
         };
 
         return response([
