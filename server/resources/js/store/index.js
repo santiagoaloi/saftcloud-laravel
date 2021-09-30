@@ -5,17 +5,15 @@ import Vuex from 'vuex';
 // libraries
 import VuexPersist from 'vuex-persist';
 import localforage from 'localforage';
-import { cloneDeep, omit } from 'lodash';
+import { omit } from 'lodash';
 import pathify from '@/plugins/vuex-pathify';
 
 // All Vuex Modules definned in ./modules/index.js
 import * as modules from './modules';
 
 // Blacklist module keys
-
-const componentManagementFiltered = () => {
+const componentManagementFiltered = (module) => {
   const blackList = ['componentEditSheet'];
-  const module = modules.componentManagement.state;
   return omit(module, blackList);
 };
 
@@ -35,7 +33,7 @@ const vuexLocal = new VuexPersist({
       activeBranch: state.authentication.activeBranch,
     },
     componentManagement: {
-      ...componentManagementFiltered(state),
+      ...componentManagementFiltered(state.componentManagement),
     },
   }),
 });

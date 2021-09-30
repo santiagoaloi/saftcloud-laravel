@@ -34,7 +34,7 @@
 </template>
 
 <script>
-  import { sync, call, get } from 'vuex-pathify';
+  import { sync, get } from 'vuex-pathify';
   import globalMixin from '@/mixins/globalMixin';
 
   export default {

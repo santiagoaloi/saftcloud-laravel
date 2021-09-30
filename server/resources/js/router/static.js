@@ -57,7 +57,7 @@ export default [
     name: 'accounts',
     meta: { layout: 'secure_layout', title: 'Manage account and roles' },
     component: () =>
-      import(/* webpackChunkName: 'components' */ '@/views/System/Accounts/Accounts.vue'),
+      import(/* webpackChunkName: 'accounts' */ '@/views/System/Accounts/Accounts.vue'),
     children: [],
   },
 ];

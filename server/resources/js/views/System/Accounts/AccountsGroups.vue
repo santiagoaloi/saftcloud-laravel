@@ -46,7 +46,7 @@
 </template>
 
 <script>
-  import { sync, get, call } from 'vuex-pathify';
+  import { sync, call } from 'vuex-pathify';
   import componentGroups from '@/mixins/componentGroups';
   import componentActions from '@/mixins/componentActions';
 
