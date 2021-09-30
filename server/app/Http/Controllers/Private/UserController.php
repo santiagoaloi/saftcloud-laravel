@@ -74,7 +74,7 @@ class UserController extends Controller {
         $this->authorize('show', User::class);
         $user = User::findOrFail($id);
         $user->entity;
-        $user->privileges = RoleHelper::getRoles($user->roles);
+        $user->privileges = getRoles($user->roles);
 
         return response([
             'record'=> $user
@@ -88,7 +88,7 @@ class UserController extends Controller {
             $user->userSetting;
             $user->entity;
             $user->branches;
-            $user->privileges = RoleHelper::getRoles($user->roles);
+            $user->privileges = getRoles($user->roles);
             
             $newUsers[] = $user;
         }

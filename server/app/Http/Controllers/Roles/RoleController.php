@@ -52,6 +52,7 @@ class RoleController extends Controller {
     }
 
     public function getCapabilities($capabilities){
+        $privilege = [];
         foreach ($capabilities as $capability){
             $privilege[] = $capability->name;
         };

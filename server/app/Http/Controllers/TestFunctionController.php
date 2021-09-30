@@ -124,7 +124,12 @@ class TestFunctionController extends Controller {
     }
 
     public function test4(Request $request, Country $country){
-        $this->authorize('shows', User::class) OR 
+        
+        $user = Auth::user();
+        $roles = $user->roles;
+
+        return getRoles($roles);
+
         $user = User::findOrFail(1);
 
         $roles = [];
