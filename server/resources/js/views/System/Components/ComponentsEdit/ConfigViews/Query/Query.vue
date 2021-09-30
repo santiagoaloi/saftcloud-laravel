@@ -1,18 +1,8 @@
 <template>
   <div>
-    <v-card
-      flat
-      width="100%"
-      class="queryHeight mx-auto "
-    >
-      <ValidationObserver
-        ref="componentsEditQuery"
-        slim
-      >
-        <validation-provider
-          name="component query"
-          rules="required"
-        >
+    <v-card flat width="100%" class="queryHeight mx-auto">
+      <ValidationObserver ref="componentsEditQuery" slim>
+        <validation-provider name="component query" rules="required">
           <base-editor
             :key="editorKey"
             v-model="selectedComponent.config.general_config.sql_query"
@@ -25,38 +15,38 @@
 </template>
 
 <script>
-import axios from 'axios';
-import { sync, call, get } from 'vuex-pathify';
+  import axios from 'axios';
+  import { sync, call, get } from 'vuex-pathify';
 
-export default {
-  name: 'ComponentsEditQuery',
-  components: {},
-  data: () => ({
-    editorKey: 800,
-  }),
+  export default {
+    name: 'ComponentsEditQuery',
+    components: {},
+    data: () => ({
+      editorKey: 800,
+    }),
 
-  watch: {
-    isDark(oldValue, newValue) {
-      if (oldValue !== newValue) {
-        this.editorKey++;
-      }
+    watch: {
+      isDark(oldValue, newValue) {
+        if (oldValue !== newValue) {
+          this.editorKey++;
+        }
+      },
     },
-  },
 
-  computed: {
-    ...sync('theme', ['isDark']),
-    ...get('componentManagement', ['selectedComponent']),
-  },
+    computed: {
+      ...sync('theme', ['isDark']),
+      ...get('componentManagement', ['selectedComponent']),
+    },
 
-  methods: {
-    ...call('componentManagement/*'),
-  },
-};
+    methods: {
+      ...call('componentManagement/*'),
+    },
+  };
 </script>
 
 <style scoped>
-.queryHeight {
- height: calc(100vh - 103px);
- overflow-y: auto;
-}
+  .queryHeight {
+    height: calc(100vh - 103px);
+    overflow-y: auto;
+  }
 </style>

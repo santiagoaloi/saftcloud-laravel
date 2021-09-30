@@ -13,41 +13,34 @@
     @save="saveComponentsConfigStructure()"
     @close="dialogEditor = false"
   >
-    <v-card
-      flat
-      width="100%"
-      class="dialogHeight"
-    >
-      <base-editor
-        v-model="componentsConfigStructure"
-        mode="json"
-      />
+    <v-card flat width="100%" class="dialogHeight">
+      <base-editor v-model="componentsConfigStructure" mode="json" />
     </v-card>
   </baseDialog>
 </template>
 <script>
-import { sync, call } from 'vuex-pathify';
+  import { sync, call } from 'vuex-pathify';
 
-export default {
-  name: 'DialogComponent',
+  export default {
+    name: 'DialogComponent',
 
-  mounted() {
-    this.getComponentsConfigStructure();
-  },
+    computed: {
+      ...sync('theme', ['isDark']),
+      ...sync('componentManagement', ['dialogEditor', 'componentsConfigStructure']),
+    },
 
-  computed: {
-    ...sync('theme', ['isDark']),
-    ...sync('componentManagement', ['dialogEditor', 'componentsConfigStructure']),
-  },
+    mounted() {
+      this.getComponentsConfigStructure();
+    },
 
-  methods: {
-    ...call('componentManagement/*'),
-  },
-};
+    methods: {
+      ...call('componentManagement/*'),
+    },
+  };
 </script>
 <style>
-.dialogHeight {
- height: calc(100vh - 300px);
- overflow-y: auto;
-}
+  .dialogHeight {
+    height: calc(100vh - 300px);
+    overflow-y: auto;
+  }
 </style>

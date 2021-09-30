@@ -1,21 +1,12 @@
 <template>
   <div>
     <v-card-text>
-      <h2 class="text--primary mb-5">
-        Hi {{ signupForm.name }}, nice to meet you!
-      </h2>
-      <ValidationObserver
-        ref="step0"
-        slim
-      >
+      <h2 class="text--primary mb-5">Hi {{ signupForm.name }}, nice to meet you!</h2>
+      <ValidationObserver ref="step0" slim>
         <v-row>
           <v-col sm="6">
             <baseFieldLabel label="Name" />
-            <validation-provider
-              v-slot="{ errors, reset }"
-              name="first name"
-              rules="required"
-            >
+            <validation-provider v-slot="{ errors, reset }" name="first name" rules="required">
               <v-text-field
                 v-model="signupForm.name"
                 counter
@@ -36,11 +27,7 @@
           </v-col>
           <v-col sm="6">
             <baseFieldLabel label="Last name" />
-            <validation-provider
-              v-slot="{ errors, reset }"
-              name="last name"
-              rules="required"
-            >
+            <validation-provider v-slot="{ errors, reset }" name="last name" rules="required">
               <v-text-field
                 v-model="signupForm.lastname"
                 counter
@@ -61,34 +48,28 @@
         </v-row>
       </ValidationObserver>
     </v-card-text>
-    <v-btn
-      large
-      color="primary"
-      @click="validateAndProceed()"
-    >
-      Continue
-    </v-btn>
+    <v-btn large color="primary" @click="validateAndProceed()"> Continue </v-btn>
   </div>
 </template>
 
 <script>
-import { sync, get } from 'vuex-pathify';
+  import { sync, get } from 'vuex-pathify';
 
-export default {
-  name: 'SignupStep0',
-  computed: {
-    ...sync('theme', ['isDark']),
-    ...sync('signup', ['signupForm', 'step']),
-  },
-
-  methods: {
-    validateAndProceed() {
-      this.$refs.step0.validate().then((success) => {
-        if (success) {
-          this.step++;
-        }
-      });
+  export default {
+    name: 'SignupStep0',
+    computed: {
+      ...sync('theme', ['isDark']),
+      ...sync('signup', ['signupForm', 'step']),
     },
-  },
-};
+
+    methods: {
+      validateAndProceed() {
+        this.$refs.step0.validate().then((success) => {
+          if (success) {
+            this.step++;
+          }
+        });
+      },
+    },
+  };
 </script>

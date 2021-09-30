@@ -6,12 +6,13 @@ import routes from '@/router/routes';
 
 Vue.use(Router);
 
-const createRouter = () => new Router({
-  base: '/',
-  mode: 'hash',
-  linkActiveClass: 'active',
-  routes,
-});
+const createRouter = () =>
+  new Router({
+    base: '/',
+    mode: 'hash',
+    linkActiveClass: 'active',
+    routes,
+  });
 
 const router = createRouter();
 
@@ -37,7 +38,6 @@ const waitForStorageToBeReady = async (to, from, next) => {
 router.beforeEach(waitForStorageToBeReady);
 
 router.beforeResolve((to, from, next) => {
-
   if (store.get('application/isBooted')) {
     store.set('application/isBooted', false);
   }
@@ -55,8 +55,5 @@ router.beforeResolve((to, from, next) => {
     next();
   }
 });
-
-
-
 
 export default router;

@@ -1,15 +1,9 @@
 <template>
   <div>
-    <ValidationObserver
-      ref="componentsEditFormFieldsBasicTab"
-      slim
-    >
+    <ValidationObserver ref="componentsEditFormFieldsBasicTab" slim>
       <v-row>
         <v-col cols="6">
-          <baseFieldLabel
-            required
-            label="Label"
-          />
+          <baseFieldLabel required label="Label" />
           <validation-provider
             v-slot="{ errors, invalid }"
             immediate
@@ -32,15 +26,8 @@
           </validation-provider>
         </v-col>
         <v-col cols="6">
-          <baseFieldLabel
-            required
-            label="Input type"
-          />
-          <validation-provider
-            v-slot="{ errors }"
-            name="field input type"
-            rules="required"
-          >
+          <baseFieldLabel required label="Input type" />
+          <validation-provider v-slot="{ errors }" name="field input type" rules="required">
             <v-select
               v-model="selectedComponentFormField.inputType"
               :outlined="isDark"
@@ -57,50 +44,46 @@
         </v-col>
       </v-row>
     </ValidationObserver>
-    <base-dialog-icons
-      v-if="dialogIcons"
-      v-model="dialogIcons"
-      :icon="componentIcon"
-    />
+    <base-dialog-icons v-if="dialogIcons" v-model="dialogIcons" :icon="componentIcon" />
   </div>
 </template>
 
 <script>
-import { sync, get } from 'vuex-pathify';
-import { store } from '@/store';
+  import { sync, get } from 'vuex-pathify';
+  import { store } from '@/store';
 
-export default {
-  name: 'ComponentsEditViewsFormFieldsTabsBasic',
-  data() {
-    return {
-      dialogIcons: false,
-      inputTypes: [
-        { value: 'text', text: 'Text' },
-        { value: 'number', text: 'Number' },
-        { value: 'password', text: 'Password' },
-        { value: 'range', text: 'Range' },
-        { value: 'color', text: 'Color' },
-        { value: 'email', text: 'Email' },
-        { value: 'phone', text: 'Phone' },
-      ],
-    };
-  },
-
-  computed: {
-    ...sync('theme', ['isDark']),
-    ...sync('validationStates', ['componentsEditFormFieldsBasicTab']),
-    ...get('componentManagement', ['selectedComponentFormField']),
-
-    componentIcon() {
-      if (!this.selectedComponentFormField) return;
-      return this.selectedComponentFormField.icon;
+  export default {
+    name: 'ComponentsEditViewsFormFieldsTabsBasic',
+    data() {
+      return {
+        dialogIcons: false,
+        inputTypes: [
+          { value: 'text', text: 'Text' },
+          { value: 'number', text: 'Number' },
+          { value: 'password', text: 'Password' },
+          { value: 'range', text: 'Range' },
+          { value: 'color', text: 'Color' },
+          { value: 'email', text: 'Email' },
+          { value: 'phone', text: 'Phone' },
+        ],
+      };
     },
-  },
 
-  methods: {
-    setInvalid(invalid, field) {
-      store.set(`validationStates/componentsEditFormFieldsBasicTab@${field}`, invalid);
+    computed: {
+      ...sync('theme', ['isDark']),
+      ...sync('validationStates', ['componentsEditFormFieldsBasicTab']),
+      ...get('componentManagement', ['selectedComponentFormField']),
+
+      componentIcon() {
+        if (!this.selectedComponentFormField) return;
+        return this.selectedComponentFormField.icon;
+      },
     },
-  },
-};
+
+    methods: {
+      setInvalid(invalid, field) {
+        store.set(`validationStates/componentsEditFormFieldsBasicTab@${field}`, invalid);
+      },
+    },
+  };
 </script>

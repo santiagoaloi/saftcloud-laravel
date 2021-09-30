@@ -14,10 +14,7 @@
         :active-class="isDark ? 'white--text' : ''"
         :ripple="false"
       >
-        <v-icon
-          small
-          left
-        >
+        <v-icon small left>
           {{ tab.icon }}
         </v-icon>
         {{ tab.name }}
@@ -26,30 +23,26 @@
 
     <div class="d-flex">
       <!-- <v-switch v-model="multipleSelect" label="Multiple selection" class="mt-1 mx-4"> </v-switch> -->
-      <v-btn
-        class="mt-n3"
-        plain
-        @click="isTableLayout = !isTableLayout"
-      >
+      <v-btn class="mt-n3" plain @click="isTableLayout = !isTableLayout">
         <v-icon left>
-          {{ isTableLayout ? " mdi-view-grid-outline" : " mdi-format-list-bulleted-square" }}
+          {{ isTableLayout ? ' mdi-view-grid-outline' : ' mdi-format-list-bulleted-square' }}
         </v-icon>
-        {{ isTableLayout ? "Grid" : "List" }}
+        {{ isTableLayout ? 'Grid' : 'List' }}
       </v-btn>
     </div>
   </div>
 </template>
 
 <script>
-import { sync, call, get } from 'vuex-pathify';
-import globalMixin from '@/mixins/globalMixin';
+  import { sync, call, get } from 'vuex-pathify';
+  import globalMixin from '@/mixins/globalMixin';
 
-export default {
-  name: 'AccountsTabs',
-  computed: {
-    ...sync('theme', ['isDark']),
-    ...sync('accountsManagement', ['activeStatusTab', 'entityStatusTabs', 'isTableLayout']),
-    ...get('accountsManagement', ['isEmpty', 'isAllFilteredEntititesEmpty']),
-  },
-};
+  export default {
+    name: 'AccountsTabs',
+    computed: {
+      ...sync('theme', ['isDark']),
+      ...sync('accountsManagement', ['activeStatusTab', 'entityStatusTabs', 'isTableLayout']),
+      ...get('accountsManagement', ['isEmpty', 'isAllFilteredEntititesEmpty']),
+    },
+  };
 </script>

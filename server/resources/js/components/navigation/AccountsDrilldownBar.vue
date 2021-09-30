@@ -1,18 +1,7 @@
 <template>
-  <div
-    v-if="selectedEntity"
-    class="mt-3"
-  >
-    <v-app-bar
-      color="transparent"
-      flat
-      dense
-    >
-      <v-tooltip
-        transition="false"
-        color="black"
-        bottom
-      >
+  <div v-if="selectedEntity" class="mt-3">
+    <v-app-bar color="transparent" flat dense>
+      <v-tooltip transition="false" color="black" bottom>
         <template #activator="{ on }">
           <v-btn
             :disabled="previousEntityDisabled"
@@ -28,15 +17,11 @@
         </template>
         <span>Previous entity</span>
       </v-tooltip>
-      <v-tooltip
-        transition="false"
-        color="black"
-        bottom
-      >
+      <v-tooltip transition="false" color="black" bottom>
         <template #activator="{ on }">
           <v-btn
             :disabled="nextEntityDisabled"
-            class=" mt-n2"
+            class="mt-n2"
             fab
             text
             x-small
@@ -51,14 +36,10 @@
 
       <v-spacer />
 
-      <v-tooltip
-        transition="false"
-        color="black"
-        bottom
-      >
+      <v-tooltip transition="false" color="black" bottom>
         <template #activator="{ on }">
           <v-btn
-            class=" mt-n2 mr-n1"
+            class="mt-n2 mr-n1"
             fab
             text
             x-small
@@ -76,19 +57,23 @@
 </template>
 
 <script>
-import { sync, call, get } from 'vuex-pathify';
+  import { sync, call, get } from 'vuex-pathify';
 
-export default {
-  name: 'ComponentDrilldown',
-  computed: {
-    ...sync('theme', ['isDark']),
-    ...sync('drawers', ['secureAccountsDrawer']),
-    ...sync('accountsManagement', ['componentCardGroup']),
-    ...get('accountsManagement', ['previousEntityDisabled', 'nextEntityDisabled', 'selectedEntity']),
-  },
+  export default {
+    name: 'ComponentDrilldown',
+    computed: {
+      ...sync('theme', ['isDark']),
+      ...sync('drawers', ['secureAccountsDrawer']),
+      ...sync('accountsManagement', ['componentCardGroup']),
+      ...get('accountsManagement', [
+        'previousEntityDisabled',
+        'nextEntityDisabled',
+        'selectedEntity',
+      ]),
+    },
 
-  methods: {
-    ...call('accountsManagement/*'),
-  },
-};
+    methods: {
+      ...call('accountsManagement/*'),
+    },
+  };
 </script>

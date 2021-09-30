@@ -11,7 +11,7 @@
       <div class="d-flex">
         <v-list-item-icon class="mr-1">
           <v-icon :class="{ 'grey--text': menuItem.disabled }">
-            {{ menuItem.icon ? menuItem.icon : "mdi-folder-outline" }}
+            {{ menuItem.icon ? menuItem.icon : 'mdi-folder-outline' }}
           </v-icon>
         </v-list-item-icon>
         <v-list-item-content class="ml-2">
@@ -34,19 +34,13 @@
       @click="showId(menuItem)"
     >
       <template #activator>
-        <slot
-          v-if="!subgroup"
-          name="prependIcon"
-        >
+        <slot v-if="!subgroup" name="prependIcon">
           <v-icon class="mr-3">
             {{ icon }}
           </v-icon>
         </slot>
 
-        <slot
-          v-if="subgroup"
-          name="prependIcon"
-        >
+        <slot v-if="subgroup" name="prependIcon">
           <v-icon class="ml-n4 mr-3">
             {{ icon }}
           </v-icon>
@@ -65,43 +59,43 @@
 </template>
 
 <script>
-export default {
-  props: {
-    menuItem: {
-      type: Object,
-      default: () => {},
-    },
-    subgroup: {
-      type: Boolean,
-      default: false,
-    },
-    small: {
-      type: Boolean,
-      default: false,
-    },
-  },
-  data: () => ({
-    icon: 'mdi-folder-outline',
-  }),
-  mounted() {
-    this.$watch(
-      () => {
-        if (this.$refs.group) return this.$refs.group.isActive;
+  export default {
+    props: {
+      menuItem: {
+        type: Object,
+        default: () => {},
       },
-      (val) => {
-        this.icon = val ? 'mdi-folder-open-outline' : 'mdi-folder-outline';
+      subgroup: {
+        type: Boolean,
+        default: false,
       },
-    );
-  },
-  methods: {
-    showId(item) {
-      console.log(item);
+      small: {
+        type: Boolean,
+        default: false,
+      },
     },
-  },
-};
+    data: () => ({
+      icon: 'mdi-folder-outline',
+    }),
+    mounted() {
+      this.$watch(
+        () => {
+          if (this.$refs.group) return this.$refs.group.isActive;
+        },
+        (val) => {
+          this.icon = val ? 'mdi-folder-open-outline' : 'mdi-folder-outline';
+        },
+      );
+    },
+    methods: {
+      showId(item) {
+        console.log(item);
+      },
+    },
+  };
 </script>
 <style scoped>
-.v-application--is-ltr .v-list-group__items .v-list-item {
- padding-left: 18px !important;
-}
+  .v-application--is-ltr .v-list-group__items .v-list-item {
+    padding-left: 18px !important;
+  }
 </style>

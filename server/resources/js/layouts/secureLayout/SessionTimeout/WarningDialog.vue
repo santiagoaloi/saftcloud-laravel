@@ -7,24 +7,18 @@
     width="600"
     no-actions
   >
-    <v-card
-      class="mx-auto"
-      width="300"
-    >
-      hello
-    </v-card>
+    <v-card class="mx-auto" width="300"> hello </v-card>
   </base-dialog>
 </template>
 <script>
-import { sync, get } from 'vuex-pathify';
-import { store } from '@/store';
+  import { sync } from 'vuex-pathify';
 
-export default {
-  name: 'DialogSessionTimeoutWarning',
+  export default {
+    name: 'DialogSessionTimeoutWarning',
 
-  computed: {
-    ...sync('theme', ['isDark']),
-    ...sync('authentication', ['dialogTImeoutWarning']),
-  },
-};
+    computed: {
+      ...sync('theme', ['isDark']),
+      ...sync('authentication', ['dialogTImeoutWarning']),
+    },
+  };
 </script>

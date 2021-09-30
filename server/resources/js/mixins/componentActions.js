@@ -8,7 +8,9 @@ export default {
     removeComponentWarning(id, method, apiPath) {
       this.$swal({
         title: `<span style="color:${this.isDark ? 'lightgrey' : ''} "> Delete component? </span>`,
-        html: `<span style="color:${this.isDark ? 'lightgrey' : ''} "> This component will be deleted inmediately.</span>`,
+        html: `<span style="color:${
+          this.isDark ? 'lightgrey' : ''
+        } "> This component will be deleted inmediately.</span>`,
         color: 'white',
         showCancelButton: true,
         confirmButtonText: 'Delete',

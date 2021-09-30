@@ -2,7 +2,7 @@ import { store } from '@/store';
 
 export default {
   loggedIn() {
-  // If no token exists in VUEX, router understands that you aren't logged-in.
+    // If no token exists in VUEX, router understands that you aren't logged-in.
     const token = store.get('authentication@session.token');
     if (token != undefined) {
       return true;

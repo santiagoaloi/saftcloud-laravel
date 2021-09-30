@@ -1,35 +1,25 @@
 <template>
   <div>
-      <div  class="d-flex justify-end align-center transparent" >
+    <div class="d-flex justify-end align-center transparent">
+      <accounts-groups />
 
-        <accounts-groups />
-
-   <div class="flex-grow-1" />
+      <div class="flex-grow-1" />
       <div class="d-flex">
-       
         <v-btn
           class="ml-2"
           :color="isDark ? 'accent' : 'primary'"
-          @click.stop="dialogAccount = true"
+          @click.stop="(dialogEntity = true), (identityTypeButton = 'Role')"
         >
-          <v-icon
-            :left="$vuetify.breakpoint.lgAndUp" 
-            small
-          >
-            mdi-lock-plus
-          </v-icon> {{createRole}}
+          <v-icon :left="$vuetify.breakpoint.lgAndUp" small> mdi-lock-plus </v-icon>
+          {{ createRole }}
         </v-btn>
         <v-btn
           class="ml-2"
           :color="isDark ? 'accent' : 'primary'"
-          @click.stop="dialogAccount = true"
+          @click.stop="(dialogEntity = true), (identityTypeButton = 'User')"
         >
-          <v-icon
-           :left="$vuetify.breakpoint.lgAndUp" 
-            small
-          >
-           mdi-account-plus
-          </v-icon>{{createUser}}
+          <v-icon :left="$vuetify.breakpoint.lgAndUp" small> mdi-account-plus </v-icon
+          >{{ createUser }}
         </v-btn>
       </div>
     </div>
@@ -38,31 +28,29 @@
 </template>
 
 <script>
-import { sync, call } from 'vuex-pathify';
+  import { sync, call } from 'vuex-pathify';
 
-export default {
-  name: 'AccountsAppbar',
-components: {
-    AccountsGroups: () => import(/* webpackChunkName: 'accounts-groups' */ "./AccountsGroups"),
+  export default {
+    name: 'AccountsAppbar',
+    components: {
+      AccountsGroups: () => import(/* webpackChunkName: 'accounts-groups' */ './AccountsGroups'),
+    },
 
-},
-  methods: {
-    ...call('accountManagement/*'),
-  },
+    computed: {
+      ...sync('theme', ['isDark']),
+      ...sync('accountsManagement', ['dialogEntity', 'dialogEditor', 'identityTypeButton']),
 
-  computed: {
-    ...sync('theme', ['isDark']),
-    ...sync('accountsManagement', ['dialogAccount', 'dialogEditor']),
+      createUser() {
+        return this.$vuetify.breakpoint.lgAndUp ? 'Create User' : '';
+      },
 
-   createUser(){
-     return this.$vuetify.breakpoint.lgAndUp ? 'Create User' : ''
-   },
+      createRole() {
+        return this.$vuetify.breakpoint.lgAndUp ? 'Create Role' : '';
+      },
+    },
 
-   createRole(){
-      return this.$vuetify.breakpoint.lgAndUp ? 'Create Role' : ''
-
-  },
-
-  },
-};
+    methods: {
+      ...call('accountManagement/*'),
+    },
+  };
 </script>

@@ -60,7 +60,10 @@ const mutations = make.mutations(state);
 
 const getters = {
   //* returns true if at least one validation did not succeed.
-  hasValidationErrors: (_, __, rootState) => Object.values(rootState.validationStates).some((innerObj) => Object.values(innerObj).includes(true)),
+  hasValidationErrors: (_, __, rootState) =>
+    Object.values(rootState.validationStates).some((innerObj) =>
+      Object.values(innerObj).includes(true),
+    ),
 
   //* returns the group name where this component belongs.
   mapComponentGroup: (state, getters) => (component) => {
@@ -71,17 +74,22 @@ const getters = {
   //* returns the parent group name where this component belongs.
   mapGroupParent: (state, getters) => (component) => {
     if (getters.isAllGroupsEmpty) return;
-    const parentGroupId = state.allGroups.find((g) => g.id === component.component_group_id).component_group_id;
+    const parentGroupId = state.allGroups.find(
+      (g) => g.id === component.component_group_id,
+    ).component_group_id;
     return state.allGroups.find((g) => g.id === parentGroupId).name;
   },
 
   //* Loads all the configuration of the selected component.
-  selectedComponent: (state, getters) => getters.allComponentsFiltered[state.selectedComponentIndex],
+  selectedComponent: (state, getters) =>
+    getters.allComponentsFiltered[state.selectedComponentIndex],
 
   //* Loads all the field settings of the selected field in component form field tab.
   selectedComponentFormField: (state, getters) => {
     if (getters.selectedComponent) {
-      const index = getters.selectedComponent.config.form_fields.findIndex((f) => f.field == state.selectedComponentActiveField);
+      const index = getters.selectedComponent.config.form_fields.findIndex(
+        (f) => f.field === state.selectedComponentActiveField,
+      );
       return getters.selectedComponent.config.form_fields[index];
     }
   },
@@ -90,13 +98,16 @@ const getters = {
   previousComponentDisabled: (state) => state.componentCardGroup === 0,
 
   //* Disables the right panel navigation arrows if the last component in the array is selected.
-  nextComponentDisabled: (state, getters) => state.componentCardGroup === getters.allComponentsFiltered.length - 1,
+  nextComponentDisabled: (state, getters) =>
+    state.componentCardGroup === getters.allComponentsFiltered.length - 1,
 
   //* Returns form fields matching the search string typed.
   filteredFormFields: (state, getters) => {
     if (getters.selectedComponent) {
       const searchFields = state.searchFields.toString().toLowerCase();
-      return getters.selectedComponent.config.form_fields.filter((field) => field.label.toLowerCase().match(searchFields));
+      return getters.selectedComponent.config.form_fields.filter((field) =>
+        field.label.toLowerCase().match(searchFields),
+      );
     }
   },
 
@@ -104,7 +115,9 @@ const getters = {
   filteredSelectedFields: (state, getters) => {
     if (getters.selectedComponent) {
       const searchFields = state.searchFields.toString().toLowerCase();
-      return getters.selectedComponent.config.form_fields.filter((field) => field.label.toLowerCase().match(searchFields) && field.displayField);
+      return getters.selectedComponent.config.form_fields.filter(
+        (field) => field.label.toLowerCase().match(searchFields) && field.displayField,
+      );
     }
   },
 
@@ -116,15 +129,15 @@ const getters = {
     if (!getters.hasSelectedSomeGroups) return {};
     return state.allComponents.filter((component) => {
       const search = rootState.application.search.toLowerCase();
-      const title = component.config  .general_config.title.toLowerCase();
+      const title = component.config.general_config.title.toLowerCase();
       const status = getters.activeComponentTabName;
       return (
-        (!search || title.match(search))
-    && (status === 'all'
-     || (status === 'inactive' && !component.status.active)
-     || (status === 'navigation' && component.config.general_config.isVisibleInSidebar)
-     || component.status[status])
-    && state.selectedComponentGroups.some((group) => group.id === component.component_group_id)
+        (!search || title.match(search)) &&
+        (status === 'all' ||
+          (status === 'inactive' && !component.status.active) ||
+          (status === 'navigation' && component.config.general_config.isVisibleInSidebar) ||
+          component.status[status]) &&
+        state.selectedComponentGroups.some((group) => group.id === component.component_group_id)
       );
     });
   },
@@ -156,37 +169,42 @@ const getters = {
   isAllFilteredComponentsEmpty: (_, getters) => getters.allComponentsFiltered.length === 0,
 
   //* Returns the color of the star icon depending on its state.
-  isStarredColor: () => (component) => (component.status.starred ? 'orange' : 'grey darken-1'),
+  isStarredColor: () => (component) => component.status.starred ? 'orange' : 'grey darken-1',
 
   //* Returns the star icon depending on its state.
-  isStarredIcon: () => (component) => (component.status.starred ? 'mdi-star' : 'mdi-star-outline'),
+  isStarredIcon: () => (component) => component.status.starred ? 'mdi-star' : 'mdi-star-outline',
 
   //* Returns the active icon depending on its state.
-  isActiveIcon: () => (component) => (component.status.active ? 'mdi-lightbulb-on' : 'mdi-lightbulb-on-outline'),
+  isActiveIcon: () => (component) =>
+    component.status.active ? 'mdi-lightbulb-on' : 'mdi-lightbulb-on-outline',
 
   //* Returns color of the compoment card in the grid view, depending on the theme settings.
-  isActiveColor: (_, __, rootState) => (component) => (rootState.theme.isDark && component.status.active
-    ? 'indigo lighten-4'
-    : !rootState.theme.isDark && component.status.active
+  isActiveColor: (_, __, rootState) => (component) =>
+    rootState.theme.isDark && component.status.active
+      ? 'indigo lighten-4'
+      : !rootState.theme.isDark && component.status.active
       ? 'indigo darken-4'
       : rootState.theme.isDark && !component.status.active
-        ? 'grey darken-1'
-        : 'black'),
+      ? 'grey darken-1'
+      : 'black',
 
   //* Returns the modular icon depending on its state.
-  isModularIcon: () => (component) => (component.status.modular ? 'mdi-view-module' : 'mdi-view-module-outline'),
+  isModularIcon: () => (component) =>
+    component.status.modular ? 'mdi-view-module' : 'mdi-view-module-outline',
 
   //* Returns color of the card modular icon in the grid view, depending on the theme settings.
-  isModularColor: (_, __, rootState) => (component) => (rootState.theme.isDark && component.status.modular
-    ? 'indigo lighten-4'
-    : !rootState.theme.isDark && component.status.modular
+  isModularColor: (_, __, rootState) => (component) =>
+    rootState.theme.isDark && component.status.modular
+      ? 'indigo lighten-4'
+      : !rootState.theme.isDark && component.status.modular
       ? 'indigo darken-4'
       : rootState.theme.isDark && !component.status.modular
-        ? 'grey darken-1'
-        : 'black'),
+      ? 'grey darken-1'
+      : 'black',
 
   //* Returns the count of components belonging to a specific group.
-  countComponentsInGroup: (state) => (id) => state.allComponents.filter((component) => component.component_group_id === id).length,
+  countComponentsInGroup: (state) => (id) =>
+    state.allComponents.filter((component) => component.component_group_id === id).length,
 
   countComponentsFiltered: (_, getters) => getters.allComponentsFiltered.length,
 };
@@ -196,57 +214,64 @@ const actions = {
 
   //* Saves the component configuration structure as a new version of the configuration (version control).
   saveComponentsConfigStructure({ state, dispatch }) {
-    axios.post('api/componentDefault', { config_structure: JSON.parse(state.componentsConfigStructure) }).then((response) => {
-      dispatch('getComponents');
-      dispatch('getNavigationStructure');
-      store.set('snackbar/value', true);
-      store.set('snackbar/text', 'Config structure updated');
-      store.set('snackbar/color', 'primary');
-    });
+    axios
+      .post('api/componentDefault', {
+        config_structure: JSON.parse(state.componentsConfigStructure),
+      })
+      .then(() => {
+        dispatch('getComponents');
+        dispatch('getNavigationStructure');
+        store.set('snackbar/value', true);
+        store.set('snackbar/text', 'Config structure updated');
+        store.set('snackbar/color', 'primary');
+      });
   },
 
   //* Retrieves the last record of the component configuration structure.
-  getComponentsConfigStructure({}) {
+  getComponentsConfigStructure() {
     axios.get('api/componentDefaultLast').then((response) => {
-      store.set('componentManagement/componentsConfigStructure', JSON.stringify(response.data, null, 2));
+      store.set(
+        'componentManagement/componentsConfigStructure',
+        JSON.stringify(response.data, null, 2),
+      );
     });
   },
 
   //* Retrieves all avaiable tables from the database.
-  getDbTables({}) {
+  getDbTables() {
     axios.get('api/getAllTables').then((response) => {
       store.set('componentManagement/dbTables', response.data);
     });
   },
 
   //* Retrieves all avaiable tables and its corresponding columns from the database.
-  getDbTablesAndColumns({}) {
+  getDbTablesAndColumns() {
     axios.get('api/getAllTablesAndColumns').then((response) => {
       store.set('componentManagement/dbTablesAndColumns', response.data.tableAndColumns);
     });
   },
 
   //* Retrieves all avaiable group names from the database.
-  getDbGroupNames({}) {
+  getDbGroupNames() {
     axios
       .get('api/getAllGroupNames')
       .then((response) => {
         store.set('componentManagement/dbGroupNames', response.data);
       })
-      .catch((_) => {
+      .catch(() => {
         store.set('componentManagement/dbGroupNames', []);
       });
   },
 
   //* Retrieves the navigation structure for the secure drawer.
-  getNavigationStructure({}) {
+  getNavigationStructure() {
     axios.get('api/getNavigationStructure').then((response) => {
       store.set('componentManagement/navigationStructure', response.data.navigationStructure);
     });
   },
 
   //* Retrieves the component groups.
-  getGroups({}) {
+  getGroups() {
     axios.get('api/getAllGroups').then((response) => {
       if (response.status === 200) {
         store.set('componentManagement/allGroups', response.data.groups);
@@ -270,7 +295,7 @@ const actions = {
   },
 
   //* Retrieves all available componentes from the database.
-  getComponents({}) {
+  getComponents() {
     axios.get('api/getAllComponents').then((response) => {
       if (response.status === 200) {
         store.set('componentManagement/allComponents', response.data.components);
@@ -308,9 +333,14 @@ const actions = {
 
   //* Saves the component group configuration settings.
   saveGroup({ state, dispatch }) {
-    parent = state.allGroups.find((g) => g.name === state.dbGroupNames[state.groupParent - 1]);
+    const parent = state.allGroups.find(
+      (g) => g.name === state.dbGroupNames[state.groupParent - 1],
+    );
     axios
-      .post('api/componentGroup', { name: state.groupName, component_group_id: parent ? parent.id : null })
+      .post('api/componentGroup', {
+        name: state.groupName,
+        component_group_id: parent ? parent.id : null,
+      })
       .then((response) => {
         if (response.status === 200) {
           store.set('componentManagement/allGroups', response.data.groups);
@@ -335,22 +365,29 @@ const actions = {
 
   //* Renames the component group.
   renameGroup({ dispatch, state }, id) {
-    parent = state.allGroups.find((g) => g.name === state.dbGroupNames[state.groupParent - 1]);
-    axios.put(`api/componentGroup/${id}`, { name: state.groupName, component_group_id: parent ? parent.id : null }).then((response) => {
-      if (response.status === 200) {
-        store.set('componentManagement/allGroups', response.data.groups);
-        store.set('componentManagement/groupName', '');
-        store.set('snackbar/value', true);
-        store.set('snackbar/text', 'Group renamed');
-        store.set('snackbar/color', 'primary');
-        dispatch('getNavigationStructure');
-      }
-    });
+    const parent = state.allGroups.find(
+      (g) => g.name === state.dbGroupNames[state.groupParent - 1],
+    );
+    axios
+      .put(`api/componentGroup/${id}`, {
+        name: state.groupName,
+        component_group_id: parent ? parent.id : null,
+      })
+      .then((response) => {
+        if (response.status === 200) {
+          store.set('componentManagement/allGroups', response.data.groups);
+          store.set('componentManagement/groupName', '');
+          store.set('snackbar/value', true);
+          store.set('snackbar/text', 'Group renamed');
+          store.set('snackbar/color', 'primary');
+          dispatch('getNavigationStructure');
+        }
+      });
   },
 
   //* When a component is selected in the components view, it loads its configuration.
   setSelectedComponent({ rootState, state }, index) {
-    if (state.selectedComponentIndex != index) {
+    if (state.selectedComponentIndex !== index) {
       store.set('componentManagement/selectedComponentIndex', index);
     }
 
@@ -361,19 +398,16 @@ const actions = {
 
   //* Saves component configuration.
   saveComponent({ state, dispatch }, component) {
-  //* Remove strange characters, add space instead.
+    //* Remove strange characters, add space instead.
     component.config.general_config.sql_query = component.config.general_config.sql_query
       .split(/\r?\n/)
-      .map((row) => row
-        .trim()
-        .split(/\s+/)
-        .join(' '))
+      .map((row) => row.trim().split(/\s+/).join(' '))
       .join('\n')
       .replace(/(\r\n|\n|\r)/gm, ' ');
 
     axios.put(`api/component/${component.id}`, component).then((response) => {
       if (response.status === 200) {
-        const index = state.allComponents.findIndex((c) => c.id == component.id);
+        const index = state.allComponents.findIndex((c) => c.id === component.id);
         store.set(`componentManagement/allComponents@${index}`, response.data.component);
         store.set('snackbar/value', true);
         store.set('snackbar/text', 'Component saved');
@@ -392,7 +426,10 @@ const actions = {
   rollbackChanges({ state, dispatch }, component) {
     const { origin } = component;
     const index = state.allComponents.findIndex((c) => c.id === component.id);
-    store.set(`componentManagement/allComponents@${index}`, { ...origin, origin: cloneDeep(origin) });
+    store.set(`componentManagement/allComponents@${index}`, {
+      ...origin,
+      origin: cloneDeep(origin),
+    });
 
     //* Dispatch resetValidationStates action in validationStates module.
     //* This sets the validations to initial state values.
@@ -400,7 +437,7 @@ const actions = {
   },
 
   //* Soft removes a component (it can be restored).
-  removeComponent({ dispatch }, { id, method, apiPath }) {
+  removeComponent({ dispatch, rootState }, { id, method, apiPath }) {
     axios[method](`api/${apiPath}/${id}`)
       .then((response) => {
         if (response.status === 200) {
@@ -439,13 +476,23 @@ const actions = {
         store.set('componentManagement/dialogComponent', false);
 
         //* Autoselect latest created component
-        const activeGroup = state.allGroups.find((item) => item.id === state.componentSettings.component_group_id);
-        const groupExists = state.selectedComponentGroups.find((item) => item.id === activeGroup.id);
+        const activeGroup = state.allGroups.find(
+          (item) => item.id === state.componentSettings.component_group_id,
+        );
+        const groupExists = state.selectedComponentGroups.find(
+          (item) => item.id === activeGroup.id,
+        );
 
         if (!groupExists) state.selectedComponentGroups.push(activeGroup);
 
-        store.set('componentManagement/componentCardGroup', getters.allComponentsFiltered.length - 1);
-        store.set('componentManagement/selectedComponentIndex', getters.allComponentsFiltered.length - 1);
+        store.set(
+          'componentManagement/componentCardGroup',
+          getters.allComponentsFiltered.length - 1,
+        );
+        store.set(
+          'componentManagement/selectedComponentIndex',
+          getters.allComponentsFiltered.length - 1,
+        );
 
         store.set('componentManagement/componentSettings', initialComponentSettings());
         dispatch('getNavigationStructure');
@@ -478,7 +525,7 @@ const actions = {
     });
   },
 
-  removeCapability({ getters }, capability) {
+  removeCapability({}, capability) {
     return axios.delete(`api/capability/${capability.id}`).then((response) => {
       if (response.status === 200) {
         store.set('snackbar/value', true);
@@ -513,13 +560,13 @@ const actions = {
 
   //* Retrieves form field settings of the selected field  in component form field tab.
   setActiveField({ state }, field) {
-    if (state.selectedComponentActiveField != field) {
+    if (state.selectedComponentActiveField !== field) {
       store.set('componentManagement/selectedComponentActiveField', field);
     }
   },
 
   //* Sets the component as starred, modular or active.
-  setComponentStatus({}, component) {
+  setComponentStatus(component) {
     axios.patch(`api/component/${component.id}`, { status: component.status });
   },
 

@@ -1,42 +1,16 @@
 <template>
-  <v-toolbar
-    color="transparent"
-    flat
-    dense
-  >
-    <v-toolbar-title class="mr-5">
-      {{ availableFields }} fields
-    </v-toolbar-title>
+  <v-toolbar color="transparent" flat dense>
+    <v-toolbar-title class="mr-5"> {{ availableFields }} fields </v-toolbar-title>
 
-    <v-menu
-      transition="fade-transition"
-      offset-y
-      nudge-top="-11"
-    >
+    <v-menu transition="fade-transition" offset-y nudge-top="-11">
       <template #activator="{ on, attrs }">
-        <v-btn
-          small
-          depressed
-          color="primary"
-          dark
-          v-bind="attrs"
-          v-on="on"
-        >
-          <v-icon
-            left
-            class="mr-2"
-            small
-          >
-            mdi-tune
-          </v-icon> Options
+        <v-btn small depressed color="primary" dark v-bind="attrs" v-on="on">
+          <v-icon left class="mr-2" small> mdi-tune </v-icon> Options
         </v-btn>
       </template>
 
       <v-list>
-        <v-list-item
-          dense
-          @click="formFIeldsSwitch(true)"
-        >
+        <v-list-item dense @click="formFIeldsSwitch(true)">
           <v-list-item-action>
             <v-icon>mdi-expand-all-outline</v-icon>
           </v-list-item-action>
@@ -45,10 +19,7 @@
           </v-list-item-content>
         </v-list-item>
 
-        <v-list-item
-          dense
-          @click="formFIeldsSwitch(false)"
-        >
+        <v-list-item dense @click="formFIeldsSwitch(false)">
           <v-list-item-action>
             <v-icon>mdi-collapse-all-outline</v-icon>
           </v-list-item-action>
@@ -81,29 +52,29 @@
 </template>
 
 <script>
-import { sync, get } from 'vuex-pathify';
+  import { sync, get } from 'vuex-pathify';
 
-export default {
-  name: 'ComponentsEditViewsFormFieldsToolbar',
-  data: () => ({
-    selectedFieldItem: 0,
-  }),
+  export default {
+    name: 'ComponentsEditViewsFormFieldsToolbar',
+    data: () => ({
+      selectedFieldItem: 0,
+    }),
 
-  computed: {
-    ...sync('theme', ['isDark']),
-    ...sync('componentManagement', ['componentEditSheet', 'displayEnabledFormFieldsOnly']),
-    ...get('componentManagement', ['selectedComponent']),
+    computed: {
+      ...sync('theme', ['isDark']),
+      ...sync('componentManagement', ['componentEditSheet', 'displayEnabledFormFieldsOnly']),
+      ...get('componentManagement', ['selectedComponent']),
 
-    availableFields() {
-      return this.selectedComponent.config.form_fields.length;
+      availableFields() {
+        return this.selectedComponent.config.form_fields.length;
+      },
     },
-  },
 
-  methods: {
-    formFIeldsSwitch(value) {
-      const fields = this.selectedComponent.config.form_fields;
-      for (const field of fields) field.displayField = value;
+    methods: {
+      formFIeldsSwitch(value) {
+        const fields = this.selectedComponent.config.form_fields;
+        for (const field of fields) field.displayField = value;
+      },
     },
-  },
-};
+  };
 </script>

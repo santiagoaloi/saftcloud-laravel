@@ -1,22 +1,13 @@
 <template>
   <div>
     <v-card-text>
-      <h2 class="text--primary mb-5">
-        How should we contact you?
-      </h2>
-      <ValidationObserver
-        ref="step1"
-        slim
-      >
+      <h2 class="text--primary mb-5">How should we contact you?</h2>
+      <ValidationObserver ref="step1" slim>
         <v-row justify="center">
           <v-col sm="12">
             <baseFieldLabel label="Email" />
             <span />
-            <validation-provider
-              v-slot="{ errors, reset }"
-              name="email"
-              rules="required|email"
-            >
+            <validation-provider v-slot="{ errors, reset }" name="email" rules="required|email">
               <v-text-field
                 v-model="signupForm.email"
                 counter
@@ -38,11 +29,7 @@
           </v-col>
           <v-col sm="6">
             <baseFieldLabel label="Country Code" />
-            <validation-provider
-              v-slot="{ errors, reset }"
-              name="country code"
-              rules="required"
-            >
+            <validation-provider v-slot="{ errors, reset }" name="country code" rules="required">
               <v-autocomplete
                 v-model="signupForm.phone_code"
                 maxlength="30"
@@ -60,10 +47,7 @@
                 @input="reset"
                 @blur="reset"
               >
-                <template
-                  slot="selection"
-                  slot-scope="data"
-                >
+                <template slot="selection" slot-scope="data">
                   <country-flag :country="data.item.iso2" />
                   <v-list-item-content class="pt-4 pl-2">
                     <v-list-item-title>
@@ -73,10 +57,7 @@
                 </template>
 
                 <template #item="{ item, on }">
-                  <v-list-item
-                    :ripple="false"
-                    v-on="on"
-                  >
+                  <v-list-item :ripple="false" v-on="on">
                     <v-list-item-avatar>
                       <country-flag :country="item.iso2" />
                     </v-list-item-avatar>
@@ -94,11 +75,7 @@
           <v-col sm="6">
             <baseFieldLabel label="Phone number" />
             <span />
-            <validation-provider
-              v-slot="{ errors, reset }"
-              name="phone number"
-              rules="required"
-            >
+            <validation-provider v-slot="{ errors, reset }" name="phone number" rules="required">
               <v-text-field
                 v-model="signupForm.phoneNumber"
                 oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
@@ -122,56 +99,42 @@
       </ValidationObserver>
     </v-card-text>
 
-    <v-btn
-      dark
-      class="mx-1"
-      large
-      color="grey darken-2"
-      @click="step--"
-    >
-      Back
-    </v-btn>
-    <v-btn
-      large
-      color="primary"
-      @click="validateAndProceed()"
-    >
-      Continue
-    </v-btn>
+    <v-btn dark class="mx-1" large color="grey darken-2" @click="step--"> Back </v-btn>
+    <v-btn large color="primary" @click="validateAndProceed()"> Continue </v-btn>
   </div>
 </template>
 
 <script>
-import { sync, get, call } from 'vuex-pathify';
-import CountryFlag from 'vue-country-flag';
+  import { sync, get, call } from 'vuex-pathify';
+  import CountryFlag from 'vue-country-flag';
 
-export default {
-  name: 'SignupStep0',
-  components: {
-    CountryFlag,
-  },
-  computed: {
-    ...sync('theme', ['isDark']),
-    ...sync('signup', ['signupForm', 'step', 'countriesLoading', 'countryCodes']),
-    ...get('signup', ['filterCountries']),
-  },
-
-  mounted() {
-    if (!this.countryCodes.length) {
-      this.getCountries();
-    }
-  },
-
-  methods: {
-    ...call('signup/*'),
-
-    validateAndProceed() {
-      this.$refs.step1.validate().then((success) => {
-        if (success) {
-          this.step++;
-        }
-      });
+  export default {
+    name: 'SignupStep0',
+    components: {
+      CountryFlag,
     },
-  },
-};
+    computed: {
+      ...sync('theme', ['isDark']),
+      ...sync('signup', ['signupForm', 'step', 'countriesLoading', 'countryCodes']),
+      ...get('signup', ['filterCountries']),
+    },
+
+    mounted() {
+      if (!this.countryCodes.length) {
+        this.getCountries();
+      }
+    },
+
+    methods: {
+      ...call('signup/*'),
+
+      validateAndProceed() {
+        this.$refs.step1.validate().then((success) => {
+          if (success) {
+            this.step++;
+          }
+        });
+      },
+    },
+  };
 </script>

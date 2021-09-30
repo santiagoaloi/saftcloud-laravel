@@ -1,23 +1,9 @@
 <template>
   <v-fade-transition>
-    <v-container
-      v-show="!delay"
-      fill-height
-    >
-      <v-row
-        align="center"
-        justify="space-between"
-        class="mb-0"
-      >
-        <v-col
-          cols="12"
-          lg="6"
-        >
-          <v-row
-            no-gutters
-            align="center"
-            justify="center"
-          >
+    <v-container v-show="!delay" fill-height>
+      <v-row align="center" justify="space-between" class="mb-0">
+        <v-col cols="12" lg="6">
+          <v-row no-gutters align="center" justify="center">
             <div>
               <v-avatar :size="$vuetify.breakpoint.smAndDown ? '8em' : '16em'">
                 <v-img
@@ -29,11 +15,7 @@
                 >
                   <!-- Spinner loader -->
                   <template #placeholder>
-                    <v-row
-                      class="fill-height ma-0"
-                      align="center"
-                      justify="center"
-                    >
+                    <v-row class="fill-height ma-0" align="center" justify="center">
                       <v-progress-circular indeterminate />
                     </v-row>
                   </template>
@@ -42,23 +24,13 @@
             </div>
           </v-row>
 
-          <v-row
-            class="mt-10"
-            no-gutters
-            align="center"
-            justify="center"
-          >
+          <v-row class="mt-10" no-gutters align="center" justify="center">
             <div class="topFont topSlide shadows mx-10 white--text">
               <h1>SaftCloud ™</h1>
             </div>
           </v-row>
 
-          <v-row
-            class="mt-2"
-            no-gutters
-            align="center"
-            justify="center"
-          >
+          <v-row class="mt-2" no-gutters align="center" justify="center">
             <div class="subFont topSlide shadows mx-10 text-center white--text">
               <h2>Point of sales made easy for everyone.</h2>
             </div>
@@ -66,26 +38,9 @@
         </v-col>
 
         <v-fade-transition hide-on-leave>
-          <ValidationObserver
-            ref="loginForm"
-            slim
-          >
-            <v-col
-              v-if="!resetPasswordScreen && !forgot"
-              cols="12"
-              sm="12"
-              md="12"
-              lg="6"
-              xl="5"
-            >
-              <v-alert
-                v-model="hasSessionExpired"
-                dismissible
-                dense
-                text
-                color="white"
-                type="info"
-              >
+          <ValidationObserver ref="loginForm" slim>
+            <v-col v-if="!resetPasswordScreen && !forgot" cols="12" sm="12" md="12" lg="6" xl="5">
+              <v-alert v-model="hasSessionExpired" dismissible dense text color="white" type="info">
                 Your session has expired <strong> due to inactivity.</strong>
               </v-alert>
 
@@ -95,10 +50,10 @@
                 class="pa-4"
                 :color="$vuetify.theme.dark ? '#2f3136' : '#f6f8fa'"
               >
-                <v-card-title class=" py-10">
+                <v-card-title class="py-10">
                   <h1>Login</h1>
                 </v-card-title>
-                <v-card-subtitle class=" mb-n10">
+                <v-card-subtitle class="mb-n10">
                   <span v-if="$vuetify.breakpoint.mdAndUp">Don't have an account?</span>
                   <v-btn
                     dark
@@ -114,17 +69,9 @@
 
                 <div class="px-4 width-full">
                   <v-row>
-                    <v-col
-                      cols="12"
-                      sm="12"
-                      md="12"
-                    />
+                    <v-col cols="12" sm="12" md="12" />
 
-                    <v-col
-                      cols="12"
-                      sm="6"
-                      md="12"
-                    >
+                    <v-col cols="12" sm="6" md="12">
                       <validation-provider
                         v-slot="{ errors, reset }"
                         name="account name"
@@ -153,11 +100,7 @@
                       </validation-provider>
                     </v-col>
 
-                    <v-col
-                      cols="12"
-                      sm="6"
-                      md="12"
-                    >
+                    <v-col cols="12" sm="6" md="12">
                       <div id="passwordField">
                         <validation-provider
                           v-slot="{ errors, reset }"
@@ -171,7 +114,9 @@
                             prepend-inner-icon="mdi-shield-key-outline"
                             placeholder="Password"
                             :type="password_visible ? 'text' : 'password'"
-                            :append-icon="password_visible ? 'mdi-eye-off-outline' : 'mdi-eye-outline'"
+                            :append-icon="
+                              password_visible ? 'mdi-eye-off-outline' : 'mdi-eye-outline'
+                            "
                             :disabled="loading"
                             spellcheck="false"
                             :color="isDark ? '#208ad6' : 'grey'"
@@ -189,23 +134,13 @@
                       <v-card-actions class="mt-n2">
                         <div class="flex-grow-1" />
 
-                        <v-btn
-                          disabled
-                          class="mt-3"
-                          text
-                          small
-                          @click="forgot = true"
-                        >
+                        <v-btn disabled class="mt-3" text small @click="forgot = true">
                           I forgot my password.
                         </v-btn>
                       </v-card-actions>
                     </v-col>
 
-                    <v-col
-                      cols="12"
-                      sm="12"
-                      md="12"
-                    >
+                    <v-col cols="12" sm="12" md="12">
                       <v-card-actions class="mt-n7">
                         <v-btn
                           width="40%"
@@ -231,75 +166,75 @@
 </template>
 
 <script>
-import axios from 'axios';
-import { sync, get, call } from 'vuex-pathify';
-import { store } from '@/store';
+  import axios from 'axios';
+  import { sync, get, call } from 'vuex-pathify';
+  import { store } from '@/store';
 
-const initialState = () => ({
-  auth: { email: '', password: '', remember: false },
-  signup: false,
-  newPassword: '',
-  newPasswordRepeat: '',
-  resetPasswordScreen: false,
-  forgot: false,
-  loading: false,
-  password_visible: false,
-  shake: false,
-});
-export default {
-  name: 'Login',
-  data() {
-    return {
-      ...initialState(),
-      delay: true,
-    };
-  },
+  const initialState = () => ({
+    auth: { email: '', password: '', remember: false },
+    signup: false,
+    newPassword: '',
+    newPasswordRepeat: '',
+    resetPasswordScreen: false,
+    forgot: false,
+    loading: false,
+    password_visible: false,
+    shake: false,
+  });
+  export default {
+    name: 'Login',
+    data() {
+      return {
+        ...initialState(),
+        delay: true,
+      };
+    },
 
-  mounted() {
-    this.$nextTick(() => {
-      setTimeout(() => {
-        this.delay = false;
-      }, 200);
-    });
-  },
-
-  deactivated() {
-    Object.assign(this.$data, initialState());
-  },
-
-  computed: {
-    ...sync('theme', ['isDark']),
-    ...sync('authentication', ['hasSessionExpired']),
-  },
-
-  methods: {
-    ...call('authentication/*'),
-
-    validatelogin() {
-      this.$refs.loginForm.validate().then((validated) => {
-        if (validated) {
-          this.loading = true;
-          this.login(this.auth).then((authenticated) => {
-            if (!authenticated) {
-              this.loading = false;
-              this.shake = true;
-              setTimeout(() => {
-                this.shake = false;
-              }, 500);
-            } else {
-              this.hasSessionExpired = false;
-              this.$router.push('/components');
-              window.eventBus.$emit('BUS_BUILD_ROUTES');
-            }
-          });
-        } else {
-          this.shake = true;
-          setTimeout(() => {
-            this.shake = false;
-          }, 500);
-        }
+    mounted() {
+      this.$nextTick(() => {
+        setTimeout(() => {
+          this.delay = false;
+        }, 200);
       });
     },
-  },
-};
+
+    deactivated() {
+      Object.assign(this.$data, initialState());
+    },
+
+    computed: {
+      ...sync('theme', ['isDark']),
+      ...sync('authentication', ['hasSessionExpired']),
+    },
+
+    methods: {
+      ...call('authentication/*'),
+
+      validatelogin() {
+        this.$refs.loginForm.validate().then((validated) => {
+          if (validated) {
+            this.loading = true;
+            this.login(this.auth).then((authenticated) => {
+              if (!authenticated) {
+                this.loading = false;
+                this.shake = true;
+                setTimeout(() => {
+                  this.shake = false;
+                }, 500);
+              } else {
+                this.hasSessionExpired = false;
+                this.$router.push('/components');
+                window.eventBus.$emit('BUS_BUILD_ROUTES');
+              }
+            });
+          } else {
+            this.shake = true;
+            setTimeout(() => {
+              this.shake = false;
+            }, 500);
+          }
+        });
+      },
+    },
+  };
 </script>

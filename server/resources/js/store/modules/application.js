@@ -2,7 +2,7 @@ import { make } from 'vuex-pathify';
 
 const state = {
   search: '',
-  isBooted : false
+  isBooted: false,
 };
 
 const mutations = make.mutations(state);

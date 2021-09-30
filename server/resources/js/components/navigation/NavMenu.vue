@@ -31,9 +31,9 @@
 </template>
 
 <script>
-import NavMenuItem from './NavMenuItem';
+  import NavMenuItem from './NavMenuItem';
 
-/*
+  /*
 |---------------------------------------------------------------------
 | Navigation Menu Component
 |---------------------------------------------------------------------
@@ -53,15 +53,15 @@ import NavMenuItem from './NavMenuItem';
 |  }]
 |
 */
-export default {
-  components: {
-    NavMenuItem,
-  },
-  props: {
-    menu: {
-      type: Array,
-      default: () => [],
+  export default {
+    components: {
+      NavMenuItem,
     },
-  },
-};
+    props: {
+      menu: {
+        type: Array,
+        default: () => [],
+      },
+    },
+  };
 </script>

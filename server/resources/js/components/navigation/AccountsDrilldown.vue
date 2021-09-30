@@ -6,85 +6,44 @@
         :color="isDark ? '#2C2F33' : 'transparent'"
         class="px-2"
       >
-        <v-alert
-          class="mt-3"
-          elevation="1"
-          colored-border
-          color="pink"
-          border="right"
-          dense
-        >
+        <v-alert class="mt-3" elevation="1" colored-border color="pink" border="right" dense>
           <div class="d-flex justify-space-between align-center">
             Unsaved
-            <v-btn
-              dark
-              small
-              @click="rollbackChanges(selectedEntity)"
-            >
-              rollback
-            </v-btn>
+            <v-btn dark small @click="rollbackChanges(selectedEntity)"> rollback </v-btn>
           </div>
         </v-alert>
       </v-sheet>
     </v-expand-transition>
 
     <template v-if="selectedEntityType === 'Roles'">
-   <v-card-title>
-      Edit Role
-    </v-card-title>
+      <v-card-title> Edit Role </v-card-title>
 
-    <v-card-subtitle>
-     Each application module has its own set of capabilities that you can  choose from to build your role in a more granular manner.
-    </v-card-subtitle>
-
+      <v-card-subtitle>
+        Each application module has its own set of capabilities that you can choose from to build
+        your role in a more granular manner.
+      </v-card-subtitle>
     </template>
-  
-      <template v-if="selectedEntityType === 'Accounts'">
-   <v-card-title>
-      Edit User account
-    </v-card-title>
 
-    <v-card-subtitle>
-     Assign roles, enforce security policies, monitor activiy logs among other settings that applies to each invdividual user account.
-    </v-card-subtitle>
+    <template v-if="selectedEntityType === 'Accounts'">
+      <v-card-title> Edit User account </v-card-title>
 
+      <v-card-subtitle>
+        Assign roles, enforce security policies, monitor activiy logs among other settings that
+        applies to each invdividual user account.
+      </v-card-subtitle>
     </template>
-  
-   
 
     <div class="text-end mb-3 mt-2">
-
-
-      <v-tooltip
-        transition="false"
-        color="black"
-        bottom
-      >
+      <v-tooltip transition="false" color="black" bottom>
         <template #activator="{ on }">
-          <v-btn
-            depressed
-            dark
-            large
-            small
-            :color="isDark ? '' : 'white'"
-            v-on="on"
-          >
-            <v-icon
-              color="pink lighten-1"
-              dark
-            >
-              mdi-trash-can-outline
-            </v-icon>
+          <v-btn depressed dark large small :color="isDark ? '' : 'white'" v-on="on">
+            <v-icon color="pink lighten-1" dark> mdi-trash-can-outline </v-icon>
           </v-btn>
         </template>
         <span>Delete</span>
       </v-tooltip>
 
-      <v-tooltip
-        transition="false"
-        color="black"
-        bottom
-      >
+      <v-tooltip transition="false" color="black" bottom>
         <template #activator="{ on }">
           <v-btn
             :disabled="!hasUnsavedChanges(selectedEntity)"
@@ -94,11 +53,8 @@
             :color="isDark ? '' : 'white'"
             v-on="on"
           >
-            <v-icon
-              color="green"
-              dark
-            >
-              {{ hasUnsavedChanges(selectedEntity) ? "mdi-check" : "mdi-check-all" }}
+            <v-icon color="green" dark>
+              {{ hasUnsavedChanges(selectedEntity) ? 'mdi-check' : 'mdi-check-all' }}
             </v-icon>
           </v-btn>
         </template>
@@ -106,280 +62,240 @@
       </v-tooltip>
     </div>
 
-  <v-container>
-
-    <template v-if="selectedEntityType === 'Roles'">
-
-  <div class="mt-2">
-            <baseFieldLabel
-              class="mb-n3"
-              label="Root role"
-            />
-            <v-list-item two-line>
-              <v-list-item-icon>
-                <v-switch
-                  hide-details
-                  class="mt-2"
-                  color="indigo lighten-2"
-                />
-              </v-list-item-icon>
-              <v-list-item-content>
-                <v-list-item-title>Enable root access</v-list-item-title>
-                <v-list-item-subtitle>
-                  Unlock all capabilities 
-                </v-list-item-subtitle>
-              </v-list-item-content>
-            </v-list-item>
-          </div>
-
-
-
-
-
-
-
- <div class="mt-2">
-            <baseFieldLabel
-              required
-              label="Role Capabilities "
-            />
-            <v-autocomplete
-            v-model="selectedCapabilities"
-              outlined
-              :color="isDark ? '#208ad6' : 'grey'"
-              item-color="indigo lighten-4"
-              :background-color="isDark ? '#28292b' : 'white'"
-              :items="allCapabilities"
-              :maxlength="25"
-              item-value="id"
-              item-text="name"
-              hide-no-data
-              hide-details
-              multiple
-              dense
-            >
-
-                      <template #selection="data">
-            <v-chip
-              v-if="data.index === 0"
-              :style="isDark ? 'color: white' : 'color:black'"
-              :color="isDark ? 'grey-darken-4' : 'blue-white'"
-              small
-            >
-              {{ selectedCapabilities.length }} capabilities selected.
-            </v-chip>
-          </template>
-
-                    <template #item="{ item, attrs}">
-            <v-list-item-action>
-
-          <v-icon> {{ attrs.inputValue ? 'mdi-checkbox-marked' : 'mdi-checkbox-blank-outline' }} </v-icon>   
-           
-            </v-list-item-action>
+    <v-container>
+      <template v-if="selectedEntityType === 'Roles'">
+        <div class="mt-2">
+          <baseFieldLabel class="mb-n3" label="Root role" />
+          <v-list-item two-line>
+            <v-list-item-icon>
+              <v-switch hide-details class="mt-2" color="indigo lighten-2" />
+            </v-list-item-icon>
             <v-list-item-content>
-              <v-list-item-title> <b class="indigo--text text--lighten-3">{{ extractPrefix(item.name)}}</b><span class="blue--text text--lighten-3" >{{ extractCapabilityName(item.name) }}</span> </v-list-item-title>
+              <v-list-item-title>Enable root access</v-list-item-title>
+              <v-list-item-subtitle> Unlock all capabilities </v-list-item-subtitle>
             </v-list-item-content>
+          </v-list-item>
+        </div>
 
-            <v-tooltip
-              transition="false"
-              color="black"
-              bottom
-              max-width="250"
-              v-if="item.description"
-            >
-              <template #activator="{ on }">
-                <v-btn
-                  plain
-                  :ripple="false"
-                  small
-                  depressed
-                  v-on="on"
-                  @click.stop="removeGroupWarning(item.id, item.name, 'delete')"
-                >
-                  <v-icon small>
-                    mdi-help-box
-                  </v-icon>
-                </v-btn>
-              </template>
-              <span>{{  item.description  }}</span>
-            </v-tooltip>
-          </template>
-          
-            </v-autocomplete>
-          </div>
-    </template>
+        <div class="mt-2">
+          <baseFieldLabel required label="Role Capabilities " />
+          <v-autocomplete
+            v-model="selectedCapabilities"
+            outlined
+            :color="isDark ? '#208ad6' : 'grey'"
+            item-color="indigo lighten-4"
+            :background-color="isDark ? '#28292b' : 'white'"
+            :items="allCapabilities"
+            :maxlength="25"
+            item-value="id"
+            item-text="name"
+            hide-no-data
+            hide-details
+            multiple
+            dense
+          >
+            <template #selection="data">
+              <v-chip
+                v-if="data.index === 0"
+                :style="isDark ? 'color: white' : 'color:black'"
+                :color="isDark ? 'grey-darken-4' : 'blue-white'"
+                small
+              >
+                {{ selectedCapabilities.length }} capabilities selected.
+              </v-chip>
+            </template>
 
-  </v-container>
+            <template #item="{ item, attrs }">
+              <v-list-item-action>
+                <v-icon>
+                  {{ attrs.inputValue ? 'mdi-checkbox-marked' : 'mdi-checkbox-blank-outline' }}
+                </v-icon>
+              </v-list-item-action>
+              <v-list-item-content>
+                <v-list-item-title>
+                  <b class="indigo--text text--lighten-3">{{ extractPrefix(item.name) }}</b
+                  ><span class="blue--text text--lighten-3">{{
+                    extractCapabilityName(item.name)
+                  }}</span>
+                </v-list-item-title>
+              </v-list-item-content>
 
+              <v-tooltip
+                v-if="item.description"
+                transition="false"
+                color="black"
+                bottom
+                max-width="250"
+              >
+                <template #activator="{ on }">
+                  <v-btn
+                    plain
+                    :ripple="false"
+                    small
+                    depressed
+                    v-on="on"
+                    @click.stop="removeGroupWarning(item.id, item.name, 'delete')"
+                  >
+                    <v-icon small> mdi-help-box </v-icon>
+                  </v-btn>
+                </template>
+                <span>{{ item.description }}</span>
+              </v-tooltip>
+            </template>
+          </v-autocomplete>
+        </div>
+      </template>
+    </v-container>
 
     <template v-if="selectedEntityType === 'Accounts'">
-
-      
-            <div class="mt-n5">
-            <v-list-item >
-              <v-list-item-icon>
-                <v-avatar >
-                     <v-icon class="ml-n4 yellow--text text--lighten-3">
+      <div class="mt-n5">
+        <v-list-item>
+          <v-list-item-icon>
+            <v-avatar>
+              <v-icon class="ml-n4 yellow--text text--lighten-3">
                 mdi-lock-open-alert-outline
               </v-icon>
-                  </v-avatar>
-           
-              </v-list-item-icon>
-              <v-list-item-content>
-                <v-list-item-title>This accout is locked</v-list-item-title>
-                <v-list-item-subtitle>
-                  <h5>Unlock user account </h5>
-                </v-list-item-subtitle>
-              </v-list-item-content>
-            </v-list-item>
-          </div>
+            </v-avatar>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title>This user account is locked</v-list-item-title>
+            <v-list-item-subtitle>
+              <h5>Unlock</h5>
+            </v-list-item-subtitle>
+          </v-list-item-content>
+        </v-list-item>
+      </div>
 
-                      <div class="mt-n5">
-            <v-list-item >
-              <v-list-item-icon>
-                <v-avatar >
-                     <v-icon class="ml-n4 green--text text--lighten-3">
+      <div class="mt-n5">
+        <v-list-item>
+          <v-list-item-icon>
+            <v-avatar>
+              <v-icon class="ml-n4 green--text text--lighten-3">
                 mdi-two-factor-authentication
               </v-icon>
-                  </v-avatar>
-           
-              </v-list-item-icon>
-              <v-list-item-content>
-                <v-list-item-title>Two factor authentication</v-list-item-title>
-                <v-list-item-subtitle>
-                  <h5>Remove 2FA </h5>
-                </v-list-item-subtitle>
-              </v-list-item-content>
-            </v-list-item>
-          </div>
+            </v-avatar>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title>Two factor authentication</v-list-item-title>
+            <v-list-item-subtitle>
+              <h5>Remove 2FA</h5>
+            </v-list-item-subtitle>
+          </v-list-item-content>
+        </v-list-item>
+      </div>
 
+      <div class="mt-2">
+        <v-list-item two-line>
+          <v-list-item-icon>
+            <v-switch v-model="accountStatus" :ripple="false" hide-details class="mt-2" />
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title>Disable user account</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </div>
 
-    <div class="mt-2">
-      <v-list-item two-line>
-        <v-list-item-icon>
-          <v-switch
-            :ripple="false"
-            hide-details
-            class="mt-2"
-
-           v-model="accountStatus"
-          />
-        </v-list-item-icon>
-        <v-list-item-content>
-          <v-list-item-title>User acccount status</v-list-item-title>
-          <v-list-item-subtitle>
-           This account is enabled
-          </v-list-item-subtitle>
-        </v-list-item-content>
-      </v-list-item>
-    </div>
-
-    <v-container class="text-end">
-    <v-btn color="accent">Audit logs</v-btn>
-      <v-btn>Change password</v-btn>
-    </v-container>
+      <v-container class="text-end">
+        <v-btn color="accent">Audit logs</v-btn>
+        <v-btn>Change password</v-btn>
+      </v-container>
     </template>
-
 
     <v-divider />
 
-    <v-list
-      subheader
-      two-line
-    >
+    <v-list subheader two-line>
       <v-subheader>Database</v-subheader>
-
-
 
       <v-list-item>
         <v-list-item-icon>
-          <v-icon>
-            mdi-calendar-plus
-          </v-icon>
+          <v-icon> mdi-calendar-plus </v-icon>
         </v-list-item-icon>
 
         <v-list-item-content>
           <v-list-item-title>Created</v-list-item-title>
-          <v-list-item-subtitle> {{ selectedEntity.created_at | momentDate }} </v-list-item-subtitle>
-          <v-list-item-subtitle> {{ selectedEntity.created_at | momentDateAgo }}</v-list-item-subtitle>
+          <v-list-item-subtitle>
+            {{ selectedEntity.created_at | momentDate }}
+          </v-list-item-subtitle>
+          <v-list-item-subtitle>
+            {{ selectedEntity.created_at | momentDateAgo }}</v-list-item-subtitle
+          >
         </v-list-item-content>
       </v-list-item>
 
       <v-list-item>
         <v-list-item-icon>
-          <v-icon>
-            mdi-calendar-edit
-          </v-icon>
+          <v-icon> mdi-calendar-edit </v-icon>
         </v-list-item-icon>
 
         <v-list-item-content>
           <v-list-item-title>Edited</v-list-item-title>
-          <v-list-item-subtitle> {{ selectedEntity.updated_at | momentDate }} </v-list-item-subtitle>
-          <v-list-item-subtitle>{{ selectedEntity.updated_at | momentDateAgo }} </v-list-item-subtitle>
+          <v-list-item-subtitle>
+            {{ selectedEntity.updated_at | momentDate }}
+          </v-list-item-subtitle>
+          <v-list-item-subtitle
+            >{{ selectedEntity.updated_at | momentDateAgo }}
+          </v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
 
       <v-divider />
 
-            <template v-if="selectedEntityType === 'Accounts'">
-
-
-      <v-container class="text-end accent--text text--lighten-3">
-<h5>      Export all user data</h5>
-      </v-container>
-            </template>
-
+      <template v-if="selectedEntityType === 'Accounts'">
+        <v-container class="text-end accent--text text--lighten-3">
+          <h5>Export all user data</h5>
+        </v-container>
+      </template>
     </v-list>
   </div>
 </template>
 
 <script>
-import isEqual from 'lodash/isEqual';
-import { sync, call, get } from 'vuex-pathify';
-import { store } from '@/store';
-import componentActions from '@/mixins/componentActions';
+  import { sync, call, get } from 'vuex-pathify';
+  import componentActions from '@/mixins/componentActions';
 
-export default {
-  name: 'ComponentDrilldown',
-  mixins: [componentActions],
+  export default {
+    name: 'ComponentDrilldown',
+    mixins: [componentActions],
 
-  data() {
-    return {
-      selectedCapabilities: [],
-      accountStatus: true,
-    }
-  },
-
-  computed: {
-    ...sync('theme', ['isDark']),
-    ...get('accountsManagement', [
-      'hasUnsavedChanges',
-      'previousEntityDisabled',
-      'nextEntityDisabled',
-      'selectedEntity',
-      'isAllFilteredEntitiesEmpty',
-      'isStarredColor',
-      'isStarredIcon',
-    ]),
-    ...sync('accountsManagement', ['entityCardGroup',  'selectedEntityIndex',  'selectedEntityType', 'allCapabilities']),
-  },
-
-  methods: {
-    ...call('accountsManagement/*'),
-
-    extractPrefix(item){
-      let prefix= item.substr(0, item.indexOf('.'))
-      return prefix
+    data() {
+      return {
+        selectedCapabilities: [],
+        accountStatus: true,
+      };
     },
 
-        extractCapabilityName(item){
-      let suffix = item.substring(item.indexOf('.'));
-
-      return suffix
+    computed: {
+      ...sync('theme', ['isDark']),
+      ...get('accountsManagement', [
+        'hasUnsavedChanges',
+        'previousEntityDisabled',
+        'nextEntityDisabled',
+        'selectedEntity',
+        'isAllFilteredEntitiesEmpty',
+        'isStarredColor',
+        'isStarredIcon',
+      ]),
+      ...sync('accountsManagement', [
+        'entityCardGroup',
+        'selectedEntityIndex',
+        'selectedEntityType',
+        'allCapabilities',
+      ]),
     },
 
+    methods: {
+      ...call('accountsManagement/*'),
 
+      extractPrefix(item) {
+        const prefix = item.substr(0, item.indexOf('.'));
+        return prefix;
+      },
 
-  },
-};
+      extractCapabilityName(item) {
+        const suffix = item.substring(item.indexOf('.'));
+
+        return suffix;
+      },
+    },
+  };
 </script>

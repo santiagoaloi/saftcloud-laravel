@@ -6,8 +6,14 @@ import { store } from '@/store';
 // When this function is called, the component settings form is back to default values.
 const initialUserSettings = () => ({
   name: '',
-  lastName: '',
+  last_name: '',
   email: '',
+});
+
+// When this function is called, the component settings form is back to default values.
+const initialRoleSettings = () => ({
+  name: '',
+  description: '',
 });
 
 const state = {
@@ -19,11 +25,13 @@ const state = {
   activeStatusTab: 0,
   isTableLayout: false,
   entityCardGroup: 0,
-  dialogAccount: false,
-  selectedEntityType: "",
+  dialogEntity: false,
+  selectedEntityType: 'Roles',
   selectedEntityIndex: 0,
   selectedEntityTableRow: [],
-  account: initialUserSettings(),
+  user: initialUserSettings(),
+  role: initialRoleSettings(),
+  identityTypeButton: '',
   entityStatusTabs: [
     { name: 'All', value: 'all', icon: 'mdi-all-inclusive' },
     { name: 'Starred', value: 'starred', icon: 'mdi-star' },
@@ -35,34 +43,32 @@ const mutations = make.mutations(state);
 
 const getters = {
   //* returns true if at least one validation did not succeed.
-  hasValidationErrors: (_, __, rootState) => Object.values(rootState.validationStates).some((innerObj) => Object.values(innerObj).includes(true)),
+  hasValidationErrors: (_, __, rootState) =>
+    Object.values(rootState.validationStates).some((innerObj) =>
+      Object.values(innerObj).includes(true),
+    ),
 
-  //* Loads all the configuration of the selected component.
+  //* Loads all the configuration of the selected entity.
   selectedEntity: (state, getters) => getters.allEntitiesFiltered[state.selectedEntityIndex],
 
-
-  //* Disables the right panel navigation arrows if the first component in the array is selected.
+  //* Disables the right panel navigation arrows if the first entity in the array is selected.
   previousEntityDisabled: (state) => state.entityCardGroup === 0,
 
-  //* Disables the right panel navigation arrows if the last component in the array is selected.
-  nextEntityDisabled: (state, getters) => state.entityCardGroup === getters.allEntitiesFiltered.length - 1,
-
+  //* Disables the right panel navigation arrows if the last entity in the array is selected.
+  nextEntityDisabled: (state, getters) =>
+    state.entityCardGroup === getters.allEntitiesFiltered.length - 1,
 
   //* Returns the name of the tab name selected within the form field editor
   activeEntityTabName: (state) => state.entityStatusTabs[state.activeStatusTab].value,
 
   //* Returns components that belongs to a group, status or matching search.
   allEntitiesFiltered: (state, getters, rootState) => {
-    
-    let entity = state.selectedEntityType === 'Roles' ? 'allRoles' : 'allUsers'
-    let entityName = state.selectedEntityType === 'Roles' ? 'name' : 'email' 
+    const entity = state.selectedEntityType === 'Roles' ? 'allRoles' : 'allUsers';
+    const entityName = state.selectedEntityType === 'Roles' ? 'name' : 'email';
     return state[entity].filter((ent) => {
       const search = rootState.application.search.toLowerCase();
-      const title =   ent[entityName].toLowerCase();
-      return (
-        (!search || title.match(search))
-
-      );
+      const title = ent[entityName].toLowerCase();
+      return !search || title.match(search);
     });
   },
 
@@ -81,35 +87,36 @@ const getters = {
   isAllFilteredEntitiesEmpty: (_, getters) => getters.allEntitiesFiltered.length === 0,
 
   //* Returns the color of the star icon depending on its state.
-  isStarredColor: () => (component) => (component.status.starred ? 'orange' : 'grey darken-1'),
+  isStarredColor: () => (component) => component.status.starred ? 'orange' : 'grey darken-1',
 
   //* Returns the star icon depending on its state.
-  isStarredIcon: () => (component) => (component.status.starred ? 'mdi-star' : 'mdi-star-outline'),
+  isStarredIcon: () => (component) => component.status.starred ? 'mdi-star' : 'mdi-star-outline',
 
   //* Returns the active icon depending on its state.
-  isActiveIcon: () => (component) => (component.status.active ? 'mdi-lightbulb-on' : 'mdi-lightbulb-on-outline'),
+  isActiveIcon: () => (component) =>
+    component.status.active ? 'mdi-lightbulb-on' : 'mdi-lightbulb-on-outline',
 
   //* Returns color of the compoment card in the grid view, depending on the theme settings.
-  isActiveColor: (_, __, rootState) => (component) => (rootState.theme.isDark && component.status.active
-    ? 'indigo lighten-4'
-    : !rootState.theme.isDark && component.status.active
+  isActiveColor: (_, __, rootState) => (component) =>
+    rootState.theme.isDark && component.status.active
+      ? 'indigo lighten-4'
+      : !rootState.theme.isDark && component.status.active
       ? 'indigo darken-4'
       : rootState.theme.isDark && !component.status.active
-        ? 'grey darken-1'
-        : 'black'),
-
+      ? 'grey darken-1'
+      : 'black',
 
   //* Returns the count of components belonging to a specific group.
-  countComponentsInGroup: (state) => (id) => state.allComponents.filter((component) => component.component_group_id === id).length,
+  countComponentsInGroup: (state) => (id) =>
+    state.allComponents.filter((component) => component.component_group_id === id).length,
   countComponentsFiltered: (_, getters) => getters.allEntitiesFiltered.length,
 };
 
 const actions = {
   ...make.actions(state),
 
-
-  //* Retrieves the component groups.
-  getUsers({}) {
+  //* Retrieves all users.
+  getUsers() {
     axios.get('api/getAllUsers').then((response) => {
       if (response.status === 200) {
         store.set('accountsManagement/allUsers', response.data.records);
@@ -117,26 +124,23 @@ const actions = {
     });
   },
 
-    //* Retrieves the component groups.
-    getRoles({}) {
-      axios.get('api/getAllRoles').then((response) => {
-        if (response.status === 200) {
-          store.set('accountsManagement/allRoles', response.data.records);
-        }
-      });
-    },
+  //* Retrieves all roles.
+  getRoles() {
+    axios.get('api/getAllRoles').then((response) => {
+      if (response.status === 200) {
+        store.set('accountsManagement/allRoles', response.data.records);
+      }
+    });
+  },
 
-    
-    //* Retrieves the component groups.
-    getCapabilities({}) {
-      axios.get('api/getAllCapabilities').then((response) => {
-        if (response.status === 200) {
-          store.set('accountsManagement/allCapabilities', response.data.records);
-        }
-      });
-    },
-
-    
+  //* Retrieves all capabilities.
+  getCapabilities() {
+    axios.get('api/getAllCapabilities').then((response) => {
+      if (response.status === 200) {
+        store.set('accountsManagement/allCapabilities', response.data.records);
+      }
+    });
+  },
 
   //* When a component is selected in the components view, it loads its configuration.
   setSelectedEntity({ rootState, state }, index) {
@@ -149,31 +153,47 @@ const actions = {
     }
   },
 
-
-
   //* Rollback changes before saving component configuration.
   rollbackChanges({ state, dispatch }, component) {
     const { origin } = component;
     const index = state.allComponents.findIndex((c) => c.id === component.id);
-    store.set(`componentManagement/allComponents@${index}`, { ...origin, origin: cloneDeep(origin) });
+    store.set(`componentManagement/allComponents@${index}`, {
+      ...origin,
+      origin: cloneDeep(origin),
+    });
 
     //* Dispatch resetValidationStates action in validationStates module.
     //* This sets the validations to initial state values.
     dispatch('validationStates/resetValidationStates', null, { root: true });
   },
 
-
-
-  //* Creates a new component in the database.
-  createAccount({ state, getters, dispatch }) {
-    return axios.post('api/user', state.account).then((response) => {
+  //* Creates a new user in the database.
+  createUser({ state }) {
+    return axios.post('api/user', state.user).then((response) => {
       if (response.status === 200) {
         store.set('snackbar/value', true);
         store.set('snackbar/text', 'account created');
         store.set('snackbar/color', 'primary');
 
         //* Autoselect latest created component
-        store.set('componentManagement/dialogAccount', false);
+        store.set('componentManagement/dialogEntity', false);
+        return true;
+      }
+    });
+  },
+
+  //* Creates a new role in the database.
+  createRole({ state, rootState }) {
+    const { role } = state;
+    role.entity_id = rootState.authentication.activeBranch;
+    return axios.post('api/role', state.role).then((response) => {
+      if (response.status === 200) {
+        store.set('snackbar/value', true);
+        store.set('snackbar/text', 'role created');
+        store.set('snackbar/color', 'primary');
+
+        //* Autoselect latest created component
+        store.set('componentManagement/dialogEntity', false);
         return true;
       }
     });
@@ -194,7 +214,6 @@ const actions = {
       store.set('accountsManagement/selectedEntityIndex', state.selectedEntityIndex + 1);
     }
   },
-
 
   //* Sets the component as starred, modular or active.
   setEntityStatus({}, component) {

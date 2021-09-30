@@ -1,18 +1,7 @@
 <template>
-  <div
-    v-if="selectedComponent"
-    class="mt-3"
-  >
-    <v-app-bar
-      color="transparent"
-      flat
-      dense
-    >
-      <v-tooltip
-        transition="false"
-        color="black"
-        bottom
-      >
+  <div v-if="selectedComponent" class="mt-3">
+    <v-app-bar color="transparent" flat dense>
+      <v-tooltip transition="false" color="black" bottom>
         <template #activator="{ on }">
           <v-btn
             :disabled="previousComponentDisabled"
@@ -28,15 +17,11 @@
         </template>
         <span>Previous component</span>
       </v-tooltip>
-      <v-tooltip
-        transition="false"
-        color="black"
-        bottom
-      >
+      <v-tooltip transition="false" color="black" bottom>
         <template #activator="{ on }">
           <v-btn
             :disabled="nextComponentDisabled"
-            class=" mt-n2"
+            class="mt-n2"
             fab
             text
             x-small
@@ -51,14 +36,10 @@
 
       <v-spacer />
 
-      <v-tooltip
-        transition="false"
-        color="black"
-        bottom
-      >
+      <v-tooltip transition="false" color="black" bottom>
         <template #activator="{ on }">
           <v-btn
-            class=" mt-n2 mr-n1"
+            class="mt-n2 mr-n1"
             fab
             text
             x-small
@@ -76,19 +57,23 @@
 </template>
 
 <script>
-import { sync, call, get } from 'vuex-pathify';
+  import { sync, call, get } from 'vuex-pathify';
 
-export default {
-  name: 'ComponentDrilldown',
-  computed: {
-    ...sync('theme', ['isDark']),
-    ...sync('drawers', ['secureComponentDrawer']),
-    ...sync('componentManagement', ['componentCardGroup']),
-    ...get('componentManagement', ['previousComponentDisabled', 'nextComponentDisabled', 'selectedComponent']),
-  },
+  export default {
+    name: 'ComponentDrilldown',
+    computed: {
+      ...sync('theme', ['isDark']),
+      ...sync('drawers', ['secureComponentDrawer']),
+      ...sync('componentManagement', ['componentCardGroup']),
+      ...get('componentManagement', [
+        'previousComponentDisabled',
+        'nextComponentDisabled',
+        'selectedComponent',
+      ]),
+    },
 
-  methods: {
-    ...call('componentManagement/*'),
-  },
-};
+    methods: {
+      ...call('componentManagement/*'),
+    },
+  };
 </script>

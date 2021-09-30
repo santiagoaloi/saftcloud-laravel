@@ -1,139 +1,113 @@
 <template>
   <div>
-        <v-responsive :width="$vuetify.breakpoint.mdAndUp ? 300 : null"> 
-        <v-select
-          v-model="selectedComponentGroups"
-          multiple
-          item-value="id"
-          item-text="name"
-          return-object
-          placeholder="Select or create groups"
-          :maxlength="20"
-          :items="allGroups"
-          solo
-          :dark="isDark"
-           @update:search-input="syncGroupInputValue($event)"
-          hide-details
-               :color="isDark ? '#208ad6' : 'grey'"
-              item-color="indigo lighten-4"
-              :background-color="isDark ? '#28292b' : 'white'"
-              outlined
-              dense
-                       :menu-props="{ bottom: true, offsetY: true }"
-        >
-          <template
-            v-if="allGroups.length"
-            #prepend-item
-          >
-            <v-list-item
-              dense
-              :ripple="false"
-              @click.stop="selectAllGroups"
-            >
-              <v-list-item-action>
-                <v-icon class="ml-1">
-                  {{ icon }}
-                </v-icon>
-              </v-list-item-action>
-              <v-list-item-content>
-                <v-list-item-title> {{ hasSelectedAllGroups ? "Unselect all" : "Select all" }} </v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-            <v-divider />
-          </template>
-
-          <template #selection="data">
-            <v-chip
-              v-if="data.index === 0"
-              small
-              :style="isDark ? 'color: white' : 'color:black'"
-              :color="isDark ? 'grey-darken-4' : 'blue-white'"
-            >
-              {{ selectedComponentGroups.length }} groups selected.
-            </v-chip>
-          </template>
-
-          <template #item="{ item}">
+    <v-responsive :width="$vuetify.breakpoint.mdAndUp ? 300 : null">
+      <v-select
+        v-model="selectedComponentGroups"
+        multiple
+        item-value="id"
+        item-text="name"
+        return-object
+        placeholder="Select or create groups"
+        :maxlength="20"
+        :items="allGroups"
+        solo
+        :dark="isDark"
+        @update:search-input="syncGroupInputValue($event)"
+        hide-details
+        :color="isDark ? '#208ad6' : 'grey'"
+        item-color="indigo lighten-4"
+        :background-color="isDark ? '#28292b' : 'white'"
+        outlined
+        dense
+        :menu-props="{ bottom: true, offsetY: true }"
+      >
+        <template v-if="allGroups.length" #prepend-item>
+          <v-list-item dense :ripple="false" @click.stop="selectAllGroups">
             <v-list-item-action>
-              <v-avatar
-                class="white--text"
-                tile
-                size="30"
-                color="primary"
-              >
-                <h6>{{ countComponentsInGroup(item.id) }}</h6>
-              </v-avatar>
+              <v-icon class="ml-1">
+                {{ icon }}
+              </v-icon>
             </v-list-item-action>
             <v-list-item-content>
-              <v-list-item-title> {{ item.name }} </v-list-item-title>
+              <v-list-item-title>
+                {{ hasSelectedAllGroups ? 'Unselect all' : 'Select all' }}
+              </v-list-item-title>
             </v-list-item-content>
+          </v-list-item>
+          <v-divider />
+        </template>
 
-            <v-tooltip
-              transition="false"
-              color="black"
-              bottom
-            >
-              <template #activator="{ on }">
-                <v-btn
-                  plain
-                  class="mr-2"
-                  :ripple="false"
-                  small
-                  depressed
-                  v-on="on"
-                  @click.stop="renameGroupDialog(item.id, item.name)"
-                >
-                  <v-icon small>
-                    mdi-pencil-outline
-                  </v-icon>
-                </v-btn>
-              </template>
-              <span>Edit group</span>
-            </v-tooltip>
+        <template #selection="data">
+          <v-chip
+            v-if="data.index === 0"
+            small
+            :style="isDark ? 'color: white' : 'color:black'"
+            :color="isDark ? 'grey-darken-4' : 'blue-white'"
+          >
+            {{ selectedComponentGroups.length }} groups selected.
+          </v-chip>
+        </template>
 
-            <v-tooltip
-              transition="false"
-              color="black"
-              bottom
-            >
-              <template #activator="{ on }">
-                <v-btn
-                  plain
-                  :ripple="false"
-                  small
-                  depressed
-                  v-on="on"
-                  @click.stop="removeGroupWarning(item.id, item.name, 'delete')"
-                >
-                  <v-icon small>
-                    mdi-delete-outline
-                  </v-icon>
-                </v-btn>
-              </template>
-              <span>Remove group</span>
-            </v-tooltip>
-          </template>
+        <template #item="{ item }">
+          <v-list-item-action>
+            <v-avatar class="white--text" tile size="30" color="primary">
+              <h6>{{ countComponentsInGroup(item.id) }}</h6>
+            </v-avatar>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title> {{ item.name }} </v-list-item-title>
+          </v-list-item-content>
 
-          <template #no-data>
-            <v-list-item @click="addGroupDialog()">
-              <v-list-item-action>
-                <v-icon>
-                  mdi-plus
-                </v-icon>
-              </v-list-item-action>
+          <v-tooltip transition="false" color="black" bottom>
+            <template #activator="{ on }">
+              <v-btn
+                plain
+                class="mr-2"
+                :ripple="false"
+                small
+                depressed
+                v-on="on"
+                @click.stop="renameGroupDialog(item.id, item.name)"
+              >
+                <v-icon small> mdi-pencil-outline </v-icon>
+              </v-btn>
+            </template>
+            <span>Edit group</span>
+          </v-tooltip>
 
-              <v-list-item-content>
-                <v-list-item-title>
-                  <span>Create group </span>
-                  {{ formattedGroup }}
-                </v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-          </template>
-        </v-select>
-        </v-responsive>
+          <v-tooltip transition="false" color="black" bottom>
+            <template #activator="{ on }">
+              <v-btn
+                plain
+                :ripple="false"
+                small
+                depressed
+                v-on="on"
+                @click.stop="removeGroupWarning(item.id, item.name, 'delete')"
+              >
+                <v-icon small> mdi-delete-outline </v-icon>
+              </v-btn>
+            </template>
+            <span>Remove group</span>
+          </v-tooltip>
+        </template>
 
+        <template #no-data>
+          <v-list-item @click="addGroupDialog()">
+            <v-list-item-action>
+              <v-icon> mdi-plus </v-icon>
+            </v-list-item-action>
 
+            <v-list-item-content>
+              <v-list-item-title>
+                <span>Create group </span>
+                {{ formattedGroup }}
+              </v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </template>
+      </v-select>
+    </v-responsive>
 
     <baseDialog
       v-if="componentsLinkedToGroupDialog"
@@ -145,19 +119,18 @@
       @save="componentsLinkedToGroupDialog = !componentsLinkedToGroupDialog"
     >
       <v-expand-transition appear>
-        <v-sheet
-          v-if="componentsLinkedToGroup.length"
-          color="transparent"
-        >
+        <v-sheet v-if="componentsLinkedToGroup.length" color="transparent">
           <v-alert
             dismissible
             border="left"
             colored-border
             color="grey darken-2"
             elevation="2"
-            class="text-left "
+            class="text-left"
           >
-            <div>These componets are still associated with the group "{{ groupNameBeingRemoved }}"</div>
+            <div>
+              These componets are still associated with the group "{{ groupNameBeingRemoved }}"
+            </div>
             <div>You can remove the components permanently and then remove the group.</div>
           </v-alert>
         </v-sheet>
@@ -178,70 +151,43 @@
             rounded
             :color="item.config_settings.icon.color"
           >
-            <v-icon
-              size="25"
-              dark
-            >
+            <v-icon size="25" dark>
               {{ item.config_settings.icon.name }}
             </v-icon>
           </v-avatar>
         </template>
 
         <template #[`item.actions`]="{ item }">
-          <v-menu
-            origin="center center"
-            transition="scale-transition"
-            :nudge-bottom="10"
-            offset-y
-          >
+          <v-menu origin="center center" transition="scale-transition" :nudge-bottom="10" offset-y>
             <template #activator="{ on }">
-              <v-btn
-                icon
-                v-on="on"
-              >
+              <v-btn icon v-on="on">
                 <v-icon>mdi-dots-vertical</v-icon>
               </v-btn>
             </template>
 
-            <v-list
-              class="pa-2"
-              outlined
-            >
+            <v-list class="pa-2" outlined>
               <v-list-item>
                 <v-list-item-action>
-                  <v-btn
-                    small
-                    icon
-                    dark
-                    color="#4C4C4C"
-                  >
-                    <v-icon
-                      color="grey darken-2"
-                      small
-                      class="mx-2"
-                    >
-                      mdi-pencil-outline
-                    </v-icon>
+                  <v-btn small icon dark color="#4C4C4C">
+                    <v-icon color="grey darken-2" small class="mx-2"> mdi-pencil-outline </v-icon>
                   </v-btn>
                 </v-list-item-action>
                 <v-list-item-title>Restore </v-list-item-title>
               </v-list-item>
 
-              <v-list-item @click.stop="removeComponentWarning(item.id, 'post', 'forceDestroy', item.config.general_config.title)">
+              <v-list-item
+                @click.stop="
+                  removeComponentWarning(
+                    item.id,
+                    'post',
+                    'forceDestroy',
+                    item.config.general_config.title,
+                  )
+                "
+              >
                 <v-list-item-action>
-                  <v-btn
-                    small
-                    icon
-                    dark
-                    color="#4C4C4C"
-                  >
-                    <v-icon
-                      color="red lighten-2"
-                      small
-                      class="mx-2"
-                    >
-                      mdi-delete-outline
-                    </v-icon>
+                  <v-btn small icon dark color="#4C4C4C">
+                    <v-icon color="red lighten-2" small class="mx-2"> mdi-delete-outline </v-icon>
                   </v-btn>
                 </v-list-item-action>
                 <v-list-item-title>Remove permanently</v-list-item-title>
@@ -250,15 +196,8 @@
           </v-menu>
         </template>
         <template #[`item.deleted_at`]="{ item }">
-          <v-chip v-if="item.deleted_at">
-            Removed
-          </v-chip>
-          <v-chip
-            v-else
-            color="primary"
-          >
-            Active
-          </v-chip>
+          <v-chip v-if="item.deleted_at"> Removed </v-chip>
+          <v-chip v-else color="primary"> Active </v-chip>
         </template>
       </v-data-table>
       <v-btn
@@ -273,86 +212,91 @@
 </template>
 
 <script>
-import { sync, get, call } from 'vuex-pathify';
-import componentGroups from '@/mixins/componentGroups';
-import componentActions from '@/mixins/componentActions';
+  import { sync, get, call } from 'vuex-pathify';
+  import componentGroups from '@/mixins/componentGroups';
+  import componentActions from '@/mixins/componentActions';
 
-export default {
-  name: 'ComponentsGroups',
-  mixins: [componentGroups, componentActions],
-  data() {
-    return {
-      removeAlert: true,
-      dropDownValue: false,
-      persistenDropdown: false,
-      headers: [
-        {
-          text: 'Avatar',
-          align: 'start',
-          sortable: false,
-          value: 'avatar',
-        },
-        {
-          text: 'Component',
-          align: 'start',
-          sortable: true,
-          value: 'name',
-        },
-        {
-          text: 'Status',
-          align: 'center',
-          sortable: true,
-          value: 'deleted_at',
-        },
-        {
-          text: 'Actions',
-          align: 'end',
-          sortable: false,
-          value: 'actions',
-        },
-      ],
-    };
-  },
-
-  mounted() {
-    this.getGroups();
-  },
-
-  computed: {
-    ...sync('componentManagement', ['componentsLinkedToGroupDialog', 'componentsLinkedToGroup', 'groupNameBeingRemoved']),
-  },
-  methods: {
-    ...call('componentManagement/*'),
-
-    setValue() {
-      if (this.persistenDropdown) {
-        return { value: this.dropDownValue };
-      } this.dropDownValue = true;
+  export default {
+    name: 'ComponentsGroups',
+    mixins: [componentGroups, componentActions],
+    data() {
+      return {
+        removeAlert: true,
+        dropDownValue: false,
+        persistenDropdown: false,
+        headers: [
+          {
+            text: 'Avatar',
+            align: 'start',
+            sortable: false,
+            value: 'avatar',
+          },
+          {
+            text: 'Component',
+            align: 'start',
+            sortable: true,
+            value: 'name',
+          },
+          {
+            text: 'Status',
+            align: 'center',
+            sortable: true,
+            value: 'deleted_at',
+          },
+          {
+            text: 'Actions',
+            align: 'end',
+            sortable: false,
+            value: 'actions',
+          },
+        ],
+      };
     },
-  },
-};
+
+    mounted() {
+      this.getGroups();
+    },
+
+    computed: {
+      ...sync('componentManagement', [
+        'componentsLinkedToGroupDialog',
+        'componentsLinkedToGroup',
+        'groupNameBeingRemoved',
+      ]),
+    },
+    methods: {
+      ...call('componentManagement/*'),
+
+      setValue() {
+        if (this.persistenDropdown) {
+          return { value: this.dropDownValue };
+        }
+        this.dropDownValue = true;
+      },
+    },
+  };
 </script>
 <style>
-.swalDarkTitle {
- color: white !important;
-}
+  .swalDarkTitle {
+    color: white !important;
+  }
 
-.swalDarkValidation {
- align-items: center;
- justify-content: center;
- margin: 0;
- padding: 0;
- background: transparent;
- color: white;
- font-size: 1em;
- font-weight: 300;
-}
+  .swalDarkValidation {
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    color: white;
+    font-size: 1em;
+    font-weight: 300;
+  }
 
-.swalDarkSelect {
- min-width: 100% !important;
- background: rgb(54, 57, 63) !important;
- color: white !important;
- border-radius: 8px;
- height: 50px;
-}
+  .swalDarkSelect {
+    min-width: 100% !important;
+    background: rgb(54, 57, 63) !important;
+    color: white !important;
+    border-radius: 8px;
+    height: 50px;
+  }
 </style>

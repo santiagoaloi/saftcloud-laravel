@@ -1,6 +1,10 @@
 import Vue from 'vue';
 import {
-  ValidationObserver, ValidationProvider, extend, localize, setInteractionMode,
+  ValidationObserver,
+  ValidationProvider,
+  extend,
+  localize,
+  setInteractionMode,
 } from 'vee-validate';
 import en from 'vee-validate/dist/locale/en.json';
 import * as rules from 'vee-validate/dist/rules';
@@ -9,12 +13,12 @@ import * as rules from 'vee-validate/dist/rules';
 extend('url', {
   validate: (str) => {
     const pattern = new RegExp(
-      '^(https?:\\/\\/)?' // protocol
-   + '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' // domain name
-   + '((\\d{1,3}\\.){3}\\d{1,3}))' // OR ip (v4) address
-   + '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' // port and path
-   + '(\\?[;&a-z\\d%_.~+=-]*)?' // query string
-    + '(\\#[-a-z\\d_]*)?$',
+      '^(https?:\\/\\/)?' + // protocol
+        '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
+        '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
+        '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
+        '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
+        '(\\#[-a-z\\d_]*)?$',
       'i',
     ); // fragment locator
     return !!pattern.test(str);

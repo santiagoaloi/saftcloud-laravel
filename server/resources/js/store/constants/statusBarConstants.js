@@ -5,6 +5,4 @@ const STARRED = 'Displaying your starred components (highlited components genera
 const MODULAR = 'Displaying modular components (subscription based components)';
 const NAVIGATION = 'Displaying components that are visible in the navigation drawer';
 
-export {
-  ALL, ACTIVE, INACTIVE, STARRED, MODULAR, NAVIGATION,
-};
+export { ALL, ACTIVE, INACTIVE, STARRED, MODULAR, NAVIGATION };

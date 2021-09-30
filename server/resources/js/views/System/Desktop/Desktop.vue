@@ -2,9 +2,9 @@
   <div />
 </template>
 <script>
-export default {
-  name: 'Desktop',
-};
+  export default {
+    name: 'Desktop',
+  };
 </script>
 
 <style scoped></style>

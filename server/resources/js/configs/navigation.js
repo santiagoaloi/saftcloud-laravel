@@ -3,9 +3,14 @@ export default {
     {
       text: '',
       key: '',
-      items: [{
-        icon: 'mdi-view-dashboard-outline', key: 'menu.dashboard', text: 'Dashboard', link: '/dashboard/analytics',
-      }],
+      items: [
+        {
+          icon: 'mdi-view-dashboard-outline',
+          key: 'menu.dashboard',
+          text: 'Dashboard',
+          link: '/dashboard/analytics',
+        },
+      ],
     },
     {
       text: 'Other',
