@@ -67,85 +67,28 @@
           <v-btn rounded to="/signup" height="36" class="mr-3" dark x-large plain>
             <v-icon left> mdi-account-plus </v-icon>Sign up
           </v-btn>
-          <template>
-            <v-btn
-              min-width="100px"
-              to="/login"
-              height="36"
-              class="mr-3"
-              rounded
-              dark
-              color="primary"
-              x-large
-            >
-              <v-avatar class="ml-n4 mr-3" size="28" left>
-                <v-img src="storage/defaults/avatar.png" />
-              </v-avatar>
-              Login
-            </v-btn>
-
-            <!-- <v-chip to="/login" link>
-            <v-avatar left>
-              <v-img :src="getAvatarSoruce()"></v-img>
-            </v-avatar>
-            Login
-          </v-chip> -->
-          </template>
-          <!--
-          <v-menu
-            v-if="isLoggedIn"
-            rounded="xl"
-            origin="center center"
-            transition="scale-transition"
-            :nudge-bottom="10"
-            offset-y
+          <v-btn
+            min-width="100px"
+            to="/login"
+            height="36"
+            class="mr-3"
+            rounded
+            dark
+            color="primary"
+            x-large
           >
-            <template v-slot:activator="{ on }">
-              <v-chip v-on="on">
-                <v-avatar left>
-                  <v-img :src="getAvatarSoruce()"></v-img>
-                </v-avatar>
-                {{ profile.first_name }}
-              </v-chip>
-            </template>
-            <v-card
-              color="rgba(250, 250, 250, 1)"
-              class="mx-auto pa-2"
-              max-width="300"
-              rounded="xl"
-            >
-              <v-list rounded="xl" color="rgba(250, 250, 250, 1)" outlined>
-                <v-list-item>
-                  <v-list-item-avatar>
-                    <v-img :src="getAvatarSoruce()"></v-img>
-                  </v-list-item-avatar>
-                  <v-list-item-content>
-                    <v-list-item-title>
-                      {{ profile.first_name }}
-                      {{ profile.last_name }}</v-list-item-title
-                    >
-                    <v-list-item-subtitle>{{
-                      sessionEmail
-                    }}</v-list-item-subtitle>
-                  </v-list-item-content>
-                </v-list-item>
-              </v-list>
-              <v-list rounded="xl" color="rgba(250, 250, 250, 1)" outlined>
-                <v-list-item to="/login">
-                  <v-list-item-action>
-                    <v-icon>mdi-view-dashboard-outline</v-icon>
-                  </v-list-item-action>
-                  <v-list-item-subtitle>POS Console</v-list-item-subtitle>
-                </v-list-item>
-                <v-list-item @click="logout()">
-                  <v-list-item-action>
-                    <v-icon>mdi-logout</v-icon>
-                  </v-list-item-action>
-                  <v-list-item-subtitle>Log Out</v-list-item-subtitle>
-                </v-list-item>
-              </v-list>
-            </v-card>
-          </v-menu> -->
+            <v-avatar class="ml-n4 mr-3" size="28" left>
+              <v-img v-if="user" :src="user.avatar">
+                <template #placeholder>
+                  <v-row class="fill-height ma-0" align="center" justify="center">
+                    <v-progress-circular indeterminate color="white" />
+                  </v-row>
+                </template>
+              </v-img>
+              <v-img v-else src="storage/defaults/avatar.png" />
+            </v-avatar>
+            {{ user ? 'Dashboard' : 'Login' }}
+          </v-btn>
         </template>
         <template v-else>
           <v-btn fab class="mr-3" color="white" text small dark>
@@ -231,6 +174,7 @@
 
     computed: {
       ...sync('theme', ['isDark']),
+      user: sync('authentication@session.user'),
     },
 
     methods: {

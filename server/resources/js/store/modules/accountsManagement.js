@@ -18,7 +18,7 @@ const initialRoleSettings = () => ({
 
 const state = {
   groupName: '',
-  searchFields: '',
+  searchPrivileges: '',
   allUsers: [],
   allRoles: [],
   allCapabilities: [],
@@ -26,6 +26,7 @@ const state = {
   isTableLayout: false,
   entityCardGroup: 0,
   dialogEntity: false,
+  dialogPrivileges: false,
   selectedEntityType: 'Roles',
   selectedEntityIndex: 0,
   selectedEntityTableRow: [],
@@ -62,7 +63,7 @@ const getters = {
   activeEntityTabName: (state) => state.entityStatusTabs[state.activeStatusTab].value,
 
   //* Returns components that belongs to a group, status or matching search.
-  allEntitiesFiltered: (state, getters, rootState) => {
+  allEntitiesFiltered: (state, _, rootState) => {
     const entity = state.selectedEntityType === 'Roles' ? 'allRoles' : 'allUsers';
     const entityName = state.selectedEntityType === 'Roles' ? 'name' : 'email';
     return state[entity].filter((ent) => {
@@ -70,6 +71,17 @@ const getters = {
       const title = ent[entityName].toLowerCase();
       return !search || title.match(search);
     });
+  },
+
+  //* Filter privileges in the privileges dialog sinple tabe.
+  filteredPrivileges: (state, getters) => {
+    if (getters.selectedEntity.privileges.capabilities) {
+      const search = state.searchPrivileges.toString().toLowerCase();
+      return getters.selectedEntity.privileges.capabilities.filter((p) =>
+        p.toLowerCase().match(search),
+      );
+    }
+    return getters.selectedEntity.privileges.capabilities;
   },
 
   //* Returns true if the are no components returned from the backend.
@@ -142,9 +154,9 @@ const actions = {
     });
   },
 
-  //* When a component is selected in the components view, it loads its configuration.
+  //* When an entity is selected in the entities view, it loads its configuration.
   setSelectedEntity({ rootState, state }, index) {
-    if (state.selectedEntityIndex != index) {
+    if (state.selectedEntityIndex !== index) {
       store.set('accountsManagement/selectedEntityIndex', index);
     }
 
@@ -157,7 +169,7 @@ const actions = {
   rollbackChanges({ state, dispatch }, component) {
     const { origin } = component;
     const index = state.allComponents.findIndex((c) => c.id === component.id);
-    store.set(`componentManagement/allComponents@${index}`, {
+    store.set(`accountsManagement/allComponents@${index}`, {
       ...origin,
       origin: cloneDeep(origin),
     });
@@ -176,7 +188,7 @@ const actions = {
         store.set('snackbar/color', 'primary');
 
         //* Autoselect latest created component
-        store.set('componentManagement/dialogEntity', false);
+        store.set('accountsManagement/dialogEntity', false);
         return true;
       }
     });
@@ -193,7 +205,7 @@ const actions = {
         store.set('snackbar/color', 'primary');
 
         //* Autoselect latest created component
-        store.set('componentManagement/dialogEntity', false);
+        store.set('accountsManagement/dialogEntity', false);
         return true;
       }
     });

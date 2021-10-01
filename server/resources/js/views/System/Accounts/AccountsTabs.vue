@@ -22,7 +22,6 @@
     </v-tabs>
 
     <div class="d-flex">
-      <!-- <v-switch v-model="multipleSelect" label="Multiple selection" class="mt-1 mx-4"> </v-switch> -->
       <v-btn class="mt-n3" plain @click="isTableLayout = !isTableLayout">
         <v-icon left>
           {{ isTableLayout ? ' mdi-view-grid-outline' : ' mdi-format-list-bulleted-square' }}
@@ -35,7 +34,6 @@
 
 <script>
   import { sync, get } from 'vuex-pathify';
-  import globalMixin from '@/mixins/globalMixin';
 
   export default {
     name: 'AccountsTabs',

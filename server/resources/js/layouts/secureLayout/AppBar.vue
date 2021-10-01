@@ -105,7 +105,7 @@
       <template #activator="{ on, attrs }">
         <v-btn v-bind="attrs" x-small fab icon class="mr-2" v-on="on">
           <v-avatar size="33px">
-            <v-img src="storage/defaults/avatar.png">
+            <v-img :src="user.avatar">
               <template #placeholder>
                 <v-row class="fill-height ma-0" align="center" justify="center">
                   <v-progress-circular indeterminate color="white" />
@@ -120,8 +120,7 @@
         <v-list-item class="cursor-pointer">
           <v-list-item-content>
             <v-list-item-title style="font-size: 130%; font-weight: 600">
-              {{ user.entity.first_name }}
-              {{ user.entity.last_name }}
+              {{ fullName }}
             </v-list-item-title>
           </v-list-item-content>
         </v-list-item>
@@ -172,6 +171,7 @@
   import axios from 'axios';
   import { call, sync } from 'vuex-pathify';
   import CountryFlag from 'vue-country-flag';
+  import capitalize from 'lodash/capitalize';
 
   export default {
     name: 'SecureAppbar',
@@ -243,8 +243,14 @@
     computed: {
       ...sync('theme', ['isDark']),
       ...sync('application', ['search']),
-      ...sync('drawers', ['secureDefaultDrawer']),
       user: sync('authentication@session.user'),
+      ...sync('drawers', ['secureDefaultDrawer']),
+
+      fullName() {
+        return `${capitalize(this.user.entity.first_name)} ${capitalize(
+          this.user.entity.last_name,
+        )} `;
+      },
 
       routeTitle() {
         return this.$route.meta.title;

@@ -15,91 +15,7 @@
       </v-sheet>
     </v-expand-transition>
 
-    <v-card-title> Edit Component View </v-card-title>
-
-    <v-card-subtitle>
-      Edit your module quickly, change group, component name, description, enable sidebar visibility
-      and more...
-    </v-card-subtitle>
-
-    <ValidationObserver ref="componentDrilldown" slim>
-      <v-card-text class="pa-3">
-        <div class="text--primary">
-          <baseFieldLabel required label="Component name" />
-          <validation-provider
-            v-slot="{ errors }"
-            immediate
-            mode="aggressive"
-            name="component name"
-            rules="required"
-          >
-            <v-text-field
-              v-model="selectedComponent.config.general_config.title"
-              v-lazy-input:debounce="100"
-              outlined
-              :color="isDark ? '#208ad6' : 'grey'"
-              :background-color="isDark ? '#28292b' : 'white'"
-              :prepend-inner-icon="selectedComponent.config_settings.icon.name"
-              spellcheck="false"
-              flat
-              solo
-              :error-messages="errors[0]"
-              :error="errors.length > 0"
-            >
-              <template #append>
-                <v-tooltip transition="false" color="black" bottom>
-                  <template #activator="{ on }">
-                    <v-btn
-                      small
-                      icon
-                      :ripple="false"
-                      v-on="on"
-                      @click="setStarred(selectedComponent)"
-                    >
-                      <v-icon :color="isStarredColor(selectedComponent)">
-                        {{ isStarredIcon(selectedComponent) }}
-                      </v-icon>
-                    </v-btn>
-                  </template>
-                  <span>Favourite</span>
-                </v-tooltip>
-              </template>
-            </v-text-field>
-          </validation-provider>
-
-          <baseFieldLabel label="Description / Notes" />
-          <v-textarea
-            v-model="selectedComponent.config.general_config.note"
-            v-lazy-input:debounce="100"
-            outlined
-            :color="isDark ? '#208ad6' : 'grey'"
-            :background-color="isDark ? '#28292b' : 'white'"
-            spellcheck="false"
-            :rows="2"
-            dense
-            hide-details
-          />
-
-          <div class="mt-2">
-            <baseFieldLabel required label="Component group " />
-            <v-autocomplete
-              v-model="selectedComponent.component_group_id"
-              outlined
-              :color="isDark ? '#208ad6' : 'grey'"
-              :background-color="isDark ? '#28292b' : 'white'"
-              hide-selected
-              :items="allGroups"
-              :maxlength="25"
-              item-value="id"
-              item-text="name"
-              hide-no-data
-            />
-          </div>
-        </div>
-      </v-card-text>
-    </ValidationObserver>
-
-    <div class="text-center mb-3">
+    <div class="text-end pr-3 pt-2">
       <v-tooltip transition="false" color="black" bottom>
         <template #activator="{ on }">
           <v-btn
@@ -178,6 +94,93 @@
       </v-tooltip>
     </div>
 
+    <v-card-title> Edit Component View </v-card-title>
+
+    <v-card-subtitle>
+      Edit your module quickly, change group, component name, description, enable sidebar visibility
+      and more...
+    </v-card-subtitle>
+
+    <ValidationObserver ref="componentDrilldown" slim>
+      <v-contaSiner>
+        <baseFieldLabel required label="Component name" />
+        <validation-provider
+          v-slot="{ errors }"
+          immediate
+          mode="aggressive"
+          name="component name"
+          rules="required"
+        >
+          <v-text-field
+            v-model="selectedComponent.config.general_config.title"
+            v-lazy-input:debounce="100"
+            outlined
+            :color="isDark ? '#208ad6' : 'grey'"
+            :background-color="isDark ? '#28292b' : 'white'"
+            :prepend-inner-icon="selectedComponent.config_settings.icon.name"
+            spellcheck="false"
+            flat
+            solo
+            :error-messages="errors[0]"
+            :error="errors.length > 0"
+            hide-details="auto"
+            class="mb-3"
+            dense
+          >
+            <template #append>
+              <v-tooltip transition="false" color="black" bottom>
+                <template #activator="{ on }">
+                  <v-btn
+                    small
+                    icon
+                    :ripple="false"
+                    v-on="on"
+                    @click="setStarred(selectedComponent)"
+                  >
+                    <v-icon :color="isStarredColor(selectedComponent)">
+                      {{ isStarredIcon(selectedComponent) }}
+                    </v-icon>
+                  </v-btn>
+                </template>
+                <span>Favourite</span>
+              </v-tooltip>
+            </template>
+          </v-text-field>
+        </validation-provider>
+
+        <baseFieldLabel label="Description / Notes" />
+        <v-textarea
+          v-model="selectedComponent.config.general_config.note"
+          v-lazy-input:debounce="100"
+          outlined
+          :color="isDark ? '#208ad6' : 'grey'"
+          :background-color="isDark ? '#28292b' : 'white'"
+          spellcheck="false"
+          :rows="2"
+          dense
+          hide-details
+          class="mb-3"
+        />
+
+        <div class="mt-2">
+          <baseFieldLabel required label="Component group " />
+          <v-autocomplete
+            v-model="selectedComponent.component_group_id"
+            outlined
+            :color="isDark ? '#208ad6' : 'grey'"
+            item-color="indigo lighten-4"
+            :background-color="isDark ? '#28292b' : 'white'"
+            :items="allGroups"
+            :maxlength="25"
+            item-value="id"
+            item-text="name"
+            hide-no-data
+            dense
+          />
+        </div>
+      </v-contaSiner>
+    </ValidationObserver>
+
     <div class="mt-2">
       <v-list-item two-line>
         <v-list-item-icon>
@@ -197,7 +200,7 @@
 
     <v-divider />
 
-    <v-list subheader two-line>
+    <v-list subheader>
       <v-subheader>Database</v-subheader>
       <v-list-item>
         <v-list-item-icon>

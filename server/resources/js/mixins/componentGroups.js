@@ -41,7 +41,9 @@ export default {
     ...call('componentManagement/*'),
 
     dbGroupNamesFiltered(editedGroupName) {
-      return this.dbGroupNames.filter((group) => group !== editedGroupName);
+      const result = this.dbGroupNames.filter((g) => g !== editedGroupName);
+      console.log(result, editedGroupName);
+      return result;
     },
 
     addGroupDialog() {
@@ -165,13 +167,13 @@ export default {
           input: `${this.isDark ? 'swalDarkSelect' : ''}`,
         },
         input: 'select',
-        inputOptions: ['No Parent', ...this.dbGroupNamesFiltered(name)],
+        inputOptions: ['No Parent', ...this.dbGroupNamesFiltered(name, id)],
         backdrop: `${this.isDark ? 'rgba(0, 0, 0, 0.6)' : 'rgba(108, 122, 137, 0.8)'}`,
         background: `${this.isDark ? '#2f3136' : ''}`,
       }).then((result) => {
         if (result.value) {
-          this.groupParent = result.value;
-          this.renameGroup(id);
+          const groupParent = Number(result.value);
+          this.renameGroup({ id, groupParent });
         } else if (result.dismiss === 'cancel') {
           this.renameGroupDialog(id, name);
         }

@@ -15,25 +15,7 @@
       </v-sheet>
     </v-expand-transition>
 
-    <template v-if="selectedEntityType === 'Roles'">
-      <v-card-title> Edit Role </v-card-title>
-
-      <v-card-subtitle>
-        Each application module has its own set of capabilities that you can choose from to build
-        your role in a more granular manner.
-      </v-card-subtitle>
-    </template>
-
-    <template v-if="selectedEntityType === 'Accounts'">
-      <v-card-title> Edit User account </v-card-title>
-
-      <v-card-subtitle>
-        Assign roles, enforce security policies, monitor activiy logs among other settings that
-        applies to each invdividual user account.
-      </v-card-subtitle>
-    </template>
-
-    <div class="text-end mb-3 mt-2">
+    <div class="text-end pr-3 pt-2">
       <v-tooltip transition="false" color="black" bottom>
         <template #activator="{ on }">
           <v-btn depressed dark large small :color="isDark ? '' : 'white'" v-on="on">
@@ -62,8 +44,66 @@
       </v-tooltip>
     </div>
 
+    <template v-if="selectedEntityType === 'Roles'">
+      <v-card-title> Edit Role </v-card-title>
+
+      <v-card-subtitle>
+        Each application module has its own set of privileges that you can choose from to build your
+        role in a more granular manner.
+      </v-card-subtitle>
+    </template>
+
+    <template v-if="selectedEntityType === 'Accounts'">
+      <v-card-title> Edit User account </v-card-title>
+
+      <v-card-subtitle>
+        Assign roles, enforce security policies, monitor activiy logs among other settings that
+        applies to each invdividual user account.
+      </v-card-subtitle>
+    </template>
+
     <v-container>
       <template v-if="selectedEntityType === 'Roles'">
+        <baseFieldLabel required label="Role Name" />
+        <validation-provider
+          v-slot="{ errors }"
+          immediate
+          mode="aggressive"
+          name="Role name"
+          rules="required"
+        >
+          <v-text-field
+            v-model="selectedEntity.name"
+            v-lazy-input:debounce="100"
+            outlined
+            :color="isDark ? '#208ad6' : 'grey'"
+            :background-color="isDark ? '#28292b' : 'white'"
+            spellcheck="false"
+            flat
+            solo
+            :error-messages="errors[0]"
+            :error="errors.length > 0"
+            hide-details="auto"
+            class="mb-3"
+            dense
+          >
+          </v-text-field>
+        </validation-provider>
+
+        <baseFieldLabel label="Role Description" />
+        <v-textarea
+          v-model="selectedEntity.description"
+          v-lazy-input:debounce="100"
+          outlined
+          :color="isDark ? '#208ad6' : 'grey'"
+          :background-color="isDark ? '#28292b' : 'white'"
+          spellcheck="false"
+          :rows="2"
+          dense
+          hide-details
+          class="mb-3"
+        />
+
         <div class="mt-2">
           <baseFieldLabel class="mb-n3" label="Root role" />
           <v-list-item two-line>
@@ -72,22 +112,22 @@
             </v-list-item-icon>
             <v-list-item-content>
               <v-list-item-title>Enable root access</v-list-item-title>
-              <v-list-item-subtitle> Unlock all capabilities </v-list-item-subtitle>
+              <v-list-item-subtitle> Unlock all privileges </v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
         </div>
 
         <div class="mt-2">
-          <baseFieldLabel required label="Role Capabilities " />
+          <baseFieldLabel required label="Role Privileges " />
           <v-autocomplete
-            v-model="selectedCapabilities"
+            v-model="selectedEntity.privileges"
             outlined
             :color="isDark ? '#208ad6' : 'grey'"
             item-color="indigo lighten-4"
             :background-color="isDark ? '#28292b' : 'white'"
             :items="allCapabilities"
             :maxlength="25"
-            item-value="id"
+            item-value="name"
             item-text="name"
             hide-no-data
             hide-details
@@ -101,7 +141,7 @@
                 :color="isDark ? 'grey-darken-4' : 'blue-white'"
                 small
               >
-                {{ selectedCapabilities.length }} capabilities selected.
+                {{ selectedEntity.privileges.length }} privileges selected.
               </v-chip>
             </template>
 
@@ -148,7 +188,16 @@
     </v-container>
 
     <template v-if="selectedEntityType === 'Accounts'">
-      <div class="mt-n5">
+      <v-list subheader two-line>
+        <v-subheader>Operations</v-subheader>
+
+        <v-container class="text-end">
+          <v-btn class="mr-2" color="red lighten-2">Disable</v-btn>
+          <v-btn>Change password</v-btn>
+        </v-container>
+      </v-list>
+
+      <div>
         <v-list-item>
           <v-list-item-icon>
             <v-avatar>
@@ -184,27 +233,45 @@
         </v-list-item>
       </div>
 
-      <div class="mt-2">
-        <v-list-item two-line>
-          <v-list-item-icon>
-            <v-switch v-model="accountStatus" :ripple="false" hide-details class="mt-2" />
-          </v-list-item-icon>
-          <v-list-item-content>
-            <v-list-item-title>Disable user account</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-      </div>
+      <v-container>
+        <v-list subheader two-line>
+          <v-subheader>Assigned roles</v-subheader>
 
+          <v-sheet elevation="4" rounded="xl">
+            <div class="pa-4">
+              <v-chip-group class="pointer-events-none" active-class="primary--text" column>
+                <template v-if="selectedEntity.roles.length">
+                  <v-chip
+                    v-for="role in selectedEntity.privileges.roles"
+                    :key="role"
+                    color="grey darken-4"
+                  >
+                    {{ role }}
+                  </v-chip>
+                </template>
+                <template v-else>
+                  <v-chip color="grey darken-4"> No Roles Assigned </v-chip>
+                </template>
+              </v-chip-group>
+            </div>
+          </v-sheet>
+        </v-list>
+      </v-container>
       <v-container class="text-end">
-        <v-btn color="accent">Audit logs</v-btn>
-        <v-btn>Change password</v-btn>
+        <v-btn
+          class="mr-2"
+          :disabled="!selectedEntity.roles.length"
+          @click="dialogPrivileges = true"
+          >Show privilege list</v-btn
+        >
+        <v-btn color="primary">Assign roles</v-btn>
       </v-container>
     </template>
 
     <v-divider />
 
     <v-list subheader two-line>
-      <v-subheader>Database</v-subheader>
+      <v-subheader>Metadata</v-subheader>
 
       <v-list-item>
         <v-list-item-icon>
@@ -237,15 +304,9 @@
           </v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
-
-      <v-divider />
-
-      <template v-if="selectedEntityType === 'Accounts'">
-        <v-container class="text-end accent--text text--lighten-3">
-          <h5>Export all user data</h5>
-        </v-container>
-      </template>
     </v-list>
+
+    <v-divider />
   </div>
 </template>
 
@@ -258,10 +319,7 @@
     mixins: [componentActions],
 
     data() {
-      return {
-        selectedCapabilities: [],
-        accountStatus: true,
-      };
+      return {};
     },
 
     computed: {
@@ -280,6 +338,7 @@
         'selectedEntityIndex',
         'selectedEntityType',
         'allCapabilities',
+        'dialogPrivileges',
       ]),
     },
 
@@ -292,8 +351,7 @@
       },
 
       extractCapabilityName(item) {
-        const suffix = item.substring(item.indexOf('.'));
-
+        const suffix = item.substr(item.indexOf('.'));
         return suffix;
       },
     },

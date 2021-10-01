@@ -2,10 +2,10 @@
   <div>
     <capabilities-appbar class="mt-2" />
     <v-data-table :headers="headers" :items="selectedComponent.capabilities">
-      <template v-slot:[`item.options`]="{ item }">
+      <template #[`item.options`]="{ item }">
         <v-tooltip transition="false" color="black" bottom>
-          <template v-slot:activator="{ on }">
-            <v-btn @click="edit(item)" v-on="on" color="white" small icon :ripple="false">
+          <template #activator="{ on }">
+            <v-btn color="white" small icon :ripple="false" @click="edit(item)" v-on="on">
               <v-icon> mdi-pencil </v-icon>
             </v-btn>
           </template>
@@ -13,15 +13,15 @@
         </v-tooltip>
 
         <v-tooltip transition="false" color="black" bottom>
-          <template v-slot:activator="{ on }">
+          <template #activator="{ on }">
             <v-btn
-              @click="remove(item)"
               class="ml-3"
-              v-on="on"
               color="white"
               small
               icon
               :ripple="false"
+              @click="remove(item)"
+              v-on="on"
             >
               <v-icon> mdi-delete </v-icon>
             </v-btn>
@@ -35,9 +35,10 @@
 </template>
 
 <script>
+  import { sync, get, call } from 'vuex-pathify';
   import DialogCapability from './DialogCapability';
   import { store } from '@/store';
-  import { sync, get, call } from 'vuex-pathify';
+
   export default {
     name: 'ComponentsEditViewsCapabilities',
     components: {

@@ -12,7 +12,6 @@
         :items="allGroups"
         solo
         :dark="isDark"
-        @update:search-input="syncGroupInputValue($event)"
         hide-details
         :color="isDark ? '#208ad6' : 'grey'"
         item-color="indigo lighten-4"
@@ -20,6 +19,7 @@
         outlined
         dense
         :menu-props="{ bottom: true, offsetY: true }"
+        @update:search-input="syncGroupInputValue($event)"
       >
         <template v-if="allGroups.length" #prepend-item>
           <v-list-item dense :ripple="false" @click.stop="selectAllGroups">
@@ -253,10 +253,6 @@
       };
     },
 
-    mounted() {
-      this.getGroups();
-    },
-
     computed: {
       ...sync('componentManagement', [
         'componentsLinkedToGroupDialog',
@@ -264,6 +260,11 @@
         'groupNameBeingRemoved',
       ]),
     },
+
+    mounted() {
+      this.getGroups();
+    },
+
     methods: {
       ...call('componentManagement/*'),
 

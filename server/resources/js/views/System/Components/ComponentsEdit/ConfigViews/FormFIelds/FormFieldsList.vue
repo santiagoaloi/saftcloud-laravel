@@ -77,10 +77,6 @@
       draggable,
     },
 
-    mounted() {
-      this.setActiveField(this.filteredFormFields[0].field);
-    },
-
     computed: {
       ...sync('theme', ['isDark']),
       ...sync('componentManagement', [
@@ -94,6 +90,10 @@
         'filteredSelectedFields',
         'hasValidationErrors',
       ]),
+    },
+
+    mounted() {
+      this.setActiveField(this.filteredFormFields[0].field);
     },
 
     methods: {

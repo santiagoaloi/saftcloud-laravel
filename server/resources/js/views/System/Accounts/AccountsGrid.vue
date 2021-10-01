@@ -31,7 +31,11 @@
               </v-card-actions>
 
               <span class="gallery-card-title pl-2">
-                <template>
+                <template v-if="selectedEntityType === 'Accounts'">
+                  {{ fullName(entity.entity.first_name, entity.entity.last_name) }}
+                </template>
+
+                <template v-if="selectedEntityType === 'Roles'">
                   {{ selectedEntityType === 'Roles' ? entity.name : entity.email }}
                 </template>
               </span>
@@ -52,6 +56,44 @@
                   </div>
                 </v-scale-transition>
               </div>
+
+              <div class="gallery-card-subtitle-container">
+                <div class="gallery-card-subtitle-wrapper">
+                  <h5 class="gallery-card-subtitle">
+                    <v-chip
+                      :dark="isDark"
+                      :color="isDark ? 'rgb(54, 57, 63)' : 'white'"
+                      :text-color="isDark ? 'grey lighten-1' : 'indigo darken-4'"
+                      label
+                      class="col-12 pointer-events-none"
+                      small
+                    >
+                      <template v-if="selectedEntityType === 'Roles'">
+                        {{ privileges(entity.privileges) }}
+                        <span style="margin-top: 1.6px" class="ml-2 white--text"> Privileges</span>
+                      </template>
+
+                      <template v-if="selectedEntityType === 'Accounts'">
+                        {{ entity.email }}
+                      </template>
+                    </v-chip>
+                  </h5>
+                </div>
+                <!-- <v-scale-transition e-transition>
+                  <div v-if="hasUnsavedChanges(component)" class="gallery-card-subtitle-wrapper">
+                    <h5 class="gallery-card-subtitle">
+                      <v-tooltip transition="false" color="black" bottom>
+                        <template #activator="{ on }">
+                          <v-icon :color="isDark ? 'white' : '#28292b'" v-on="on">
+                            mdi-alert-outline
+                          </v-icon>
+                        </template>
+                        <span>Unsaved</span>
+                      </v-tooltip>
+                    </h5>
+                  </div>
+                </v-scale-transition> -->
+              </div>
             </v-card>
           </v-hover>
         </v-item>
@@ -62,6 +104,7 @@
 
 <script>
   import { sync, call, get } from 'vuex-pathify';
+  import capitalize from 'lodash/capitalize';
   import { store } from '@/store';
 
   export default {
@@ -93,6 +136,13 @@
     methods: {
       ...call('accountsManagement/*'),
 
+      privileges(privileges) {
+        return `${privileges.length} `;
+      },
+
+      fullName(first, last) {
+        return `${capitalize(first)} ${capitalize(last)}`;
+      },
       getCardColor(active) {
         return this.isDark ? (active ? '#51555e' : '#40434a') : active ? '#edeef2' : 'white';
       },

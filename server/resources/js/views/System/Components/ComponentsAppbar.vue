@@ -16,6 +16,11 @@
         <v-icon :left="$vuetify.breakpoint.lgAndUp" small> mdi-view-grid-plus </v-icon
         >{{ createComponent }}
       </v-btn>
+
+      <v-btn class="ml-2" :color="isDark ? 'accent' : 'primary'" @click="addGroupDialog()">
+        <v-icon :left="$vuetify.breakpoint.lgAndUp" small> mdi-view-grid-plus </v-icon
+        >{{ createGroup }}
+      </v-btn>
     </div>
 
     <v-divider class="mt-2"></v-divider>
@@ -31,9 +36,11 @@
 
 <script>
   import { sync, call } from 'vuex-pathify';
+  import componentGroups from '@/mixins/componentGroups';
 
   export default {
     name: 'ComponentsAppbar',
+
     components: {
       DialogConfigEditor: () =>
         import(/* webpackChunkName: 'components-dialog-config-editor' */ './DialogConfigEditor'),
@@ -42,6 +49,7 @@
       ComponentsGroupsChips: () =>
         import(/* webpackChunkName: 'components-groups-chips' */ './ComponentsGroupsChips'),
     },
+    mixins: [componentGroups],
 
     computed: {
       ...sync('theme', ['isDark']),
@@ -53,6 +61,10 @@
 
       createComponent() {
         return this.$vuetify.breakpoint.lgAndUp ? 'Create component' : '';
+      },
+
+      createGroup() {
+        return this.$vuetify.breakpoint.lgAndUp ? 'Create group' : '';
       },
     },
 

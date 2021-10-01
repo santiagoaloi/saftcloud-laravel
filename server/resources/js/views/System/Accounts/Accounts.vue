@@ -26,6 +26,7 @@
     </v-card>
 
     <dialog-entity />
+    <dialog-privileges />
   </div>
 </template>
 
@@ -35,12 +36,14 @@
   export default {
     name: 'AccountsManagement',
     components: {
-      AccountsTabs: () => import(/* webpackChunkName: 'accounts-tabs' */ './AccountsTabs.vue'),
       AccountsGrid: () => import(/* webpackChunkName: 'accounts-grid' */ './AccountsGrid'),
       AccountsTable: () => import(/* webpackChunkName: 'accounts-table' */ './AccountsTable'),
+      AccountsTabs: () => import(/* webpackChunkName: 'accounts-tabs' */ './AccountsTabs.vue'),
       AccountsAppbar: () => import(/* webpackChunkName: 'accounts-appbar' */ './AccountsAppbar'),
       AccountsNoData: () => import(/* webpackChunkName: 'accounts-no-data' */ './AccountsNoData'),
       DialogEntity: () => import(/* webpackChunkName: 'accounts-dialog-entity' */ './DialogEntity'),
+      DialogPrivileges: () =>
+        import(/* webpackChunkName: 'accounts-dialog-privileges' */ './DialogPrivileges'),
     },
 
     computed: {

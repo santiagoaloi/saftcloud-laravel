@@ -137,7 +137,7 @@
                     </v-chip>
                   </h5>
                 </div>
-                <v-scale-transition e-transition>
+                <v-fade-transition>
                   <div v-if="hasUnsavedChanges(component)" class="gallery-card-subtitle-wrapper">
                     <h5 class="gallery-card-subtitle">
                       <v-tooltip transition="false" color="black" bottom>
@@ -150,7 +150,7 @@
                       </v-tooltip>
                     </h5>
                   </div>
-                </v-scale-transition>
+                </v-fade-transition>
               </div>
             </v-card>
           </v-hover>
