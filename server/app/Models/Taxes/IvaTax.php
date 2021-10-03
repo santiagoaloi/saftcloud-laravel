@@ -10,7 +10,7 @@ class IvaTax extends Model {
 
     protected $fillable = ['country_id', 'code', 'name', 'value'];
 
-    public function products(){
+    public function product(){
         return $this->belongsToMany('App\Models\Pos\Product');
     }
 }

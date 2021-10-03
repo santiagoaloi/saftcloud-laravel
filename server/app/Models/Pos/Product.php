@@ -18,7 +18,7 @@ class Product extends Model {
         return $this->hasMany('App\Models\pos\Price');
     }
 
-    public function ivaTaxes(){
+    public function ivaTaxe(){
         return $this->hasOne('App\Models\Taxes\IvaTaxes');
     }
 
@@ -30,7 +30,7 @@ class Product extends Model {
         return $this->hasOne('App\Models\pos\Commission');
     }
 
-    public function promotions(){
+    public function promotion(){
         return $this->hasOne('App\Models\pos\ProductPromotion');
     }
 
@@ -38,15 +38,15 @@ class Product extends Model {
         return $this->belongsTo('App\Models\Private\Branch');
     }
 
-    public function brands(){
+    public function brand(){
         return $this->belongsTo('App\Models\Pos\Brands');
     }
 
-    public function families(){
+    public function family(){
         return $this->belongsTo('App\Models\Pos\Family');
     }
 
-    public function categories(){
+    public function category(){
         return $this->belongsTo('App\Models\Pos\Category');
     }
 

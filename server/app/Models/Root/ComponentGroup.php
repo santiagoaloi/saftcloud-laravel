@@ -14,7 +14,7 @@ class ComponentGroup extends Model {
         return $this->belongsTomany('App\Models\Pos\ComponentGroup');
     }
 
-    public function components(){
+    public function component(){
         return $this->hasmany('App\Models\GeneralConfig\Component');
     }
 }
