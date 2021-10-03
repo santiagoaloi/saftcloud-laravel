@@ -44,6 +44,7 @@
       EntitiesNoData: () => import(/* webpackChunkName: 'entities-no-data' */ './EntitiesNoData'),
       DialogAssignRoles: () =>
         import(/* webpackChunkName: 'entities-dialog-assign-roles' */ './DialogAssignRoles'),
+      DialogEntity: () => import(/* webpackChunkName: 'entities-dialog-entity' */ './DialogEntity'),
 
       DialogPrivileges: () =>
         import(/* webpackChunkName: 'entities-dialog-privileges' */ './DialogPrivileges'),

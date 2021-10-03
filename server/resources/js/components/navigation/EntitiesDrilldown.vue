@@ -241,12 +241,8 @@
             <div class="pa-4">
               <v-chip-group class="pointer-events-none" active-class="primary--text" column>
                 <template v-if="selectedEntity.role.length">
-                  <v-chip
-                    v-for="role in selectedEntity.privileges.roles"
-                    :key="role"
-                    color="grey darken-4"
-                  >
-                    {{ role }}
+                  <v-chip v-for="role in selectedEntity.role" :key="role" color="grey darken-4">
+                    {{ role.name }}
                   </v-chip>
                 </template>
                 <template v-else>
