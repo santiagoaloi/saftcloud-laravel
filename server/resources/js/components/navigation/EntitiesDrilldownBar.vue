@@ -44,7 +44,7 @@
             text
             x-small
             v-on="on"
-            @click.stop="secureAccountsDrawer = false"
+            @click.stop="secureEntitiesDrawer = false"
           >
             <v-icon>mdi-menu</v-icon>
           </v-btn>
@@ -63,9 +63,9 @@
     name: 'ComponentDrilldown',
     computed: {
       ...sync('theme', ['isDark']),
-      ...sync('drawers', ['secureAccountsDrawer']),
-      ...sync('accountsManagement', ['componentCardGroup']),
-      ...get('accountsManagement', [
+      ...sync('drawers', ['secureEntitiesDrawer']),
+      ...sync('entitiesManagement', ['componentCardGroup']),
+      ...get('entitiesManagement', [
         'previousEntityDisabled',
         'nextEntityDisabled',
         'selectedEntity',
@@ -73,7 +73,7 @@
     },
 
     methods: {
-      ...call('accountsManagement/*'),
+      ...call('entitiesManagement/*'),
     },
   };
 </script>

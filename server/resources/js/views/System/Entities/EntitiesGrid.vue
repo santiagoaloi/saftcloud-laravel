@@ -31,7 +31,7 @@
               </v-card-actions>
 
               <span class="gallery-card-title pl-2">
-                <template v-if="selectedEntityType === 'Accounts'">
+                <template v-if="selectedEntityType === 'Users'">
                   {{ fullName(entity.entity.first_name, entity.entity.last_name) }}
                 </template>
 
@@ -73,7 +73,7 @@
                         <span style="margin-top: 1.6px" class="ml-2 white--text"> Privileges</span>
                       </template>
 
-                      <template v-if="selectedEntityType === 'Accounts'">
+                      <template v-if="selectedEntityType === 'Users'">
                         {{ entity.email }}
                       </template>
                     </v-chip>
@@ -105,14 +105,13 @@
 <script>
   import { sync, call, get } from 'vuex-pathify';
   import capitalize from 'lodash/capitalize';
-  import { store } from '@/store';
 
   export default {
-    name: 'AccountsGridView',
+    name: 'EntitiesGridView',
     computed: {
       ...sync('theme', ['isDark']),
-      ...sync('accountsManagement', ['entityCardGroup', 'allUsers', 'selectedEntityType']),
-      ...get('accountsManagement', [
+      ...sync('entitiesManagement', ['entityCardGroup', 'allUsers', 'selectedEntityType']),
+      ...get('entitiesManagement', [
         'allEntitiesFiltered',
         'hasUnsavedChanges',
         'isModularIcon',
@@ -134,7 +133,7 @@
     },
 
     methods: {
-      ...call('accountsManagement/*'),
+      ...call('entitiesManagement/*'),
 
       privileges(privileges) {
         return `${privileges.length} `;

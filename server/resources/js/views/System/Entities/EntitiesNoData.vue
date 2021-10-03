@@ -19,10 +19,10 @@
   import { sync } from 'vuex-pathify';
 
   export default {
-    name: 'AccountsNoData',
+    name: 'EntitiesNoData',
     computed: {
       ...sync('theme', ['isDark']),
-      ...sync('accountsManagement', ['dialogEntity']),
+      ...sync('entitiesManagement', ['dialogEntity']),
     },
   };
 </script>

@@ -53,7 +53,7 @@
       </v-card-subtitle>
     </template>
 
-    <template v-if="selectedEntityType === 'Accounts'">
+    <template v-if="selectedEntityType === 'Users'">
       <v-card-title> Edit User account </v-card-title>
 
       <v-card-subtitle>
@@ -187,7 +187,7 @@
       </template>
     </v-container>
 
-    <template v-if="selectedEntityType === 'Accounts'">
+    <template v-if="selectedEntityType === 'Users'">
       <v-list subheader two-line>
         <v-subheader>Operations</v-subheader>
 
@@ -324,7 +324,7 @@
 
     computed: {
       ...sync('theme', ['isDark']),
-      ...get('accountsManagement', [
+      ...get('entitiesManagement', [
         'hasUnsavedChanges',
         'previousEntityDisabled',
         'nextEntityDisabled',
@@ -333,7 +333,7 @@
         'isStarredColor',
         'isStarredIcon',
       ]),
-      ...sync('accountsManagement', [
+      ...sync('entitiesManagement', [
         'entityCardGroup',
         'selectedEntityIndex',
         'selectedEntityType',
@@ -343,7 +343,7 @@
     },
 
     methods: {
-      ...call('accountsManagement/*'),
+      ...call('entitiesManagement/*'),
 
       extractPrefix(item) {
         const prefix = item.substr(0, item.indexOf('.'));

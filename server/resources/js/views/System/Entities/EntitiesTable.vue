@@ -131,7 +131,7 @@
   import componentActions from '@/mixins/componentActions';
 
   export default {
-    name: 'AccountsTableView',
+    name: 'EntitiesTableView',
     mixins: [componentActions],
     data() {
       return {
@@ -179,8 +179,8 @@
 
     computed: {
       ...sync('theme', ['isDark']),
-      ...sync('accountsManagement', ['selectedEntityTableRow', 'entityCardGroup']),
-      ...get('accountsManagement', [
+      ...sync('entitiesManagement', ['selectedEntityTableRow', 'entityCardGroup']),
+      ...get('entitiesManagement', [
         'allEntitiesFiltered',
         'isStarredColor',
         'isStarredIcon',
@@ -193,7 +193,7 @@
     },
 
     methods: {
-      ...call('accountsManagement/*'),
+      ...call('entitiesManagement/*'),
 
       setComponentTableIcon(item) {
         this.componentIcon = item.config_settings.icon;

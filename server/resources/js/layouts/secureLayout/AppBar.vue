@@ -205,13 +205,13 @@
 
           {
             icon: 'mdi-security',
-            href: '/accounts',
-            title: 'Accounts',
+            href: '/Entities',
+            title: 'Entities',
           },
 
           {
             icon: 'mdi-puzzle-outline',
-            href: '/components',
+            href: '/Components',
             title: 'Components',
           },
 

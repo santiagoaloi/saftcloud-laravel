@@ -102,7 +102,7 @@
     </v-card-subtitle>
 
     <ValidationObserver ref="componentDrilldown" slim>
-      <v-contaSiner>
+      <v-container>
         <baseFieldLabel required label="Component name" />
         <validation-provider
           v-slot="{ errors }"
@@ -178,7 +178,7 @@
             dense
           />
         </div>
-      </v-contaSiner>
+      </v-container>
     </ValidationObserver>
 
     <div class="mt-2">

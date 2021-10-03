@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-app-bar
-      :color="$route.name === '/homepage' ? 'transparent' : '#36393f'"
+      :color="$route.name === '/Homepage' ? 'transparent' : '#36393f'"
       elevate-on-scroll
       app
       flat
@@ -69,7 +69,7 @@
           </v-btn>
           <v-btn
             min-width="100px"
-            to="/login"
+            to="/Login"
             height="36"
             class="mr-3"
             rounded

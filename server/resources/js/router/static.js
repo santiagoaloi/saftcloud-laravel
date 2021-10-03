@@ -1,21 +1,14 @@
 export default [
   {
-    path: '/desktop',
-    name: 'desktop',
-    meta: { layout: 'secure_layout' },
-    component: () => import('@/views/System/Desktop/Desktop.vue'),
-  },
-
-  {
-    path: '/components',
-    name: 'components',
+    path: '/Components',
+    name: 'Components',
     meta: { layout: 'secure_layout', title: 'Manage components' },
     component: () =>
       import(/* webpackChunkName: 'components' */ '@/views/System/Components/Components.vue'),
     children: [
       {
-        path: '/components/basic',
-        name: 'components/basic',
+        path: '/Components/Basic',
+        name: 'Components/Basic',
         meta: { layout: 'secure_layout', title: 'Manage components' },
         component: () =>
           import(
@@ -23,8 +16,8 @@ export default [
           ),
       },
       {
-        path: '/components/formFields',
-        name: 'components/formFields',
+        path: '/Fomponents/FormFields',
+        name: 'Components/FormFields',
         meta: { layout: 'secure_layout', title: 'Manage components' },
         component: () =>
           import(
@@ -32,8 +25,8 @@ export default [
           ),
       },
       {
-        path: '/components/query',
-        name: 'components/query',
+        path: '/Components/Query',
+        name: 'Components/Query',
         meta: { layout: 'secure_layout', title: 'Manage components' },
         component: () =>
           import(
@@ -41,8 +34,8 @@ export default [
           ),
       },
       {
-        path: '/components/capabilities',
-        name: 'components/capabilities',
+        path: '/Components/Capabilities',
+        name: 'Components/Capabilities',
         meta: { layout: 'secure_layout', title: 'Manage components' },
         component: () =>
           import(
@@ -53,11 +46,11 @@ export default [
   },
 
   {
-    path: '/accounts',
-    name: 'accounts',
-    meta: { layout: 'secure_layout', title: 'Manage account and roles' },
+    path: '/Entities',
+    name: 'Entities',
+    meta: { layout: 'secure_layout', title: 'Manage users and roles' },
     component: () =>
-      import(/* webpackChunkName: 'accounts' */ '@/views/System/Accounts/Accounts.vue'),
+      import(/* webpackChunkName: 'entities' */ '@/views/System/Entities/Entities.vue'),
     children: [],
   },
 ];

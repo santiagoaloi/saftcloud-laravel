@@ -7,7 +7,7 @@ export default [
     name: 'initial',
     meta: { layout: 'public_layout' },
     redirect: {
-      path: '/homepage',
+      path: '/Homepage',
       meta: {
         layout: 'public_layout',
       },

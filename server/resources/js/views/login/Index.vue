@@ -223,7 +223,7 @@
                 }, 500);
               } else {
                 this.hasSessionExpired = false;
-                this.$router.push('/components');
+                this.$router.push('/Components');
                 window.eventBus.$emit('BUS_BUILD_ROUTES');
               }
             });

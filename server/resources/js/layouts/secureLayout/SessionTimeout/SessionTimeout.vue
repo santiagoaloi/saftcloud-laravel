@@ -18,7 +18,7 @@
 
     methods: {
       onidle() {
-        router.push('/login');
+        router.push('/Login');
         this.hasSessionExpired = true;
         store.set('authentication/session', {});
       },
