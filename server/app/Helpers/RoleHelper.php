@@ -5,7 +5,7 @@
         foreach($values as $value){
             $privileges[] = $value->name;
             $newValues['roles'] = $privileges;
-            foreach($value->capabilities as $capability){
+            foreach($value->capability as $capability){
                 $capabilities[] = $capability->name;
                 $newValues['capabilities'] = $capabilities;
             }
@@ -19,7 +19,7 @@
         foreach ($roles as $value) {
             if($value){
                 $roles[] = $value->name;
-                foreach ($value->capabilities as $capability){
+                foreach ($value->capability as $capability){
                     $capabilities[] = $capability->name;
                 }
             }
