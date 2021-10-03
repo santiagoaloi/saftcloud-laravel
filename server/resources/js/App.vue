@@ -1,6 +1,7 @@
 <template>
   <keep-alive>
-    <div v-show="isContentLoaded">
+    <!-- <div v-show="isContentLoaded"> -->
+    <div>
       <public-layout v-if="layout === 'public_layout'" />
       <secure-layout v-if="layout === 'secure_layout'" />
     </div>
@@ -82,17 +83,6 @@
           }, 500);
         }
       };
-    },
-
-    updated() {
-      // this.$nextTick(() => {
-      if (this.firstPaint) {
-        // setTimeout(() => {
-        this.isBooted = true;
-        // this.isContentLoaded = true;
-        // }, 500);
-      }
-      // });
     },
 
     methods: {
