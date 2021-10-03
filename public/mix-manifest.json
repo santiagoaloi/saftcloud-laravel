@@ -62,5 +62,6 @@
     "/dist/js/entities-navigation-drilldown-bar.js": "/dist/js/entities-navigation-drilldown-bar.js",
     "/dist/js/components-status-bar.js": "/dist/js/components-status-bar.js",
     "/dist/css/app.css": "/dist/css/app.css",
-    "/dist/js/vendor.js": "/dist/js/vendor.js"
+    "/dist/js/vendor.js": "/dist/js/vendor.js",
+    "/dist/js/entities-dialog-assign-roles.js": "/dist/js/entities-dialog-assign-roles.js"
 }

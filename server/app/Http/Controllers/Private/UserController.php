@@ -30,7 +30,7 @@ class UserController extends Controller {
         try{
             $admin = auth()->User();
             $account = $admin->Entity->RootAccount;
-            $branch = $admin->Branches[0];
+            $branch = $admin->Branch[0];
 
             // CREACION DE PERSONA
             $person = $account->entity()->create([
