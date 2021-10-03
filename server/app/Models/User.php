@@ -52,7 +52,7 @@ class User extends Authenticatable {
     }
 
     public function isAdmin(User $user){
-        return $this->roles->name('Admin');
+        return $this->role->name('Admin');
     }
 
 }

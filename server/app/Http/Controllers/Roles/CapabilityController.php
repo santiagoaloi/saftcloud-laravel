@@ -108,16 +108,16 @@ class CapabilityController extends Controller {
 
     // AGREGA TODOS LOS ROLES QUE ENVIAMOS EN LA VARIABLE ROLE
     public function attachRoles($request, Capability $capability){
-        $request->capabilities()->attach($capability);
+        $request->capability()->attach($capability);
     }
 
     // ELIMINA TODOS LOS ROLES QUE ENVIAMOS EN LA VARIABLE ROLE
     public function detachRoles($request, Capability $capability){
-        $request->capabilities()->detach($capability);
+        $request->capability()->detach($capability);
     }
 
     // ELIMINA TODOS LOS ROLES Y AGREGA LOS NUEVOS
     public function syncRoles($request, Capability $capability){
-        $request->capabilities()->sync($capability);
+        $request->capability()->sync($capability);
     }
 }

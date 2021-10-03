@@ -171,12 +171,12 @@ class UserController extends Controller {
 
     // ELIMINA TODOS LOS USUARIOS QUE ENVIAMOS EN LA VARIABLE ROLE
     public function detachUser($request, User $user){
-        $request->users()->detach($user);
+        $request->user()->detach($user);
     }
 
     // ELIMINA TODOS LOS USUARIOS Y AGREGA LOS NUEVOS
     public function syncUser($request, User $user){
-        $request->users()->sync($user);
+        $request->user()->sync($user);
     }
 
 

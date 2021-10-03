@@ -163,17 +163,17 @@ return $user;
 
         // AGREGA TODOS LOS ROLES QUE ENVIAMOS EN LA VARIABLE ROLE
         public function attachRoles(Request $request, $role){
-            $request->roles()->attach($role);
+            $request->role()->attach($role);
         }
     
         // ELIMINA TODOS LOS ROLES QUE ENVIAMOS EN LA VARIABLE ROLE
         public function detachRoles(Request $request, $role){
-            $request->roles()->detach($role);
+            $request->role()->detach($role);
         }
     
         // ELIMINA TODOS LOS ROLES Y AGREGA LOS NUEVOS
         public function syncRoles($request, $role){
-            $request->roles()->sync($role);
+            $request->role()->sync($role);
         }
 
     function probarFormFieldStructure(){

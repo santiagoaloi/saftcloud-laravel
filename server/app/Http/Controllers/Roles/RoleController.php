@@ -42,7 +42,7 @@ class RoleController extends Controller {
         $roles = Role::get();
 
         foreach($roles  as $role){
-            $role['privileges'] = $this->getCapabilities($role->capabilities);
+            $role['privileges'] = $this->getCapabilities($role->capability);
             $newRoles[] = $role;
         };
 
@@ -123,16 +123,16 @@ class RoleController extends Controller {
 
     // AGREGA TODOS LOS ROLES QUE ENVIAMOS EN LA VARIABLE ROLE
     public function attachRoles($request, Role $role){
-        $request->roles()->attach($role);
+        $request->role()->attach($role);
     }
 
     // ELIMINA TODOS LOS ROLES QUE ENVIAMOS EN LA VARIABLE ROLE
     public function detachRoles($request, Role $role){
-        $request->roles()->detach($role);
+        $request->role()->detach($role);
     }
 
     // ELIMINA TODOS LOS ROLES Y AGREGA LOS NUEVOS
     public function syncRoles($request, Role $role){
-        $request->roles()->sync($role);
+        $request->role()->sync($role);
     }
 }
