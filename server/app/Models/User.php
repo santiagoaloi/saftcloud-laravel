@@ -43,7 +43,7 @@ class User extends Authenticatable {
         return $this->belongsToMany('App\Models\Private\Branch');
     }
 
-    public function roles(){
+    public function role(){
         return $this->belongsToMany('App\Models\Roles\Role');
     }
 
