@@ -26,7 +26,6 @@ class ComponentGroupController extends Controller {
                 ], 404);
             }
         }
-
         return $this->showAll();
     }
 

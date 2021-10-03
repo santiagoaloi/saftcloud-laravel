@@ -64,7 +64,7 @@ const actions = {
       .get('api/countries')
       .then((response) => {
         if (response.status === 200) {
-          commit('countryCodes', response.data.rows);
+          commit('countryCodes', response.data.records);
         }
       })
       .catch((err) => {
@@ -78,7 +78,7 @@ const actions = {
       .post(`api/states/${state.id}`)
       .then((response) => {
         if (response.status === 200) {
-          commit('states', response.data.states);
+          commit('states', response.data.records);
         }
       })
       .catch((err) => {

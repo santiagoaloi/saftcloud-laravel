@@ -124,7 +124,20 @@ class TestFunctionController extends Controller {
     }
 
     public function test4(Request $request, Country $country){
-        
+        $user = User::findOrFail(70);
+        $role = Role::findOrFail(3);
+
+        $person = Entity::findOrFail(80);
+        $userP = $person->user;
+
+        return [$user, $userP];
+
+        $UserController = New UserController;
+        $UserController->attachUser($role, $user);
+return $user;
+
+
+
         $user = Auth::user();
         $roles = $user->roles;
 

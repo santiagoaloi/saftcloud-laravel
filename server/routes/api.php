@@ -3,37 +3,53 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\RegionController;
 
-use App\Http\Controllers\Public\StateController;
-use App\Http\Controllers\Public\IconController;
-use App\Http\Controllers\Public\MakeAccountController;
-use App\Http\Controllers\Public\CountryController;
-
+// GENERAL CONTROLLERS
+use App\Http\Controllers\GeneralConfig\DocumentTypeController;
 use App\Http\Controllers\GeneralConfig\LookUpListController;
-use App\Http\Controllers\GeneralConfig\PaymentMethodController;
 use App\Http\Controllers\GeneralConfig\LookUpListValueController;
+use App\Http\Controllers\GeneralConfig\PaymentMethodController;
 
+// POS CONTROLLERS
+use App\Http\Controllers\Pos\BrandController;
+use App\Http\Controllers\Pos\CategoryController;
+use App\Http\Controllers\Pos\CommissionController;
+use App\Http\Controllers\Pos\FamilyController;
+use App\Http\Controllers\Pos\MeasurementUnityController;
+use App\Http\Controllers\Pos\MeasurementUnitySystemController;
+use App\Http\Controllers\Pos\MkupController;
+use App\Http\Controllers\Pos\PriceController;
 use App\Http\Controllers\Pos\ProductController;
 use App\Http\Controllers\Pos\ProductPromotionController;
 
+// PRIVATE CONTROLLERS
+use App\Http\Controllers\Private\AccountPaymentController;
+use App\Http\Controllers\Private\AccountPlanController;
+use App\Http\Controllers\Private\AddressController;
+use App\Http\Controllers\Private\BranchController;
+use App\Http\Controllers\Private\ConstructController;
+use App\Http\Controllers\Private\EntityController;
+use App\Http\Controllers\Private\PhoneController;
+use App\Http\Controllers\Private\PointOfSaleController;
+use App\Http\Controllers\Private\RootAccountController;
+use App\Http\Controllers\Private\SocialController;
+use App\Http\Controllers\Private\UserController;
+use App\Http\Controllers\Private\userSettingController;
+
+// PUBLIC CONTROLLERS
+use App\Http\Controllers\Public\CountryController;
+use App\Http\Controllers\Public\IconController;
+use App\Http\Controllers\Public\MakeAccountController;
+use App\Http\Controllers\Public\StateController;
+
+// ROLES CONTROLLERS
 use App\Http\Controllers\Roles\RoleController;
 use App\Http\Controllers\Roles\CapabilityController;
-use App\Http\Controllers\Private\UserController;
-use App\Http\Controllers\Private\PhoneController;
-use App\Http\Controllers\Private\BranchController;
-use App\Http\Controllers\Private\EntityController;
-use App\Http\Controllers\Private\SocialController;
-use App\Http\Controllers\Private\RootAccountController;
-use App\Http\Controllers\Private\AddressController;
-use App\Http\Controllers\Private\ConstructController;
-use App\Http\Controllers\Private\PointOfSaleController;
-use App\Http\Controllers\Private\userSettingController;
-use App\Http\Controllers\Private\AccountPlanController;
-use App\Http\Controllers\Private\AccountPaymentController;
 
-use App\Http\Controllers\Root\ComponentGroupController;
-use App\Http\Controllers\Root\MysqlController;
+// ROOT CONTROLLERS
 use App\Http\Controllers\Root\ComponentController;
 use App\Http\Controllers\Root\ComponentDefaultController;
+use App\Http\Controllers\Root\ComponentGroupController;
+use App\Http\Controllers\Root\MysqlController;
 
 //Testing
 use App\Http\Controllers\TestFunctionController;
@@ -49,7 +65,6 @@ Route::post('/login', [AuthController::class, 'login']);
 
 Route::get('/region', [RegionController::class, 'ip_info']);
 
-Route::resource('/country', CountryController::class);
 Route::get('/countries', [CountryController::class, 'showAll']);
 
 Route::resource('/state', StateController::class);
@@ -70,6 +85,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     // POS CONTROLLERS
     Route::resource('/product', ProductController::class);
     Route::resource('/productPromotion', ProductPromotionController::class);
+
+    // PUBLIC CONTROLLERS
+    Route::resource('/country', CountryController::class);
 
     // PRIVATE CONTROLLERS
     Route::resource('/account', RootAccountController::class);
@@ -124,6 +142,38 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::post('/logout', [AuthController::class, 'logout']);
     // Route::get('/countries', [CountryController::class, 'showAll']);
+
+    // Relations
+    Route::post('/attachDocumentType', [DocumentTypeController::class, 'attachDocumentType']);
+    Route::post('/attachPaymentMethod', [PaymentMethodController::class, 'attachPaymentMethod']);
+    Route::post('/attachBrand', [BrandController::class, 'attachBrand']);
+    Route::post('/attachCategory', [CategoryController::class, 'attachCategory']);
+    Route::post('/attachCommission', [CommissionController::class, 'attachCommission']);
+    Route::post('/attachFamily', [FamilyController::class, 'attachFamily']);
+    Route::post('/attachMeasurementUnity', [MeasurementUnityController::class, 'attachMeasurementUnity']);
+    Route::post('/attachMeasurementUnitySystem', [MeasurementUnitySystemController::class, 'attachMeasurementUnitySystem']);
+    Route::post('/attachMkup', [MkupController::class, 'attachMkup']);
+    Route::post('/attachPrice', [PriceController::class, 'attachPrice']);
+    Route::post('/attachProduct', [ProductController::class, 'attachProduct']);
+    Route::post('/attachProductPromotion', [ProductPromotionController::class, 'attachProductPromotion']);
+    Route::post('/attachAccountPayment', [AccountPaymentController::class, 'attachAccountPayment']);
+    Route::post('/attachAccountPlan', [AccountPlanController::class, 'attachAccountPlan']);
+    Route::post('/attachAddress', [AddressController::class, 'attachAddress']);
+    Route::post('/attachBranch', [BranchController::class, 'attachBranch']);
+    Route::post('/attachEntity', [EntityController::class, 'attachEntity']);
+    Route::post('/attachPhone', [PhoneController::class, 'attachPhone']);
+    Route::post('/attachPointOfSale', [PointOfSaleController::class, 'attachPointOfSale']);
+    Route::post('/attachRootAccount', [RootAccountController::class, 'attachRootAccount']);
+    Route::post('/attachSocial', [SocialController::class, 'attachSocial']);
+    Route::post('/attachUserSetting', [UserSettingController::class, 'attachUserSetting']);
+    Route::post('/attachCountry', [CountryController::class, 'attachCountry']);
+    Route::post('/attachState', [StateController::class, 'attachState']);
+    Route::post('/attachCapability', [CapabilityController::class, 'attachCapability']);
+    Route::post('/attachRole', [RoleController::class, 'attachRole']);
+    Route::post('/attachComponent', [ComponentController::class, 'attachComponent']);
+    Route::post('/attachComponentDefault', [ComponentDefaultController::class, 'attachComponentDefault']);
+    Route::post('/attachComponentGroup', [ComponentGroupController::class, 'attachComponentGroup']);
+
 });
 
 //Testing

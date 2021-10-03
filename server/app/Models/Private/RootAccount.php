@@ -15,7 +15,7 @@ class RootAccount extends Model {
         return $this->hasOne('App\Models\AccountPlan');
     }
 
-    public function AccountPayments(){
+    public function AccountPayment(){
         return $this->hasMany('App\Models\Private\AccountPayment');
     }
 

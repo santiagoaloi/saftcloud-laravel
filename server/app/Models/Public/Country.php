@@ -10,7 +10,7 @@ class Country extends Model {
 
     protected $fillable = ['nombre', 'name', 'iso2', 'iso3', 'phone_code'];
 
-    public function states(){
+    public function state(){
         return $this->hasmany('App\Models\GeneralConfig\Public\state');
     }
 

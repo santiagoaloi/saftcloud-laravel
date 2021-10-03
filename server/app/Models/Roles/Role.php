@@ -10,11 +10,11 @@ class Role extends Model {
 
    protected $fillable = ['entity_id', 'name', 'description'];
 
-   public function users(){
+   public function user(){
       return $this->belongsToMany('App\Models\User');
    }
 
-   public function capabilities(){
+   public function capability(){
       return $this->belongsToMany('App\Models\Roles\Capability');
    }
 }

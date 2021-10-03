@@ -27,19 +27,19 @@ class Entity extends Model {
         return $this->hasOne('App\Models\User');
     }
 
-    public function branches(){
+    public function branch(){
         return $this->hasMany('App\Models\Private\Branch');
     }
 
-    public function addresses(){
+    public function address(){
         return $this->morphMany('App\Models\Private\Address', 'addreseable');
     }
 
-    public function phones(){
+    public function phone(){
         return $this->morphMany('App\Models\Private\Phone', 'phoneable');
     }
 
-    public function socials(){
+    public function social(){
         return $this->morphMany('App\Models\Private\Social', 'socialable');
     }
 }
