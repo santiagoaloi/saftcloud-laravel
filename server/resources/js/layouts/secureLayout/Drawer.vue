@@ -35,7 +35,7 @@
 
                     <v-list-item-content>
                       <v-list-item-title
-                        >{{ session.user.branches[0].entity.first_name }}
+                        >{{ session.user.branch[0].entity.first_name }}
                       </v-list-item-title>
                     </v-list-item-content>
                   </v-list-item>
@@ -47,7 +47,7 @@
                   :menu-props="{ 'offset-y': true }"
                   item-color="primary lighten-4"
                   hide-details
-                  :items="session.user.branches"
+                  :items="session.user.branch"
                   item-text="name"
                   item-value="entity_id"
                   dense

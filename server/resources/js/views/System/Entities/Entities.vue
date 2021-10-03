@@ -27,6 +27,7 @@
 
     <dialog-entity />
     <dialog-privileges />
+    <dialog-assign-roles />
   </div>
 </template>
 
@@ -41,7 +42,9 @@
       EntitiesTabs: () => import(/* webpackChunkName: 'entities-tabs' */ './EntitiesTabs.vue'),
       EntitiesAppbar: () => import(/* webpackChunkName: 'entities-appbar' */ './EntitiesAppbar'),
       EntitiesNoData: () => import(/* webpackChunkName: 'entities-no-data' */ './EntitiesNoData'),
-      DialogEntity: () => import(/* webpackChunkName: 'entities-dialog-entity' */ './DialogEntity'),
+      DialogAssignRoles: () =>
+        import(/* webpackChunkName: 'entities-dialog-assign-roles' */ './DialogAssignRoles'),
+
       DialogPrivileges: () =>
         import(/* webpackChunkName: 'entities-dialog-privileges' */ './DialogPrivileges'),
     },

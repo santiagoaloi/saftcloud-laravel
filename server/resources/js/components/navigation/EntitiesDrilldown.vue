@@ -240,7 +240,7 @@
           <v-sheet elevation="4" rounded="xl">
             <div class="pa-4">
               <v-chip-group class="pointer-events-none" active-class="primary--text" column>
-                <template v-if="selectedEntity.roles.length">
+                <template v-if="selectedEntity.role.length">
                   <v-chip
                     v-for="role in selectedEntity.privileges.roles"
                     :key="role"
@@ -258,13 +258,10 @@
         </v-list>
       </v-container>
       <v-container class="text-end">
-        <v-btn
-          class="mr-2"
-          :disabled="!selectedEntity.roles.length"
-          @click="dialogPrivileges = true"
+        <v-btn class="mr-2" :disabled="!selectedEntity.role.length" @click="dialogPrivileges = true"
           >Show privilege list</v-btn
         >
-        <v-btn color="primary">Assign roles</v-btn>
+        <v-btn color="primary" @click="dialogAssignRoles = true">Assign roles</v-btn>
       </v-container>
     </template>
 
@@ -339,6 +336,7 @@
         'selectedEntityType',
         'allCapabilities',
         'dialogPrivileges',
+        'dialogAssignRoles',
       ]),
     },
 
