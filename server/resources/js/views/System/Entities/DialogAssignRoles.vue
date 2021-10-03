@@ -7,8 +7,8 @@
     filled
     icon="mdi-lock-open-outline"
     no-container
-    close-only
     @close="dialogAssignRoles = false"
+    @save="saveAssignRoles()"
   >
     <v-card flat width="100%" class="dialogHeight">
       <v-container>
@@ -44,7 +44,7 @@
   </baseDialog>
 </template>
 <script>
-  import { sync, get } from 'vuex-pathify';
+  import { sync, get, call } from 'vuex-pathify';
 
   export default {
     name: 'DialogPrivileges',
@@ -53,6 +53,10 @@
       ...sync('theme', ['isDark']),
       ...sync('entitiesManagement', ['dialogAssignRoles', 'allRoles', 'selectedUserRoles']),
       ...get('entitiesManagement', ['selectedEntity']),
+    },
+
+    methods: {
+      ...call('entitiesManagement/*'),
     },
   };
 </script>

@@ -197,7 +197,7 @@ const actions = {
   },
 
   //* Creates a new role in the database.
-  createRole({ state, rootState }) {
+  createRole({ state, rootState, getters }) {
     const { role } = state;
     role.entity_id = rootState.authentication.activeBranch;
     return axios.post('api/role', state.role).then((response) => {
@@ -209,6 +209,22 @@ const actions = {
         //* Autoselect latest created component
         store.set('entitiesManagement/dialogEntity', false);
         return true;
+      }
+    });
+  },
+
+  //* Creates a new role in the database.
+  saveAssignRoles({ getters }) {
+    const data = {
+      user: getters.selectedEntity.id,
+      roles: getters.selectedEntity.role,
+    };
+
+    axios.post('api/attachRole', data).then((response) => {
+      if (response.status === 200) {
+        store.set('snackbar/value', true);
+        store.set('snackbar/text', 'roles assigned');
+        store.set('snackbar/color', 'primary');
       }
     });
   },
