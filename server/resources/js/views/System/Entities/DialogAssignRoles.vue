@@ -47,7 +47,7 @@
   import { sync, get, call } from 'vuex-pathify';
 
   export default {
-    name: 'DialogPrivileges',
+    name: 'DialogAssignRoles',
 
     computed: {
       ...sync('theme', ['isDark']),
