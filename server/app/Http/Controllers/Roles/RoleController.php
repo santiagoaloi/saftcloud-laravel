@@ -39,7 +39,7 @@ class RoleController extends Controller {
 
     public function showAll() {
         $this->authorize('showAll', Role::class);
-        $roles = Role::where('id', 1)->get();
+        $roles = Role::get();
 
         foreach($roles  as $role){
             $role['privileges'] = $this->getCapabilities($role->capability);
