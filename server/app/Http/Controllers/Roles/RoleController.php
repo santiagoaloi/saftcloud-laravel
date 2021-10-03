@@ -39,7 +39,7 @@ class RoleController extends Controller {
 
     public function showAll() {
         $this->authorize('showAll', Role::class);
-        $roles = Role::get();
+        $roles = Role::where('id', 1)->get();
 
         foreach($roles  as $role){
             $role['privileges'] = $this->getCapabilities($role->capability);
@@ -122,8 +122,8 @@ class RoleController extends Controller {
     }
 
     // AGREGA TODOS LOS ROLES QUE ENVIAMOS EN LA VARIABLE ROLE
-    public function attachRoles($request, Role $role){
-        $request->role()->attach($role);
+    public function attachRole($request, Role $role){
+        $request->role()->attach([$role]);
     }
 
     // ELIMINA TODOS LOS ROLES QUE ENVIAMOS EN LA VARIABLE ROLE
