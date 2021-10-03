@@ -12,7 +12,8 @@
   >
     <v-card flat width="100%" class="dialogHeight">
       <v-container>
-        <v-autocomplete
+        hola
+        <!-- <v-autocomplete
           v-model="selectedEntity.role"
           outlined
           :color="isDark ? '#208ad6' : 'grey'"
@@ -38,7 +39,7 @@
               {{ selectedEntity.role.length }} roles selected.
             </v-chip>
           </template>
-        </v-autocomplete>
+        </v-autocomplete> -->
       </v-container>
     </v-card>
   </baseDialog>
