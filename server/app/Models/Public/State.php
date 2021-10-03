@@ -14,7 +14,7 @@ class State extends Model {
         return $this->belongsTo('App\Models\Public\country');
     }
 
-    public function addresses(){
+    public function address(){
         return $this->hasmany('App\Models\GeneralConfig\Private\address');
     }
 }

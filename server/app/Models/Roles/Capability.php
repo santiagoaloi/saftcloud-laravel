@@ -9,11 +9,11 @@ class Capability extends Model {
     use SoftDeletes;
 
     protected $fillable = ['name', 'description'];
-    public function users(){
+    public function user(){
         return $this->belongsToMany('App\Models\User');
     }
 
-    public function roles(){
+    public function role(){
        return $this->belongsToMany('App\Models\Roles\Role');
     }
 }

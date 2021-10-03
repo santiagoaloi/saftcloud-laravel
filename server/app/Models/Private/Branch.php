@@ -18,7 +18,7 @@ class Branch extends Model {
         return $this->belongsToMany('App\Models\User');
     }
 
-    public function pointOfSales(){
+    public function pointOfSale(){
         return $this->hasmany('App\Models\Private\PointOfSale');
     }
 
@@ -26,15 +26,15 @@ class Branch extends Model {
         return $this->hasMany('App\Models\GeneralConfig\PaymentMethod');
     }
 
-    public function addresses(){
+    public function address(){
         return $this->morphMany('App\Models\Private\Address', 'addreseable');
     }
 
-    public function phones(){
+    public function phone(){
         return $this->morphMany('App\Models\Private\Phone', 'phoneable');
     }
 
-    public function socials(){
+    public function social(){
         return $this->morphMany('App\Models\Private\Social', 'socialable');
     }
 }

@@ -48,10 +48,9 @@ class UserController extends Controller {
                 'password'         =>  bcrypt('password')
             ]);
             $user = $person->user;
-            $roleS = New Role;
-            $role = $roleS->findOrFail(3);
+            $this->attachUser($branch, $user);
+            $role = Role::findOrFail(3);
             $this->attachUser($role, $user);
-            $this->attachUserS($branch, $user);
 
             $user->entity;
         }
@@ -161,12 +160,12 @@ class UserController extends Controller {
     }
 
     // AGREGA TODOS LOS USUARIOS QUE ENVIAMOS EN LA VARIABLE ROLE
-    public function attachUser($request, $user){
-        $request->users()->attach($user);
+    public function attachUser($request, User $user){
+        $request->user()->attach($user);
     }
 
     // AGREGA TODOS LOS USUARIOS QUE ENVIAMOS EN LA VARIABLE ROLE
-    public function attachUserS($request, User $user){
+    public function attachbelongsToUser($request, User $user){
         $request->user()->attach($user);
     }
 
@@ -179,6 +178,8 @@ class UserController extends Controller {
     public function syncUser($request, User $user){
         $request->users()->sync($user);
     }
+
+
 
     public function getRolCapabilities($user){
         $roles = [];
