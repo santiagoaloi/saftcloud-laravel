@@ -122,7 +122,7 @@ class RoleController extends Controller {
     }
 
     // AGREGA TODOS LOS ROLES QUE ENVIAMOS EN LA VARIABLE ROLE
-    public function attachRole($request, Role $role){
+    public function attachRole(Role $role, $request){
         $request->role()->attach([$role]);
     }
 

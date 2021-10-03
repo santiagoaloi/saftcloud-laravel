@@ -165,6 +165,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/attachPointOfSale', [PointOfSaleController::class, 'attachPointOfSale']);
     Route::post('/attachRootAccount', [RootAccountController::class, 'attachRootAccount']);
     Route::post('/attachSocial', [SocialController::class, 'attachSocial']);
+    Route::post('/attachUser/{user}', [UserController::class, 'attachUser']);
     Route::post('/attachUserSetting', [UserSettingController::class, 'attachUserSetting']);
     Route::post('/attachCountry', [CountryController::class, 'attachCountry']);
     Route::post('/attachState', [StateController::class, 'attachState']);
