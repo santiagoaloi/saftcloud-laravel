@@ -9,7 +9,7 @@ export { default as application } from './application';
 export { default as authentication } from './authentication';
 export { default as componentStatusBar } from './componentStatusBar';
 export { default as componentManagement } from './componentManagement';
-export { default as accountsManagement } from './accountsManagement';
+export { default as entitiesManagement } from './entitiesManagement';
 
 // Validations
 export { default as validationStates } from './validationStates';

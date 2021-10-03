@@ -2,18 +2,15 @@
   <v-app :style="bg">
     <public-bar />
 
-    <div v-show="isBooted">
-      <public-view />
-      <public-footer v-if="!$route.name.startsWith('login')" />
-    </div>
+    <public-view />
+    <public-footer v-if="!$route.name.startsWith('Login')" />
     <snackbar />
   </v-app>
 </template>
 
 <script>
-  import { sync } from 'vuex-pathify';
   export default {
-    name: 'Publiclayout',
+    name: 'PublicLayout',
     components: {
       PublicView: () => import(/* webpackChunkName: 'public-view' */ './View'),
       PublicBar: () => import(/* webpackChunkName: 'public-appbar' */ './AppBar'),
@@ -25,8 +22,6 @@
         ),
     },
     computed: {
-      ...sync('application', ['isBooted']),
-
       bg() {
         return {
           'background-size': 'cover',

@@ -45,7 +45,7 @@
 
     computed: {
       ...sync('theme', ['isDark']),
-      ...sync('accountsManagement', ['dialogEntity', 'user', 'role', 'identityTypeButton']),
+      ...sync('entitiesManagement', ['dialogEntity', 'user', 'role', 'identityTypeButton']),
 
       entity() {
         return this.identityTypeButton === 'User' ? this.user : this.role;
@@ -53,7 +53,7 @@
     },
 
     methods: {
-      ...call('accountsManagement/*'),
+      ...call('entitiesManagement/*'),
 
       validateEntity() {
         const action = this.identityTypeButton === 'User' ? 'createUser' : 'createRole';

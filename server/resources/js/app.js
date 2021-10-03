@@ -11,11 +11,11 @@ import vuetify from '@/plugins/vuetify';
 // Application
 import App from './App.vue';
 
-// Animations
-
 // Styles
 import 'aos/dist/aos.css';
 import './assets/css/style.css';
+
+
 
 require('./bootstrap');
 

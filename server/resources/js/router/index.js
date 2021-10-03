@@ -22,13 +22,18 @@ export function resetRouter() {
 }
 
 const waitForStorageToBeReady = async (to, from, next) => {
+  await store.get('application/isBooted');
+
+  if (store.get('application/isBooted')) {
+    store.set('application/isContentLoaded', true);
+  }
   if (to.matched.some((record) => record.meta.layout === 'secure_layout')) {
     if (auth.loggedIn()) {
       await store.restored;
       next();
     } else {
       await store.restored;
-      next({ path: '/login' });
+      next({ path: '/Login' });
     }
   } else {
     next();
@@ -38,15 +43,11 @@ const waitForStorageToBeReady = async (to, from, next) => {
 router.beforeEach(waitForStorageToBeReady);
 
 router.beforeResolve((to, from, next) => {
-  if (store.get('application/isBooted')) {
-    store.set('application/isBooted', false);
-  }
-
   // If the user is already logged in
   if (auth.loggedIn()) {
-    if (to.matched.some((record) => record.name === 'login')) {
+    if (to.matched.some((record) => record.name === 'Login')) {
       // Redirect to the home page instead
-      next({ path: '/components' });
+      next({ path: '/Components' });
     } else {
       // Continue to the login page
       next();

@@ -1,5 +1,5 @@
 <template>
-  <v-main style="min-height: 90vh">
+  <v-main style="min-height: 110vh">
     <router-view />
   </v-main>
 </template>
@@ -7,10 +7,5 @@
 <script>
   export default {
     name: 'Publicview',
-    data() {
-      return {
-        booted: false,
-      };
-    },
   };
 </script>

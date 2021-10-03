@@ -66,8 +66,8 @@
     },
     computed: {
       ...sync('theme', ['isDark']),
-      ...sync('accountsManagement', ['dialogPrivileges', 'searchPrivileges']),
-      ...get('accountsManagement', ['selectedEntity', 'filteredPrivileges']),
+      ...sync('entitiesManagement', ['dialogPrivileges', 'searchPrivileges']),
+      ...get('entitiesManagement', ['selectedEntity', 'filteredPrivileges']),
     },
   };
 </script>

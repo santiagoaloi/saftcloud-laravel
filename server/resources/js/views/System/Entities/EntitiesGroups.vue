@@ -7,7 +7,7 @@
         item-text="name"
         placeholder="Select roles o users"
         :maxlength="20"
-        :items="['Roles', 'Accounts']"
+        :items="['Roles', 'Users']"
         solo
         hide-no-data
         hide-details
@@ -51,14 +51,14 @@
   import componentActions from '@/mixins/componentActions';
 
   export default {
-    name: 'AccountsGroups',
+    name: 'EntitiesGroups',
     mixins: [componentGroups, componentActions],
 
     computed: {
-      ...sync('accountsManagement', ['selectedEntityType']),
+      ...sync('entitiesManagement', ['selectedEntityType']),
     },
     methods: {
-      ...call('accountsManagement/*'),
+      ...call('entitiesManagement/*'),
     },
   };
 </script>

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="d-flex justify-end align-center transparent">
-      <accounts-groups />
+      <entities-groups />
 
       <div class="flex-grow-1" />
       <div class="d-flex">
@@ -31,14 +31,14 @@
   import { sync, call } from 'vuex-pathify';
 
   export default {
-    name: 'AccountsAppbar',
+    name: 'EntitiesAppbar',
     components: {
-      AccountsGroups: () => import(/* webpackChunkName: 'accounts-groups' */ './AccountsGroups'),
+      EntitiesGroups: () => import(/* webpackChunkName: 'entities-groups' */ './EntitiesGroups'),
     },
 
     computed: {
       ...sync('theme', ['isDark']),
-      ...sync('accountsManagement', ['dialogEntity', 'dialogEditor', 'identityTypeButton']),
+      ...sync('entitiesManagement', ['dialogEntity', 'dialogEditor', 'identityTypeButton']),
 
       createUser() {
         return this.$vuetify.breakpoint.lgAndUp ? 'Create User' : '';

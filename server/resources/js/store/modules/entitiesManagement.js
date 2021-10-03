@@ -131,7 +131,7 @@ const actions = {
   getUsers() {
     axios.get('api/getAllUsers').then((response) => {
       if (response.status === 200) {
-        store.set('accountsManagement/allUsers', response.data.records);
+        store.set('entitiesManagement/allUsers', response.data.records);
       }
     });
   },
@@ -140,7 +140,7 @@ const actions = {
   getRoles() {
     axios.get('api/getAllRoles').then((response) => {
       if (response.status === 200) {
-        store.set('accountsManagement/allRoles', response.data.records);
+        store.set('entitiesManagement/allRoles', response.data.records);
       }
     });
   },
@@ -149,7 +149,7 @@ const actions = {
   getCapabilities() {
     axios.get('api/getAllCapabilities').then((response) => {
       if (response.status === 200) {
-        store.set('accountsManagement/allCapabilities', response.data.records);
+        store.set('entitiesManagement/allCapabilities', response.data.records);
       }
     });
   },
@@ -157,11 +157,11 @@ const actions = {
   //* When an entity is selected in the entities view, it loads its configuration.
   setSelectedEntity({ rootState, state }, index) {
     if (state.selectedEntityIndex !== index) {
-      store.set('accountsManagement/selectedEntityIndex', index);
+      store.set('entitiesManagement/selectedEntityIndex', index);
     }
 
-    if (!rootState.drawers.secureAccountsDrawer) {
-      store.set('drawers/secureAccountsDrawer', true);
+    if (!rootState.drawers.secureEntitiesDrawer) {
+      store.set('drawers/secureEntitiesDrawer', true);
     }
   },
 
@@ -169,7 +169,7 @@ const actions = {
   rollbackChanges({ state, dispatch }, component) {
     const { origin } = component;
     const index = state.allComponents.findIndex((c) => c.id === component.id);
-    store.set(`accountsManagement/allComponents@${index}`, {
+    store.set(`entitiesManagement/allComponents@${index}`, {
       ...origin,
       origin: cloneDeep(origin),
     });
@@ -184,11 +184,11 @@ const actions = {
     return axios.post('api/user', state.user).then((response) => {
       if (response.status === 200) {
         store.set('snackbar/value', true);
-        store.set('snackbar/text', 'account created');
+        store.set('snackbar/text', 'User created');
         store.set('snackbar/color', 'primary');
 
         //* Autoselect latest created component
-        store.set('accountsManagement/dialogEntity', false);
+        store.set('entitiesManagement/dialogEntity', false);
         return true;
       }
     });
@@ -205,7 +205,7 @@ const actions = {
         store.set('snackbar/color', 'primary');
 
         //* Autoselect latest created component
-        store.set('accountsManagement/dialogEntity', false);
+        store.set('entitiesManagement/dialogEntity', false);
         return true;
       }
     });
@@ -214,16 +214,16 @@ const actions = {
   //* Moves to the previous component in the array (navigation arrows).
   previousEntity({ state }) {
     if (state.entityCardGroup > 0) {
-      store.set('accountsManagement/entityCardGroup', state.entityCardGroup - 1);
-      store.set('accountsManagement/selectedEntityIndex', state.selectedEntityIndex - 1);
+      store.set('entitiesManagement/entityCardGroup', state.entityCardGroup - 1);
+      store.set('entitiesManagement/selectedEntityIndex', state.selectedEntityIndex - 1);
     }
   },
 
   //* Moves to the next component in the array (navigation arrows).
   nextEntity({ state, getters }) {
     if (state.entityCardGroup < getters.allEntitiesFiltered.length - 1) {
-      store.set('accountsManagement/entityCardGroup', state.entityCardGroup + 1);
-      store.set('accountsManagement/selectedEntityIndex', state.selectedEntityIndex + 1);
+      store.set('entitiesManagement/entityCardGroup', state.entityCardGroup + 1);
+      store.set('entitiesManagement/selectedEntityIndex', state.selectedEntityIndex + 1);
     }
   },
 

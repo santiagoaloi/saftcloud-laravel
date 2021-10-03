@@ -36,11 +36,11 @@
   import { sync, get } from 'vuex-pathify';
 
   export default {
-    name: 'AccountsTabs',
+    name: 'EntitiesTabs',
     computed: {
       ...sync('theme', ['isDark']),
-      ...sync('accountsManagement', ['activeStatusTab', 'entityStatusTabs', 'isTableLayout']),
-      ...get('accountsManagement', ['isEmpty', 'isAllFilteredEntititesEmpty']),
+      ...sync('entitiesManagement', ['activeStatusTab', 'entityStatusTabs', 'isTableLayout']),
+      ...get('entitiesManagement', ['isEmpty', 'isAllFilteredEntititesEmpty']),
     },
   };
 </script>

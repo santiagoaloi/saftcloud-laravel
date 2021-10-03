@@ -2,8 +2,8 @@
   <v-app>
     <secure-bar />
     <secure-drawer />
-    <secure-cdrawer v-if="$route.name.startsWith('components')" />
-    <secure-accdrawer v-if="$route.name.startsWith('accounts')" />
+    <secure-comp-drawer v-if="$route.name.startsWith('Components')" />
+    <secure-ent-drawer v-if="$route.name.startsWith('Entities')" />
     <secure-view />
     <snackbar />
     <session-timeout />
@@ -13,17 +13,18 @@
 <script>
   import SessionTimeout from './SessionTimeout/SessionTimeout.vue';
   import WarningDialog from './SessionTimeout/warningDialog.vue';
+
   export default {
-    name: 'Securelayout',
+    name: 'SecureLayout',
     components: {
       SessionTimeout: () =>
         import(/* webpackChunkName: 'secure-session-timeout' */ './SessionTimeout/SessionTimeout'),
       SecureBar: () => import(/* webpackChunkName: 'secure-appbar' */ './AppBar'),
       SecureDrawer: () => import(/* webpackChunkName: 'secure-drawer' */ './Drawer'),
-      SecureCdrawer: () =>
+      SecureCompDrawer: () =>
         import(/* webpackChunkName: 'secure-component-drawer' */ './ComponentDrawer'),
-      SecureAccdrawer: () =>
-        import(/* webpackChunkName: 'secure-accounts-drawer' */ './AccountsDrawer'),
+      SecureEntDrawer: () =>
+        import(/* webpackChunkName: 'secure-entities-drawer' */ './EntitiesDrawer'),
       SecureView: () => import(/* webpackChunkName: 'secure-view' */ './View'),
       Snackbar: () =>
         import(
