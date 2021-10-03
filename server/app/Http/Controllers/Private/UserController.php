@@ -73,7 +73,7 @@ class UserController extends Controller {
         $this->authorize('show', User::class);
         $user = User::findOrFail($id);
         $user->entity;
-        $user->privileges = getRoles($user->roles);
+        $user->privileges = getRoles($user->role);
 
         return response([
             'record'=> $user
@@ -86,8 +86,8 @@ class UserController extends Controller {
         foreach($users as $user){
             $user->userSetting;
             $user->entity;
-            $user->branches;
-            $user->privileges = getRoles($user->roles);
+            $user->branch;
+            $user->privileges = getRoles($user->role);
             
             $newUsers[] = $user;
         }
@@ -185,10 +185,10 @@ class UserController extends Controller {
         $roles = [];
         $capabilities = [];
 
-        foreach ($user->roles as $value) {
+        foreach ($user->role as $value) {
             if($value){
                 $roles[] = $value->name;
-                foreach ($value->capabilities as $capability){
+                foreach ($value->capability as $capability){
                     $capabilities[] = $capability->name;
                 }
             }
@@ -198,7 +198,7 @@ class UserController extends Controller {
 
     public function getCapabilities($user, $capabilities){
         if ($capabilities){
-            foreach ($user->capabilities as $value) {
+            foreach ($user->capability as $value) {
                 if($value){
                     $capabilities[] = $value->name;
                 }
