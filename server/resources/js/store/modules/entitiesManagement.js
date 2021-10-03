@@ -218,7 +218,7 @@ const actions = {
     const userId = getters.selectedEntity.id;
     const roles = getters.selectedEntity.role;
 
-    axios.post(`api/attachRole/${userId}`, roles).then((response) => {
+    axios.post(`api/attachUser/${userId}`, roles).then((response) => {
       if (response.status === 200) {
         store.set('snackbar/value', true);
         store.set('snackbar/text', 'roles assigned');
