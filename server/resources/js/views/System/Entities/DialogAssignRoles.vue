@@ -10,10 +10,9 @@
     @close="dialogAssignRoles = false"
     @save="saveAssignRoles()"
   >
-    <v-card flat width="100%" class="dialogHeight">
+    <v-card flat width="100%" heigt="300">
       <v-container>
-        hola
-        <!-- <v-autocomplete
+        <v-autocomplete
           v-model="selectedEntity.role"
           outlined
           :color="isDark ? '#208ad6' : 'grey'"
@@ -39,7 +38,7 @@
               {{ selectedEntity.role.length }} roles selected.
             </v-chip>
           </template>
-        </v-autocomplete> -->
+        </v-autocomplete>
       </v-container>
     </v-card>
   </baseDialog>
@@ -61,9 +60,3 @@
     },
   };
 </script>
-<style>
-  .dialogHeight {
-    height: calc(40vh - 300px);
-    overflow-y: auto;
-  }
-</style>
