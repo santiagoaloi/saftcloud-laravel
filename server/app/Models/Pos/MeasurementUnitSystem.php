@@ -12,7 +12,7 @@ class MeasurementUnitSystem extends Model {
         return $this->belongsTo('App\Models\Private\Branch');
     }
 
-    public function measurementUnits(){
+    public function measurementUnit(){
         return $this->hasMany('App\Models\Pos\MeasurementUnit');
     }
 }

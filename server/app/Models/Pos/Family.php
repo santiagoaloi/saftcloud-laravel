@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Family extends Model {
     use SoftDeletes;
 
-    public function products(){
+    public function product(){
         return $this->belongsTo('App\Models\Pos\Product');
     }
 

@@ -10,7 +10,7 @@ class IvaCondition extends Model {
 
     protected $fillable = ['country_id', 'name', 'short_name', 'value'];
 
-    public function entities(){
+    public function entity(){
         return $this->hasMany('App\Models\Private\Entity');
     }
 }
