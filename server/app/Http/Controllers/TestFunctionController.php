@@ -139,7 +139,7 @@ return $user;
 
 
         $user = Auth::user();
-        $roles = $user->roles;
+        $roles = $user->role;
 
         return getRoles($roles);
 
@@ -148,10 +148,10 @@ return $user;
         $roles = [];
         $capabilities = [];
 
-        foreach ($user->roles as $value) {
+        foreach ($user->role as $value) {
             if($value){
                 $roles[] = $value->name;
-                foreach ($value->capabilities as $capability){
+                foreach ($value->capability as $capability){
                     $capabilities[] = $capability->name;
                 }
             }
