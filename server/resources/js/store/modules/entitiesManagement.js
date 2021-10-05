@@ -216,7 +216,7 @@ const actions = {
   //* Creates a new role in the database.
   saveAssignRoles({ getters }) {
     const userId = getters.selectedEntity.id;
-    const roles = getters.selectedEntity.role;
+    const roles = { name: 'role', roles: getters.selectedEntity.role };
 
     axios.post(`api/attachUser/${userId}`, roles).then((response) => {
       if (response.status === 200) {
