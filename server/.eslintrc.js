@@ -1,4 +1,6 @@
 module.exports = {
+  root: true,
+
   env: {
     browser: true,
     commonjs: true,
@@ -19,9 +21,9 @@ module.exports = {
     SharedArrayBuffer: 'readonly',
   },
   parserOptions: {
-    ecmaVersion: 2018,
+    ecmaVersion: 2020,
     parser: 'babel-eslint',
-    sourceType: 'module',
+    // sourceType: 'module',
   },
   plugins: ['vue', 'prettier'],
 };
