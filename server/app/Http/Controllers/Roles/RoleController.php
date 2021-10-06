@@ -122,8 +122,14 @@ class RoleController extends Controller {
     }
 
     // AGREGA TODOS LOS ROLES QUE ENVIAMOS EN LA VARIABLE ROLE
-    public function attachRole(Role $role, $request){
-        $request->role()->attach([$role]);
+    public function attachRole(Role $role, Request $request){
+        $items = $request->all();
+
+        foreach($items as $item){
+            $roles[] = $item['id'];
+        }
+        // return $roles;
+        $request->role()->sync($roles);
     }
 
     // ELIMINA TODOS LOS ROLES QUE ENVIAMOS EN LA VARIABLE ROLE

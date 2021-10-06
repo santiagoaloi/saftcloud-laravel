@@ -160,10 +160,14 @@ class UserController extends Controller {
     }
 
     // AGREGA TODOS LOS USUARIOS QUE ENVIAMOS EN LA VARIABLE ROLE
-    public function attachUser(User $user, $requests){
-        foreach($requests as $request){
-            $request->user()->attach($user);
+    public function attachUser(User $user, Request $request){
+        $items = $request['roles'];
+        $class = $request['name'];
+
+        foreach($items as $item){
+            $arr[] = $item['id'];
         }
+        $user->$class()->sync($arr);
     }
 
     // AGREGA TODOS LOS USUARIOS QUE ENVIAMOS EN LA VARIABLE ROLE
