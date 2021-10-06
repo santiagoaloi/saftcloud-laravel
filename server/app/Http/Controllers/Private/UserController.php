@@ -74,6 +74,7 @@ class UserController extends Controller {
         $user = User::findOrFail($id);
         $user->entity;
         $user->privileges = getRoles($user->role);
+        $user->origin = clone$user;
 
         return response([
             'record'=> $user
@@ -88,7 +89,8 @@ class UserController extends Controller {
             $user->entity;
             $user->branch;
             $user->privileges = getRoles($user->role);
-            
+            $user->origin = clone$user;
+
             $newUsers[] = $user;
         }
 
@@ -161,28 +163,35 @@ class UserController extends Controller {
 
     // AGREGA TODOS LOS USUARIOS QUE ENVIAMOS EN LA VARIABLE ROLE
     public function attachUser(User $user, Request $request){
-        $items = $request['roles'];
+        $items = $request['items'];
+        $class = $request['name'];
+
+        foreach($items as $item){
+            $arr[] = $item['id'];
+        }
+        $user->$class()->attach($arr);
+    }
+
+    // ELIMINA TODOS LOS USUARIOS QUE ENVIAMOS EN LA VARIABLE ROLE
+    public function detachUser(User $user, Request $request){
+        $items = $request['items'];
+        $class = $request['name'];
+
+        foreach($items as $item){
+            $arr[] = $item['id'];
+        }
+        $user->$class()->detach($arr);
+    }
+
+    // ELIMINA TODOS LOS USUARIOS Y AGREGA LOS NUEVOS
+    public function syncUser(User $user, Request $request){
+        $items = $request['items'];
         $class = $request['name'];
 
         foreach($items as $item){
             $arr[] = $item['id'];
         }
         $user->$class()->sync($arr);
-    }
-
-    // AGREGA TODOS LOS USUARIOS QUE ENVIAMOS EN LA VARIABLE ROLE
-    public function attachbelongsToUser($request, User $user){
-        $request->user()->attach($user);
-    }
-
-    // ELIMINA TODOS LOS USUARIOS QUE ENVIAMOS EN LA VARIABLE ROLE
-    public function detachUser($request, User $user){
-        $request->user()->detach($user);
-    }
-
-    // ELIMINA TODOS LOS USUARIOS Y AGREGA LOS NUEVOS
-    public function syncUser($request, User $user){
-        $request->user()->sync($user);
     }
 
 

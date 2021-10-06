@@ -78,6 +78,7 @@ class AuthController extends Controller {
             $user->branch[0]->entity;
             $UserController = New UserController;
             $user->privileges = $UserController->getRolCapabilities($user);
+            $user->origin = clone$user;
 
             $response = [
                 'user' => $user,
