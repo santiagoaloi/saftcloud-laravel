@@ -31,6 +31,7 @@ class AccountPlanController extends Controller {
     public function show(Request $id) {
         $this->authorize('show', AccountPlan::class);
         $result = AccountPlan::find($id);
+        origin($result);
 
         return response([
             'record' => $result
@@ -39,8 +40,13 @@ class AccountPlanController extends Controller {
 
     public function showAll() {
         $this->authorize('showAll', AccountPlan::class);
+        $result = AccountPlan::get();
+        foreach ($result as $item){
+            origin($item);
+        }
+
         return response([
-            'records' => AccountPlan::get()
+            'records' => $result
         ], 200);
     }
 
@@ -98,11 +104,44 @@ class AccountPlanController extends Controller {
     }
 
     public function forceDestroy($id){
-        $this->authorize('forceDestroy', Capability::class);
+        $this->authorize('forceDestroy', AccountPlan::class);
         $query = AccountPlan::withTrashed()->find($id);
         $query->forceDelete();
         return response([
             'status'=> true
         ], 200);
+    }
+
+    // AGREGA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
+    public function attachAccountPlan(AccountPlan $accountPlan, Request $request){
+        $items = $request['items'];
+        $class = $request['name'];
+
+        foreach($items as $item){
+            $arr[] = $item['id'];
+        }
+        $accountPlan->$class()->attach($arr);
+    }
+
+    // ELIMINA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
+    public function detachAccountPlan(AccountPlan $accountPlan, Request $request){
+        $items = $request['items'];
+        $class = $request['name'];
+
+        foreach($items as $item){
+            $arr[] = $item['id'];
+        }
+        $accountPlan->$class()->detach($arr);
+    }
+
+    // SINCRONIZA TODOS LOS ITEMS ENVIADOS EN REQUEST
+    public function syncAccountPlan(AccountPlan $accountPlan, Request $request){
+        $items = $request['items'];
+        $class = $request['name'];
+
+        foreach($items as $item){
+            $arr[] = $item['id'];
+        }
+        $accountPlan->$class()->sync($arr);
     }
 }

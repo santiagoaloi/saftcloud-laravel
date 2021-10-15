@@ -31,6 +31,7 @@ class RoleController extends Controller {
     public function show(Request $id) {
         $this->authorize('show', Role::class);
         $result = Role::find($id);
+        origin($result);
 
         return response([
             'record'=> $result
@@ -39,10 +40,11 @@ class RoleController extends Controller {
 
     public function showAll() {
         $this->authorize('showAll', Role::class);
-        $roles = Role::get();
+        $result = Role::get();
 
-        foreach($roles  as $role){
+        foreach($result as $role){
             $role['privileges'] = $this->getCapabilities($role->capability);
+            origin($role);
             $newRoles[] = $role;
         };
 
@@ -121,24 +123,36 @@ class RoleController extends Controller {
         ], 200);
     }
 
-    // AGREGA TODOS LOS ROLES QUE ENVIAMOS EN LA VARIABLE ROLE
-    public function attachRole(Role $role, Request $request){
-        $items = $request->all();
+    // AGREGA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
+    public function attachRole(Role $Role, Request $request){
+        $items = $request['items'];
+        $class = $request['name'];
 
         foreach($items as $item){
-            $roles[] = $item['id'];
+            $arr[] = $item['id'];
         }
-        // return $roles;
-        $request->role()->sync($roles);
+        $Role->$class()->attach($arr);
     }
 
-    // ELIMINA TODOS LOS ROLES QUE ENVIAMOS EN LA VARIABLE ROLE
-    public function detachRoles($request, Role $role){
-        $request->role()->detach($role);
+    // ELIMINA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
+    public function detachRole(Role $Role, Request $request){
+        $items = $request['items'];
+        $class = $request['name'];
+
+        foreach($items as $item){
+            $arr[] = $item['id'];
+        }
+        $Role->$class()->detach($arr);
     }
 
-    // ELIMINA TODOS LOS ROLES Y AGREGA LOS NUEVOS
-    public function syncRoles($request, Role $role){
-        $request->role()->sync($role);
+    // SINCRONIZA TODOS LOS ITEMS ENVIADOS EN REQUEST
+    public function syncRole(Role $Role, Request $request){
+        $items = $request['items'];
+        $class = $request['name'];
+
+        foreach($items as $item){
+            $arr[] = $item['id'];
+        }
+        $Role->$class()->sync($arr);
     }
 }

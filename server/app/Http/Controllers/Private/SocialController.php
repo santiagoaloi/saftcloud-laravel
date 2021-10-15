@@ -31,6 +31,7 @@ class SocialController extends Controller {
     public function show(Request $id) {
         $this->authorize('show', Social::class);
         $result = Social::find($id);
+        origin($result);
 
         return response([
             'record'=> $result
@@ -39,8 +40,13 @@ class SocialController extends Controller {
 
     public function showAll() {
         $this->authorize('showAll', Social::class);
+        $result = Social::get();
+        foreach ($result as $item){
+            origin($item);
+        }
+
         return response([
-            'records'=> Social::get()
+            'records'=> $result
         ], 200);
     }
 
@@ -104,5 +110,38 @@ class SocialController extends Controller {
         return response([
             'status'=> true
         ], 200);
+    }
+
+    // AGREGA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
+    public function attachSocial(Social $social, Request $request){
+        $items = $request['items'];
+        $class = $request['name'];
+
+        foreach($items as $item){
+            $arr[] = $item['id'];
+        }
+        $social->$class()->attach($arr);
+    }
+
+    // ELIMINA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
+    public function detachSocial(Social $social, Request $request){
+        $items = $request['items'];
+        $class = $request['name'];
+
+        foreach($items as $item){
+            $arr[] = $item['id'];
+        }
+        $social->$class()->detach($arr);
+    }
+
+    // SINCRONIZA TODOS LOS ITEMS ENVIADOS EN REQUEST
+    public function syncSocial(Social $social, Request $request){
+        $items = $request['items'];
+        $class = $request['name'];
+
+        foreach($items as $item){
+            $arr[] = $item['id'];
+        }
+        $social->$class()->sync($arr);
     }
 }

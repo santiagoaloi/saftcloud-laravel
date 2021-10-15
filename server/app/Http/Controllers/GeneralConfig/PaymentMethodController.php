@@ -22,7 +22,6 @@ class PaymentMethodController extends Controller {
                 ], 404);
             }
         }
-        
 
         return response([
             'record'=> $query
@@ -32,6 +31,7 @@ class PaymentMethodController extends Controller {
     public function show(Request $id) {
         $this->authorize('show', PaymentMethod::class);
         $result = PaymentMethod::find($id);
+        origin($result);
 
         return response([
             'record'=> $result
@@ -40,8 +40,13 @@ class PaymentMethodController extends Controller {
 
     public function showAll() {
         $this->authorize('showAll', PaymentMethod::class);
+        $result = PaymentMethod::get();
+        foreach ($result as $item){
+            origin($item);
+        }
+
         return response([
-            'records'=> PaymentMethod::get()
+            'records'=> $result
         ], 200);
     }
 
@@ -105,5 +110,38 @@ class PaymentMethodController extends Controller {
         return response([
             'status'=> true
         ], 200);
+    }
+
+    // AGREGA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
+    public function attachPaymentMethod(PaymentMethod $paymentMethod, Request $request){
+        $items = $request['items'];
+        $class = $request['name'];
+
+        foreach($items as $item){
+            $arr[] = $item['id'];
+        }
+        $paymentMethod->$class()->attach($arr);
+    }
+
+    // ELIMINA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
+    public function detachPaymentMethod(PaymentMethod $paymentMethod, Request $request){
+        $items = $request['items'];
+        $class = $request['name'];
+
+        foreach($items as $item){
+            $arr[] = $item['id'];
+        }
+        $paymentMethod->$class()->detach($arr);
+    }
+
+    // SINCRONIZA TODOS LOS ITEMS ENVIADOS EN REQUEST
+    public function syncPaymentMethod(PaymentMethod $paymentMethod, Request $request){
+        $items = $request['items'];
+        $class = $request['name'];
+
+        foreach($items as $item){
+            $arr[] = $item['id'];
+        }
+        $paymentMethod->$class()->sync($arr);
     }
 }

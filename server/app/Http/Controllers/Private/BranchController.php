@@ -31,6 +31,7 @@ class BranchController extends Controller {
     public function show(Request $id) {
         $this->authorize('show', Branch::class);
         $result = Branch::find($id);
+        origin($result);
 
         return response([
             'record'=> $result
@@ -39,8 +40,13 @@ class BranchController extends Controller {
 
     public function showAll() {
         $this->authorize('showAll', Branch::class);
+        $result = Branch::get();
+        foreach ($result as $item){
+            origin($item);
+        }
+
         return response([
-            'records'=> Branch::get()
+            'records'=> $result
         ], 200);
     }
 
@@ -98,11 +104,44 @@ class BranchController extends Controller {
     }
 
     public function forceDestroy($id){
-        $this->authorize('forceDestroy', Capability::class);
+        $this->authorize('forceDestroy', Address::class);
         $query = Branch::withTrashed()->find($id);
         $query->forceDelete();
         return response([
             'status'=> true
         ], 200);
+    }
+
+    // AGREGA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
+    public function attachBranch(Branch $branch, Request $request){
+        $items = $request['items'];
+        $class = $request['name'];
+
+        foreach($items as $item){
+            $arr[] = $item['id'];
+        }
+        $branch->$class()->attach($arr);
+    }
+
+    // ELIMINA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
+    public function detachBranch(Branch $branch, Request $request){
+        $items = $request['items'];
+        $class = $request['name'];
+
+        foreach($items as $item){
+            $arr[] = $item['id'];
+        }
+        $branch->$class()->detach($arr);
+    }
+
+    // SINCRONIZA TODOS LOS ITEMS ENVIADOS EN REQUEST
+    public function syncBranch(Branch $branch, Request $request){
+        $items = $request['items'];
+        $class = $request['name'];
+
+        foreach($items as $item){
+            $arr[] = $item['id'];
+        }
+        $branch->$class()->sync($arr);
     }
 }

@@ -6,13 +6,10 @@ use App\Models\User;
 
 use App\Models\Roles\Role;
 
-use App\Exceptions\Handler;
 use Illuminate\Http\Request;
 
 use App\Models\Private\Entity;
 use App\Models\Public\Country;
-use App\Models\Private\Account;
-use App\Models\Roles\Capability;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -20,13 +17,8 @@ Use Exception;
 use App\Models\GeneralConfig\LookUpList;
 use App\Http\Controllers\Roles\RoleController;
 use App\Http\Controllers\Private\UserController;
-use App\Http\Controllers\Public\StateController;
-use App\Http\Controllers\Private\BranchController;
 use App\Http\Controllers\Root\ComponentController;
-use App\Http\Controllers\Root\ComponentGroupController;
 use App\Http\Controllers\Root\ComponentDefaultController;
-use App\Http\Controllers\GeneralConfig\LookUpListController;
-use App\Http\Controllers\GeneralConfig\LookUpListValueController;
 
 class TestFunctionController extends Controller {
 

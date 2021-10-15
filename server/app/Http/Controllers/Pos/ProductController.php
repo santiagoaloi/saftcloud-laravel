@@ -30,15 +30,23 @@ class ProductController extends Controller {
 
     public function show(Request $id, $local = false) {
         $this->authorize('show', Product::class);
+        $result = Product::find($id);
+        origin($result);
+
         return response([
-            'record'=> Product::find($id)
+            'record'=> $result
         ], 200);
     }
 
     public function showAll() {
         $this->authorize('showAll', Product::class);
+        $result = Product::get();
+        foreach ($result as $item){
+            origin($item);
+        }
+
         return response([
-            'records'=> Product::get()
+            'records'=> $result
         ], 200);
     }
 

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Root;
 
-use App\Helpers\Helper;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Root\ComponentDefault;
@@ -41,27 +40,24 @@ class ComponentDefaultController extends Controller {
         return $components;
     }
 
-    public function show(Request $id, $local = false) {
+    public function show(Request $id) {
         $result = ComponentDefault::find($id);
+        origin($result);
 
-        if ($local){
-            return $result;
-        } else {
-            return response([
-                'record'=> $result
-            ], 200);
-        }
+        return response([
+            'record'=> $result
+        ], 200);
     }
 
-    public function showAll($local = false) {
-        $query = ComponentDefault::get();
-        if ($local){
-            return $query;
-        } else {
-            return response([
-                'records'=> $query
-            ], 200);
+    public function showAll() {
+        $result = ComponentDefault::get();
+        foreach ($result as $item){
+            origin($item);
         }
+
+        return response([
+            'records'=> $result
+        ], 200);
     }
 
     //  Para mostrar los elementos eliminados
@@ -107,18 +103,14 @@ class ComponentDefaultController extends Controller {
             $query->fill($item)->save();
         };
 
-        $result = $this->showAll(true);
-
-        return response([
-            'records'=> $result
-        ], 200);
+        return $this->showAll();
     }
 
     public function destroy($id) {
         $query = ComponentDefault::find($id);
         $query->delete();
 
-        return $this->showAll(true);
+        return $this->showAll();
     }
 
     // Obtiene el ultimo registro de config_structure
@@ -144,7 +136,7 @@ class ComponentDefaultController extends Controller {
         $modelo = $it_2['form_fields'];
 
         foreach($items as $item){
-            $result[] = Helper::compareItems($item, $modelo);
+            $result[] = compareItems($item, $modelo);
         };
         return $result;
     }
@@ -162,14 +154,14 @@ class ComponentDefaultController extends Controller {
         $modelGeneralConfig = $mod['general_config'];
 
         foreach($itemsformFields as $item){
-            $result['form_fields'][] = Helper::compareItems($item, $modelFormFields);
+            $result['form_fields'][] = compareItems($item, $modelFormFields);
         };
 
         foreach($itemsColumns as $item){
-            $result['columns'][] = Helper::compareItems($item, $modelColumns);
+            $result['columns'][] = compareItems($item, $modelColumns);
         }
 
-        $result['general_config'] = Helper::compareItems($itemsGeneralConfig, $modelGeneralConfig);
+        $result['general_config'] = compareItems($itemsGeneralConfig, $modelGeneralConfig);
         
         return $result;
     }
@@ -179,4 +171,36 @@ class ComponentDefaultController extends Controller {
         file_put_contents($getJsonFile2, $jsonModel);
     }
 
+    // AGREGA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
+    public function attachComponentDefault(ComponentDefault $componentDefault, Request $request){
+        $items = $request['items'];
+        $class = $request['name'];
+
+        foreach($items as $item){
+            $arr[] = $item['id'];
+        }
+        $componentDefault->$class()->attach($arr);
+    }
+
+    // ELIMINA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
+    public function detachComponentDefault(ComponentDefault $componentDefault, Request $request){
+        $items = $request['items'];
+        $class = $request['name'];
+
+        foreach($items as $item){
+            $arr[] = $item['id'];
+        }
+        $componentDefault->$class()->detach($arr);
+    }
+
+    // SINCRONIZA TODOS LOS ITEMS ENVIADOS EN REQUEST
+    public function syncComponentDefault(ComponentDefault $componentDefault, Request $request){
+        $items = $request['items'];
+        $class = $request['name'];
+
+        foreach($items as $item){
+            $arr[] = $item['id'];
+        }
+        $componentDefault->$class()->sync($arr);
+    }
 }

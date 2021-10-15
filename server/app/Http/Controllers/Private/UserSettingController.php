@@ -31,6 +31,8 @@ class UserSettingController extends Controller {
     public function show(Request $id) {
         $this->authorize('show', userSetting::class);
         $result = userSetting::find($id);
+        origin($result);
+
         return response([
             'record'=> $result
         ], 200);
@@ -38,8 +40,13 @@ class UserSettingController extends Controller {
 
     public function showAll() {
         $this->authorize('showAll', userSetting::class);
+        $result = userSetting::get();
+        foreach ($result as $item){
+            origin($item);
+        }
+
         return response([
-            'records'=> userSetting::get()
+            'records'=> $result
         ], 200);
     }
 
@@ -103,5 +110,38 @@ class UserSettingController extends Controller {
         return response([
             'status'=> true
         ], 200);
+    }
+
+    // AGREGA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
+    public function attachUserSetting(UserSetting $userSetting, Request $request){
+        $items = $request['items'];
+        $class = $request['name'];
+
+        foreach($items as $item){
+            $arr[] = $item['id'];
+        }
+        $userSetting->$class()->attach($arr);
+    }
+
+    // ELIMINA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
+    public function detachUserSetting(UserSetting $userSetting, Request $request){
+        $items = $request['items'];
+        $class = $request['name'];
+
+        foreach($items as $item){
+            $arr[] = $item['id'];
+        }
+        $userSetting->$class()->detach($arr);
+    }
+
+    // SINCRONIZA TODOS LOS ITEMS ENVIADOS EN REQUEST
+    public function syncUserSetting(UserSetting $userSetting, Request $request){
+        $items = $request['items'];
+        $class = $request['name'];
+
+        foreach($items as $item){
+            $arr[] = $item['id'];
+        }
+        $userSetting->$class()->sync($arr);
     }
 }

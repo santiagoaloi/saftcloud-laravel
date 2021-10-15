@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use App\Models\Root\ComponentGroup;
-use App\Helpers\ComponentManager;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Database\QueryException;
@@ -30,16 +29,23 @@ class ComponentGroupController extends Controller {
     }
 
     public function show(Request $id) {
+        $result = ComponentGroup::find($id);
+        origin($result);
+
         return response([
-            'group' => ComponentGroup::find($id),
+            'group' => $result,
             'status' => true
         ], 200);
     }
 
     public function showAll() {
-        $query = ComponentGroup::all();
+        $result = ComponentGroup::all();
+        foreach ($result as $item){
+            origin($item);
+        }
+
         return response([
-            'groups' => $query,
+            'groups' => $result,
             'status' => true,
         ], 200);
     }
@@ -174,7 +180,7 @@ class ComponentGroupController extends Controller {
         $components = DB::table('components')->where('component_group_id', '=', $id)->get();
 
         foreach($components as $component){
-            $arrayComponent[] = ComponentManager::parseComponent($component);
+            $arrayComponent[] = parseComponent($component);
         };
 
         return response([
@@ -188,4 +194,36 @@ class ComponentGroupController extends Controller {
         ], 404);
     }
 
+    // AGREGA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
+    public function attachComponentGroup(ComponentGroup $componentGroup, Request $request){
+        $items = $request['items'];
+        $class = $request['name'];
+
+        foreach($items as $item){
+            $arr[] = $item['id'];
+        }
+        $componentGroup->$class()->attach($arr);
+    }
+
+    // ELIMINA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
+    public function detachComponentGroup(ComponentGroup $componentGroup, Request $request){
+        $items = $request['items'];
+        $class = $request['name'];
+
+        foreach($items as $item){
+            $arr[] = $item['id'];
+        }
+        $componentGroup->$class()->detach($arr);
+    }
+
+    // SINCRONIZA TODOS LOS ITEMS ENVIADOS EN REQUEST
+    public function syncComponentGroup(ComponentGroup $componentGroup, Request $request){
+        $items = $request['items'];
+        $class = $request['name'];
+
+        foreach($items as $item){
+            $arr[] = $item['id'];
+        }
+        $componentGroup->$class()->sync($arr);
+    }
 }

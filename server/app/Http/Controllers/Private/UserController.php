@@ -74,7 +74,7 @@ class UserController extends Controller {
         $user = User::findOrFail($id);
         $user->entity;
         $user->privileges = getRoles($user->role);
-        $user->origin = clone$user;
+        origin($user);
 
         return response([
             'record'=> $user
@@ -90,6 +90,7 @@ class UserController extends Controller {
             $user->branch;
             $user->privileges = getRoles($user->role);
             $user->origin = clone$user;
+            origin($user);
 
             $newUsers[] = $user;
         }
@@ -161,7 +162,7 @@ class UserController extends Controller {
         ], 200);
     }
 
-    // AGREGA TODOS LOS USUARIOS QUE ENVIAMOS EN LA VARIABLE ROLE
+    // AGREGA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
     public function attachUser(User $user, Request $request){
         $items = $request['items'];
         $class = $request['name'];
@@ -172,7 +173,7 @@ class UserController extends Controller {
         $user->$class()->attach($arr);
     }
 
-    // ELIMINA TODOS LOS USUARIOS QUE ENVIAMOS EN LA VARIABLE ROLE
+    // ELIMINA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
     public function detachUser(User $user, Request $request){
         $items = $request['items'];
         $class = $request['name'];
@@ -183,7 +184,7 @@ class UserController extends Controller {
         $user->$class()->detach($arr);
     }
 
-    // ELIMINA TODOS LOS USUARIOS Y AGREGA LOS NUEVOS
+    // SINCRONIZA TODOS LOS ITEMS ENVIADOS EN REQUEST
     public function syncUser(User $user, Request $request){
         $items = $request['items'];
         $class = $request['name'];
@@ -193,8 +194,6 @@ class UserController extends Controller {
         }
         $user->$class()->sync($arr);
     }
-
-
 
     public function getRolCapabilities($user){
         $roles = [];

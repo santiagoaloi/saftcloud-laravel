@@ -28,14 +28,22 @@ class StateController extends Controller {
     }
 
     public function show(Request $id) {
+        $result = State::find($id);
+        origin($result);
+
         return response([
-            'record'=> State::find($id)
+            'record'=> $result
         ], 200);
     }
 
     public function showAll($country_id) {
+        $result = State::where('country_id', $country_id)->get();
+        foreach ($result as $item){
+            origin($item);
+        }
+
         return response([
-            'records'=> State::where('country_id', $country_id)->get()
+            'records'=> $result
         ], 200);
     }
 
@@ -90,5 +98,38 @@ class StateController extends Controller {
         return response([
             'message'=> "Estado eliminado."
         ], 200);
+    }
+
+    // AGREGA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
+    public function attachState(State $state, Request $request){
+        $items = $request['items'];
+        $class = $request['name'];
+
+        foreach($items as $item){
+            $arr[] = $item['id'];
+        }
+        $state->$class()->attach($arr);
+    }
+
+    // ELIMINA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
+    public function detachState(State $state, Request $request){
+        $items = $request['items'];
+        $class = $request['name'];
+
+        foreach($items as $item){
+            $arr[] = $item['id'];
+        }
+        $state->$class()->detach($arr);
+    }
+
+    // SINCRONIZA TODOS LOS ITEMS ENVIADOS EN REQUEST
+    public function syncState(State $state, Request $request){
+        $items = $request['items'];
+        $class = $request['name'];
+
+        foreach($items as $item){
+            $arr[] = $item['id'];
+        }
+        $state->$class()->sync($arr);
     }
 }

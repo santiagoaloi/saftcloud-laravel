@@ -31,6 +31,8 @@ class ProductPromotionController extends Controller {
     public function show(Request $id) {
         $this->authorize('show', ProductPromotion::class);
         $result = ProductPromotion::find($id);
+        origin($result);
+
         return response([
             'record'=> $result
         ], 200);
@@ -38,8 +40,13 @@ class ProductPromotionController extends Controller {
 
     public function showAll() {
         $this->authorize('showAll', ProductPromotion::class);
+        $result = ProductPromotion::get();
+        foreach ($result as $item){
+            origin($item);
+        }
+
         return response([
-            'records'=> ProductPromotion::get()
+            'records'=> $result
         ], 200);
     }
 

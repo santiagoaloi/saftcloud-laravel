@@ -31,6 +31,7 @@ class AccountPaymentController extends Controller {
     public function show(Request $id) {
         $this->authorize('show', AccountPayment::class);
         $result = AccountPayment::find($id);
+        origin($result);
 
         return response([
             'record' => $result
@@ -39,8 +40,13 @@ class AccountPaymentController extends Controller {
 
     public function showAll() {
         $this->authorize('showAll', AccountPayment::class);
+        $result = AccountPayment::get();
+        foreach ($result as $item){
+            origin($item);
+        }
+
         return response([
-            'records' => AccountPayment::get()
+            'records' => $result
         ], 200);
     }
 
@@ -104,5 +110,38 @@ class AccountPaymentController extends Controller {
         return response([
             'status'=> true
         ], 200);
+    }
+
+    // AGREGA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
+    public function attachAccountPayment(AccountPayment $accountPayment, Request $request){
+        $items = $request['items'];
+        $class = $request['name'];
+
+        foreach($items as $item){
+            $arr[] = $item['id'];
+        }
+        $accountPayment->$class()->attach($arr);
+    }
+
+    // ELIMINA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
+    public function detachAccountPayment(AccountPayment $accountPayment, Request $request){
+        $items = $request['items'];
+        $class = $request['name'];
+
+        foreach($items as $item){
+            $arr[] = $item['id'];
+        }
+        $accountPayment->$class()->detach($arr);
+    }
+
+    // SINCRONIZA TODOS LOS ITEMS ENVIADOS EN REQUEST
+    public function syncAccountPayment(AccountPayment $accountPayment, Request $request){
+        $items = $request['items'];
+        $class = $request['name'];
+
+        foreach($items as $item){
+            $arr[] = $item['id'];
+        }
+        $accountPayment->$class()->sync($arr);
     }
 }

@@ -170,7 +170,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/attachCountry', [CountryController::class, 'attachCountry']);
     Route::post('/attachState', [StateController::class, 'attachState']);
     Route::post('/attachCapability', [CapabilityController::class, 'attachCapability']);
-    Route::post('/attachRole/{var}', [RoleController::class, 'attachRole']);
+    Route::post('/attachRole/{role}', [RoleController::class, 'attachRole']);
     Route::post('/attachComponent', [ComponentController::class, 'attachComponent']);
     Route::post('/attachComponentDefault', [ComponentDefaultController::class, 'attachComponentDefault']);
     Route::post('/attachComponentGroup', [ComponentGroupController::class, 'attachComponentGroup']);

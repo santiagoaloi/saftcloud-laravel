@@ -35,6 +35,7 @@ class CountryController extends Controller {
     public function show(Request $id) {
         // $this->authorize('show', Country::class);
         $result = Country::find($id);
+        origin($result);
 
         return response([
             'record'=> $result
@@ -43,8 +44,13 @@ class CountryController extends Controller {
 
     public function showAll() {
         // $this->authorize('showAll', Country::class);
+        $result = Country::get();
+        foreach ($result as $item){
+            origin($item);
+        }
+
         return response([
-            'records'=> Country::get()
+            'records'=> $result
         ], 200);
     }
 
@@ -99,5 +105,38 @@ class CountryController extends Controller {
         $query->delete();
 
         return $this->showAll();
+    }
+
+    // AGREGA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
+    public function attachCountry(Country $country, Request $request){
+        $items = $request['items'];
+        $class = $request['name'];
+
+        foreach($items as $item){
+            $arr[] = $item['id'];
+        }
+        $country->$class()->attach($arr);
+    }
+
+    // ELIMINA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
+    public function detachCountry(Country $country, Request $request){
+        $items = $request['items'];
+        $class = $request['name'];
+
+        foreach($items as $item){
+            $arr[] = $item['id'];
+        }
+        $country->$class()->detach($arr);
+    }
+
+    // SINCRONIZA TODOS LOS ITEMS ENVIADOS EN REQUEST
+    public function syncCountry(Country $country, Request $request){
+        $items = $request['items'];
+        $class = $request['name'];
+
+        foreach($items as $item){
+            $arr[] = $item['id'];
+        }
+        $country->$class()->sync($arr);
     }
 }

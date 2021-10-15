@@ -31,6 +31,7 @@ class CapabilityController extends Controller {
     public function show(Request $id) {
         $this->authorize('show', Capability::class);
         $result = Capability::find($id);
+        origin($result);
 
         return response([
             'record'=> $result
@@ -39,8 +40,13 @@ class CapabilityController extends Controller {
 
     public function showAll() {
         $this->authorize('showAll', Capability::class);
+        $result = Capability::get();
+        foreach ($result as $item){
+            origin($item);
+        }
+
         return response([
-            'records'=> Capability::get()
+            'records'=> $result
         ], 200);
     }
 
@@ -106,18 +112,36 @@ class CapabilityController extends Controller {
         ], 200);
     }
 
-    // AGREGA TODOS LOS ROLES QUE ENVIAMOS EN LA VARIABLE ROLE
-    public function attachRoles($request, Capability $capability){
-        $request->capability()->attach($capability);
+    // AGREGA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
+    public function attachCapability(Capability $capability, Request $request){
+        $items = $request['items'];
+        $class = $request['name'];
+
+        foreach($items as $item){
+            $arr[] = $item['id'];
+        }
+        $capability->$class()->attach($arr);
     }
 
-    // ELIMINA TODOS LOS ROLES QUE ENVIAMOS EN LA VARIABLE ROLE
-    public function detachRoles($request, Capability $capability){
-        $request->capability()->detach($capability);
+    // ELIMINA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
+    public function detachCapability(Capability $capability, Request $request){
+        $items = $request['items'];
+        $class = $request['name'];
+
+        foreach($items as $item){
+            $arr[] = $item['id'];
+        }
+        $capability->$class()->detach($arr);
     }
 
-    // ELIMINA TODOS LOS ROLES Y AGREGA LOS NUEVOS
-    public function syncRoles($request, Capability $capability){
-        $request->capability()->sync($capability);
+    // SINCRONIZA TODOS LOS ITEMS ENVIADOS EN REQUEST
+    public function syncCapability(Capability $capability, Request $request){
+        $items = $request['items'];
+        $class = $request['name'];
+
+        foreach($items as $item){
+            $arr[] = $item['id'];
+        }
+        $capability->$class()->sync($arr);
     }
 }

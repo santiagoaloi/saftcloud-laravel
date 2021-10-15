@@ -31,6 +31,7 @@ class PointOfSaleController extends Controller {
     public function show(Request $id) {
         $this->authorize('forceDestroy', PointOfSale::class);
         $result = PointOfSale::find($id);
+        origin($result);
 
         return response([
             'record'=> $result
@@ -39,8 +40,13 @@ class PointOfSaleController extends Controller {
 
     public function showAll() {
         $this->authorize('forceDestroy', PointOfSale::class);
+        $result = PointOfSale::get();
+        foreach ($result as $item){
+            origin($item);
+        }
+
         return response([
-            'records'=> PointOfSale::get()
+            'records'=> $result
         ], 200);
     }
 
@@ -104,5 +110,38 @@ class PointOfSaleController extends Controller {
         return response([
             'status'=> true
         ], 200);
+    }
+
+    // AGREGA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
+    public function attachPointOfSale(PointOfSale $pointOfSale, Request $request){
+        $items = $request['items'];
+        $class = $request['name'];
+
+        foreach($items as $item){
+            $arr[] = $item['id'];
+        }
+        $pointOfSale->$class()->attach($arr);
+    }
+
+    // ELIMINA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
+    public function detachPointOfSale(PointOfSale $pointOfSale, Request $request){
+        $items = $request['items'];
+        $class = $request['name'];
+
+        foreach($items as $item){
+            $arr[] = $item['id'];
+        }
+        $pointOfSale->$class()->detach($arr);
+    }
+
+    // SINCRONIZA TODOS LOS ITEMS ENVIADOS EN REQUEST
+    public function syncPointOfSale(PointOfSale $pointOfSale, Request $request){
+        $items = $request['items'];
+        $class = $request['name'];
+
+        foreach($items as $item){
+            $arr[] = $item['id'];
+        }
+        $pointOfSale->$class()->sync($arr);
     }
 }

@@ -31,6 +31,7 @@ class EntityController extends Controller {
     public function show(Request $id) {
         $this->authorize('show', Entity::class);
         $result = Entity::find($id);
+        origin($result);
 
         return response([
             'record'=> $result
@@ -39,8 +40,13 @@ class EntityController extends Controller {
 
     public function showAll() {
         $this->authorize('showAll', Entity::class);
+        $result = Entity::get();
+        foreach ($result as $item){
+            origin($item);
+        }
+
         return response([
-            'records'=> Entity::get()
+            'records'=> $result
         ], 200);
     }
 
@@ -104,5 +110,38 @@ class EntityController extends Controller {
         return response([
             'status'=> true
         ], 200);
+    }
+
+    // AGREGA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
+    public function attachEntity(Entity $entity, Request $request){
+        $items = $request['items'];
+        $class = $request['name'];
+
+        foreach($items as $item){
+            $arr[] = $item['id'];
+        }
+        $entity->$class()->attach($arr);
+    }
+
+    // ELIMINA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
+    public function detachEntity(Entity $entity, Request $request){
+        $items = $request['items'];
+        $class = $request['name'];
+
+        foreach($items as $item){
+            $arr[] = $item['id'];
+        }
+        $entity->$class()->detach($arr);
+    }
+
+    // SINCRONIZA TODOS LOS ITEMS ENVIADOS EN REQUEST
+    public function syncEntity(Entity $entity, Request $request){
+        $items = $request['items'];
+        $class = $request['name'];
+
+        foreach($items as $item){
+            $arr[] = $item['id'];
+        }
+        $entity->$class()->sync($arr);
     }
 }

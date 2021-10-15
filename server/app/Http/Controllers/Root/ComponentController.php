@@ -2,14 +2,10 @@
 
 namespace App\Http\Controllers\Root;
 
-use App\Helpers\Helper;
-use App\Helpers\FileManager;
-use App\Helpers\ComponentManager;
 use Illuminate\Http\Request;
 
 Use Exception;
 use App\Models\Root\Component;
-use Jawira\CaseConverter\Convert; // borrar
 use Illuminate\Support\Facades\DB;
 
 use App\Http\Controllers\Controller;
@@ -21,10 +17,8 @@ class ComponentController extends Controller {
     public function componentConstructor($id) {
         $query = Component::find($id);
 
-        $result = ComponentManager::parseComponent($query);
-
-        $config = ComponentManager::constructConfig($query->config);
-
+        $result = parseComponent($query);
+        $config = constructConfig($query->config);
         $records = DB::SELECT($config['general_config']['sql_query']);
 
         foreach($records as $record){
@@ -114,7 +108,6 @@ class ComponentController extends Controller {
                 ], 404);
             }
         }
-
         $this->makeNewComponentFile($request['name']);
 
         return $this->showAll();
@@ -122,7 +115,7 @@ class ComponentController extends Controller {
 
     public function show($id) {
         $query = Component::find($id);
-        $result = ComponentManager::parseComponent($query);
+        $result = parseComponent($query);
 
         return response([
             'component' => $result
@@ -134,7 +127,7 @@ class ComponentController extends Controller {
         $arrayComponent = [];
 
         foreach($components as $component){
-            $arrayComponent[] = ComponentManager::parseComponent($component);
+            $arrayComponent[] = parseComponent($component);
         };
 
         return response([
@@ -207,7 +200,7 @@ class ComponentController extends Controller {
 
                 $originalFormFields = json_decode($query->config, true);
 
-                $result = Helper::compareItems($originalFormFields, $newFormFields);
+                $result = compareItems($originalFormFields, $newFormFields);
 
                 $input['config']['columns'] = $formColumnsAndFields['ArrayColumns'];
                 $input['config']['form_fields'] = $result;
@@ -242,7 +235,7 @@ class ComponentController extends Controller {
         $query = Component::find($id);
         $pathDeleted = resource_path('js/views/Deleted');
         if(!file_exists($pathDeleted)){
-            FileManager::makeNewDirectory($pathDeleted);
+            makeNewDirectory($pathDeleted);
         }
 
         // delete component folder
@@ -264,12 +257,12 @@ class ComponentController extends Controller {
         $query = Component::withTrashed()->find($id);
         $pathDeleted = resource_path("js/views/Deleted/{$query->name}");
         if(file_exists($pathDeleted)){
-            FileManager::deleteDirectory($pathDeleted);
+            deleteDirectory($pathDeleted);
         }
 
         $pathProtected = resource_path("js/views/Protected/{$query->name}");
         if(file_exists($pathProtected)){
-            FileManager::deleteDirectory($pathProtected);
+            deleteDirectory($pathProtected);
         }
 
         // delete row in db
@@ -286,9 +279,9 @@ class ComponentController extends Controller {
 
         $vue_folder = resource_path("js/views/Protected/{$name}");
 
-        FileManager::makeNewDirectory($vue_folder);
+        makeNewDirectory($vue_folder);
         $tmp_vue = file_get_contents(resource_path("js/templates/componentBoilerplate.vue"));
-        $build_vue = Helper::blend($tmp_vue, $data);
+        $build_vue = blend($tmp_vue, $data);
         file_put_contents( $vue_folder . "/{$data['name']}.vue" , $build_vue);
     }
 
@@ -328,5 +321,38 @@ class ComponentController extends Controller {
         $model->columns->text = $field;
 
         return $model->columns;
+    }
+
+    // AGREGA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
+    public function attachComponent(Component $component, Request $request){
+        $items = $request['items'];
+        $class = $request['name'];
+
+        foreach($items as $item){
+            $arr[] = $item['id'];
+        }
+        $component->$class()->attach($arr);
+    }
+
+    // ELIMINA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
+    public function detachComponent(Component $component, Request $request){
+        $items = $request['items'];
+        $class = $request['name'];
+
+        foreach($items as $item){
+            $arr[] = $item['id'];
+        }
+        $component->$class()->detach($arr);
+    }
+
+    // SINCRONIZA TODOS LOS ITEMS ENVIADOS EN REQUEST
+    public function syncComponent(Component $component, Request $request){
+        $items = $request['items'];
+        $class = $request['name'];
+
+        foreach($items as $item){
+            $arr[] = $item['id'];
+        }
+        $component->$class()->sync($arr);
     }
 }
