@@ -27,7 +27,7 @@ const waitForStorageToBeReady = async (to, from, next) => {
   if (store.get('application/isBooted')) {
     store.set('application/isContentLoaded', true);
   }
-  if (to.matched.some((record) => record.meta.layout === 'secure_layout')) {
+  if (to.matched.some((record) => record.meta.layout === '')) {
     if (auth.loggedIn()) {
       await store.restored;
       next();

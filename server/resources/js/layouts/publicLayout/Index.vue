@@ -1,7 +1,6 @@
 <template>
   <v-app :style="bg">
     <public-bar />
-
     <public-view />
     <public-footer v-if="!$route.name.startsWith('Login')" />
     <snackbar />
@@ -22,12 +21,19 @@
         ),
     },
     computed: {
+      opacity() {
+        if (['Homepage', 'Login'].includes(this.$route.name)) {
+          return 0.9;
+        }
+        return 1;
+      },
+
       bg() {
         return {
           'background-size': 'cover',
           'background-attachment': 'fixed',
           'background-repeat': 'no-repeat',
-          'background-image': `linear-gradient(rgba(84, 120,170, 0.5),rgba(0, 0,0, 1)), url(storage/backgrounds/main4.jpg)`,
+          'background-image': `linear-gradient(rgba(44, 47,51, ${this.opacity}) 65%,rgba(44,47,51, 0.9) ), url(storage/backgrounds/main4.jpg)`,
         };
       },
     },

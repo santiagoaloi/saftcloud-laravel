@@ -60,7 +60,7 @@
   import { sync, call, get } from 'vuex-pathify';
 
   export default {
-    name: 'ComponentDrilldown',
+    name: 'ComponentDrilldownBar',
     computed: {
       ...sync('theme', ['isDark']),
       ...sync('drawers', ['secureComponentDrawer']),

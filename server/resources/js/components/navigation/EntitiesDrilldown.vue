@@ -315,10 +315,6 @@
     name: 'ComponentDrilldown',
     mixins: [componentActions],
 
-    data() {
-      return {};
-    },
-
     computed: {
       ...sync('theme', ['isDark']),
       ...get('entitiesManagement', [
@@ -338,6 +334,10 @@
         'dialogPrivileges',
         'dialogAssignRoles',
       ]),
+    },
+
+    data() {
+      return {};
     },
 
     methods: {

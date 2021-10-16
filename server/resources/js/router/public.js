@@ -3,15 +3,15 @@ export default [
     path: '/Login',
     name: 'Login',
     meta: {
-      layout: 'public_layout',
+      layout: 'public-layout',
     },
-    component: () => import(/* webpackChunkName: 'public-login-view' */ '@/views/Login/Index.vue'),
+    component: () => import(/* webpackChunkName: 'public-login-page' */ '@/views/Login/Index.vue'),
   },
   {
     path: '/Homepage',
     name: 'Homepage',
     meta: {
-      layout: 'public_layout',
+      layout: 'public-layout',
     },
     component: () =>
       import(/* webpackChunkName: 'public-homepage' */ '@/views/Public/Homepage/Index.vue'),
@@ -21,7 +21,7 @@ export default [
     path: '/Signup',
     name: 'Signup',
     meta: {
-      layout: 'public_layout',
+      layout: 'public-layout',
     },
     component: () =>
       import(
@@ -33,7 +33,7 @@ export default [
     path: '/VerifyAccount',
     name: 'VerifyAccount',
     meta: {
-      layout: 'public_layout',
+      layout: 'public-layout',
     },
     component: () =>
       import(

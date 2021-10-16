@@ -2,10 +2,9 @@
   <div>
     <v-app-bar
       :color="$route.name === '/Homepage' ? 'transparent' : '#36393f'"
-      elevate-on-scroll
       app
       flat
-      height="80"
+      height="70"
     >
       <v-container
         data-aos="fade"
@@ -15,9 +14,9 @@
         data-aos-easing="linear"
         data-aos-duration="400"
         style="background-color: transparent"
-        class="py-0 px-0 px-sm-2 fill-height"
+        class="py-0 px-0 fill-height"
       >
-        <router-link to="/" class="d-flex align-center text-decoration-none ml-3">
+        <router-link to="/" class="d-flex align-center text-decoration-none">
           <img class="mr-4" src="storage/logo.png" height="45" />
           <span class="font-weight-black headline white--text"> SaftCloud</span>
         </router-link>
@@ -26,14 +25,14 @@
 
         <template v-if="$vuetify.breakpoint.mdAndUp">
           <v-btn
-            rounded
             height="36"
+            rounded
             class="mr-3"
             color="white"
             text
             dark
-            x-large
             plain
+            x-large
             @click="testFunction()"
           >
             Test
@@ -198,11 +197,6 @@
 <style scoped>
   .v-chip.v-size--default {
     height: 36px;
-  }
-
-  ::v-deep [data-v-4be6215a] .v-toolbar__content,
-  .v-toolbar__extension[data-v-4be6215a] {
-    border-bottom: 0px solid #ccc !important;
   }
 
   .header-logo:hover {

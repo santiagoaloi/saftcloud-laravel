@@ -5,11 +5,11 @@ export default [
   {
     path: '/',
     name: 'initial',
-    meta: { layout: 'public_layout' },
+    meta: { layout: 'public-layout' },
     redirect: {
       path: '/Homepage',
       meta: {
-        layout: 'public_layout',
+        layout: 'public-layout',
       },
     },
   },

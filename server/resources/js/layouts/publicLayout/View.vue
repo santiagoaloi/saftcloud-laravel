@@ -1,11 +1,13 @@
 <template>
   <v-main style="min-height: 110vh">
-    <router-view />
+    <v-fade-transition mode="out-in">
+      <router-view :key="$route.fullPath" />
+    </v-fade-transition>
   </v-main>
 </template>
 
 <script>
   export default {
-    name: 'Publicview',
+    name: 'PublicView',
   };
 </script>

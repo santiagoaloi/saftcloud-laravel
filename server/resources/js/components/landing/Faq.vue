@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <v-container>
     <div v-for="faq in faqs" :id="faq.id" :key="faq.id">
       <div id="#general" class="title pl-2 pb-2 mt-15">
         {{ faq.title }}
@@ -15,7 +15,7 @@
         </v-expansion-panel>
       </v-expansion-panels>
     </div>
-  </div>
+  </v-container>
 </template>
 
 <script>

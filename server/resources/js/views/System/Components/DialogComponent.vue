@@ -127,14 +127,12 @@
               @blur="reset"
             >
               <template #item="data">
-                <template>
-                  <v-list-item-avatar>
-                    <v-icon small> mdi-table </v-icon>
-                  </v-list-item-avatar>
-                  <v-list-item-content>
-                    <v-list-item-title v-html="data.item" />
-                  </v-list-item-content>
-                </template>
+                <v-list-item-avatar>
+                  <v-icon small> mdi-table </v-icon>
+                </v-list-item-avatar>
+                <v-list-item-content>
+                  <v-list-item-title v-html="data.item" />
+                </v-list-item-content>
               </template>
             </v-autocomplete>
           </validation-provider>

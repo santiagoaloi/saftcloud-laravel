@@ -39,8 +39,6 @@
       ComponentsTabs: () => import(/* webpackChunkName: 'components-tabs' */ './ComponentsTabs'),
       ComponentsGrid: () => import(/* webpackChunkName: 'components-grid' */ './ComponentsGrid'),
       ComponentsTable: () => import(/* webpackChunkName: 'components-table' */ './ComponentsTable'),
-      ComponentsGroups: () =>
-        import(/* webpackChunkName: 'components-groups' */ './ComponentsGroups'),
       ComponentsAppbar: () =>
         import(/* webpackChunkName: 'components-appbar' */ './ComponentsAppbar'),
       ComponentsNoData: () =>
@@ -68,7 +66,7 @@
     methods: {
       ...call('componentManagement/*'),
       calculateHeight() {
-        return Number(this.$vuetify.breakpoint.height - 367);
+        return Number(this.$vuetify.breakpoint.height - 280);
       },
     },
   };

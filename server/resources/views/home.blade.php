@@ -7,13 +7,13 @@
         <link rel="icon" href="/favicon.ico">
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <title>SaftCloud</title>
-        <link href="{{ mix('dist/css/app.css') }}" rel="stylesheet">
+        <link  href="{{ mix('dist/css/app.css') }}" rel="stylesheet">
     </head>
     <body style="background: #3a3c40;">
         <noscript>
             <strong>We're sorry but SaftCloud doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
         </noscript>
-        <div id="app"/>
+        <div id="app"></div>
         <script defer src="{{ mix('dist/js/manifest.js') }}"></script>
         <script defer src="{{ mix('dist/js/vendor.js') }}"></script>
         <script defer src="{{ mix('dist/js/app.js') }}"></script>

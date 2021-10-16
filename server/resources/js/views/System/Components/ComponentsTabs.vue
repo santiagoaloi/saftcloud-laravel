@@ -40,8 +40,7 @@
 </template>
 
 <script>
-  import { sync, call, get } from 'vuex-pathify';
-  import globalMixin from '@/mixins/globalMixin';
+  import { sync, get } from 'vuex-pathify';
 
   export default {
     name: 'ComponentsTabs',

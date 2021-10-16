@@ -1,6 +1,7 @@
 // Utilities
 import axios from 'axios';
 import { make } from 'vuex-pathify';
+import { cloneDeep } from 'lodash';
 import router from '@/router';
 
 const axiosDefaults = require('axios/lib/defaults');
@@ -28,17 +29,19 @@ const actions = {
 
   // Sends login form payload to backend.
   async login({ commit }, data) {
-    return axios
-      .post('api/login', data)
-      .then((response) => {
-        if (response.status === 200) {
-          commit('session', response.data.data);
-          axiosDefaults.headers.common.Authorization = `Bearer ${response.data.data.token}`;
-          return true;
-        }
-        return false;
-      })
-      .catch((_) => false);
+    return axios.post('api/login', data).then((response) => {
+      if (response.status === 200) {
+        const { data } = response.data;
+
+        // Creates an "origin" of the login response data...
+        data.user.origin = cloneDeep(data);
+
+        commit('session', data);
+        axiosDefaults.headers.common.Authorization = `Bearer ${response.data.data.token}`;
+        return true;
+      }
+      return false;
+    });
   },
 
   // Logs out the user.

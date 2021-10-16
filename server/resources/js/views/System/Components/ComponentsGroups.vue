@@ -223,7 +223,6 @@
       return {
         removeAlert: true,
         dropDownValue: false,
-        persistenDropdown: false,
         headers: [
           {
             text: 'Avatar',
@@ -267,13 +266,6 @@
 
     methods: {
       ...call('componentManagement/*'),
-
-      setValue() {
-        if (this.persistenDropdown) {
-          return { value: this.dropDownValue };
-        }
-        this.dropDownValue = true;
-      },
     },
   };
 </script>

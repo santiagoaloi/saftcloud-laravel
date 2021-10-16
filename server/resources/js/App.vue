@@ -1,11 +1,5 @@
 <template>
-  <keep-alive>
-    <!-- <div v-show="isContentLoaded"> -->
-    <div>
-      <public-layout v-if="layout === 'public_layout'" />
-      <secure-layout v-if="layout === 'secure_layout'" />
-    </div>
-  </keep-alive>
+  <component :is="layout" />
 </template>
 
 <script>
@@ -17,7 +11,7 @@
   import { resetRouter } from '@/router';
 
   Vue.component('SecureLayout', () =>
-    import(/* webpackChunkName: 'secure-Layout' */ '@/layouts/secureLayout/Index'),
+    import(/* webpackChunkName: 'secure-Layout' */ '@/layouts/secureLayout/Index.vue'),
   );
   Vue.component('PublicLayout', () =>
     import(/* webpackChunkName: 'public-Layout' */ '@/layouts/publicLayout/Index'),
@@ -108,7 +102,7 @@
                   path: `/${component.name}`,
                   name: `${component.name}`,
                   meta: {
-                    layout: 'secure_layout',
+                    layout: 'secure-layout',
                     title: component.title,
                     id: component.id,
                     icon: component.configSettings.icon ? component.configSettings.icon : null,

@@ -15,85 +15,6 @@
       </v-sheet>
     </v-expand-transition>
 
-    <div class="text-end pr-3 pt-2">
-      <v-tooltip transition="false" color="black" bottom>
-        <template #activator="{ on }">
-          <v-btn
-            depressed
-            dark
-            large
-            small
-            :color="isDark ? '' : 'white'"
-            @click="validateBeforeEdit()"
-            v-on="on"
-          >
-            <v-icon color="#208ad6" dark> mdi-pencil-outline </v-icon>
-          </v-btn>
-        </template>
-        <span>Edit</span>
-      </v-tooltip>
-
-      <v-tooltip transition="false" color="black" bottom>
-        <template #activator="{ on }">
-          <v-btn
-            :to="`/${selectedComponent.name}`"
-            depressed
-            dark
-            large
-            small
-            :color="isDark ? '' : 'white'"
-            v-on="on"
-          >
-            <v-icon :color="isDark ? '' : 'black'" dark> mdi-link </v-icon>
-          </v-btn>
-        </template>
-        <span>Open</span>
-      </v-tooltip>
-
-      <v-tooltip transition="false" color="black" bottom>
-        <template #activator="{ on }">
-          <v-btn
-            depressed
-            dark
-            large
-            small
-            :color="isDark ? '' : 'white'"
-            v-on="on"
-            @click.stop="
-              removeComponentWarning(
-                selectedComponent.id,
-                'delete',
-                'component',
-                selectedComponent.config.general_config.title,
-              )
-            "
-          >
-            <v-icon color="pink lighten-1" dark> mdi-trash-can-outline </v-icon>
-          </v-btn>
-        </template>
-        <span>Delete</span>
-      </v-tooltip>
-
-      <v-tooltip transition="false" color="black" bottom>
-        <template #activator="{ on }">
-          <v-btn
-            :disabled="!hasUnsavedChanges(selectedComponent)"
-            depressed
-            large
-            small
-            :color="isDark ? '' : 'white'"
-            @click="validateBeforeSave(selectedComponent)"
-            v-on="on"
-          >
-            <v-icon color="green" dark>
-              {{ hasUnsavedChanges(selectedComponent) ? 'mdi-check' : 'mdi-check-all' }}
-            </v-icon>
-          </v-btn>
-        </template>
-        <span>Save</span>
-      </v-tooltip>
-    </div>
-
     <v-card-title> Edit Component View </v-card-title>
 
     <v-card-subtitle>
@@ -101,7 +22,7 @@
       and more...
     </v-card-subtitle>
 
-    <ValidationObserver ref="componentDrilldown" slim>
+    <ValidationObserver ref="componentDrilldownFormValidation" slim>
       <v-container>
         <baseFieldLabel required label="Component name" />
         <validation-provider

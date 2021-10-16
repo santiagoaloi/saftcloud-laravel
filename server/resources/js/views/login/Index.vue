@@ -1,6 +1,6 @@
 <template>
   <v-fade-transition>
-    <v-container v-show="!delay" fill-height>
+    <v-container fill-height>
       <v-row align="center" justify="space-between" class="mb-0">
         <v-col cols="12" lg="6">
           <v-row no-gutters align="center" justify="center">

@@ -18,11 +18,9 @@
 
 <script>
   import { get, sync } from 'vuex-pathify';
+
   export default {
     name: 'StatusBar',
-    components: {
-      StatusBar: () => import(/* webpackChunkName: 'components-status-bar' */ './StatusBar'),
-    },
     computed: {
       ...sync('theme', ['isDark']),
       ...get('componentStatusBar', ['statusBarValue']),

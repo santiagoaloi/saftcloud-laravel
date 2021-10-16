@@ -2,6 +2,7 @@ module.exports = {
   root: true,
 
   env: {
+    node: true,
     browser: true,
     commonjs: true,
     es6: true,
@@ -14,6 +15,9 @@ module.exports = {
     'no-nested-ternary': 'off',
     'no-shadow': 'off',
     'no-param-reassign': 'off',
+    'import/no-unresolved': 'off',
+    'import/extensions': 'off',
+    'no-underscore-dangle': 'off',
   },
 
   globals: {
@@ -23,7 +27,7 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 2020,
     parser: 'babel-eslint',
-    // sourceType: 'module',
+    sourceType: 'module',
   },
   plugins: ['vue', 'prettier'],
 };

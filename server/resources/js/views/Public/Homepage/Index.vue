@@ -32,15 +32,22 @@
               <v-btn dark x-large class="my-1 mx-sm-1 hoverElevationSoft"> Contact Sales </v-btn>
             </div>
           </v-card>
-          <div style="position: absolute; margin-left: 380px">
-            <v-img src="storage/header/1.png" height="580" contain />
+          <div
+            data-aos="fade"
+            data-aos-anchor-placement="center-bottom"
+            data-aos-delay="500"
+            data-aos-once="true"
+            data-aos-easing="linear"
+            data-aos-duration="400"
+            style="position: absolute; margin-left: 380px"
+          >
+            <v-img src="storage/header/1.png" height="580" contain :transition="false" />
           </div>
         </div>
       </v-container>
     </v-sheet>
     <Feature2 />
     <Feature1 />
-    <CallToAction />
   </div>
 </template>
 
@@ -48,7 +55,6 @@
   import { VueTyper } from 'vue-typer';
   import Feature2 from '@/components/Landing/Feature2.vue';
   import Feature1 from '@/components/Landing/Feature1.vue';
-  import CallToAction from '@/components/Landing/CallToAction.vue';
 
   export default {
     name: 'Homepage',
@@ -56,7 +62,6 @@
       VueTyper,
       Feature1,
       Feature2,
-      CallToAction,
     },
   };
 </script>

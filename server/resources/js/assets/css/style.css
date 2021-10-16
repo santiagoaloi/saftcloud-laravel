@@ -1,63 +1,63 @@
 .v-dialog--scrollable,
 .v-dialog--scrollable > form {
- display: flex;
- flex-direction: column !important;
+  display: flex;
+  flex-direction: column !important;
 }
 
 .expanded {
- width: 7em;
- -webkit-transition: all 0.7s ease 0s;
- -moz-transition: all 0.7s ease 0s;
- -o-transition: all 0.7s ease 0s;
- transition: all 0.7s ease 0s;
+  width: 7em;
+  -webkit-transition: all 0.7s ease 0s;
+  -moz-transition: all 0.7s ease 0s;
+  -o-transition: all 0.7s ease 0s;
+  transition: all 0.7s ease 0s;
 }
 
 .shrinked {
- width: 0px;
- -webkit-transition: all 0.7s ease 0s;
- -moz-transition: all 0.7s ease 0s;
- -o-transition: all 0.7s ease 0s;
- transition: all 0.7s ease 0s;
+  width: 0px;
+  -webkit-transition: all 0.7s ease 0s;
+  -moz-transition: all 0.7s ease 0s;
+  -o-transition: all 0.7s ease 0s;
+  transition: all 0.7s ease 0s;
 }
 
 .v-card--link:before {
- background: transparent !important;
+  background: transparent !important;
 }
 
 /* Scroll bar stylings */
 ::-webkit-scrollbar {
- width: 7px;
- height: 10px;
+  width: 7px;
+  height: 10px;
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
- background: var(--lightestgrey);
+  background: var(--lightestgrey);
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
- background: rgb(173, 171, 171);
- border-radius: 0px;
+  background: rgb(173, 171, 171);
+  border-radius: 0px;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
- background: rgb(129, 129, 129);
+  background: rgb(129, 129, 129);
 }
 
 /* Removes transition delay and color transition from black to primary.*/
 .v-text-field--outlined fieldset {
- transition-duration: 0s !important;
- transition-property: unset !important;
- transition-timing-function: unset !important;
+  transition-duration: 0s !important;
+  transition-property: unset !important;
+  transition-timing-function: unset !important;
 }
 .v-input__slot {
- transition: unset !important;
+  transition: unset !important;
 }
 
 .swal2-popup {
- font-family: "Open Sans", Sans-serif !important;
+  font-family: 'Open Sans', Sans-serif !important;
 }
 
 /* Change Autocomplete styles in Chrome*/
@@ -68,115 +68,120 @@ textarea:-webkit-autofill:hover textarea:-webkit-autofill:focus,
 select:-webkit-autofill,
 select:-webkit-autofill:hover,
 select:-webkit-autofill:focus {
- background-color: transparent;
- -webkit-text-fill-color: black;
- -webkit-box-shadow: 0 0 0px 1000px transparent inset;
+  background-color: transparent;
+  -webkit-text-fill-color: black;
+  -webkit-box-shadow: 0 0 0px 1000px transparent inset;
 }
 
 :focus {
- outline: 0 !important;
+  outline: 0 !important;
 }
 
 .v-list {
- padding: 0px 0 !important;
+  padding: 0px 0 !important;
 }
 
 .v-text-field input {
- border-bottom: solid 0px;
+  border-bottom: solid 0px;
 }
 
 /* HIDE INPUT TYPE NUMBER INNER ARROWS
   /* Firefox */
-input[type="number"] {
- -moz-appearance: textfield;
+input[type='number'] {
+  -moz-appearance: textfield;
 }
 ::selection {
- /* background: #8c93be !important;  WebKit/Blink Browsers */
+  /* background: #8c93be !important;  WebKit/Blink Browsers */
 }
 ::-moz-selection {
- /*background: #8c93be !important;  WebKit/Blink Browsers */
+  /*background: #8c93be !important;  WebKit/Blink Browsers */
 }
 /* HIDE INPUT TYPE NUMBER INNER ARROWS
   /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
- -webkit-appearance: none;
- margin: 0;
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 .text-shadow {
- text-shadow: rgba(61, 61, 61, 0.1) 1px 1px, rgba(61, 61, 61, 0.3) 1px 1px;
+  text-shadow: rgba(61, 61, 61, 0.1) 1px 1px, rgba(61, 61, 61, 0.3) 1px 1px;
 }
 
 .v-tab {
- font-size: 0.7rem !important;
- font-weight: 400 !important;
- text-transform: none !important;
- text-align: left;
- justify-content: start !important;
+  font-size: 0.7rem !important;
+  font-weight: 400 !important;
+  text-transform: none !important;
+  text-align: left;
+  justify-content: start !important;
 }
 
 .theme--dark.v-tabs .v-tab--active:hover::before,
 .theme--dark.v-tabs .v-tab--active::before {
- opacity: 0 !important;
+  opacity: 0 !important;
 }
 
 .v-tab:before {
- background-color: unset !important;
+  background-color: unset !important;
 }
 
 .v-toolbar.v-toolbar--absolute {
- z-index: 9999;
+  z-index: 9999;
 }
 
 .drag {
- cursor: grab;
+  cursor: grab;
 }
 
 .drag:active {
- cursor: grabbing;
- transform: scale(0.99);
+  cursor: grabbing;
+  transform: scale(0.99);
 }
 
 .backgroundSelected {
- background: #676e7e;
+  background: #676e7e;
 }
 
 .backgroundSelectedLight {
- background: #e2e2e2;
+  background: #e2e2e2;
 }
 
 .shake {
- animation: shake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
- transform: translate3d(0, 0, 0);
- backface-visibility: hidden;
- perspective: 1000px;
+  animation: shake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  perspective: 1000px;
 }
 
 @keyframes shake {
- 10%,
- 90% {
-  transform: translate3d(-1px, 0, 0);
- }
+  10%,
+  90% {
+    transform: translate3d(-1px, 0, 0);
+  }
 
- 20%,
- 80% {
-  transform: translate3d(2px, 0, 0);
- }
+  20%,
+  80% {
+    transform: translate3d(2px, 0, 0);
+  }
 
- 30%,
- 50%,
- 70% {
-  transform: translate3d(-4px, 0, 0);
- }
+  30%,
+  50%,
+  70% {
+    transform: translate3d(-4px, 0, 0);
+  }
 
- 40%,
- 60% {
-  transform: translate3d(4px, 0, 0);
- }
+  40%,
+  60% {
+    transform: translate3d(4px, 0, 0);
+  }
 }
+
 .dottedBackground {
- background: transparent;
- background-size: 35px 32px !important;
- background-image: radial-gradient(circle, rgb(122, 122, 122) 1px, rgba(0, 0, 0, 0) 1px) !important;
+  background: transparent;
+  background-size: 35px 32px !important;
+  background-image: radial-gradient(
+    circle,
+    rgb(122, 122, 122) 1px,
+    rgba(0, 0, 0, 0) 1px
+  ) !important;
 }

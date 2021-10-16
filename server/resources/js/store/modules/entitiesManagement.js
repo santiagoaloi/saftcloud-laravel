@@ -90,11 +90,12 @@ const getters = {
   isUsersEmpty: (state) => isEmpty(state.allUsers),
 
   //* Returns true if the component has unsaved changes.
-  hasUnsavedChanges: (_, getters) => (component) => {
-    if (getters.hasSelectedSomeGroups) {
-      const { origin, ...current } = component;
+  hasUnsavedChanges: (state, getters, rootState) => (entity) => {
+    if (state.selectedEntityType === 'Users') {
+      const { origin, ...current } = entity;
       return !isEqual(origin, current);
     }
+    return null;
   },
 
   //* Returns true if the current groups selected do not contain any components associated to them.
@@ -216,9 +217,9 @@ const actions = {
   //* Creates a new role in the database.
   saveAssignRoles({ getters }) {
     const userId = getters.selectedEntity.id;
-    const roles = { name: 'role', roles: getters.selectedEntity.role };
+    const roles = { name: 'items', roles: getters.selectedEntity.role };
 
-    axios.post(`api/attachUser/${userId}`, roles).then((response) => {
+    axios.post(`api/syncUser/${userId}`, roles).then((response) => {
       if (response.status === 200) {
         store.set('snackbar/value', true);
         store.set('snackbar/text', 'roles assigned');

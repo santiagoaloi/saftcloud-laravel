@@ -2,14 +2,14 @@ export default [
   {
     path: '/Components',
     name: 'Components',
-    meta: { layout: 'secure_layout', title: 'Manage components' },
+    meta: { layout: 'secure-layout', title: 'Manage components' },
     component: () =>
       import(/* webpackChunkName: 'components' */ '@/views/System/Components/Components.vue'),
     children: [
       {
         path: '/Components/Basic',
         name: 'Components/Basic',
-        meta: { layout: 'secure_layout', title: 'Manage components' },
+        meta: { layout: 'secure-layout', title: 'Manage components' },
         component: () =>
           import(
             /* webpackChunkName: 'components-basic' */ '@/views/System/Components/ComponentsEdit/ConfigViews/Basic/Basic.vue'
@@ -18,7 +18,7 @@ export default [
       {
         path: '/Fomponents/FormFields',
         name: 'Components/FormFields',
-        meta: { layout: 'secure_layout', title: 'Manage components' },
+        meta: { layout: 'secure-layout', title: 'Manage components' },
         component: () =>
           import(
             /* webpackChunkName: 'components-form-fields' */ '@/views/System/Components/ComponentsEdit/ConfigViews/FormFields/FormFields.vue'
@@ -27,7 +27,7 @@ export default [
       {
         path: '/Components/Query',
         name: 'Components/Query',
-        meta: { layout: 'secure_layout', title: 'Manage components' },
+        meta: { layout: 'secure-layout', title: 'Manage components' },
         component: () =>
           import(
             /* webpackChunkName: 'components-query' */ '@/views/System/Components/ComponentsEdit/ConfigViews/Query/Query.vue'
@@ -36,7 +36,7 @@ export default [
       {
         path: '/Components/Capabilities',
         name: 'Components/Capabilities',
-        meta: { layout: 'secure_layout', title: 'Manage components' },
+        meta: { layout: 'secure-layout', title: 'Manage components' },
         component: () =>
           import(
             /* webpackChunkName: 'components-capabilities' */ '@/views/System/Components/ComponentsEdit/ConfigViews/Capabilities/Capabilities.vue'
@@ -48,7 +48,7 @@ export default [
   {
     path: '/Entities',
     name: 'Entities',
-    meta: { layout: 'secure_layout', title: 'Manage users and roles' },
+    meta: { layout: 'secure-layout', title: 'Manage users and roles' },
     component: () =>
       import(/* webpackChunkName: 'entities' */ '@/views/System/Entities/Entities.vue'),
     children: [],

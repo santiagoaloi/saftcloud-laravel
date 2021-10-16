@@ -145,6 +145,9 @@ const getters = {
   //* Returns true if there are no components fetched from the backend.
   isComponentsEmpty: (state) => isEmpty(state.allComponents),
 
+  //* Returns true if there are no component groups defined in the groups array.
+  isAllGroupsEmpty: (state) => state.allGroups.length === 0,
+
   //* Returns true if all groups in the component group dropdown are selected.
   hasSelectedAllGroups: (state) => state.selectedComponentGroups.length === state.allGroups.length,
 
@@ -153,9 +156,6 @@ const getters = {
     if (isEmpty(state.selectedComponentGroups)) return true;
     return false;
   },
-
-  //* Returns true if there are no component groups defined in the groups array.
-  isAllGroupsEmpty: (state) => state.allGroups.length === 0,
 
   //* Returns true if the component has unsaved changes.
   hasUnsavedChanges: (_, getters) => (component) => {
@@ -320,6 +320,7 @@ const actions = {
             store.set('snackbar/value', true);
             store.set('snackbar/text', 'Group removed');
             store.set('snackbar/color', 'primary');
+
             dispatch('getDbGroupNames');
             dispatch('getNavigationStructure');
             dispatch('getGroups');
@@ -410,6 +411,7 @@ const actions = {
         store.set('snackbar/value', true);
         store.set('snackbar/text', 'Component saved');
         store.set('snackbar/color', 'primary');
+
         dispatch('getNavigationStructure');
         window.eventBus.$emit('BUS_BUILD_ROUTES');
       } else {
@@ -477,6 +479,7 @@ const actions = {
         const activeGroup = state.allGroups.find(
           (item) => item.id === state.componentSettings.component_group_id,
         );
+
         const groupExists = state.selectedComponentGroups.find(
           (item) => item.id === activeGroup.id,
         );
@@ -487,12 +490,14 @@ const actions = {
           'componentManagement/componentCardGroup',
           getters.allComponentsFiltered.length - 1,
         );
+
         store.set(
           'componentManagement/selectedComponentIndex',
           getters.allComponentsFiltered.length - 1,
         );
 
         store.set('componentManagement/componentSettings', initialComponentSettings());
+
         dispatch('getNavigationStructure');
         return true;
       }

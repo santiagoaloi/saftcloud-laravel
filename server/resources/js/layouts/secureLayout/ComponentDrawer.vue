@@ -15,6 +15,10 @@
     </template>
 
     <component-drilldown />
+
+    <template #append>
+      <component-drilldown-footer />
+    </template>
   </v-navigation-drawer>
 </template>
 
@@ -31,6 +35,12 @@
   Vue.component('ComponentDrilldownBar', () =>
     import(
       /* webpackChunkName: 'components-navigation-drilldown-bar' */ '@/components/Navigation/ComponentDrilldownBar'
+    ),
+  );
+
+  Vue.component('ComponentDrilldownFooter', () =>
+    import(
+      /* webpackChunkName: 'components-navigation-drilldown-footer' */ '@/components/Navigation/ComponentDrilldownFooter'
     ),
   );
 
