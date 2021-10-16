@@ -19,7 +19,7 @@ class CreateProductsTable extends Migration {
             $table->foreignId('product_category_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
             $table->foreignId('product_family_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
             $table->foreignId('product_brand_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
-            $table->string('product_name');
+            $table->string('name');
             $table->string('quantity');
             $table->foreignId('measurement_unit_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
             $table->decimal('cost_net', 20, 2);

@@ -126,9 +126,7 @@ class TestFunctionController extends Controller {
 
         $UserController = New UserController;
         $UserController->attachUser($role, $user);
-return $user;
-
-
+        return $user;
 
         $user = Auth::user();
         $roles = $user->role;
@@ -153,20 +151,20 @@ return $user;
         return $user;
     }
 
-        // AGREGA TODOS LOS ROLES QUE ENVIAMOS EN LA VARIABLE ROLE
-        public function attachRoles(Request $request, $role){
-            $request->role()->attach($role);
-        }
-    
-        // ELIMINA TODOS LOS ROLES QUE ENVIAMOS EN LA VARIABLE ROLE
-        public function detachRoles(Request $request, $role){
-            $request->role()->detach($role);
-        }
-    
-        // ELIMINA TODOS LOS ROLES Y AGREGA LOS NUEVOS
-        public function syncRoles($request, $role){
-            $request->role()->sync($role);
-        }
+    // AGREGA TODOS LOS ROLES QUE ENVIAMOS EN LA VARIABLE ROLE
+    public function attachRoles(Request $request, $role){
+        $request->role()->attach($role);
+    }
+
+    // ELIMINA TODOS LOS ROLES QUE ENVIAMOS EN LA VARIABLE ROLE
+    public function detachRoles(Request $request, $role){
+        $request->role()->detach($role);
+    }
+
+    // ELIMINA TODOS LOS ROLES Y AGREGA LOS NUEVOS
+    public function syncRoles($request, $role){
+        $request->role()->sync($role);
+    }
 
     function probarFormFieldStructure(){
         $test = new ComponentDefaultController;

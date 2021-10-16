@@ -28,7 +28,7 @@ class ProductController extends Controller {
         ], 200);
     }
 
-    public function show(Request $id, $local = false) {
+    public function show(Request $id) {
         $this->authorize('show', Product::class);
         $result = Product::find($id);
         origin($result);
@@ -40,6 +40,8 @@ class ProductController extends Controller {
 
     public function showAll() {
         $this->authorize('showAll', Product::class);
+        $branch_id = getBranch();
+        $result = Product::where('branch_id', $branch_id)->get();
         $result = Product::get();
         foreach ($result as $item){
             origin($item);

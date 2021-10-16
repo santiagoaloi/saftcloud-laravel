@@ -1,5 +1,11 @@
 <?php
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+
+function getBranch(){
+    $user = Auth::user();
+    return $user->branch;
+}
 
 function origin($request){
     return $request->origin = clone$request;
