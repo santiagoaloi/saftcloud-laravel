@@ -33,11 +33,11 @@ const actions = {
       .post('api/login', data)
       .then((response) => {
         if (response.status === 200) {
-          const { data } = response.data;
+          const { data } = response;
           // Creates an "origin" of the login response data...
           data.user.origin = cloneDeep(data);
           commit('session', data);
-          axiosDefaults.headers.common.Authorization = `Bearer ${response.data.data.token}`;
+          axiosDefaults.headers.common.Authorization = `Bearer ${response.data.token}`;
           return true;
         }
       })
