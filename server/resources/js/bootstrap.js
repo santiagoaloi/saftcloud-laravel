@@ -25,18 +25,25 @@ getToken().then((sessionToken) => {
 // Attaches catch to every axios request
 axios.interceptors.response.use(
   (response) => response,
-  (error) => {
+  ({ ...error }) => {
+    console.log(error);
     if (error.response) {
       // If session fails to validate the token, kill the session.
-      if (error.response.data.message === 'Unauthenticated.') {
-        router.push('/login');
+      if (error.response.statusText === 'Unauthenticated.') {
+        router.push('/Login');
         store.set('authentication/session', {});
       }
 
       // If records are duplicated
-      if (error.response.data.code === 1062) {
+      if (error.response.status === 1062) {
         store.set('snackbar/value', true);
         store.set('snackbar/text', 'Duplicated records, try choosing a different value');
+        store.set('snackbar/color', 'pink darken-1');
+      }
+
+      if (error.response.status === 401) {
+        store.set('snackbar/value', true);
+        store.set('snackbar/text', 'Invalid Credentials');
         store.set('snackbar/color', 'pink darken-1');
       }
 

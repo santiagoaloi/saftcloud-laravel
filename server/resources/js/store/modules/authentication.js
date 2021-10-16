@@ -29,19 +29,19 @@ const actions = {
 
   // Sends login form payload to backend.
   async login({ commit }, data) {
-    return axios.post('api/login', data).then((response) => {
-      if (response.status === 200) {
-        const { data } = response.data;
-
-        // Creates an "origin" of the login response data...
-        data.user.origin = cloneDeep(data);
-
-        commit('session', data);
-        axiosDefaults.headers.common.Authorization = `Bearer ${response.data.data.token}`;
-        return true;
-      }
-      return false;
-    });
+    return axios
+      .post('api/login', data)
+      .then((response) => {
+        if (response.status === 200) {
+          const { data } = response.data;
+          // Creates an "origin" of the login response data...
+          data.user.origin = cloneDeep(data);
+          commit('session', data);
+          axiosDefaults.headers.common.Authorization = `Bearer ${response.data.data.token}`;
+          return true;
+        }
+      })
+      .catch(() => false);
   },
 
   // Logs out the user.

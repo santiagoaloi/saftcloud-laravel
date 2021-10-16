@@ -166,9 +166,7 @@
 </template>
 
 <script>
-  import axios from 'axios';
-  import { sync, get, call } from 'vuex-pathify';
-  import { store } from '@/store';
+  import { sync, call } from 'vuex-pathify';
 
   const initialState = () => ({
     auth: { email: '', password: '', remember: false },
@@ -186,25 +184,16 @@
     data() {
       return {
         ...initialState(),
-        delay: true,
       };
-    },
-
-    mounted() {
-      this.$nextTick(() => {
-        setTimeout(() => {
-          this.delay = false;
-        }, 200);
-      });
-    },
-
-    deactivated() {
-      Object.assign(this.$data, initialState());
     },
 
     computed: {
       ...sync('theme', ['isDark']),
       ...sync('authentication', ['hasSessionExpired']),
+    },
+
+    deactivated() {
+      Object.assign(this.$data, initialState());
     },
 
     methods: {
