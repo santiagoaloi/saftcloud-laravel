@@ -187,7 +187,7 @@ class UserController extends Controller {
     public function syncUser(User $user, Request $request){
         $items = $request['items'];
         $class = $request['name'];
-
+        $arr = [];
         foreach($items as $item){
             $arr[] = $item['id'];
         }
