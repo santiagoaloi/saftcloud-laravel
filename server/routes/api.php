@@ -144,6 +144,37 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     // Route::get('/countries', [CountryController::class, 'showAll']);
 
     // Relations
+    Route::post('/syncDocumentType', [DocumentTypeController::class, 'syncDocumentType']);
+    Route::post('/syncPaymentMethod', [PaymentMethodController::class, 'syncPaymentMethod']);
+    Route::post('/syncBrand', [BrandController::class, 'syncBrand']);
+    Route::post('/syncCategory', [CategoryController::class, 'syncCategory']);
+    Route::post('/syncCommission', [CommissionController::class, 'syncCommission']);
+    Route::post('/syncFamily', [FamilyController::class, 'syncFamily']);
+    Route::post('/syncMeasurementUnity', [MeasurementUnityController::class, 'syncMeasurementUnity']);
+    Route::post('/syncMeasurementUnitySystem', [MeasurementUnitySystemController::class, 'syncMeasurementUnitySystem']);
+    Route::post('/syncMkup', [MkupController::class, 'syncMkup']);
+    Route::post('/syncPrice', [PriceController::class, 'syncPrice']);
+    Route::post('/syncProduct', [ProductController::class, 'syncProduct']);
+    Route::post('/syncProductPromotion', [ProductPromotionController::class, 'syncProductPromotion']);
+    Route::post('/syncAccountPayment', [AccountPaymentController::class, 'syncAccountPayment']);
+    Route::post('/syncAccountPlan', [AccountPlanController::class, 'syncAccountPlan']);
+    Route::post('/syncAddress', [AddressController::class, 'syncAddress']);
+    Route::post('/syncBranch', [BranchController::class, 'syncBranch']);
+    Route::post('/syncEntity', [EntityController::class, 'syncEntity']);
+    Route::post('/syncPhone', [PhoneController::class, 'syncPhone']);
+    Route::post('/syncPointOfSale', [PointOfSaleController::class, 'syncPointOfSale']);
+    Route::post('/syncRootAccount', [RootAccountController::class, 'syncRootAccount']);
+    Route::post('/syncSocial', [SocialController::class, 'syncSocial']);
+    Route::post('/syncUser/{user}', [UserController::class, 'syncUser']);
+    Route::post('/syncUserSetting', [UserSettingController::class, 'syncUserSetting']);
+    Route::post('/syncCountry', [CountryController::class, 'syncCountry']);
+    Route::post('/syncState', [StateController::class, 'syncState']);
+    Route::post('/syncCapability', [CapabilityController::class, 'syncCapability']);
+    Route::post('/syncRole/{role}', [RoleController::class, 'syncRole']);
+    Route::post('/syncComponent', [ComponentController::class, 'syncComponent']);
+    Route::post('/syncComponentDefault', [ComponentDefaultController::class, 'syncComponentDefault']);
+    Route::post('/syncComponentGroup', [ComponentGroupController::class, 'syncComponentGroup']);
+
     Route::post('/attachDocumentType', [DocumentTypeController::class, 'attachDocumentType']);
     Route::post('/attachPaymentMethod', [PaymentMethodController::class, 'attachPaymentMethod']);
     Route::post('/attachBrand', [BrandController::class, 'attachBrand']);
