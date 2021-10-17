@@ -87,7 +87,7 @@ class RolePolicy {
      * @param  \App\Models\Public\Role  $Role
      * @return mixed
      */
-    public function update(User $user, Role $Role) {
+    public function update(User $user) {
         $user = Auth::user();
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
