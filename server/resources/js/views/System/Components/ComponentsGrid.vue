@@ -11,10 +11,12 @@
             <v-card
               :ref="`SEL${componentCardGroup}ID${index}`"
               :color="getComponentCardColor(active)"
+              style="opacity: 0.8"
               height="210"
               width="100%"
               :ripple="false"
               class="d-flex flex-column justify-space-between pa-4 hoverElevationSoft"
+              :class="{ activeBorder: active }"
               @click.stop="
                 toggle();
                 setSelectedComponent(index);
@@ -218,7 +220,7 @@
       },
 
       getComponentCardColor(active) {
-        return this.isDark ? (active ? '#51555e' : '#40434a') : active ? '#edeef2' : 'white';
+        return this.isDark ? (active ? '#515664' : '#40434a') : active ? '#edeef2' : 'white';
       },
     },
   };
@@ -316,5 +318,8 @@
     opacity: 0.5;
     position: absolute;
     width: 100%;
+  }
+  .activeBorder {
+    border-bottom: 3px solid #4169de !important;
   }
 </style>

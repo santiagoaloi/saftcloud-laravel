@@ -3,7 +3,7 @@
     <!-- Navigation -->
     <v-navigation-drawer
       v-model="secureDefaultDrawer"
-      src="storage/sidebar/bg1.jpg"
+      src="storage/appbar/prism2.jpg"
       dark
       width="250"
       app
@@ -14,7 +14,7 @@
         <vue-diagonal
           class="mt-n5"
           :deg="-7"
-          background="linear-gradient(331deg, rgba(44, 91, 122, 1) 0%, rgba(109, 115, 135, 1) 0%)"
+          background="linear-gradient(331deg, rgba(44, 91, 122, 1) 0%, rgba(0, 10, 20 , 0.2) 0%)"
           space-after
           space-before
         >
@@ -24,19 +24,13 @@
               <div class="overline white--text">v5.0.2</div>
               <div class="mt-4" style="margin-left: -4px">
                 <v-card-actions class="px-0">
-                  <v-list-item class="pa-0">
+                  <v-list-item dense class="pa-0">
                     <v-list-item-avatar color="grey darken-3">
-                      <v-img
-                        class="elevation-6"
-                        alt=""
-                        src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light"
-                      ></v-img>
+                      <v-img class="elevation-6" :src="session.user.avatar"></v-img>
                     </v-list-item-avatar>
 
                     <v-list-item-content>
-                      <v-list-item-title
-                        >{{ session.user.branch[0].entity.first_name }}
-                      </v-list-item-title>
+                      <v-list-item-title>{{ fullName }} </v-list-item-title>
                     </v-list-item-content>
                   </v-list-item>
                 </v-card-actions>
@@ -53,7 +47,7 @@
                   dense
                   solo
                 >
-                  <template #item="data">
+                  <!-- <template #item="data">
                     <template>
                       <v-list-item-avatar color="indigo" size="24">
                         <v-icon small color="blue lighten-3">mdi-map-marker</v-icon>
@@ -62,7 +56,7 @@
                         <v-list-item-title>{{ data.item.name }}</v-list-item-title>
                       </v-list-item-content>
                     </template>
-                  </template>
+                  </template> -->
                 </v-select>
               </div>
             </v-container>
@@ -79,7 +73,7 @@
 <script>
   import Vue from 'vue';
   import { sync, call } from 'vuex-pathify';
-  import nav from '@/configs/navigation';
+  import capitalize from 'lodash/capitalize';
 
   Vue.component('MainMenu', () =>
     import(/* webpackChunkName: 'components-drawer-menu' */ '@/components/Navigation/MainMenu'),
@@ -87,13 +81,22 @@
 
   export default {
     name: 'SecureDrawer',
-    mounted() {
-      this.getNavigationStructure();
-    },
+
     computed: {
       ...sync('drawers', ['secureDefaultDrawer']),
       ...sync('componentManagement', ['navigationStructure']),
       ...sync('authentication', ['session', 'activeBranch']),
+      user: sync('authentication@session.user'),
+
+      fullName() {
+        return `${capitalize(this.user.entity.first_name)} ${capitalize(
+          this.user.entity.last_name,
+        )}`;
+      },
+    },
+
+    mounted() {
+      this.getNavigationStructure();
     },
 
     methods: {

@@ -8,7 +8,7 @@ export default {
   computed: {
     ...sync('activeView/*'),
     ...sync('theme', ['isDark']),
-    ...sync('application', ['search', 'isBooted']),
+    ...sync('application', ['search']),
   },
 
   methods: {

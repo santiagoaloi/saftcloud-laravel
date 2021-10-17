@@ -39,7 +39,7 @@
 
         <v-fade-transition hide-on-leave>
           <ValidationObserver ref="loginForm" slim>
-            <v-col v-if="!resetPasswordScreen && !forgot" cols="12" sm="12" md="12" lg="6" xl="5">
+            <v-col v-if="!resetPasswordScreen && !forgot" cols="12" sm="12" md="12" lg="6" xl="6">
               <v-alert v-model="hasSessionExpired" dismissible dense text color="white" type="info">
                 Your session has expired <strong> due to inactivity.</strong>
               </v-alert>
@@ -211,9 +211,9 @@
                   this.shake = false;
                 }, 500);
               } else {
+                window.eventBus.$emit('BUS_BUILD_ROUTES');
                 this.hasSessionExpired = false;
                 this.$router.push('/Components');
-                window.eventBus.$emit('BUS_BUILD_ROUTES');
               }
             });
           } else {

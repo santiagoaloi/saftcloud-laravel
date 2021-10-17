@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar :class="{ darkBorder: isDark }" :flat="isDark" height="80">
+  <v-app-bar :class="{ darkBorder: isDark }" :flat="isDark" src="storage/appbar/prism2.jpg">
     <v-icon dark class="mr-4"> mdi-pencil </v-icon>
 
     <h4 class="white--text">Editing</h4>

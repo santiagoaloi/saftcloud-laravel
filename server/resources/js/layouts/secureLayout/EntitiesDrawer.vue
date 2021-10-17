@@ -9,12 +9,18 @@
     right
     app
   >
-    <!-- Navigation menu fixed on top -->
+    <!-- Drawer fixed top -->
     <template #prepend>
       <entities-drilldown-bar />
     </template>
 
+    <!-- Drawer content -->
     <entities-drilldown />
+
+    <!-- Drawer fixed bottom -->
+    <template #append>
+      <entities-drilldown-footer />
+    </template>
   </v-navigation-drawer>
 </template>
 
@@ -30,6 +36,12 @@
   Vue.component('EntitiesDrilldownBar', () =>
     import(
       /* webpackChunkName: 'entities-navigation-drilldown-bar' */ '@/components/Navigation/EntitiesDrilldownBar'
+    ),
+  );
+
+  Vue.component('EntitiesDrilldownFooter', () =>
+    import(
+      /* webpackChunkName: 'entities-navigation-drilldown-footer' */ '@/components/Navigation/EntitiesDrilldownFooter'
     ),
   );
 

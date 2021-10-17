@@ -22,12 +22,7 @@ export function resetRouter() {
 }
 
 const waitForStorageToBeReady = async (to, from, next) => {
-  await store.get('application/isBooted');
-
-  if (store.get('application/isBooted')) {
-    store.set('application/isContentLoaded', true);
-  }
-  if (to.matched.some((record) => record.meta.layout === '')) {
+  if (to.matched.some((record) => record.meta.layout === 'secure-layout')) {
     if (auth.loggedIn()) {
       await store.restored;
       next();

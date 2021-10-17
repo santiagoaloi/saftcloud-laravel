@@ -51,12 +51,7 @@
   import activeView from '@/mixins/activeView';
 
   export default {
-    name: '{name}',
+    name: 'Componentone',
     mixins: [activeView],
-    data() {
-      return {
-        dialog: false,
-      };
-    },
   };
 </script>

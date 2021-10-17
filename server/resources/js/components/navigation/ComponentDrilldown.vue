@@ -18,18 +18,18 @@
     <v-card-title> Edit Component View </v-card-title>
 
     <v-card-subtitle>
-      Edit your module quickly, change group, component name, description, enable sidebar visibility
-      and more...
+      Edit your module quickly, change group, component label, description, enable sidebar
+      visibility and more...
     </v-card-subtitle>
 
     <ValidationObserver ref="componentDrilldownFormValidation" slim>
       <v-container>
-        <baseFieldLabel required label="Component name" />
+        <baseFieldLabel required label="Component label" />
         <validation-provider
-          v-slot="{ errors }"
+          v-slot="{ errors, invalid }"
           immediate
           mode="aggressive"
-          name="component name"
+          name="component label"
           rules="required"
         >
           <v-text-field
@@ -47,6 +47,7 @@
             hide-details="auto"
             class="mb-3"
             dense
+            @change="setInvalid(invalid, 'componentName')"
           >
             <template #append>
               <v-tooltip transition="false" color="black" bottom>
@@ -188,11 +189,9 @@
 <script>
   import { sync, call, get } from 'vuex-pathify';
   import { store } from '@/store';
-  import componentActions from '@/mixins/componentActions';
 
   export default {
     name: 'ComponentDrilldown',
-    mixins: [componentActions],
 
     computed: {
       ...sync('theme', ['isDark']),
@@ -217,34 +216,8 @@
     methods: {
       ...call('componentManagement/*'),
 
-      validateBeforeSave(selectedComponent) {
-        this.$refs.componentDrilldown.validate().then((success) => {
-          if (success) {
-            this.saveComponent(selectedComponent);
-          } else {
-            store.set('snackbar/value', true);
-            store.set(
-              'snackbar/text',
-              'There are input validation errors, check them out before saving',
-            );
-            store.set('snackbar/color', 'pink darken-1');
-          }
-        });
-      },
-
-      validateBeforeEdit() {
-        this.$refs.componentDrilldown.validate().then((success) => {
-          if (success) {
-            this.componentEditSheet = !this.componentEditSheet;
-          } else {
-            store.set('snackbar/value', true);
-            store.set(
-              'snackbar/text',
-              'There are input validation errors, check them out before editing',
-            );
-            store.set('snackbar/color', 'pink darken-1');
-          }
-        });
+      setInvalid(invalid, field) {
+        store.set(`validationStates/componentsEditBasic@${field}`, invalid);
       },
     },
   };

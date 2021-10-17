@@ -9,13 +9,15 @@
     right
     app
   >
-    <!-- Navigation menu fixed on top -->
+    <!-- Drawer fixed top -->
     <template #prepend>
       <component-drilldown-bar />
     </template>
 
+    <!-- Drawer content -->
     <component-drilldown />
 
+    <!-- Drawer fixed bottom -->
     <template #append>
       <component-drilldown-footer />
     </template>
@@ -23,7 +25,6 @@
 </template>
 
 <script>
-  import { isEmpty } from 'lodash';
   import Vue from 'vue';
   import { sync, get } from 'vuex-pathify';
 
@@ -32,6 +33,7 @@
       /* webpackChunkName: 'components-navigation-drilldown' */ '@/components/Navigation/ComponentDrilldown'
     ),
   );
+
   Vue.component('ComponentDrilldownBar', () =>
     import(
       /* webpackChunkName: 'components-navigation-drilldown-bar' */ '@/components/Navigation/ComponentDrilldownBar'
@@ -58,19 +60,5 @@
         return true;
       },
     },
-
-    //  watch: {
-    //   selectedComponent: {
-    //    immediate: false,
-    //    handler(val) {
-    //     if (isEmpty(val) || this.secureComponentDrawer) {
-    //          this.secureComponentDrawer = false;
-
-    //     } else {
-    //      this.secureComponentDrawer = true;
-    //     }
-    //    }
-    //   }
-    //  }
   };
 </script>

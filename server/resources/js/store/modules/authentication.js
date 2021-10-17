@@ -3,6 +3,7 @@ import axios from 'axios';
 import { make } from 'vuex-pathify';
 import { cloneDeep } from 'lodash';
 import router from '@/router';
+import { store } from '@/store';
 
 const axiosDefaults = require('axios/lib/defaults');
 
@@ -22,9 +23,8 @@ const actions = {
   ...make.actions(state),
 
   // Reset state to default values.
-  resetState({ state }) {
-    Object.assign(state, getDefaultState());
-    console.log('authentication state reseted');
+  resetState() {
+    store.set('authentication/session', {});
   },
 
   // Sends login form payload to backend.
@@ -45,23 +45,18 @@ const actions = {
   },
 
   // Logs out the user.
-  logout({ dispatch }, data) {
+  async logout({ dispatch }, data) {
     return axios
       .post('api/logout', data)
-      .then((response) => {
-        if (response.status === 200) {
-          axiosDefaults.headers.common.Authorization = undefined;
-          dispatch('resetState');
-          router.push('/login');
-          return true;
-        }
+      .then(() => {
+        axiosDefaults.headers.common.Authorization = undefined;
         dispatch('resetState');
-        router.push('/login');
-        return false;
+        router.push('/Login');
+        return true;
       })
-      .catch((_) => {
+      .catch(() => {
         dispatch('resetState');
-        router.push('/login');
+        router.push('/Login');
         return false;
       });
   },

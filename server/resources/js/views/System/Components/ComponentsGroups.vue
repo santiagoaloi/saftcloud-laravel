@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-responsive :width="$vuetify.breakpoint.mdAndUp ? 300 : null">
+    <v-responsive class="py-1" :width="$vuetify.breakpoint.mdAndUp ? 300 : null">
       <v-select
         v-model="selectedComponentGroups"
         multiple
@@ -8,15 +8,12 @@
         item-text="name"
         return-object
         placeholder="Select or create groups"
-        :maxlength="20"
         :items="allGroups"
         solo
         :dark="isDark"
         hide-details
         :color="isDark ? '#208ad6' : 'grey'"
-        item-color="indigo lighten-4"
-        :background-color="isDark ? '#28292b' : 'white'"
-        outlined
+        item-color="primary lighten-4"
         dense
         :menu-props="{ bottom: true, offsetY: true }"
         @update:search-input="syncGroupInputValue($event)"

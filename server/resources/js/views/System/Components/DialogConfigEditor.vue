@@ -13,7 +13,7 @@
     @save="saveComponentsConfigStructure()"
     @close="dialogEditor = false"
   >
-    <v-card flat width="100%" class="dialogHeight">
+    <v-card flat width="100%">
       <base-editor v-model="componentsConfigStructure" mode="json" />
     </v-card>
   </baseDialog>

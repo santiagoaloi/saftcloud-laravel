@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <div v-for="faq in faqs" :id="faq.id" :key="faq.id">
-      <div id="#general" class="title pl-2 pb-2 mt-15">
+      <div id="#general" class="title pl-2 pb-2">
         {{ faq.title }}
       </div>
       <v-expansion-panels class="mb-4" multiple>

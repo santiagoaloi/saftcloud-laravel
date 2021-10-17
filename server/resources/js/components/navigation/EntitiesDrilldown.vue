@@ -15,16 +15,7 @@
       </v-sheet>
     </v-expand-transition>
 
-    <div class="text-end pr-3 pt-2">
-      <v-tooltip transition="false" color="black" bottom>
-        <template #activator="{ on }">
-          <v-btn depressed dark large small :color="isDark ? '' : 'white'" v-on="on">
-            <v-icon color="pink lighten-1" dark> mdi-trash-can-outline </v-icon>
-          </v-btn>
-        </template>
-        <span>Delete</span>
-      </v-tooltip>
-
+    <!-- <div class="text-end pr-3 pt-2">
       <v-tooltip transition="false" color="black" bottom>
         <template #activator="{ on }">
           <v-btn
@@ -42,7 +33,7 @@
         </template>
         <span>Save</span>
       </v-tooltip>
-    </div>
+    </div> -->
 
     <template v-if="selectedEntityType === 'Roles'">
       <v-card-title> Edit Role </v-card-title>
@@ -100,7 +91,6 @@
           spellcheck="false"
           :rows="2"
           dense
-          hide-details
           class="mb-3"
         />
 

@@ -174,7 +174,7 @@
         };
         axios.post(`${this.controller}/accountCreation`, post).then((response) => {
           if (response.status === 200) {
-            this.$router.push('/login');
+            this.$router.push('/Login');
           }
         });
       },

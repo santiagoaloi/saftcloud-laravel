@@ -1,5 +1,5 @@
 <template>
-  <div v-if="isBooted">
+  <div>
     <div class="d-flex justify-end align-center">
       <div class="d-flex">
         <v-btn plain class="mx-2">
@@ -51,7 +51,12 @@
   import activeView from '@/mixins/activeView';
 
   export default {
-    name: 'Testcomp',
+    name: 'Vvv',
     mixins: [activeView],
+    data() {
+      return {
+        dialog: false,
+      };
+    },
   };
 </script>

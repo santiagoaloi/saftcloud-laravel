@@ -29,7 +29,7 @@ axios.interceptors.response.use(
     console.log(error);
     if (error.response) {
       //* If session fails to validate the token, kill the session.
-      if (error.response.statusText === 'Unauthenticated.') {
+      if (error.response.data.message === 'Unauthenticated.') {
         router.push('/Login');
         store.set('authentication/session', {});
       }

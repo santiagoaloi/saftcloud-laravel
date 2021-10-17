@@ -11,7 +11,6 @@ const state = {
   visibleColumns: [],
   dialogCrud: false,
   dialogCustomize: false,
-  // isBooted: undefined,
 };
 
 const mutations = make.mutations(state);
@@ -28,7 +27,6 @@ const actions = {
         store.set('activeView/recordItem', response.data.component.recordItem);
         store.set('activeView/columns', response.data.component.columns);
         store.set('activeView/formFields', response.data.component.formFields);
-        // store.set('activeView/isBooted', true);
         dispatch('pushAllColumnNames');
       }
     });

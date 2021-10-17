@@ -2,10 +2,10 @@
   <v-main>
     <v-container style="height: calc(100vh - 105px)" fluid>
       <v-fade-transition mode="out-in" :duration="400" hide-on-leave>
-        <router-view :key="$route.fullPath" />
+        <router-view />
       </v-fade-transition>
     </v-container>
-    <status-bar v-if="$route.name.startsWith('Components')" />
+    <Status-bar v-if="$route.name.startsWith('Components')" />
   </v-main>
 </template>
 

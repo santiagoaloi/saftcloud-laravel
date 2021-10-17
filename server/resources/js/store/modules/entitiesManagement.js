@@ -83,19 +83,16 @@ const getters = {
         p.toLowerCase().match(search),
       );
     }
-    return getters.selectedEntity.privileges.capabilities;
+    return null;
   },
 
   //* Returns true if the are no components returned from the backend.
   isUsersEmpty: (state) => isEmpty(state.allUsers),
 
   //* Returns true if the component has unsaved changes.
-  hasUnsavedChanges: (state, getters, rootState) => (entity) => {
-    if (state.selectedEntityType === 'Users') {
-      const { origin, ...current } = entity;
-      return !isEqual(origin, current);
-    }
-    return null;
+  hasUnsavedChanges: () => (entity) => {
+    const { origin, ...current } = entity;
+    return !isEqual(origin, current);
   },
 
   //* Returns true if the current groups selected do not contain any components associated to them.

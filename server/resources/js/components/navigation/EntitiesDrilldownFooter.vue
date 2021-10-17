@@ -9,40 +9,6 @@
             large
             small
             :color="isDark ? '' : 'white'"
-            @click="edit()"
-            v-on="on"
-          >
-            <v-icon color="#208ad6" dark> mdi-pencil-outline </v-icon>
-          </v-btn>
-        </template>
-        <span>Edit</span>
-      </v-tooltip>
-
-      <v-tooltip transition="false" color="black" top>
-        <template #activator="{ on }">
-          <v-btn
-            :to="`/${selectedComponent.name}`"
-            depressed
-            dark
-            large
-            small
-            :color="isDark ? '' : 'white'"
-            v-on="on"
-          >
-            <v-icon :color="isDark ? '' : 'black'" dark> mdi-link </v-icon>
-          </v-btn>
-        </template>
-        <span>Open</span>
-      </v-tooltip>
-
-      <v-tooltip transition="false" color="black" top>
-        <template #activator="{ on }">
-          <v-btn
-            depressed
-            dark
-            large
-            small
-            :color="isDark ? '' : 'white'"
             v-on="on"
             @click.stop="
               removeComponentWarning(

@@ -6,7 +6,7 @@
       <div class="flex-grow-1" />
       <v-btn plain class="mx-2" @click="dialogEditor = true">
         <v-icon :left="$vuetify.breakpoint.lgAndUp" small> mdi-code-json </v-icon
-        >{{ configStructure }}
+        >{{ configStructureTitle }}
       </v-btn>
       <v-btn
         class="ml-2"
@@ -14,12 +14,12 @@
         @click.stop="dialogComponent = true"
       >
         <v-icon :left="$vuetify.breakpoint.lgAndUp" small> mdi-view-grid-plus </v-icon
-        >{{ createComponent }}
+        >{{ createComponentTitle }}
       </v-btn>
 
       <v-btn class="ml-2" :color="isDark ? 'accent' : 'primary'" @click="addGroupDialog()">
         <v-icon :left="$vuetify.breakpoint.lgAndUp" small> mdi-view-grid-plus </v-icon
-        >{{ createGroup }}
+        >{{ createGroupTitle }}
       </v-btn>
     </div>
 
@@ -55,15 +55,15 @@
       ...sync('theme', ['isDark']),
       ...sync('componentManagement', ['dialogComponent', 'dialogEditor']),
 
-      configStructure() {
+      configStructureTitle() {
         return this.$vuetify.breakpoint.lgAndUp ? 'Config Structure' : '';
       },
 
-      createComponent() {
+      createComponentTitle() {
         return this.$vuetify.breakpoint.lgAndUp ? 'Create component' : '';
       },
 
-      createGroup() {
+      createGroupTitle() {
         return this.$vuetify.breakpoint.lgAndUp ? 'Create group' : '';
       },
     },

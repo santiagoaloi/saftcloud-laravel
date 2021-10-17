@@ -1,10 +1,10 @@
 <template>
   <v-navigation-drawer
-    src="storage/sidebar/bg1.jpg"
-    color="#2f3136"
     v-model="componentEditSheet"
-    mobileBreakpoint="0"
-    hideOverlay
+    src="storage/appbar/prism2.jpg"
+    color="#2f3136"
+    mobile-breakpoint="0"
+    hide-overlay
     width="250"
   >
     <components-edit-sheet-menu />
@@ -13,6 +13,7 @@
 
 <script>
   import { sync, get } from 'vuex-pathify';
+
   export default {
     name: 'ComponentsEditSheetDrawer',
     components: {

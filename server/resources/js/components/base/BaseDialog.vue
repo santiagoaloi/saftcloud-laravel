@@ -11,9 +11,16 @@
     transition="fade-transition"
     v-on="$listeners"
   >
-    <v-toolbar class="pr-3" flat :dense="dense" dark color="#36393f">
+    <v-toolbar
+      src="storage/appbar/prism2.jpg"
+      class="pr-3"
+      flat
+      :dense="dense"
+      dark
+      color="#36393f"
+    >
       <template v-if="icon">
-        <v-btn x-small color="white" text fab class="mr-3">
+        <v-btn x-small color="white" text fab class="mr-3 pointer-events-none">
           <v-icon>{{ icon }}</v-icon>
         </v-btn>
       </template>

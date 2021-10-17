@@ -5,6 +5,7 @@
       app
       flat
       height="70"
+      src="storage/appbar/prism2.jpg"
     >
       <v-container
         data-aos="fade"
@@ -18,7 +19,7 @@
       >
         <router-link to="/" class="d-flex align-center text-decoration-none">
           <img class="mr-4" src="storage/logo.png" height="45" />
-          <span class="font-weight-black headline white--text"> SaftCloud</span>
+          <span class="font-weight-black headline white--text"> SaftCloud ™</span>
         </router-link>
 
         <v-spacer />
@@ -121,7 +122,7 @@
 
 <script>
   import axios from 'axios';
-  import { sync, get, call } from 'vuex-pathify';
+  import { sync } from 'vuex-pathify';
   import { store } from '@/store';
 
   export default {

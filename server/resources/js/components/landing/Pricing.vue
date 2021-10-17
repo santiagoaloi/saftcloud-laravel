@@ -4,7 +4,7 @@
     background="linear-gradient(331deg, rgba(101, 235, 235, 1) 0%, rgba(54, 49, 125, 1) 50%)"
     space-after
   >
-    <v-container style="padding-top: 60px; padding-bottom: 200px">
+    <v-container>
       <v-responsive max-width="1200" class="mx-auto text-center">
         <h2 class="text-h3 mb-2 white--text">Pricing</h2>
         <div class="text-h6 text-lg-h5 white--text">

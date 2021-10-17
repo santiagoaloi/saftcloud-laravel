@@ -11,10 +11,12 @@
             <v-card
               :ref="`SEL${entityCardGroup}ID${index}`"
               :color="getCardColor(active)"
+              style="opacity: 0.8"
               height="210"
               width="100%"
               :ripple="false"
               class="d-flex flex-column justify-space-between pa-4 hoverElevationSoft"
+              :class="{ activeBorder: active }"
               @click.stop="
                 toggle();
                 setSelectedEntity(index);
@@ -41,23 +43,6 @@
               </span>
 
               <div class="gallery-card-subtitle-container">
-                <v-scale-transition e-transition>
-                  <div v-if="hasUnsavedChanges(entity)" class="gallery-card-subtitle-wrapper">
-                    <h5 class="gallery-card-subtitle">
-                      <v-tooltip transition="false" color="black" bottom>
-                        <template #activator="{ on }">
-                          <v-icon :color="isDark ? 'white' : '#28292b'" v-on="on">
-                            mdi-alert-outline
-                          </v-icon>
-                        </template>
-                        <span>Unsaved</span>
-                      </v-tooltip>
-                    </h5>
-                  </div>
-                </v-scale-transition>
-              </div>
-
-              <div class="gallery-card-subtitle-container">
                 <div class="gallery-card-subtitle-wrapper">
                   <h5 class="gallery-card-subtitle">
                     <v-chip
@@ -79,8 +64,9 @@
                     </v-chip>
                   </h5>
                 </div>
-                <!-- <v-scale-transition e-transition>
-                  <div v-if="hasUnsavedChanges(component)" class="gallery-card-subtitle-wrapper">
+
+                <v-scale-transition e-transition>
+                  <div v-if="hasUnsavedChanges(entity)" class="gallery-card-subtitle-wrapper">
                     <h5 class="gallery-card-subtitle">
                       <v-tooltip transition="false" color="black" bottom>
                         <template #activator="{ on }">
@@ -92,7 +78,7 @@
                       </v-tooltip>
                     </h5>
                   </div>
-                </v-scale-transition> -->
+                </v-scale-transition>
               </div>
             </v-card>
           </v-hover>
@@ -143,7 +129,7 @@
         return `${capitalize(first)} ${capitalize(last)}`;
       },
       getCardColor(active) {
-        return this.isDark ? (active ? '#51555e' : '#40434a') : active ? '#edeef2' : 'white';
+        return this.isDark ? (active ? '#515664' : '#40434a') : active ? '#edeef2' : 'white';
       },
     },
   };
@@ -241,5 +227,9 @@
     opacity: 0.5;
     position: absolute;
     width: 100%;
+  }
+
+  .activeBorder {
+    border-bottom: 3px solid #4169de !important;
   }
 </style>

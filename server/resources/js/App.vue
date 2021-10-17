@@ -19,18 +19,13 @@
 
   export default {
     name: 'AppVue',
-    data() {
-      return {
-        firstPaint: false,
-      };
-    },
+
     head: {
       link: [...config.icons.map((href) => ({ rel: 'stylesheet', href }))],
     },
 
     computed: {
       ...sync('theme', ['isDark']),
-      ...sync('application', ['isBooted', 'isContentLoaded']),
       ...sync('authentication', ['session']),
 
       layout() {
@@ -64,19 +59,10 @@
     mounted() {
       // * Waits for auth to be ready.
       setTimeout(() => {
-        if (auth.loggedIn()) {
+        if (auth.loggedIn() && this.$route.meta.layout !== 'public-layout') {
           this.buildRoutes();
         }
       }, 500);
-
-      document.onreadystatechange = () => {
-        if (document.readyState === 'complete') {
-          setTimeout(() => {
-            this.firstPaint = true;
-            this.isBooted = true;
-          }, 500);
-        }
-      };
     },
 
     methods: {
@@ -87,31 +73,28 @@
         // * Waits for indexeddb to be ready.
         setTimeout(() => {
           axios.get('/api/getComponentNames/').then((response) => {
-            if (response.status === 200) {
-              const { components } = response.data;
+            const { components } = response.data;
 
-              // * Dummy component to avoid webpack error about not finding the path.
-              //   if (!components.length) {
-              //    components.push("Blank");
-              //   }
+            // * Dummy component to avoid webpack error about not finding the path.
+            //   if (!components.length) {
+            //    components.push("Blank");
+            //   }
 
-              // * add new routes
-              //   if(components[0] != 'Blank'){
-              for (const component of components) {
-                this.$router.addRoute({
-                  path: `/${component.name}`,
-                  name: `${component.name}`,
-                  meta: {
-                    layout: 'secure-layout',
-                    title: component.title,
-                    id: component.id,
-                    icon: component.configSettings.icon ? component.configSettings.icon : null,
-                  },
-                  component: () =>
-                    import(`./views/Protected/${component.name}/${component.name}.vue`),
-                });
-              }
-              //   }
+            // * add new routes
+            //   if(components[0] != 'Blank'){
+            for (const component of components) {
+              this.$router.addRoute({
+                path: `/${component.name}`,
+                name: `${component.name}`,
+                meta: {
+                  layout: 'secure-layout',
+                  title: component.title,
+                  id: component.id,
+                  icon: component.configSettings.icon ? component.configSettings.icon : null,
+                },
+                component: () =>
+                  import(`./views/Protected/${component.name}/${component.name}.vue`),
+              });
             }
           });
         }, 500);

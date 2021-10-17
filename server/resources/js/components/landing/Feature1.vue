@@ -1,7 +1,7 @@
 <template>
   <vue-diagonal
     :deg="-7"
-    background="linear-gradient(331deg, rgba(209, 31, 171, 0.6) 0%, rgba(136, 160, 247, 0.6) 50%)"
+    background="linear-gradient(331deg, rgba(101, 235, 235, 1) 0%, rgba(54, 49, 125, 1) 50%)"
     space-after
     space-before
   >

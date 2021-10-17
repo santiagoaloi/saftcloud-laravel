@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-responsive :width="$vuetify.breakpoint.mdAndUp ? 300 : null">
+    <v-responsive class="py-1" :width="$vuetify.breakpoint.mdAndUp ? 300 : null">
       <v-select
         v-model="selectedEntityType"
         item-value="id"
@@ -13,9 +13,7 @@
         hide-details
         chips
         :color="isDark ? '#208ad6' : 'grey'"
-        item-color="indigo lighten-4"
-        :background-color="isDark ? '#28292b' : 'white'"
-        outlined
+        item-color="primary lighten-4"
         dense
         small-chips
         :menu-props="{ bottom: true, offsetY: true }"
