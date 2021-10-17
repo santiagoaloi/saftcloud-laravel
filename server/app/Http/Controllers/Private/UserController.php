@@ -89,7 +89,6 @@ class UserController extends Controller {
             $user->entity;
             $user->branch;
             $user->privileges = getRoles($user->role);
-            $user->origin = clone$user;
             origin($user);
 
             $newUsers[] = $user;
