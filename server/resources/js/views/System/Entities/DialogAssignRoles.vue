@@ -7,8 +7,8 @@
     filled
     icon="mdi-lock-open-outline"
     no-container
-    @close="dialogAssignRoles = false"
-    @save="saveAssignRoles()"
+    save-only
+    @save="dialogAssignRoles = false"
   >
     <v-card flat width="100%" heigt="300">
       <v-container>

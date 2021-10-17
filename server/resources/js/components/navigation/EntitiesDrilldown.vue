@@ -17,26 +17,6 @@
       </v-sheet>
     </v-expand-transition>
 
-    <!-- <div class="text-end pr-3 pt-2">
-      <v-tooltip transition="false" color="black" bottom>
-        <template #activator="{ on }">
-          <v-btn
-            :disabled="!hasUnsavedChanges(selectedEntity)"
-            depressed
-            large
-            small
-            :color="isDark ? '' : 'white'"
-            v-on="on"
-          >
-            <v-icon color="green" dark>
-              {{ hasUnsavedChanges(selectedEntity) ? 'mdi-check' : 'mdi-check-all' }}
-            </v-icon>
-          </v-btn>
-        </template>
-        <span>Save</span>
-      </v-tooltip>
-    </div> -->
-
     <template v-if="selectedEntityType === 'Roles'">
       <v-card-title> Edit Role </v-card-title>
 
@@ -112,19 +92,20 @@
         <div class="mt-2">
           <baseFieldLabel required label="Role Privileges " />
           <v-autocomplete
-            v-model="selectedEntity.privileges"
+            v-model="selectedEntity.capability"
             outlined
             :color="isDark ? '#208ad6' : 'grey'"
             item-color="indigo lighten-4"
             :background-color="isDark ? '#28292b' : 'white'"
             :items="allCapabilities"
             :maxlength="25"
-            item-value="name"
+            item-value="id"
             item-text="name"
             hide-no-data
             hide-details
             multiple
             dense
+            return-object
           >
             <template #selection="data">
               <v-chip
@@ -133,7 +114,7 @@
                 :color="isDark ? 'grey-darken-4' : 'blue-white'"
                 small
               >
-                {{ selectedEntity.privileges.length }} privileges selected.
+                {{ selectedEntity.capability.length }} privileges selected.
               </v-chip>
             </template>
 
@@ -326,10 +307,6 @@
         'dialogPrivileges',
         'dialogAssignRoles',
       ]),
-    },
-
-    data() {
-      return {};
     },
 
     methods: {

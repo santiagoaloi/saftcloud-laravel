@@ -1,5 +1,5 @@
 <template>
-  <div v-if="selectedComponent" class="mt-3">
+  <div v-if="selectedEntity" class="mt-3">
     <div class="text-end pr-3 pb-2">
       <v-tooltip transition="false" color="black" top>
         <template #activator="{ on }">
@@ -12,10 +12,10 @@
             v-on="on"
             @click.stop="
               removeComponentWarning(
-                selectedComponent.id,
+                selectedEntity.id,
                 'delete',
                 'component',
-                selectedComponent.config.general_config.title,
+                selectedEntity.config.general_config.title,
               )
             "
           >
@@ -28,7 +28,7 @@
       <v-tooltip transition="false" color="black" top>
         <template #activator="{ on }">
           <v-btn
-            :disabled="!hasUnsavedChanges(selectedComponent)"
+            :disabled="!hasUnsavedChanges(selectedEntity)"
             depressed
             large
             small
@@ -37,7 +37,7 @@
             v-on="on"
           >
             <v-icon color="green" dark>
-              {{ hasUnsavedChanges(selectedComponent) ? 'mdi-check' : 'mdi-check-all' }}
+              {{ hasUnsavedChanges(selectedEntity) ? 'mdi-check' : 'mdi-check-all' }}
             </v-icon>
           </v-btn>
         </template>
@@ -58,33 +58,28 @@
 
     computed: {
       ...sync('theme', ['isDark']),
-      ...sync('componentManagement', ['componentEditSheet']),
-      ...get('componentManagement', [
-        'selectedComponent',
+      ...get('entitiesManagement', [
+        'selectedEntity',
         'hasUnsavedChanges',
         'hasValidationErrors',
+        'selectedEntityType',
       ]),
     },
 
     methods: {
-      ...call('componentManagement/*'),
+      ...call('entitiesManagement/*'),
 
       save() {
         if (!this.hasValidationErrors) {
-          this.saveComponent(this.selectedComponent);
+          if (this.selectedEntityType === 'Users') {
+            this.saveEntityUser();
+          }
+          if (this.selectedEntityType === 'Roles') {
+            this.saveEntityRole();
+          }
         } else {
           store.set('snackbar/value', true);
-          store.set('snackbar/text', 'The component name is invalid.');
-          store.set('snackbar/color', 'pink darken-1');
-        }
-      },
-
-      edit() {
-        if (!this.hasValidationErrors) {
-          this.componentEditSheet = !this.componentEditSheet;
-        } else {
-          store.set('snackbar/value', true);
-          store.set('snackbar/text', 'The component name is invalid.');
+          store.set('snackbar/text', 'There are validation errors, please correct them.');
           store.set('snackbar/color', 'pink darken-1');
         }
       },
