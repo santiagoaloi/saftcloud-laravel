@@ -3,14 +3,14 @@ import { isEqual, isEmpty, cloneDeep } from 'lodash';
 import axios from 'axios';
 import { store } from '@/store';
 
-// When this function is called, the component settings form is back to default values.
+// When this function is called, the users settings form is back to default values.
 const initialUserSettings = () => ({
   name: '',
   last_name: '',
   email: '',
 });
 
-// When this function is called, the component settings form is back to default values.
+// When this function is called, the roles settings form is back to default values.
 const initialRoleSettings = () => ({
   name: '',
   description: '',
@@ -28,7 +28,7 @@ const state = {
   dialogEntity: false,
   dialogPrivileges: false,
   dialogAssignRoles: false,
-  selectedEntityType: 'Roles',
+  selectedEntityType: 'Users',
   selectedEntityIndex: 0,
   selectedEntityTableRow: [],
   selectedUserRoles: [],
@@ -64,7 +64,7 @@ const getters = {
   //* Returns the name of the tab name selected within the form field editor
   activeEntityTabName: (state) => state.entityStatusTabs[state.activeStatusTab].value,
 
-  //* Returns components that belongs to a group, status or matching search.
+  //* Returns entities that belongs to a status or matching search.
   allEntitiesFiltered: (state, _, rootState) => {
     const entity = state.selectedEntityType === 'Roles' ? 'allRoles' : 'allUsers';
     const entityName = state.selectedEntityType === 'Roles' ? 'name' : 'email';
@@ -86,16 +86,16 @@ const getters = {
     return null;
   },
 
-  //* Returns true if the are no components returned from the backend.
+  //* Returns true if there are no users returned from the backend.
   isUsersEmpty: (state) => isEmpty(state.allUsers),
 
-  //* Returns true if the component has unsaved changes.
+  //* Returns true if the entity has unsaved changes.
   hasUnsavedChanges: () => (entity) => {
     const { origin, ...current } = entity;
     return !isEqual(origin, current);
   },
 
-  //* Returns true if the current groups selected do not contain any components associated to them.
+  //* Returns true if the current groups selected do not contain any entities associated to them.
   isAllFilteredEntitiesEmpty: (_, getters) => getters.allEntitiesFiltered.length === 0,
 
   //* Returns the color of the star icon depending on its state.
@@ -117,11 +117,6 @@ const getters = {
       : rootState.theme.isDark && !component.status.active
       ? 'grey darken-1'
       : 'black',
-
-  //* Returns the count of components belonging to a specific group.
-  countComponentsInGroup: (state) => (id) =>
-    state.allComponents.filter((component) => component.component_group_id === id).length,
-  countComponentsFiltered: (_, getters) => getters.allEntitiesFiltered.length,
 };
 
 const actions = {
@@ -165,11 +160,11 @@ const actions = {
     }
   },
 
-  //* Rollback changes before saving component configuration.
-  rollbackChanges({ state, dispatch }, component) {
-    const { origin } = component;
-    const index = state.allComponents.findIndex((c) => c.id === component.id);
-    store.set(`entitiesManagement/allComponents@${index}`, {
+  //* Rollback changes before saving entity configuration.
+  rollbackChanges({ state, dispatch }, { selectedEntity, selectedEntityType }) {
+    const { origin } = selectedEntity;
+    const index = state[`all${selectedEntityType}`].findIndex((e) => e.id === selectedEntity.id);
+    store.set(`entitiesManagement/all${selectedEntityType}@${index}`, {
       ...origin,
       origin: cloneDeep(origin),
     });
@@ -186,8 +181,6 @@ const actions = {
         store.set('snackbar/value', true);
         store.set('snackbar/text', 'User created');
         store.set('snackbar/color', 'primary');
-
-        //* Autoselect latest created component
         store.set('entitiesManagement/dialogEntity', false);
         return true;
       }
@@ -195,7 +188,7 @@ const actions = {
   },
 
   //* Creates a new role in the database.
-  createRole({ state, rootState, getters }) {
+  createRole({ state, rootState }) {
     const { role } = state;
     role.entity_id = rootState.authentication.activeBranch;
     return axios.post('api/role', state.role).then((response) => {
@@ -203,8 +196,6 @@ const actions = {
         store.set('snackbar/value', true);
         store.set('snackbar/text', 'role created');
         store.set('snackbar/color', 'primary');
-
-        //* Autoselect latest created component
         store.set('entitiesManagement/dialogEntity', false);
         return true;
       }
@@ -225,7 +216,7 @@ const actions = {
     });
   },
 
-  //* Moves to the previous component in the array (navigation arrows).
+  //* Moves to the previous entity in the array (navigation arrows).
   previousEntity({ state }) {
     if (state.entityCardGroup > 0) {
       store.set('entitiesManagement/entityCardGroup', state.entityCardGroup - 1);
@@ -233,7 +224,7 @@ const actions = {
     }
   },
 
-  //* Moves to the next component in the array (navigation arrows).
+  //* Moves to the next entity in the array (navigation arrows).
   nextEntity({ state, getters }) {
     if (state.entityCardGroup < getters.allEntitiesFiltered.length - 1) {
       store.set('entitiesManagement/entityCardGroup', state.entityCardGroup + 1);

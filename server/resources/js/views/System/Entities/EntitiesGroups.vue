@@ -7,7 +7,7 @@
         item-text="name"
         placeholder="Select roles o users"
         :maxlength="20"
-        :items="['Roles', 'Users']"
+        :items="['Users', 'Roles']"
         solo
         hide-no-data
         hide-details

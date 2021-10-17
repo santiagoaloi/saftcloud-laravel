@@ -214,7 +214,7 @@
           {
             icon: 'mdi-security',
             href: '/Entities',
-            title: 'Entities',
+            title: 'Users and Roles',
           },
 
           {

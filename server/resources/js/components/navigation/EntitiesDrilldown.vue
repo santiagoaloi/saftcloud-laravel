@@ -9,7 +9,9 @@
         <v-alert class="mt-3" elevation="1" colored-border color="pink" border="right" dense>
           <div class="d-flex justify-space-between align-center">
             Unsaved
-            <v-btn dark small @click="rollbackChanges(selectedEntity)"> rollback </v-btn>
+            <v-btn dark small @click="rollbackChanges({ selectedEntity, selectedEntityType })">
+              rollback
+            </v-btn>
           </div>
         </v-alert>
       </v-sheet>

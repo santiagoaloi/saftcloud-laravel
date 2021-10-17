@@ -6,6 +6,7 @@
       <div class="flex-grow-1" />
       <div class="d-flex">
         <v-btn
+          v-if="selectedEntityType === 'Roles'"
           class="ml-2"
           :color="isDark ? 'accent' : 'primary'"
           @click.stop="(dialogEntity = true), (identityTypeButton = 'Role')"
@@ -14,6 +15,7 @@
           {{ createRole }}
         </v-btn>
         <v-btn
+          v-if="selectedEntityType === 'Users'"
           class="ml-2"
           :color="isDark ? 'accent' : 'primary'"
           @click.stop="(dialogEntity = true), (identityTypeButton = 'User')"
@@ -38,7 +40,12 @@
 
     computed: {
       ...sync('theme', ['isDark']),
-      ...sync('entitiesManagement', ['dialogEntity', 'dialogEditor', 'identityTypeButton']),
+      ...sync('entitiesManagement', [
+        'dialogEntity',
+        'dialogEditor',
+        'identityTypeButton',
+        'selectedEntityType',
+      ]),
 
       createUser() {
         return this.$vuetify.breakpoint.lgAndUp ? 'Create User' : '';
