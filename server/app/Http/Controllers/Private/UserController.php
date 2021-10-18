@@ -4,11 +4,11 @@ namespace App\Http\Controllers\Private;
 
 use App\Models\User;
 use App\Models\Roles\Role;
+use App\Helpers\RoleHelper;
 use Illuminate\Http\Request;
 use App\Models\Private\Entity;
-use App\Http\Controllers\Controller;
-use App\Helpers\RoleHelper;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\QueryException;
 
@@ -48,9 +48,12 @@ class UserController extends Controller {
                 'password'         =>  bcrypt('password')
             ]);
             $user = $person->user;
-            $this->attachUser($branch, $user);
+            $br = new Request(['items'=>$branch, 'name'=>'branch']);
+            $this->attachUserS($user, $br);
+
             $role = Role::findOrFail(3);
-            $this->attachUser($role, $user);
+            $rol = new Request(['items'=>$role, 'name'=>'role']);
+            $this->attachUserS($user, $rol);
 
             $user->entity;
         }
@@ -171,6 +174,14 @@ class UserController extends Controller {
         }
         $user->$class()->attach($arr);
     }
+
+        // AGREGA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
+        public function attachUserS(User $user, Request $request){
+            $items = $request['items'];
+            $class = $request['name'];
+
+            $user->$class()->attach($items);
+        }
 
     // ELIMINA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
     public function detachUser(User $user, Request $request){

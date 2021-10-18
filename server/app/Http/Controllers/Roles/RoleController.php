@@ -149,6 +149,7 @@ class RoleController extends Controller {
     public function syncRole(Role $Role, Request $request){
         $items = $request['items'];
         $class = $request['name'];
+        $arr = [];
 
         foreach($items as $item){
             $arr[] = $item['id'];
