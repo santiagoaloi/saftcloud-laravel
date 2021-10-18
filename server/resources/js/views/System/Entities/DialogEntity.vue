@@ -56,6 +56,13 @@
       entity() {
         return this.identityTypeButton === 'User' ? this.user : this.role;
       },
+
+      identityMethodCreate() {
+        return this.identityTypeButton === 'User' ? 'createUser' : 'createRole';
+      },
+      identifyMethodGet() {
+        return this.identityTypeButton === 'User' ? 'getUsers' : 'getRoles';
+      },
     },
 
     methods: {
@@ -63,17 +70,14 @@
 
       validateEntity() {
         this.loading = true;
-        const identityMethodCreate =
-          this.identityTypeButton === 'User' ? 'createUser' : 'createRole';
-        const identityMethodGet = this.identityTypeButton === 'User' ? 'getUsers' : 'getRoles';
         this.$refs.createEntityForm.validate().then((validated) => {
           if (validated) {
-            this[identityMethodCreate]()
+            this[this.identityMethodCreate]()
               .then((created) => {
                 if (created) {
-                  this[identityMethodGet]();
-                  this.loading = false;
+                  this[this.identifyMethodGet]();
                   this.dialogEntity = false;
+                  this.loading = false;
                 } else {
                   this.loading = false;
                 }
