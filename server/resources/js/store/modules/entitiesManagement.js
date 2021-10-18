@@ -244,21 +244,17 @@ const actions = {
     const userId = getters.selectedEntity.id;
     const capabilities = { name: 'capability', items: getters.selectedEntity.capability };
 
-    axios.post(`api/syncRole/${userId}`, capabilities).then((response) => {
+    return axios.post(`api/syncRole/${userId}`, capabilities).then((response) => {
       if (response.status === 200) {
         const meta = {
           name: getters.selectedEntity.name,
           description: getters.selectedEntity.description,
         };
 
-        axios
+        return axios
           .put(`api/role/${userId}`, meta)
           .then((response) => {
             if (response.status === 200) {
-              store.set('snackbar/value', true);
-              store.set('snackbar/text', 'roles assigned');
-              store.set('snackbar/color', 'primary');
-
               const index = state[`all${state.selectedEntityType}`].findIndex(
                 (e) => e.id === getters.selectedEntity.id,
               );
@@ -270,6 +266,7 @@ const actions = {
                 ...getters.selectedEntity,
                 origin: cloneDeep(getters.selectedEntity),
               });
+              return true;
             }
           })
           .catch(() => {

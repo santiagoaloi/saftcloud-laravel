@@ -83,7 +83,7 @@
 
         if (!this.hasValidationErrors) {
           try {
-            const saved = await this[this.identityMethod];
+            const saved = await this[this.identityMethod]();
 
             if (saved) {
               store.set('snackbar/value', true);
