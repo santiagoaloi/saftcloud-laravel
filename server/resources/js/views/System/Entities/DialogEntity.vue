@@ -5,6 +5,7 @@
     persistent
     max-width="900"
     icon="mdi-plus"
+    :loading="loading"
     @save="validateEntity()"
     @close="dialogEntity = !dialogEntity"
   >
@@ -37,11 +38,16 @@
 </template>
 <script>
   import { sync, call } from 'vuex-pathify';
-  import componentGroups from '@/mixins/componentGroups';
+  import { store } from '@/store';
 
   export default {
     name: 'DialogEntity',
-    mixins: [componentGroups],
+
+    data() {
+      return {
+        loading: false,
+      };
+    },
 
     computed: {
       ...sync('theme', ['isDark']),
@@ -56,14 +62,30 @@
       ...call('entitiesManagement/*'),
 
       validateEntity() {
-        const action = this.identityTypeButton === 'User' ? 'createUser' : 'createRole';
+        this.loading = true;
+        const identityMethodCreate =
+          this.identityTypeButton === 'User' ? 'createUser' : 'createRole';
+        const identityMethodGet = this.identityTypeButton === 'User' ? 'getUsers' : 'getRoles';
         this.$refs.createEntityForm.validate().then((validated) => {
           if (validated) {
-            this[action]().then((created) => {
-              if (created) {
-                alert('account created');
-              }
-            });
+            this[identityMethodCreate]()
+              .then((created) => {
+                if (created) {
+                  this[identityMethodGet]();
+                  this.loading = false;
+                  this.dialogEntity = false;
+                } else {
+                  this.loading = false;
+                }
+              })
+              .catch(() => {
+                store.set('snackbar/value', true);
+                store.set('snackbar/text', 'There was an error saving...');
+                store.set('snackbar/color', 'pink darken-1');
+                this.loading = false;
+              });
+          } else {
+            this.loading = false;
           }
         });
       },

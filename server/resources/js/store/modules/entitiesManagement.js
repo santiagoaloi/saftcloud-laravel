@@ -198,9 +198,11 @@ const actions = {
 
   //* Creates a new role in the database.
   createRole({ state, rootState }) {
-    const { role } = state;
-    role.entity_id = rootState.authentication.activeBranch;
-    return axios.post('api/role', state.role).then((response) => {
+    const post = {
+      ...state.role,
+      entity_id: rootState.authentication.activeBranch,
+    };
+    return axios.post('api/role', post).then((response) => {
       if (response.status === 200) {
         store.set('snackbar/value', true);
         store.set('snackbar/text', 'role created');

@@ -51,7 +51,7 @@
 
     computed: {
       ...sync('theme', ['isDark']),
-      ...sync('entitiesManagement', ['dialogAssignRoles', 'allRoles', 'selectedUserRoles']),
+      ...sync('entitiesManagement', ['dialogAssignRoles', 'allRoles']),
       ...get('entitiesManagement', ['selectedEntity']),
     },
 

@@ -27,7 +27,7 @@
 
     <dialog-entity />
     <dialog-privileges />
-    <dialog-assign-roles v-if="selectedEntityType === 'Users'" />
+    <dialog-assign-roles v-if="selectedEntityType === 'Users' && selectedEntity" />
   </div>
 </template>
 
@@ -53,7 +53,11 @@
     computed: {
       ...sync('theme', ['isDark']),
       ...sync('entitiesManagement', ['isTableLayout']),
-      ...get('entitiesManagement', ['isAllFilteredEntitiesEmpty', 'selectedEntityType']),
+      ...get('entitiesManagement', [
+        'isAllFilteredEntitiesEmpty',
+        'selectedEntityType',
+        'selectedEntity',
+      ]),
     },
 
     mounted() {
