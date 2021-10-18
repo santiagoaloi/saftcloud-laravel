@@ -36,7 +36,7 @@ class UserController extends Controller {
             $person = $account->entity()->create([
                 'entity_type_id'    => 2,
                 'first_name'        => $request['name'],
-                'last_name'         => $request['lastname'],
+                'last_name'         => $request['last_name'],
                 'iva_condition_id'  => 5,
                 'document_type_id'  => 6
             ]);

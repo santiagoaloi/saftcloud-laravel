@@ -77,7 +77,7 @@ class RoleController extends Controller {
         ], 200);
     }
 
-    public function update($id, Request $request) {
+    public function update(Request $request, $id) {
         $this->authorize('update', Role::class);
         $query = Role::find($id);
         try{
