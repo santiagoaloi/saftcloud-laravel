@@ -214,7 +214,7 @@ const actions = {
 
   //* Saves the component configuration structure as a new version of the configuration (version control).
   saveComponentsConfigStructure({ state, dispatch }) {
-    axios
+    return axios
       .post('api/componentDefault', {
         config_structure: JSON.parse(state.componentsConfigStructure),
       })
@@ -403,7 +403,7 @@ const actions = {
       .join('\n')
       .replace(/(\r\n|\n|\r)/gm, ' ');
 
-    axios.put(`api/component/${component.id}`, component).then((response) => {
+    return axios.put(`api/component/${component.id}`, component).then((response) => {
       if (response.status === 200) {
         const index = state.allComponents.findIndex((c) => c.id == component.id);
         store.set(`componentManagement/allComponents@${index}`, response.data.component);
@@ -413,11 +413,12 @@ const actions = {
 
         dispatch('getNavigationStructure');
         window.eventBus.$emit('BUS_BUILD_ROUTES');
-      } else {
-        store.set('snackbar/value', true);
-        store.set('snackbar/text', response.data.message);
-        store.set('snackbar/color', 'pink darken-1');
+        return true;
       }
+      store.set('snackbar/value', true);
+      store.set('snackbar/text', response.data.message);
+      store.set('snackbar/color', 'pink darken-1');
+      return false;
     });
   },
 

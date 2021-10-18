@@ -75,13 +75,22 @@ const getters = {
     });
   },
 
-  //* Filter privileges in the privileges dialog sinple tabe.
+  // //* Filter privileges in the privileges dialog sinple tabe.
   filteredPrivileges: (state, getters) => {
-    if (getters.selectedEntity.privileges.capabilities) {
+    if (getters.selectedEntity.role.length) {
+      // Search field string
       const search = state.searchPrivileges.toString().toLowerCase();
-      return getters.selectedEntity.privileges.capabilities.filter((p) =>
-        p.toLowerCase().match(search),
-      );
+
+      const privileges = [];
+
+      for (const role of getters.selectedEntity.role) {
+        for (const capability of role.capability) {
+          privileges.push({ name: capability.name, role: capability.pivot.role_id });
+        }
+      }
+
+      // return all privileges or the ones matching the search string.
+      return privileges.filter((p) => p.name.toLowerCase().match(search));
     }
     return null;
   },

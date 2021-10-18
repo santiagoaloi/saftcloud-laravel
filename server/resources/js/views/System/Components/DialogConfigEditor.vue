@@ -22,7 +22,7 @@
   import { sync, call } from 'vuex-pathify';
 
   export default {
-    name: 'DialogComponent',
+    name: 'DialogConfigEditor',
 
     computed: {
       ...sync('theme', ['isDark']),

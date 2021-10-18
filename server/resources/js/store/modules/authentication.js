@@ -34,6 +34,10 @@ const actions = {
       .then((response) => {
         if (response.status === 200) {
           const { data } = response;
+
+          // get rid of the status key
+          delete data.status;
+
           // Creates an "origin" of the login response data...
           data.user.origin = cloneDeep(data);
           commit('session', data);

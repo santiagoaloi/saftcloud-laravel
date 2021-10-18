@@ -67,6 +67,7 @@
             large
             small
             :color="isDark ? '' : 'white'"
+            :loading="loading"
             @click="save()"
             v-on="on"
           >
@@ -90,6 +91,12 @@
     name: 'ComponentDrilldownFooter',
     mixins: [componentActions],
 
+    data() {
+      return {
+        loading: false,
+      };
+    },
+
     computed: {
       ...sync('theme', ['isDark']),
       ...sync('componentManagement', ['componentEditSheet']),
@@ -103,13 +110,26 @@
     methods: {
       ...call('componentManagement/*'),
 
-      save() {
+      async save() {
+        this.loading = true;
+
         if (!this.hasValidationErrors) {
-          this.saveComponent(this.selectedComponent);
+          try {
+            const saved = await this.saveComponent(this.selectedComponent);
+
+            if (saved) {
+              this.loading = false;
+            } else {
+              this.loading = false;
+              store.set('snackbar/value', true);
+              store.set('snackbar/text', 'The component name is invalid.');
+              store.set('snackbar/color', 'pink darken-1');
+            }
+          } catch (error) {
+            console.log(error);
+          }
         } else {
-          store.set('snackbar/value', true);
-          store.set('snackbar/text', 'The component name is invalid.');
-          store.set('snackbar/color', 'pink darken-1');
+          this.loading = false;
         }
       },
 

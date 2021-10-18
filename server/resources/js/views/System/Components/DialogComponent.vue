@@ -5,6 +5,7 @@
     persistent
     max-width="900"
     icon="mdi-plus"
+    :loading="loading"
     @save="validateComponentForm()"
     @close="dialogComponent = !dialogComponent"
   >
@@ -163,6 +164,12 @@
     name: 'DialogComponent',
     mixins: [componentGroups],
 
+    data() {
+      return {
+        loading: false,
+      };
+    },
+
     computed: {
       ...sync('theme', ['isDark']),
       ...sync('componentManagement', [
@@ -183,13 +190,17 @@
 
       async validateComponentForm() {
         try {
+          this.loading = true;
           const validated = await this.$refs.createComponentForm.validate();
 
           if (validated) {
             const created = await this.createComponent();
             if (created) {
+              this.loading = false;
               window.eventBus.$emit('BUS_BUILD_ROUTES');
             }
+          } else {
+            this.loading = false;
           }
         } catch (error) {
           console.log(error);

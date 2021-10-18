@@ -104,6 +104,9 @@
         </v-btn>
       </template>
     </v-toolbar>
+
+    <slot name="top"> </slot>
+
     <v-card width="100%" :class="{ 'pa-2': !noGutters }" style="overflow: auto" flat tile>
       <v-container v-if="!noContainer" :fluid="fluid" :class="{ 'fill-height': filled }">
         <slot />
