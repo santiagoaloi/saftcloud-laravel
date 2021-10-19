@@ -19,6 +19,7 @@ use App\Http\Controllers\Roles\RoleController;
 use App\Http\Controllers\Private\UserController;
 use App\Http\Controllers\Root\ComponentController;
 use App\Http\Controllers\Root\ComponentDefaultController;
+use App\Helpers\AccountVerification;
 
 class TestFunctionController extends Controller {
 
@@ -106,49 +107,15 @@ class TestFunctionController extends Controller {
 
         // return $this->model;
 
-        // $entity = Entity::first();
-        // $entity->addresses()->create(['name'=>'test', 'state_id'=>1, 'city'=>'punta alta', 'neighborhood'=>'pepe']);
-        // exit;
-
         // return session();
         // var_dump(csrf_token());
         // var_dump($request->header('X-CSRF-TOKEN'));
     }
 
     public function test4(Request $request, Country $country){
-        $user = User::findOrFail(70);
-        $role = Role::findOrFail(3);
+        return AccountVerification::checkRootRole();
 
-        $person = Entity::findOrFail(80);
-        $userP = $person->user;
-
-        return [$user, $userP];
-
-        $UserController = New UserController;
-        $UserController->attachUser($role, $user);
-        return $user;
-
-        $user = Auth::user();
-        $roles = $user->role;
-
-        return getRoles($roles);
-
-        $user = User::findOrFail(1);
-
-        $roles = [];
-        $capabilities = [];
-
-        foreach ($user->role as $value) {
-            if($value){
-                $roles[] = $value->name;
-                foreach ($value->capability as $capability){
-                    $capabilities[] = $capability->name;
-                }
-            }
-        };
-        $user->privilege = ['roles'=>$roles, 'capabilities'=>$capabilities];
-
-        return $user;
+        return ['user1'=>User::findOrFail(1), 'user2'=>Auth::user()];
     }
 
     // AGREGA TODOS LOS ROLES QUE ENVIAMOS EN LA VARIABLE ROLE

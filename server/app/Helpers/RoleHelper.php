@@ -2,12 +2,16 @@
 
 function getRoles($values){
     $newValues = [];
-    foreach($values as $value){
-        $privileges[] = $value->name;
-        $newValues['roles'] = $privileges;
-        foreach($value->capability as $capability){
-            $capabilities[] = $capability->name;
-            $newValues['capabilities'] = $capabilities;
+    $newValues['roles'] = [];
+    $newValues['capabilities'] = [];
+    if(COUNT($values) > 0){
+        foreach($values as $value){
+            $privileges[] = $value->name;
+            $newValues['roles'] = $privileges;
+            foreach($value->capability as $capability){
+                $capabilities[] = $capability->name;
+                $newValues['capabilities'] = $capabilities;
+            }
         }
     }
     return $newValues;

@@ -210,10 +210,10 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
 //Testing
 Route::group(['middleware' => ['auth:sanctum', 'accountVerification']], function () {
-    Route::get('/testFunction', [TestFunctionController::class, 'test4']);
+    // Route::get('/testFunction', [TestFunctionController::class, 'test4']);
     Route::get('/componentConstructor/{id}', [ComponentController::class, 'componentConstructor']);
 });
 
-// Route::group(['middleware' => ['web']], function () {
-//     Route::post('/testFunction', [AuthenticatedSessionController::class, 'store']);
-// });
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::get('/testFunction', [TestFunctionController::class, 'test4']);
+});

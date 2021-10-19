@@ -29,12 +29,14 @@ class DatabaseSeeder extends Seeder {
         $this->call(LookUpListValueSeeder::class);
 
         $this->call(RootAccountSeeder::class);
+        $this->call(EntityFunctionSeeder::class);
         $this->call(EntitySeeder::class);
         $this->call(RoleSeeder::class);
         $this->call(CapabilitySeeder::class);
         $this->call(AddressSeeder::class);
         $this->call(PhoneSeeder::class);
         $this->call(UserSeeder::class);
+        $this->call(RoleUserSeeder::class);
         // $this->call(UserSettingSeeder::class);
         $this->call(SocialsSeeder::class);
 

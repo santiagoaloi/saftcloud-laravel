@@ -11,5 +11,5 @@ class AccountVerification {
         }
         return false;
     }
-
+    // if(in_array('Root', getRoles(Auth::user()->role))){
 }

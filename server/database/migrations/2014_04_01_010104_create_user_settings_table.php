@@ -14,6 +14,7 @@ class CreateUserSettingsTable extends Migration {
         Schema::create('user_settings', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
+            $table->smallInteger('default_branch')->nullable();
             $table->longText('view_config');
             $table->softDeletes();
             $table->timestamps();
