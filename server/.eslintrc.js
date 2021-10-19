@@ -19,6 +19,7 @@ module.exports = {
     'import/extensions': 'off',
     'no-underscore-dangle': 'off',
     'no-restricted-syntax': 'off',
+    'import/prefer-default-export': 'off',
   },
 
   globals: {

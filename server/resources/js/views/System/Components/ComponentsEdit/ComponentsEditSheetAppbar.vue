@@ -140,17 +140,13 @@
 
     methods: {
       ...call('componentManagement/*'),
+      ...call('snackbar/*'),
 
       validateBeforeSave(selectedComponent) {
         if (!this.hasValidationErrors) {
           this.saveComponent(selectedComponent);
         } else {
-          store.set('snackbar/value', true);
-          store.set(
-            'snackbar/text',
-            'There are input validation errors, check them out and try again',
-          );
-          store.set('snackbar/color', 'pink darken-1');
+          this.snackbarError('There are input validation errors');
         }
       },
 
@@ -158,12 +154,7 @@
         if (!this.hasValidationErrors) {
           this.previousComponent();
         } else {
-          store.set('snackbar/value', true);
-          store.set(
-            'snackbar/text',
-            'There are input validation errors, check them out and try again',
-          );
-          store.set('snackbar/color', 'pink darken-1');
+          this.snackbarError('There are input validation errors');
         }
       },
 
@@ -171,12 +162,7 @@
         if (!this.hasValidationErrors) {
           this.nextComponent();
         } else {
-          store.set('snackbar/value', true);
-          store.set(
-            'snackbar/text',
-            'There are input validation errors, check them out and try again',
-          );
-          store.set('snackbar/color', 'pink darken-1');
+          this.snackbarError('There are input validation errors');
         }
       },
 
@@ -185,11 +171,7 @@
           this.componentEditSheet = false;
         } else {
           store.set('snackbar/value', true);
-          store.set(
-            'snackbar/text',
-            'There are input validation errors, check them out and try again',
-          );
-          store.set('snackbar/color', 'pink darken-1');
+          this.snackbarError('There are input validation errors');
         }
       },
     },

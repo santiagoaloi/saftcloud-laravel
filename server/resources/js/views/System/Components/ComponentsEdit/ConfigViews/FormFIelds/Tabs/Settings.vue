@@ -34,7 +34,10 @@
     },
     methods: {
       setInvalid(invalid, field) {
-        store.set(`validationStates/componentsEditFormFieldsSettingsTab@${field}`, invalid);
+        store.set(
+          `validationStatesComponents/componentsEditFormFieldsSettingsTab@${field}`,
+          invalid,
+        );
       },
     },
   };

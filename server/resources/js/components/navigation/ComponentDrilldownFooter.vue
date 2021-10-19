@@ -109,6 +109,7 @@
 
     methods: {
       ...call('componentManagement/*'),
+      ...call('snackbar/*'),
 
       async save() {
         this.loading = true;
@@ -119,17 +120,17 @@
 
             if (saved) {
               this.loading = false;
+              this.snackbarSuccess('Component saved');
             } else {
               this.loading = false;
-              store.set('snackbar/value', true);
-              store.set('snackbar/text', 'The component name is invalid.');
-              store.set('snackbar/color', 'pink darken-1');
+              this.snackbarError('There was an error saving');
             }
           } catch (error) {
-            console.log(error);
+            this.snackbarError('There was an error saving');
           }
         } else {
           this.loading = false;
+          this.snackbarError('The component label is invalid');
         }
       },
 

@@ -203,7 +203,8 @@
             this.loading = false;
           }
         } catch (error) {
-          console.log(error);
+          this.loading = false;
+          this.snackbarError('There was an error saving');
         }
       },
     },

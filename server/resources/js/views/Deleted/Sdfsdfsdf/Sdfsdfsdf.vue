@@ -1,15 +1,24 @@
 <template>
   <div>
-    <div class="d-flex justify-end align-center">
-      <div class="d-flex">
-        <v-btn plain class="mx-2">
-          <v-icon class="mr-2" small> mdi-arrow-top-right </v-icon>Export
-        </v-btn>
-        <v-btn class="ml-2" :color="isDark ? 'accent' : 'primary'" @click="dialog = true">
-          <v-icon class="mr-2" small> mdi-plus </v-icon>Add records
-        </v-btn>
-      </div>
-    </div>
+    <v-card-actions class="pa-0">
+      <template v-if="$route.meta.icon">
+        <v-avatar class="cursor-pointer" size="40" rounded :color="$route.meta.icon.color">
+          <v-icon size="30" dark>
+            {{ $route.meta.icon.name || null }}
+          </v-icon>
+        </v-avatar>
+      </template>
+
+      <v-spacer></v-spacer>
+
+      <v-btn plain class="mx-2">
+        <v-icon class="mr-2" small> mdi-arrow-top-right </v-icon>Export
+      </v-btn>
+      <v-btn class="ml-2" :color="isDark ? 'accent' : 'primary'" @click="dialog = true">
+        <v-icon class="mr-2" small> mdi-plus </v-icon>Add records
+      </v-btn>
+    </v-card-actions>
+
     <v-divider class="mt-3" />
 
     <v-data-table
@@ -51,7 +60,7 @@
   import activeView from '@/mixins/activeView';
 
   export default {
-    name: 'Xa',
+    name: 'Sdfsdfsdf',
     mixins: [activeView],
     data() {
       return {
@@ -60,3 +69,18 @@
     },
   };
 </script>
+
+<style scoped>
+  .gallery-card-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(264px, 1fr));
+    grid-auto-rows: 5 0%;
+    gap: 10px;
+    justify-items: center;
+  }
+
+  .gallery-card-wrapper {
+    box-sizing: border-box;
+    text-align: left;
+  }
+</style>

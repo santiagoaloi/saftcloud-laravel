@@ -9,6 +9,7 @@
             large
             small
             :color="isDark ? '' : 'white'"
+            :disabled="['Root', 'Admin'].includes(selectedEntity.name)"
             v-on="on"
             @click.stop="
               removeComponentWarning(
@@ -44,13 +45,28 @@
         </template>
         <span>Save</span>
       </v-tooltip>
+
+      <v-tooltip transition="false" color="black" top>
+        <template #activator="{ on }">
+          <v-btn
+            depressed
+            large
+            small
+            :color="isDark ? '' : 'white'"
+            @click="testPromiseAll()"
+            v-on="on"
+          >
+            <v-icon color="green" dark> mdi-link </v-icon>
+          </v-btn>
+        </template>
+        <span>Save</span>
+      </v-tooltip>
     </div>
   </div>
 </template>
 
 <script>
   import { sync, call, get } from 'vuex-pathify';
-  import { store } from '@/store';
   import componentActions from '@/mixins/componentActions';
 
   export default {
@@ -77,6 +93,18 @@
 
     methods: {
       ...call('entitiesManagement/*'),
+      ...call('snackbar/*'),
+
+      async testPromiseAll() {
+        try {
+          const res = await Promise.all([this.test1(), this.test2(), this.test3()]);
+          const data = res.map((res) => res.data);
+          console.log(data.flat());
+          console.log('finished');
+        } catch {
+          throw Error('Promise failed');
+        }
+      },
 
       async save() {
         this.loading = true;
@@ -86,24 +114,19 @@
             const saved = await this[this.identityMethod]();
 
             if (saved) {
-              store.set('snackbar/value', true);
-              store.set('snackbar/text', 'Saved.');
-              store.set('snackbar/color', 'primary');
+              this.snackbarSuccess('Your changes are saved...');
               this.loading = false;
             } else {
               this.loading = false;
-              store.set('snackbar/value', true);
-              store.set('snackbar/text', 'There was an error saving');
-              store.set('snackbar/color', 'pink darken-1');
+              this.snackbarError('There was an error saving');
             }
           } catch (error) {
             this.loading = false;
-            store.set('snackbar/value', true);
-            store.set('snackbar/text', 'There was an error saving');
-            store.set('snackbar/color', 'pink darken-1');
+            this.snackbarError('There was an error saving');
           }
         } else {
           this.loading = false;
+          this.snackbarError('There are validation errors');
         }
       },
     },

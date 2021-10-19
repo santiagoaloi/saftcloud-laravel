@@ -61,7 +61,7 @@ const mutations = make.mutations(state);
 const getters = {
   //* returns true if at least one validation did not succeed.
   hasValidationErrors: (_, __, rootState) =>
-    Object.values(rootState.validationStates).some((innerObj) =>
+    Object.values(rootState.validationStatesComponents).some((innerObj) =>
       Object.values(innerObj).includes(true),
     ),
 
@@ -221,9 +221,8 @@ const actions = {
       .then(() => {
         dispatch('getComponents');
         dispatch('getNavigationStructure');
-        store.set('snackbar/value', true);
-        store.set('snackbar/text', 'Config structure updated');
-        store.set('snackbar/color', 'primary');
+        dispatch('snackbar/snackbarSuccess', 'Config structure updated', { root: true });
+        store.set('componentManagement/dialogEditor', false);
       });
   },
 
@@ -317,19 +316,14 @@ const actions = {
           }
           if (response.data.groups) {
             store.set('componentManagement/allGroups', response.data.groups);
-            store.set('snackbar/value', true);
-            store.set('snackbar/text', 'Group removed');
-            store.set('snackbar/color', 'primary');
-
+            dispatch('getGroups');
             dispatch('getDbGroupNames');
             dispatch('getNavigationStructure');
-            dispatch('getGroups');
+            dispatch('snackbar/snackbarSuccess', 'Group removed', { root: true });
           }
         }
       })
-      .catch((error) => {
-        console.log({ ...error });
-      });
+      .catch(() => {});
   },
 
   //* Saves the component group configuration settings.
@@ -345,9 +339,10 @@ const actions = {
       .then((response) => {
         if (response.status === 200) {
           store.set('componentManagement/allGroups', response.data.groups);
-          store.set('snackbar/value', true);
-          store.set('snackbar/text', `Group "${state.groupName}" created`);
-          store.set('snackbar/color', 'primary');
+          dispatch('snackbar/snackbarSuccess', `Group "${state.groupName}" created`, {
+            root: true,
+          });
+
           store.set('componentManagement/groupName', '');
           //  store.set("componentManagement/groupChild", "");
           store.set('componentManagement/groupParent', 0);
@@ -357,9 +352,13 @@ const actions = {
         }
       })
       .catch((error) => {
-        store.set('snackbar/value', true);
-        store.set('snackbar/text', `${error.response.status} ${error.response.statusText}`);
-        store.set('snackbar/color', 'pink darken-1');
+        dispatch(
+          'snackbar/snackbarError',
+          `${error.response.status} ${error.response.statusText}`,
+          {
+            root: true,
+          },
+        );
       });
   },
 
@@ -375,9 +374,9 @@ const actions = {
         if (response.status === 200) {
           store.set('componentManagement/allGroups', response.data.groups);
           store.set('componentManagement/groupName', '');
-          store.set('snackbar/value', true);
-          store.set('snackbar/text', 'Group renamed');
-          store.set('snackbar/color', 'primary');
+          dispatch('snackbar/snackbarSuccess', 'Group removed', {
+            root: true,
+          });
           dispatch('getNavigationStructure');
         }
       });
@@ -405,19 +404,22 @@ const actions = {
 
     return axios.put(`api/component/${component.id}`, component).then((response) => {
       if (response.status === 200) {
-        const index = state.allComponents.findIndex((c) => c.id == component.id);
+        const index = state.allComponents.findIndex((c) => c.id === component.id);
         store.set(`componentManagement/allComponents@${index}`, response.data.component);
-        store.set('snackbar/value', true);
-        store.set('snackbar/text', 'Component saved');
-        store.set('snackbar/color', 'primary');
+        store.set('componentManagement/groupName', '');
+        dispatch('snackbar/snackbarSuccess', 'Component saved', {
+          root: true,
+        });
 
         dispatch('getNavigationStructure');
         window.eventBus.$emit('BUS_BUILD_ROUTES');
         return true;
       }
-      store.set('snackbar/value', true);
-      store.set('snackbar/text', response.data.message);
-      store.set('snackbar/color', 'pink darken-1');
+
+      dispatch('snackbar/snackbarError', response.data.message, {
+        root: true,
+      });
+
       return false;
     });
   },
@@ -433,7 +435,7 @@ const actions = {
 
     //* Dispatch resetValidationStates action in validationStates module.
     //* This sets the validations to initial state values.
-    dispatch('validationStates/resetValidationStates', null, { root: true });
+    dispatch('validationStatesComponents/resetValidationStates', null, { root: true });
   },
 
   //* Soft removes a component (it can be restored).
@@ -443,9 +445,9 @@ const actions = {
         if (response.status === 200) {
           store.set('componentManagement/componentsLinkedToGroup', response.data.components);
           store.set('componentManagement/allComponents', response.data.components);
-          store.set('snackbar/value', true);
-          store.set('snackbar/text', 'Component removed');
-          store.set('snackbar/color', 'primary');
+          dispatch('snackbar/snackbarSuccess', 'Component removed', {
+            root: true,
+          });
           store.set('drawers/secureComponentDrawer', false);
           dispatch('getNavigationStructure');
           if (rootState.drawers.secureComponentDrawer) {
@@ -454,10 +456,13 @@ const actions = {
         }
       })
       .catch((error) => {
-        console.log({ ...error });
-        store.set('snackbar/value', true);
-        store.set('snackbar/text', `${error.response.status} ${error.response.statusText}`);
-        store.set('snackbar/color', 'pink darken-1');
+        dispatch(
+          'snackbar/snackbarError',
+          `${error.response.status} ${error.response.statusText}`,
+          {
+            root: true,
+          },
+        );
       });
   },
 
@@ -466,9 +471,6 @@ const actions = {
     return axios.post('api/component', state.componentSettings).then((response) => {
       if (response.status === 200) {
         store.set('componentManagement/allComponents', response.data.components);
-        store.set('snackbar/value', true);
-        store.set('snackbar/text', `"${state.componentSettings.title}" component created`);
-        store.set('snackbar/color', 'primary');
 
         //* Set the status tab as "all"
         state.activeStatusTab = 0;
@@ -499,49 +501,58 @@ const actions = {
         store.set('componentManagement/componentSettings', initialComponentSettings());
 
         dispatch('getNavigationStructure');
+
+        dispatch(
+          'snackbar/snackbarSuccess',
+          `"${state.componentSettings.title}" component created`,
+          {
+            root: true,
+          },
+        );
+
         return true;
       }
     });
   },
 
   //* Creates a new role capability for a component.
-  createCapability({ getters }, capability) {
+  createCapability({ dispatch }, capability) {
     return axios.post('api/capability', capability).then((response) => {
       if (response.status === 200) {
-        store.set('snackbar/value', true);
-        store.set('snackbar/text', 'Capability added');
-        store.set('snackbar/color', 'primary');
+        dispatch('snackbar/snackbarSuccess', 'Capability added', {
+          root: true,
+        });
         return true;
       }
     });
   },
 
-  editCapabilitySaveChanges({ getters }, capability) {
+  editCapabilitySaveChanges({ getters, dispatch }, capability) {
     capability.name = `${getters.selectedComponent.name}.${capability.name}`;
     return axios.put(`api/capability/${capability.id}`, capability).then((response) => {
       if (response.status === 200) {
-        store.set('snackbar/value', true);
-        store.set('snackbar/text', 'Capability edited');
-        store.set('snackbar/color', 'primary');
+        dispatch('snackbar/snackbarSuccess', 'Capability edited', {
+          root: true,
+        });
         return true;
       }
     });
   },
 
-  removeCapability({}, capability) {
+  removeCapability({ dispatch }, capability) {
     return axios.delete(`api/capability/${capability.id}`).then((response) => {
       if (response.status === 200) {
-        store.set('snackbar/value', true);
-        store.set('snackbar/text', 'Capability removed');
-        store.set('snackbar/color', 'primary');
+        dispatch('snackbar/snackbarSuccess', 'Capability removed', {
+          root: true,
+        });
         return true;
       }
     });
   },
 
   editCapability({ state }, item) {
-    state.editingCapability = true;
     state.capability = item;
+    state.editingCapability = true;
     state.capability.name = state.capability.name.replace('Test.', '');
   },
 

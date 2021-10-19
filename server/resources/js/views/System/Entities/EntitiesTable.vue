@@ -211,7 +211,7 @@
       },
 
       calculateHeight() {
-        return Number(this.$vuetify.breakpoint.height - 430);
+        return Number(this.$vuetify.breakpoint.height - 270);
       },
     },
   };

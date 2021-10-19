@@ -2,7 +2,7 @@ export default [
   {
     path: '/Components',
     name: 'Components',
-    meta: { layout: 'secure-layout', title: 'Manage components' },
+    meta: { layout: 'secure-layout', title: 'Manage components', search: 'components...' },
     component: () =>
       import(/* webpackChunkName: 'components' */ '@/views/System/Components/Components.vue'),
     children: [
@@ -16,7 +16,7 @@ export default [
           ),
       },
       {
-        path: '/Fomponents/FormFields',
+        path: '/Components/FormFields',
         name: 'Components/FormFields',
         meta: { layout: 'secure-layout', title: 'Manage components' },
         component: () =>
@@ -48,9 +48,8 @@ export default [
   {
     path: '/Entities',
     name: 'Entities',
-    meta: { layout: 'secure-layout', title: 'Manage users and roles' },
+    meta: { layout: 'secure-layout', title: 'Manage users and roles', search: 'entities...' },
     component: () =>
       import(/* webpackChunkName: 'entities' */ '@/views/System/Entities/Entities.vue'),
-    children: [],
   },
 ];

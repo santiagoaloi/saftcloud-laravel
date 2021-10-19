@@ -12,4 +12,5 @@ export { default as componentManagement } from './componentManagement';
 export { default as entitiesManagement } from './entitiesManagement';
 
 // Validations
-export { default as validationStates } from './validationStates';
+export { default as validationStatesComponents } from './validationStatesComponents';
+export { default as validationStatesEntities } from './validationStatesEntities';

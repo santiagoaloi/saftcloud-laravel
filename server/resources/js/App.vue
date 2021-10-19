@@ -32,9 +32,9 @@
         return this.$route.meta.layout;
       },
 
-      vuetfiy() {
-        return this.$vuetify;
-      },
+      // vuetfiy() {
+      //   return this.$vuetify;
+      // },
     },
 
     watch: {
@@ -75,11 +75,6 @@
           axios.get('/api/getComponentNames/').then((response) => {
             const { components } = response.data;
 
-            // * Dummy component to avoid webpack error about not finding the path.
-            //   if (!components.length) {
-            //    components.push("Blank");
-            //   }
-
             // * add new routes
             //   if(components[0] != 'Blank'){
             for (const component of components) {
@@ -90,7 +85,7 @@
                   layout: 'secure-layout',
                   title: component.title,
                   id: component.id,
-                  icon: component.configSettings.icon ? component.configSettings.icon : null,
+                  icon: component.configSettings.icon || null,
                 },
                 component: () =>
                   import(`./views/Protected/${component.name}/${component.name}.vue`),

@@ -11,9 +11,6 @@
 </template>
 
 <script>
-  import SessionTimeout from './SessionTimeout/SessionTimeout.vue';
-  import WarningDialog from './SessionTimeout/warningDialog.vue';
-
   export default {
     name: 'SecureLayout',
     components: {

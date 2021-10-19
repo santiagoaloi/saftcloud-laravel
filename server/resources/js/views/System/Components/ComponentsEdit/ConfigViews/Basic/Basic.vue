@@ -130,7 +130,7 @@
 
     methods: {
       setInvalid(invalid, field) {
-        store.set(`validationStates/componentsEditBasic@${field}`, invalid);
+        store.set(`validationStatesComponents/componentsEditBasic@${field}`, invalid);
       },
     },
   };

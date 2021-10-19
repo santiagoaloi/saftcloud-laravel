@@ -21,7 +21,7 @@
               :outlined="isDark"
               prepend-inner-icon="mdi-comment"
               counter
-              maxlength="20"
+              maxlength="70"
               :color="isDark ? '#208ad6' : 'grey'"
               :background-color="isDark ? '#28292b' : 'white'"
               :error="errors.length > 0"
@@ -38,7 +38,6 @@
 </template>
 <script>
   import { sync, call } from 'vuex-pathify';
-  import { store } from '@/store';
 
   export default {
     name: 'DialogEntity',
@@ -67,6 +66,7 @@
 
     methods: {
       ...call('entitiesManagement/*'),
+      ...call('snackbar/*'),
 
       validateEntity() {
         this.loading = true;
@@ -83,9 +83,7 @@
                 }
               })
               .catch(() => {
-                store.set('snackbar/value', true);
-                store.set('snackbar/text', 'There was an error saving...');
-                store.set('snackbar/color', 'pink darken-1');
+                this.snackbarError('There was an error saving');
                 this.loading = false;
               });
           } else {

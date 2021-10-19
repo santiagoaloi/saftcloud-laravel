@@ -4,6 +4,9 @@ import auth from '@/util/auth';
 import { store } from '@/store';
 import routes from '@/router/routes';
 
+const lastUrl = window.location.href;
+const lastRoute = lastUrl.substring(lastUrl.lastIndexOf('#') + 1);
+
 Vue.use(Router);
 
 const createRouter = () =>
@@ -42,7 +45,7 @@ router.beforeResolve((to, from, next) => {
   if (auth.loggedIn()) {
     if (to.matched.some((record) => record.name === 'Login')) {
       // Redirect to the home page instead
-      next({ path: '/Components' });
+      next({ path: lastRoute });
     } else {
       // Continue to the login page
       next();

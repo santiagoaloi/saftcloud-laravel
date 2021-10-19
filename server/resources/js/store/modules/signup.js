@@ -33,8 +33,8 @@ const getters = {
     return fields.some((f) => f != null && f.toLowerCase().includes(searchText));
   },
 
-  getCountryNameAndCode: (state) => (phone_code) => {
-    const countryObject = state.countryCodes.filter((item) => item.phone_code === phone_code);
+  getCountryNameAndCode: (state) => (code) => {
+    const countryObject = state.countryCodes.filter((item) => item.phone_code === code);
     return `${countryObject[0].name} +${countryObject[0].phone_code} `;
   },
 
@@ -66,11 +66,9 @@ const actions = {
         if (response.status === 200) {
           commit('countryCodes', response.data.records);
         }
+        state.countriesLoading = false;
       })
-      .catch((err) => {
-        console.log(err);
-      })
-      .finally(() => (state.countriesLoading = false));
+      .catch(() => {});
   },
 
   getStates({ commit }, state) {
@@ -81,9 +79,7 @@ const actions = {
           commit('states', response.data.records);
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch(() => {});
   },
 };
 

@@ -51,7 +51,7 @@
   import activeView from '@/mixins/activeView';
 
   export default {
-    name: 'Vvv',
+    name: 'Zxcz',
     mixins: [activeView],
     data() {
       return {

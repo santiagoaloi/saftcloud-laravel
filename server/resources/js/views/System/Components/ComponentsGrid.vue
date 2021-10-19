@@ -166,7 +166,6 @@
 
 <script>
   import { sync, call, get } from 'vuex-pathify';
-  import { store } from '@/store';
 
   export default {
     name: 'ComponentsGridView',
@@ -205,17 +204,13 @@
 
     methods: {
       ...call('componentManagement/*'),
+      ...call('snackbar/*'),
 
       validateBeforeEdit() {
         if (this.selectedComponent.config.general_config.title) {
           this.componentEditSheet = !this.componentEditSheet;
         } else {
-          store.set('snackbar/value', true);
-          store.set(
-            'snackbar/text',
-            'There are input validation errors, check them out before editing',
-          );
-          store.set('snackbar/color', 'pink darken-1');
+          this.snackbarError('There are input validation errors');
         }
       },
 

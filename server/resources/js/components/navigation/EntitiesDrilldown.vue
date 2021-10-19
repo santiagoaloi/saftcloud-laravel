@@ -39,7 +39,7 @@
       <template v-if="selectedEntityType === 'Roles'">
         <baseFieldLabel required label="Role Name" />
         <validation-provider
-          v-slot="{ errors }"
+          v-slot="{ errors, invalid }"
           immediate
           mode="aggressive"
           name="Role name"
@@ -59,6 +59,8 @@
             hide-details="auto"
             class="mb-3"
             dense
+            :disabled="['Root', 'Admin'].includes(selectedEntity.name)"
+            @change="setInvalid(invalid, 'roleName')"
           >
           </v-text-field>
         </validation-provider>
@@ -106,6 +108,7 @@
             multiple
             dense
             return-object
+            attach
           >
             <template #selection="data">
               <v-chip
@@ -283,6 +286,7 @@
 <script>
   import { sync, call, get } from 'vuex-pathify';
   import componentActions from '@/mixins/componentActions';
+  import { store } from '@/store';
 
   export default {
     name: 'ComponentDrilldown',
@@ -311,6 +315,10 @@
 
     methods: {
       ...call('entitiesManagement/*'),
+
+      setInvalid(invalid, field) {
+        store.set(`validationStatesEntities/roles@${field}`, invalid);
+      },
 
       extractPrefix(item) {
         const prefix = item.substr(0, item.indexOf('.'));

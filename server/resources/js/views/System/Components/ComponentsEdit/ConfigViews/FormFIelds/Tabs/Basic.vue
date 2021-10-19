@@ -71,7 +71,7 @@
 
     computed: {
       ...sync('theme', ['isDark']),
-      ...sync('validationStates', ['componentsEditFormFieldsBasicTab']),
+      ...sync('validationStatesComponents', ['componentsEditFormFieldsBasicTab']),
       ...get('componentManagement', ['selectedComponentFormField']),
 
       componentIcon() {
@@ -82,7 +82,7 @@
 
     methods: {
       setInvalid(invalid, field) {
-        store.set(`validationStates/componentsEditFormFieldsBasicTab@${field}`, invalid);
+        store.set(`validationStatesComponents/componentsEditFormFieldsBasicTab@${field}`, invalid);
       },
     },
   };

@@ -36,6 +36,10 @@ const vuexLocal = new VuexPersist({
     componentManagement: {
       ...componentManagementFiltered(state.componentManagement),
     },
+
+    entitiesManagement: {
+      ...state.entitiesManagement,
+    },
   }),
 });
 

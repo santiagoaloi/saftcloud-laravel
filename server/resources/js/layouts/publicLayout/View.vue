@@ -1,7 +1,7 @@
 <template>
   <v-main style="min-height: 110vh">
     <v-fade-transition mode="out-in">
-      <router-view :key="$route.fullPath" />
+      <router-view />
     </v-fade-transition>
   </v-main>
 </template>

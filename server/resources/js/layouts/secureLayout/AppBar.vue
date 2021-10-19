@@ -16,14 +16,6 @@
         @click="secureDefaultDrawer = !secureDefaultDrawer"
       />
 
-      <template v-if="routeIcon">
-        <v-avatar class="cursor-pointer my-4 ml-8" size="40" rounded :color="routeIcon.color">
-          <v-icon size="30" dark>
-            {{ routeIcon.name || null }}
-          </v-icon>
-        </v-avatar>
-      </template>
-
       <h4 style="position: absolute" class="white--text ml-8">
         {{ routeTitle }}
       </h4>
@@ -40,7 +32,7 @@
         :background-color="isDark ? '#28292b' : 'white'"
         dense
         hide-details
-        placeholder="Search..."
+        :placeholder="'Search ' + ($route.meta.search || '...')"
         prepend-inner-icon="mdi-magnify"
         :class="expand ? 'expanded' : 'shrinked'"
         class="mx-11 pr-12"

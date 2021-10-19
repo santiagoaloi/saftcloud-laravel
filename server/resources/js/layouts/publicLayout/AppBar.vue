@@ -69,7 +69,7 @@
           </v-btn>
           <v-btn
             min-width="100px"
-            to="/Login"
+            to="/Components"
             height="36"
             class="mr-3"
             rounded
@@ -132,43 +132,6 @@
       return {
         responsiveMenu: false,
         store,
-        navMenu: [
-          {
-            name: 'aktuellt',
-            href: 'pub_aktuellt',
-            disabled: false,
-          },
-          {
-            name: 'Portfolio',
-            href: 'portfolio',
-            disabled: false,
-          },
-          {
-            name: 'Bli medlem',
-            href: 'medlem',
-            disabled: false,
-          },
-          {
-            name: 'Press',
-            href: 'press',
-            disabled: false,
-          },
-          {
-            name: 'Om oss',
-            href: 'om',
-            disabled: false,
-          },
-          {
-            name: 'Kontakt',
-            href: 'kontakt',
-            disabled: false,
-          },
-          {
-            name: 'English',
-            href: 'english',
-            disabled: false,
-          },
-        ],
       };
     },
 

@@ -47,7 +47,7 @@ const mutations = make.mutations(state);
 const getters = {
   //* returns true if at least one validation did not succeed.
   hasValidationErrors: (_, __, rootState) =>
-    Object.values(rootState.validationStates).some((innerObj) =>
+    Object.values(rootState.validationStatesEntities).some((innerObj) =>
       Object.values(innerObj).includes(true),
     ),
 
@@ -180,37 +180,44 @@ const actions = {
 
     //* Dispatch resetValidationStates action in validationStates module.
     //* This sets the validations to initial state values.
-    dispatch('validationStates/resetValidationStates', null, { root: true });
+    dispatch('validationStatesEntities/resetValidationStates', null, { root: true });
   },
 
   //* Creates a new user in the database.
-  createUser({ state }) {
+  createUser({ state, dispatch }) {
     return axios.post('api/user', state.user).then((response) => {
       if (response.status === 200) {
-        store.set('snackbar/value', true);
-        store.set('snackbar/text', 'User created');
-        store.set('snackbar/color', 'primary');
-        store.set('entitiesManagement/dialogEntity', false);
+        dispatch('snackbar/snackbarSuccess', 'New user created', { root: true });
         return true;
       }
     });
   },
 
   //* Creates a new role in the database.
-  createRole({ state, rootState }) {
+  createRole({ state, rootState, dispatch }) {
     const post = {
       ...state.role,
       entity_id: rootState.authentication.activeBranch,
     };
     return axios.post('api/role', post).then((response) => {
       if (response.status === 200) {
-        store.set('snackbar/value', true);
-        store.set('snackbar/text', 'role created');
-        store.set('snackbar/color', 'primary');
+        dispatch('snackbar/snackbarSuccess', 'New role created', { root: true });
         store.set('entitiesManagement/dialogEntity', false);
         return true;
       }
     });
+  },
+
+  test1() {
+    return axios.get('api/test1');
+  },
+
+  test2() {
+    return axios.get('api/test1');
+  },
+
+  test3() {
+    return axios.get('api/test1');
   },
 
   //* Saves Entity User Settings
@@ -218,12 +225,8 @@ const actions = {
     const userId = getters.selectedEntity.id;
     const roles = { name: 'role', items: getters.selectedEntity.role };
 
-    axios.post(`api/syncUser/${userId}`, roles).then((response) => {
+    return axios.post(`api/syncUser/${userId}`, roles).then((response) => {
       if (response.status === 200) {
-        store.set('snackbar/value', true);
-        store.set('snackbar/text', 'roles assigned');
-        store.set('snackbar/color', 'primary');
-
         const index = state[`all${state.selectedEntityType}`].findIndex(
           (e) => e.id === getters.selectedEntity.id,
         );
@@ -235,16 +238,17 @@ const actions = {
           ...getters.selectedEntity,
           origin: cloneDeep(getters.selectedEntity),
         });
+        return true;
       }
     });
   },
 
   //* Saves Entity User Settings
-  saveEntityRole({ state, getters }) {
-    const userId = getters.selectedEntity.id;
+  saveEntityRole({ dispatch, getters }) {
+    const roleId = getters.selectedEntity.id;
     const capabilities = { name: 'capability', items: getters.selectedEntity.capability };
 
-    return axios.post(`api/syncRole/${userId}`, capabilities).then((response) => {
+    return axios.post(`api/syncRole/${roleId}`, capabilities).then((response) => {
       if (response.status === 200) {
         const meta = {
           name: getters.selectedEntity.name,
@@ -252,27 +256,29 @@ const actions = {
         };
 
         return axios
-          .put(`api/role/${userId}`, meta)
+          .put(`api/role/${roleId}`, meta)
           .then((response) => {
             if (response.status === 200) {
-              const index = state[`all${state.selectedEntityType}`].findIndex(
-                (e) => e.id === getters.selectedEntity.id,
-              );
+              // const index = state.allRoles.findIndex((r) => r.id === getters.selectedEntity.id);
 
-              //* Avoids origin duplication.
-              delete getters.selectedEntity.origin;
+              // //* Avoids origin duplication.
+              // delete getters.selectedEntity.origin;
 
-              store.set(`entitiesManagement/all${state.selectedEntityType}@${index}`, {
-                ...getters.selectedEntity,
-                origin: cloneDeep(getters.selectedEntity),
+              // store.set(`entitiesManagement/all${state.selectedEntityType}@${index}`, {
+              //   ...getters.selectedEntity,
+              //   origin: cloneDeep(getters.selectedEntity),
+              // });
+
+              axios.get(`api/role/${getters.selectedEntity.id}`).then(() => {
+                // store.set(`entitiesManagement/allRoles@${index}`, {
+                // });
               });
+
               return true;
             }
           })
           .catch(() => {
-            store.set('snackbar/value', true);
-            store.set('snackbar/text', 'There was an error saving...');
-            store.set('snackbar/color', 'pink darken-1');
+            dispatch('snackbar/snackbarError', 'There was an error saving', { root: true });
           });
       }
     });
@@ -295,7 +301,7 @@ const actions = {
   },
 
   //* Sets the component as starred, modular or active.
-  setEntityStatus({}, component) {
+  setEntityStatus(_, component) {
     axios.patch(`api/component/${component.id}`, { status: component.status });
   },
 
