@@ -118,6 +118,18 @@ class TestFunctionController extends Controller {
         return ['user1'=>User::findOrFail(1), 'user2'=>Auth::user()];
     }
 
+    public function test7(){
+        return ["status"=>true];
+    }
+
+    public function test8(){
+        return ["status"=>true];
+    }
+
+    public function test9(){
+        return ["status"=>true];
+    }
+
     // AGREGA TODOS LOS ROLES QUE ENVIAMOS EN LA VARIABLE ROLE
     public function attachRoles(Request $request, $role){
         $request->role()->attach($role);
