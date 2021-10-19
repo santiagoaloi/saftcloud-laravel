@@ -36,6 +36,7 @@ class DatabaseSeeder extends Seeder {
         $this->call(AddressSeeder::class);
         $this->call(PhoneSeeder::class);
         $this->call(UserSeeder::class);
+        $this->call(UserSettingsSeeder::class);
         $this->call(RoleUserSeeder::class);
         // $this->call(UserSettingSeeder::class);
         $this->call(SocialsSeeder::class);
