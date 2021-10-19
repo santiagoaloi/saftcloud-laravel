@@ -33,6 +33,7 @@
             large
             small
             :color="isDark ? '' : 'white'"
+            :loading="loading"
             @click="save()"
             v-on="on"
           >
@@ -55,7 +56,11 @@
   export default {
     name: 'ComponentDrilldownFooter',
     mixins: [componentActions],
-
+    data() {
+      return {
+        loading: false,
+      };
+    },
     computed: {
       ...sync('theme', ['isDark']),
       ...get('entitiesManagement', [
@@ -64,23 +69,41 @@
         'hasValidationErrors',
         'selectedEntityType',
       ]),
+
+      identityMethod() {
+        return this.selectedEntityType === 'Users' ? 'saveEntityUser' : 'saveEntityRole';
+      },
     },
 
     methods: {
       ...call('entitiesManagement/*'),
 
-      save() {
+      async save() {
+        this.loading = true;
+
         if (!this.hasValidationErrors) {
-          if (this.selectedEntityType === 'Users') {
-            this.saveEntityUser();
-          }
-          if (this.selectedEntityType === 'Roles') {
-            this.saveEntityRole();
+          try {
+            const saved = await this[this.identityMethod]();
+
+            if (saved) {
+              store.set('snackbar/value', true);
+              store.set('snackbar/text', 'Saved.');
+              store.set('snackbar/color', 'primary');
+              this.loading = false;
+            } else {
+              this.loading = false;
+              store.set('snackbar/value', true);
+              store.set('snackbar/text', 'There was an error saving');
+              store.set('snackbar/color', 'pink darken-1');
+            }
+          } catch (error) {
+            this.loading = false;
+            store.set('snackbar/value', true);
+            store.set('snackbar/text', 'There was an error saving');
+            store.set('snackbar/color', 'pink darken-1');
           }
         } else {
-          store.set('snackbar/value', true);
-          store.set('snackbar/text', 'There are validation errors, please correct them.');
-          store.set('snackbar/color', 'pink darken-1');
+          this.loading = false;
         }
       },
     },

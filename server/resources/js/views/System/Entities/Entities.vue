@@ -69,7 +69,7 @@
     methods: {
       ...call('entitiesManagement/*'),
       calculateHeight() {
-        return Number(this.$vuetify.breakpoint.height - 366);
+        return Number(this.$vuetify.breakpoint.height - 200);
       },
     },
   };
