@@ -28,7 +28,7 @@ class PhoneController extends Controller {
         ], 200);
     }
 
-    public function show(Request $id) {
+    public function show($id) {
         $this->authorize('show', Phone::class);
         $result = Phone::find($id);
         origin($result);

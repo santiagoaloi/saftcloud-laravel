@@ -27,26 +27,18 @@ class LookUpListValueController extends Controller {
         ], 200);
     }
 
-    public function show(Request $id, $local = false) {
+    public function show($id) {
         $result = LookUpListValue::find($id);
 
-        if ($local){
-            return $result;
-        } else {
-            return response([
-                'record'=> $result
-            ], 200);
-        }
+        return response([
+            'record'=> $result
+        ], 200);
     }
 
-    public function showAll($local = false, $parentId = ['']) {
-        if ($local){
-            return LookUpListValue::whereIn('look_up_list_id', $parentId)->get();
-        } else {
-            return response([
-                'records'=> LookUpListValue::get()
-            ], 200);
-        }
+    public function showAll() {
+        return response([
+            'records'=> LookUpListValue::get()
+        ], 200);
     }
 
     //  Para mostrar los elementos eliminados

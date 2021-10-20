@@ -28,7 +28,7 @@ class CategoryController extends Controller {
         ], 200);
     }
 
-    public function show(Request $id, $local = false) {
+    public function show($id) {
         $this->authorize('show', Category::class);
         $result = Category::find($id);
         origin($result);

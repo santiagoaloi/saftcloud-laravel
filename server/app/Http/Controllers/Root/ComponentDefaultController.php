@@ -40,7 +40,7 @@ class ComponentDefaultController extends Controller {
         return $components;
     }
 
-    public function show(Request $id) {
+    public function show($id) {
         $result = ComponentDefault::find($id);
         origin($result);
 

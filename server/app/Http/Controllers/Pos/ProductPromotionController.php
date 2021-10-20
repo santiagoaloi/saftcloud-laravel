@@ -28,7 +28,7 @@ class ProductPromotionController extends Controller {
         ], 200);
     }
 
-    public function show(Request $id) {
+    public function show($id) {
         $this->authorize('show', ProductPromotion::class);
         $result = ProductPromotion::find($id);
         origin($result);

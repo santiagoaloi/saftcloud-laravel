@@ -28,7 +28,7 @@ class PointOfSaleController extends Controller {
         ], 200);
     }
 
-    public function show(Request $id) {
+    public function show($id) {
         $this->authorize('forceDestroy', PointOfSale::class);
         $result = PointOfSale::find($id);
         origin($result);

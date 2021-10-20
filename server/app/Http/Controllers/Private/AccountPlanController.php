@@ -28,7 +28,7 @@ class AccountPlanController extends Controller {
         ], 200);
     }
 
-    public function show(Request $id) {
+    public function show($id) {
         $this->authorize('show', AccountPlan::class);
         $result = AccountPlan::find($id);
         origin($result);

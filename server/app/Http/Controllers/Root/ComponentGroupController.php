@@ -28,7 +28,7 @@ class ComponentGroupController extends Controller {
         return $this->showAll();
     }
 
-    public function show(Request $id) {
+    public function show($id) {
         $result = ComponentGroup::find($id);
         origin($result);
 

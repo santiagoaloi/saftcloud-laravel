@@ -28,7 +28,7 @@ class MkupController extends Controller {
         ], 200);
     }
 
-    public function show(Request $id, $local = false) {
+    public function show($id) {
         $this->authorize('show', Mkup::class);
         $result = Mkup::find($id);
         origin($result);

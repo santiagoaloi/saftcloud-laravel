@@ -29,7 +29,7 @@ class LookUpListController extends Controller {
         ], 200);
     }
 
-    public function show(Request $id) {
+    public function show($id) {
         return response([
             'record'=> LookUpList::find($id)
         ], 200);

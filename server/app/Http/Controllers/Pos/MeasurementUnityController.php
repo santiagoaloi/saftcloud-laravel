@@ -28,7 +28,7 @@ class MeasurementUnityController extends Controller {
         ], 200);
     }
 
-    public function show(Request $id, $local = false) {
+    public function show($id) {
         $this->authorize('show', MeasurementUnit::class);
         $result = MeasurementUnit::find($id);
         origin($result);

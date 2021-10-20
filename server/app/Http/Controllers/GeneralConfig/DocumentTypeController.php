@@ -28,7 +28,7 @@ class DocumentTypeController extends Controller {
         ], 200);
     }
 
-    public function show(Request $id) {
+    public function show($id) {
         $this->authorize('show', DocumentType::class);
         $result = DocumentType::find($id);
         origin($result);

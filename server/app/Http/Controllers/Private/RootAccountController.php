@@ -28,7 +28,7 @@ class RootAccountController extends Controller {
         ], 200);
     }
 
-    public function show(Request $id) {
+    public function show($id) {
         $this->authorize('show', RootAccount::class);
         $result = RootAccount::find($id);
         origin($result);

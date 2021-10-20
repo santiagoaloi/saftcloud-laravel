@@ -28,7 +28,7 @@ class ProductController extends Controller {
         ], 200);
     }
 
-    public function show(Request $id) {
+    public function show($id) {
         $this->authorize('show', Product::class);
         $result = Product::find($id);
         origin($result);

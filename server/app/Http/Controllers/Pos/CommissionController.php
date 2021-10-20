@@ -28,7 +28,7 @@ class CommissionController extends Controller {
         ], 200);
     }
 
-    public function show(Request $id, $local = false) {
+    public function show($id) {
         $this->authorize('show', Commission::class);
         $result = Commission::find($id);
         origin($result);

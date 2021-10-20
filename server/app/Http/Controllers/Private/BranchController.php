@@ -28,7 +28,7 @@ class BranchController extends Controller {
         ], 200);
     }
 
-    public function show(Request $id) {
+    public function show($id) {
         $this->authorize('show', Branch::class);
         $result = Branch::find($id);
         origin($result);

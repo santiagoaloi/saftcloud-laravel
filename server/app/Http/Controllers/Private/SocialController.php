@@ -28,7 +28,7 @@ class SocialController extends Controller {
         ], 200);
     }
 
-    public function show(Request $id) {
+    public function show($id) {
         $this->authorize('show', Social::class);
         $result = Social::find($id);
         origin($result);

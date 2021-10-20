@@ -28,7 +28,7 @@ class BrandController extends Controller {
         ], 200);
     }
 
-    public function show(Request $id, $local = false) {
+    public function show($id) {
         $this->authorize('show', Brand::class);
         $result = Brand::find($id);
         origin($result);

@@ -28,7 +28,7 @@ class FamilyController extends Controller {
         ], 200);
     }
 
-    public function show(Request $id, $local = false) {
+    public function show($id) {
         $this->authorize('show', Family::class);
         $result = Family::find($id);
         origin($result);

@@ -28,7 +28,7 @@ class AccountPaymentController extends Controller {
         ], 200);
     }
 
-    public function show(Request $id) {
+    public function show($id) {
         $this->authorize('show', AccountPayment::class);
         $result = AccountPayment::find($id);
         origin($result);

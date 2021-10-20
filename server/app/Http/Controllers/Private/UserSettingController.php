@@ -28,7 +28,7 @@ class UserSettingController extends Controller {
         ], 200);
     }
 
-    public function show(Request $id) {
+    public function show($id) {
         $this->authorize('show', userSetting::class);
         $result = userSetting::find($id);
         origin($result);

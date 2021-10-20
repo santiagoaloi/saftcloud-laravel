@@ -28,7 +28,7 @@ class EntityController extends Controller {
         ], 200);
     }
 
-    public function show(Request $id) {
+    public function show($id) {
         $this->authorize('show', Entity::class);
         $result = Entity::find($id);
         origin($result);
