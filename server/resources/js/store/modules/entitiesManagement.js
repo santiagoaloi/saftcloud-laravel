@@ -184,7 +184,7 @@ const actions = {
   },
 
   //* Creates a new user in the database.
-  createUser({ state, dispatch }) {
+  async createUser({ state, dispatch }) {
     return axios.post('api/user', state.user).then((response) => {
       if (response.status === 200) {
         dispatch('snackbar/snackbarSuccess', 'New user created', { root: true });
@@ -194,7 +194,7 @@ const actions = {
   },
 
   //* Creates a new role in the database.
-  createRole({ state, rootState, dispatch }) {
+  async createRole({ state, rootState, dispatch }) {
     const post = {
       ...state.role,
       entity_id: rootState.authentication.activeBranch,
@@ -221,7 +221,7 @@ const actions = {
   },
 
   //* Saves Entity User Settings
-  saveEntityUser({ state, getters }) {
+  async saveEntityUser({ state, getters }) {
     const userId = getters.selectedEntity.id;
     const roles = { name: 'role', items: getters.selectedEntity.role };
 
@@ -244,7 +244,7 @@ const actions = {
   },
 
   //* Saves Entity User Settings
-  saveEntityRole({ dispatch, getters }) {
+  async saveEntityRole({ dispatch, getters }) {
     const roleId = getters.selectedEntity.id;
     const capabilities = { name: 'capability', items: getters.selectedEntity.capability };
 

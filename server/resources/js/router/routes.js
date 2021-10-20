@@ -6,12 +6,7 @@ export default [
     path: '/',
     name: 'initial',
     meta: { layout: 'public-layout' },
-    redirect: {
-      path: '/Homepage',
-      meta: {
-        layout: 'public-layout',
-      },
-    },
+    component: () => import(/* webpackChunkName: 'homepage' */ '@/views/Public/Homepage/Index.vue'),
   },
   ...staticRoutes,
   ...publicRoutes,

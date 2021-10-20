@@ -40,7 +40,7 @@
             <thead>
               <tr>
                 <th class="text-left">Privilege name</th>
-                <th class="text-left">Role</th>
+                <th class="text-left">Inheritance</th>
               </tr>
             </thead>
             <tbody>

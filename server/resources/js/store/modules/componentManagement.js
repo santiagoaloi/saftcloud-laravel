@@ -213,7 +213,7 @@ const actions = {
   ...make.actions(state),
 
   //* Saves the component configuration structure as a new version of the configuration (version control).
-  saveComponentsConfigStructure({ state, dispatch }) {
+  async saveComponentsConfigStructure({ state, dispatch }) {
     return axios
       .post('api/componentDefault', {
         config_structure: JSON.parse(state.componentsConfigStructure),
@@ -394,7 +394,7 @@ const actions = {
   },
 
   //* Saves component configuration.
-  saveComponent({ state, dispatch }, component) {
+  async saveComponent({ state, dispatch }, component) {
     //* Remove strange characters, add space instead.
     component.config.general_config.sql_query = component.config.general_config.sql_query
       .split(/\r?\n/)
@@ -467,7 +467,7 @@ const actions = {
   },
 
   //* Creates a new component in the database.
-  createComponent({ state, getters, dispatch }) {
+  async createComponent({ state, getters, dispatch }) {
     return axios.post('api/component', state.componentSettings).then((response) => {
       if (response.status === 200) {
         store.set('componentManagement/allComponents', response.data.components);
@@ -516,7 +516,7 @@ const actions = {
   },
 
   //* Creates a new role capability for a component.
-  createCapability({ dispatch }, capability) {
+  async createCapability({ dispatch }, capability) {
     return axios.post('api/capability', capability).then((response) => {
       if (response.status === 200) {
         dispatch('snackbar/snackbarSuccess', 'Capability added', {
@@ -527,7 +527,7 @@ const actions = {
     });
   },
 
-  editCapabilitySaveChanges({ getters, dispatch }, capability) {
+  async editCapabilitySaveChanges({ getters, dispatch }, capability) {
     capability.name = `${getters.selectedComponent.name}.${capability.name}`;
     return axios.put(`api/capability/${capability.id}`, capability).then((response) => {
       if (response.status === 200) {
@@ -539,7 +539,7 @@ const actions = {
     });
   },
 
-  removeCapability({ dispatch }, capability) {
+  async removeCapability({ dispatch }, capability) {
     return axios.delete(`api/capability/${capability.id}`).then((response) => {
       if (response.status === 200) {
         dispatch('snackbar/snackbarSuccess', 'Capability removed', {

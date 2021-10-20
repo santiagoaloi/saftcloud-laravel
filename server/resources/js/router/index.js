@@ -4,9 +4,6 @@ import auth from '@/util/auth';
 import { store } from '@/store';
 import routes from '@/router/routes';
 
-const lastUrl = window.location.href;
-const lastRoute = lastUrl.substring(lastUrl.lastIndexOf('#') + 1);
-
 Vue.use(Router);
 
 const createRouter = () =>
@@ -26,33 +23,20 @@ export function resetRouter() {
 
 const waitForStorageToBeReady = async (to, from, next) => {
   if (to.matched.some((record) => record.meta.layout === 'secure-layout')) {
-    if (auth.loggedIn()) {
-      await store.restored;
+    await store.restored;
+    if (auth.loggedIn() && to.matched.some((record) => record.name !== 'Login')) {
       next();
     } else {
       await store.restored;
       next({ path: '/Login' });
     }
+  } else if (auth.loggedIn() && to.matched.some((record) => record.name === 'Login')) {
+    next({ path: '/Components' });
   } else {
     next();
   }
 };
 
 router.beforeEach(waitForStorageToBeReady);
-
-router.beforeResolve((to, from, next) => {
-  // If the user is already logged in
-  if (auth.loggedIn()) {
-    if (to.matched.some((record) => record.name === 'Login')) {
-      // Redirect to the home page instead
-      next({ path: lastRoute });
-    } else {
-      // Continue to the login page
-      next();
-    }
-  } else {
-    next();
-  }
-});
 
 export default router;
