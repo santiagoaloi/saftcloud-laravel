@@ -28,7 +28,7 @@ class RoleController extends Controller {
         ], 200);
     }
 
-    public function show(Request $id) {
+    public function show($id) {
         $this->authorize('show', Role::class);
         $result = Role::find($id);
         origin($result);
