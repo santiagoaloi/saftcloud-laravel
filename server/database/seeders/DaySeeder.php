@@ -5,14 +5,14 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class StateSeeder extends Seeder {
+class DaySeeder extends Seeder {
     /**
      * Run the database seeds.
      *
      * @return void
      */
     public function run() {
-        DB::table('states')->insert([
+        DB::table('days')->insert([
             ["id"=> 1, "name"=> "Lunes"],
             ["id"=> 2, "name"=> "Martes"],
             ["id"=> 3, "name"=> "Miercoles"],

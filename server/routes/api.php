@@ -80,6 +80,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     // GENERAL CONFIG CONTROLLERS
     Route::resource('/lookUpList', LookUpListController::class);
     Route::resource('/lookUpListValue', LookUpListValueController::class);
+
     Route::resource('/paymentMethod', PaymentMethodController::class);
 
     // POS CONTROLLERS
@@ -92,29 +93,40 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     // PRIVATE CONTROLLERS
     Route::resource('/account', RootAccountController::class);
     Route::get('/getAllAccount', [RootAccountController::class, 'showAll']);
+
     Route::resource('/accountPayment', AccountPaymentController::class);
     Route::get('/getAllAccountPayment', [AccountPaymentController::class, 'showAll']);
+
     Route::resource('/accountPlan', AccountPlanController::class);
     Route::get('/getAllAccountPlan', [AccountPlanController::class, 'showAll']);
+
     Route::resource('/address', AddressController::class);
     Route::get('/getAllAddress', [AddressController::class, 'showAll']);
+
     Route::resource('/branch', BranchController::class);
     Route::get('/getAllBranch', [BranchController::class, 'showAll']);
+
     Route::resource('/entity', EntityController::class);
     Route::get('/getAllEntity', [EntityController::class, 'showAll']);
+
     Route::resource('/phone', PhoneController::class);
     Route::get('/getAllPhone', [RoleController::class, 'showAll']);
+
     Route::resource('/pointOfSale', PointOfSaleController::class);
     Route::get('/getAllPointOfSale', [RoleController::class, 'showAll']);
 
     Route::get('/getAllRoles', [RoleController::class, 'showAll']);
     Route::resource('/role', RoleController::class);
     Route::get('/getAllRoles', [RoleController::class, 'showAll']);
+
     Route::resource('/capability', CapabilityController::class);
     Route::get('/getAllCapabilities', [CapabilityController::class, 'showAll']);
+
     Route::resource('/social', SocialController::class);
+
     Route::resource('/user', UserController::class);
     Route::get('/getAllUsers', [UserController::class, 'showAll']);
+
     Route::resource('/userSetting', userSettingController::class);
     Route::get('/getAlluserSetting', [userSettingController::class, 'showAll']);
 

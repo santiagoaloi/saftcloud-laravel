@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder {
         $this->call(DaySeeder::class);
 
         $this->call(DocumentTypeSeeder::class);
-        $this->call(ExpenseTypeSeeder::class);
+        // $this->call(ExpenseTypeSeeder::class);
         $this->call(InvoiceTypeSeeder::class);
         $this->call(IvaConditionSeeder::class);
         $this->call(IvaTaxSeeder::class);

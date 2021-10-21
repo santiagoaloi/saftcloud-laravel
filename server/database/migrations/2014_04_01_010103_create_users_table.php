@@ -19,7 +19,7 @@ class CreateUsersTable extends Migration {
             $table->string('password');
             $table->smallInteger('second_factor')->default('0');
             $table->smallInteger('locked')->default('0');
-            $table->string('avatar')->nullable();
+            $table->longText('avatar')->nullable();
             $table->rememberToken();
             $table->softDeletes();
             $table->timestamps();
