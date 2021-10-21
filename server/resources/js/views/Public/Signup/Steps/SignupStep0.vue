@@ -53,7 +53,7 @@
 </template>
 
 <script>
-  import { sync, get } from 'vuex-pathify';
+  import { sync } from 'vuex-pathify';
 
   export default {
     name: 'SignupStep0',
@@ -66,7 +66,7 @@
       validateAndProceed() {
         this.$refs.step0.validate().then((success) => {
           if (success) {
-            this.step++;
+            this.step += 1;
           }
         });
       },

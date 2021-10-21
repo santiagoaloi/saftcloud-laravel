@@ -1,6 +1,23 @@
 <template>
   <div v-if="selectedEntity" class="mt-3">
     <div class="text-end pr-3 pb-2">
+      <v-tooltip v-if="selectedEntityType === 'Users'" transition="false" color="black" top>
+        <template #activator="{ on }">
+          <v-btn
+            depressed
+            dark
+            large
+            small
+            :color="isDark ? '' : 'white'"
+            @click="edit()"
+            v-on="on"
+          >
+            <v-icon color="#208ad6" dark> mdi-pencil-outline </v-icon>
+          </v-btn>
+        </template>
+        <span>Edit</span>
+      </v-tooltip>
+
       <v-tooltip transition="false" color="black" top>
         <template #activator="{ on }">
           <v-btn
@@ -29,8 +46,8 @@
       <v-tooltip transition="false" color="black" top>
         <template #activator="{ on }">
           <v-btn
-            :disabled="!hasUnsavedChanges(selectedEntity)"
             depressed
+            :disabled="!hasUnsavedChanges(selectedEntity)"
             large
             small
             :color="isDark ? '' : 'white'"
@@ -45,28 +62,13 @@
         </template>
         <span>Save</span>
       </v-tooltip>
-
-      <v-tooltip transition="false" color="black" top>
-        <template #activator="{ on }">
-          <v-btn
-            depressed
-            large
-            small
-            :color="isDark ? '' : 'white'"
-            @click="testPromiseAll()"
-            v-on="on"
-          >
-            <v-icon color="green" dark> mdi-link </v-icon>
-          </v-btn>
-        </template>
-        <span>Save</span>
-      </v-tooltip>
     </div>
   </div>
 </template>
 
 <script>
   import { sync, call, get } from 'vuex-pathify';
+  import { isEqual } from 'lodash';
   import componentActions from '@/mixins/componentActions';
 
   export default {
@@ -84,7 +86,9 @@
         'hasUnsavedChanges',
         'hasValidationErrors',
         'selectedEntityType',
+        'entitiesEditSheet',
       ]),
+      ...sync('entitiesManagement', ['entitiesEditSheet']),
 
       identityMethod() {
         return this.selectedEntityType === 'Users' ? 'saveEntityUser' : 'saveEntityRole';
@@ -95,23 +99,45 @@
       ...call('entitiesManagement/*'),
       ...call('snackbar/*'),
 
-      async testPromiseAll() {
+      save() {
+        this[this.identityMethod]();
+      },
+
+      async saveEntityUser() {
+        this.loading = true;
+
+        const functionGroups = [];
+
+        if (!isEqual(this.selectedEntity.role, this.selectedEntity.origin.role)) {
+          functionGroups.push(this.saveUserRoles());
+        }
+
+        if (!isEqual(this.selectedEntity.entity, this.selectedEntity.origin.entity)) {
+          functionGroups.push(this.saveUserMetadata());
+        }
+
+        if (!isEqual(this.selectedEntity.email, this.selectedEntity.origin.email)) {
+          functionGroups.push(this.saveUserMetadata());
+        }
+
         try {
-          const res = await Promise.all([this.test1(), this.test2(), this.test3()]);
-          const data = res.map((res) => res.data);
-          console.log(data.flat());
-          console.log('finished');
+          await Promise.all(functionGroups);
+          // const data = res.map((res) => res.data);
+          this.snackbarSuccess('Your changes are saved...');
+          this.getUserAndReplace();
+          this.loading = false;
         } catch {
-          throw Error('Promise failed');
+          this.loading = false;
+          this.snackbarError('There was an error saving');
         }
       },
 
-      async save() {
+      async saveEntityRole() {
         this.loading = true;
 
         if (!this.hasValidationErrors) {
           try {
-            const saved = await this[this.identityMethod]();
+            const saved = await this.saveRole();
 
             if (saved) {
               this.snackbarSuccess('Your changes are saved...');
@@ -126,6 +152,14 @@
           }
         } else {
           this.loading = false;
+          this.snackbarError('There are validation errors');
+        }
+      },
+
+      edit() {
+        if (!this.hasValidationErrors) {
+          this.entitiesEditSheet = !this.entitiesEditSheet;
+        } else {
           this.snackbarError('There are validation errors');
         }
       },

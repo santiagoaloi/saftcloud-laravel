@@ -1,5 +1,11 @@
 <template>
-  <component :is="layout" />
+  <div>
+    <v-fade-transition hide-on-leave>
+      <keep-alive exclude="PublicLayout">
+        <component :is="layout" />
+      </keep-alive>
+    </v-fade-transition>
+  </div>
 </template>
 
 <script>

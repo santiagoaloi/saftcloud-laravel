@@ -3,8 +3,6 @@
     <entities-appbar />
     <entities-tabs />
 
-    <v-divider />
-
     <v-card
       color="transparent"
       flat
@@ -28,6 +26,7 @@
     <dialog-entity />
     <dialog-privileges />
     <dialog-assign-roles v-if="selectedEntityType === 'Users' && selectedEntity" />
+    <entities-edit-sheet />
   </div>
 </template>
 
@@ -39,8 +38,8 @@
     components: {
       EntitiesGrid: () => import(/* webpackChunkName: 'entities-grid' */ './EntitiesGrid'),
       EntitiesTable: () => import(/* webpackChunkName: 'entities-table' */ './EntitiesTable'),
-      EntitiesTabs: () => import(/* webpackChunkName: 'entities-tabs' */ './EntitiesTabs.vue'),
-      EntitiesAppbar: () => import(/* webpackChunkName: 'entities-appbar' */ './EntitiesAppbar'),
+      EntitiesTabs: () => import(/* webpackChunkName: 'entities-bundle' */ './EntitiesTabs.vue'),
+      EntitiesAppbar: () => import(/* webpackChunkName: 'entities-bundle' */ './EntitiesAppbar'),
       EntitiesNoData: () => import(/* webpackChunkName: 'entities-no-data' */ './EntitiesNoData'),
       DialogAssignRoles: () =>
         import(/* webpackChunkName: 'entities-dialog-assign-roles' */ './DialogAssignRoles'),
@@ -48,6 +47,8 @@
 
       DialogPrivileges: () =>
         import(/* webpackChunkName: 'entities-dialog-privileges' */ './DialogPrivileges'),
+      EntitiesEditSheet: () =>
+        import(/* webpackChunkName: 'entities-edit-sheet' */ './EntitiesEdit/EntitiesEditSheet'),
     },
 
     computed: {

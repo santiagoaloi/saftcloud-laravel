@@ -60,11 +60,10 @@
   import { sync, call, get } from 'vuex-pathify';
 
   export default {
-    name: 'ComponentDrilldown',
+    name: 'EntitiesDrilldown',
     computed: {
       ...sync('theme', ['isDark']),
       ...sync('drawers', ['secureEntitiesDrawer']),
-      ...sync('entitiesManagement', ['componentCardGroup']),
       ...get('entitiesManagement', [
         'previousEntityDisabled',
         'nextEntityDisabled',

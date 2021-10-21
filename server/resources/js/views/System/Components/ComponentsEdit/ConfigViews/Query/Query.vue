@@ -15,7 +15,6 @@
 </template>
 
 <script>
-  import axios from 'axios';
   import { sync, call, get } from 'vuex-pathify';
 
   export default {
@@ -25,17 +24,17 @@
       editorKey: 800,
     }),
 
-    watch: {
-      isDark(oldValue, newValue) {
-        if (oldValue !== newValue) {
-          this.editorKey++;
-        }
-      },
-    },
-
     computed: {
       ...sync('theme', ['isDark']),
       ...get('componentManagement', ['selectedComponent']),
+    },
+
+    watch: {
+      isDark(oldValue, newValue) {
+        if (oldValue !== newValue) {
+          this.editorKey += 1;
+        }
+      },
     },
 
     methods: {

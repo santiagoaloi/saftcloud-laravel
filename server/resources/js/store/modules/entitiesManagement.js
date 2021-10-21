@@ -17,6 +17,9 @@ const initialRoleSettings = () => ({
 });
 
 const state = {
+  entitiesEditSheet: false,
+  entitiesEditDrawerActiveMenu: undefined,
+
   groupName: '',
   searchPrivileges: '',
   allUsers: [],
@@ -131,6 +134,9 @@ const getters = {
 const actions = {
   ...make.actions(state),
 
+  //* Returns true if 2 objects are different.
+  isDifferent: () => (a, b) => !isEqual(a, b),
+
   //* Retrieves all users.
   getUsers() {
     axios.get('api/getAllUsers').then((response) => {
@@ -213,38 +219,57 @@ const actions = {
   },
 
   test2() {
-    return axios.get('api/test1');
+    return axios.get('api/test2');
   },
 
   test3() {
-    return axios.get('api/test1');
+    return axios.get('api/test3');
   },
 
-  //* Saves Entity User Settings
-  async saveEntityUser({ state, getters }) {
+  //* Saves Entity User Roles
+  async saveUserRoles({ getters }) {
     const userId = getters.selectedEntity.id;
     const roles = { name: 'role', items: getters.selectedEntity.role };
 
-    return axios.post(`api/syncUser/${userId}`, roles).then((response) => {
-      if (response.status === 200) {
-        const index = state[`all${state.selectedEntityType}`].findIndex(
-          (e) => e.id === getters.selectedEntity.id,
-        );
+    return axios.post(`api/syncUser/${userId}`, roles);
 
-        //* Avoids origin duplication.
-        delete getters.selectedEntity.origin;
+    // const index = state.allUsers.findIndex((e) => e.id === getters.selectedEntity.id);
 
-        store.set(`entitiesManagement/all${state.selectedEntityType}@${index}`, {
-          ...getters.selectedEntity,
-          origin: cloneDeep(getters.selectedEntity),
-        });
-        return true;
-      }
-    });
+    // axios.get(`api/role/${getters.selectedEntity.id}`).then((responseMeta) => {
+    //   store.set(`entitiesManagement/allUsers@${index}`, responseMeta.data.record);
+    // });
+  },
+
+  //* Get User
+  async getUser({ getters }) {
+    const user = { ...getters.selectedEntity.id };
+    return axios.get(`api/user/${user}`);
+  },
+
+  //* Get User
+  async getUserAndReplace({ getters, dispatch }) {
+    const user = getters.selectedEntity.id;
+    return axios
+      .get(`api/user/${user}`)
+      .then((response) => {
+        if (response) {
+          const index = state.allUsers.findIndex((e) => e.id === user);
+          store.set(`entitiesManagement/allUsers@${index}`, response.data.record);
+        }
+      })
+      .catch(() => {
+        dispatch('snackbar/snackbarError', 'There was an error fetching the users', { root: true });
+      });
+  },
+
+  //* Saves Entity User Roles
+  async saveUserMetadata({ getters }) {
+    const entity = { ...getters.selectedEntity.entity };
+    return axios.patch(`api/entity/${entity.id}`, entity);
   },
 
   //* Saves Entity User Settings
-  async saveEntityRole({ dispatch, getters }) {
+  async saveRole({ state, dispatch, getters }) {
     const roleId = getters.selectedEntity.id;
     const capabilities = { name: 'capability', items: getters.selectedEntity.capability };
 
@@ -259,19 +284,10 @@ const actions = {
           .put(`api/role/${roleId}`, meta)
           .then((response) => {
             if (response.status === 200) {
-              // const index = state.allRoles.findIndex((r) => r.id === getters.selectedEntity.id);
+              const index = state.allRoles.findIndex((r) => r.id === getters.selectedEntity.id);
 
-              // //* Avoids origin duplication.
-              // delete getters.selectedEntity.origin;
-
-              // store.set(`entitiesManagement/all${state.selectedEntityType}@${index}`, {
-              //   ...getters.selectedEntity,
-              //   origin: cloneDeep(getters.selectedEntity),
-              // });
-
-              axios.get(`api/role/${getters.selectedEntity.id}`).then(() => {
-                // store.set(`entitiesManagement/allRoles@${index}`, {
-                // });
+              axios.get(`api/role/${getters.selectedEntity.id}`).then((responseMeta) => {
+                store.set(`entitiesManagement/allRoles@${index}`, responseMeta.data.record);
               });
 
               return true;

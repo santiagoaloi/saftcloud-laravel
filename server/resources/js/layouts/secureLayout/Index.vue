@@ -16,13 +16,13 @@
     components: {
       SessionTimeout: () =>
         import(/* webpackChunkName: 'secure-session-timeout' */ './SessionTimeout/SessionTimeout'),
-      SecureBar: () => import(/* webpackChunkName: 'secure-appbar' */ './AppBar'),
-      SecureDrawer: () => import(/* webpackChunkName: 'secure-drawer' */ './Drawer'),
+      SecureBar: () => import(/* webpackChunkName: 'secure-bundle' */ './AppBar'),
+      SecureDrawer: () => import(/* webpackChunkName: 'secure-bundle' */ './Drawer'),
       SecureCompDrawer: () =>
         import(/* webpackChunkName: 'secure-component-drawer' */ './ComponentDrawer'),
       SecureEntDrawer: () =>
         import(/* webpackChunkName: 'secure-entities-drawer' */ './EntitiesDrawer'),
-      SecureView: () => import(/* webpackChunkName: 'secure-view' */ './View'),
+      SecureView: () => import(/* webpackChunkName: 'secure-bundle' */ './View'),
       Snackbar: () =>
         import(
           /* webpackChunkName: 'public-snackbar' */

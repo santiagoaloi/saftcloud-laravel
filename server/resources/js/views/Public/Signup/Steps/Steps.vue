@@ -5,8 +5,10 @@
       <v-container>
         <v-row>
           <v-col class="text-center" cols="12" lg="6">
-            <v-expand-transition appear>
-              <component :is="`step${step}`" />
+            <v-expand-transition>
+              <keep-alive>
+                <component :is="`step${step}`" />
+              </keep-alive>
             </v-expand-transition>
           </v-col>
           <v-col cols="12" lg="6">
@@ -29,13 +31,13 @@
 </template>
 
 <script>
-  import { sync, get } from 'vuex-pathify';
+  import { sync } from 'vuex-pathify';
 
   export default {
     name: 'SignupSteps',
     components: {
-      step0: () =>
-        import(/* webpackChunkName: 'signup-step0' , webpackPrefetch: true */ './SignupStep0'),
+      SignupAlert: () => import(/* webpackChunkName: 'Parent' */ './SignupAlert'),
+      step0: () => import(/* webpackChunkName: 'Parent'  */ './SignupStep0'),
       step1: () => import(/* webpackChunkName: 'signup-step1' */ './SignupStep1'),
       step2: () => import(/* webpackChunkName: 'signup-step2' */ './SignupStep2'),
       step3: () => import(/* webpackChunkName: 'signup-step3' */ './SignupStep3'),

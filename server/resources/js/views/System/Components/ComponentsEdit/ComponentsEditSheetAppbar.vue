@@ -169,6 +169,7 @@
       validateBeforeHide() {
         if (!this.hasValidationErrors) {
           this.componentEditSheet = false;
+          this.$router.push('/Components');
         } else {
           store.set('snackbar/value', true);
           this.snackbarError('There are input validation errors');

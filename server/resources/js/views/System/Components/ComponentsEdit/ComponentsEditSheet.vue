@@ -1,12 +1,5 @@
 <template>
-  <v-bottom-sheet
-    transition="fade-transition"
-    eager
-    no-click-animation
-    persistent
-    fullscreen
-    v-model="componentEditSheet"
-  >
+  <v-bottom-sheet v-model="componentEditSheet" eager no-click-animation persistent fullscreen>
     <v-card tile>
       <template v-if="componentEditSheet">
         <components-edit-sheet-appbar />
@@ -54,17 +47,14 @@
 
 <script>
   import { sync, get } from 'vuex-pathify';
+
   export default {
     name: 'ComponentsEdit',
     components: {
       ComponentsEditSheetAppbar: () =>
-        import(
-          /* webpackChunkName: 'components-edit-sheet-appbar' */ './ComponentsEditSheetAppbar'
-        ),
+        import(/* webpackChunkName:   'edit-bundle' */ './ComponentsEditSheetAppbar'),
       ComponentsEditSheetDrawer: () =>
-        import(
-          /* webpackChunkName: 'components-edit-sheet-drawer' */ './ComponentsEditSheetDrawer'
-        ),
+        import(/* webpackChunkName:   'edit-bundle' */ './ComponentsEditSheetDrawer'),
     },
 
     computed: {

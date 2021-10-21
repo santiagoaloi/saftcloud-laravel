@@ -13,6 +13,7 @@ const initialComponentSettings = () => ({
 });
 
 const state = {
+  loading: false,
   editingCapability: false,
   capability: {},
   dbTables: [],
@@ -294,10 +295,12 @@ const actions = {
   },
 
   //* Retrieves all available componentes from the database.
-  getComponents() {
+  getComponents({ state }) {
+    state.loading = true;
     axios.get('api/getAllComponents').then((response) => {
       if (response.status === 200) {
         store.set('componentManagement/allComponents', response.data.components);
+        state.loading = false;
       }
     });
   },

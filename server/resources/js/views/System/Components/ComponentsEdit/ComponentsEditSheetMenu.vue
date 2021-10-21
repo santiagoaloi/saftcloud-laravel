@@ -36,7 +36,7 @@
     data: () => ({
       menuItems: [
         { header: 'Component Settings' },
-        { icon: 'mdi-view-dashboard-outline', text: 'Basic', link: '/components/basic' },
+        { icon: 'mdi-view-dashboard-outline', text: 'Basic', link: '/Components/Basic' },
         {
           icon: 'mdi-view-dashboard-outline',
           text: 'Toolbar',
@@ -46,14 +46,14 @@
         {
           icon: 'mdi-view-dashboard-outline',
           text: 'Capabilities',
-          link: '/components/capabilities',
+          link: '/Components/Capabilities',
           disabled: false,
         },
         { header: 'Database' },
         {
           icon: 'mdi-view-dashboard-outline',
           text: 'Query',
-          link: '/components/query',
+          link: '/Components/Query',
           disabled: false,
         },
         {
@@ -65,7 +65,7 @@
         {
           icon: 'mdi-view-dashboard-outline',
           text: 'Fields',
-          link: '/components/formFields',
+          link: '/Components/FormFields',
           disabled: false,
         },
       ],
@@ -77,9 +77,9 @@
     },
 
     mounted() {
-      if (!this.componentEditDrawerActiveMenu && this.$route.name != '/components/basic') {
+      if (!this.componentEditDrawerActiveMenu && this.$route.name !== '/Components/Basic') {
         this.$router.push('/components/basic');
-      } else if (this.$route.name != this.componentEditDrawerActiveMenu) {
+      } else if (this.$route.name !== this.componentEditDrawerActiveMenu) {
         this.$router.push(this.componentEditDrawerActiveMenu);
       }
     },

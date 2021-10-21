@@ -3,8 +3,6 @@
     <components-appbar />
     <components-tabs />
 
-    <v-divider />
-
     <v-card
       color="transparent"
       flat
@@ -36,11 +34,12 @@
   export default {
     name: 'ComponentsManagement',
     components: {
-      ComponentsTabs: () => import(/* webpackChunkName: 'components-tabs' */ './ComponentsTabs'),
-      ComponentsGrid: () => import(/* webpackChunkName: 'components-grid' */ './ComponentsGrid'),
-      ComponentsTable: () => import(/* webpackChunkName: 'components-table' */ './ComponentsTable'),
       ComponentsAppbar: () =>
-        import(/* webpackChunkName: 'components-appbar' */ './ComponentsAppbar'),
+        import(/* webpackChunkName: 'secure-bundle-comp' */ './ComponentsAppbar'),
+      ComponentsTabs: () => import(/* webpackChunkName: 'secure-bundle-comp' */ './ComponentsTabs'),
+      ComponentsGrid: () => import(/* webpackChunkName: 'secure-bundle-comp' */ './ComponentsGrid'),
+      ComponentsTable: () => import(/* webpackChunkName: 'components-table' */ './ComponentsTable'),
+
       ComponentsNoData: () =>
         import(/* webpackChunkName: 'components-no-data' */ './ComponentsNoData'),
       DialogComponent: () =>

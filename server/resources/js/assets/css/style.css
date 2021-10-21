@@ -1,3 +1,7 @@
+html {
+  overflow-y: auto;
+}
+
 .v-dialog--scrollable,
 .v-dialog--scrollable > form {
   display: flex;
@@ -85,11 +89,6 @@ select:-webkit-autofill:focus {
   border-bottom: solid 0px;
 }
 
-/* HIDE INPUT TYPE NUMBER INNER ARROWS
-  /* Firefox */
-input[type='number'] {
-  -moz-appearance: textfield;
-}
 ::selection {
   /* background: #8c93be !important;  WebKit/Blink Browsers */
 }

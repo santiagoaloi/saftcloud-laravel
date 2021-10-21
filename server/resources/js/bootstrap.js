@@ -36,16 +36,18 @@ axios.interceptors.response.use(
 
       //* If records are duplicated
       if (error.response.status === 1062) {
-        store.set('snackbar/value', true);
-        store.set('snackbar/text', 'Duplicated records, try choosing a different value');
-        store.set('snackbar/color', 'pink darken-1');
+        store.set('snackbar/data@value', true);
+        store.set('snackbar/data@text', 'Invalid Credentials');
+        store.set('snackbar/data@icon', 'mdi-alert-octagon');
+        store.set('snackbar/data@color', 'pink darken-1');
       }
 
       //* If credentials are invalid
       if (error.response.status === 401) {
-        store.set('snackbar/value', true);
-        store.set('snackbar/text', 'Invalid Credentials');
-        store.set('snackbar/color', 'pink darken-1');
+        store.set('snackbar/data@value', true);
+        store.set('snackbar/data@text', 'Invalid Credentials');
+        store.set('snackbar/data@icon', 'mdi-alert-octagon');
+        store.set('snackbar/data@color', 'pink darken-1');
       }
 
       return Promise.reject(error);

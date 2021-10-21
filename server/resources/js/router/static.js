@@ -51,5 +51,16 @@ export default [
     meta: { layout: 'secure-layout', title: 'Manage users and roles', search: 'entities...' },
     component: () =>
       import(/* webpackChunkName: 'entities' */ '@/views/System/Entities/Entities.vue'),
+    children: [
+      {
+        path: '/Entities/Basic',
+        name: 'Entities/Basic',
+        meta: { layout: 'secure-layout', title: 'Manage users and roles' },
+        component: () =>
+          import(
+            /* webpackChunkName: 'entities' */ '@/views/System/Entities/EntitiesEdit/ConfigViews/Basic/Basic.vue'
+          ),
+      },
+    ],
   },
 ];

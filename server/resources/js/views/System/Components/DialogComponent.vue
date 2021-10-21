@@ -187,6 +187,7 @@
 
     methods: {
       ...call('componentManagement/*'),
+      ...call('snackbar/*'),
 
       async validateComponentForm() {
         try {

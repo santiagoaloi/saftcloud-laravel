@@ -1,7 +1,6 @@
 // Utilities
 import axios from 'axios';
 import { make } from 'vuex-pathify';
-import { cloneDeep } from 'lodash';
 import router from '@/router';
 import { store } from '@/store';
 
@@ -32,14 +31,14 @@ const actions = {
     return axios
       .post('api/login', data)
       .then((response) => {
-        if (response.status === 200) {
+        if (response.status) {
           const { data } = response;
 
           // get rid of the status key
           delete data.status;
 
           // Creates an "origin" of the login response data...
-          data.user.origin = cloneDeep(data);
+          // data.user.origin = cloneDeep(data);
           commit('session', data);
           axiosDefaults.headers.common.Authorization = `Bearer ${response.data.token}`;
           return true;
@@ -66,7 +65,9 @@ const actions = {
   },
 };
 
-const getters = {};
+const getters = {
+  isRoot: (state) => state.session.user.role.find((role) => role.name === 'Root').name === 'Root',
+};
 
 export default {
   namespaced: true,

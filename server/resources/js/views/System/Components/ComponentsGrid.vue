@@ -1,7 +1,12 @@
 <template>
   <div>
+    <v-progress-linear
+      height="1"
+      color="grey darken-2"
+      :indeterminate="loading"
+    ></v-progress-linear>
     <v-item-group v-model="componentCardGroup" mandatory>
-      <transition-group class="gallery-card-container pa-2" name="slide-x-transition">
+      <transition-group hide-on-leave class="gallery-card-container pa-2" name="fade-transition">
         <v-item
           v-for="(component, index) in allComponentsFilteredSorted"
           :key="`${index}`"
@@ -177,7 +182,7 @@
 
     computed: {
       ...sync('theme', ['isDark']),
-      ...sync('componentManagement', ['componentCardGroup', 'componentEditSheet']),
+      ...sync('componentManagement', ['componentCardGroup', 'componentEditSheet', 'loading']),
       ...get('componentManagement', [
         'mapComponentGroup',
         'mapGroupParent',

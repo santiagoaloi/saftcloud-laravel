@@ -2,22 +2,29 @@ import axios from 'axios';
 import { make } from 'vuex-pathify';
 import { store } from '@/store';
 
-const state = {
+const getDefaultState = () => ({
   records: [],
   recordItem: {},
-  recordItemInitial: {},
   columns: [],
   formFields: {},
   visibleColumns: [],
   dialogCrud: false,
   dialogCustomize: false,
-};
+  loading: true,
+});
+
+const state = getDefaultState();
 
 const mutations = make.mutations(state);
 const getters = {};
 
 const actions = {
   ...make.actions(state),
+
+  //* Reset validations to default values.
+  resetState({ state }) {
+    Object.assign(state, getDefaultState());
+  },
 
   // Loads all the neccesary data to hydrate the active view.
   loadView({ dispatch }, id) {
@@ -28,6 +35,7 @@ const actions = {
         store.set('activeView/columns', response.data.component.columns);
         store.set('activeView/formFields', response.data.component.formFields);
         dispatch('pushAllColumnNames');
+        store.set('activeView/loading', false);
       }
     });
   },

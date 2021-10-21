@@ -131,7 +131,7 @@
       validateAndProceed() {
         this.$refs.step1.validate().then((success) => {
           if (success) {
-            this.step++;
+            this.step += 1;
           }
         });
       },

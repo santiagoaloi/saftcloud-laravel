@@ -138,9 +138,7 @@
         if (!this.hasValidationErrors) {
           this.componentEditSheet = !this.componentEditSheet;
         } else {
-          store.set('snackbar/value', true);
-          store.set('snackbar/text', 'The component name is invalid.');
-          store.set('snackbar/color', 'pink darken-1');
+          this.snackbarError('The component label is invalid');
         }
       },
     },

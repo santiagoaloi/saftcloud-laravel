@@ -16,6 +16,22 @@ const createRouter = () =>
 
 const router = createRouter();
 
+//* Avoid routing to the the same route.
+const originalPush = router.push;
+router.push = function push(location, onResolve, onReject) {
+  if (onResolve || onReject) {
+    return originalPush.call(this, location, onResolve, onReject);
+  }
+
+  return originalPush.call(this, location).catch((err) => {
+    if (Router.isNavigationFailure(err)) {
+      return err;
+    }
+
+    return Promise.reject(err);
+  });
+};
+
 export function resetRouter() {
   const newRouter = createRouter();
   router.matcher = newRouter.matcher;

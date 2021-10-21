@@ -109,6 +109,7 @@
             dense
             return-object
             attach
+            :disabled="!['Root'].includes(selectedEntity.name)"
           >
             <template #selection="data">
               <v-chip
@@ -289,7 +290,7 @@
   import { store } from '@/store';
 
   export default {
-    name: 'ComponentDrilldown',
+    name: 'EntitiesDrilldown',
     mixins: [componentActions],
 
     computed: {

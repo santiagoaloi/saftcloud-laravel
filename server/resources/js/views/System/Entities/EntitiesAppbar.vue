@@ -35,7 +35,7 @@
   export default {
     name: 'EntitiesAppbar',
     components: {
-      EntitiesGroups: () => import(/* webpackChunkName: 'entities-groups' */ './EntitiesGroups'),
+      EntitiesGroups: () => import(/* webpackChunkName: 'entities-bundle' */ './EntitiesGroups'),
     },
 
     computed: {

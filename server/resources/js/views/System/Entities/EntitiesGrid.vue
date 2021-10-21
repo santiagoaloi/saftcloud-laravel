@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-item-group v-model="entityCardGroup" mandatory>
-      <transition-group class="gallery-card-container pa-2" name="slide-x-transition">
+      <transition-group class="gallery-card-container pa-2" name="fade-transition">
         <v-item
           v-for="(entity, index) in allEntitiesFilteredSorted"
           :key="`${index}`"

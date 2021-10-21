@@ -9,7 +9,7 @@
         <title>SaftCloud</title>
         <link  href="{{ mix('dist/css/app.css') }}" rel="stylesheet">
     </head>
-    <body style="background: #3a3c40;">
+        <body style="background: #3d4049;">
         <noscript>
             <strong>We're sorry but SaftCloud doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
         </noscript>

@@ -11,8 +11,8 @@
   export default {
     name: 'PublicLayout',
     components: {
-      PublicView: () => import(/* webpackChunkName: 'public-view' */ './View'),
-      PublicBar: () => import(/* webpackChunkName: 'public-appbar' */ './AppBar'),
+      PublicView: () => import(/* webpackChunkName: 'public-view-bundle' */ './View'),
+      PublicBar: () => import(/* webpackChunkName: 'public-view-bundle' */ './AppBar'),
       PublicFooter: () => import(/* webpackChunkName: 'public-footer' */ './Footer'),
       Snackbar: () =>
         import(

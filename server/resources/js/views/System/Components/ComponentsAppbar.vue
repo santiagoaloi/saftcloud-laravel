@@ -45,9 +45,9 @@
       DialogConfigEditor: () =>
         import(/* webpackChunkName: 'components-dialog-config-editor' */ './DialogConfigEditor'),
       ComponentsGroups: () =>
-        import(/* webpackChunkName: 'components-groups' */ './ComponentsGroups'),
+        import(/* webpackChunkName: 'secure-bundle-comp' */ './ComponentsGroups'),
       ComponentsGroupsChips: () =>
-        import(/* webpackChunkName: 'components-groups-chips' */ './ComponentsGroupsChips'),
+        import(/* webpackChunkName: 'secure-bundle-comp' */ './ComponentsGroupsChips'),
     },
     mixins: [componentGroups],
 
