@@ -70,7 +70,7 @@ class PointOfSalePolicy {
      * @return mixed
      */
 
-    public function restore(User $user, PointOfSale $PointOfSale) {
+    public function restore() {
         $user = Auth::user();
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
@@ -88,7 +88,7 @@ class PointOfSalePolicy {
      * @param  \App\Models\Public\PointOfSale  $PointOfSale
      * @return mixed
      */
-    public function update(User $user, PointOfSale $PointOfSale) {
+    public function update() {
         $user = Auth::user();
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
@@ -99,7 +99,7 @@ class PointOfSalePolicy {
         return false;
     }
 
-    public function updateAll(User $user, PointOfSale $PointOfSale) {
+    public function updateAll() {
         $user = Auth::user();
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
@@ -117,7 +117,7 @@ class PointOfSalePolicy {
      * @param  \App\Models\Public\PointOfSale  $PointOfSale
      * @return mixed
      */
-    public function destroy(User $user, PointOfSale $PointOfSale) {
+    public function destroy() {
         $user = Auth::user();
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
@@ -135,7 +135,7 @@ class PointOfSalePolicy {
      * @param  \App\Models\Public\PointOfSale  $PointOfSale
      * @return mixed
      */
-    public function forceDelete(User $user, PointOfSale $PointOfSale) {
+    public function forceDelete() {
         $user = Auth::user();
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);

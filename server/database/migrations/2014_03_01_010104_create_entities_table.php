@@ -16,7 +16,7 @@ class CreateEntitiesTable extends Migration {
             $table->foreignId('root_account_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
             $table->unsignedBigInteger('entity_type_id');
             $table->foreign('entity_type_id')->references('id')->on('look_up_list_values')->onDelete('RESTRICT')->onUpdate('CASCADE');
-            $table->foreignId('entity_function_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
+            $table->foreignId('entity_capacity_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
             $table->string('first_name');
             $table->string('last_name');
             $table->foreignId('iva_condition_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');

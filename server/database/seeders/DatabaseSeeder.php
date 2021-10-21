@@ -31,7 +31,7 @@ class DatabaseSeeder extends Seeder {
         $this->call(LookUpListValueSeeder::class);
 
         $this->call(RootAccountSeeder::class);
-        $this->call(EntityFunctionSeeder::class);
+        $this->call(EntityCapacitiesSeeder::class);
         $this->call(EntitySeeder::class);
         $this->call(RoleSeeder::class);
         $this->call(CapabilitySeeder::class);

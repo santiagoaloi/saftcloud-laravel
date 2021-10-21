@@ -70,7 +70,7 @@ class AccountPlanPolicy {
      * @return mixed
      */
 
-    public function restore(User $user, AccountPlan $AccountPlan) {
+    public function restore() {
         $user = Auth::user();
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
@@ -88,7 +88,7 @@ class AccountPlanPolicy {
      * @param  \App\Models\Public\AccountPlan  $AccountPlan
      * @return mixed
      */
-    public function update(User $user, AccountPlan $AccountPlan) {
+    public function update() {
         $user = Auth::user();
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
@@ -99,7 +99,7 @@ class AccountPlanPolicy {
         return false;
     }
 
-    public function updateAll(User $user, AccountPlan $AccountPlan) {
+    public function updateAll() {
         $user = Auth::user();
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
@@ -117,7 +117,7 @@ class AccountPlanPolicy {
      * @param  \App\Models\Public\AccountPlan  $AccountPlan
      * @return mixed
      */
-    public function destroy(User $user, AccountPlan $AccountPlan) {
+    public function destroy() {
         $user = Auth::user();
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
@@ -135,7 +135,7 @@ class AccountPlanPolicy {
      * @param  \App\Models\Public\AccountPlan  $AccountPlan
      * @return mixed
      */
-    public function forceDelete(User $user, AccountPlan $AccountPlan) {
+    public function forceDelete() {
         $user = Auth::user();
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);

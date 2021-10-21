@@ -15,6 +15,7 @@ class CreateCommissionsTable extends Migration {
             $table->id();
             $table->string('name');
             $table->decimal('amount', 20, 2);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

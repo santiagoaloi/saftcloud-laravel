@@ -36,7 +36,7 @@ class CreateProductsTable extends Migration {
             $table->decimal('stock', 11, 2);
             $table->decimal('inventory', 11, 2);
             $table->smallInteger('can_have_promotion')->default('1');
-            $table->foreignId('product_promotion_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE'); //->default('1');
+            $table->foreignId('product_promotion_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE')->default('1');
             $table->decimal('price_last_record', 20, 2)->nullable();
             $table->string('avatar')->nullable();
             $table->smallInteger('incremental_type');

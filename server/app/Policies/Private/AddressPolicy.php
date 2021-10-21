@@ -70,7 +70,7 @@ class AddressPolicy {
      * @return mixed
      */
 
-    public function restore(User $user, Address $Address) {
+    public function restore() {
         $user = Auth::user();
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
@@ -88,7 +88,7 @@ class AddressPolicy {
      * @param  \App\Models\Public\Address  $Address
      * @return mixed
      */
-    public function update(User $user, Address $Address) {
+    public function update() {
         $user = Auth::user();
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
@@ -99,7 +99,7 @@ class AddressPolicy {
         return false;
     }
 
-    public function updateAll(User $user, Address $Address) {
+    public function updateAll() {
         $user = Auth::user();
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
@@ -117,7 +117,7 @@ class AddressPolicy {
      * @param  \App\Models\Public\Address  $Address
      * @return mixed
      */
-    public function destroy(User $user, Address $Address) {
+    public function destroy() {
         $user = Auth::user();
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
@@ -135,7 +135,7 @@ class AddressPolicy {
      * @param  \App\Models\Public\Address  $Address
      * @return mixed
      */
-    public function forceDelete(User $user, Address $Address) {
+    public function forceDelete() {
         $user = Auth::user();
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);

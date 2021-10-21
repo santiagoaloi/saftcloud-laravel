@@ -70,7 +70,7 @@ class UserSettingPolicy {
      * @return mixed
      */
 
-    public function restore(User $user, userSetting $userSetting) {
+    public function restore() {
         $user = Auth::user();
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
@@ -88,7 +88,7 @@ class UserSettingPolicy {
      * @param  \App\Models\Public\userSetting  $userSetting
      * @return mixed
      */
-    public function update(User $user, userSetting $userSetting) {
+    public function update() {
         $user = Auth::user();
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
@@ -99,7 +99,7 @@ class UserSettingPolicy {
         return false;
     }
 
-    public function updateAll(User $user, userSetting $userSetting) {
+    public function updateAll() {
         $user = Auth::user();
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
@@ -117,7 +117,7 @@ class UserSettingPolicy {
      * @param  \App\Models\Public\userSetting  $userSetting
      * @return mixed
      */
-    public function destroy(User $user, userSetting $userSetting) {
+    public function destroy() {
         $user = Auth::user();
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
@@ -135,7 +135,7 @@ class UserSettingPolicy {
      * @param  \App\Models\Public\userSetting  $userSetting
      * @return mixed
      */
-    public function forceDelete(User $user, userSetting $userSetting) {
+    public function forceDelete() {
         $user = Auth::user();
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
