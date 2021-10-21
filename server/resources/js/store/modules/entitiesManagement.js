@@ -17,27 +17,26 @@ const initialRoleSettings = () => ({
 });
 
 const state = {
-  entitiesEditSheet: false,
-  entitiesEditDrawerActiveMenu: undefined,
-
-  groupName: '',
-  searchPrivileges: '',
   allUsers: [],
   allRoles: [],
-  allCapabilities: [],
+  groupName: '',
   activeStatusTab: 0,
-  isTableLayout: false,
   entityCardGroup: 0,
   dialogEntity: false,
+  allCapabilities: [],
+  searchPrivileges: '',
+  isTableLayout: false,
+  selectedUserRoles: [],
+  identityTypeButton: '',
+  selectedEntityIndex: 0,
   dialogPrivileges: false,
   dialogAssignRoles: false,
+  entitiesEditSheet: false,
   selectedEntityType: 'Users',
-  selectedEntityIndex: 0,
   selectedEntityTableRow: [],
-  selectedUserRoles: [],
   user: initialUserSettings(),
   role: initialRoleSettings(),
-  identityTypeButton: '',
+  entitiesEditDrawerActiveMenu: undefined,
   entityStatusTabs: [
     { name: 'All', value: 'all', icon: 'mdi-all-inclusive' },
     { name: 'Starred', value: 'starred', icon: 'mdi-star' },
@@ -80,22 +79,23 @@ const getters = {
 
   // //* Filter privileges in the privileges dialog sinple tabe.
   filteredPrivileges: (state, getters) => {
-    if (getters.selectedEntity.role.length) {
-      // Search field string
-      const search = state.searchPrivileges.toString().toLowerCase();
+    if (state.selectedEntityType === 'Users' && getters.selectedEntity) {
+      if (getters.selectedEntity.role.length && state.allUsers.length) {
+        // Search field string
+        const search = state.searchPrivileges.toString().toLowerCase();
 
-      const privileges = [];
+        const privileges = [];
 
-      for (const role of getters.selectedEntity.role) {
-        for (const capability of role.capability) {
-          privileges.push({ name: capability.name, role: capability.pivot.role_id });
+        for (const role of getters.selectedEntity.role) {
+          for (const capability of role.capability) {
+            privileges.push({ name: capability.name, role: capability.pivot.role_id });
+          }
         }
-      }
 
-      // return all privileges or the ones matching the search string.
-      return privileges.filter((p) => p.name.toLowerCase().match(search));
+        // return all privileges or the ones matching the search string.
+        return privileges.filter((p) => p.name.toLowerCase().match(search));
+      }
     }
-    return null;
   },
 
   //* Returns true if there are no users returned from the backend.
@@ -229,18 +229,23 @@ const actions = {
       }
     });
   },
+
+  async removeRole({ dispatch }, id) {
+    return axios.delete(`api/user/${id}`).then((response) => {
+      if (response.status === 200) {
+        dispatch('snackbar/snackbarSuccess', 'Role removed', {
+          root: true,
+        });
+        return true;
+      }
+    });
+  },
+
   //* Saves Entity User Roles
   async saveUserRoles({ getters }) {
     const userId = getters.selectedEntity.id;
     const roles = { name: 'role', items: getters.selectedEntity.role };
-
     return axios.post(`api/syncUser/${userId}`, roles);
-
-    // const index = state.allUsers.findIndex((e) => e.id === getters.selectedEntity.id);
-
-    // axios.get(`api/role/${getters.selectedEntity.id}`).then((responseMeta) => {
-    //   store.set(`entitiesManagement/allUsers@${index}`, responseMeta.data.record);
-    // });
   },
 
   //* Get User
@@ -250,15 +255,14 @@ const actions = {
   },
 
   //* Get User
-  async getUserAndReplace({ getters, dispatch }) {
+  async getUserAndReplace({ state, getters, dispatch }) {
     const user = getters.selectedEntity.id;
     return axios
       .get(`api/user/${user}`)
       .then((response) => {
-        if (response) {
-          const index = state.allUsers.findIndex((e) => e.id === user);
-          store.set(`entitiesManagement/allUsers@${index}`, response.data.record);
-        }
+        const index = state.allUsers.findIndex((e) => e.id === user);
+
+        store.set(`entitiesManagement/allUsers@${index}`, response.data.record);
       })
       .catch(() => {
         dispatch('snackbar/snackbarError', 'There was an error fetching the users', { root: true });

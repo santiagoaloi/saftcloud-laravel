@@ -133,6 +133,7 @@
             const saved = await this.saveRole();
 
             if (saved) {
+              this.getUsers();
               this.snackbarSuccess('Your changes are saved...');
               this.loading = false;
             } else {

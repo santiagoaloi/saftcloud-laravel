@@ -1,6 +1,7 @@
 // Utilities
 import axios from 'axios';
 import { make } from 'vuex-pathify';
+import { isEmpty } from 'lodash';
 import router from '@/router';
 import { store } from '@/store';
 
@@ -66,7 +67,31 @@ const actions = {
 };
 
 const getters = {
-  isRoot: (state) => state.session.user.role.find((role) => role.name === 'Root').name === 'Root',
+  isRoot: (state, getters) => {
+    if (getters.isLoggedIn) {
+      const root = state.session.user.role.find((role) => role.name === 'Root');
+      if (root) {
+        return root.name === 'Root';
+      }
+    }
+  },
+
+  isAdmin: (state, getters) => {
+    if (getters.isLoggedIn) {
+      const admin = state.session.user.role.find((role) => role.name === 'Admin');
+      if (admin) {
+        return admin.name === 'Admin';
+      }
+    }
+  },
+
+  roles: (state) => {
+    if (state.session.user) {
+      return state.session.user.role.map((role) => role.name);
+    }
+  },
+
+  isLoggedIn: (state) => !isEmpty(state.session),
 };
 
 export default {

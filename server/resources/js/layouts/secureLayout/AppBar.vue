@@ -22,8 +22,6 @@
 
       <div class="flex-grow-1" />
 
-      <v-chip v-if="$root.privileges.includes('User.create')"> Root </v-chip>
-
       <v-text-field
         v-model="search"
         v-lazy-input:debounce="200"
@@ -53,7 +51,7 @@
           </v-btn>
         </template>
         <v-list class="pa-2" outlined>
-          <v-list-item v-for="(item, i) in settingsMenu" :key="i" :to="item.href">
+          <v-list-item v-for="(item, i) in settingsMenuFiltered" :key="i" :to="item.href">
             <v-icon class="mr-5">
               {{ item.icon }}
             </v-icon>
@@ -106,7 +104,7 @@
         <template #activator="{ on, attrs }">
           <v-btn v-bind="attrs" x-small fab icon class="mr-2" v-on="on">
             <v-avatar size="33px">
-              <v-img :src="user.avatar">
+              <v-img :src="user.avatar || 'storage/defaults/avatar.png'">
                 <template #placeholder>
                   <v-row class="fill-height ma-0" align="center" justify="center">
                     <v-progress-circular indeterminate color="white" />
@@ -203,24 +201,28 @@
             icon: 'mdi-arrow-expand',
             href: '/appconfig/general',
             title: 'Configuration',
+            roles: [],
           },
 
           {
             icon: 'mdi-security',
             href: '/Entities',
             title: 'Users and Roles',
+            roles: ['Admin', 'Root'],
           },
 
           {
             icon: 'mdi-puzzle-outline',
             href: '/Components',
             title: 'Components',
+            roles: ['Root'],
           },
 
           {
             icon: 'mdi-database-search',
             href: '/SystemSettings/activitylogs',
             title: 'Logs',
+            roles: ['Admin', 'Root'],
           },
         ],
 
@@ -229,12 +231,14 @@
             icon: 'mdi-cogs',
             href: '/secure/config/general',
             title: 'Configuration',
+            roles: [],
           },
 
           {
             icon: 'mdi-security',
             href: '/core/users',
             title: 'Users and Groups',
+            roles: [],
           },
         ],
 
@@ -247,6 +251,12 @@
       ...sync('application', ['search']),
       user: sync('authentication@session.user'),
       ...sync('drawers', ['secureDefaultDrawer']),
+
+      settingsMenuFiltered() {
+        return this.settingsMenu.filter(
+          (menu) => menu.roles.includes(...this.$root.roles) || !menu.roles.length,
+        );
+      },
 
       fullName() {
         return `${capitalize(this.user.entity.first_name)} ${capitalize(

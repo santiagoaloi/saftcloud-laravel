@@ -471,6 +471,8 @@ const actions = {
 
   //* Creates a new component in the database.
   async createComponent({ state, getters, dispatch }) {
+    state.loading = true;
+
     return axios.post('api/component', state.componentSettings).then((response) => {
       if (response.status === 200) {
         store.set('componentManagement/allComponents', response.data.components);
@@ -512,6 +514,7 @@ const actions = {
             root: true,
           },
         );
+        state.loading = false;
 
         return true;
       }

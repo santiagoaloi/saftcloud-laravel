@@ -21,13 +21,16 @@
           <v-card flat min-height="100" class="transparent px-4 my-2">
             <v-container>
               <div class="title font-weight-bold">SaftCloud ™</div>
+
               <div class="overline white--text">v5.0.2</div>
               <div class="mt-4" style="margin-left: -4px">
                 <v-card-actions class="px-0">
                   <v-list-item dense class="pa-0">
-                    <v-list-item-avatar color="grey darken-3">
-                      <v-img class="elevation-6" :src="session.user.avatar"></v-img>
-                    </v-list-item-avatar>
+                    <v-badge bordered :color="badgeColor()" :content="badgeText()" overlap>
+                      <v-list-item-avatar color="grey darken-3">
+                        <v-img :src="user.avatar || 'storage/defaults/avatar.png'"></v-img>
+                      </v-list-item-avatar>
+                    </v-badge>
 
                     <v-list-item-content>
                       <v-list-item-title>{{ fullName }} </v-list-item-title>
@@ -47,16 +50,6 @@
                   dense
                   solo
                 >
-                  <!-- <template #item="data">
-                    <template>
-                      <v-list-item-avatar color="indigo" size="24">
-                        <v-icon small color="blue lighten-3">mdi-map-marker</v-icon>
-                      </v-list-item-avatar>
-                      <v-list-item-content>
-                        <v-list-item-title>{{ data.item.name }}</v-list-item-title>
-                      </v-list-item-content>
-                    </template>
-                  </template> -->
                 </v-select>
               </div>
             </v-container>
@@ -101,6 +94,31 @@
 
     methods: {
       ...call('componentManagement/*'),
+      badgeText() {
+        if (this.$root.isRoot) {
+          return 'Root';
+        }
+        if (this.$root.isAdmin && this.$root.isRoot) {
+          return 'Root';
+        }
+        if (this.$root.isAdmin) {
+          return 'Admin';
+        }
+        return 'User';
+      },
+
+      badgeColor() {
+        if (this.$root.isRoot) {
+          return 'red';
+        }
+        if (this.$root.isAdmin && this.$root.isRoot) {
+          return 'red';
+        }
+        if (this.$root.isAdmin) {
+          return 'green';
+        }
+        return 'primary';
+      },
     },
   };
 </script>

@@ -76,6 +76,8 @@
           :rows="2"
           dense
           class="mb-3"
+          auto-grow
+          :disabled="!$root.isRoot && ['Root', 'Admin'].includes(selectedEntity.name)"
         />
 
         <div class="mt-2">
@@ -85,7 +87,7 @@
               <v-switch hide-details class="mt-2" color="indigo lighten-2" />
             </v-list-item-icon>
             <v-list-item-content>
-              <v-list-item-title>Enable root access</v-list-item-title>
+              <v-list-item-title>Enable admin access</v-list-item-title>
               <v-list-item-subtitle> Unlock all privileges </v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
@@ -109,7 +111,7 @@
             dense
             return-object
             attach
-            :disabled="!['Root'].includes(selectedEntity.name)"
+            :disabled="!$root.isRoot && ['Root', 'Admin'].includes(selectedEntity.name)"
           >
             <template #selection="data">
               <v-chip
