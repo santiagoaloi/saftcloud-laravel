@@ -31,6 +31,7 @@ class RoleController extends Controller {
     public function show($id) {
         $this->authorize('show', Role::class);
         $result = Role::find($id);
+        $result['privileges'] = $this->getCapabilities($result->capability);
         origin($result);
 
         return response([
@@ -41,7 +42,6 @@ class RoleController extends Controller {
     public function showAll() {
         $this->authorize('showAll', Role::class);
         $result = Role::get();
-
         foreach($result as $role){
             $role['privileges'] = $this->getCapabilities($role->capability);
             origin($role);
@@ -51,14 +51,6 @@ class RoleController extends Controller {
         return response([
             'records'=> $newRoles
         ], 200);
-    }
-
-    public function getCapabilities($capabilities){
-        $privilege = [];
-        foreach ($capabilities as $capability){
-            $privilege[] = $capability->name;
-        };
-        return $privilege;
     }
 
     //  Para mostrar los elementos eliminados
@@ -155,5 +147,13 @@ class RoleController extends Controller {
             $arr[] = $item['id'];
         }
         $Role->$class()->sync($arr);
+    }
+
+    public function getCapabilities($capabilities){
+        $privilege = [];
+        foreach ($capabilities as $capability){
+            $privilege[] = $capability->name;
+        };
+        return $privilege;
     }
 }

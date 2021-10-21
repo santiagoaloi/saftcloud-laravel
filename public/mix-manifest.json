@@ -1,6 +1,7 @@
 {
     "/dist/js/app.js": "/dist/js/app.js",
     "/dist/js/manifest.js": "/dist/js/manifest.js",
+    "/dist/js/homepage.js": "/dist/js/homepage.js",
     "/dist/js/components.js": "/dist/js/components.js",
     "/dist/js/components-basic.js": "/dist/js/components-basic.js",
     "/dist/js/components-form-fields.js": "/dist/js/components-form-fields.js",
@@ -8,7 +9,6 @@
     "/dist/js/components-capabilities.js": "/dist/js/components-capabilities.js",
     "/dist/js/entities.js": "/dist/js/entities.js",
     "/dist/js/public-login-page.js": "/dist/js/public-login-page.js",
-    "/dist/js/public-homepage.js": "/dist/js/public-homepage.js",
     "/dist/js/public-signup.js": "/dist/js/public-signup.js",
     "/dist/js/public-signup-verify-account.js": "/dist/js/public-signup-verify-account.js",
     "/dist/js/secure-Layout.js": "/dist/js/secure-Layout.js",
@@ -65,6 +65,5 @@
     "/dist/js/entities-navigation-drilldown-footer.js": "/dist/js/entities-navigation-drilldown-footer.js",
     "/dist/js/components-status-bar.js": "/dist/js/components-status-bar.js",
     "/dist/css/app.css": "/dist/css/app.css",
-    "/dist/js/vendor.js": "/dist/js/vendor.js",
-    "/dist/js/homepage.js": "/dist/js/homepage.js"
+    "/dist/js/vendor.js": "/dist/js/vendor.js"
 }
