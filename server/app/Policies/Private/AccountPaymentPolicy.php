@@ -70,7 +70,7 @@ class AccountPaymentPolicy {
      * @return mixed
      */
 
-    public function restore(User $user, AccountPayment $AccountPayment) {
+    public function restore() {
         $user = Auth::user();
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
@@ -88,7 +88,7 @@ class AccountPaymentPolicy {
      * @param  \App\Models\Public\AccountPayment  $AccountPayment
      * @return mixed
      */
-    public function update(User $user, AccountPayment $AccountPayment) {
+    public function update() {
         $user = Auth::user();
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
@@ -99,7 +99,7 @@ class AccountPaymentPolicy {
         return false;
     }
 
-    public function updateAll(User $user, AccountPayment $AccountPayment) {
+    public function updateAll() {
         $user = Auth::user();
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
@@ -117,7 +117,7 @@ class AccountPaymentPolicy {
      * @param  \App\Models\Public\AccountPayment  $AccountPayment
      * @return mixed
      */
-    public function destroy(User $user, AccountPayment $AccountPayment) {
+    public function destroy() {
         $user = Auth::user();
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
@@ -135,7 +135,7 @@ class AccountPaymentPolicy {
      * @param  \App\Models\Public\AccountPayment  $AccountPayment
      * @return mixed
      */
-    public function forceDelete(User $user, AccountPayment $AccountPayment) {
+    public function forceDelete() {
         $user = Auth::user();
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);

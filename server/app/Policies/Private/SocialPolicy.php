@@ -70,7 +70,7 @@ class SocialPolicy {
      * @return mixed
      */
 
-    public function restore(User $user, Social $Social) {
+    public function restore() {
         $user = Auth::user();
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
@@ -88,7 +88,7 @@ class SocialPolicy {
      * @param  \App\Models\Public\Social  $Social
      * @return mixed
      */
-    public function update(User $user, Social $Social) {
+    public function update() {
         $user = Auth::user();
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
@@ -99,7 +99,7 @@ class SocialPolicy {
         return false;
     }
 
-    public function updateAll(User $user, Social $Social) {
+    public function updateAll() {
         $user = Auth::user();
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
@@ -117,7 +117,7 @@ class SocialPolicy {
      * @param  \App\Models\Public\Social  $Social
      * @return mixed
      */
-    public function destroy(User $user, Social $Social) {
+    public function destroy() {
         $user = Auth::user();
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
@@ -135,7 +135,7 @@ class SocialPolicy {
      * @param  \App\Models\Public\Social  $Social
      * @return mixed
      */
-    public function forceDelete(User $user, Social $Social) {
+    public function forceDelete() {
         $user = Auth::user();
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);

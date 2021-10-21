@@ -70,7 +70,7 @@ class RootAccountPolicy {
      * @return mixed
      */
 
-    public function restore(User $user, RootAccount $RootAccount) {
+    public function restore() {
         $user = Auth::user();
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
@@ -88,7 +88,7 @@ class RootAccountPolicy {
      * @param  \App\Models\Public\RootAccount  $RootAccount
      * @return mixed
      */
-    public function update(User $user, RootAccount $RootAccount) {
+    public function update() {
         $user = Auth::user();
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
@@ -99,7 +99,7 @@ class RootAccountPolicy {
         return false;
     }
 
-    public function updateAll(User $user, RootAccount $RootAccount) {
+    public function updateAll() {
         $user = Auth::user();
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
@@ -117,7 +117,7 @@ class RootAccountPolicy {
      * @param  \App\Models\Public\RootAccount  $RootAccount
      * @return mixed
      */
-    public function destroy(User $user, RootAccount $RootAccount) {
+    public function destroy() {
         $user = Auth::user();
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
@@ -135,7 +135,7 @@ class RootAccountPolicy {
      * @param  \App\Models\Public\RootAccount  $RootAccount
      * @return mixed
      */
-    public function forceDelete(User $user, RootAccount $RootAccount) {
+    public function forceDelete() {
         $user = Auth::user();
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);

@@ -70,7 +70,7 @@ class BranchPolicy {
      * @return mixed
      */
 
-    public function restore(User $user, Branch $Branch) {
+    public function restore() {
         $user = Auth::user();
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
@@ -88,7 +88,7 @@ class BranchPolicy {
      * @param  \App\Models\Public\Branch  $Branch
      * @return mixed
      */
-    public function update(User $user, Branch $Branch) {
+    public function update() {
         $user = Auth::user();
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
@@ -99,7 +99,7 @@ class BranchPolicy {
         return false;
     }
 
-    public function updateAll(User $user, Branch $Branch) {
+    public function updateAll() {
         $user = Auth::user();
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
@@ -117,7 +117,7 @@ class BranchPolicy {
      * @param  \App\Models\Public\Branch  $Branch
      * @return mixed
      */
-    public function destroy(User $user, Branch $Branch) {
+    public function destroy() {
         $user = Auth::user();
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
@@ -135,7 +135,7 @@ class BranchPolicy {
      * @param  \App\Models\Public\Branch  $Branch
      * @return mixed
      */
-    public function forceDelete(User $user, Branch $Branch) {
+    public function forceDelete() {
         $user = Auth::user();
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);

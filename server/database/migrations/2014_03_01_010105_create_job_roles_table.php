@@ -4,16 +4,18 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateEntityCustomersTable extends Migration {
+class CreateJobRolesTable extends Migration {
     /**
      * Run the migrations.
      *
      * @return void
      */
     public function up() {
-        Schema::create('entity_customers', function (Blueprint $table) {
+        Schema::create('job_roles', function (Blueprint $table) {
             $table->id();
-            $table->softDeletes();
+            $table->string('name');
+            $table->string('description');
+            $table->string('task');
             $table->timestamps();
         });
     }
@@ -24,6 +26,6 @@ class CreateEntityCustomersTable extends Migration {
      * @return void
      */
     public function down() {
-        Schema::dropIfExists('entity_customers');
+        Schema::dropIfExists('job_roles');
     }
 }

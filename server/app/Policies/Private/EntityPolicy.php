@@ -117,7 +117,7 @@ class EntityPolicy {
      * @param  \App\Models\Public\Entity  $Entity
      * @return mixed
      */
-    public function destroy(User $user, Entity $Entity) {
+    public function destroy() {
         $user = Auth::user();
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
@@ -135,7 +135,7 @@ class EntityPolicy {
      * @param  \App\Models\Public\Entity  $Entity
      * @return mixed
      */
-    public function forceDelete(User $user, Entity $Entity) {
+    public function forceDelete() {
         $user = Auth::user();
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);

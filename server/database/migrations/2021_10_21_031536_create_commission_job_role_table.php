@@ -4,22 +4,16 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateEntityEmployeesTable extends Migration {
+class CreateCommissionJobRoleTable extends Migration {
     /**
      * Run the migrations.
      *
      * @return void
      */
     public function up() {
-        Schema::create('entity_employees', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
+        Schema::create('commission_job_role', function (Blueprint $table) {
+            $table->foreignId('commission_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
             $table->foreignId('job_role_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
-            $table->string('work_shift_hours');
-            $table->string('start_work_date');
-            $table->string('finish_work_date');
-            $table->string('payment_method');
-            $table->softDeletes();
             $table->timestamps();
         });
     }
@@ -30,6 +24,6 @@ class CreateEntityEmployeesTable extends Migration {
      * @return void
      */
     public function down() {
-        Schema::dropIfExists('entity_employees');
+        Schema::dropIfExists('commission_job_role');
     }
 }

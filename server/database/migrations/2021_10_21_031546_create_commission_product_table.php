@@ -4,16 +4,16 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateEntityCustomersTable extends Migration {
+class CreateCommissionProductTable extends Migration {
     /**
      * Run the migrations.
      *
      * @return void
      */
     public function up() {
-        Schema::create('entity_customers', function (Blueprint $table) {
-            $table->id();
-            $table->softDeletes();
+        Schema::create('commission_product', function (Blueprint $table) {
+            $table->foreignId('commission_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
+            $table->foreignId('product_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
             $table->timestamps();
         });
     }
@@ -24,6 +24,6 @@ class CreateEntityCustomersTable extends Migration {
      * @return void
      */
     public function down() {
-        Schema::dropIfExists('entity_customers');
+        Schema::dropIfExists('commission_product');
     }
 }

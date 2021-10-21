@@ -70,7 +70,7 @@ class PhonePolicy {
      * @return mixed
      */
 
-    public function restore(User $user, Phone $Phone) {
+    public function restore() {
         $user = Auth::user();
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
@@ -88,7 +88,7 @@ class PhonePolicy {
      * @param  \App\Models\Public\Phone  $Phone
      * @return mixed
      */
-    public function update(User $user, Phone $Phone) {
+    public function update() {
         $user = Auth::user();
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
@@ -99,7 +99,7 @@ class PhonePolicy {
         return false;
     }
 
-    public function updateAll(User $user, Phone $Phone) {
+    public function updateAll() {
         $user = Auth::user();
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
@@ -117,7 +117,7 @@ class PhonePolicy {
      * @param  \App\Models\Public\Phone  $Phone
      * @return mixed
      */
-    public function destroy(User $user, Phone $Phone) {
+    public function destroy() {
         $user = Auth::user();
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
@@ -135,7 +135,7 @@ class PhonePolicy {
      * @param  \App\Models\Public\Phone  $Phone
      * @return mixed
      */
-    public function forceDelete(User $user, Phone $Phone) {
+    public function forceDelete() {
         $user = Auth::user();
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);

@@ -11,7 +11,8 @@ use App\Helpers\AccountVerification;
 class UserPolicy {
     use HandlesAuthorization;
 
-    public function store(user $user) {
+    public function store() {
+        $user = Auth::user();
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
         if(in_array('User.store', $capabilities) OR AccountVerification::checkRootRole()) {
@@ -26,17 +27,19 @@ class UserPolicy {
      * @param  \App\Models\User  $user
      * @return mixed
      */
-    public function show(user $user) {
+    public function show() {
+        $user = Auth::user();
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
 
-        if(in_array('User.shows', $capabilities) OR !AccountVerification::checkRootRole()){
+        if(in_array('User.shows', $capabilities) OR AccountVerification::checkRootRole()){
             return true;
         }
         return false;
     }
 
-     public function showAll(user $user) {
+     public function showAll() {
+        $user = Auth::user();
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
 
@@ -46,7 +49,8 @@ class UserPolicy {
         return false;
     }
 
-    public function showTrashed(user $user, $request) {
+    public function showTrashed() {
+        $user = Auth::user();
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
 
@@ -63,7 +67,8 @@ class UserPolicy {
      * @return mixed
      */
 
-    public function restore(User $user, $request) {
+    public function restore() {
+        $user = Auth::user();
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
 
@@ -79,7 +84,7 @@ class UserPolicy {
      * @param  \App\Models\User  $user
      * @return mixed
      */
-    public function update(User $user, $request) {
+    public function update() {
         $user = Auth::user();
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
@@ -90,7 +95,7 @@ class UserPolicy {
         return false;
     }
 
-    public function updateAll(User $user, $request) {
+    public function updateAll() {
         $user = Auth::user();
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
@@ -108,7 +113,8 @@ class UserPolicy {
      * @param  \App\Models\Public\User  $User
      * @return mixed
      */
-    public function destroy(User $user, $request) {
+    public function destroy() {
+        $user = Auth::user();
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
 
@@ -125,7 +131,8 @@ class UserPolicy {
      * @param  \App\Models\Public\User  $User
      * @return mixed
      */
-    public function forceDelete(User $user, $request) {
+    public function forceDelete() {
+        $user = Auth::user();
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
 
