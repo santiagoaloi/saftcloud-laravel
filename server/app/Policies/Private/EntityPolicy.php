@@ -70,7 +70,7 @@ class EntityPolicy {
      * @return mixed
      */
 
-    public function restore(User $user, Entity $Entity) {
+    public function restore() {
         $user = Auth::user();
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
@@ -88,7 +88,7 @@ class EntityPolicy {
      * @param  \App\Models\Public\Entity  $Entity
      * @return mixed
      */
-    public function update(User $user, Entity $Entity) {
+    public function update() {
         $user = Auth::user();
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
@@ -99,7 +99,7 @@ class EntityPolicy {
         return false;
     }
 
-    public function updateAll(User $user, Entity $Entity) {
+    public function updateAll() {
         $user = Auth::user();
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);

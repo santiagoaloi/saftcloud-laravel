@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\GeneralConfig;
 
+use App\Models\GeneralConfig\DocumentType;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Database\QueryException;
-use App\Models\GeneralConfig\DocumentType;
 
 class DocumentTypeController extends Controller {
 
@@ -116,6 +116,7 @@ class DocumentTypeController extends Controller {
     public function attachDocumentType(DocumentType $documentType, Request $request){
         $items = $request['items'];
         $class = $request['name'];
+        $arr = [];
 
         foreach($items as $item){
             $arr[] = $item['id'];
@@ -127,6 +128,7 @@ class DocumentTypeController extends Controller {
     public function detachDocumentType(DocumentType $documentType, Request $request){
         $items = $request['items'];
         $class = $request['name'];
+        $arr = [];
 
         foreach($items as $item){
             $arr[] = $item['id'];
@@ -138,6 +140,7 @@ class DocumentTypeController extends Controller {
     public function syncDocumentType(DocumentType $documentType, Request $request){
         $items = $request['items'];
         $class = $request['name'];
+        $arr = [];
 
         foreach($items as $item){
             $arr[] = $item['id'];

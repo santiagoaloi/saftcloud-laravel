@@ -116,6 +116,7 @@ class CapabilityController extends Controller {
     public function attachCapability(Capability $capability, Request $request){
         $items = $request['items'];
         $class = $request['name'];
+        $arr = [];
 
         foreach($items as $item){
             $arr[] = $item['id'];
@@ -127,6 +128,7 @@ class CapabilityController extends Controller {
     public function detachCapability(Capability $capability, Request $request){
         $items = $request['items'];
         $class = $request['name'];
+        $arr = [];
 
         foreach($items as $item){
             $arr[] = $item['id'];
@@ -138,6 +140,7 @@ class CapabilityController extends Controller {
     public function syncCapability(Capability $capability, Request $request){
         $items = $request['items'];
         $class = $request['name'];
+        $arr = [];
 
         foreach($items as $item){
             $arr[] = $item['id'];

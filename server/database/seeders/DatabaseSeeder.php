@@ -17,8 +17,10 @@ class DatabaseSeeder extends Seeder {
 
         $this->call(CountrySeeder::class);
         $this->call(StateSeeder::class);
+        $this->call(DaySeeder::class);
 
         $this->call(DocumentTypeSeeder::class);
+        $this->call(ExpenseTypeSeeder::class);
         $this->call(InvoiceTypeSeeder::class);
         $this->call(IvaConditionSeeder::class);
         $this->call(IvaTaxSeeder::class);

@@ -116,6 +116,7 @@ class PaymentMethodController extends Controller {
     public function attachPaymentMethod(PaymentMethod $paymentMethod, Request $request){
         $items = $request['items'];
         $class = $request['name'];
+        $arr = [];
 
         foreach($items as $item){
             $arr[] = $item['id'];
@@ -127,6 +128,7 @@ class PaymentMethodController extends Controller {
     public function detachPaymentMethod(PaymentMethod $paymentMethod, Request $request){
         $items = $request['items'];
         $class = $request['name'];
+        $arr = [];
 
         foreach($items as $item){
             $arr[] = $item['id'];
@@ -138,6 +140,7 @@ class PaymentMethodController extends Controller {
     public function syncPaymentMethod(PaymentMethod $paymentMethod, Request $request){
         $items = $request['items'];
         $class = $request['name'];
+        $arr = [];
 
         foreach($items as $item){
             $arr[] = $item['id'];

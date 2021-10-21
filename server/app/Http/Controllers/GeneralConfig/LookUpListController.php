@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Database\QueryException;
 use App\Models\GeneralConfig\LookUpList;
-use App\Models\GeneralConfig\LookUpListValue;
 
 class LookUpListController extends Controller {
 

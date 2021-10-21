@@ -104,6 +104,7 @@ class StateController extends Controller {
     public function attachState(State $state, Request $request){
         $items = $request['items'];
         $class = $request['name'];
+        $arr = [];
 
         foreach($items as $item){
             $arr[] = $item['id'];
@@ -115,6 +116,7 @@ class StateController extends Controller {
     public function detachState(State $state, Request $request){
         $items = $request['items'];
         $class = $request['name'];
+        $arr = [];
 
         foreach($items as $item){
             $arr[] = $item['id'];
@@ -126,6 +128,7 @@ class StateController extends Controller {
     public function syncState(State $state, Request $request){
         $items = $request['items'];
         $class = $request['name'];
+        $arr = [];
 
         foreach($items as $item){
             $arr[] = $item['id'];

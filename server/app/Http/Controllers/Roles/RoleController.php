@@ -119,6 +119,7 @@ class RoleController extends Controller {
     public function attachRole(Role $Role, Request $request){
         $items = $request['items'];
         $class = $request['name'];
+        $arr = [];
 
         foreach($items as $item){
             $arr[] = $item['id'];
@@ -130,6 +131,7 @@ class RoleController extends Controller {
     public function detachRole(Role $Role, Request $request){
         $items = $request['items'];
         $class = $request['name'];
+        $arr = [];
 
         foreach($items as $item){
             $arr[] = $item['id'];
