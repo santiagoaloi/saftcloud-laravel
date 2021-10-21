@@ -190,8 +190,13 @@ const actions = {
   },
 
   //* Creates a new user in the database.
-  async createUser({ state, dispatch }) {
-    return axios.post('api/user', state.user).then((response) => {
+  async createUser({ state, rootState, dispatch }) {
+    const post = {
+      ...state.user,
+      entity_id: rootState.authentication.activeBranch,
+    };
+
+    return axios.post('api/user', post).then((response) => {
       if (response.status === 200) {
         dispatch('snackbar/snackbarSuccess', 'New user created', { root: true });
         return true;
@@ -214,18 +219,16 @@ const actions = {
     });
   },
 
-  test1() {
-    return axios.get('api/test1');
+  async removeUser({ dispatch }, id) {
+    return axios.delete(`api/user/${id}`).then((response) => {
+      if (response.status === 200) {
+        dispatch('snackbar/snackbarSuccess', 'User removed', {
+          root: true,
+        });
+        return true;
+      }
+    });
   },
-
-  test2() {
-    return axios.get('api/test2');
-  },
-
-  test3() {
-    return axios.get('api/test3');
-  },
-
   //* Saves Entity User Roles
   async saveUserRoles({ getters }) {
     const userId = getters.selectedEntity.id;

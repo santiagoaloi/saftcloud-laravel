@@ -9,20 +9,17 @@ import router from '@/router';
 import { store } from '@/store';
 import vuetify from '@/plugins/vuetify';
 
-//Role privileges
-
-import Privileges from './mixins/Privileges';
-
 // Application
 import App from './App.vue';
+import Privileges from './mixins/privileges';
 
 // Styles
 import 'aos/dist/aos.css';
 import './assets/css/style.css';
 
-// Vue.mixin(Privileges);
-
 new Vue({
+  mixins: [Privileges],
+
   created() {
     AOS.init({});
   },

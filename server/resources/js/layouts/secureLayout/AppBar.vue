@@ -22,6 +22,8 @@
 
       <div class="flex-grow-1" />
 
+      <v-chip v-if="$root.privileges.includes('User.create')"> Root </v-chip>
+
       <v-text-field
         v-model="search"
         v-lazy-input:debounce="200"

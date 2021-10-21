@@ -28,14 +28,7 @@
             :color="isDark ? '' : 'white'"
             :disabled="['Root', 'Admin'].includes(selectedEntity.name)"
             v-on="on"
-            @click.stop="
-              removeComponentWarning(
-                selectedEntity.id,
-                'delete',
-                'component',
-                selectedEntity.config.general_config.title,
-              )
-            "
+            @click.stop="removeUserWarning(selectedEntity.id, selectedEntity.entity.first_name)"
           >
             <v-icon color="pink lighten-1" dark> mdi-trash-can-outline </v-icon>
           </v-btn>
@@ -69,11 +62,11 @@
 <script>
   import { sync, call, get } from 'vuex-pathify';
   import { isEqual } from 'lodash';
-  import componentActions from '@/mixins/componentActions';
+  import entitiesActions from '@/mixins/entitiesActions';
 
   export default {
     name: 'ComponentDrilldownFooter',
-    mixins: [componentActions],
+    mixins: [entitiesActions],
     data() {
       return {
         loading: false,
