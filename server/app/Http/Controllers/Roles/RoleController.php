@@ -10,7 +10,7 @@ use Illuminate\Database\QueryException;
 class RoleController extends Controller {
 
     public function store(Request $request) {
-        $this->authorize('store', Role::class);
+        $this->authorize(ability: 'store', arguments: [Role::class, 'Role.store']);
         try{
             $query = Role::create($request->all());
         }
@@ -29,7 +29,7 @@ class RoleController extends Controller {
     }
 
     public function show($id) {
-        $this->authorize('show', Role::class);
+        $this->authorize(ability: 'show', arguments: [Role::class, 'Role.show']);
         $result = Role::find($id);
         $result['privileges'] = $this->getCapabilities($result->capability);
         origin($result);
@@ -40,7 +40,7 @@ class RoleController extends Controller {
     }
 
     public function showAll() {
-        $this->authorize('showAll', Role::class);
+        $this->authorize(ability: 'showAll', arguments: [Role::class, 'Role.showAll']);
         $result = Role::get();
         foreach($result as $role){
             $role['privileges'] = $this->getCapabilities($role->capability);
@@ -54,23 +54,24 @@ class RoleController extends Controller {
     }
 
     //  Para mostrar los elementos eliminados
-    public function getTrashed() {
-        $this->authorize('getTrashed', Role::class);
+    public function showTrashed() {
+        $this->authorize(ability: 'showTrashed', arguments: [Role::class, 'Role.showTrashed']);
         return response([
             'records'=> Role::onlyTrashed()->get()
         ], 200);
     }
 
     //  Para mostrar un elemento eliminado
-    public function restore($id) {
-        $this->authorize('restore', Role::class);
+    public function recoveryTrashed($id) {
+        $this->authorize(ability: 'recoveryTrashed', arguments: [Role::class, 'Role.recoveryTrashed']);
         return response([
             'record'=> Role::onlyTrashed()->find($id)->recovery()
         ], 200);
     }
 
     public function update(Request $request, $id) {
-        $this->authorize('update', Role::class);
+        $this->authorize(ability: 'update', arguments: [Role::class, 'Role.update']);
+
         $query = Role::find($id);
         try{
             $query->fill($request->all())->save();
@@ -90,7 +91,7 @@ class RoleController extends Controller {
     }
 
     public function updateAll(Request $request) {
-        $this->authorize('updateAll', Role::class);
+        $this->authorize(ability: 'updateAll', arguments: [Role::class, 'Role.updateAll']);
         foreach($request as $item){
             $this->update($item, $item->id);
         };
@@ -99,7 +100,7 @@ class RoleController extends Controller {
     }
 
     public function destroy($id) {
-        $this->authorize('destroy', Role::class);
+        $this->authorize(ability: 'destroy', arguments: [Role::class, 'Role.destroy']);
         $query = Role::find($id);
         $query->delete();
 
@@ -107,9 +108,10 @@ class RoleController extends Controller {
     }
 
     public function forceDestroy($id){
-        $this->authorize('forceDestroy', Role::class);
+        $this->authorize(ability: 'forceDestroy', arguments: [Role::class, 'Role.forceDestroy']);
         $query = Role::withTrashed()->find($id);
         $query->forceDelete();
+
         return response([
             'status'=> true
         ], 200);

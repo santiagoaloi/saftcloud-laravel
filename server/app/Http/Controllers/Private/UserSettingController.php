@@ -10,7 +10,7 @@ use Illuminate\Database\QueryException;
 class UserSettingController extends Controller {
 
     public function store(Request $request) {
-        $this->authorize('store', userSetting::class);
+        $this->authorize(ability: 'store', arguments: [userSetting::class, 'userSetting.store']);
         try{
             $query = userSetting::create($request->all());
         }
@@ -39,7 +39,7 @@ class UserSettingController extends Controller {
     }
 
     public function showAll() {
-        $this->authorize('showAll', userSetting::class);
+        $this->authorize(ability: 'showAll', arguments: [userSetting::class, 'userSetting.showAll']);
         $result = userSetting::get();
         foreach ($result as $item){
             origin($item);
@@ -51,23 +51,23 @@ class UserSettingController extends Controller {
     }
 
     //  Para mostrar los elementos eliminados
-    public function getTrashed() {
-        $this->authorize('getTrashed', userSetting::class);
+    public function showTrashed() {
+        $this->authorize(ability: 'showTrashed', arguments: [userSetting::class, 'userSetting.showTrashed']);
         return response([
             'records'=> userSetting::onlyTrashed()->get()
         ], 200);
     }
 
     //  Para mostrar un elemento eliminado
-    public function restore($id) {
-        $this->authorize('restore', userSetting::class);
+    public function recoveryTrashed($id) {
+        $this->authorize(ability: 'recoveryTrashed', arguments: [userSetting::class, 'userSetting.recoveryTrashed']);
         return response([
             'record'=> userSetting::onlyTrashed()->find($id)->recovery()
         ], 200);
     }
 
     public function update(Request $request, $id) {
-        $this->authorize('update', userSetting::class);
+        $this->authorize(ability: 'update', arguments: [userSetting::class, 'userSetting.update']);
         $query = userSetting::find($id);
         try{
             $query->fill($request->all())->save();
@@ -87,7 +87,7 @@ class UserSettingController extends Controller {
     }
 
     public function updateAll(Request $request) {
-        $this->authorize('updateAll', userSetting::class);
+        $this->authorize(ability: 'updateAll', arguments: [userSetting::class, 'userSetting.updateAll']);
         foreach($request as $item){
             $this->update($item, $item->id);
         };
@@ -96,7 +96,7 @@ class UserSettingController extends Controller {
     }
 
     public function destroy($id) {
-        $this->authorize('destroy', userSetting::class);
+        $this->authorize(ability: 'destroy', arguments: [userSetting::class, 'userSetting.destroy']);
         $query = userSetting::find($id);
         $query->delete();
 
@@ -104,7 +104,7 @@ class UserSettingController extends Controller {
     }
 
     public function forceDestroy($id){
-        $this->authorize('forceDestroy', userSetting::class);
+        $this->authorize(ability: 'forceDestroy', arguments: [userSetting::class, 'userSetting.forceDestroy']);
         $query = userSetting::withTrashed()->find($id);
         $query->forceDelete();
         return response([

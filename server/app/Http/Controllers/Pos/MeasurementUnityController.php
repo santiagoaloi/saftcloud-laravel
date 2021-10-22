@@ -10,7 +10,7 @@ use Illuminate\Database\QueryException;
 class MeasurementUnityController extends Controller {
 
     public function store(Request $request) {
-        $this->authorize('store', MeasurementUnit::class);
+        $this->authorize(ability: 'store', arguments: [MeasurementUnit::class, 'MeasurementUnit.store']);
         try{
             $query = MeasurementUnit::create($request->all());
         }
@@ -29,7 +29,7 @@ class MeasurementUnityController extends Controller {
     }
 
     public function show($id) {
-        $this->authorize('show', MeasurementUnit::class);
+        $this->authorize(ability: 'show', arguments: [MeasurementUnit::class, 'MeasurementUnit.show']);
         $result = MeasurementUnit::find($id);
         origin($result);
 
@@ -39,7 +39,7 @@ class MeasurementUnityController extends Controller {
     }
 
     public function showAll() {
-        $this->authorize('showAll', MeasurementUnit::class);
+        $this->authorize(ability: 'showAll', arguments: [MeasurementUnit::class, 'MeasurementUnit.showAll']);
         $result = MeasurementUnit::get();
         foreach ($result as $item){
             origin($item);
@@ -51,23 +51,23 @@ class MeasurementUnityController extends Controller {
     }
 
     //  Para mostrar los elementos eliminados
-    public function getTrashed() {
-        $this->authorize('getTrashed', MeasurementUnit::class);
+    public function showTrashed() {
+        $this->authorize(ability: 'showTrashed', arguments: [MeasurementUnit::class, 'MeasurementUnit.showTrashed']);
         return response([
             'records'=> MeasurementUnit::onlyTrashed()->get()
         ], 200);
     }
 
     //  Para mostrar un elemento eliminado
-    public function restore($id) {
-        $this->authorize('restore', MeasurementUnit::class);
+    public function recoveryTrashed($id) {
+        $this->authorize(ability: 'recoveryTrashed', arguments: [MeasurementUnit::class, 'MeasurementUnit.recoveryTrashed']);
         return response([
             'record'=> MeasurementUnit::onlyTrashed()->find($id)->recovery()
         ], 200);
     }
 
     public function update(Request $request, $id) {
-        $this->authorize('update', MeasurementUnit::class);
+        $this->authorize(ability: 'update', arguments: [MeasurementUnit::class, 'MeasurementUnit.update']);
         $query = MeasurementUnit::find($id);
         try{
             $query->fill($request->all())->save();
@@ -87,7 +87,7 @@ class MeasurementUnityController extends Controller {
     }
 
     public function updateAll(Request $request) {
-        $this->authorize('updateAll', MeasurementUnit::class);
+        $this->authorize(ability: 'updateAll', arguments: [MeasurementUnit::class, 'MeasurementUnit.updateAll']);
         foreach($request as $item){
             $this->update($item, $item->id);
         };
@@ -95,7 +95,7 @@ class MeasurementUnityController extends Controller {
     }
 
     public function destroy($id) {
-        $this->authorize('destroy', MeasurementUnit::class);
+        $this->authorize(ability: 'destroy', arguments: [MeasurementUnit::class, 'MeasurementUnit.destroy']);
         $query = MeasurementUnit::find($id);
         $query->delete();
 
@@ -103,7 +103,7 @@ class MeasurementUnityController extends Controller {
     }
 
     public function forceDestroy($id){
-        $this->authorize('forceDestroy', MeasurementUnit::class);
+        $this->authorize(ability: 'forceDestroy', arguments: [MeasurementUnit::class, 'MeasurementUnit.forceDestroy']);
         $query = MeasurementUnit::withTrashed()->find($id);
         $query->forceDelete();
         return response([

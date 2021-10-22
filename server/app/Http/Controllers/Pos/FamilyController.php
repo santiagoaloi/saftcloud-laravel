@@ -10,7 +10,7 @@ use Illuminate\Database\QueryException;
 class FamilyController extends Controller {
 
     public function store(Request $request) {
-        $this->authorize('store', Family::class);
+        $this->authorize(ability: 'store', arguments: [Family::class, 'Family.store']);
         try{
             $query = Family::create($request->all());
         }
@@ -29,7 +29,7 @@ class FamilyController extends Controller {
     }
 
     public function show($id) {
-        $this->authorize('show', Family::class);
+        $this->authorize(ability: 'show', arguments: [Family::class, 'Family.show']);
         $result = Family::find($id);
         origin($result);
 
@@ -39,7 +39,7 @@ class FamilyController extends Controller {
     }
 
     public function showAll() {
-        $this->authorize('showAll', Family::class);
+        $this->authorize(ability: 'showAll', arguments: [Family::class, 'Family.showAll']);
         $result = Family::get();
         foreach ($result as $item){
             origin($item);
@@ -51,23 +51,23 @@ class FamilyController extends Controller {
     }
 
     //  Para mostrar los elementos eliminados
-    public function getTrashed() {
-        $this->authorize('getTrashed', Family::class);
+    public function showTrashed() {
+        $this->authorize(ability: 'showTrashed', arguments: [Family::class, 'Family.showTrashed']);
         return response([
             'records'=> Family::onlyTrashed()->get()
         ], 200);
     }
 
     //  Para mostrar un elemento eliminado
-    public function restore($id) {
-        $this->authorize('restore', Family::class);
+    public function recoveryTrashed($id) {
+        $this->authorize(ability: 'recoveryTrashed', arguments: [Family::class, 'Family.recoveryTrashed']);
         return response([
             'record'=> Family::onlyTrashed()->find($id)->recovery()
         ], 200);
     }
 
     public function update(Request $request, $id) {
-        $this->authorize('update', Family::class);
+        $this->authorize(ability: 'update', arguments: [Family::class, 'Family.update']);
         $query = Family::find($id);
         try{
             $query->fill($request->all())->save();
@@ -87,7 +87,7 @@ class FamilyController extends Controller {
     }
 
     public function updateAll(Request $request) {
-        $this->authorize('updateAll', Family::class);
+        $this->authorize(ability: 'updateAll', arguments: [Family::class, 'Family.updateAll']);
         foreach($request as $item){
             $this->update($item, $item->id);
         };
@@ -95,7 +95,7 @@ class FamilyController extends Controller {
     }
 
     public function destroy($id) {
-        $this->authorize('destroy', Family::class);
+        $this->authorize(ability: 'destroy', arguments: [Family::class, 'Family.destroy']);
         $query = Family::find($id);
         $query->delete();
 
@@ -103,11 +103,47 @@ class FamilyController extends Controller {
     }
 
     public function forceDestroy($id){
-        $this->authorize('forceDestroy', Family::class);
+        $this->authorize(ability: 'forceDestroy', arguments: [Family::class, 'Family.forceDestroy']);
         $query = Family::withTrashed()->find($id);
         $query->forceDelete();
         return response([
             'status'=> true
         ], 200);
+    }
+
+    // AGREGA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
+    public function attachPaymentMethod(Family $family, Request $request){
+        $items = $request['items'];
+        $class = $request['name'];
+        $arr = [];
+
+        foreach($items as $item){
+            $arr[] = $item['id'];
+        }
+        $family->$class()->attach($arr);
+    }
+
+    // ELIMINA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
+    public function detachPaymentMethod(Family $family, Request $request){
+        $items = $request['items'];
+        $class = $request['name'];
+        $arr = [];
+
+        foreach($items as $item){
+            $arr[] = $item['id'];
+        }
+        $family->$class()->detach($arr);
+    }
+
+    // SINCRONIZA TODOS LOS ITEMS ENVIADOS EN REQUEST
+    public function syncPaymentMethod(Family $family, Request $request){
+        $items = $request['items'];
+        $class = $request['name'];
+        $arr = [];
+
+        foreach($items as $item){
+            $arr[] = $item['id'];
+        }
+        $family->$class()->sync($arr);
     }
 }

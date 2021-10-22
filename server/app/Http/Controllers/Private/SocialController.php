@@ -10,7 +10,7 @@ use Illuminate\Database\QueryException;
 class SocialController extends Controller {
 
     public function store(Request $request) {
-        $this->authorize('store', Social::class);
+        $this->authorize(ability: 'store', arguments: [Social::class, 'Social.store']);
         try{
             $query = Social::create($request->all());
         }
@@ -29,7 +29,7 @@ class SocialController extends Controller {
     }
 
     public function show($id) {
-        $this->authorize('show', Social::class);
+        $this->authorize(ability: 'show', arguments: [Social::class, 'Social.show']);
         $result = Social::find($id);
         origin($result);
 
@@ -39,7 +39,7 @@ class SocialController extends Controller {
     }
 
     public function showAll() {
-        $this->authorize('showAll', Social::class);
+        $this->authorize(ability: 'showAll', arguments: [Social::class, 'Social.showAll']);
         $result = Social::get();
         foreach ($result as $item){
             origin($item);
@@ -51,23 +51,23 @@ class SocialController extends Controller {
     }
 
     //  Para mostrar los elementos eliminados
-    public function getTrashed() {
-        $this->authorize('getTrashed', Social::class);
+    public function showTrashed() {
+        $this->authorize(ability: 'showTrashed', arguments: [Social::class, 'Social.showTrashed']);
         return response([
             'records'=> Social::onlyTrashed()->get()
         ], 200);
     }
 
     //  Para mostrar un elemento eliminado
-    public function restore($id) {
-        $this->authorize('restore', Social::class);
+    public function recoveryTrashed($id) {
+        $this->authorize(ability: 'recoveryTrashed', arguments: [Social::class, 'Social.recoveryTrashed']);
         return response([
             'record'=> Social::onlyTrashed()->find($id)->recovery()
         ], 200);
     }
 
     public function update(Request $request, $id) {
-        $this->authorize('update', Social::class);
+        $this->authorize(ability: 'update', arguments: [Social::class, 'Social.update']);
         $query = Social::find($id);
         try{
             $query->fill($request->all())->save();
@@ -87,7 +87,7 @@ class SocialController extends Controller {
     }
 
     public function updateAll(Request $request) {
-        $this->authorize('updateAll', Social::class);
+        $this->authorize(ability: 'updateAll', arguments: [Social::class, 'Social.updateAll']);
         foreach($request as $item){
             $this->update($item, $item->id);
         };
@@ -96,7 +96,7 @@ class SocialController extends Controller {
     }
 
     public function destroy($id) {
-        $this->authorize('destroy', Social::class);
+        $this->authorize(ability: 'destroy', arguments: [Social::class, 'Social.destroy']);
         $query = Social::find($id);
         $query->delete();
 
@@ -104,7 +104,7 @@ class SocialController extends Controller {
     }
 
     public function forceDestroy($id){
-        $this->authorize('forceDestroy', Social::class);
+        $this->authorize(ability: 'forceDestroy', arguments: [Social::class, 'Social.forceDestroy']);
         $query = Social::withTrashed()->find($id);
         $query->forceDelete();
         return response([

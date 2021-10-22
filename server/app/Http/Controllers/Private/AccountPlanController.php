@@ -10,7 +10,7 @@ use Illuminate\Database\QueryException;
 class AccountPlanController extends Controller {
     
     public function store(Request $request) {
-        $this->authorize('store', AccountPlan::class);
+        $this->authorize(ability: 'store', arguments: [AccountPlan::class, 'AccountPlan.store']);
         try{
             $query = AccountPlan::create($request->all());
         }
@@ -29,7 +29,7 @@ class AccountPlanController extends Controller {
     }
 
     public function show($id) {
-        $this->authorize('show', AccountPlan::class);
+        $this->authorize(ability: 'show', arguments: [AccountPlan::class, 'AccountPlan.show']);
         $result = AccountPlan::find($id);
         origin($result);
 
@@ -39,7 +39,7 @@ class AccountPlanController extends Controller {
     }
 
     public function showAll() {
-        $this->authorize('showAll', AccountPlan::class);
+        $this->authorize(ability: 'showAll', arguments: [AccountPlan::class, 'AccountPlan.showAll']);
         $result = AccountPlan::get();
         foreach ($result as $item){
             origin($item);
@@ -51,23 +51,23 @@ class AccountPlanController extends Controller {
     }
 
     //  Para mostrar los elementos eliminados
-    public function getTrashed() {
-        $this->showTrashed('restore', AccountPlan::class);
+    public function showTrashed() {
+        $this->authorize(ability: 'showTrashed', arguments: [AccountPlan::class, 'AccountPlan.showTrashed']);
         return response([
             'records' => AccountPlan::onlyTrashed()->get()
         ], 200);
     }
 
     //  Para mostrar un elemento eliminado
-    public function restore($id) {
-        $this->authorize('restore', AccountPlan::class);
+    public function recoveryTrashed($id) {
+        $this->authorize(ability: 'recoveryTrashed', arguments: [AccountPlan::class, 'AccountPlan.recoveryTrashed']);
         return response([
             'record' => AccountPlan::onlyTrashed()->find($id)->recovery()
         ], 200);
     }
 
     public function update(Request $request, $id) {
-        $this->authorize('update', AccountPlan::class);
+        $this->authorize(ability: 'update', arguments: [AccountPlan::class, 'AccountPlan.update']);
         $query = AccountPlan::find($id);
         try{
             $query->fill($request->all())->save();
@@ -87,7 +87,7 @@ class AccountPlanController extends Controller {
     }
 
     public function updateAll(Request $request) {
-        $this->authorize('updateAll', AccountPlan::class);
+        $this->authorize(ability: 'updateAll', arguments: [AccountPlan::class, 'AccountPlan.updateAll']);
         foreach($request as $item){
             $this->update($item, $item->id);
         };
@@ -96,7 +96,7 @@ class AccountPlanController extends Controller {
     }
 
     public function destroy($id) {
-        $this->authorize('destroy', AccountPlan::class);
+        $this->authorize(ability: 'destroy', arguments: [AccountPlan::class, 'AccountPlan.destroy']);
         $query = AccountPlan::find($id);
         $query->delete();
 
@@ -104,7 +104,7 @@ class AccountPlanController extends Controller {
     }
 
     public function forceDestroy($id){
-        $this->authorize('forceDestroy', AccountPlan::class);
+        $this->authorize(ability: 'forceDestroy', arguments: [AccountPlan::class, 'AccountPlan.forceDestroy']);
         $query = AccountPlan::withTrashed()->find($id);
         $query->forceDelete();
         return response([

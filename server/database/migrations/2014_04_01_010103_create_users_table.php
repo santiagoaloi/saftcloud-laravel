@@ -18,6 +18,7 @@ class CreateUsersTable extends Migration {
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->smallInteger('second_factor')->default('0');
+            $table->smallInteger('favorite')->default('0');
             $table->smallInteger('locked')->default('0');
             $table->longText('avatar')->nullable();
             $table->rememberToken();

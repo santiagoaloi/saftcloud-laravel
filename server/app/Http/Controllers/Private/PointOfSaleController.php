@@ -10,7 +10,7 @@ use Illuminate\Database\QueryException;
 class PointOfSaleController extends Controller {
 
     public function store(Request $request) {
-        $this->authorize('forceDestroy', PointOfSale::class);
+        $this->authorize(ability: 'store', arguments: [PointOfSale::class, 'PointOfSale.store']);
         try{
             $query = PointOfSale::create($request->all());
         }
@@ -29,7 +29,7 @@ class PointOfSaleController extends Controller {
     }
 
     public function show($id) {
-        $this->authorize('forceDestroy', PointOfSale::class);
+        $this->authorize(ability: 'show', arguments: [PointOfSale::class, 'PointOfSale.show']);
         $result = PointOfSale::find($id);
         origin($result);
 
@@ -39,7 +39,7 @@ class PointOfSaleController extends Controller {
     }
 
     public function showAll() {
-        $this->authorize('forceDestroy', PointOfSale::class);
+        $this->authorize(ability: 'showAll', arguments: [PointOfSale::class, 'PointOfSale.showAll']);
         $result = PointOfSale::get();
         foreach ($result as $item){
             origin($item);
@@ -51,8 +51,8 @@ class PointOfSaleController extends Controller {
     }
 
     //  Para mostrar los elementos eliminados
-    public function getTrashed() {
-        $this->authorize('forceDestroy', PointOfSale::class);
+    public function showTrashed() {
+        $this->authorize(ability: 'showTrashed', arguments: [PointOfSale::class, 'PointOfSale.showTrashed']);
         return response([
             'records'=> PointOfSale::onlyTrashed()->get()
         ], 200);
@@ -60,14 +60,14 @@ class PointOfSaleController extends Controller {
 
     //  Para mostrar un elemento eliminado
     public function recoveryTrashed($id) {
-        $this->authorize('forceDestroy', PointOfSale::class);
+        $this->authorize(ability: 'recoveryTrashed', arguments: [PointOfSale::class, 'PointOfSale.recoveryTrashed']);
         return response([
             'record'=> PointOfSale::onlyTrashed()->find($id)->recovery()
         ], 200);
     }
 
     public function update(Request $request, $id) {
-        $this->authorize('forceDestroy', PointOfSale::class);
+        $this->authorize(ability: 'update', arguments: [PointOfSale::class, 'PointOfSale.update']);
         $query = PointOfSale::find($id);
         try{
             $query->fill($request->all())->save();
@@ -87,7 +87,7 @@ class PointOfSaleController extends Controller {
     }
 
     public function updateAll(Request $request) {
-        $this->authorize('forceDestroy', PointOfSale::class);
+        $this->authorize(ability: 'updateAll', arguments: [PointOfSale::class, 'PointOfSale.updateAll']);
         foreach($request as $item){
             $this->update($item, $item->id);
         };
@@ -96,7 +96,7 @@ class PointOfSaleController extends Controller {
     }
 
     public function destroy($id) {
-        $this->authorize('forceDestroy', PointOfSale::class);
+        $this->authorize(ability: 'destroy', arguments: [PointOfSale::class, 'PointOfSale.destroy']);
         $query = PointOfSale::find($id);
         $query->delete();
 
@@ -104,7 +104,7 @@ class PointOfSaleController extends Controller {
     }
 
     public function forceDestroy($id){
-        $this->authorize('forceDestroy', PointOfSale::class);
+        $this->authorize(ability: 'forceDestroy', arguments: [PointOfSale::class, 'PointOfSale.forceDestroy']);
         $query = PointOfSale::withTrashed()->find($id);
         $query->forceDelete();
         return response([

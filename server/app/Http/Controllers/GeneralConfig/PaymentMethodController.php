@@ -10,7 +10,7 @@ use App\Models\GeneralConfig\PaymentMethod;
 class PaymentMethodController extends Controller {
 
     public function store(Request $request) {
-        $this->authorize('store', PaymentMethod::class);
+        $this->authorize(ability: 'store', arguments: [PaymentMethod::class, 'PaymentMethod.store']);
         try{
             $query = PaymentMethod::create($request->all());
         }
@@ -29,7 +29,7 @@ class PaymentMethodController extends Controller {
     }
 
     public function show($id) {
-        $this->authorize('show', PaymentMethod::class);
+        $this->authorize(ability: 'show', arguments: [PaymentMethod::class, 'PaymentMethod.show']);
         $result = PaymentMethod::find($id);
         origin($result);
 
@@ -39,7 +39,7 @@ class PaymentMethodController extends Controller {
     }
 
     public function showAll() {
-        $this->authorize('showAll', PaymentMethod::class);
+        $this->authorize(ability: 'showAll', arguments: [PaymentMethod::class, 'PaymentMethod.showAll']);
         $result = PaymentMethod::get();
         foreach ($result as $item){
             origin($item);
@@ -51,23 +51,23 @@ class PaymentMethodController extends Controller {
     }
 
     //  Para mostrar los elementos eliminados
-    public function getTrashed() {
-        $this->authorize('getTrashed', PaymentMethod::class);
+    public function showTrashed() {
+        $this->authorize(ability: 'showTrashed', arguments: [PaymentMethod::class, 'PaymentMethod.showTrashed']);
         return response([
             'records'=> PaymentMethod::onlyTrashed()->get()
         ], 200);
     }
 
     //  Para mostrar un elemento eliminado
-    public function restore($id) {
-        $this->authorize('restore', PaymentMethod::class);
+    public function recoveryTrashed($id) {
+        $this->authorize(ability: 'recoveryTrashed', arguments: [PaymentMethod::class, 'PaymentMethod.recoveryTrashed']);
         return response([
             'record'=> PaymentMethod::onlyTrashed()->find($id)->recovery()
         ], 200);
     }
 
     public function update(Request $request, $id) {
-        $this->authorize('update', PaymentMethod::class);
+        $this->authorize(ability: 'update', arguments: [PaymentMethod::class, 'PaymentMethod.update']);
         $query = PaymentMethod::find($id);
         try{
             $query->fill($request->all())->save();
@@ -87,7 +87,7 @@ class PaymentMethodController extends Controller {
     }
 
     public function updateAll(Request $request) {
-        $this->authorize('updateAll', PaymentMethod::class);
+        $this->authorize(ability: 'updateAll', arguments: [PaymentMethod::class, 'PaymentMethod.updateAll']);
         foreach($request as $item){
             $this->update($item, $item->id);
         };
@@ -96,7 +96,7 @@ class PaymentMethodController extends Controller {
     }
 
     public function destroy($id) {
-        $this->authorize('destroy', PaymentMethod::class);
+        $this->authorize(ability: 'destroy', arguments: [PaymentMethod::class, 'PaymentMethod.destroy']);
         $query = PaymentMethod::find($id);
         $query->delete();
 
@@ -104,7 +104,7 @@ class PaymentMethodController extends Controller {
     }
 
     public function forceDestroy($id){
-        $this->authorize('forceDestroy', PaymentMethod::class);
+        $this->authorize(ability: 'forceDestroy', arguments: [PaymentMethod::class, 'PaymentMethod.forceDestroy']);
         $query = PaymentMethod::withTrashed()->find($id);
         $query->forceDelete();
         return response([

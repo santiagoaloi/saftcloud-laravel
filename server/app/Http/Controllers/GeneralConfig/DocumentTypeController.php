@@ -10,7 +10,7 @@ use Illuminate\Database\QueryException;
 class DocumentTypeController extends Controller {
 
     public function store(Request $request) {
-        $this->authorize('store', DocumentType::class);
+        $this->authorize(ability: 'store', arguments: [DocumentType::class, 'DocumentType.store']);
         try{
             $query = DocumentType::create($request->all());
         }
@@ -29,7 +29,7 @@ class DocumentTypeController extends Controller {
     }
 
     public function show($id) {
-        $this->authorize('show', DocumentType::class);
+        $this->authorize(ability: 'show', arguments: [DocumentType::class, 'DocumentType.show']);
         $result = DocumentType::find($id);
         origin($result);
 
@@ -39,7 +39,7 @@ class DocumentTypeController extends Controller {
     }
 
     public function showAll() {
-        $this->authorize('showAll', DocumentType::class);
+        $this->authorize(ability: 'showAll', arguments: [DocumentType::class, 'DocumentType.showAll']);
         $result = DocumentType::get();
         foreach ($result as $item){
             origin($item);
@@ -51,23 +51,23 @@ class DocumentTypeController extends Controller {
     }
 
     //  Para mostrar los elementos eliminados
-    public function getTrashed() {
-        $this->authorize('getTrashed', DocumentType::class);
+    public function showTrashed() {
+        $this->authorize(ability: 'showTrashed', arguments: [DocumentType::class, 'DocumentType.showTrashed']);
         return response([
             'records'=> DocumentType::onlyTrashed()->get()
         ], 200);
     }
 
     //  Para mostrar un elemento eliminado
-    public function restore($id) {
-        $this->authorize('restore', DocumentType::class);
+    public function recoveryTrashed($id) {
+        $this->authorize(ability: 'recoveryTrashed', arguments: [DocumentType::class, 'DocumentType.recoveryTrashed']);
         return response([
             'record'=> DocumentType::onlyTrashed()->find($id)->recovery()
         ], 200);
     }
 
     public function update(Request $request, $id) {
-        $this->authorize('update', DocumentType::class);
+        $this->authorize(ability: 'update', arguments: [DocumentType::class, 'DocumentType.update']);
         $query = DocumentType::find($id);
         try{
             $query->fill($request->all())->save();
@@ -87,7 +87,7 @@ class DocumentTypeController extends Controller {
     }
 
     public function updateAll(Request $request) {
-        $this->authorize('updateAll', DocumentType::class);
+        $this->authorize(ability: 'updateAll', arguments: [DocumentType::class, 'DocumentType.updateAll']);
         foreach($request as $item){
             $this->update($item, $item->id);
         };
@@ -96,7 +96,7 @@ class DocumentTypeController extends Controller {
     }
 
     public function destroy($id) {
-        $this->authorize('destroy', DocumentType::class);
+        $this->authorize(ability: 'destroy', arguments: [DocumentType::class, 'DocumentType.destroy']);
         $query = DocumentType::find($id);
         $query->delete();
 
@@ -104,7 +104,7 @@ class DocumentTypeController extends Controller {
     }
 
     public function forceDestroy($id){
-        $this->authorize('forceDestroy', DocumentType::class);
+        $this->authorize(ability: 'forceDestroy', arguments: [DocumentType::class, 'DocumentType.forceDestroy']);
         $query = DocumentType::withTrashed()->find($id);
         $query->forceDelete();
         return response([

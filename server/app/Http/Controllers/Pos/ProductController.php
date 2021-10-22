@@ -10,7 +10,7 @@ use Illuminate\Database\QueryException;
 class ProductController extends Controller {
 
     public function store(Request $request) {
-        $this->authorize('store', Product::class);
+        $this->authorize(ability: 'store', arguments: [Product::class, 'Product.store']);
         try{
             $query = Product::create($request->all());
         }
@@ -29,7 +29,7 @@ class ProductController extends Controller {
     }
 
     public function show($id) {
-        $this->authorize('show', Product::class);
+        $this->authorize(ability: 'show', arguments: [Product::class, 'Product.show']);
         $result = Product::find($id);
         origin($result);
 
@@ -39,7 +39,7 @@ class ProductController extends Controller {
     }
 
     public function showAll() {
-        $this->authorize('showAll', Product::class);
+        $this->authorize(ability: 'showAll', arguments: [Product::class, 'Product.showAll']);
         $branch_id = getBranch();
         $result = Product::where('branch_id', $branch_id)->get();
         $result = Product::get();
@@ -53,23 +53,23 @@ class ProductController extends Controller {
     }
 
     //  Para mostrar los elementos eliminados
-    public function getTrashed() {
-        $this->authorize('getTrashed', Product::class);
+    public function showTrashed() {
+        $this->authorize(ability: 'showTrashed', arguments: [Product::class, 'Product.showTrashed']);
         return response([
             'records'=> Product::onlyTrashed()->get()
         ], 200);
     }
 
     //  Para mostrar un elemento eliminado
-    public function restore($id) {
-        $this->authorize('restore', Product::class);
+    public function recoveryTrashed($id) {
+        $this->authorize(ability: 'recoveryTrashed', arguments: [Product::class, 'Product.recoveryTrashed']);
         return response([
             'record'=> Product::onlyTrashed()->find($id)->recovery()
         ], 200);
     }
 
     public function update(Request $request, $id) {
-        $this->authorize('update', Product::class);
+        $this->authorize(ability: 'update', arguments: [Product::class, 'Product.update']);
         $query = Product::find($id);
         try{
             $query->fill($request->all())->save();
@@ -89,7 +89,7 @@ class ProductController extends Controller {
     }
 
     public function updateAll(Request $request) {
-        $this->authorize('updateAll', Product::class);
+        $this->authorize(ability: 'updateAll', arguments: [Product::class, 'Product.updateAll']);
         foreach($request as $item){
             $this->update($item, $item->id);
         };
@@ -97,7 +97,7 @@ class ProductController extends Controller {
     }
 
     public function destroy($id) {
-        $this->authorize('destroy', Product::class);
+        $this->authorize(ability: 'destroy', arguments: [Product::class, 'Product.destroy']);
         $query = Product::find($id);
         $query->delete();
 
@@ -105,11 +105,44 @@ class ProductController extends Controller {
     }
 
     public function forceDestroy($id){
-        $this->authorize('forceDestroy', Product::class);
+        $this->authorize(ability: 'forceDestroy', arguments: [Product::class, 'Product.forceDestroy']);
         $query = Product::withTrashed()->find($id);
         $query->forceDelete();
         return response([
             'status'=> true
         ], 200);
+    }
+
+    // AGREGA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
+    public function attachAccountPayment(Product $var, Request $request){
+        $items = $request['items'];
+        $class = $request['name'];
+
+        foreach($items as $item){
+            $arr[] = $item['id'];
+        }
+        $var->$class()->attach($arr);
+    }
+
+    // ELIMINA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
+    public function detachAccountPayment(Product $var, Request $request){
+        $items = $request['items'];
+        $class = $request['name'];
+
+        foreach($items as $item){
+            $arr[] = $item['id'];
+        }
+        $var->$class()->detach($arr);
+    }
+
+    // SINCRONIZA TODOS LOS ITEMS ENVIADOS EN REQUEST
+    public function syncAccountPayment(Product $var, Request $request){
+        $items = $request['items'];
+        $class = $request['name'];
+
+        foreach($items as $item){
+            $arr[] = $item['id'];
+        }
+        $var->$class()->sync($arr);
     }
 }

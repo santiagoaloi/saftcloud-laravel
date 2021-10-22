@@ -10,6 +10,7 @@ use Illuminate\Database\QueryException;
 class StateController extends Controller {
 
     public function store(Request $request) {
+        $this->authorize(ability: 'store', arguments: [State::class, 'State.store']);
         try{
             $query = State::create($request->all());
         }
@@ -48,7 +49,8 @@ class StateController extends Controller {
     }
 
     //  Para mostrar los elementos eliminados
-    public function getTrashed() {
+    public function showTrashed() {
+        $this->authorize(ability: 'showTrashed', arguments: [State::class, 'State.showTrashed']);
         return response([
             'records'=> State::onlyTrashed()->get()
         ], 200);
@@ -56,12 +58,14 @@ class StateController extends Controller {
 
     //  Para mostrar un elemento eliminado
     public function recoveryTrashed($id) {
+        $this->authorize(ability: 'recoveryTrashed', arguments: [State::class, 'State.recoveryTrashed']);
         return response([
             'record'=> State::onlyTrashed()->find($id)->recovery()
         ], 200);
     }
 
     public function update(Request $request, $id) {
+        $this->authorize(ability: 'update', arguments: [State::class, 'State.update']);
         $query = State::find($id);
 
         try{
@@ -82,6 +86,7 @@ class StateController extends Controller {
     }
 
     public function updateAll(Request $request) {
+        $this->authorize(ability: 'updateAll', arguments: [State::class, 'State.updateAll']);
         foreach($request as $item){
             $this->update($item, $item->id);
         };
@@ -92,11 +97,22 @@ class StateController extends Controller {
     }
 
     public function destroy($id) {
+        $this->authorize(ability: 'destroy', arguments: [State::class, 'State.destroy']);
         $query = State::find($id);
         $query->delete();
 
         return response([
             'message'=> "Estado eliminado."
+        ], 200);
+    }
+
+    public function forceDestroy($id){
+        $this->authorize(ability: 'forceDestroy', arguments: [State::class, 'State.forceDestroy']);
+        $query = State::withTrashed()->find($id);
+        $query->forceDelete();
+
+        return response([
+            'status'=> true
         ], 200);
     }
 

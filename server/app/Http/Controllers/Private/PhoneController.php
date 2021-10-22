@@ -10,7 +10,7 @@ use Illuminate\Database\QueryException;
 class PhoneController extends Controller {
 
     public function store(Request $request) {
-        $this->authorize('store', Phone::class);
+        $this->authorize(ability: 'store', arguments: [Phone::class, 'Phone.store']);
         try{
             $query = Phone::create($request->all());
         }
@@ -29,7 +29,7 @@ class PhoneController extends Controller {
     }
 
     public function show($id) {
-        $this->authorize('show', Phone::class);
+        $this->authorize(ability: 'show', arguments: [Phone::class, 'Phone.show']);
         $result = Phone::find($id);
         origin($result);
 
@@ -39,7 +39,7 @@ class PhoneController extends Controller {
     }
 
     public function showAll() {
-        $this->authorize('showAll', Phone::class);
+        $this->authorize(ability: 'showAll', arguments: [Phone::class, 'Phone.showAll']);
         $result = Phone::get();
         foreach ($result as $item){
             origin($item);
@@ -51,23 +51,23 @@ class PhoneController extends Controller {
     }
 
     //  Para mostrar los elementos eliminados
-    public function getTrashed() {
-        $this->authorize('getTrashed', Phone::class);
+    public function showTrashed() {
+        $this->authorize(ability: 'showTrashed', arguments: [Phone::class, 'Phone.showTrashed']);
         return response([
             'records'=> Phone::onlyTrashed()->get()
         ], 200);
     }
 
     //  Para mostrar un elemento eliminado
-    public function restore($id) {
-        $this->authorize('restore', Phone::class);
+    public function recoveryTrashed($id) {
+        $this->authorize(ability: 'recoveryTrashed', arguments: [Phone::class, 'Phone.recoveryTrashed']);
         return response([
             'record'=> Phone::onlyTrashed()->find($id)->recovery()
         ], 200);
     }
 
     public function update(Request $request, $id) {
-        $this->authorize('update', Phone::class);
+        $this->authorize(ability: 'update', arguments: [Phone::class, 'Phone.update']);
         $query = Phone::find($id);
         try{
             $query->fill($request->all())->save();
@@ -87,7 +87,7 @@ class PhoneController extends Controller {
     }
 
     public function updateAll(Request $request) {
-        $this->authorize('updateAll', Phone::class);
+        $this->authorize(ability: 'updateAll', arguments: [Phone::class, 'Phone.updateAll']);
         foreach($request as $item){
             $this->update($item, $item->id);
         };
@@ -96,7 +96,7 @@ class PhoneController extends Controller {
     }
 
     public function destroy($id) {
-        $this->authorize('destroy', Phone::class);
+        $this->authorize(ability: 'destroy', arguments: [Phone::class, 'Phone.destroy']);
         $query = Phone::find($id);
         $query->delete();
 
@@ -104,7 +104,7 @@ class PhoneController extends Controller {
     }
 
     public function forceDestroy($id){
-        $this->authorize('forceDestroy', Phone::class);
+        $this->authorize(ability: 'forceDestroy', arguments: [Phone::class, 'Phone.forceDestroy']);
         $query = Phone::withTrashed()->find($id);
         $query->forceDelete();
         return response([

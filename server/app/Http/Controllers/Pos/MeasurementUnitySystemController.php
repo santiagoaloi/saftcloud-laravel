@@ -10,7 +10,7 @@ use Illuminate\Database\QueryException;
 class MeasurementUnitySystemController extends Controller {
 
     public function store(Request $request) {
-        $this->authorize('store', MeasurementUnitSystem::class);
+        $this->authorize(ability: 'store', arguments: [MeasurementUnitSystem::class, 'MeasurementUnitSystem.store']);
         try{
             $query = MeasurementUnitSystem::create($request->all());
         }
@@ -29,7 +29,7 @@ class MeasurementUnitySystemController extends Controller {
     }
 
     public function show($id) {
-        $this->authorize('show', MeasurementUnitSystem::class);
+        $this->authorize(ability: 'show', arguments: [MeasurementUnitSystem::class, 'MeasurementUnitSystem.show']);
         $result = MeasurementUnitSystem::find($id);
         origin($result);
 
@@ -39,7 +39,7 @@ class MeasurementUnitySystemController extends Controller {
     }
 
     public function showAll() {
-        $this->authorize('showAll', MeasurementUnitSystem::class);
+        $this->authorize(ability: 'showAll', arguments: [MeasurementUnitSystem::class, 'MeasurementUnitSystem.showAll']);
         $result = MeasurementUnitSystem::get();
         foreach ($result as $item){
             origin($item);
@@ -51,23 +51,23 @@ class MeasurementUnitySystemController extends Controller {
     }
 
     //  Para mostrar los elementos eliminados
-    public function getTrashed() {
-        $this->authorize('getTrashed', MeasurementUnitSystem::class);
+    public function showTrashed() {
+        $this->authorize(ability: 'showTrashed', arguments: [MeasurementUnitSystem::class, 'MeasurementUnitSystem.showTrashed']);
         return response([
             'records'=> MeasurementUnitSystem::onlyTrashed()->get()
         ], 200);
     }
 
     //  Para mostrar un elemento eliminado
-    public function restore($id) {
-        $this->authorize('restore', MeasurementUnitSystem::class);
+    public function recoveryTrashed($id) {
+        $this->authorize(ability: 'recoveryTrashed', arguments: [MeasurementUnitSystem::class, 'MeasurementUnitSystem.recoveryTrashed']);
         return response([
             'record'=> MeasurementUnitSystem::onlyTrashed()->find($id)->recovery()
         ], 200);
     }
 
     public function update(Request $request, $id) {
-        $this->authorize('update', MeasurementUnitSystem::class);
+        $this->authorize(ability: 'update', arguments: [MeasurementUnitSystem::class, 'MeasurementUnitSystem.update']);
         $query = MeasurementUnitSystem::find($id);
         try{
             $query->fill($request->all())->save();
@@ -87,7 +87,7 @@ class MeasurementUnitySystemController extends Controller {
     }
 
     public function updateAll(Request $request) {
-        $this->authorize('updateAll', MeasurementUnitSystem::class);
+        $this->authorize(ability: 'updateAll', arguments: [MeasurementUnitSystem::class, 'MeasurementUnitSystem.updateAll']);
         foreach($request as $item){
             $this->update($item, $item->id);
         };
@@ -95,7 +95,7 @@ class MeasurementUnitySystemController extends Controller {
     }
 
     public function destroy($id) {
-        $this->authorize('destroy', MeasurementUnitSystem::class);
+        $this->authorize(ability: 'destroy', arguments: [MeasurementUnitSystem::class, 'MeasurementUnitSystem.destroy']);
         $query = MeasurementUnitSystem::find($id);
         $query->delete();
 
@@ -103,11 +103,44 @@ class MeasurementUnitySystemController extends Controller {
     }
 
     public function forceDestroy($id){
-        $this->authorize('forceDestroy', MeasurementUnitSystem::class);
+        $this->authorize(ability: 'forceDestroy', arguments: [MeasurementUnitSystem::class, 'MeasurementUnitSystem.forceDestroy']);
         $query = MeasurementUnitSystem::withTrashed()->find($id);
         $query->forceDelete();
         return response([
             'status'=> true
         ], 200);
+    }
+
+    // AGREGA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
+    public function attachAccountPayment(MeasurementUnitSystem $var, Request $request){
+        $items = $request['items'];
+        $class = $request['name'];
+
+        foreach($items as $item){
+            $arr[] = $item['id'];
+        }
+        $var->$class()->attach($arr);
+    }
+
+    // ELIMINA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
+    public function detachAccountPayment(MeasurementUnitSystem $var, Request $request){
+        $items = $request['items'];
+        $class = $request['name'];
+
+        foreach($items as $item){
+            $arr[] = $item['id'];
+        }
+        $var->$class()->detach($arr);
+    }
+
+    // SINCRONIZA TODOS LOS ITEMS ENVIADOS EN REQUEST
+    public function syncAccountPayment(MeasurementUnitSystem $var, Request $request){
+        $items = $request['items'];
+        $class = $request['name'];
+
+        foreach($items as $item){
+            $arr[] = $item['id'];
+        }
+        $var->$class()->sync($arr);
     }
 }

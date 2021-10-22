@@ -8,13 +8,11 @@ use App\Models\Public\Country;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\QueryException;
-use App\Http\Controllers\Private\UserController;
-use App\Models\Roles\Capability;
 
 class CountryController extends Controller {
 
     public function store(Request $request) {
-        $this->authorize('store', Country::class);
+        $this->authorize(ability: 'store', arguments: [Country::class, 'Country.store']);
         try{
             $query = Country::create($request->all());
         }
@@ -33,7 +31,6 @@ class CountryController extends Controller {
     }
 
     public function show(Request $id) {
-        // $this->authorize('show', Country::class);
         $result = Country::find($id);
         origin($result);
 
@@ -43,7 +40,6 @@ class CountryController extends Controller {
     }
 
     public function showAll() {
-        // $this->authorize('showAll', Country::class);
         $result = Country::get();
         foreach ($result as $item){
             origin($item);
@@ -56,22 +52,22 @@ class CountryController extends Controller {
 
     //  Para mostrar los elementos eliminados
     public function showTrashed() {
-        $this->showTrashed('restore', Country::class);
+        $this->authorize(ability: 'showTrashed', arguments: [Country::class, 'Country.showTrashed']);
         return response([
             'records'=> Country::onlyTrashed()->get()
         ], 200);
     }
 
     //  Para mostrar un elemento eliminado
-    public function restore($id) {
-        $this->authorize('restore', Country::class);
+    public function recoveryTrashed($id) {
+        $this->authorize(ability: 'recoveryTrashed', arguments: [Country::class, 'Country.recoveryTrashed']);
         return response([
             'record'=> Country::onlyTrashed()->find($id)->recovery()
         ], 200);
     }
 
     public function update(Request $request, $id) {
-        $this->authorize('update', Country::class);
+        $this->authorize(ability: 'update', arguments: [Country::class, 'Country.update']);
         $query = Country::find($id);
         try{
             $query->fill($request->all())->save();
@@ -91,7 +87,7 @@ class CountryController extends Controller {
     }
 
     public function updateAll(Request $request) {
-        $this->authorize('updateAll', Country::class);
+        $this->authorize(ability: 'updateAll', arguments: [Country::class, 'Country.updateAll']);
         foreach($request as $item){
             $this->update($item, $item->id);
         };
@@ -100,11 +96,21 @@ class CountryController extends Controller {
     }
 
     public function destroy($id) {
-        $this->authorize('destroy', Country::class);
+        $this->authorize(ability: 'destroy', arguments: [Country::class, 'Country.destroy']);
         $query = Country::find($id);
         $query->delete();
 
         return $this->showAll();
+    }
+
+    public function forceDestroy($id){
+        $this->authorize(ability: 'forceDestroy', arguments: [Country::class, 'Country.forceDestroy']);
+        $query = Country::withTrashed()->find($id);
+        $query->forceDelete();
+
+        return response([
+            'status'=> true
+        ], 200);
     }
 
     // AGREGA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request

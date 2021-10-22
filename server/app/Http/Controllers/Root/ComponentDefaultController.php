@@ -12,6 +12,7 @@ use App\Http\Controllers\Root\ComponentController;
 class ComponentDefaultController extends Controller {
 
     public function store(Request $request) {
+        $this->authorize(ability: 'store', arguments: [ComponentDefault::class, 'ComponentDefault.store']);
         try{
             $query = ComponentDefault::create(['config_structure'=>json_encode($request['config_structure'])]);
         }
@@ -41,6 +42,7 @@ class ComponentDefaultController extends Controller {
     }
 
     public function show($id) {
+        $this->authorize(ability: 'show', arguments: [ComponentDefault::class, 'ComponentDefault.show']);
         $result = ComponentDefault::find($id);
         origin($result);
 
@@ -50,6 +52,7 @@ class ComponentDefaultController extends Controller {
     }
 
     public function showAll() {
+        $this->authorize(ability: 'showAll', arguments: [ComponentDefault::class, 'ComponentDefault.showAll']);
         $result = ComponentDefault::get();
         foreach ($result as $item){
             origin($item);
@@ -61,7 +64,8 @@ class ComponentDefaultController extends Controller {
     }
 
     //  Para mostrar los elementos eliminados
-    public function getTrashed() {
+    public function showTrashed() {
+        $this->authorize(ability: 'showTrashed', arguments: [ComponentDefault::class, 'ComponentDefault.showTrashed']);
         $result = ComponentDefault::onlyTrashed()->get();
 
         return response([
@@ -71,6 +75,7 @@ class ComponentDefaultController extends Controller {
 
     //  Para mostrar un elemento eliminado
     public function recoveryTrashed($id) {
+        $this->authorize(ability: 'recoveryTrashed', arguments: [ComponentDefault::class, 'ComponentDefault.recoveryTrashed']);
         $result = ComponentDefault::onlyTrashed()->find($id)->recovery();
 
         return response([
@@ -79,6 +84,7 @@ class ComponentDefaultController extends Controller {
     }
 
     public function update(Request $request, $id) {
+        $this->authorize(ability: 'update', arguments: [ComponentDefault::class, 'ComponentDefault.update']);
         $query = ComponentDefault::find($id);
         try{
             $query->fill($request->all())->save();
@@ -98,6 +104,7 @@ class ComponentDefaultController extends Controller {
     }
 
     public function updateAll($request) {
+        $this->authorize(ability: 'updateAll', arguments: [ComponentDefault::class, 'ComponentDefault.updateAll']);
         foreach($request as $item){
             $query = ComponentDefault::find($item['id']);
             $query->fill($item)->save();
@@ -107,10 +114,21 @@ class ComponentDefaultController extends Controller {
     }
 
     public function destroy($id) {
+        $this->authorize(ability: 'destroy', arguments: [ComponentDefault::class, 'ComponentDefault.destroy']);
         $query = ComponentDefault::find($id);
         $query->delete();
 
         return $this->showAll();
+    }
+
+    public function forceDestroy($id){
+        $this->authorize(ability: 'forceDestroy', arguments: [ComponentDefault::class, 'ComponentDefault.forceDestroy']);
+        $query = ComponentDefault::withTrashed()->find($id);
+        $query->forceDelete();
+
+        return response([
+            'status'=> true
+        ], 200);
     }
 
     // Obtiene el ultimo registro de config_structure

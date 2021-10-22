@@ -10,7 +10,7 @@ use Illuminate\Database\QueryException;
 class CapabilityController extends Controller {
 
     public function store(Request $request) {
-        $this->authorize('store', Capability::class);
+        $this->authorize(ability: 'store', arguments: [Capability::class, 'Capability.store']);
         try{
             $query = Capability::create($request->all());
         }
@@ -29,7 +29,7 @@ class CapabilityController extends Controller {
     }
 
     public function show($id) {
-        $this->authorize('show', Capability::class);
+        $this->authorize(ability: 'show', arguments: [Capability::class, 'Capability.show']);
         $result = Capability::find($id);
         origin($result);
 
@@ -39,7 +39,7 @@ class CapabilityController extends Controller {
     }
 
     public function showAll() {
-        $this->authorize('showAll', Capability::class);
+        $this->authorize(ability: 'showAll', arguments: [Capability::class, 'Capability.showAll']);
         $result = Capability::get();
         foreach ($result as $item){
             origin($item);
@@ -51,23 +51,23 @@ class CapabilityController extends Controller {
     }
 
     //  Para mostrar los elementos eliminados
-    public function getTrashed() {
-        $this->authorize('store', Capability::class);
+    public function showTrashed() {
+        $this->authorize(ability: 'showTrashed', arguments: [Capability::class, 'Capability.showTrashed']);
         return response([
             'records'=> Capability::onlyTrashed()->get()
         ], 200);
     }
 
     //  Para mostrar un elemento eliminado
-    public function restore($id) {
-        $this->authorize('restore', Capability::class);
+    public function recoveryTrashed($id) {
+        $this->authorize(ability: 'recoveryTrashed', arguments: [Capability::class, 'Capability.recoveryTrashed']);
         return response([
             'record'=> Capability::onlyTrashed()->find($id)->recovery()
         ], 200);
     }
 
     public function update(Request $request, $id) {
-        $this->authorize('update', Capability::class);
+        $this->authorize(ability: 'update', arguments: [Capability::class, 'Capability.update']);
         $query = Capability::find($id);
         try{
             $query->fill($request->all())->save();
@@ -87,7 +87,7 @@ class CapabilityController extends Controller {
     }
 
     public function updateAll(Request $request) {
-        $this->authorize('updateAll', Capability::class);
+        $this->authorize(ability: 'updateAll', arguments: [Capability::class, 'Capability.updateAll']);
         foreach($request as $item){
             $this->update($item, $item->id);
         };
@@ -96,7 +96,7 @@ class CapabilityController extends Controller {
     }
 
     public function destroy($id) {
-        $this->authorize('destroy', Capability::class);
+        $this->authorize(ability: 'destroy', arguments: [Capability::class, 'Capability.destroy']);
         $query = Capability::find($id);
         $query->delete();
 
@@ -104,9 +104,10 @@ class CapabilityController extends Controller {
     }
 
     public function forceDestroy($id){
-        $this->authorize('forceDestroy', Capability::class);
+        $this->authorize(ability: 'forceDestroy', arguments: [Capability::class, 'Capability.forceDestroy']);
         $query = Capability::withTrashed()->find($id);
         $query->forceDelete();
+
         return response([
             'status'=> true
         ], 200);

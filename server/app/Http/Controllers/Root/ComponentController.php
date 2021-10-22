@@ -59,6 +59,7 @@ class ComponentController extends Controller {
     }
 
     public function store(Request $request) {
+        $this->authorize(ability: 'store', arguments: [Component::class, 'Component.store']);
         $json_data['table'] = $request['table'];
 
         $sql_query = "SELECT {$request['table']}.* FROM {$request['table']}";
@@ -114,6 +115,7 @@ class ComponentController extends Controller {
     }
 
     public function show($id) {
+        $this->authorize(ability: 'show', arguments: [Component::class, 'Component.show']);
         $query = Component::find($id);
         $result = parseComponent($query);
 
@@ -123,6 +125,7 @@ class ComponentController extends Controller {
     }
 
     public function showAll() {
+        $this->authorize(ability: 'showAll', arguments: [Component::class, 'Component.showAll']);
         $components = Component::all();
         $arrayComponent = [];
 
@@ -157,7 +160,8 @@ class ComponentController extends Controller {
     }
 
     //  Para mostrar los elementos eliminados
-    public function getTrashed() {
+    public function showTrashed() {
+        $this->authorize(ability: 'showTrashed', arguments: [Component::class, 'Component.showTrashed']);
         return response([
             'components' => Component::onlyTrashed()->get()
         ], 200);
@@ -165,12 +169,14 @@ class ComponentController extends Controller {
 
     //  Para mostrar un elemento eliminado
     public function recoveryTrashed($id) {
+        $this->authorize(ability: 'recoveryTrashed', arguments: [Component::class, 'Component.recoveryTrashed']);
         return response([
             'component' => Component::onlyTrashed()->find($id)->recovery()
         ], 200);
     }
 
     public function update(Request $request, $id) {
+        $this->authorize(ability: 'update', arguments: [Component::class, 'Component.update']);
         $query = Component::find($id);
 
         $general_config = json_decode($query->config, true);
@@ -223,6 +229,7 @@ class ComponentController extends Controller {
     }
 
     public function updateAll($request) {
+        $this->authorize(ability: 'updateAll', arguments: [Component::class, 'Component.updateAll']);
         foreach($request as $item){
             $component = Component::find($item['id']);
             $component->fill($item)->save();
@@ -232,6 +239,7 @@ class ComponentController extends Controller {
     }
 
     public function destroy($id) {
+        $this->authorize(ability: 'destroy', arguments: [Component::class, 'Component.destroy']);
         $query = Component::find($id);
         $pathDeleted = resource_path('js/views/Deleted');
         if(!file_exists($pathDeleted)){
@@ -254,6 +262,7 @@ class ComponentController extends Controller {
     }
 
     public function forceDestroy($id){
+        $this->authorize(ability: 'forceDestroy', arguments: [Component::class, 'Component.forceDestroy']);
         $query = Component::withTrashed()->find($id);
         $pathDeleted = resource_path("js/views/Deleted/{$query->name}");
         if(file_exists($pathDeleted)){

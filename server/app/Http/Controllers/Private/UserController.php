@@ -4,9 +4,7 @@ namespace App\Http\Controllers\Private;
 
 use App\Models\User;
 use App\Models\Roles\Role;
-use App\Helpers\RoleHelper;
 use Illuminate\Http\Request;
-use App\Models\Private\Entity;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -26,7 +24,7 @@ class UserController extends Controller {
         //     $query['picture']=$request->file('picture')->store('avatars', 'public');
         // };
 
-        $this->authorize('store', User::class);
+        $this->authorize(ability: 'store', arguments: [User::class, 'User.store']);
         try{
             $admin = auth()->User();
             $account = $admin->Entity->RootAccount;
@@ -73,7 +71,7 @@ class UserController extends Controller {
     }
 
     public function show($id) {
-        $this->authorize('show', User::class);
+        $this->authorize(ability: 'show', arguments: [User::class, 'User.show']);
         $user = User::findOrFail($id);
         $user->entity;
         $user->privileges = getRoles($user->role);
@@ -85,7 +83,7 @@ class UserController extends Controller {
     }
 
     public function showAll() {
-        $this->authorize('showAll', User::class);
+        $this->authorize(ability: 'showAll', arguments: [User::class, 'User.showAll']);
         $users = User::get();
         foreach($users as $user){
             $user->userSetting;
@@ -103,23 +101,23 @@ class UserController extends Controller {
     }
 
     //  Para mostrar los elementos eliminados
-    public function getTrashed() {
-        $this->authorize('getTrashed', User::class);
+    public function showTrashed() {
+        $this->authorize(ability: 'showTrashed', arguments: [User::class, 'User.showTrashed']);
         return response([
             'records'=> User::onlyTrashed()->get()
         ], 200);
     }
 
     //  Para mostrar un elemento eliminado
-    public function restore($id) {
-        $this->authorize('restore', User::class);
+    public function recoveryTrashed($id) {
+        $this->authorize(ability: 'recoveryTrashed', arguments: [User::class, 'User.recoveryTrashed']);
         return response([
             'record'=> User::onlyTrashed()->find($id)->recovery()
         ], 200);
     }
 
     public function update(Request $request, $id) {
-        $this->authorize('update', User::class);
+        $this->authorize(ability: 'update', arguments: [User::class, 'User.update']);
         $query = User::find($id);
         try{
             $query->fill($request->all())->save();
@@ -139,7 +137,7 @@ class UserController extends Controller {
     }
 
     public function updateAll(Request $request) {
-        $this->authorize('updateAll', User::class);
+        $this->authorize(ability: 'updateAll', arguments: [User::class, 'User.updateAll']);
         foreach($request as $item){
             $this->update($item, $item->id);
         };
@@ -148,7 +146,7 @@ class UserController extends Controller {
     }
 
     public function destroy($id) {
-        $this->authorize('destroy', User::class);
+        $this->authorize(ability: 'destroy', arguments: [User::class, 'User.destroy']);
         $query = User::find($id);
         $query->delete();
 
@@ -156,7 +154,7 @@ class UserController extends Controller {
     }
 
     public function forceDestroy($id){
-        $this->authorize('forceDestroy', User::class);
+        $this->authorize(ability: 'forceDestroy', arguments: [User::class, 'User.forceDestroy']);
         $query = User::withTrashed()->find($id);
         $query->forceDelete();
         return response([

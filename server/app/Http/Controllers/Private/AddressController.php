@@ -10,7 +10,7 @@ use Illuminate\Database\QueryException;
 class AddressController extends Controller {
 
     public function store(Request $request) {
-        $this->authorize('store', Address::class);
+        $this->authorize(ability: 'store', arguments: [Address::class, 'Address.store']);
         try{
             $query = Address::create($request->all());
         }
@@ -29,7 +29,7 @@ class AddressController extends Controller {
     }
 
     public function show($id) {
-        $this->authorize('show', Address::class);
+        $this->authorize(ability: 'show', arguments: [Address::class, 'Address.show']);
         $result = Address::find($id);
         origin($result);
 
@@ -39,7 +39,7 @@ class AddressController extends Controller {
     }
 
     public function showAll() {
-        $this->authorize('showAll', Address::class);
+        $this->authorize(ability: 'showAll', arguments: [Address::class, 'Address.showAll']);
         $result = Address::get();
         foreach ($result as $item){
             origin($item);
@@ -51,23 +51,23 @@ class AddressController extends Controller {
     }
 
     //  Para mostrar los elementos eliminados
-    public function getTrashed() {
-        $this->showTrashed('restore', Address::class);
+    public function showTrashed() {
+        $this->authorize(ability: 'showTrashed', arguments: [Address::class, 'Address.showTrashed']);
         return response([
             'records' => Address::onlyTrashed()->get()
         ], 200);
     }
 
     //  Para mostrar un elemento eliminado
-    public function restore($id) {
-        $this->authorize('restore', Address::class);
+    public function recoveryTrashed($id) {
+        $this->authorize(ability: 'recoveryTrashed', arguments: [Address::class, 'Address.recoveryTrashed']);
         return response([
             'record' => Address::onlyTrashed()->find($id)->recovery()
         ], 200);
     }
 
     public function update(Request $request, $id) {
-        $this->authorize('update', Address::class);
+        $this->authorize(ability: 'update', arguments: [Address::class, 'Address.update']);
         $query = Address::find($id);
         try{
             $query->fill($request->all())->save();
@@ -87,7 +87,7 @@ class AddressController extends Controller {
     }
 
     public function updateAll(Request $request) {
-        $this->authorize('updateAll', Address::class);
+        $this->authorize(ability: 'updateAll', arguments: [Address::class, 'Address.updateAll']);
         foreach($request as $item){
             $this->update($item, $item->id);
         };
@@ -96,7 +96,7 @@ class AddressController extends Controller {
     }
 
     public function destroy($id) {
-        $this->authorize('destroy', Address::class);
+        $this->authorize(ability: 'destroy', arguments: [Address::class, 'Address.destroy']);
         $query = Address::find($id);
         $query->delete();
 
@@ -104,7 +104,7 @@ class AddressController extends Controller {
     }
 
     public function forceDestroy($id){
-        $this->authorize('forceDestroy', Address::class);
+        $this->authorize(ability: 'forceDestroy', arguments: [Address::class, 'Address.forceDestroy']);
         $query = Address::withTrashed()->find($id);
         $query->forceDelete();
         return response([

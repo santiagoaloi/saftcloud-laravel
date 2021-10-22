@@ -10,7 +10,7 @@ use Illuminate\Database\QueryException;
 class MkupController extends Controller {
 
     public function store(Request $request) {
-        $this->authorize('store', Mkup::class);
+        $this->authorize(ability: 'store', arguments: [Mkup::class, 'Mkup.store']);
         try{
             $query = Mkup::create($request->all());
         }
@@ -29,7 +29,7 @@ class MkupController extends Controller {
     }
 
     public function show($id) {
-        $this->authorize('show', Mkup::class);
+        $this->authorize(ability: 'show', arguments: [Mkup::class, 'Mkup.show']);
         $result = Mkup::find($id);
         origin($result);
 
@@ -39,7 +39,7 @@ class MkupController extends Controller {
     }
 
     public function showAll() {
-        $this->authorize('showAll', Mkup::class);
+        $this->authorize(ability: 'showAll', arguments: [Mkup::class, 'Mkup.showAll']);
         $result = Mkup::get();
         foreach ($result as $item){
             origin($item);
@@ -51,23 +51,23 @@ class MkupController extends Controller {
     }
 
     //  Para mostrar los elementos eliminados
-    public function getTrashed() {
-        $this->authorize('getTrashed', Mkup::class);
+    public function showTrashed() {
+        $this->authorize(ability: 'showTrashed', arguments: [Mkup::class, 'Mkup.showTrashed']);
         return response([
             'records'=> Mkup::onlyTrashed()->get()
         ], 200);
     }
 
     //  Para mostrar un elemento eliminado
-    public function restore($id) {
-        $this->authorize('restore', Mkup::class);
+    public function recoveryTrashed($id) {
+        $this->authorize(ability: 'recoveryTrashed', arguments: [Mkup::class, 'Mkup.recoveryTrashed']);
         return response([
             'record'=> Mkup::onlyTrashed()->find($id)->recovery()
         ], 200);
     }
 
     public function update(Request $request, $id) {
-        $this->authorize('update', Mkup::class);
+        $this->authorize(ability: 'update', arguments: [Mkup::class, 'Mkup.update']);
         $query = Mkup::find($id);
         try{
             $query->fill($request->all())->save();
@@ -87,7 +87,7 @@ class MkupController extends Controller {
     }
 
     public function updateAll(Request $request) {
-        $this->authorize('updateAll', Mkup::class);
+        $this->authorize(ability: 'updateAll', arguments: [Mkup::class, 'Mkup.updateAll']);
         foreach($request as $item){
             $this->update($item, $item->id);
         };
@@ -95,7 +95,7 @@ class MkupController extends Controller {
     }
 
     public function destroy($id) {
-        $this->authorize('destroy', Mkup::class);
+        $this->authorize(ability: 'destroy', arguments: [Mkup::class, 'Mkup.destroy']);
         $query = Mkup::find($id);
         $query->delete();
 
@@ -103,11 +103,44 @@ class MkupController extends Controller {
     }
 
     public function forceDestroy($id){
-        $this->authorize('forceDestroy', Mkup::class);
+        $this->authorize(ability: 'forceDestroy', arguments: [Mkup::class, 'Mkup.forceDestroy']);
         $query = Mkup::withTrashed()->find($id);
         $query->forceDelete();
         return response([
             'status'=> true
         ], 200);
+    }
+
+    // AGREGA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
+    public function attachAccountPayment(Mkup $var, Request $request){
+        $items = $request['items'];
+        $class = $request['name'];
+
+        foreach($items as $item){
+            $arr[] = $item['id'];
+        }
+        $var->$class()->attach($arr);
+    }
+
+    // ELIMINA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
+    public function detachAccountPayment(Mkup $var, Request $request){
+        $items = $request['items'];
+        $class = $request['name'];
+
+        foreach($items as $item){
+            $arr[] = $item['id'];
+        }
+        $var->$class()->detach($arr);
+    }
+
+    // SINCRONIZA TODOS LOS ITEMS ENVIADOS EN REQUEST
+    public function syncAccountPayment(Mkup $var, Request $request){
+        $items = $request['items'];
+        $class = $request['name'];
+
+        foreach($items as $item){
+            $arr[] = $item['id'];
+        }
+        $var->$class()->sync($arr);
     }
 }

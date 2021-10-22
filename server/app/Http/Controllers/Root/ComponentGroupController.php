@@ -13,6 +13,7 @@ use Illuminate\Database\QueryException;
 class ComponentGroupController extends Controller {
 
     public function store(Request $request) {
+        $this->authorize(ability: 'store', arguments: [ComponentGroup::class, 'ComponentGroup.store']);
         $postdata = json_decode($request->getContent(), true);
         try{
             ComponentGroup::create($postdata);
@@ -29,6 +30,7 @@ class ComponentGroupController extends Controller {
     }
 
     public function show($id) {
+        $this->authorize(ability: 'show', arguments: [ComponentGroup::class, 'ComponentGroup.show']);
         $result = ComponentGroup::find($id);
         origin($result);
 
@@ -39,6 +41,7 @@ class ComponentGroupController extends Controller {
     }
 
     public function showAll() {
+        $this->authorize(ability: 'showAll', arguments: [ComponentGroup::class, 'ComponentGroup.showAll']);
         $result = ComponentGroup::all();
         foreach ($result as $item){
             origin($item);
@@ -115,7 +118,8 @@ class ComponentGroupController extends Controller {
     }
 
     //  Para mostrar los elementos eliminados
-    public function getTrashed() {
+    public function showTrashed() {
+        $this->authorize(ability: 'showTrashed', arguments: [ComponentGroup::class, 'ComponentGroup.showTrashed']);
         $result = ComponentGroup::onlyTrashed()->get();
 
         return response([
@@ -126,6 +130,7 @@ class ComponentGroupController extends Controller {
 
     //  Para mostrar un elemento eliminado
     public function recoveryTrashed($id) {
+        $this->authorize(ability: 'recoveryTrashed', arguments: [ComponentGroup::class, 'ComponentGroup.recoveryTrashed']);
         $result = ComponentGroup::onlyTrashed()->find($id)->recovery();
 
         return response([
@@ -135,6 +140,7 @@ class ComponentGroupController extends Controller {
     }
 
     public function update(Request $request, $id) {
+        $this->authorize(ability: 'update', arguments: [ComponentGroup::class, 'ComponentGroup.update']);
         $query = ComponentGroup::find($id);
         try{
             $query->fill($request->all())->save();
@@ -152,6 +158,7 @@ class ComponentGroupController extends Controller {
     }
 
     public function updateAll(Request $request) {
+        $this->authorize(ability: 'updateAll', arguments: [ComponentGroup::class, 'ComponentGroup.updateAll']);
         foreach($request as $item){
             $this->update($item, $item->id);
         };
@@ -160,6 +167,7 @@ class ComponentGroupController extends Controller {
     }
 
     public function destroy($id) {
+        $this->authorize(ability: 'destroy', arguments: [ComponentGroup::class, 'ComponentGroup.destroy']);
         $exist = DB::table('component_groups')->whereExists(function ($query) use ($id) {
             $query->select(DB::raw(1))
                   ->from('components')
@@ -174,6 +182,16 @@ class ComponentGroupController extends Controller {
         } else {
             return $this->getExistComponents($id);
         }
+    }
+
+    public function forceDestroy($id){
+        $this->authorize(ability: 'forceDestroy', arguments: [ComponentGroup::class, 'ComponentGroup.forceDestroy']);
+        $query = ComponentGroup::withTrashed()->find($id);
+        $query->forceDelete();
+
+        return response([
+            'status'=> true
+        ], 200);
     }
 
     public function getExistComponents($id){

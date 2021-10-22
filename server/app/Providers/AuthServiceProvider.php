@@ -39,38 +39,7 @@ use App\Models\Taxes\IvaCondition;
 use App\Models\Taxes\IvaTax;
 use App\Models\Taxes\Tax;
 
-use App\Policies\GeneralConfig\DocumentTypePolicy;
-use App\Policies\GeneralConfig\PaymentMethodPolicy;
-use App\Policies\Pos\CategoryPolicy;
-use App\Policies\Pos\CommissionPolicy;
-use App\Policies\Pos\FamilyPolicy;
-use App\Policies\Pos\MeasurementUnitPolicy;
-use App\Policies\Pos\MeasurementUnitSystemPolicy;
-use App\Policies\Pos\MkupPolicy;
-use App\Policies\Pos\PricePolicy;
-use App\Policies\Pos\ProductPolicy;
-use App\Policies\Pos\ProductPromotionPolicy;
-use App\Policies\Public\AccountPaymentPolicy;
-use App\Policies\Private\AccountPlanPolicy;
-use App\Policies\Private\AddressPolicy;
-use App\Policies\Private\BranchPolicy;
-use App\Policies\Private\EntityPolicy;
-use App\Policies\Private\PhonePolicy;
-use App\Policies\Private\PointOfSalePolicy;
-use App\Policies\Private\RootAccountPolicy;
-use App\Policies\Private\SocialPolicy;
-use App\Policies\Private\UserPolicy;
-use App\Policies\Private\UserSettingPolicy;
-use App\Policies\Public\CountryPolicy;
-use App\Policies\Public\StatePolicy;
-use App\Policies\Roles\CapabilityPolicy;
-use App\Policies\Roles\RolePolicy;
-use App\Policies\Root\ComponentPolicy;
-use App\Policies\Root\ComponentDefaultPolicy;
-use App\Policies\Root\ComponentGroupPolicy;
-use App\Policies\Taxes\IvaConditionPolicy;
-use App\Policies\Taxes\IvaTaxPolicy;
-use App\Policies\Taxes\TaxPolicy;
+use App\Policies\privilegePolicy;
 
 class AuthServiceProvider extends ServiceProvider {
     /**
@@ -79,39 +48,41 @@ class AuthServiceProvider extends ServiceProvider {
      * @var array
      */
     protected $policies = [
-        DocumentType::class => DocumentTypePolicy::class,
-        PaymentMethod::class => PaymentMethodPolicy::class,
-        Brand::class => BrandPolicy::class,
-        Category::class => CategoryPolicy::class,
-        Commission::class => CommissionPolicy::class,
-        Family::class => FamilyPolicy::class,
-        MeasurementUnit::class => MeasurementUnitPolicy::class,
-        MeasurementUnitSystem::class => MeasurementUnitSystemPolicy::class,
-        Mkup::class => MkupPolicy::class,
-        Price::class => PricePolicy::class,
-        Product::class => ProductPolicy::class,
-        ProductPromotion::class => ProductPromotionPolicy::class,
-        AccountPayment::class => AccountPaymentPolicy::class,
-        AccountPlan::class => AccountPlanPolicy::class,
-        Address::class => AddressPolicy::class,
-        Branch::class => BranchPolicy::class,
-        Entity::class => EntityPolicy::class,
-        Phone::class => PhonePolicy::class,
-        PointOfSale::class => PointOfSalePolicy::class,
-        RootAccount::class => RootAccountPolicy::class,
-        Social::class => SocialPolicy::class,
-        User::class => UserPolicy::class,
-        UserSetting::class => UserSettingPolicy::class,
-        Country::class => CountryPolicy::class,
-        State::class => StatePolicy::class,
-        Capability::class => CapabilityPolicy::class,
-        Role::class => RolePolicy::class,
-        Component::class => ComponentPolicy::class,
-        ComponentDefault::class => ComponentDefaultPolicy::class,
-        ComponentGroup::class => ComponentGroupPolicy::class,
-        IvaCondition::class => IvaConditionPolicy::class,
-        IvaTax::class => IvaTaxPolicy::class,
-        Tax::class => TaxPolicy::class
+        DocumentType::class => privilegePolicy::class,
+        PaymentMethod::class => privilegePolicy::class,
+        Brand::class => privilegePolicy::class,
+        Category::class => privilegePolicy::class,
+        Commission::class => privilegePolicy::class,
+        Family::class => privilegePolicy::class,
+        MeasurementUnit::class => privilegePolicy::class,
+        MeasurementUnitSystem::class => privilegePolicy::class,
+        Mkup::class => privilegePolicy::class,
+        Price::class => privilegePolicy::class,
+        Product::class => privilegePolicy::class,
+        ProductPromotion::class => privilegePolicy::class,
+        AccountPayment::class => privilegePolicy::class,
+        AccountPlan::class => privilegePolicy::class,
+        Address::class => privilegePolicy::class,
+        Branch::class => privilegePolicy::class,
+        Entity::class => privilegePolicy::class,
+        Phone::class => privilegePolicy::class,
+        PointOfSale::class => privilegePolicy::class,
+        RootAccount::class => privilegePolicy::class,
+        Social::class => privilegePolicy::class,
+        User::class => privilegePolicy::class,
+        UserSetting::class => privilegePolicy::class,
+        Country::class => privilegePolicy::class,
+        State::class => privilegePolicy::class,
+        Capability::class => privilegePolicy::class,
+
+        Role::class => privilegePolicy::class,
+
+        Component::class => privilegePolicy::class,
+        ComponentDefault::class => privilegePolicy::class,
+        ComponentGroup::class => privilegePolicy::class,
+        IvaCondition::class => privilegePolicy::class,
+        IvaTax::class => privilegePolicy::class,
+        Tax::class => privilegePolicy::class,
     ];
 
     /**

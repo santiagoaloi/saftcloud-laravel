@@ -10,7 +10,7 @@ use Illuminate\Database\QueryException;
 class EntityController extends Controller {
 
     public function store(Request $request) {
-        $this->authorize('store', Entity::class);
+        $this->authorize(ability: 'store', arguments: [Entity::class, 'Entity.store']);
         try{
             $query = Entity::create($request->all());
         }
@@ -29,7 +29,7 @@ class EntityController extends Controller {
     }
 
     public function show($id) {
-        $this->authorize('show', Entity::class);
+        $this->authorize(ability: 'show', arguments: [Entity::class, 'Entity.show']);
         $result = Entity::find($id);
         origin($result);
 
@@ -39,7 +39,7 @@ class EntityController extends Controller {
     }
 
     public function showAll() {
-        $this->authorize('showAll', Entity::class);
+        $this->authorize(ability: 'showAll', arguments: [Entity::class, 'Entity.showAll']);
         $result = Entity::get();
         foreach ($result as $item){
             origin($item);
@@ -51,23 +51,23 @@ class EntityController extends Controller {
     }
 
     //  Para mostrar los elementos eliminados
-    public function getTrashed() {
-        $this->authorize('getTrashed', Entity::class);
+    public function showTrashed() {
+        $this->authorize(ability: 'showTrashed', arguments: [Entity::class, 'Entity.showTrashed']);
         return response([
             'records'=> Entity::onlyTrashed()->get()
         ], 200);
     }
 
     //  Para mostrar un elemento eliminado
-    public function restore($id) {
-        $this->authorize('restore', Entity::class);
+    public function recoveryTrashed($id) {
+        $this->authorize(ability: 'recoveryTrashed', arguments: [Entity::class, 'Entity.recoveryTrashed']);
         return response([
             'record'=> Entity::onlyTrashed()->find($id)->recovery()
         ], 200);
     }
 
     public function update(Request $request, $id) {
-        $this->authorize('update', Entity::class);
+        $this->authorize(ability: 'update', arguments: [Entity::class, 'Entity.update']);
         $query = Entity::find($id);
         try{
             $query->fill($request->all())->save();
@@ -87,7 +87,7 @@ class EntityController extends Controller {
     }
 
     public function updateAll(Request $request) {
-        $this->authorize('updateAll', Entity::class);
+        $this->authorize(ability: 'updateAll', arguments: [Entity::class, 'Entity.updateAll']);
         foreach($request as $item){
             $this->update($item, $item->id);
         };
@@ -96,7 +96,7 @@ class EntityController extends Controller {
     }
 
     public function destroy($id) {
-        $this->authorize('destroy', Entity::class);
+        $this->authorize(ability: 'destroy', arguments: [Entity::class, 'Entity.destroy']);
         $query = Entity::find($id);
         $query->delete();
 
@@ -104,7 +104,7 @@ class EntityController extends Controller {
     }
 
     public function forceDestroy($id){
-        $this->authorize('forceDestroy', Entity::class);
+        $this->authorize(ability: 'forceDestroy', arguments: [Entity::class, 'Entity.forceDestroy']);
         $query = Entity::withTrashed()->find($id);
         $query->forceDelete();
         return response([

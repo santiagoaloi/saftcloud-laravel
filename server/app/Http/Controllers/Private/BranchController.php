@@ -10,7 +10,7 @@ use Illuminate\Database\QueryException;
 class BranchController extends Controller {
 
     public function store(Request $request) {
-        $this->authorize('store', Branch::class);
+        $this->authorize(ability: 'store', arguments: [Branch::class, 'Branch.store']);
         try{
             $query = Branch::create($request->all());
         }
@@ -29,7 +29,7 @@ class BranchController extends Controller {
     }
 
     public function show($id) {
-        $this->authorize('show', Branch::class);
+        $this->authorize(ability: 'show', arguments: [Branch::class, 'Branch.show']);
         $result = Branch::find($id);
         origin($result);
 
@@ -39,7 +39,7 @@ class BranchController extends Controller {
     }
 
     public function showAll() {
-        $this->authorize('showAll', Branch::class);
+        $this->authorize(ability: 'showAll', arguments: [Branch::class, 'Branch.showAll']);
         $result = Branch::get();
         foreach ($result as $item){
             origin($item);
@@ -51,23 +51,23 @@ class BranchController extends Controller {
     }
 
     //  Para mostrar los elementos eliminados
-    public function getTrashed() {
-        $this->showTrashed('restore', Branch::class);
+    public function showTrashed() {
+        $this->authorize(ability: 'showTrashed', arguments: [Branch::class, 'Branch.showTrashed']);
         return response([
             'records'=> Branch::onlyTrashed()->get()
         ], 200);
     }
 
     //  Para mostrar un elemento eliminado
-    public function restore($id) {
-        $this->authorize('restore', Branch::class);
+    public function recoveryTrashed($id) {
+        $this->authorize(ability: 'recoveryTrashed', arguments: [Branch::class, 'Branch.recoveryTrashed']);
         return response([
             'record'=> Branch::onlyTrashed()->find($id)->recovery()
         ], 200);
     }
 
     public function update(Request $request, $id) {
-        $this->authorize('update', Branch::class);
+        $this->authorize(ability: 'update', arguments: [Branch::class, 'Branch.update']);
         $query = Branch::find($id);
         try{
             $query->fill($request->all())->save();
@@ -87,7 +87,7 @@ class BranchController extends Controller {
     }
 
     public function updateAll(Request $request) {
-        $this->authorize('updateAll', Branch::class);
+        $this->authorize(ability: 'updateAll', arguments: [Branch::class, 'Branch.updateAll']);
         foreach($request as $item){
             $this->update($item, $item->id);
         };
@@ -96,7 +96,7 @@ class BranchController extends Controller {
     }
 
     public function destroy($id) {
-        $this->authorize('destroy', Branch::class);
+        $this->authorize(ability: 'destroy', arguments: [Branch::class, 'Branch.destroy']);
         $query = Branch::find($id);
         $query->delete();
 
@@ -104,7 +104,7 @@ class BranchController extends Controller {
     }
 
     public function forceDestroy($id){
-        $this->authorize('forceDestroy', Address::class);
+        $this->authorize(ability: 'forceDestroy', arguments: [Branch::class, 'Branch.forceDestroy']);
         $query = Branch::withTrashed()->find($id);
         $query->forceDelete();
         return response([
