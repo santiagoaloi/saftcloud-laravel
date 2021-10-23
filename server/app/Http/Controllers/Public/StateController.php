@@ -118,6 +118,7 @@ class StateController extends Controller {
 
     // AGREGA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
     public function attachState(State $state, Request $request){
+        $this->authorize(ability: 'attach', arguments: [State::class, 'State.attach']);
         $items = $request['items'];
         $class = $request['name'];
         $arr = [];
@@ -130,6 +131,7 @@ class StateController extends Controller {
 
     // ELIMINA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
     public function detachState(State $state, Request $request){
+        $this->authorize(ability: 'attach', arguments: [State::class, 'State.attach']);
         $items = $request['items'];
         $class = $request['name'];
         $arr = [];
@@ -142,6 +144,7 @@ class StateController extends Controller {
 
     // SINCRONIZA TODOS LOS ITEMS ENVIADOS EN REQUEST
     public function syncState(State $state, Request $request){
+        $this->authorize(ability: 'attach', arguments: [State::class, 'State.attach']);
         $items = $request['items'];
         $class = $request['name'];
         $arr = [];

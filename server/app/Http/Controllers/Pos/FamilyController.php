@@ -112,7 +112,8 @@ class FamilyController extends Controller {
     }
 
     // AGREGA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
-    public function attachPaymentMethod(Family $family, Request $request){
+    public function attachPaymentMethod(Family $var, Request $request){
+        $this->authorize(ability: 'attach', arguments: [Family::class, 'Family.attach']);
         $items = $request['items'];
         $class = $request['name'];
         $arr = [];
@@ -120,11 +121,12 @@ class FamilyController extends Controller {
         foreach($items as $item){
             $arr[] = $item['id'];
         }
-        $family->$class()->attach($arr);
+        $var->$class()->attach($arr);
     }
 
     // ELIMINA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
-    public function detachPaymentMethod(Family $family, Request $request){
+    public function detachPaymentMethod(Family $var, Request $request){
+        $this->authorize(ability: 'attach', arguments: [Family::class, 'Family.attach']);
         $items = $request['items'];
         $class = $request['name'];
         $arr = [];
@@ -132,11 +134,12 @@ class FamilyController extends Controller {
         foreach($items as $item){
             $arr[] = $item['id'];
         }
-        $family->$class()->detach($arr);
+        $var->$class()->detach($arr);
     }
 
     // SINCRONIZA TODOS LOS ITEMS ENVIADOS EN REQUEST
-    public function syncPaymentMethod(Family $family, Request $request){
+    public function syncPaymentMethod(Family $var, Request $request){
+        $this->authorize(ability: 'attach', arguments: [Family::class, 'Family.attach']);
         $items = $request['items'];
         $class = $request['name'];
         $arr = [];
@@ -144,6 +147,6 @@ class FamilyController extends Controller {
         foreach($items as $item){
             $arr[] = $item['id'];
         }
-        $family->$class()->sync($arr);
+        $var->$class()->sync($arr);
     }
 }

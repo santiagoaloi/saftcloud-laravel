@@ -29,7 +29,7 @@ class PhoneController extends Controller {
     }
 
     public function show($id) {
-        $this->authorize(ability: 'show', arguments: [Phone::class, 'Phone.show']);
+        $this->authorize(ability: 'show', arguments: [Phone::class, 'Phone.store']);
         $result = Phone::find($id);
         origin($result);
 
@@ -113,35 +113,41 @@ class PhoneController extends Controller {
     }
 
     // AGREGA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
-    public function attachPhone(Phone $phone, Request $request){
+    public function attachPhone(Phone $var, Request $request){
+        $this->authorize(ability: 'attach', arguments: [Phone::class, 'Phone.attach']);
         $items = $request['items'];
         $class = $request['name'];
+        $arr = [];
 
         foreach($items as $item){
             $arr[] = $item['id'];
         }
-        $phone->$class()->attach($arr);
+        $var->$class()->attach($arr);
     }
 
     // ELIMINA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
-    public function detachPhone(Phone $phone, Request $request){
+    public function detachPhone(Phone $var, Request $request){
+        $this->authorize(ability: 'attach', arguments: [Phone::class, 'Phone.attach']);
         $items = $request['items'];
         $class = $request['name'];
+        $arr = [];
 
         foreach($items as $item){
             $arr[] = $item['id'];
         }
-        $phone->$class()->detach($arr);
+        $var->$class()->detach($arr);
     }
 
     // SINCRONIZA TODOS LOS ITEMS ENVIADOS EN REQUEST
-    public function syncPhone(Phone $phone, Request $request){
+    public function syncPhone(Phone $var, Request $request){
+        $this->authorize(ability: 'attach', arguments: [Phone::class, 'Phone.attach']);
         $items = $request['items'];
         $class = $request['name'];
+        $arr = [];
 
         foreach($items as $item){
             $arr[] = $item['id'];
         }
-        $phone->$class()->sync($arr);
+        $var->$class()->sync($arr);
     }
 }

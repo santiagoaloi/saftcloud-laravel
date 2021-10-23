@@ -110,4 +110,43 @@ class MeasurementUnityController extends Controller {
             'status'=> true
         ], 200);
     }
+
+    // AGREGA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
+    public function attachPaymentMethod(MeasurementUnit $var, Request $request){
+        $this->authorize(ability: 'attach', arguments: [MeasurementUnit::class, 'MeasurementUnit.attach']);
+        $items = $request['items'];
+        $class = $request['name'];
+        $arr = [];
+
+        foreach($items as $item){
+            $arr[] = $item['id'];
+        }
+        $var->$class()->attach($arr);
+    }
+
+    // ELIMINA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
+    public function detachPaymentMethod(MeasurementUnit $var, Request $request){
+        $this->authorize(ability: 'attach', arguments: [MeasurementUnit::class, 'MeasurementUnit.attach']);
+        $items = $request['items'];
+        $class = $request['name'];
+        $arr = [];
+
+        foreach($items as $item){
+            $arr[] = $item['id'];
+        }
+        $var->$class()->detach($arr);
+    }
+
+    // SINCRONIZA TODOS LOS ITEMS ENVIADOS EN REQUEST
+    public function syncPaymentMethod(MeasurementUnit $var, Request $request){
+        $this->authorize(ability: 'attach', arguments: [MeasurementUnit::class, 'MeasurementUnit.attach']);
+        $items = $request['items'];
+        $class = $request['name'];
+        $arr = [];
+
+        foreach($items as $item){
+            $arr[] = $item['id'];
+        }
+        $var->$class()->sync($arr);
+    }
 }

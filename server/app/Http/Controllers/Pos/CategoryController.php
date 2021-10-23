@@ -113,6 +113,7 @@ class CategoryController extends Controller {
 
     // AGREGA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
     public function attachPaymentMethod(Category $category, Request $request){
+        $this->authorize(ability: 'attach', arguments: [Category::class, 'Category.attach']);
         $items = $request['items'];
         $class = $request['name'];
         $arr = [];
@@ -125,6 +126,7 @@ class CategoryController extends Controller {
 
     // ELIMINA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
     public function detachPaymentMethod(Category $category, Request $request){
+        $this->authorize(ability: 'attach', arguments: [Category::class, 'Category.attach']);
         $items = $request['items'];
         $class = $request['name'];
         $arr = [];
@@ -137,6 +139,7 @@ class CategoryController extends Controller {
 
     // SINCRONIZA TODOS LOS ITEMS ENVIADOS EN REQUEST
     public function syncPaymentMethod(Category $category, Request $request){
+        $this->authorize(ability: 'attach', arguments: [Category::class, 'Category.attach']);
         $items = $request['items'];
         $class = $request['name'];
         $arr = [];

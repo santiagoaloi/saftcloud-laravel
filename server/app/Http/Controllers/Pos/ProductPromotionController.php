@@ -114,8 +114,10 @@ class ProductPromotionController extends Controller {
 
     // AGREGA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
     public function attachAccountPayment(ProductPromotion $var, Request $request){
+        $this->authorize(ability: 'attach', arguments: [ProductPromotion::class, 'ProductPromotion.attach']);
         $items = $request['items'];
         $class = $request['name'];
+        $arr = [];
 
         foreach($items as $item){
             $arr[] = $item['id'];
@@ -125,8 +127,10 @@ class ProductPromotionController extends Controller {
 
     // ELIMINA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
     public function detachAccountPayment(ProductPromotion $var, Request $request){
+        $this->authorize(ability: 'attach', arguments: [ProductPromotion::class, 'ProductPromotion.attach']);
         $items = $request['items'];
         $class = $request['name'];
+        $arr = [];
 
         foreach($items as $item){
             $arr[] = $item['id'];
@@ -136,8 +140,10 @@ class ProductPromotionController extends Controller {
 
     // SINCRONIZA TODOS LOS ITEMS ENVIADOS EN REQUEST
     public function syncAccountPayment(ProductPromotion $var, Request $request){
+        $this->authorize(ability: 'attach', arguments: [ProductPromotion::class, 'ProductPromotion.attach']);
         $items = $request['items'];
         $class = $request['name'];
+        $arr = [];
 
         foreach($items as $item){
             $arr[] = $item['id'];

@@ -113,35 +113,41 @@ class AccountPaymentController extends Controller {
     }
 
     // AGREGA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
-    public function attachAccountPayment(AccountPayment $accountPayment, Request $request){
+    public function attachAccountPayment(AccountPayment $var, Request $request){
+        $this->authorize(ability: 'attach', arguments: [AccountPayment::class, 'AccountPayment.attach']);
         $items = $request['items'];
         $class = $request['name'];
+        $arr = [];
 
         foreach($items as $item){
             $arr[] = $item['id'];
         }
-        $accountPayment->$class()->attach($arr);
+        $var->$class()->attach($arr);
     }
 
     // ELIMINA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
-    public function detachAccountPayment(AccountPayment $accountPayment, Request $request){
+    public function detachAccountPayment(AccountPayment $var, Request $request){
+        $this->authorize(ability: 'attach', arguments: [AccountPayment::class, 'AccountPayment.attach']);
         $items = $request['items'];
         $class = $request['name'];
+        $arr = [];
 
         foreach($items as $item){
             $arr[] = $item['id'];
         }
-        $accountPayment->$class()->detach($arr);
+        $var->$class()->detach($arr);
     }
 
     // SINCRONIZA TODOS LOS ITEMS ENVIADOS EN REQUEST
-    public function syncAccountPayment(AccountPayment $accountPayment, Request $request){
+    public function syncAccountPayment(AccountPayment $var, Request $request){
+        $this->authorize(ability: 'attach', arguments: [AccountPayment::class, 'AccountPayment.attach']);
         $items = $request['items'];
         $class = $request['name'];
+        $arr = [];
 
         foreach($items as $item){
             $arr[] = $item['id'];
         }
-        $accountPayment->$class()->sync($arr);
+        $var->$class()->sync($arr);
     }
 }

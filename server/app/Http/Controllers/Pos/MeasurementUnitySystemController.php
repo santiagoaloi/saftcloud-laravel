@@ -113,8 +113,10 @@ class MeasurementUnitySystemController extends Controller {
 
     // AGREGA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
     public function attachAccountPayment(MeasurementUnitSystem $var, Request $request){
+        $this->authorize(ability: 'attach', arguments: [MeasurementUnitSystem::class, 'MeasurementUnitSystem.attach']);
         $items = $request['items'];
         $class = $request['name'];
+        $arr = [];
 
         foreach($items as $item){
             $arr[] = $item['id'];
@@ -124,8 +126,10 @@ class MeasurementUnitySystemController extends Controller {
 
     // ELIMINA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
     public function detachAccountPayment(MeasurementUnitSystem $var, Request $request){
+        $this->authorize(ability: 'attach', arguments: [MeasurementUnitSystem::class, 'MeasurementUnitSystem.attach']);
         $items = $request['items'];
         $class = $request['name'];
+        $arr = [];
 
         foreach($items as $item){
             $arr[] = $item['id'];
@@ -135,8 +139,10 @@ class MeasurementUnitySystemController extends Controller {
 
     // SINCRONIZA TODOS LOS ITEMS ENVIADOS EN REQUEST
     public function syncAccountPayment(MeasurementUnitSystem $var, Request $request){
+        $this->authorize(ability: 'attach', arguments: [MeasurementUnitSystem::class, 'MeasurementUnitSystem.attach']);
         $items = $request['items'];
         $class = $request['name'];
+        $arr = [];
 
         foreach($items as $item){
             $arr[] = $item['id'];

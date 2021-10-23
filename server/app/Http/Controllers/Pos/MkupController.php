@@ -113,8 +113,10 @@ class MkupController extends Controller {
 
     // AGREGA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
     public function attachAccountPayment(Mkup $var, Request $request){
+        $this->authorize(ability: 'attach', arguments: [Mkup::class, 'Mkup.attach']);
         $items = $request['items'];
         $class = $request['name'];
+        $arr = [];
 
         foreach($items as $item){
             $arr[] = $item['id'];
@@ -124,8 +126,10 @@ class MkupController extends Controller {
 
     // ELIMINA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
     public function detachAccountPayment(Mkup $var, Request $request){
+        $this->authorize(ability: 'attach', arguments: [Mkup::class, 'Mkup.attach']);
         $items = $request['items'];
         $class = $request['name'];
+        $arr = [];
 
         foreach($items as $item){
             $arr[] = $item['id'];
@@ -135,8 +139,10 @@ class MkupController extends Controller {
 
     // SINCRONIZA TODOS LOS ITEMS ENVIADOS EN REQUEST
     public function syncAccountPayment(Mkup $var, Request $request){
+        $this->authorize(ability: 'attach', arguments: [Mkup::class, 'Mkup.attach']);
         $items = $request['items'];
         $class = $request['name'];
+        $arr = [];
 
         foreach($items as $item){
             $arr[] = $item['id'];

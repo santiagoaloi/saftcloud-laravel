@@ -113,35 +113,41 @@ class BranchController extends Controller {
     }
 
     // AGREGA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
-    public function attachBranch(Branch $branch, Request $request){
+    public function attachBranch(Branch $var, Request $request){
+        $this->authorize(ability: 'attach', arguments: [Branch::class, 'Branch.attach']);
         $items = $request['items'];
         $class = $request['name'];
+        $arr = [];
 
         foreach($items as $item){
             $arr[] = $item['id'];
         }
-        $branch->$class()->attach($arr);
+        $var->$class()->attach($arr);
     }
 
     // ELIMINA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
-    public function detachBranch(Branch $branch, Request $request){
+    public function detachBranch(Branch $var, Request $request){
+        $this->authorize(ability: 'attach', arguments: [Branch::class, 'Branch.attach']);
         $items = $request['items'];
         $class = $request['name'];
+        $arr = [];
 
         foreach($items as $item){
             $arr[] = $item['id'];
         }
-        $branch->$class()->detach($arr);
+        $var->$class()->detach($arr);
     }
 
     // SINCRONIZA TODOS LOS ITEMS ENVIADOS EN REQUEST
-    public function syncBranch(Branch $branch, Request $request){
+    public function syncBranch(Branch $var, Request $request){
+        $this->authorize(ability: 'attach', arguments: [Branch::class, 'Branch.attach']);
         $items = $request['items'];
         $class = $request['name'];
+        $arr = [];
 
         foreach($items as $item){
             $arr[] = $item['id'];
         }
-        $branch->$class()->sync($arr);
+        $var->$class()->sync($arr);
     }
 }

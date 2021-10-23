@@ -174,26 +174,29 @@ class UserController extends Controller {
     }
 
         // AGREGA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
-        public function attachUserS(User $user, Request $request){
+        public function attachUserS(User $var, Request $request){
+            $this->authorize(ability: 'attach', arguments: [User::class, 'User.attach']);
             $items = $request['items'];
             $class = $request['name'];
 
-            $user->$class()->attach($items);
+            $var->$class()->attach($items);
         }
 
     // ELIMINA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
-    public function detachUser(User $user, Request $request){
+    public function detachUser(User $var, Request $request){
+        $this->authorize(ability: 'attach', arguments: [User::class, 'User.attach']);
         $items = $request['items'];
         $class = $request['name'];
 
         foreach($items as $item){
             $arr[] = $item['id'];
         }
-        $user->$class()->detach($arr);
+        $var->$class()->detach($arr);
     }
 
     // SINCRONIZA TODOS LOS ITEMS ENVIADOS EN REQUEST
-    public function syncUser(User $user, Request $request){
+    public function syncUser(User $var, Request $request){
+        $this->authorize(ability: 'attach', arguments: [User::class, 'User.attach']);
         $items = $request['items'];
         $class = $request['name'];
         $arr = [];
@@ -201,7 +204,7 @@ class UserController extends Controller {
         foreach($items as $item){
             $arr[] = $item['id'];
         }
-        $user->$class()->sync($arr);
+        $var->$class()->sync($arr);
     }
 
     public function getRolCapabilities($user){

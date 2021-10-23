@@ -113,35 +113,41 @@ class SocialController extends Controller {
     }
 
     // AGREGA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
-    public function attachSocial(Social $social, Request $request){
+    public function attachSocial(Social $var, Request $request){
+        $this->authorize(ability: 'attach', arguments: [Social::class, 'Social.attach']);
         $items = $request['items'];
         $class = $request['name'];
+        $arr = [];
 
         foreach($items as $item){
             $arr[] = $item['id'];
         }
-        $social->$class()->attach($arr);
+        $var->$class()->attach($arr);
     }
 
     // ELIMINA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
-    public function detachSocial(Social $social, Request $request){
+    public function detachSocial(Social $var, Request $request){
+        $this->authorize(ability: 'attach', arguments: [Social::class, 'Social.attach']);
         $items = $request['items'];
         $class = $request['name'];
+        $arr = [];
 
         foreach($items as $item){
             $arr[] = $item['id'];
         }
-        $social->$class()->detach($arr);
+        $var->$class()->detach($arr);
     }
 
     // SINCRONIZA TODOS LOS ITEMS ENVIADOS EN REQUEST
-    public function syncSocial(Social $social, Request $request){
+    public function syncSocial(Social $var, Request $request){
+        $this->authorize(ability: 'attach', arguments: [Social::class, 'Social.attach']);
         $items = $request['items'];
         $class = $request['name'];
+        $arr = [];
 
         foreach($items as $item){
             $arr[] = $item['id'];
         }
-        $social->$class()->sync($arr);
+        $var->$class()->sync($arr);
     }
 }

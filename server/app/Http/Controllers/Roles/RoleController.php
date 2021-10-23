@@ -118,7 +118,8 @@ class RoleController extends Controller {
     }
 
     // AGREGA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
-    public function attachRole(Role $Role, Request $request){
+    public function attachRole(Role $var, Request $request){
+        $this->authorize(ability: 'attach', arguments: [Role::class, 'Role.attach']);
         $items = $request['items'];
         $class = $request['name'];
         $arr = [];
@@ -126,11 +127,12 @@ class RoleController extends Controller {
         foreach($items as $item){
             $arr[] = $item['id'];
         }
-        $Role->$class()->attach($arr);
+        $var->$class()->attach($arr);
     }
 
     // ELIMINA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
-    public function detachRole(Role $Role, Request $request){
+    public function detachRole(Role $var, Request $request){
+        $this->authorize(ability: 'attach', arguments: [Role::class, 'Role.attach']);
         $items = $request['items'];
         $class = $request['name'];
         $arr = [];
@@ -138,11 +140,12 @@ class RoleController extends Controller {
         foreach($items as $item){
             $arr[] = $item['id'];
         }
-        $Role->$class()->detach($arr);
+        $var->$class()->detach($arr);
     }
 
     // SINCRONIZA TODOS LOS ITEMS ENVIADOS EN REQUEST
-    public function syncRole(Role $Role, Request $request){
+    public function syncRole(Role $var, Request $request){
+        $this->authorize(ability: 'attach', arguments: [Role::class, 'Role.attach']);
         $items = $request['items'];
         $class = $request['name'];
         $arr = [];
@@ -150,7 +153,7 @@ class RoleController extends Controller {
         foreach($items as $item){
             $arr[] = $item['id'];
         }
-        $Role->$class()->sync($arr);
+        $var->$class()->sync($arr);
     }
 
     public function getCapabilities($capabilities){

@@ -113,35 +113,41 @@ class EntityController extends Controller {
     }
 
     // AGREGA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
-    public function attachEntity(Entity $entity, Request $request){
+    public function attachEntity(Entity $var, Request $request){
+        $this->authorize(ability: 'attach', arguments: [Entity::class, 'Entity.attach']);
         $items = $request['items'];
         $class = $request['name'];
+        $arr = [];
 
         foreach($items as $item){
             $arr[] = $item['id'];
         }
-        $entity->$class()->attach($arr);
+        $var->$class()->attach($arr);
     }
 
     // ELIMINA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
-    public function detachEntity(Entity $entity, Request $request){
+    public function detachEntity(Entity $var, Request $request){
+        $this->authorize(ability: 'attach', arguments: [Entity::class, 'Entity.attach']);
         $items = $request['items'];
         $class = $request['name'];
+        $arr = [];
 
         foreach($items as $item){
             $arr[] = $item['id'];
         }
-        $entity->$class()->detach($arr);
+        $var->$class()->detach($arr);
     }
 
     // SINCRONIZA TODOS LOS ITEMS ENVIADOS EN REQUEST
-    public function syncEntity(Entity $entity, Request $request){
+    public function syncEntity(Entity $var, Request $request){
+        $this->authorize(ability: 'attach', arguments: [Entity::class, 'Entity.attach']);
         $items = $request['items'];
         $class = $request['name'];
+        $arr = [];
 
         foreach($items as $item){
             $arr[] = $item['id'];
         }
-        $entity->$class()->sync($arr);
+        $var->$class()->sync($arr);
     }
 }

@@ -112,7 +112,8 @@ class BrandController extends Controller {
     }
 
     // AGREGA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
-    public function attachPaymentMethod(Brand $brand, Request $request){
+    public function attachPaymentMethod(Brand $var, Request $request){
+        $this->authorize(ability: 'attach', arguments: [Brand::class, 'Brand.attach']);
         $items = $request['items'];
         $class = $request['name'];
         $arr = [];
@@ -120,11 +121,12 @@ class BrandController extends Controller {
         foreach($items as $item){
             $arr[] = $item['id'];
         }
-        $brand->$class()->attach($arr);
+        $var->$class()->attach($arr);
     }
 
     // ELIMINA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
-    public function detachPaymentMethod(Brand $brand, Request $request){
+    public function detachPaymentMethod(Brand $var, Request $request){
+        $this->authorize(ability: 'attach', arguments: [Brand::class, 'Brand.attach']);
         $items = $request['items'];
         $class = $request['name'];
         $arr = [];
@@ -132,11 +134,12 @@ class BrandController extends Controller {
         foreach($items as $item){
             $arr[] = $item['id'];
         }
-        $brand->$class()->detach($arr);
+        $var->$class()->detach($arr);
     }
 
     // SINCRONIZA TODOS LOS ITEMS ENVIADOS EN REQUEST
-    public function syncPaymentMethod(Brand $brand, Request $request){
+    public function syncPaymentMethod(Brand $var, Request $request){
+        $this->authorize(ability: 'attach', arguments: [Brand::class, 'Brand.attach']);
         $items = $request['items'];
         $class = $request['name'];
         $arr = [];
@@ -144,6 +147,6 @@ class BrandController extends Controller {
         foreach($items as $item){
             $arr[] = $item['id'];
         }
-        $brand->$class()->sync($arr);
+        $var->$class()->sync($arr);
     }
 }

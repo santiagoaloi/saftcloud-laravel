@@ -113,35 +113,41 @@ class AddressController extends Controller {
     }
 
     // AGREGA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
-    public function attachAddress(Address $address, Request $request){
+    public function attachAddress(Address $var, Request $request){
+        $this->authorize(ability: 'attach', arguments: [Address::class, 'Address.attach']);
         $items = $request['items'];
         $class = $request['name'];
+        $arr = [];
 
         foreach($items as $item){
             $arr[] = $item['id'];
         }
-        $address->$class()->attach($arr);
+        $var->$class()->attach($arr);
     }
 
     // ELIMINA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
-    public function detachAddress(Address $address, Request $request){
+    public function detachAddress(Address $var, Request $request){
+        $this->authorize(ability: 'attach', arguments: [Address::class, 'Address.attach']);
         $items = $request['items'];
         $class = $request['name'];
+        $arr = [];
 
         foreach($items as $item){
             $arr[] = $item['id'];
         }
-        $address->$class()->detach($arr);
+        $var->$class()->detach($arr);
     }
 
     // SINCRONIZA TODOS LOS ITEMS ENVIADOS EN REQUEST
-    public function syncAddress(Address $address, Request $request){
+    public function syncAddress(Address $var, Request $request){
+        $this->authorize(ability: 'attach', arguments: [Address::class, 'Address.attach']);
         $items = $request['items'];
         $class = $request['name'];
+        $arr = [];
 
         foreach($items as $item){
             $arr[] = $item['id'];
         }
-        $address->$class()->sync($arr);
+        $var->$class()->sync($arr);
     }
 }

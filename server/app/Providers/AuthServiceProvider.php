@@ -40,6 +40,7 @@ use App\Models\Taxes\IvaTax;
 use App\Models\Taxes\Tax;
 
 use App\Policies\privilegePolicy;
+use App\Policies\publicPrivilegePolicy;
 
 class AuthServiceProvider extends ServiceProvider {
     /**

@@ -114,6 +114,7 @@ class DocumentTypeController extends Controller {
 
     // AGREGA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
     public function attachDocumentType(DocumentType $documentType, Request $request){
+        $this->authorize(ability: 'attach', arguments: [DocumentType::class, 'DocumentType.attach']);
         $items = $request['items'];
         $class = $request['name'];
         $arr = [];
@@ -126,6 +127,7 @@ class DocumentTypeController extends Controller {
 
     // ELIMINA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
     public function detachDocumentType(DocumentType $documentType, Request $request){
+        $this->authorize(ability: 'attach', arguments: [DocumentType::class, 'DocumentType.attach']);
         $items = $request['items'];
         $class = $request['name'];
         $arr = [];
@@ -138,6 +140,7 @@ class DocumentTypeController extends Controller {
 
     // SINCRONIZA TODOS LOS ITEMS ENVIADOS EN REQUEST
     public function syncDocumentType(DocumentType $documentType, Request $request){
+        $this->authorize(ability: 'attach', arguments: [DocumentType::class, 'DocumentType.attach']);
         $items = $request['items'];
         $class = $request['name'];
         $arr = [];

@@ -333,35 +333,41 @@ class ComponentController extends Controller {
     }
 
     // AGREGA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
-    public function attachComponent(Component $component, Request $request){
+    public function attachComponent(Component $var, Request $request){
+        $this->authorize(ability: 'attach', arguments: [Component::class, 'Component.attach']);
         $items = $request['items'];
         $class = $request['name'];
+        $arr = [];
 
         foreach($items as $item){
             $arr[] = $item['id'];
         }
-        $component->$class()->attach($arr);
+        $var->$class()->attach($arr);
     }
 
     // ELIMINA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
-    public function detachComponent(Component $component, Request $request){
+    public function detachComponent(Component $var, Request $request){
+        $this->authorize(ability: 'attach', arguments: [Component::class, 'Component.attach']);
         $items = $request['items'];
         $class = $request['name'];
+        $arr = [];
 
         foreach($items as $item){
             $arr[] = $item['id'];
         }
-        $component->$class()->detach($arr);
+        $var->$class()->detach($arr);
     }
 
     // SINCRONIZA TODOS LOS ITEMS ENVIADOS EN REQUEST
-    public function syncComponent(Component $component, Request $request){
+    public function syncComponent(Component $var, Request $request){
+        $this->authorize(ability: 'attach', arguments: [Component::class, 'Component.attach']);
         $items = $request['items'];
         $class = $request['name'];
+        $arr = [];
 
         foreach($items as $item){
             $arr[] = $item['id'];
         }
-        $component->$class()->sync($arr);
+        $var->$class()->sync($arr);
     }
 }

@@ -113,35 +113,41 @@ class AccountPlanController extends Controller {
     }
 
     // AGREGA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
-    public function attachAccountPlan(AccountPlan $accountPlan, Request $request){
+    public function attachAccountPlan(AccountPlan $var, Request $request){
+        $this->authorize(ability: 'attach', arguments: [AccountPlan::class, 'AccountPlan.attach']);
         $items = $request['items'];
         $class = $request['name'];
+        $arr = [];
 
         foreach($items as $item){
             $arr[] = $item['id'];
         }
-        $accountPlan->$class()->attach($arr);
+        $var->$class()->attach($arr);
     }
 
     // ELIMINA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
-    public function detachAccountPlan(AccountPlan $accountPlan, Request $request){
+    public function detachAccountPlan(AccountPlan $var, Request $request){
+        $this->authorize(ability: 'attach', arguments: [AccountPlan::class, 'AccountPlan.attach']);
         $items = $request['items'];
         $class = $request['name'];
+        $arr = [];
 
         foreach($items as $item){
             $arr[] = $item['id'];
         }
-        $accountPlan->$class()->detach($arr);
+        $var->$class()->detach($arr);
     }
 
     // SINCRONIZA TODOS LOS ITEMS ENVIADOS EN REQUEST
-    public function syncAccountPlan(AccountPlan $accountPlan, Request $request){
+    public function syncAccountPlan(AccountPlan $var, Request $request){
+        $this->authorize(ability: 'attach', arguments: [AccountPlan::class, 'AccountPlan.attach']);
         $items = $request['items'];
         $class = $request['name'];
+        $arr = [];
 
         foreach($items as $item){
             $arr[] = $item['id'];
         }
-        $accountPlan->$class()->sync($arr);
+        $var->$class()->sync($arr);
     }
 }

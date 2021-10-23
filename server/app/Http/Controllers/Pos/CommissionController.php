@@ -112,7 +112,8 @@ class CommissionController extends Controller {
     }
 
     // AGREGA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
-    public function attachPaymentMethod(Commission $commission, Request $request){
+    public function attachPaymentMethod(Commission $var, Request $request){
+        $this->authorize(ability: 'attach', arguments: [Commission::class, 'Commission.attach']);
         $items = $request['items'];
         $class = $request['name'];
         $arr = [];
@@ -120,11 +121,12 @@ class CommissionController extends Controller {
         foreach($items as $item){
             $arr[] = $item['id'];
         }
-        $commission->$class()->attach($arr);
+        $var->$class()->attach($arr);
     }
 
     // ELIMINA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
-    public function detachPaymentMethod(Commission $commission, Request $request){
+    public function detachPaymentMethod(Commission $var, Request $request){
+        $this->authorize(ability: 'attach', arguments: [Commission::class, 'Commission.attach']);
         $items = $request['items'];
         $class = $request['name'];
         $arr = [];
@@ -132,11 +134,12 @@ class CommissionController extends Controller {
         foreach($items as $item){
             $arr[] = $item['id'];
         }
-        $commission->$class()->detach($arr);
+        $var->$class()->detach($arr);
     }
 
     // SINCRONIZA TODOS LOS ITEMS ENVIADOS EN REQUEST
-    public function syncPaymentMethod(Commission $commission, Request $request){
+    public function syncPaymentMethod(Commission $var, Request $request){
+        $this->authorize(ability: 'attach', arguments: [Commission::class, 'Commission.attach']);
         $items = $request['items'];
         $class = $request['name'];
         $arr = [];
@@ -144,6 +147,6 @@ class CommissionController extends Controller {
         foreach($items as $item){
             $arr[] = $item['id'];
         }
-        $commission->$class()->sync($arr);
+        $var->$class()->sync($arr);
     }
 }

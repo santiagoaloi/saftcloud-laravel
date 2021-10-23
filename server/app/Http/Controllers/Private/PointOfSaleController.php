@@ -113,35 +113,41 @@ class PointOfSaleController extends Controller {
     }
 
     // AGREGA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
-    public function attachPointOfSale(PointOfSale $pointOfSale, Request $request){
+    public function attachPointOfSale(PointOfSale $var, Request $request){
+        $this->authorize(ability: 'attach', arguments: [PointOfSale::class, 'PointOfSale.attach']);
         $items = $request['items'];
         $class = $request['name'];
+        $arr = [];
 
         foreach($items as $item){
             $arr[] = $item['id'];
         }
-        $pointOfSale->$class()->attach($arr);
+        $var->$class()->attach($arr);
     }
 
     // ELIMINA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
-    public function detachPointOfSale(PointOfSale $pointOfSale, Request $request){
+    public function detachPointOfSale(PointOfSale $var, Request $request){
+        $this->authorize(ability: 'attach', arguments: [PointOfSale::class, 'PointOfSale.attach']);
         $items = $request['items'];
         $class = $request['name'];
+        $arr = [];
 
         foreach($items as $item){
             $arr[] = $item['id'];
         }
-        $pointOfSale->$class()->detach($arr);
+        $var->$class()->detach($arr);
     }
 
     // SINCRONIZA TODOS LOS ITEMS ENVIADOS EN REQUEST
-    public function syncPointOfSale(PointOfSale $pointOfSale, Request $request){
+    public function syncPointOfSale(PointOfSale $var, Request $request){
+        $this->authorize(ability: 'attach', arguments: [PointOfSale::class, 'PointOfSale.attach']);
         $items = $request['items'];
         $class = $request['name'];
+        $arr = [];
 
         foreach($items as $item){
             $arr[] = $item['id'];
         }
-        $pointOfSale->$class()->sync($arr);
+        $var->$class()->sync($arr);
     }
 }
