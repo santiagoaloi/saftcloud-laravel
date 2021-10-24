@@ -148,4 +148,37 @@ class privilegePolicy {
         }
         return false;
     }
+
+    public function attachCapability(User $user, $capability) {
+        $user = Auth::user();
+        $userC = New UserController;
+        $capabilities = $userC->getRolCapabilities($user);
+
+        if(in_array($capability, $capabilities) OR AccountVerification::checkRootRole()) {
+            return true;
+        }
+        return false;
+    }
+
+    public function detachCapability(User $user, $capability) {
+        $user = Auth::user();
+        $userC = New UserController;
+        $capabilities = $userC->getRolCapabilities($user);
+
+        if(in_array($capability, $capabilities) OR AccountVerification::checkRootRole()) {
+            return true;
+        }
+        return false;
+    }
+
+    public function syncCapability(User $user, $capability) {
+        $user = Auth::user();
+        $userC = New UserController;
+        $capabilities = $userC->getRolCapabilities($user);
+
+        if(in_array($capability, $capabilities) OR AccountVerification::checkRootRole()) {
+            return true;
+        }
+        return false;
+    }
 }

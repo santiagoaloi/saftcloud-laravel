@@ -70,12 +70,12 @@ class publicPrivilegePolicy {
         return false;
     }
 
-        /**
+    /**
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
      * @return mixed
-     */
+    */
 
     public function recoveryTrashed(User $user, $capability) {
         $user = Auth::user();
@@ -93,7 +93,7 @@ class publicPrivilegePolicy {
      *
      * @param  \App\Models\User  $user
      * @return mixed
-     */
+    */
     public function update(User $user, $capability) {
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
@@ -120,7 +120,7 @@ class publicPrivilegePolicy {
      *
      * @param  \App\Models\User  $user
      * @return mixed
-     */
+    */
     public function destroy(User $user, $capability) {
         $user = Auth::user();
         $userC = New UserController;
@@ -137,7 +137,7 @@ class publicPrivilegePolicy {
      *
      * @param  \App\Models\User  $user
      * @return mixed
-     */
+    */
     public function forceDelete(User $user, $capability) {
         $user = Auth::user();
         $userC = New UserController;
