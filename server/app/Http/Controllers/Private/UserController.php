@@ -163,7 +163,8 @@ class UserController extends Controller {
     }
 
     // AGREGA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
-    public function attachUser(User $user, Request $request){
+    public function attach(User $user, Request $request){
+        $this->authorize(ability: 'attach', arguments: [User::class, 'User.attach']);
         $items = $request['items'];
         $class = $request['name'];
 
@@ -175,7 +176,6 @@ class UserController extends Controller {
 
         // AGREGA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
         public function attachUserS(User $var, Request $request){
-            $this->authorize(ability: 'attach', arguments: [User::class, 'User.attach']);
             $items = $request['items'];
             $class = $request['name'];
 
@@ -183,7 +183,7 @@ class UserController extends Controller {
         }
 
     // ELIMINA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
-    public function detachUser(User $var, Request $request){
+    public function detach(User $var, Request $request){
         $this->authorize(ability: 'attach', arguments: [User::class, 'User.attach']);
         $items = $request['items'];
         $class = $request['name'];
@@ -195,7 +195,7 @@ class UserController extends Controller {
     }
 
     // SINCRONIZA TODOS LOS ITEMS ENVIADOS EN REQUEST
-    public function syncUser(User $var, Request $request){
+    public function sync(User $var, Request $request){
         $this->authorize(ability: 'attach', arguments: [User::class, 'User.attach']);
         $items = $request['items'];
         $class = $request['name'];

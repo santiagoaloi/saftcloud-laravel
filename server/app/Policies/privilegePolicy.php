@@ -149,7 +149,7 @@ class privilegePolicy {
         return false;
     }
 
-    public function attachCapability(User $user, $capability) {
+    public function attach(User $user, $capability) {
         $user = Auth::user();
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
@@ -160,7 +160,7 @@ class privilegePolicy {
         return false;
     }
 
-    public function detachCapability(User $user, $capability) {
+    public function detach(User $user, $capability) {
         $user = Auth::user();
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);
@@ -171,7 +171,7 @@ class privilegePolicy {
         return false;
     }
 
-    public function syncCapability(User $user, $capability) {
+    public function sync(User $user, $capability) {
         $user = Auth::user();
         $userC = New UserController;
         $capabilities = $userC->getRolCapabilities($user);

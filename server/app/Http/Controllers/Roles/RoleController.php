@@ -118,7 +118,7 @@ class RoleController extends Controller {
     }
 
     // AGREGA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
-    public function attachRole(Role $var, Request $request){
+    public function attach(Role $var, Request $request){
         $this->authorize(ability: 'attach', arguments: [Role::class, 'Role.attach']);
         $items = $request['items'];
         $class = $request['name'];
@@ -131,7 +131,7 @@ class RoleController extends Controller {
     }
 
     // ELIMINA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
-    public function detachRole(Role $var, Request $request){
+    public function detach(Role $var, Request $request){
         $this->authorize(ability: 'attach', arguments: [Role::class, 'Role.attach']);
         $items = $request['items'];
         $class = $request['name'];
@@ -144,7 +144,7 @@ class RoleController extends Controller {
     }
 
     // SINCRONIZA TODOS LOS ITEMS ENVIADOS EN REQUEST
-    public function syncRole(Role $var, Request $request){
+    public function sync(Role $var, Request $request){
         $this->authorize(ability: 'attach', arguments: [Role::class, 'Role.attach']);
         $items = $request['items'];
         $class = $request['name'];

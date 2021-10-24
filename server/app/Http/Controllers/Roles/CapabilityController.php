@@ -114,7 +114,7 @@ class CapabilityController extends Controller {
     }
 
     // AGREGA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
-    public function attachCapability(Capability $var, Request $request){
+    public function attach(Capability $var, Request $request){
         $this->authorize(ability: 'attach', arguments: [Capability::class, 'Capability.attach']);
         $items = $request['items'];
         $class = $request['name'];
@@ -127,7 +127,7 @@ class CapabilityController extends Controller {
     }
 
     // ELIMINA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
-    public function detachCapability(Capability $var, Request $request){
+    public function detach(Capability $var, Request $request){
         $this->authorize(ability: 'attach', arguments: [Capability::class, 'Capability.attach']);
         $items = $request['items'];
         $class = $request['name'];
@@ -140,7 +140,7 @@ class CapabilityController extends Controller {
     }
 
     // SINCRONIZA TODOS LOS ITEMS ENVIADOS EN REQUEST
-    public function syncCapability(Capability $var, Request $request){
+    public function sync(Capability $var, Request $request){
         $this->authorize(ability: 'attach', arguments: [Capability::class, 'Capability.attach']);
         $items = $request['items'];
         $class = $request['name'];

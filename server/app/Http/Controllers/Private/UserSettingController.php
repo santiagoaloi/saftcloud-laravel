@@ -113,7 +113,7 @@ class UserSettingController extends Controller {
     }
 
     // AGREGA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
-    public function attachUserSetting(UserSetting $userSetting, Request $request){
+    public function attach(UserSetting $userSetting, Request $request){
         $this->authorize(ability: 'attach', arguments: [userSetting::class, 'userSetting.attach']);
         $items = $request['items'];
         $class = $request['name'];
@@ -126,7 +126,7 @@ class UserSettingController extends Controller {
     }
 
     // ELIMINA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
-    public function detachUserSetting(UserSetting $userSetting, Request $request){
+    public function detach(UserSetting $userSetting, Request $request){
         $this->authorize(ability: 'attach', arguments: [userSetting::class, 'userSetting.attach']);
         $items = $request['items'];
         $class = $request['name'];
@@ -139,7 +139,7 @@ class UserSettingController extends Controller {
     }
 
     // SINCRONIZA TODOS LOS ITEMS ENVIADOS EN REQUEST
-    public function syncUserSetting(UserSetting $userSetting, Request $request){
+    public function sync(UserSetting $userSetting, Request $request){
         $this->authorize(ability: 'attach', arguments: [userSetting::class, 'userSetting.attach']);
         $items = $request['items'];
         $class = $request['name'];
