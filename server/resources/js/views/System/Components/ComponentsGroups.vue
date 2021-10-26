@@ -14,7 +14,6 @@
         hide-details
         :color="isDark ? '#208ad6' : 'grey'"
         item-color="primary lighten-4"
-        dense
         :menu-props="{ bottom: true, offsetY: true }"
         @update:search-input="syncGroupInputValue($event)"
       >

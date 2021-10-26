@@ -26,21 +26,13 @@
               your business operates as one cohesive operation.
             </h3>
             <div class="mt-8">
-              <v-btn class="hoverElevationSoft" to="/signup" dark x-large color="primary">
+              <v-btn class="hoverElevationSoft" to="/Signup" dark x-large color="primary">
                 Try it for free
               </v-btn>
               <v-btn dark x-large class="my-1 mx-sm-1 hoverElevationSoft"> Contact Sales </v-btn>
             </div>
           </v-card>
-          <div
-            data-aos="fade"
-            data-aos-anchor-placement="center-bottom"
-            data-aos-delay="500"
-            data-aos-once="true"
-            data-aos-easing="linear"
-            data-aos-duration="400"
-            style="position: absolute; margin-left: 380px"
-          >
+          <div data-aos="fade-up" style="position: absolute; margin-left: 380px">
             <v-img src="storage/header/1.png" height="580" contain :transition="false" />
           </div>
         </div>

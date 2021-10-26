@@ -16,7 +16,6 @@
             <v-card
               :ref="`SEL${componentCardGroup}ID${index}`"
               :color="getComponentCardColor(active)"
-              style="opacity: 0.8"
               height="210"
               width="100%"
               :ripple="false"
@@ -220,7 +219,7 @@
       },
 
       getComponentCardColor(active) {
-        return this.isDark ? (active ? '#515664' : '#40434a') : active ? '#edeef2' : 'white';
+        return this.isDark ? (active ? '#373a44' : '#40444f') : active ? '#edeef2' : 'white';
       },
     },
   };

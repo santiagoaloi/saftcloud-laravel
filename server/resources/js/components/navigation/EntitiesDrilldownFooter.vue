@@ -121,7 +121,6 @@
           this.loading = false;
         } catch {
           this.loading = false;
-          this.snackbarError('There was an error saving');
         }
       },
 
@@ -138,11 +137,9 @@
               this.loading = false;
             } else {
               this.loading = false;
-              this.snackbarError('There was an error saving');
             }
           } catch (error) {
             this.loading = false;
-            this.snackbarError('There was an error saving');
           }
         } else {
           this.loading = false;

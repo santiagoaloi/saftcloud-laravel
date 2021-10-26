@@ -30,7 +30,7 @@
     "/dist/js/entities-dialog-privileges.js": "/dist/js/entities-dialog-privileges.js",
     "/dist/js/entities-edit-sheet.js": "/dist/js/entities-edit-sheet.js",
     "/dist/js/Parent.js": "/dist/js/Parent.js",
-    "/dist/js/secure-session-timeout.js": "/dist/js/secure-session-timeout.js",
+    "/dist/js/secure-bar.js": "/dist/js/secure-bar.js",
     "/dist/js/secure-bundle.js": "/dist/js/secure-bundle.js",
     "/dist/js/secure-component-drawer.js": "/dist/js/secure-component-drawer.js",
     "/dist/js/secure-entities-drawer.js": "/dist/js/secure-entities-drawer.js",

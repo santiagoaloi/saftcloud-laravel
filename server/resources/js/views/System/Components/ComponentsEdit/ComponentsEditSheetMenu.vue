@@ -78,7 +78,7 @@
 
     mounted() {
       if (!this.componentEditDrawerActiveMenu && this.$route.name !== '/Components/Basic') {
-        this.$router.push('/components/basic');
+        this.$router.push('/Components/Basic');
       } else if (this.$route.name !== this.componentEditDrawerActiveMenu) {
         this.$router.push(this.componentEditDrawerActiveMenu);
       }

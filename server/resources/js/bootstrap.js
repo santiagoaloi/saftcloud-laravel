@@ -50,6 +50,17 @@ axios.interceptors.response.use(
         store.set('snackbar/data@color', 'pink darken-1');
       }
 
+      //* If session fails to validate the token, kill the session.
+      if (error.response.data.message === 'This action is unauthorized.') {
+        store.set('snackbar/data@value', true);
+        store.set(
+          'snackbar/data@text',
+          'Insufficient privileges, this action requires higher clearance',
+        );
+        store.set('snackbar/data@icon', 'mdi-alert-octagon');
+        store.set('snackbar/data@color', 'pink darken-1');
+      }
+
       return Promise.reject(error);
     }
   },

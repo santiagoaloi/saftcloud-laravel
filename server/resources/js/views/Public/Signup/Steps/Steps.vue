@@ -36,7 +36,7 @@
   export default {
     name: 'SignupSteps',
     components: {
-      SignupAlert: () => import(/* webpackChunkName: 'Parent' */ './SignupAlert'),
+      SignupAlert: () => import(/* webpackChunkName: 'signup-bundle' */ './SignupAlert'),
       step0: () => import(/* webpackChunkName: 'Parent'  */ './SignupStep0'),
       step1: () => import(/* webpackChunkName: 'signup-step1' */ './SignupStep1'),
       step2: () => import(/* webpackChunkName: 'signup-step2' */ './SignupStep2'),

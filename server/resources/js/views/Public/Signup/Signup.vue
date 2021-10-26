@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Parent v-show="show" />
+    <SignupWrapper />
   </div>
 </template>
 
@@ -11,23 +11,11 @@
     name: 'Signup',
 
     components: {
-      Parent: () => import(/* webpackChunkName: 'Parent' */ './Parent'),
-    },
-
-    data() {
-      return {
-        show: false,
-      };
+      SignupWrapper: () => import(/* webpackChunkName: 'Parent' */ './Parent'),
     },
 
     computed: {
       ...sync('theme', ['isDark']),
-    },
-
-    mounted() {
-      this.$nextTick(() => {
-        this.show = true;
-      });
     },
   };
 </script>

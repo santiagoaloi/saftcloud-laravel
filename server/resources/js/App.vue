@@ -80,6 +80,7 @@
         setTimeout(() => {
           axios.get('/api/getComponentNames/').then((response) => {
             const { components } = response.data;
+            Object.freeze(components);
 
             // * add new routes
             //   if(components[0] != 'Blank'){

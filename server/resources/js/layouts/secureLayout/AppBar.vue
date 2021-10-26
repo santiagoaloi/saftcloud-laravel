@@ -40,13 +40,33 @@
         @blur="expand = false"
       />
 
-      <v-btn dark class="mr-3" text x-small fab to="/">
+      <v-tooltip transition="false" color="black" bottom>
+        <template #activator="{ on }">
+          <v-btn
+            x-small
+            fab
+            class="mr-3"
+            color="white"
+            text
+            dark
+            plain
+            v-on="on"
+            @click="isDark = !isDark"
+          >
+            <v-icon v-if="isDark"> mdi-lightbulb-on-outline </v-icon>
+            <v-icon v-else> mdi-lightbulb-outline </v-icon>
+          </v-btn>
+        </template>
+        <span> {{ isDark ? ' Light mode' : 'Dark mode' }}</span>
+      </v-tooltip>
+
+      <v-btn x-small fab class="mr-3" text dark plain to="/">
         <v-icon>mdi-home-variant</v-icon>
       </v-btn>
 
       <v-menu origin="center center" transition="scroll-y-transition" :nudge-bottom="10" offset-y>
         <template #activator="{ on, attrs }">
-          <v-btn dark class="mr-3" text x-small fab v-bind="attrs" v-on="on">
+          <v-btn x-small fab class="mr-3" text dark plain v-bind="attrs" v-on="on">
             <v-icon>mdi-dots-vertical</v-icon>
           </v-btn>
         </template>
@@ -69,14 +89,14 @@
         offset-x="20"
         offset-y="18"
       >
-        <v-btn dark class="mr-3" text x-small fab @click="pushNotifications()">
+        <v-btn x-small fab class="mr-3" text dark plain @click="pushNotifications()">
           <v-icon>mdi-bell-ring-outline</v-icon>
         </v-btn>
       </v-badge>
 
       <v-menu origin="center center" transition="scroll-y-transition" :nudge-bottom="10" offset-y>
         <template #activator="{ on, attrs }">
-          <v-btn dark class="mr-3" text x-small fab v-bind="attrs" v-on="on">
+          <v-btn x-small fab class="mr-3" text dark plain v-bind="attrs" v-on="on">
             <v-icon>mdi-earth</v-icon>
           </v-btn>
         </template>
@@ -95,14 +115,14 @@
       <v-divider inset vertical class="ml-3 mr-6 grey" />
 
       <template #activator="{ attrs }">
-        <v-btn class="mr-3" text x-small fab v-bind="attrs">
+        <v-btn x-small fab class="mr-3" text dark plain v-bind="attrs">
           <v-icon>mdi-dots-vertical</v-icon>
         </v-btn>
       </template>
 
       <v-menu origin="center center" transition="scroll-y-transition" :nudge-bottom="10" offset-y>
         <template #activator="{ on, attrs }">
-          <v-btn v-bind="attrs" x-small fab icon class="mr-2" v-on="on">
+          <v-btn x-small fab class="mr-3" text dark plain v-bind="attrs" v-on="on">
             <v-avatar size="33px">
               <v-img :src="user.avatar || 'storage/defaults/avatar.png'">
                 <template #placeholder>
@@ -131,7 +151,7 @@
           </v-list-item>
 
           <v-divider />
-
+          <!-- 
           <v-list-item>
             <v-list-item-action>
               <v-icon>mdi-tune-vertical</v-icon>
@@ -142,7 +162,7 @@
             <v-list-item-action>
               <v-switch v-model="isDark" :ripple="false" color="grey darken-1" @click.stop />
             </v-list-item-action>
-          </v-list-item>
+          </v-list-item> -->
 
           <v-list-item @click="pushprofile">
             <v-list-item-action>
@@ -275,18 +295,6 @@
 
     methods: {
       ...call('authentication/*'),
-
-      pushDesktop() {
-        this.$router.push('/desktop');
-      },
-
-      pushprofile() {
-        this.$router.push('/profile/info');
-      },
-
-      pushNotifications() {
-        this.$router.push('/notifications');
-      },
 
       fetchNotificationCount() {
         axios.get('site/fetchNotificationCount').then((response) => {

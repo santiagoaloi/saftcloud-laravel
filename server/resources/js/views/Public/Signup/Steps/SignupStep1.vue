@@ -10,6 +10,7 @@
             <validation-provider v-slot="{ errors, reset }" name="email" rules="required|email">
               <v-text-field
                 v-model="signupForm.email"
+                height="55"
                 counter
                 maxlength="70"
                 autofocus
@@ -32,6 +33,7 @@
             <validation-provider v-slot="{ errors, reset }" name="country code" rules="required">
               <v-autocomplete
                 v-model="signupForm.phone_code"
+                height="55"
                 maxlength="30"
                 :items="countryCodes"
                 solo
@@ -78,6 +80,7 @@
             <validation-provider v-slot="{ errors, reset }" name="phone number" rules="required">
               <v-text-field
                 v-model="signupForm.phoneNumber"
+                height="55"
                 oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
                 maxlength="25"
                 type="number"

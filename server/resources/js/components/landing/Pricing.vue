@@ -1,8 +1,9 @@
 <template>
   <vue-diagonal
     :deg="-7"
-    background="linear-gradient(331deg, rgba(101, 235, 235, 1) 0%, rgba(54, 49, 125, 1) 50%)"
+    background="linear-gradient(331deg, rgba(57, 62, 87, 1) 0%, rgba(98, 108, 158, 1) 50%)"
     space-after
+    space-before
   >
     <v-container>
       <v-responsive max-width="1200" class="mx-auto text-center">
@@ -57,13 +58,7 @@
               </div>
             </div>
             <v-divider class="my-4" />
-            <v-btn
-              x-large
-              block
-              :outlined="!plan.featured"
-              :color="plan.featured ? 'primary' : ''"
-              to="/auth/signup"
-            >
+            <v-btn x-large block :outlined="!plan.featured" :color="plan.featured ? 'primary' : ''">
               Subscribe
             </v-btn>
           </v-card>

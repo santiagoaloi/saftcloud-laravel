@@ -6,7 +6,7 @@
     <secure-ent-drawer v-if="$route.name.startsWith('Entities')" />
     <secure-view />
     <snackbar />
-    <session-timeout />
+    <!-- <session-timeout /> -->
   </v-app>
 </template>
 
@@ -14,9 +14,9 @@
   export default {
     name: 'SecureLayout',
     components: {
-      SessionTimeout: () =>
-        import(/* webpackChunkName: 'secure-session-timeout' */ './SessionTimeout/SessionTimeout'),
-      SecureBar: () => import(/* webpackChunkName: 'secure-bundle' */ './AppBar'),
+      // SessionTimeout: () =>
+      //   import(/* webpackChunkName: 'secure-session-timeout' */ './SessionTimeout/SessionTimeout'),
+      SecureBar: () => import(/* webpackChunkName: 'secure-bar' */ './AppBar'),
       SecureDrawer: () => import(/* webpackChunkName: 'secure-bundle' */ './Drawer'),
       SecureCompDrawer: () =>
         import(/* webpackChunkName: 'secure-component-drawer' */ './ComponentDrawer'),

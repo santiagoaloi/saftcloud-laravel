@@ -129,9 +129,9 @@ const getters = {
   allComponentsFiltered: (state, getters, rootState) => {
     if (!getters.hasSelectedSomeGroups) return {};
     return state.allComponents.filter((component) => {
+      const status = getters.activeComponentTabName;
       const search = rootState.application.search.toLowerCase();
       const title = component.config.general_config.title.toLowerCase();
-      const status = getters.activeComponentTabName;
       return (
         (!search || title.match(search)) &&
         (status === 'all' ||
@@ -153,10 +153,7 @@ const getters = {
   hasSelectedAllGroups: (state) => state.selectedComponentGroups.length === state.allGroups.length,
 
   //* Returns true if one or more component groups in the component group dropdown are selected.
-  hasSelectedSomeGroups: () => {
-    if (isEmpty(state.selectedComponentGroups)) return true;
-    return false;
-  },
+  hasSelectedSomeGroups: (state) => !isEmpty(state.selectedComponentGroups),
 
   //* Returns true if the component has unsaved changes.
   hasUnsavedChanges: (_, getters) => (component) => {
@@ -247,7 +244,9 @@ const actions = {
   //* Retrieves all avaiable tables and its corresponding columns from the database.
   getDbTablesAndColumns() {
     axios.get('api/getAllTablesAndColumns').then((response) => {
-      store.set('componentManagement/dbTablesAndColumns', response.data.tableAndColumns);
+      const { data } = response.data;
+      Object.freeze(data);
+      store.set('componentManagement/dbTablesAndColumns', data);
     });
   },
 
@@ -300,7 +299,7 @@ const actions = {
     axios.get('api/component.showAll').then((response) => {
       if (response.status === 200) {
         store.set('componentManagement/allComponents', response.data.components);
-        state.loading = false;
+        store.set('componentManagement/loading', false);
       }
     });
   },
@@ -471,14 +470,15 @@ const actions = {
 
   //* Creates a new component in the database.
   async createComponent({ state, getters, dispatch }) {
-    state.loading = true;
+    store.set('componentManagement/loading', false);
 
     return axios.post('api/component', state.componentSettings).then((response) => {
       if (response.status === 200) {
         store.set('componentManagement/allComponents', response.data.components);
 
         //* Set the status tab as "all"
-        state.activeStatusTab = 0;
+
+        store.set('componentManagement/activeStatusTab', 0);
 
         store.set('componentManagement/dialogComponent', false);
 
@@ -514,7 +514,8 @@ const actions = {
             root: true,
           },
         );
-        state.loading = false;
+
+        store.set('componentManagement/loading', false);
 
         return true;
       }

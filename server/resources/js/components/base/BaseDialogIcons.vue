@@ -11,7 +11,7 @@
       <v-row>
         <v-col cols="8">
           <v-autocomplete
-            v-model="icon.name"
+            v-model="iconProp.name"
             :items="items"
             hide-no-data
             hide-selected
@@ -44,7 +44,7 @@
         </v-col>
         <v-col>
           <v-text-field
-            v-model="icon.color"
+            v-model="iconProp.color"
             append-icon="mdi-palette-outline"
             solo
             hide-details
@@ -67,7 +67,7 @@
         @save="() => (colorPicker = false)"
       >
         <v-card class="mx-auto" width="300">
-          <v-color-picker v-model="icon.color" flat />
+          <v-color-picker v-model="iconProp.color" flat />
         </v-card>
       </base-dialog>
     </v-card-text>
@@ -103,6 +103,16 @@
     computed: {
       ...sync('theme', ['isDark', 'icons']),
 
+      // Can't mutate props, so we emit the whole icon prop object with new values.
+      iconProp: {
+        get() {
+          return this.icon;
+        },
+        set(value) {
+          this.$emit('update:icon', value);
+        },
+      },
+
       items() {
         return this.icons.map((icon) => {
           const name = `mdi-${icon.name}`;
@@ -133,7 +143,11 @@
         axios
           .get('api/listIcons')
           .then((response) => {
-            store.set('theme/icons', response.data.icons);
+            // We won't change the icons, so Vue won't need to add reactivity.
+            const { icons } = response.data;
+            Object.freeze(icons);
+
+            store.set('theme/icons', icons);
           })
           .catch((err) => {
             console.log(err);

@@ -129,7 +129,7 @@
         return `${capitalize(first)} ${capitalize(last)}`;
       },
       getCardColor(active) {
-        return this.isDark ? (active ? '#515664' : '#40434a') : active ? '#edeef2' : 'white';
+        return this.isDark ? (active ? '#373a44' : '#40444f') : active ? '#edeef2' : 'white';
       },
     },
   };

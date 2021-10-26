@@ -108,8 +108,8 @@ input::-webkit-inner-spin-button {
 }
 
 .v-tab {
-  font-size: 0.7rem !important;
-  font-weight: 400 !important;
+  font-size: 0.8rem !important;
+  font-weight: 500 !important;
   text-transform: none !important;
   text-align: left;
   justify-content: start !important;

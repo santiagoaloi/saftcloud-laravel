@@ -4,16 +4,11 @@
       :color="$route.name === '/Homepage' ? 'transparent' : '#36393f'"
       app
       flat
-      height="70"
       src="storage/appbar/prism2.jpg"
     >
       <v-container
         data-aos="fade"
-        data-aos-anchor-placement="center-bottom"
         data-aos-delay="300"
-        data-aos-once="true"
-        data-aos-easing="linear"
-        data-aos-duration="400"
         style="background-color: transparent"
         class="py-0 px-0 fill-height"
       >
@@ -40,7 +35,7 @@
           </v-btn>
           <v-btn
             rounded
-            to="/signup"
+            to="/Signup"
             height="36"
             class="mr-3"
             color="white"
@@ -53,7 +48,7 @@
           </v-btn>
           <v-btn
             rounded
-            to="/signup"
+            to="/Signup"
             height="36"
             class="mr-3"
             color="white"
@@ -78,14 +73,19 @@
             x-large
           >
             <v-avatar class="ml-n4 mr-3" size="28" left>
-              <v-img v-if="user" :src="user.avatar">
+              <v-img
+                :src="
+                  user
+                    ? user.avatar || 'storage/defaults/avatar.png'
+                    : 'storage/defaults/avatar.png'
+                "
+              >
                 <template #placeholder>
                   <v-row class="fill-height ma-0" align="center" justify="center">
                     <v-progress-circular indeterminate color="white" />
                   </v-row>
                 </template>
               </v-img>
-              <v-img v-else src="storage/defaults/avatar.png" />
             </v-avatar>
             {{ user ? 'Dashboard' : 'Login' }}
           </v-btn>

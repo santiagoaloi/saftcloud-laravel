@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-card-text>
-      <h2 class="text--primary mb-5">Where is your bussiness headquartered?</h2>
+      <h2 class="mb-5">Where is your bussiness headquartered?</h2>
       <ValidationObserver ref="step2" slim>
         <v-row justify="center">
           <v-col sm="12">
@@ -9,6 +9,7 @@
             <validation-provider v-slot="{ errors, reset }" name="country" rules="required">
               <v-autocomplete
                 v-model="signupForm.country"
+                height="55"
                 maxlength="30"
                 :items="countryCodes"
                 solo
@@ -49,6 +50,7 @@
             <validation-provider v-slot="{ errors, reset }" name="state" rules="required">
               <v-autocomplete
                 v-model="signupForm.state"
+                height="55"
                 maxlength="30"
                 :disabled="!states.length"
                 :items="states"
@@ -73,6 +75,7 @@
             <validation-provider v-slot="{ errors, reset }" name="city" rules="required">
               <v-text-field
                 v-model="signupForm.city"
+                height="55"
                 counter
                 maxlength="30"
                 :disabled="!states.length"
@@ -95,6 +98,7 @@
             <validation-provider v-slot="{ errors, reset }" name="address" rules="required">
               <v-text-field
                 v-model="signupForm.address"
+                height="55"
                 counter
                 maxlength="45"
                 solo
@@ -116,6 +120,7 @@
             <validation-provider v-slot="{ errors, reset }" name="zipcode" rules="required">
               <v-text-field
                 v-model="signupForm.zipcode"
+                height="55"
                 counter
                 maxlength="15"
                 solo

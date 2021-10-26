@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-card-text>
-      <h2 class="text--primary mb-5">Hi {{ signupForm.name }}, nice to meet you!</h2>
+      <h2 class="mb-5">Hi {{ signupForm.name }}, nice to meet you!</h2>
       <ValidationObserver ref="step0" slim>
         <v-row>
           <v-col sm="6">
@@ -18,6 +18,7 @@
                 :color="isDark ? '#208ad6' : 'grey'"
                 :background-color="isDark ? '#28292b' : 'white'"
                 :error="errors.length > 0"
+                height="55"
                 @keydown.enter.prevent="validateAndProceed()"
                 @focus="reset"
                 @input="reset"
@@ -30,6 +31,7 @@
             <validation-provider v-slot="{ errors, reset }" name="last name" rules="required">
               <v-text-field
                 v-model="signupForm.lastname"
+                height="55"
                 counter
                 maxlength="30"
                 solo

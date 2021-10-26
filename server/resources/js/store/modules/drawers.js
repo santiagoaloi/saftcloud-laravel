@@ -2,7 +2,7 @@
 import { make } from 'vuex-pathify';
 
 const state = {
-  secureDefaultDrawer: true,
+  secureDefaultDrawer: false,
   secureComponentDrawer: false,
   secureEntitiesDrawer: false,
 };
