@@ -233,4 +233,8 @@ class UserController extends Controller {
         }
         return [];
     }
+
+    public function test(User $user){
+        return $user;
+    }
 }

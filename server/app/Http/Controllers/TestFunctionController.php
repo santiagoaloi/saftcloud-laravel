@@ -151,4 +151,7 @@ class TestFunctionController extends Controller {
         return $pepe['form_fields'];
     }
 
+    public function test(User $user){
+        return "pepe";
+    }
 }

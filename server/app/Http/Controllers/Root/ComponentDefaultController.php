@@ -140,11 +140,9 @@ class ComponentDefaultController extends Controller {
     function getLast(){
         $getJsonFile = app_path("Models/model.json");
         return file_get_contents($getJsonFile);
-
         // return ComponentDefault::pluck('config_structure')->last();
     }
 
-    
     public function compareComponentTeta($request){
         $model = $this->getLast();
 

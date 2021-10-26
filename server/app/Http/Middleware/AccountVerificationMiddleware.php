@@ -17,6 +17,5 @@ class AccountVerificationMiddleware {
     public function handle(Request $request, Closure $next) {
         if(AccountVerification::checkRootRole())
         return $next($request);
-
     }
 }

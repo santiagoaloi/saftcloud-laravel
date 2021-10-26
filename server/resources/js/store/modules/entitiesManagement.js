@@ -139,7 +139,7 @@ const actions = {
 
   //* Retrieves all users.
   getUsers() {
-    axios.get('api/getAllUsers').then((response) => {
+    axios.get('api/user.showAll').then((response) => {
       if (response.status === 200) {
         store.set('entitiesManagement/allUsers', response.data.records);
       }
@@ -148,7 +148,7 @@ const actions = {
 
   //* Retrieves all roles.
   getRoles() {
-    axios.get('api/getAllRoles').then((response) => {
+    axios.get('api/role.showAll').then((response) => {
       if (response.status === 200) {
         store.set('entitiesManagement/allRoles', response.data.records);
       }
@@ -157,7 +157,7 @@ const actions = {
 
   //* Retrieves all capabilities.
   getCapabilities() {
-    axios.get('api/getAllCapabilities').then((response) => {
+    axios.get('api/capability.showAll').then((response) => {
       if (response.status === 200) {
         store.set('entitiesManagement/allCapabilities', response.data.records);
       }

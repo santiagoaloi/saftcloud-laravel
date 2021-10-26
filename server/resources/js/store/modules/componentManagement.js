@@ -272,7 +272,7 @@ const actions = {
 
   //* Retrieves the component groups.
   getGroups() {
-    axios.get('api/getAllGroups').then((response) => {
+    axios.get('api/componentGroup.showAll').then((response) => {
       if (response.status === 200) {
         store.set('componentManagement/allGroups', response.data.groups);
       }
@@ -297,7 +297,7 @@ const actions = {
   //* Retrieves all available componentes from the database.
   getComponents({ state }) {
     state.loading = true;
-    axios.get('api/getAllComponents').then((response) => {
+    axios.get('api/component.showAll').then((response) => {
       if (response.status === 200) {
         store.set('componentManagement/allComponents', response.data.components);
         state.loading = false;
