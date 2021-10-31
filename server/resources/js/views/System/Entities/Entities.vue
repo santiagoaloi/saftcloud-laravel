@@ -23,10 +23,10 @@
       </v-scroll-y-transition>
     </v-card>
 
-    <dialog-entity />
-    <dialog-privileges />
-    <dialog-assign-roles v-if="selectedEntityType === 'Users' && selectedEntity" />
-    <entities-edit-sheet />
+    <dialog-entity v-if="dialogEntity" />
+    <dialog-privileges v-if="dialogPrivileges" />
+    <dialog-assign-roles v-if="dialogAssignRoles" />
+    <entities-edit-sheet v-if="entitiesEditSheet" />
   </div>
 </template>
 
@@ -53,7 +53,13 @@
 
     computed: {
       ...sync('theme', ['isDark']),
-      ...sync('entitiesManagement', ['isTableLayout']),
+      ...sync('entitiesManagement', [
+        'isTableLayout',
+        'dialogEntity',
+        'dialogPrivileges',
+        'dialogAssignRoles',
+        'entitiesEditSheet',
+      ]),
       ...get('entitiesManagement', [
         'isAllFilteredEntitiesEmpty',
         'selectedEntityType',

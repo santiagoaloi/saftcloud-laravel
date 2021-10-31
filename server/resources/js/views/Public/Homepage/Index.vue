@@ -1,9 +1,37 @@
 <template>
   <div>
+    <v-carousel
+      :show-arrows="false"
+      hide-delimiters
+      style="position: absolute"
+      progress
+      :height="height"
+      cycle
+    >
+      <v-carousel-item v-for="(slide, i) in slides" :key="i">
+        <v-img
+          :height="height"
+          :transition="false"
+          gradient="to top right, rgba(100,115,201,0.4), rgba(25,32,72,1)"
+          :src="slide.src"
+          eager
+        >
+          <template #placeholder>
+            <v-row class="fill-height ma-0" align="center" justify="center">
+              <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
+            </v-row>
+          </template>
+        </v-img>
+      </v-carousel-item>
+    </v-carousel>
+
     <v-sheet class="d-flex flex-column justify-center transparent" min-height="90vh">
       <v-container>
         <div class="d-flex flex-column justify-center">
-          <div class="text-shadow font-weight-black text-h4 text-sm-h3 text-md-h2 text-lg-h1">
+          <div
+            style="z-index: 2"
+            class="text-shadow font-weight-black text-h4 text-sm-h3 text-md-h2 text-lg-h1"
+          >
             <vue-typer
               :pre-type-delay="1000"
               :type-delay="90"
@@ -32,12 +60,17 @@
               <v-btn dark x-large class="my-1 mx-sm-1 hoverElevationSoft"> Contact Sales </v-btn>
             </div>
           </v-card>
-          <div data-aos="fade-up" style="position: absolute; margin-left: 380px">
+          <div
+            data-aos-onces="true"
+            data-aos="fade-up"
+            style="position: absolute; margin-left: 380px"
+          >
             <v-img src="storage/header/1.png" height="580" contain :transition="false" />
           </div>
         </div>
       </v-container>
     </v-sheet>
+
     <Feature2 />
     <Feature1 />
   </div>
@@ -54,6 +87,22 @@
       VueTyper,
       Feature1,
       Feature2,
+    },
+
+    data() {
+      return {
+        slides: [
+          { src: 'storage/backgrounds/main2.jpg' },
+          { src: 'storage/backgrounds/main3.jpg' },
+          { src: 'storage/backgrounds/main4.jpg' },
+        ],
+      };
+    },
+
+    computed: {
+      height() {
+        return `${this.$vuetify.breakpoint.height - this.$vuetify.application.top}px`;
+      },
     },
   };
 </script>

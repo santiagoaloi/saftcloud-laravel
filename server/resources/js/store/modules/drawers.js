@@ -2,9 +2,10 @@
 import { make } from 'vuex-pathify';
 
 const state = {
-  secureDefaultDrawer: false,
-  secureComponentDrawer: false,
+  secureDefaultDrawer: true,
   secureEntitiesDrawer: false,
+  secureComponentDrawer: false,
+  secureComponentDrawerBranch: false,
 };
 
 const mutations = make.mutations(state);

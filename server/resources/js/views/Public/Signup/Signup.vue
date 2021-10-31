@@ -1,6 +1,6 @@
 <template>
   <div>
-    <SignupWrapper />
+    <Wrapper />
   </div>
 </template>
 
@@ -11,7 +11,7 @@
     name: 'Signup',
 
     components: {
-      SignupWrapper: () => import(/* webpackChunkName: 'Parent' */ './Parent'),
+      Wrapper: () => import(/* webpackChunkName: 'signup-bundle' */ './Wrapper'),
     },
 
     computed: {

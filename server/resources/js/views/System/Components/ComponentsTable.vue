@@ -5,7 +5,6 @@
       fixed-header
       checkbox-color="primary"
       item-key="id"
-      :height="calculateHeight()"
       :headers="headers"
       :items="allComponentsFiltered"
       style="cursor: pointer"

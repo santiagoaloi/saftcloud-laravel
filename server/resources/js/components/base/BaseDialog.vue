@@ -33,8 +33,6 @@
 
       <div class="flex-grow-1" />
 
-      <slot :parentData="$data" name="toolbar" />
-
       <template v-if="closeOnly && !noActions">
         <v-btn x-small color="white" outlined text fab class="mx-1" icon dark @click.stop="close">
           <v-icon>{{ fullscreen ? 'mdi-chevron-down' : 'mdi-close' }}</v-icon>

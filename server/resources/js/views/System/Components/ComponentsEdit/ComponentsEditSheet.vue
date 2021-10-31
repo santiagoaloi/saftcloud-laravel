@@ -32,11 +32,11 @@
               <v-divider class="mt-2" />
 
               <!-- keep alive is important to cross-validate compoment edit navigation drawer sections -->
-              <v-scroll-y-transition hide-on-leave>
+              <v-fade-transition mode="out-in" :duration="520" hide-on-leave>
                 <keep-alive>
                   <router-view />
                 </keep-alive>
-              </v-scroll-y-transition>
+              </v-fade-transition>
             </v-card-text>
           </v-col>
         </v-row>
