@@ -42,8 +42,8 @@ use App\Http\Controllers\Public\MakeAccountController;
 use App\Http\Controllers\Public\StateController;
 
 // ROLES CONTROLLERS
-use App\Http\Controllers\Roles\RoleController;
 use App\Http\Controllers\Roles\CapabilityController;
+use App\Http\Controllers\Roles\RoleController;
 
 // ROOT CONTROLLERS
 use App\Http\Controllers\Root\ComponentController;
@@ -119,7 +119,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     // ROOT CONTROLLERS
     Route::get('/getComponentNames', [ComponentController::class, 'getComponentNames']);
-
+    Route::get('/componentConstructor/{id}', [ComponentController::class, 'componentConstructor']);
     Route::resource('/componentDefault', ComponentDefaultController::class);
     Route::get('/componentDefaultLast', [ComponentDefaultController::class, 'getLast']);
     Route::get('/componentDefaultLastJson', [ComponentDefaultController::class, 'getLastJson']);
@@ -141,14 +141,12 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 //Testing
 Route::group(['middleware' => ['auth:sanctum', 'accountVerification']], function () {
     Route::resource('/component', ComponentController::class);
-    // Route::get('/testFunction', [TestFunctionController::class, 'test4']);
-    Route::get('/componentConstructor/{id}', [ComponentController::class, 'componentConstructor']);
 });
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
 
-    Route::resource('/test', TestFunctionController::class);
-    Route::get('/testFunction', [TestFunctionController::class, 'test4']);
+    Route::resource('/TestFunction', TestFunctionController::class);
+    Route::get('/getIP', [TestFunctionController::class, 'getIP']);
 
     Route::get('/test1', [TestFunctionController::class, 'test7']);
     Route::get('/test2', [TestFunctionController::class, 'test8']);

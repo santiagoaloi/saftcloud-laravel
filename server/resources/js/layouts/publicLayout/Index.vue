@@ -1,5 +1,5 @@
 <template>
-  <v-app v-background-image="'storage/backgrounds/main4.jpg'">
+  <v-app>
     <public-bar />
     <public-view />
     <public-footer v-if="!$route.name.startsWith('Login')" />
@@ -9,22 +9,6 @@
 
 <script>
   import { sync } from 'vuex-pathify';
-
-  Vue.directive('background-image', {
-    update(url) {
-      const el = $(this.el);
-      el.css('transition', 'opacity 0.5s ease-in').css('opacity', 0);
-      const img = $('<img>', {
-        src: url,
-      })
-        .hide()
-        .on('load', function () {
-          $(this).remove();
-          el.css('background-image', `url("${url}")`).css('opacity', 1);
-        })
-        .appendTo(el);
-    },
-  });
 
   export default {
     name: 'PublicLayout',

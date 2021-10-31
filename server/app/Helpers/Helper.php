@@ -1,6 +1,7 @@
 <?php
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 function getBranch(){
     $user = Auth::user();
@@ -132,4 +133,10 @@ function after ($string, $inthat){
 
 function before($string, $inthat){
     return substr($inthat, 0, strpos($inthat, $string));
+}
+
+function listIcons() {
+    $icons = Storage::disk('local')->get('/public/icons/icons.json');
+    $icons = json_decode($icons, true);
+    return $icons;
 }

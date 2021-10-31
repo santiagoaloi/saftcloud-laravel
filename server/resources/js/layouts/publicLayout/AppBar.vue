@@ -144,7 +144,7 @@
       async testFunction() {
         const post = { email: 'facu.ft@gmail.com', password: 'password' };
         axios
-          .post('api/test/ta')
+          .get('api/getIP')
           .then((response) => {
             if (response.status === 200) {
               console.log(response);

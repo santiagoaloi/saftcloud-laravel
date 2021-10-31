@@ -49,6 +49,7 @@
     "/dist/js/entities-navigation-drilldown-bar.js": "/dist/js/entities-navigation-drilldown-bar.js",
     "/dist/js/entities-navigation-drilldown-footer.js": "/dist/js/entities-navigation-drilldown-footer.js",
     "/dist/js/components-status-bar.js": "/dist/js/components-status-bar.js",
+    "/dist/js/signup-bundle.js": "/dist/js/signup-bundle.js",
     "/dist/js/signup-step1.js": "/dist/js/signup-step1.js",
     "/dist/js/signup-step2.js": "/dist/js/signup-step2.js",
     "/dist/js/signup-step3.js": "/dist/js/signup-step3.js",
