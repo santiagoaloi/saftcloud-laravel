@@ -1,13 +1,15 @@
 <template>
-  <v-app>
+  <div>
     <secure-bar />
+
     <secure-drawer />
+    <secure-view />
     <secure-comp-drawer v-if="$route.name.startsWith('Components')" />
     <secure-ent-drawer v-if="$route.name.startsWith('Entities')" />
-    <secure-view />
     <snackbar />
+
     <!-- <session-timeout /> -->
-  </v-app>
+  </div>
 </template>
 
 <script>
@@ -16,7 +18,8 @@
     components: {
       // SessionTimeout: () =>
       //   import(/* webpackChunkName: 'secure-session-timeout' */ './SessionTimeout/SessionTimeout'),
-      SecureBar: () => import(/* webpackChunkName: 'secure-bar' */ './AppBar'),
+      SecureBar: () => import(/* webpackChunkName: 'secure-bundle' */ './AppBar'),
+
       SecureDrawer: () => import(/* webpackChunkName: 'secure-bundle' */ './Drawer'),
       SecureCompDrawer: () =>
         import(/* webpackChunkName: 'secure-component-drawer' */ './ComponentDrawer'),
@@ -25,7 +28,7 @@
       SecureView: () => import(/* webpackChunkName: 'secure-bundle' */ './View'),
       Snackbar: () =>
         import(
-          /* webpackChunkName: 'public-snackbar' */
+          /* webpackChunkName: 'secure-snackbar' */
           '@/components/Base/Snackbar'
         ),
     },

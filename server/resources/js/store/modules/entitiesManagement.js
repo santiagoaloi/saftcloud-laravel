@@ -1,6 +1,6 @@
+import axios from 'axios';
 import { make } from 'vuex-pathify';
 import { isEqual, isEmpty, cloneDeep } from 'lodash';
-import axios from 'axios';
 import { store } from '@/store';
 
 // When this function is called, the users settings form is back to default values.
@@ -57,7 +57,7 @@ const getters = {
   selectedEntity: (state, getters) => getters.allEntitiesFiltered[state.selectedEntityIndex],
 
   //* Disables the right panel navigation arrows if the first entity in the array is selected.
-  previousEntityDisabled: (state) => state.entityCardGroup === 0,
+  previousEntityDisabled: (state) => !state.entityCardGroup,
 
   //* Disables the right panel navigation arrows if the last entity in the array is selected.
   nextEntityDisabled: (state, getters) =>
@@ -98,7 +98,7 @@ const getters = {
     }
   },
 
-  //* Returns true if there are no users returned from the backend.
+  //* Returns true if there are no users fetched from the backend.
   isUsersEmpty: (state) => isEmpty(state.allUsers),
 
   //* Returns true if the entity has unsaved changes.
@@ -108,7 +108,7 @@ const getters = {
   },
 
   //* Returns true if the current groups selected do not contain any entities associated to them.
-  isAllFilteredEntitiesEmpty: (_, getters) => getters.allEntitiesFiltered.length === 0,
+  isAllFilteredEntitiesEmpty: (_, getters) => !getters.allEntitiesFiltered.length,
 
   //* Returns the color of the star icon depending on its state.
   isStarredColor: () => (component) => component.status.starred ? 'orange' : 'grey darken-1',
@@ -245,7 +245,7 @@ const actions = {
   async saveUserRoles({ getters }) {
     const userId = getters.selectedEntity.id;
     const roles = { name: 'role', items: getters.selectedEntity.role };
-    return axios.post(`api/syncUser/${userId}`, roles);
+    return axios.post(`api/user.sync/${userId}`, roles);
   },
 
   //* Get User
@@ -280,7 +280,7 @@ const actions = {
     const roleId = getters.selectedEntity.id;
     const capabilities = { name: 'capability', items: getters.selectedEntity.capability };
 
-    return axios.post(`api/syncRole/${roleId}`, capabilities).then((response) => {
+    return axios.post(`api/role.sync/${roleId}`, capabilities).then((response) => {
       if (response.status === 200) {
         const meta = {
           name: getters.selectedEntity.name,

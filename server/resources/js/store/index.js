@@ -18,6 +18,7 @@ const componentManagementFiltered = (module) => {
 };
 
 Vue.use(Vuex);
+
 const vuexLocal = new VuexPersist({
   key: 'vuex-store',
   storage: localforage,

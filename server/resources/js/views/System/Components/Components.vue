@@ -1,43 +1,50 @@
 <template>
   <div>
-    <components-appbar />
-    <components-tabs />
+    <base-flex-container>
+      <template #top>
+        <div class="removeGutters">
+          <components-toolbar />
+          <!-- <components-appbar /> -->
+        </div>
+        <components-tabs />
+      </template>
 
-    <v-card
-      color="transparent"
-      flat
-      :height="calculateHeight()"
-      :class="{ dottedBackground: !isTableLayout }"
-      class="overflow-y-scroll"
-    >
-      <v-scroll-y-transition hide-on-leave>
-        <components-table v-if="isTableLayout && !isAllFilteredComponentsEmpty" />
-      </v-scroll-y-transition>
+      <template #main>
+        <v-scroll-y-transition hide-on-leave>
+          <components-table v-if="isTableLayout && !isAllFilteredComponentsEmpty" />
+        </v-scroll-y-transition>
 
-      <v-scroll-x-transition hide-on-leave>
-        <components-grid v-if="!isTableLayout && !isAllFilteredComponentsEmpty" />
-      </v-scroll-x-transition>
+        <v-scroll-x-transition hide-on-leave>
+          <components-grid v-if="!isTableLayout && !isAllFilteredComponentsEmpty" />
+        </v-scroll-x-transition>
 
-      <v-scroll-y-transition hide-on-leave>
-        <components-no-data v-if="isAllFilteredComponentsEmpty" />
-      </v-scroll-y-transition>
-    </v-card>
+        <v-scroll-y-transition hide-on-leave>
+          <components-no-data v-if="isAllFilteredComponentsEmpty" />
+        </v-scroll-y-transition>
+      </template>
+    </base-flex-container>
 
-    <dialog-component />
-    <component-edit-sheet />
+    <dialog-component v-if="dialogComponent" />
+    <component-edit-sheet v-if="componentEditSheet" />
   </div>
 </template>
 
 <script>
   import { sync, call, get } from 'vuex-pathify';
+  import ComponentsAppbar from './ComponentsAppbar.vue';
 
   export default {
     name: 'ComponentsManagement',
     components: {
-      ComponentsAppbar: () =>
-        import(/* webpackChunkName: 'secure-bundle-comp' */ './ComponentsAppbar'),
-      ComponentsTabs: () => import(/* webpackChunkName: 'secure-bundle-comp' */ './ComponentsTabs'),
-      ComponentsGrid: () => import(/* webpackChunkName: 'secure-bundle-comp' */ './ComponentsGrid'),
+      ComponentsToolbar: () =>
+        import(/* webpackChunkName: 'secure-bundle-components' */ './ComponentToolbar'),
+
+      // ComponentsAppbar: () =>
+      //   import(/* webpackChunkName: 'secure-bundle-components' */ './ComponentsAppbar'),
+      ComponentsTabs: () =>
+        import(/* webpackChunkName: 'secure-bundle-components' */ './ComponentsTabs'),
+      ComponentsGrid: () =>
+        import(/* webpackChunkName: 'secure-bundle-components' */ './ComponentsGrid'),
       ComponentsTable: () => import(/* webpackChunkName: 'components-table' */ './ComponentsTable'),
 
       ComponentsNoData: () =>
@@ -52,7 +59,7 @@
 
     computed: {
       ...sync('theme', ['isDark']),
-      ...sync('componentManagement', ['isTableLayout']),
+      ...sync('componentManagement', ['isTableLayout', 'dialogComponent', 'componentEditSheet']),
       ...get('componentManagement', ['isAllFilteredComponentsEmpty', 'selectedComponent']),
     },
 
@@ -64,11 +71,13 @@
 
     methods: {
       ...call('componentManagement/*'),
-      calculateHeight() {
-        return Number(this.$vuetify.breakpoint.height - 280);
-      },
     },
   };
 </script>
 
-<style></style>
+<style scoped>
+  .removeGutters {
+    margin-top: -11px;
+    margin-left: -11px;
+  }
+</style>

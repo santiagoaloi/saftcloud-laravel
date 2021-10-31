@@ -1,7 +1,6 @@
 <template>
   <div>
     <v-card-text>
-      <h2 class="mb-5">Hi {{ signupForm.name }}, nice to meet you!</h2>
       <ValidationObserver ref="step0" slim>
         <v-row>
           <v-col sm="6">

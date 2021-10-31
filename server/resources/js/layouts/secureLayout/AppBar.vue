@@ -1,12 +1,6 @@
 <template>
   <div>
-    <v-app-bar
-      :class="{ darkBorder: isDark }"
-      :flat="isDark"
-      clipped-right
-      app
-      src="storage/appbar/prism2.jpg"
-    >
+    <v-app-bar :class="{ darkBorder: isDark }" clipped-right app src="storage/appbar/prism2.jpg">
       <v-app-bar-nav-icon
         dark
         class="ml-n2 mr-3"
@@ -51,7 +45,7 @@
             dark
             plain
             v-on="on"
-            @click="isDark = !isDark"
+            @click="setTheme()"
           >
             <v-icon v-if="isDark"> mdi-lightbulb-on-outline </v-icon>
             <v-icon v-else> mdi-lightbulb-outline </v-icon>
@@ -164,7 +158,7 @@
             </v-list-item-action>
           </v-list-item> -->
 
-          <v-list-item @click="pushprofile">
+          <v-list-item>
             <v-list-item-action>
               <v-icon>mdi-tune-vertical</v-icon>
             </v-list-item-action>
@@ -192,6 +186,7 @@
   import { call, sync } from 'vuex-pathify';
   import CountryFlag from 'vue-country-flag';
   import capitalize from 'lodash/capitalize';
+  import Vuetify from '@/vuetify';
 
   export default {
     name: 'SecureAppbar',
@@ -295,6 +290,11 @@
 
     methods: {
       ...call('authentication/*'),
+
+      setTheme() {
+        this.$vuetify.theme.dark = !this.$vuetify.theme.dark;
+        this.isDark = !this.isDark;
+      },
 
       fetchNotificationCount() {
         axios.get('site/fetchNotificationCount').then((response) => {

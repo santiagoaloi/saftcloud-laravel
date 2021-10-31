@@ -1,4 +1,6 @@
 export default {
+  mode: '',
+
   // global theme for the app
   globalTheme: 'light', // light | dark
 

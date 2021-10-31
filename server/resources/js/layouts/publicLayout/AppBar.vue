@@ -1,17 +1,7 @@
 <template>
   <div>
-    <v-app-bar
-      :color="$route.name === '/Homepage' ? 'transparent' : '#36393f'"
-      app
-      flat
-      src="storage/appbar/prism2.jpg"
-    >
-      <v-container
-        data-aos="fade"
-        data-aos-delay="300"
-        style="background-color: transparent"
-        class="py-0 px-0 fill-height"
-      >
+    <v-app-bar app src="storage/appbar/prism2.jpg">
+      <v-container data-aos="fade" data-aos-delay="300" class="py-0 px-0 fill-height">
         <router-link to="/" class="d-flex align-center text-decoration-none">
           <img class="mr-4" src="storage/logo.png" height="45" />
           <span class="font-weight-black headline white--text"> SaftCloud ™</span>
@@ -107,7 +97,7 @@
               small
               plain
               v-on="on"
-              @click="isDark = !isDark"
+              @click="setTheme()"
             >
               <v-icon v-if="isDark"> mdi-lightbulb-on-outline </v-icon>
               <v-icon v-else> mdi-lightbulb-outline </v-icon>
@@ -141,6 +131,11 @@
     },
 
     methods: {
+      setTheme() {
+        this.$vuetify.theme.dark = !this.$vuetify.theme.dark;
+        this.isDark = !this.isDark;
+      },
+
       async testFunction() {
         const post = { email: 'facu.ft@gmail.com', password: 'password' };
         axios

@@ -30,7 +30,9 @@ extend('url', {
 setInteractionMode('passive');
 
 for (const rule in rules) {
-  extend(rule, rules[rule]);
+  if (Object.prototype.hasOwnProperty.call(rules, rule)) {
+    extend(rule, rules[rule]);
+  }
 }
 
 localize('en', en);

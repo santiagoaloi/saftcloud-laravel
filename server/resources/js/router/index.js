@@ -37,7 +37,7 @@ export function resetRouter() {
   router.matcher = newRouter.matcher;
 }
 
-const waitForStorageToBeReady = async (to, from, next) => {
+router.beforeEach(async (to, from, next) => {
   if (to.matched.some((record) => record.meta.layout === 'secure-layout')) {
     await store.restored;
     if (auth.loggedIn() && to.matched.some((record) => record.name !== 'Login')) {
@@ -51,8 +51,6 @@ const waitForStorageToBeReady = async (to, from, next) => {
   } else {
     next();
   }
-};
-
-router.beforeEach(waitForStorageToBeReady);
+});
 
 export default router;

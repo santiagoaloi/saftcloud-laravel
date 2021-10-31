@@ -1,10 +1,5 @@
 <template>
   <div>
-    <v-progress-linear
-      height="1"
-      color="grey darken-2"
-      :indeterminate="loading"
-    ></v-progress-linear>
     <v-item-group v-model="componentCardGroup" mandatory>
       <transition-group hide-on-leave class="gallery-card-container pa-2" name="fade-transition">
         <v-item
@@ -14,7 +9,6 @@
         >
           <v-hover v-slot="{ hover }">
             <v-card
-              :ref="`SEL${componentCardGroup}ID${index}`"
               :color="getComponentCardColor(active)"
               height="210"
               width="100%"

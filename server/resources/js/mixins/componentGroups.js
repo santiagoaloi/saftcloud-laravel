@@ -42,7 +42,6 @@ export default {
 
     dbGroupNamesFiltered(editedGroupName) {
       const result = this.dbGroupNames.filter((g) => g !== editedGroupName);
-      console.log(result, editedGroupName);
       return result;
     },
 

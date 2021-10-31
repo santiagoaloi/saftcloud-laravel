@@ -1,39 +1,35 @@
 <template>
-  <div>
-    <v-fade-transition hide-on-leave>
+  <v-app>
+    <v-fade-transition mode="out-in" :duration="520" hide-on-leave>
       <keep-alive exclude="PublicLayout">
         <component :is="layout" />
       </keep-alive>
     </v-fade-transition>
-  </div>
+  </v-app>
 </template>
 
 <script>
   import Vue from 'vue';
   import axios from 'axios';
-  import { sync } from 'vuex-pathify';
   import config from './configs';
   import auth from '@/util/auth';
   import { resetRouter } from '@/router';
 
   Vue.component('SecureLayout', () =>
-    import(/* webpackChunkName: 'secure-Layout' */ '@/layouts/secureLayout/Index.vue'),
+    import(/* webpackChunkName: 'secure-Layout' */ '@/layouts/secureLayout'),
   );
   Vue.component('PublicLayout', () =>
-    import(/* webpackChunkName: 'public-Layout' */ '@/layouts/publicLayout/Index'),
+    import(/* webpackChunkName: 'public-Layout' */ '@/layouts/publicLayout'),
   );
 
   export default {
-    name: 'AppVue',
+    name: 'App',
 
     head: {
       link: [...config.icons.map((href) => ({ rel: 'stylesheet', href }))],
     },
 
     computed: {
-      ...sync('theme', ['isDark']),
-      ...sync('authentication', ['session']),
-
       layout() {
         return this.$route.meta.layout;
       },
@@ -41,15 +37,6 @@
       // vuetfiy() {
       //   return this.$vuetify;
       // },
-    },
-
-    watch: {
-      isDark: {
-        immediate: true,
-        handler(val) {
-          this.$vuetify.theme.dark = val;
-        },
-      },
     },
 
     created() {
@@ -68,7 +55,7 @@
         if (auth.loggedIn() && this.$route.meta.layout !== 'public-layout') {
           this.buildRoutes();
         }
-      }, 500);
+      }, 700);
     },
 
     methods: {

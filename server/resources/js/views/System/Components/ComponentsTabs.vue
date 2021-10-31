@@ -3,7 +3,7 @@
     <div class="d-flex justify-space-between align-center">
       <v-tabs
         v-model="activeStatusTab"
-        color="accent"
+        color="blue"
         show-arrows
         class="col-10 mt-n3"
         background-color="transparent"

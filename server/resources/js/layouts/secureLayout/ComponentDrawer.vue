@@ -1,10 +1,10 @@
 <template>
   <v-navigation-drawer
+    v-model="drawer"
     mobile-breakpoint="0"
     clipped
-    :color="isDark ? '#2E3139' : '#edeff0'"
+    :color="isDark ? '#24292e' : '#edeff0'"
     width="350"
-    :value="drawer"
     hide-overlay
     right
     app

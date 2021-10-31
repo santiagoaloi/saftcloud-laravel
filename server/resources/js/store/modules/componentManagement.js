@@ -96,7 +96,7 @@ const getters = {
   },
 
   //* Disables the right panel navigation arrows if the first component in the array is selected.
-  previousComponentDisabled: (state) => state.componentCardGroup === 0,
+  previousComponentDisabled: (state) => !state.componentCardGroup,
 
   //* Disables the right panel navigation arrows if the last component in the array is selected.
   nextComponentDisabled: (state, getters) =>
@@ -470,14 +470,13 @@ const actions = {
 
   //* Creates a new component in the database.
   async createComponent({ state, getters, dispatch }) {
-    store.set('componentManagement/loading', false);
+    store.set('componentManagement/loading', true);
 
     return axios.post('api/component', state.componentSettings).then((response) => {
       if (response.status === 200) {
         store.set('componentManagement/allComponents', response.data.components);
 
         //* Set the status tab as "all"
-
         store.set('componentManagement/activeStatusTab', 0);
 
         store.set('componentManagement/dialogComponent', false);

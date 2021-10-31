@@ -22,7 +22,6 @@
 
 <script>
   export default {
-    name: 'App',
-    components: {},
+    name: 'Feature2',
   };
 </script>
