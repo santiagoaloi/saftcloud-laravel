@@ -113,7 +113,7 @@ class EntityController extends Controller {
     }
 
     // AGREGA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
-    public function attachEntity(Entity $var, Request $request){
+    public function attachEntity(Entity $phone, Request $request){
         $this->authorize(ability: 'attach', arguments: [Entity::class, 'Entity.attach']);
         $items = $request['items'];
         $class = $request['name'];
@@ -122,11 +122,11 @@ class EntityController extends Controller {
         foreach($items as $item){
             $arr[] = $item['id'];
         }
-        $var->$class()->attach($arr);
+        $phone->$class()->attach($arr);
     }
 
     // ELIMINA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
-    public function detachEntity(Entity $var, Request $request){
+    public function detachEntity(Entity $phone, Request $request){
         $this->authorize(ability: 'attach', arguments: [Entity::class, 'Entity.attach']);
         $items = $request['items'];
         $class = $request['name'];
@@ -135,11 +135,11 @@ class EntityController extends Controller {
         foreach($items as $item){
             $arr[] = $item['id'];
         }
-        $var->$class()->detach($arr);
+        $phone->$class()->detach($arr);
     }
 
     // SINCRONIZA TODOS LOS ITEMS ENVIADOS EN REQUEST
-    public function syncEntity(Entity $var, Request $request){
+    public function syncEntity(Entity $phone, Request $request){
         $this->authorize(ability: 'attach', arguments: [Entity::class, 'Entity.attach']);
         $items = $request['items'];
         $class = $request['name'];
@@ -148,6 +148,6 @@ class EntityController extends Controller {
         foreach($items as $item){
             $arr[] = $item['id'];
         }
-        $var->$class()->sync($arr);
+        $phone->$class()->sync($arr);
     }
 }

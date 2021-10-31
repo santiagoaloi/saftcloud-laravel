@@ -113,7 +113,7 @@ class RootAccountController extends Controller {
     }
 
     // AGREGA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
-    public function attachRootAccount(RootAccount $var, Request $request){
+    public function attachRootAccount(RootAccount $rootAccount, Request $request){
         $this->authorize(ability: 'attach', arguments: [RootAccount::class, 'RootAccount.attach']);
         $items = $request['items'];
         $class = $request['name'];
@@ -122,11 +122,11 @@ class RootAccountController extends Controller {
         foreach($items as $item){
             $arr[] = $item['id'];
         }
-        $var->$class()->attach($arr);
+        $rootAccount->$class()->attach($arr);
     }
 
     // ELIMINA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
-    public function detachRootAccount(RootAccount $var, Request $request){
+    public function detachRootAccount(RootAccount $rootAccount, Request $request){
         $this->authorize(ability: 'attach', arguments: [RootAccount::class, 'RootAccount.attach']);
         $items = $request['items'];
         $class = $request['name'];
@@ -135,11 +135,11 @@ class RootAccountController extends Controller {
         foreach($items as $item){
             $arr[] = $item['id'];
         }
-        $var->$class()->detach($arr);
+        $rootAccount->$class()->detach($arr);
     }
 
     // SINCRONIZA TODOS LOS ITEMS ENVIADOS EN REQUEST
-    public function syncRootAccount(RootAccount $var, Request $request){
+    public function syncRootAccount(RootAccount $rootAccount, Request $request){
         $this->authorize(ability: 'attach', arguments: [RootAccount::class, 'RootAccount.attach']);
         $items = $request['items'];
         $class = $request['name'];
@@ -148,6 +148,6 @@ class RootAccountController extends Controller {
         foreach($items as $item){
             $arr[] = $item['id'];
         }
-        $var->$class()->sync($arr);
+        $rootAccount->$class()->sync($arr);
     }
 }

@@ -112,7 +112,7 @@ class MkupController extends Controller {
     }
 
     // AGREGA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
-    public function attachAccountPayment(Mkup $var, Request $request){
+    public function attachAccountPayment(Mkup $mkup, Request $request){
         $this->authorize(ability: 'attach', arguments: [Mkup::class, 'Mkup.attach']);
         $items = $request['items'];
         $class = $request['name'];
@@ -121,11 +121,11 @@ class MkupController extends Controller {
         foreach($items as $item){
             $arr[] = $item['id'];
         }
-        $var->$class()->attach($arr);
+        $mkup->$class()->attach($arr);
     }
 
     // ELIMINA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
-    public function detachAccountPayment(Mkup $var, Request $request){
+    public function detachAccountPayment(Mkup $mkup, Request $request){
         $this->authorize(ability: 'attach', arguments: [Mkup::class, 'Mkup.attach']);
         $items = $request['items'];
         $class = $request['name'];
@@ -134,11 +134,11 @@ class MkupController extends Controller {
         foreach($items as $item){
             $arr[] = $item['id'];
         }
-        $var->$class()->detach($arr);
+        $mkup->$class()->detach($arr);
     }
 
     // SINCRONIZA TODOS LOS ITEMS ENVIADOS EN REQUEST
-    public function syncAccountPayment(Mkup $var, Request $request){
+    public function syncAccountPayment(Mkup $mkup, Request $request){
         $this->authorize(ability: 'attach', arguments: [Mkup::class, 'Mkup.attach']);
         $items = $request['items'];
         $class = $request['name'];
@@ -147,6 +147,6 @@ class MkupController extends Controller {
         foreach($items as $item){
             $arr[] = $item['id'];
         }
-        $var->$class()->sync($arr);
+        $mkup->$class()->sync($arr);
     }
 }

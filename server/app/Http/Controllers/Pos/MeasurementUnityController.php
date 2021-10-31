@@ -112,7 +112,7 @@ class MeasurementUnityController extends Controller {
     }
 
     // AGREGA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
-    public function attachPaymentMethod(MeasurementUnit $var, Request $request){
+    public function attachPaymentMethod(MeasurementUnit $measurementUnit, Request $request){
         $this->authorize(ability: 'attach', arguments: [MeasurementUnit::class, 'MeasurementUnit.attach']);
         $items = $request['items'];
         $class = $request['name'];
@@ -121,11 +121,11 @@ class MeasurementUnityController extends Controller {
         foreach($items as $item){
             $arr[] = $item['id'];
         }
-        $var->$class()->attach($arr);
+        $measurementUnit->$class()->attach($arr);
     }
 
     // ELIMINA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
-    public function detachPaymentMethod(MeasurementUnit $var, Request $request){
+    public function detachPaymentMethod(MeasurementUnit $measurementUnit, Request $request){
         $this->authorize(ability: 'attach', arguments: [MeasurementUnit::class, 'MeasurementUnit.attach']);
         $items = $request['items'];
         $class = $request['name'];
@@ -134,11 +134,11 @@ class MeasurementUnityController extends Controller {
         foreach($items as $item){
             $arr[] = $item['id'];
         }
-        $var->$class()->detach($arr);
+        $measurementUnit->$class()->detach($arr);
     }
 
     // SINCRONIZA TODOS LOS ITEMS ENVIADOS EN REQUEST
-    public function syncPaymentMethod(MeasurementUnit $var, Request $request){
+    public function syncPaymentMethod(MeasurementUnit $measurementUnit, Request $request){
         $this->authorize(ability: 'attach', arguments: [MeasurementUnit::class, 'MeasurementUnit.attach']);
         $items = $request['items'];
         $class = $request['name'];
@@ -147,6 +147,6 @@ class MeasurementUnityController extends Controller {
         foreach($items as $item){
             $arr[] = $item['id'];
         }
-        $var->$class()->sync($arr);
+        $measurementUnit->$class()->sync($arr);
     }
 }

@@ -113,7 +113,7 @@ class AccountPaymentController extends Controller {
     }
 
     // AGREGA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
-    public function attachAccountPayment(AccountPayment $var, Request $request){
+    public function attachAccountPayment(AccountPayment $accountPayment, Request $request){
         $this->authorize(ability: 'attach', arguments: [AccountPayment::class, 'AccountPayment.attach']);
         $items = $request['items'];
         $class = $request['name'];
@@ -122,11 +122,11 @@ class AccountPaymentController extends Controller {
         foreach($items as $item){
             $arr[] = $item['id'];
         }
-        $var->$class()->attach($arr);
+        $accountPayment->$class()->attach($arr);
     }
 
     // ELIMINA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
-    public function detachAccountPayment(AccountPayment $var, Request $request){
+    public function detachAccountPayment(AccountPayment $accountPayment, Request $request){
         $this->authorize(ability: 'attach', arguments: [AccountPayment::class, 'AccountPayment.attach']);
         $items = $request['items'];
         $class = $request['name'];
@@ -135,11 +135,11 @@ class AccountPaymentController extends Controller {
         foreach($items as $item){
             $arr[] = $item['id'];
         }
-        $var->$class()->detach($arr);
+        $accountPayment->$class()->detach($arr);
     }
 
     // SINCRONIZA TODOS LOS ITEMS ENVIADOS EN REQUEST
-    public function syncAccountPayment(AccountPayment $var, Request $request){
+    public function syncAccountPayment(AccountPayment $accountPayment, Request $request){
         $this->authorize(ability: 'attach', arguments: [AccountPayment::class, 'AccountPayment.attach']);
         $items = $request['items'];
         $class = $request['name'];
@@ -148,6 +148,6 @@ class AccountPaymentController extends Controller {
         foreach($items as $item){
             $arr[] = $item['id'];
         }
-        $var->$class()->sync($arr);
+        $accountPayment->$class()->sync($arr);
     }
 }

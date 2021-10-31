@@ -112,7 +112,7 @@ class PriceController extends Controller {
     }
 
     // AGREGA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
-    public function attachAccountPayment(Price $var, Request $request){
+    public function attachAccountPayment(Price $price, Request $request){
         $this->authorize(ability: 'attach', arguments: [Price::class, 'Price.attach']);
         $items = $request['items'];
         $class = $request['name'];
@@ -121,11 +121,11 @@ class PriceController extends Controller {
         foreach($items as $item){
             $arr[] = $item['id'];
         }
-        $var->$class()->attach($arr);
+        $price->$class()->attach($arr);
     }
 
     // ELIMINA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
-    public function detachAccountPayment(Price $var, Request $request){
+    public function detachAccountPayment(Price $price, Request $request){
         $this->authorize(ability: 'attach', arguments: [Price::class, 'Price.attach']);
         $items = $request['items'];
         $class = $request['name'];
@@ -134,11 +134,11 @@ class PriceController extends Controller {
         foreach($items as $item){
             $arr[] = $item['id'];
         }
-        $var->$class()->detach($arr);
+        $price->$class()->detach($arr);
     }
 
     // SINCRONIZA TODOS LOS ITEMS ENVIADOS EN REQUEST
-    public function syncAccountPayment(Price $var, Request $request){
+    public function syncAccountPayment(Price $price, Request $request){
         $this->authorize(ability: 'attach', arguments: [Price::class, 'Price.attach']);
         $items = $request['items'];
         $class = $request['name'];
@@ -147,6 +147,6 @@ class PriceController extends Controller {
         foreach($items as $item){
             $arr[] = $item['id'];
         }
-        $var->$class()->sync($arr);
+        $price->$class()->sync($arr);
     }
 }

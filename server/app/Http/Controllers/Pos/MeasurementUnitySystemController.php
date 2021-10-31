@@ -112,7 +112,7 @@ class MeasurementUnitySystemController extends Controller {
     }
 
     // AGREGA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
-    public function attachAccountPayment(MeasurementUnitSystem $var, Request $request){
+    public function attachAccountPayment(MeasurementUnitSystem $measurementUnitSystem, Request $request){
         $this->authorize(ability: 'attach', arguments: [MeasurementUnitSystem::class, 'MeasurementUnitSystem.attach']);
         $items = $request['items'];
         $class = $request['name'];
@@ -121,11 +121,11 @@ class MeasurementUnitySystemController extends Controller {
         foreach($items as $item){
             $arr[] = $item['id'];
         }
-        $var->$class()->attach($arr);
+        $measurementUnitSystem->$class()->attach($arr);
     }
 
     // ELIMINA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
-    public function detachAccountPayment(MeasurementUnitSystem $var, Request $request){
+    public function detachAccountPayment(MeasurementUnitSystem $measurementUnitSystem, Request $request){
         $this->authorize(ability: 'attach', arguments: [MeasurementUnitSystem::class, 'MeasurementUnitSystem.attach']);
         $items = $request['items'];
         $class = $request['name'];
@@ -134,11 +134,11 @@ class MeasurementUnitySystemController extends Controller {
         foreach($items as $item){
             $arr[] = $item['id'];
         }
-        $var->$class()->detach($arr);
+        $measurementUnitSystem->$class()->detach($arr);
     }
 
     // SINCRONIZA TODOS LOS ITEMS ENVIADOS EN REQUEST
-    public function syncAccountPayment(MeasurementUnitSystem $var, Request $request){
+    public function syncAccountPayment(MeasurementUnitSystem $measurementUnitSystem, Request $request){
         $this->authorize(ability: 'attach', arguments: [MeasurementUnitSystem::class, 'MeasurementUnitSystem.attach']);
         $items = $request['items'];
         $class = $request['name'];
@@ -147,6 +147,6 @@ class MeasurementUnitySystemController extends Controller {
         foreach($items as $item){
             $arr[] = $item['id'];
         }
-        $var->$class()->sync($arr);
+        $measurementUnitSystem->$class()->sync($arr);
     }
 }

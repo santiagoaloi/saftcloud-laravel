@@ -113,7 +113,7 @@ class ProductPromotionController extends Controller {
     }
 
     // AGREGA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
-    public function attachAccountPayment(ProductPromotion $var, Request $request){
+    public function attachAccountPayment(ProductPromotion $productPromotion, Request $request){
         $this->authorize(ability: 'attach', arguments: [ProductPromotion::class, 'ProductPromotion.attach']);
         $items = $request['items'];
         $class = $request['name'];
@@ -122,11 +122,11 @@ class ProductPromotionController extends Controller {
         foreach($items as $item){
             $arr[] = $item['id'];
         }
-        $var->$class()->attach($arr);
+        $productPromotion->$class()->attach($arr);
     }
 
     // ELIMINA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
-    public function detachAccountPayment(ProductPromotion $var, Request $request){
+    public function detachAccountPayment(ProductPromotion $productPromotion, Request $request){
         $this->authorize(ability: 'attach', arguments: [ProductPromotion::class, 'ProductPromotion.attach']);
         $items = $request['items'];
         $class = $request['name'];
@@ -135,11 +135,11 @@ class ProductPromotionController extends Controller {
         foreach($items as $item){
             $arr[] = $item['id'];
         }
-        $var->$class()->detach($arr);
+        $productPromotion->$class()->detach($arr);
     }
 
     // SINCRONIZA TODOS LOS ITEMS ENVIADOS EN REQUEST
-    public function syncAccountPayment(ProductPromotion $var, Request $request){
+    public function syncAccountPayment(ProductPromotion $productPromotion, Request $request){
         $this->authorize(ability: 'attach', arguments: [ProductPromotion::class, 'ProductPromotion.attach']);
         $items = $request['items'];
         $class = $request['name'];
@@ -148,6 +148,6 @@ class ProductPromotionController extends Controller {
         foreach($items as $item){
             $arr[] = $item['id'];
         }
-        $var->$class()->sync($arr);
+        $productPromotion->$class()->sync($arr);
     }
 }

@@ -113,7 +113,7 @@ class PaymentMethodController extends Controller {
     }
 
     // AGREGA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
-    public function attachPaymentMethod(PaymentMethod $var, Request $request){
+    public function attachPaymentMethod(PaymentMethod $paymentMethod, Request $request){
         $this->authorize(ability: 'attach', arguments: [PaymentMethod::class, 'PaymentMethod.attach']);
         $items = $request['items'];
         $class = $request['name'];
@@ -122,11 +122,11 @@ class PaymentMethodController extends Controller {
         foreach($items as $item){
             $arr[] = $item['id'];
         }
-        $var->$class()->attach($arr);
+        $paymentMethod->$class()->attach($arr);
     }
 
     // ELIMINA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
-    public function detachPaymentMethod(PaymentMethod $var, Request $request){
+    public function detachPaymentMethod(PaymentMethod $paymentMethod, Request $request){
         $this->authorize(ability: 'attach', arguments: [PaymentMethod::class, 'PaymentMethod.attach']);
         $items = $request['items'];
         $class = $request['name'];
@@ -135,11 +135,11 @@ class PaymentMethodController extends Controller {
         foreach($items as $item){
             $arr[] = $item['id'];
         }
-        $var->$class()->detach($arr);
+        $paymentMethod->$class()->detach($arr);
     }
 
     // SINCRONIZA TODOS LOS ITEMS ENVIADOS EN REQUEST
-    public function syncPaymentMethod(PaymentMethod $var, Request $request){
+    public function syncPaymentMethod(PaymentMethod $paymentMethod, Request $request){
         $this->authorize(ability: 'attach', arguments: [PaymentMethod::class, 'PaymentMethod.attach']);
         $items = $request['items'];
         $class = $request['name'];
@@ -148,6 +148,6 @@ class PaymentMethodController extends Controller {
         foreach($items as $item){
             $arr[] = $item['id'];
         }
-        $var->$class()->sync($arr);
+        $paymentMethod->$class()->sync($arr);
     }
 }
