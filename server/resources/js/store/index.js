@@ -5,17 +5,23 @@ import Vuex from 'vuex';
 // libraries
 import VuexPersist from 'vuex-persist';
 import localforage from 'localforage';
-import { omit } from 'lodash';
+import { omit, pick } from 'lodash';
 import pathify from '@/plugins/vuex-pathify';
 
 // All Vuex Modules definned in ./modules/index.js
 import * as modules from './modules';
 
 // Blacklist module keys
-const componentManagementFiltered = (module) => {
-  const blackList = ['componentEditSheet'];
-  return omit(module, blackList);
-};
+// const componentManagementFiltered = (module) => {
+//   const blackList = ['componentEditSheet'];
+//   return omit(module, blackList);
+// };
+
+// Whitelist module keys
+// const componentManagementFiltered = (module) => {
+//   const whitelist = ['componentEditSheet'];
+//   return pick(module, whitelist);
+// };
 
 Vue.use(Vuex);
 
@@ -28,14 +34,19 @@ const vuexLocal = new VuexPersist({
   reducer: (state) => ({
     theme: {
       isDark: state.theme.isDark,
+      overlay: state.theme.overlay,
     },
 
     authentication: {
       session: state.authentication.session,
       activeBranch: state.authentication.activeBranch,
     },
+    // componentManagement: {
+    //   ...componentManagementFiltered(state.componentManagement),
+    // },
+
     componentManagement: {
-      ...componentManagementFiltered(state.componentManagement),
+      ...state.componentManagement,
     },
 
     entitiesManagement: {
@@ -46,5 +57,6 @@ const vuexLocal = new VuexPersist({
 
 export const store = new Vuex.Store({
   modules,
+  // plugins: [pathify.plugin, vuexLocal.plugin],
   plugins: [pathify.plugin, vuexLocal.plugin],
 });

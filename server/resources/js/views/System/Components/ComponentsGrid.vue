@@ -2,11 +2,7 @@
   <div>
     <v-item-group v-model="componentCardGroup" mandatory>
       <transition-group hide-on-leave class="gallery-card-container pa-2" name="fade-transition">
-        <v-item
-          v-for="(component, index) in allComponentsFilteredSorted"
-          :key="`${index}`"
-          v-slot="{ active, toggle }"
-        >
+        <v-item v-for="(component, index) in allComponentsFilteredSorted" :key="`${index}`" v-slot="{ active, toggle }">
           <v-hover v-slot="{ hover }">
             <v-card
               :color="getComponentCardColor(active)"
@@ -23,19 +19,9 @@
             >
               <v-card-actions class="px-0">
                 <v-hover v-slot="{ hover }">
-                  <v-avatar
-                    class="cursor-pointer"
-                    size="65"
-                    rounded
-                    :color="component.config_settings.icon.color"
-                    @click="dialogIcons = true"
-                  >
+                  <v-avatar class="cursor-pointer" size="65" rounded :color="component.config_settings.icon.color" @click="dialogIcons = true">
                     <v-expand-transition>
-                      <div
-                        v-if="hover"
-                        class="d-flex black v-card--reveal white--text"
-                        style="height: 100%"
-                      >
+                      <div v-if="hover" class="d-flex black v-card--reveal white--text" style="height: 100%">
                         <v-icon size="30" dark> mdi-pencil </v-icon>
                       </div>
                     </v-expand-transition>
@@ -52,14 +38,7 @@
                 <div :class="{ 'show-btns': hover, 'hide-btns': !hover }">
                   <v-tooltip transition="false" color="black" bottom>
                     <template #activator="{ on }">
-                      <v-btn
-                        color="white"
-                        small
-                        icon
-                        :ripple="false"
-                        v-on="on"
-                        @click.stop="setModular(component)"
-                      >
+                      <v-btn color="white" small icon :ripple="false" v-on="on" @click.stop="setModular(component)">
                         <v-icon :color="isModularColor(component)">
                           {{ isModularIcon(component) }}
                         </v-icon>
@@ -70,14 +49,7 @@
 
                   <v-tooltip transition="false" color="black" bottom>
                     <template #activator="{ on }">
-                      <v-btn
-                        color="white"
-                        small
-                        icon
-                        :ripple="false"
-                        v-on="on"
-                        @click.stop="setActive(component)"
-                      >
+                      <v-btn color="white" small icon :ripple="false" v-on="on" @click.stop="setActive(component)">
                         <v-icon :color="isActiveColor(component)">
                           {{ isActiveIcon(component) }}
                         </v-icon>
@@ -88,14 +60,7 @@
 
                   <v-tooltip transition="false" color="black" bottom>
                     <template #activator="{ on }">
-                      <v-btn
-                        color="white"
-                        small
-                        icon
-                        :ripple="false"
-                        v-on="on"
-                        @click.stop="setStarred(component)"
-                      >
+                      <v-btn color="white" small icon :ripple="false" v-on="on" @click.stop="setStarred(component)">
                         <v-icon :color="isStarredColor(component)">
                           {{ isStarredIcon(component) }}
                         </v-icon>
@@ -118,14 +83,7 @@
               <div class="gallery-card-subtitle-container">
                 <div class="gallery-card-subtitle-wrapper">
                   <h5 class="gallery-card-subtitle">
-                    <v-chip
-                      :dark="isDark"
-                      :color="isDark ? 'rgb(54, 57, 63)' : 'white'"
-                      :text-color="isDark ? 'grey lighten-1' : 'indigo darken-4'"
-                      label
-                      class="col-12 pointer-events-none"
-                      small
-                    >
+                    <v-chip :dark="isDark" :color="isDark ? 'rgb(54, 57, 63)' : 'white'" :text-color="isDark ? 'grey lighten-1' : 'indigo darken-4'" label class="col-12 pointer-events-none" small>
                       <v-icon x-small> mdi-folder-outline </v-icon>
                       <div class="col-12 text-truncate">
                         <template v-if="mapComponentGroup(component).component_group_id">
@@ -142,9 +100,7 @@
                     <h5 class="gallery-card-subtitle">
                       <v-tooltip transition="false" color="black" bottom>
                         <template #activator="{ on }">
-                          <v-icon :color="isDark ? 'white' : '#28292b'" v-on="on">
-                            mdi-alert-outline
-                          </v-icon>
+                          <v-icon :color="isDark ? 'white' : '#28292b'" v-on="on"> mdi-alert-outline </v-icon>
                         </template>
                         <span>Unsaved</span>
                       </v-tooltip>
@@ -233,17 +189,14 @@
   .hoverElevationSoft {
     border-radius: 8px;
     -webkit-transition-property: color, background-color, -webkit-box-shadow, -webkit-transform;
-    transition-property: color, background-color, box-shadow, transform, -webkit-box-shadow,
-      -webkit-transform;
+    transition-property: color, background-color, box-shadow, transform, -webkit-box-shadow, -webkit-transform;
     transition-duration: 0.3s;
-    box-shadow: 0 10px 60px -12px rgb(50 50 93 / 25%), 0 18px 36px -18px rgb(0 0 0 / 30%),
-      0 -12px 36px -8px rgb(0 0 0 / 3%) !important;
+    box-shadow: 0 10px 60px -12px rgb(50 50 93 / 25%), 0 18px 36px -18px rgb(0 0 0 / 30%), 0 -12px 36px -8px rgb(0 0 0 / 3%) !important;
   }
 
   .hoverElevationSoft:hover {
     transform: translateY(1px) !important;
-    box-shadow: 0 13px 27px -5px rgb(50 50 93 / 25%), 0 8px 16px -8px rgb(0 0 0 / 30%),
-      0 -6px 16px -6px rgb(0 0 0 / 3%) !important;
+    box-shadow: 0 13px 27px -5px rgb(50 50 93 / 25%), 0 8px 16px -8px rgb(0 0 0 / 30%), 0 -6px 16px -6px rgb(0 0 0 / 3%) !important;
   }
   .v-card--link:before {
     background: white;

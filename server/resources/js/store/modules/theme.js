@@ -4,6 +4,7 @@ import { make } from 'vuex-pathify';
 const state = {
   isDark: false,
   icons: [],
+  overlay: false,
 };
 
 const mutations = make.mutations(state);

@@ -4,7 +4,7 @@
       <template #top>
         <div class="removeGutters">
           <components-toolbar />
-          <!-- <components-appbar /> -->
+          <components-appbar />
         </div>
         <components-tabs />
       </template>
@@ -17,7 +17,6 @@
         <v-scroll-x-transition hide-on-leave>
           <components-grid v-if="!isTableLayout && !isAllFilteredComponentsEmpty" />
         </v-scroll-x-transition>
-
         <v-scroll-y-transition hide-on-leave>
           <components-no-data v-if="isAllFilteredComponentsEmpty" />
         </v-scroll-y-transition>
@@ -31,30 +30,20 @@
 
 <script>
   import { sync, call, get } from 'vuex-pathify';
-  import ComponentsAppbar from './ComponentsAppbar.vue';
 
   export default {
     name: 'ComponentsManagement',
     components: {
-      ComponentsToolbar: () =>
-        import(/* webpackChunkName: 'secure-bundle-components' */ './ComponentToolbar'),
+      ComponentsToolbar: () => import(/* webpackChunkName: 'secure-bundle-components' */ './ComponentToolbar'),
 
-      // ComponentsAppbar: () =>
-      //   import(/* webpackChunkName: 'secure-bundle-components' */ './ComponentsAppbar'),
-      ComponentsTabs: () =>
-        import(/* webpackChunkName: 'secure-bundle-components' */ './ComponentsTabs'),
-      ComponentsGrid: () =>
-        import(/* webpackChunkName: 'secure-bundle-components' */ './ComponentsGrid'),
+      ComponentsAppbar: () => import(/* webpackChunkName: 'secure-bundle-components' */ './ComponentsAppbar'),
+      ComponentsTabs: () => import(/* webpackChunkName: 'secure-bundle-components' */ './ComponentsTabs'),
+      ComponentsGrid: () => import(/* webpackChunkName: 'secure-bundle-components' */ './ComponentsGrid'),
       ComponentsTable: () => import(/* webpackChunkName: 'components-table' */ './ComponentsTable'),
 
-      ComponentsNoData: () =>
-        import(/* webpackChunkName: 'components-no-data' */ './ComponentsNoData'),
-      DialogComponent: () =>
-        import(/* webpackChunkName: 'components-dialog-new-component' */ './DialogComponent'),
-      ComponentEditSheet: () =>
-        import(
-          /* webpackChunkName: 'components-edit-sheet' */ './ComponentsEdit/ComponentsEditSheet'
-        ),
+      ComponentsNoData: () => import(/* webpackChunkName: 'components-no-data' */ './ComponentsNoData'),
+      DialogComponent: () => import(/* webpackChunkName: 'components-dialog-new-component' */ './DialogComponent'),
+      ComponentEditSheet: () => import(/* webpackChunkName: 'components-edit-sheet' */ './ComponentsEdit/ComponentsEditSheet'),
     },
 
     computed: {

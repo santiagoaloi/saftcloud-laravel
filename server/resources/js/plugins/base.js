@@ -17,4 +17,6 @@ for (const file of requireComponent.keys()) {
   const componentName = upperFirst(camelCase(name));
 
   Vue.component(`${componentName}`, componentConfig.default || componentConfig);
+
+  console.log(Vue.component(`${componentName}`, componentConfig.default || componentConfig));
 }

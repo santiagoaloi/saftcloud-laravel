@@ -34,11 +34,9 @@
                 closeOnContentClick: true,
               }"
               :outlined="isDark"
-              @update:search-input="syncGroupInputValue($event)"
               @focus="reset"
               @input="reset"
               @blur="reset"
-              @keydown.enter.prevent="validateComponentForm()"
             >
               <template #item="{ item, on }">
                 <v-list-item :ripple="false" v-on="on">
@@ -69,7 +67,6 @@
               :background-color="isDark ? '#28292b' : 'white'"
               :error="errors.length > 0"
               :error-messages="errors[0]"
-              @keydown.enter.prevent="validateComponentForm()"
               @focus="reset"
               @input="reset"
               @blur="reset"
@@ -79,11 +76,7 @@
 
         <v-col cols="12" lg="6">
           <baseFieldLabel required label="Component name" />
-          <validation-provider
-            v-slot="{ errors, reset }"
-            name="component name"
-            rules="alpha|required"
-          >
+          <validation-provider v-slot="{ errors, reset }" name="component name" rules="alpha|required">
             <v-text-field
               v-model="componentSettings.name"
               spellcheck="false"
@@ -96,7 +89,6 @@
               :error="errors.length > 0"
               :outlined="isDark"
               :error-messages="errors[0]"
-              @keydown.enter.prevent="validateComponentForm()"
               @focus="reset"
               @input="reset"
               @blur="reset"
@@ -122,7 +114,6 @@
               :background-color="isDark ? '#28292b' : 'white'"
               :error-messages="errors[0]"
               :error="errors.length > 0"
-              @keydown.enter.prevent="validateComponentForm()"
               @focus="reset"
               @input="reset"
               @blur="reset"
@@ -158,11 +149,9 @@
 </template>
 <script>
   import { sync, call } from 'vuex-pathify';
-  import componentGroups from '@/mixins/componentGroups';
 
   export default {
     name: 'DialogComponent',
-    mixins: [componentGroups],
 
     data() {
       return {
@@ -172,13 +161,7 @@
 
     computed: {
       ...sync('theme', ['isDark']),
-      ...sync('componentManagement', [
-        'allGroups',
-        'dialogComponent',
-        'componentSettings',
-        'dbTables',
-        'groupName',
-      ]),
+      ...sync('componentManagement', ['allGroups', 'dialogComponent', 'componentSettings', 'dbTables', 'groupName']),
     },
 
     mounted() {

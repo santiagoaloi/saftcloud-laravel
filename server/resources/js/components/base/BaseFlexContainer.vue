@@ -1,15 +1,15 @@
 <template>
   <div class="flex-container">
     <div class="flex-wrapper">
-      <div v-if="$slots.top" class="content">
+      <div v-show="$slots.top" class="content">
         <slot name="top"> </slot>
       </div>
 
-      <div v-if="$slots.main" class="flex-scrollable-content content dottedBackground">
+      <div class="flex-scrollable-content content dottedBackground">
         <slot name="main"> </slot>
       </div>
 
-      <div v-if="$slots.footer" class="content">
+      <div v-show="$slots.footer" class="content">
         <slot name="footer"> </slot>
       </div>
     </div>
@@ -19,6 +19,9 @@
 <script>
   export default {
     name: 'FlexContainer',
+    updated() {
+      console.log('updated');
+    },
   };
 </script>
 <style scoped>
