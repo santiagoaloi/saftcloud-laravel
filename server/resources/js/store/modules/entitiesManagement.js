@@ -219,9 +219,10 @@ const actions = {
     });
   },
 
-  async removeUser({ dispatch }, id) {
+  async removeUser({ state, dispatch }, id) {
     return axios.delete(`api/user/${id}`).then((response) => {
       if (response.status === 200) {
+        state.allUsers = state.allUsers.filter((user) => user.id !== id);
         dispatch('snackbar/snackbarSuccess', 'User removed', {
           root: true,
         });
@@ -231,7 +232,7 @@ const actions = {
   },
 
   async removeRole({ dispatch }, id) {
-    return axios.delete(`api/user/${id}`).then((response) => {
+    return axios.delete(`api/role/${id}`).then((response) => {
       if (response.status === 200) {
         dispatch('snackbar/snackbarSuccess', 'Role removed', {
           root: true,
@@ -261,7 +262,6 @@ const actions = {
       .get(`api/user/${user}`)
       .then((response) => {
         const index = state.allUsers.findIndex((e) => e.id === user);
-
         store.set(`entitiesManagement/allUsers@${index}`, response.data.record);
       })
       .catch(() => {

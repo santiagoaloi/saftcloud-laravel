@@ -1,11 +1,6 @@
 <template>
   <v-container class="fill-height">
-    <v-img
-      src="https://cdn.vuetifyjs.com/images/cards/cooking.png"
-      class="white--text align-end"
-      gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
-      height="200px"
-    >
+    <v-img src="https://cdn.vuetifyjs.com/images/cards/cooking.png" class="white--text align-end" gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)" height="200px">
       <v-card-title> Join us</v-card-title>
     </v-img>
 
@@ -30,10 +25,7 @@
           <v-card-text>
             <div class="my-4 text-subtitle-1">$ • Italian, Cafe</div>
 
-            <div>
-              Small plates, salads & sandwiches - an intimate setting with 12 indoor seats plus
-              patio seating.
-            </div>
+            <div>Small plates, salads & sandwiches - an intimate setting with 12 indoor seats plus patio seating.</div>
           </v-card-text>
 
           <v-divider class="mx-4"></v-divider>

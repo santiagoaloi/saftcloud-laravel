@@ -15,18 +15,17 @@ $theme-dark-colors: (
 );
 
 $material-dark: (
-  'app-bar': #36393f,
-  'background': #24292e,
+  'app-bar': rgba(34, 37, 48, 0.7),
+  'background': radial-gradient(circle 818px at 48.5% 55.8%, rgba(34, 37, 48, 1) 0%, rgba(14, 17, 30, 1) 78.9%),
   'bottom-navigation': map-get($theme-dark-colors, '1'),
-  //"surface": map-get($theme-dark-colors, "4"),
-  'calendar':
-    (
-      'background-color': map-get($theme-dark-colors, '5'),
-      'outside-background-color': map-get($theme-dark-colors, '2'),
-      'line-color': map-get($theme-dark-colors, '6'),
-      'interval-color': map-get($theme-dark-colors, '12'),
-      'interval-line-color': map-get($theme-dark-colors, '8'),
-    ),
+  'surface': map-get($theme-dark-colors, '4'),
+  'calendar': (
+    'background-color': map-get($theme-dark-colors, '5'),
+    'outside-background-color': map-get($theme-dark-colors, '2'),
+    'line-color': map-get($theme-dark-colors, '6'),
+    'interval-color': map-get($theme-dark-colors, '12'),
+    'interval-line-color': map-get($theme-dark-colors, '8'),
+  ),
   'cards': #393d47,
   'text': (
     'primary': lighten($text-base, 2.5%),
@@ -35,13 +34,13 @@ $material-dark: (
     'active': $text-base,
   ),
   'inputs': (
-    'box': $text-base,
+    'box': red,
   ),
   'text-fields': (
     'outlined': rgb(26, 25, 25),
     'outlined-hover': rgb(39, 38, 38),
   ),
-  'navigation-drawer': map-get($theme-dark-colors, '1'),
+  'navigation-drawer': #222530,
   'skeleton': linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent),
   'table': (
     'active': #585c63,

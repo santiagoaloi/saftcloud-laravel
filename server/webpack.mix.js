@@ -24,14 +24,19 @@ mix.disableNotifications();
 */
 Mix.listen('configReady', (config) => {
   const scssRule = config.module.rules.find((r) => r.test.toString() === /\.scss$/.toString());
+
   scssRule.oneOf.forEach((ruleset) => {
+    console.log(ruleset.use.find((l) => l.loader.includes('sass-loader')));
+
     const scssOptions = ruleset.use.find((l) => l.loader.includes('sass-loader')).options;
     scssOptions.additionalData = "@import './resources/sass/vuetify/variables';";
   });
 
   const sassRule = config.module.rules.find((r) => r.test.toString() === /\.sass$/.toString());
+
   sassRule.oneOf.forEach((ruleset) => {
     const sassOptions = ruleset.use.find((l) => l.loader.includes('sass-loader')).options;
+
     sassOptions.additionalData = "@import './resources/sass/vuetify/variables'";
   });
 });
@@ -69,7 +74,8 @@ mix
   .js('resources/js/app.js', 'public/dist/js')
   .extract()
   .vue()
-  .sass('resources/sass/app.scss', 'public/dist/css')
+  // .sass('resources/sass/app.scss', 'public/dist/css')
+
   .webpackConfig({
     resolve: {
       extensions: ['.js', '.vue', '.json'],
@@ -95,8 +101,7 @@ function publishAssets() {
     if (fs.existsSync(dist)) fs.removeSync(dist);
   }
 
-  if (fs.existsSync(path.join(publicDir, 'build', 'dist')))
-    fs.copySync(path.join(publicDir, 'build', 'dist'), path.join(publicDir, 'dist'));
+  if (fs.existsSync(path.join(publicDir, 'build', 'dist'))) fs.copySync(path.join(publicDir, 'build', 'dist'), path.join(publicDir, 'dist'));
   // if (fs.existsSync(path.join(publicDir, "build", "images")))
   //   fs.copySync(
   //     path.join(publicDir, "build", "images"),

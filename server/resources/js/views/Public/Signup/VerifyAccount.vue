@@ -144,7 +144,7 @@
       };
     },
 
-    mounted() {
+    created() {
       this.getCountryPhoneCodes();
     },
 

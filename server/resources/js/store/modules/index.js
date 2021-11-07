@@ -14,3 +14,6 @@ export { default as entitiesManagement } from './entitiesManagement';
 // Validations
 export { default as validationStatesComponents } from './validationStatesComponents';
 export { default as validationStatesEntities } from './validationStatesEntities';
+
+// Events
+export { default as eventsManagement } from './eventsManagement';

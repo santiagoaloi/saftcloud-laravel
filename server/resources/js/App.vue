@@ -1,9 +1,9 @@
 <template>
   <v-app>
     <v-fade-transition mode="out-in" :duration="520" hide-on-leave>
-      <keep-alive exclude="PublicLayout">
-        <component :is="layout" />
-      </keep-alive>
+      <!-- <keep-alive exclude="PublicLayout"> -->
+      <component :is="layout" />
+      <!-- </keep-alive> -->
     </v-fade-transition>
   </v-app>
 </template>
@@ -47,9 +47,7 @@
       window.eventBus.$on('BUS_BUILD_ROUTES', () => {
         this.buildRoutes();
       });
-    },
 
-    mounted() {
       // * Waits for auth to be ready.
       setTimeout(() => {
         if (auth.loggedIn() && this.$route.meta.layout !== 'public-layout') {

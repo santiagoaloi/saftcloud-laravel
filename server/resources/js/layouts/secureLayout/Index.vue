@@ -22,8 +22,10 @@
       //   import(/* webpackChunkName: 'secure-session-timeout' */ './SessionTimeout/SessionTimeout'),
       SecureBar: () => import(/* webpackChunkName: 'secure-bundle' */ './AppBar'),
       SecureDrawer: () => import(/* webpackChunkName: 'secure-bundle' */ './Drawer'),
-      SecureCompDrawer: () => import(/* webpackChunkName: 'secure-component-drawer' */ './ComponentDrawer'),
-      SecureEntDrawer: () => import(/* webpackChunkName: 'secure-entities-drawer' */ './EntitiesDrawer'),
+      SecureCompDrawer: () =>
+        import(/* webpackChunkName: 'secure-component-drawer' */ './ComponentDrawer'),
+      SecureEntDrawer: () =>
+        import(/* webpackChunkName: 'secure-entities-drawer' */ './EntitiesDrawer'),
       SecureView: () => import(/* webpackChunkName: 'secure-bundle' */ './View'),
       Snackbar: () =>
         import(

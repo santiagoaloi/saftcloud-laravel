@@ -1,30 +1,62 @@
 <template>
-  <div>
+  <div class="select-none">
     <!-- Navigation -->
-    <v-navigation-drawer v-model="secureDefaultDrawer" src="storage/appbar/prism2.jpg" dark width="250" app class="elevation-1">
+    <v-navigation-drawer v-model="secureDefaultDrawer" dark width="250" app class="elevation-1">
       <!-- Navigation menu fixed  -->
       <template #prepend>
-        <vue-diagonal class="mt-n5" :deg="-7" background="linear-gradient(331deg, rgba(44, 91, 122, 1) 0%, rgba(0, 10, 20 , 0.2) 0%)" space-after space-before>
+        <vue-diagonal
+          class="mt-n5"
+          :deg="-7"
+          background="linear-gradient(331deg, rgba(34, 37, 48, 1) 0%, rgba(0, 10, 20 , 0.2) 0%)"
+          space-after
+          space-before
+        >
           <v-container>
             <div class="title font-weight-bold">SaftCloud ™</div>
             <div class="overline white--text">v5.0.2</div>
             <div class="mx-auto mx-1 d-flex flex-column justify-space-between align-center px-2">
-              <v-badge offset-x="35" offset-y="16" bordered :color="badgeColor()" :content="badgeText()" bottom>
+              <v-badge
+                offset-x="35"
+                offset-y="16"
+                bordered
+                :color="badgeColor()"
+                :content="badgeText()"
+                bottom
+              >
                 <v-avatar size="120">
                   <v-img :src="user.avatar || 'storage/defaults/avatar.png'"></v-img>
                 </v-avatar>
               </v-badge>
 
-              <div style="max-width: 200px" class="title my-2 text-truncate d-inline-block">Valeria Monzasas</div>
+              <div style="max-width: 200px" class="title my-2 text-truncate d-inline-block">
+                {{ fullName }}
+              </div>
 
-              <small style="max-width: 200px" class="mt-n2 mb-4 text-truncate d-inline-block grey--text"> valeria_mariab12@yahoo.com.ar </small>
+              <small
+                style="max-width: 200px"
+                class="mt-n2 mb-4 text-truncate d-inline-block grey--text"
+              >
+                {{ user.email }}
+              </small>
             </div>
             <div class="text-center">
-              <v-menu v-model="secureComponentDrawerBranch" nudge-right="20" nudge-top="45" transition="fade-transition" :close-on-content-click="false" offset-x>
+              <v-menu
+                v-model="secureComponentDrawerBranch"
+                nudge-right="20"
+                nudge-top="45"
+                transition="fade-transition"
+                :close-on-content-click="false"
+                offset-x
+              >
                 <template #activator="{ on, attrs }">
                   <v-btn :ripple="false" block rounded v-bind="attrs" v-on="on">
-                    <v-icon size="25" color="teal accent-2" left>mdi-store</v-icon> Downtown Store 21
-                    <v-icon size="25" color="teal accent-2" right> {{ !secureComponentDrawerBranch ? 'mdi-chevron-down' : 'mdi-chevron-right' }}</v-icon>
+                    <v-icon size="25" color="teal accent-2" left>mdi-store</v-icon> Downtown Store
+                    21
+                    <v-icon size="25" color="teal accent-2" right>
+                      {{
+                        !secureComponentDrawerBranch ? 'mdi-chevron-down' : 'mdi-chevron-right'
+                      }}</v-icon
+                    >
                   </v-btn>
                 </template>
 
@@ -48,7 +80,8 @@
                   <v-card-title> Switch workspace</v-card-title>
 
                   <v-card-subtitle>
-                    You can switch to another branch location anytime without loosing any changes in your current branch. Set a default one, request accesss or remove them.
+                    You can switch to another branch location anytime without loosing any changes in
+                    your current branch. Set a default one, request accesss or remove them.
                   </v-card-subtitle>
 
                   <v-divider></v-divider>
@@ -61,15 +94,22 @@
                             <v-list-item-content>
                               <v-list-item-title v-text="item.title"></v-list-item-title>
 
-                              <v-list-item-subtitle class="text--primary" v-text="item.headline"></v-list-item-subtitle>
+                              <v-list-item-subtitle
+                                class="text--primary"
+                                v-text="item.headline"
+                              ></v-list-item-subtitle>
 
                               <v-list-item-subtitle v-text="item.subtitle"></v-list-item-subtitle>
                             </v-list-item-content>
 
                             <v-list-item-action>
-                              <v-list-item-action-text v-text="item.action"></v-list-item-action-text>
+                              <v-list-item-action-text
+                                v-text="item.action"
+                              ></v-list-item-action-text>
 
-                              <v-icon v-if="!active" color="grey lighten-1"> mdi-star-outline </v-icon>
+                              <v-icon v-if="!active" color="grey lighten-1">
+                                mdi-star-outline
+                              </v-icon>
 
                               <v-icon v-else color="yellow darken-3"> mdi-star </v-icon>
                             </v-list-item-action>
@@ -112,7 +152,9 @@
   import { sync, call } from 'vuex-pathify';
   import capitalize from 'lodash/capitalize';
 
-  Vue.component('MainMenu', () => import(/* webpackChunkName: 'components-drawer-menu' */ '@/components/Navigation/MainMenu'));
+  Vue.component('MainMenu', () =>
+    import(/* webpackChunkName: 'components-drawer-menu' */ '@/components/Navigation/MainMenu'),
+  );
 
   // @vue/component
   export default {
@@ -158,27 +200,21 @@
         ],
       };
     },
+
     computed: {
-      ...sync('drawers', ['secureDefaultDrawer', 'secureComponentDrawerBranch']),
+      ...sync('drawers', ['secureDefaultDrawer']),
       ...sync('componentManagement', ['navigationStructure']),
       ...sync('authentication', ['session', 'activeBranch']),
       user: sync('authentication@session.user'),
 
       fullName() {
-        return `${capitalize(this.user.entity.first_name)} ${capitalize(this.user.entity.last_name)}`;
+        return `${capitalize(this.user.entity.first_name)} ${capitalize(
+          this.user.entity.last_name,
+        )}`;
       },
     },
 
-    data() {
-      return {
-        secureComponentDrawerBranch: false,
-      };
-    },
-    watch: {
-      data(newValue, oldValue) {},
-    },
-
-    mounted() {
+    created() {
       this.getNavigationStructure();
     },
 

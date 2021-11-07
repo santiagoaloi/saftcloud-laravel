@@ -298,8 +298,13 @@ const actions = {
     state.loading = true;
     axios.get('api/component.showAll').then((response) => {
       if (response.status === 200) {
-        store.set('componentManagement/allComponents', response.data.components);
-        store.set('componentManagement/loading', false);
+        if (
+          !isEqual(state.allComponents, response.data.components) ||
+          !state.allComponents.length
+        ) {
+          store.set('componentManagement/allComponents', response.data.components);
+          store.set('componentManagement/loading', false);
+        }
       }
     });
   },
@@ -586,7 +591,7 @@ const actions = {
   },
 
   //* Sets the component as starred, modular or active.
-  setComponentStatus(component) {
+  setComponentStatus(_, component) {
     axios.patch(`api/component/${component.id}`, { status: component.status });
   },
 

@@ -52,6 +52,10 @@ const vuexLocal = new VuexPersist({
     entitiesManagement: {
       ...state.entitiesManagement,
     },
+
+    eventsManagement: {
+      ...state.eventsManagement,
+    },
   }),
 });
 

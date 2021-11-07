@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-app-bar :class="{ darkBorder: isDark }" clipped-right app src="storage/appbar/prism2.jpg">
+    <v-app-bar clipped-right app flat>
       <v-app-bar-nav-icon
         dark
         class="ml-n2 mr-3"
@@ -20,11 +20,11 @@
         v-model="search"
         v-lazy-input:debounce="200"
         spellcheck="false"
-        :outlined="isDark"
-        :solo="!isDark"
+        outlined
         :color="isDark ? '#208ad6' : 'grey'"
-        :background-color="isDark ? '#28292b' : 'white'"
         dense
+        flat
+        solo
         hide-details
         :placeholder="'Search ' + ($route.meta.search || '...')"
         prepend-inner-icon="mdi-magnify"
@@ -145,18 +145,6 @@
           </v-list-item>
 
           <v-divider />
-          <!-- 
-          <v-list-item>
-            <v-list-item-action>
-              <v-icon>mdi-tune-vertical</v-icon>
-            </v-list-item-action>
-            <v-list-item-content>
-              <v-list-item-title>{{ isDark ? 'Light theme' : 'Dark theme' }} </v-list-item-title>
-            </v-list-item-content>
-            <v-list-item-action>
-              <v-switch v-model="isDark" :ripple="false" color="grey darken-1" @click.stop />
-            </v-list-item-action>
-          </v-list-item> -->
 
           <v-list-item>
             <v-list-item-action>
@@ -186,7 +174,6 @@
   import { call, sync } from 'vuex-pathify';
   import CountryFlag from 'vue-country-flag';
   import capitalize from 'lodash/capitalize';
-  import Vuetify from '@/vuetify';
 
   export default {
     name: 'SecureAppbar',

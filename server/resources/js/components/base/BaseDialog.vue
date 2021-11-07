@@ -8,10 +8,17 @@
     :overlay-color="$vuetify.theme.dark ? '#1f1f24' : 'rgba(108, 122, 137)'"
     scrollable
     class="d-flex flex-column"
-    transition="fade-transition"
+    style="pointer-events: all !importantc"
     v-on="$listeners"
   >
-    <v-toolbar src="storage/appbar/prism2.jpg" class="pr-3" flat :dense="dense" dark color="#36393f">
+    <v-toolbar
+      src="storage/appbar/prism2.jpg"
+      class="pr-3"
+      flat
+      :dense="dense"
+      dark
+      color="#36393f"
+    >
       <template v-if="icon">
         <v-btn x-small color="white" text fab class="mr-3 pointer-events-none">
           <v-icon>{{ icon }}</v-icon>
@@ -33,23 +40,64 @@
       </template>
 
       <template v-if="saveOnly">
-        <v-btn v-if="!closeOnly" x-small color="white" outlined text fab :loading="loading" @click.stop="save">
+        <v-btn
+          v-if="!closeOnly"
+          x-small
+          color="white"
+          outlined
+          text
+          fab
+          :loading="loading"
+          @click.stop="save"
+        >
           <v-icon color="green lighten-2"> mdi-check </v-icon>
         </v-btn>
       </template>
 
       <template v-if="showRemove">
-        <v-btn x-small color="white" outlined text fab class="mx-1" icon dark :loading="loading" @click.stop="remove">
+        <v-btn
+          x-small
+          color="white"
+          outlined
+          text
+          fab
+          class="mx-1"
+          icon
+          dark
+          :loading="loading"
+          @click.stop="remove"
+        >
           <v-icon color="#00B985"> mdi-delete-empty-outline </v-icon>
         </v-btn>
       </template>
 
       <template v-if="!noActions && !saveOnly">
-        <v-btn v-if="!closeOnly" x-small color="white" outlined text fab class="mx-1" :loading="loading" @click.stop="save">
+        <v-btn
+          v-if="!closeOnly"
+          x-small
+          color="white"
+          outlined
+          text
+          fab
+          class="mx-1"
+          :loading="loading"
+          @click.stop="save"
+        >
           <v-icon color="green lighten-2"> mdi-check </v-icon>
         </v-btn>
 
-        <v-btn v-if="!closeOnly && !saveOnly" x-small color="white" outlined text fab icon dark class="ml-2" @click.stop="close">
+        <v-btn
+          v-if="!closeOnly && !saveOnly"
+          x-small
+          color="white"
+          outlined
+          text
+          fab
+          icon
+          dark
+          class="ml-2"
+          @click.stop="close"
+        >
           <v-icon>{{ fullscreen ? 'mdi-chevron-down' : 'mdi-close' }}</v-icon>
         </v-btn>
       </template>

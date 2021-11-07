@@ -8,6 +8,9 @@ import router from '@/router';
 import { store } from '@/store';
 import vuetify from '@/vuetify';
 
+Vue.config.devtools = true;
+Vue.config.performance = true;
+
 // Application
 import App from './App.vue';
 

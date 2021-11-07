@@ -1,9 +1,8 @@
 <template>
   <v-navigation-drawer
-    v-model="drawer"
+    :value="drawer"
     mobile-breakpoint="0"
     clipped
-    :color="isDark ? '#24292e' : '#edeff0'"
     width="350"
     hide-overlay
     right
@@ -29,20 +28,14 @@
   import { sync, get } from 'vuex-pathify';
 
   Vue.component('ComponentDrilldown', () =>
-    import(
-      /* webpackChunkName: 'components-navigation-drilldown' */ '@/components/Navigation/ComponentDrilldown'
-    ),
+    import(/* webpackChunkName: 'drawer-bundle' */ '@/components/Navigation/ComponentDrilldown'),
   );
-
   Vue.component('ComponentDrilldownBar', () =>
-    import(
-      /* webpackChunkName: 'components-navigation-drilldown-bar' */ '@/components/Navigation/ComponentDrilldownBar'
-    ),
+    import(/* webpackChunkName: 'drawer-bundle' */ '@/components/Navigation/ComponentDrilldownBar'),
   );
-
   Vue.component('ComponentDrilldownFooter', () =>
     import(
-      /* webpackChunkName: 'components-navigation-drilldown-footer' */ '@/components/Navigation/ComponentDrilldownFooter'
+      /* webpackChunkName: 'drawer-bundle' */ '@/components/Navigation/ComponentDrilldownFooter'
     ),
   );
 
