@@ -18,8 +18,11 @@
     "/dist/js/components-no-data.js": "/dist/js/components-no-data.js",
     "/dist/js/components-dialog-new-component.js": "/dist/js/components-dialog-new-component.js",
     "/dist/js/components-edit-sheet.js": "/dist/js/components-edit-sheet.js",
+<<<<<<< HEAD
     "/dist/js/components-dialog-config-editor.js": "/dist/js/components-dialog-config-editor.js",
     "/dist/js/secure-bundle-comp.js": "/dist/js/secure-bundle-comp.js",
+=======
+>>>>>>> 41b4c85f2a557b775978320ada96c727e4104629
     "/dist/js/form-fields-list.js": "/dist/js/form-fields-list.js",
     "/dist/js/form-fields-toolbar.js": "/dist/js/form-fields-toolbar.js",
     "/dist/js/form-fields-right-panel.js": "/dist/js/form-fields-right-panel.js",
@@ -36,6 +39,11 @@
     "/dist/js/secure-component-drawer.js": "/dist/js/secure-component-drawer.js",
     "/dist/js/secure-entities-drawer.js": "/dist/js/secure-entities-drawer.js",
     "/dist/js/public-bundle.js": "/dist/js/public-bundle.js",
+<<<<<<< HEAD
+=======
+    "/dist/js/components-dialog-config-editor.js": "/dist/js/components-dialog-config-editor.js",
+    "/dist/js/secure-bundle-comp.js": "/dist/js/secure-bundle-comp.js",
+>>>>>>> 41b4c85f2a557b775978320ada96c727e4104629
     "/dist/js/edit-bundle.js": "/dist/js/edit-bundle.js",
     "/dist/js/form-fields-tabs-basic.js": "/dist/js/form-fields-tabs-basic.js",
     "/dist/js/form-fields-tabs-settings.js": "/dist/js/form-fields-tabs-settings.js",

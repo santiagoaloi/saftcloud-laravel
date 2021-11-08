@@ -1,15 +1,13 @@
 <template>
   <div>
-    <entities-appbar />
-    <entities-tabs />
+    <base-flex-container>
+      <template #top>
+        <div class="removeGutters">
+          <entities-appbar />
+          <entities-tabs />
+        </div>
+      </template>
 
-    <v-card
-      color="transparent"
-      flat
-      :height="calculateHeight()"
-      :class="{ dottedBackground: !isTableLayout }"
-      class="overflow-y-scroll"
-    >
       <v-scroll-y-transition hide-on-leave>
         <entities-table v-if="isTableLayout && !isAllFilteredEntitiesEmpty" />
       </v-scroll-y-transition>
@@ -21,7 +19,7 @@
       <v-scroll-y-transition hide-on-leave>
         <entities-no-data v-if="isAllFilteredEntitiesEmpty" />
       </v-scroll-y-transition>
-    </v-card>
+    </base-flex-container>
 
     <dialog-entity v-if="dialogEntity" />
     <dialog-privileges v-if="dialogPrivileges" />
@@ -67,7 +65,7 @@
       ]),
     },
 
-    mounted() {
+    created() {
       this.getUsers();
       this.getRoles();
       this.getCapabilities();

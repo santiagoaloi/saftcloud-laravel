@@ -30,7 +30,7 @@
     </v-sheet>
 
     <v-divider class="mt-3"></v-divider>
-    <dialog-config-editor />
+    <dialog-config-editor v-if="dialogEditor" />
   </div>
 </template>
 

@@ -13,12 +13,8 @@
     components: {
       PublicView: () => import(/* webpackChunkName: 'public-bundle' */ './View'),
       PublicBar: () => import(/* webpackChunkName: 'public-bundle' */ './AppBar'),
-      PublicFooter: () => import(/* webpackChunkName: 'public-bundle' */ './Footer'),
-      Snackbar: () =>
-        import(
-          /* webpackChunkName: 'public-snackbar' */
-          '@/components/Base/Snackbar'
-        ),
+      PublicFooter: () => import(/* webpackChunkName: 'public-footer' */ './Footer'),
+      Snackbar: () => import('@/components/Base/Snackbar'),
     },
   };
 </script>

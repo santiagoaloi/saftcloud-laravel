@@ -21,6 +21,7 @@
       <v-tooltip transition="false" color="black" top>
         <template #activator="{ on }">
           <v-btn
+            v-show="selectedEntityType === 'Users'"
             depressed
             dark
             large
@@ -29,6 +30,25 @@
             :disabled="['Root', 'Admin'].includes(selectedEntity.name)"
             v-on="on"
             @click.stop="removeUserWarning(selectedEntity.id, selectedEntity.entity.first_name)"
+          >
+            <v-icon color="pink lighten-1" dark> mdi-trash-can-outline </v-icon>
+          </v-btn>
+        </template>
+        <span>Delete</span>
+      </v-tooltip>
+
+      <v-tooltip transition="false" color="black" top>
+        <template #activator="{ on }">
+          <v-btn
+            v-show="selectedEntityType === 'Roles'"
+            depressed
+            dark
+            large
+            small
+            :color="isDark ? '' : 'white'"
+            :disabled="['Root', 'Admin'].includes(selectedEntity.name)"
+            v-on="on"
+            @click.stop="removeRoleWarning(selectedEntity.id, selectedEntity.name)"
           >
             <v-icon color="pink lighten-1" dark> mdi-trash-can-outline </v-icon>
           </v-btn>

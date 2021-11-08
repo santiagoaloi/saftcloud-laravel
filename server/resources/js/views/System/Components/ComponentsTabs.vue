@@ -1,44 +1,36 @@
 <template>
-  <div>
-    <div class="d-flex justify-space-between align-center">
-      <v-tabs
-        v-model="activeStatusTab"
-        color="blue"
-        show-arrows
-        class="col-10 mt-n3"
-        background-color="transparent"
-        slider-size="1"
+  <div class="d-flex justify-space-between align-center">
+    <v-tabs
+      v-once
+      v-model="activeStatusTab"
+      color="primary"
+      show-arrows
+      class="col-10 mt-n3"
+      background-color="transparent"
+      slider-size="2"
+    >
+      <v-tab
+        v-for="({ icon, name }, i) in componentStatusTabs"
+        :key="i"
+        :active-class="isDark ? 'white--text' : ''"
+        :disabled="isComponentsEmpty"
+        :ripple="false"
       >
-        <v-tab
-          v-for="(tab, i) in componentStatusTabs"
-          :key="i"
-          :active-class="isDark ? 'white--text' : ''"
-          :disabled="isComponentsEmpty"
-          :ripple="false"
-        >
-          <v-icon small left>
-            {{ tab.icon }}
-          </v-icon>
-          {{ tab.name }}
-        </v-tab>
-      </v-tabs>
+        <v-icon v-once small left>
+          {{ icon }}
+        </v-icon>
+        {{ name }}
+      </v-tab>
+    </v-tabs>
 
-      <div class="d-flex">
-        <!-- <v-switch v-model="multipleSelect" label="Multiple selection" class="mt-1 mx-4"> </v-switch> -->
-        <v-btn
-          class="mt-n3"
-          plain
-          :disabled="isAllFilteredComponentsEmpty"
-          @click="isTableLayout = !isTableLayout"
-        >
-          <v-icon left>
-            {{ isTableLayout ? ' mdi-view-grid-outline' : ' mdi-format-list-bulleted-square' }}
-          </v-icon>
-          {{ isTableLayout ? 'Grid' : 'List' }}
-        </v-btn>
-      </div>
+    <div class="mr-4">
+      <v-btn plain :disabled="isAllFilteredComponentsEmpty" @click="isTableLayout = !isTableLayout">
+        <v-icon left>
+          {{ isTableLayout ? ' mdi-view-grid-outline' : ' mdi-format-list-bulleted-square' }}
+        </v-icon>
+        {{ isTableLayout ? 'Grid' : 'List' }}
+      </v-btn>
     </div>
-    <v-divider />
   </div>
 </template>
 

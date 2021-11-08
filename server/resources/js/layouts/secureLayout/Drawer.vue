@@ -1,20 +1,13 @@
 <template>
-  <div>
+  <div class="select-none">
     <!-- Navigation -->
-    <v-navigation-drawer
-      v-model="secureDefaultDrawer"
-      src="storage/appbar/prism2.jpg"
-      dark
-      width="250"
-      app
-      class="elevation-1"
-    >
+    <v-navigation-drawer v-model="secureDefaultDrawer" dark width="250" app class="elevation-1">
       <!-- Navigation menu fixed  -->
       <template #prepend>
         <vue-diagonal
           class="mt-n5"
           :deg="-7"
-          background="linear-gradient(331deg, rgba(44, 91, 122, 1) 0%, rgba(0, 10, 20 , 0.2) 0%)"
+          background="linear-gradient(331deg, rgba(34, 37, 48, 1) 0%, rgba(0, 10, 20 , 0.2) 0%)"
           space-after
           space-before
         >
@@ -36,14 +29,14 @@
               </v-badge>
 
               <div style="max-width: 200px" class="title my-2 text-truncate d-inline-block">
-                Valeria Monzasa
+                {{ fullName }}
               </div>
 
               <small
                 style="max-width: 200px"
                 class="mt-n2 mb-4 text-truncate d-inline-block grey--text"
               >
-                valeria_mariab12@yahoo.com.ar
+                {{ user.email }}
               </small>
             </div>
             <div class="text-center">
@@ -163,11 +156,14 @@
     import(/* webpackChunkName: 'components-drawer-menu' */ '@/components/Navigation/MainMenu'),
   );
 
+  // @vue/component
   export default {
     name: 'SecureDrawer',
 
     data() {
       return {
+        secureComponentDrawerBranch: false,
+
         menu: false,
         selected: [2],
         items: [
@@ -204,8 +200,9 @@
         ],
       };
     },
+
     computed: {
-      ...sync('drawers', ['secureDefaultDrawer', 'secureComponentDrawerBranch']),
+      ...sync('drawers', ['secureDefaultDrawer']),
       ...sync('componentManagement', ['navigationStructure']),
       ...sync('authentication', ['session', 'activeBranch']),
       user: sync('authentication@session.user'),
@@ -217,7 +214,7 @@
       },
     },
 
-    mounted() {
+    created() {
       this.getNavigationStructure();
     },
 

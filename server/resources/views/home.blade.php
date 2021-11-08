@@ -4,16 +4,17 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="icon" href="/favicon.ico">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preload" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;400&display=swap" rel="stylesheet">
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <title>SaftCloud</title>
-        <link  href="{{ mix('dist/css/app.css') }}" rel="stylesheet">
     </head>
         <body style="background: #24292e;overflow:hidden">
         <noscript>
             <strong>We're sorry but SaftCloud doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
         </noscript>
         <div id="app"></div>
-        <script defer src="{{ mix('dist/js/manifest.js') }}"></script>
+        <script  src="{{ mix('dist/js/manifest.js') }}"></script>
         <script defer src="{{ mix('dist/js/vendor.js') }}"></script>
-        <script defer src="{{ mix('dist/js/app.js') }}"></script>
+        <script  src="{{ mix('dist/js/app.js') }}"></script>

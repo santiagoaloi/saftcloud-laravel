@@ -13,8 +13,7 @@ export default [
     meta: {
       layout: 'public-layout',
     },
-    component: () =>
-      import(/* webpackChunkName: 'public-homepage' */ '@/views/Public/Homepage/Index.vue'),
+    component: () => import(/* webpackChunkName: 'public-homepage' , webpackPreload: true */ '@/views/Public/Homepage/Index.vue'),
   },
 
   {
@@ -23,10 +22,7 @@ export default [
     meta: {
       layout: 'public-layout',
     },
-    component: () =>
-      import(
-        /* webpackChunkName: 'public-signup', webpackPrefetch: true */ '@/views/Public/Signup/Signup.vue'
-      ),
+    component: () => import(/* webpackChunkName: 'public-signup', webpackPrefetch: true */ '@/views/Public/Signup/Signup.vue'),
   },
 
   {
@@ -35,9 +31,6 @@ export default [
     meta: {
       layout: 'public-layout',
     },
-    component: () =>
-      import(
-        /* webpackChunkName: 'public-signup-verify-account' */ '@/views/Public/Signup/VerifyAccount.vue'
-      ),
+    component: () => import(/* webpackChunkName: 'public-signup-verify-account' */ '@/views/Public/Signup/VerifyAccount.vue'),
   },
 ];

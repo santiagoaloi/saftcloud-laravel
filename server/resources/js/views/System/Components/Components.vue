@@ -9,19 +9,17 @@
         <components-tabs />
       </template>
 
-      <template #main>
-        <v-scroll-y-transition hide-on-leave>
-          <components-table v-if="isTableLayout && !isAllFilteredComponentsEmpty" />
-        </v-scroll-y-transition>
+      <v-scroll-y-transition hide-on-leave>
+        <components-table v-if="isTableLayout && !isAllFilteredComponentsEmpty" />
+      </v-scroll-y-transition>
 
-        <v-scroll-x-transition hide-on-leave>
-          <components-grid v-if="!isTableLayout && !isAllFilteredComponentsEmpty" />
-        </v-scroll-x-transition>
+      <v-scroll-x-transition hide-on-leave>
+        <components-grid v-if="!isTableLayout && !isAllFilteredComponentsEmpty" />
+      </v-scroll-x-transition>
 
-        <v-scroll-y-transition hide-on-leave>
-          <components-no-data v-if="isAllFilteredComponentsEmpty" />
-        </v-scroll-y-transition>
-      </template>
+      <v-scroll-y-transition hide-on-leave>
+        <components-no-data v-if="isAllFilteredComponentsEmpty" />
+      </v-scroll-y-transition>
     </base-flex-container>
 
     <dialog-component v-if="dialogComponent" />
@@ -31,7 +29,6 @@
 
 <script>
   import { sync, call, get } from 'vuex-pathify';
-  import ComponentsAppbar from './ComponentsAppbar.vue';
 
   export default {
     name: 'ComponentsManagement',
@@ -39,8 +36,7 @@
       ComponentsToolbar: () =>
         import(/* webpackChunkName: 'secure-bundle-components' */ './ComponentToolbar'),
 
-      // ComponentsAppbar: () =>
-      //   import(/* webpackChunkName: 'secure-bundle-components' */ './ComponentsAppbar'),
+      // ComponentsAppbar: () => import(/* webpackChunkName: 'secure-bundle-components' */ './ComponentsAppbar'),
       ComponentsTabs: () =>
         import(/* webpackChunkName: 'secure-bundle-components' */ './ComponentsTabs'),
       ComponentsGrid: () =>
@@ -63,7 +59,7 @@
       ...get('componentManagement', ['isAllFilteredComponentsEmpty', 'selectedComponent']),
     },
 
-    mounted() {
+    created() {
       this.getComponents();
       this.getDbGroupNames();
       this.getDbTablesAndColumns();
@@ -74,10 +70,3 @@
     },
   };
 </script>
-
-<style scoped>
-  .removeGutters {
-    margin-top: -11px;
-    margin-left: -11px;
-  }
-</style>

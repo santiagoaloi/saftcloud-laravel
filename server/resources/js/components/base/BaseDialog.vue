@@ -8,7 +8,7 @@
     :overlay-color="$vuetify.theme.dark ? '#1f1f24' : 'rgba(108, 122, 137)'"
     scrollable
     class="d-flex flex-column"
-    transition="fade-transition"
+    style="pointer-events: all !importantc"
     v-on="$listeners"
   >
     <v-toolbar

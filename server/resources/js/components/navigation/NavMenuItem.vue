@@ -31,7 +31,6 @@
       :sub-group="subgroup"
       color="primary lighten-5"
       :prepend-icon="subgroup ? false : ''"
-      @click="showId(menuItem)"
     >
       <template #activator>
         <slot v-if="!subgroup" name="prependIcon">
@@ -86,11 +85,6 @@
           this.icon = val ? 'mdi-folder-open-outline' : 'mdi-folder-outline';
         },
       );
-    },
-    methods: {
-      showId(item) {
-        console.log(item);
-      },
     },
   };
 </script>

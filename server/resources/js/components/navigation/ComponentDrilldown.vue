@@ -1,5 +1,5 @@
 <template>
-  <div v-if="selectedComponent">
+  <div>
     <v-expand-transition>
       <v-sheet
         v-if="hasUnsavedChanges(selectedComponent)"
@@ -37,7 +37,6 @@
             v-lazy-input:debounce="100"
             outlined
             :color="isDark ? '#208ad6' : 'grey'"
-            :background-color="isDark ? '#28292b' : 'white'"
             :prepend-inner-icon="selectedComponent.config_settings.icon.name"
             spellcheck="false"
             flat
@@ -57,7 +56,7 @@
                     icon
                     :ripple="false"
                     v-on="on"
-                    @click="setStarred(selectedComponent)"
+                    @click.stop="setStarred(selectedComponent)"
                   >
                     <v-icon :color="isStarredColor(selectedComponent)">
                       {{ isStarredIcon(selectedComponent) }}
@@ -76,12 +75,12 @@
           v-lazy-input:debounce="100"
           outlined
           :color="isDark ? '#208ad6' : 'grey'"
-          :background-color="isDark ? '#28292b' : 'white'"
           spellcheck="false"
           :rows="2"
           dense
           hide-details
           class="mb-3"
+          solo
         />
 
         <div class="mt-2">
@@ -91,13 +90,13 @@
             outlined
             :color="isDark ? '#208ad6' : 'grey'"
             item-color="indigo lighten-4"
-            :background-color="isDark ? '#28292b' : 'white'"
             :items="allGroups"
             :maxlength="25"
             item-value="id"
             item-text="name"
             hide-no-data
             dense
+            solo
           />
         </div>
       </v-container>

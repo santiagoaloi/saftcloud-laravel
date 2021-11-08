@@ -34,11 +34,9 @@
                 closeOnContentClick: true,
               }"
               :outlined="isDark"
-              @update:search-input="syncGroupInputValue($event)"
               @focus="reset"
               @input="reset"
               @blur="reset"
-              @keydown.enter.prevent="validateComponentForm()"
             >
               <template #item="{ item, on }">
                 <v-list-item :ripple="false" v-on="on">
@@ -69,7 +67,6 @@
               :background-color="isDark ? '#28292b' : 'white'"
               :error="errors.length > 0"
               :error-messages="errors[0]"
-              @keydown.enter.prevent="validateComponentForm()"
               @focus="reset"
               @input="reset"
               @blur="reset"
@@ -96,7 +93,6 @@
               :error="errors.length > 0"
               :outlined="isDark"
               :error-messages="errors[0]"
-              @keydown.enter.prevent="validateComponentForm()"
               @focus="reset"
               @input="reset"
               @blur="reset"
@@ -122,7 +118,6 @@
               :background-color="isDark ? '#28292b' : 'white'"
               :error-messages="errors[0]"
               :error="errors.length > 0"
-              @keydown.enter.prevent="validateComponentForm()"
               @focus="reset"
               @input="reset"
               @blur="reset"
@@ -158,11 +153,9 @@
 </template>
 <script>
   import { sync, call } from 'vuex-pathify';
-  import componentGroups from '@/mixins/componentGroups';
 
   export default {
     name: 'DialogComponent',
-    mixins: [componentGroups],
 
     data() {
       return {
@@ -181,7 +174,7 @@
       ]),
     },
 
-    mounted() {
+    created() {
       this.getDbTables();
     },
 

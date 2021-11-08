@@ -84,4 +84,9 @@ $utilities: (
     class: overflow-x,
     values: scroll hidden auto visible,
   ),
+  'user-select': (
+    property: user-select,
+    class: select,
+    values: none,
+  ),
 );

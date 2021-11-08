@@ -9,7 +9,7 @@
 
 <script>
   export default {
-    name: 'DefaultSnackbar',
+    name: 'BaseFieldLabel',
     props: {
       label: {
         type: String,
