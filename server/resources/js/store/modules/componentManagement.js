@@ -483,7 +483,6 @@ const actions = {
 
         //* Set the status tab as "all"
         store.set('componentManagement/activeStatusTab', 0);
-
         store.set('componentManagement/dialogComponent', false);
 
         //* Autoselect latest created component

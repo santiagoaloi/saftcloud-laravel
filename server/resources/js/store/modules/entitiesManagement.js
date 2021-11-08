@@ -85,7 +85,6 @@ const getters = {
         const search = state.searchPrivileges.toString().toLowerCase();
 
         const privileges = [];
-
         for (const role of getters.selectedEntity.role) {
           for (const capability of role.capability) {
             privileges.push({ name: capability.name, role: capability.pivot.role_id });
