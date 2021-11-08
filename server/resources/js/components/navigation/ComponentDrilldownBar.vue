@@ -1,5 +1,5 @@
 <template>
-  <div v-if="selectedComponent" class="mt-3">
+  <div v-if="selectedComponent" class="pt-3">
     <v-app-bar color="transparent" flat dense>
       <v-tooltip transition="false" color="black" bottom>
         <template #activator="{ on }">
@@ -52,7 +52,6 @@
         <span>Hide</span>
       </v-tooltip>
     </v-app-bar>
-    <v-divider />
   </div>
 </template>
 

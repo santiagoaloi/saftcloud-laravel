@@ -12,10 +12,10 @@ import pathify from '@/plugins/vuex-pathify';
 import * as modules from './modules';
 
 // Blacklist module keys
-// const componentManagementFiltered = (module) => {
-//   const blackList = ['componentEditSheet'];
-//   return omit(module, blackList);
-// };
+const componentManagementFiltered = (module) => {
+  const blackList = ['selectedComponentGroupsMenuTrigger'];
+  return omit(module, blackList);
+};
 
 // Whitelist module keys
 // const componentManagementFiltered = (module) => {
@@ -34,20 +34,20 @@ const vuexLocal = new VuexPersist({
   reducer: (state) => ({
     theme: {
       isDark: state.theme.isDark,
-      overlay: state.theme.overlay,
+      // overlay: state.theme.overlay,
     },
 
     authentication: {
       session: state.authentication.session,
       activeBranch: state.authentication.activeBranch,
     },
-    // componentManagement: {
-    //   ...componentManagementFiltered(state.componentManagement),
-    // },
-
     componentManagement: {
-      ...state.componentManagement,
+      ...componentManagementFiltered(state.componentManagement),
     },
+
+    // componentManagement: {
+    //   ...state.componentManagement,
+    // },
 
     entitiesManagement: {
       ...state.entitiesManagement,

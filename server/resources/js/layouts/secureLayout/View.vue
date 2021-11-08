@@ -1,7 +1,13 @@
 <template>
   <v-main style="min-height: 100vh">
     <!-- <secure-comp-toolbar v-if="$route.name.startsWith('Components')" /> -->
-    <v-overlay :z-index="6" :value="overlay" :color="isDark ? '#1f1f24' : 'rgba(108, 122, 137)'" />
+    <v-overlay
+      v-if="overlayValue"
+      :z-index="6"
+      :opacity="0.9"
+      :color="$vuetify.theme.dark ? '#20202b' : 'rgba(108, 122, 137)'"
+      :value="overlayValue"
+    />
 
     <v-fade-transition mode="out-in" :duration="520" hide-on-leave>
       <router-view />
@@ -18,11 +24,22 @@
 
     computed: {
       ...sync('theme', ['isDark', 'overlay']),
-    },
+      ...sync('componentManagement', ['selectedComponentGroupsMenuTrigger']),
+      ...sync('drawers', ['secureComponentDrawerBranch']),
 
-    // components: {
-    //   StatusBar: () => import(/* webpackChunkName: 'components-status-bar' */ './StatusBar'),
-    //   SecureCompToolbar: () => import(/* webpackChunkName: 'secure-bundle' */ './ComponentToolbar'),
-    // },
+      overlayValue() {
+        if (this.selectedComponentGroupsMenuTrigger || this.secureComponentDrawerBranch) {
+          return true;
+        }
+        return false;
+      },
+
+      zindex() {
+        if (this.secureComponentDrawerBranch) {
+          return 4;
+        }
+        return 4;
+      },
+    },
   };
 </script>

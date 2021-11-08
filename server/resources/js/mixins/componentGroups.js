@@ -10,10 +10,12 @@ export default {
   },
 
   computed: {
-    ...sync('theme', ['isDark']),
+    ...sync('theme', ['isDark', 'overlay']),
     ...sync('componentManagement', [
       'allGroups',
       'selectedComponentGroups',
+      'selectedComponentGroupsMenu',
+      'selectedComponentGroupsMenuTrigger',
       'groupName',
       'groupParent',
       'allComponents',

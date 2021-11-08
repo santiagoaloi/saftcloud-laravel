@@ -30,6 +30,7 @@
         prepend-inner-icon="mdi-magnify"
         :class="expand ? 'expanded' : 'shrinked'"
         class="mx-11 pr-12"
+        rounded
         @focus="expand = true"
         @blur="expand = false"
       />

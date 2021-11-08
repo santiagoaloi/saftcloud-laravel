@@ -11,7 +11,15 @@
 
     <v-tooltip transition="false" color="black" top>
       <template #activator="{ on }">
-        <v-btn :to="`/${selectedComponent.name}`" depressed dark large small :color="isDark ? '' : 'white'" v-on="on">
+        <v-btn
+          :to="`/${selectedComponent.name}`"
+          depressed
+          dark
+          large
+          small
+          :color="isDark ? '' : 'white'"
+          v-on="on"
+        >
           <v-icon :color="isDark ? '' : 'black'" dark> mdi-link </v-icon>
         </v-btn>
       </template>
@@ -27,7 +35,14 @@
           small
           :color="isDark ? '' : 'white'"
           v-on="on"
-          @click.stop="removeComponentWarning(selectedComponent.id, 'delete', 'component', selectedComponent.config.general_config.title)"
+          @click.stop="
+            removeComponentWarning(
+              selectedComponent.id,
+              'delete',
+              'component',
+              selectedComponent.config.general_config.title,
+            )
+          "
         >
           <v-icon color="pink lighten-1" dark> mdi-trash-can-outline </v-icon>
         </v-btn>
@@ -37,7 +52,16 @@
 
     <v-tooltip transition="false" color="black" top>
       <template #activator="{ on }">
-        <v-btn :disabled="!hasUnsavedChanges(selectedComponent)" depressed large small :color="isDark ? '' : 'white'" :loading="loading" @click="save()" v-on="on">
+        <v-btn
+          :disabled="!hasUnsavedChanges(selectedComponent)"
+          depressed
+          large
+          small
+          :color="isDark ? '' : 'white'"
+          :loading="loading"
+          @click="save()"
+          v-on="on"
+        >
           <v-icon color="green" dark>
             {{ hasUnsavedChanges(selectedComponent) ? 'mdi-check' : 'mdi-check-all' }}
           </v-icon>
@@ -50,7 +74,6 @@
 
 <script>
   import { sync, call, get } from 'vuex-pathify';
-  import { store } from '@/store';
   import componentActions from '@/mixins/componentActions';
 
   export default {
@@ -66,7 +89,11 @@
     computed: {
       ...sync('theme', ['isDark']),
       ...sync('componentManagement', ['componentEditSheet']),
-      ...get('componentManagement', ['selectedComponent', 'hasUnsavedChanges', 'hasValidationErrors']),
+      ...get('componentManagement', [
+        'selectedComponent',
+        'hasUnsavedChanges',
+        'hasValidationErrors',
+      ]),
     },
 
     methods: {

@@ -2,6 +2,7 @@
   <div>
     <secure-bar />
     <secure-drawer />
+
     <secure-view />
     <secure-comp-drawer v-if="$route.name.startsWith('Components') && selectedComponent" />
     <secure-ent-drawer v-if="$route.name.startsWith('Entities')" />

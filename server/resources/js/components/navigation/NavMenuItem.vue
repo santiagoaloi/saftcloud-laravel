@@ -29,7 +29,7 @@
       :value="menuItem.regex ? menuItem.regex.test($route.path) : false"
       :disabled="menuItem.disabled"
       :sub-group="subgroup"
-      color="primary lighten-5"
+      color="white"
       :prepend-icon="subgroup ? false : ''"
     >
       <template #activator>

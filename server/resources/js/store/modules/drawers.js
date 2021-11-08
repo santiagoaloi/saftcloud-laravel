@@ -5,6 +5,7 @@ const state = {
   secureDefaultDrawer: true,
   secureEntitiesDrawer: false,
   secureComponentDrawer: false,
+  secureComponentDrawerBranch: false,
 };
 
 const mutations = make.mutations(state);

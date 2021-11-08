@@ -4,8 +4,8 @@
     v-bind="$attrs"
     :fullscreen="$vuetify.breakpoint.smAndDown || isMaximized || fullscreen"
     :hide-overlay="noOverlay || fullscreen"
-    :overlay-opacity="0.7"
-    :overlay-color="$vuetify.theme.dark ? '#1f1f24' : 'rgba(108, 122, 137)'"
+    :overlay-opacity="0.9"
+    :overlay-color="$vuetify.theme.dark ? '#20202b' : 'rgba(108, 122, 137)'"
     scrollable
     class="d-flex flex-column"
     style="pointer-events: all !importantc"
@@ -26,7 +26,7 @@
       </template>
 
       <v-toolbar-title>
-        <h5 class="accent--text text--lighten-5">
+        <h5 class="text--lighten-5">
           {{ title }}
         </h5>
       </v-toolbar-title>
