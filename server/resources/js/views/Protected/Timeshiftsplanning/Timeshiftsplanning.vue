@@ -142,7 +142,6 @@
 </template>
 
 <script>
-  import { format, parse } from 'date-fns';
   import { v4 as uuidv4 } from 'uuid';
   import { sync } from 'vuex-pathify';
   import activeView from '@/mixins/activeView';
