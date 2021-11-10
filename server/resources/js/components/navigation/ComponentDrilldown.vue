@@ -1,11 +1,7 @@
 <template>
   <div>
     <v-expand-transition>
-      <v-sheet
-        v-if="hasUnsavedChanges(selectedComponent)"
-        :color="isDark ? '#2C2F33' : 'transparent'"
-        class="px-2"
-      >
+      <v-sheet v-if="hasUnsavedChanges(selectedComponent)" color="transparent" class="px-2">
         <v-alert class="mt-3" elevation="1" colored-border color="pink" border="right" dense>
           <div class="d-flex justify-space-between align-center">
             Unsaved
@@ -129,10 +125,10 @@
         </v-list-item-icon>
 
         <v-list-item-content>
-          <v-list-item-title>
-            {{ selectedComponent.config.general_config.sql_table }}</v-list-item-title
-          >
-          <v-list-item-subtitle>Table</v-list-item-subtitle>
+          <v-list-item-title> Table </v-list-item-title>
+          <v-list-item-subtitle>
+            {{ selectedComponent.config.general_config.sql_table }}
+          </v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
 
@@ -141,8 +137,10 @@
           <v-icon> mdi-table-row </v-icon>
         </v-list-item-icon>
         <v-list-item-content>
-          <v-list-item-title>{{ selectedComponent.config.columns.length }}</v-list-item-title>
-          <v-list-item-subtitle> Table columns</v-list-item-subtitle>
+          <v-list-item-title>Fields</v-list-item-title>
+          <v-list-item-subtitle>
+            {{ selectedComponent.config.columns.length }}</v-list-item-subtitle
+          >
         </v-list-item-content>
       </v-list-item>
 
@@ -179,8 +177,6 @@
           </v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
-
-      <v-divider />
     </v-list>
   </div>
 </template>

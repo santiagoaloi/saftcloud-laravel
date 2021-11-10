@@ -10,7 +10,7 @@ const axiosDefaults = require('axios/lib/defaults');
 // Default validation states definitions (they should all have validation errors to false)
 const getDefaultState = () => ({
   session: {},
-  activeBranch: undefined,
+  activeBranch: null,
   dialogTImeoutWarning: false,
   hasSessionExpired: false,
 });
@@ -23,11 +23,11 @@ const actions = {
 
   // Reset state to default values.
   resetState() {
-    store.set('authentication/session', {});
+    store.set('authentication/session', getDefaultState());
   },
 
   // Sends login form payload to backend.
-  async login({ commit }, data) {
+  async login({ commit, state }, data) {
     return axios
       .post('api/login', data)
       .then((response) => {
@@ -36,6 +36,12 @@ const actions = {
 
           // get rid of the status key
           delete data.status;
+
+          console.log();
+
+          if (!state.activeBranch) {
+            store.set('authentication/activeBranch', data.user.user_setting.default_branch);
+          }
 
           // Creates an "origin" of the login response data...
           // data.user.origin = cloneDeep(data);
@@ -66,6 +72,18 @@ const actions = {
 };
 
 const getters = {
+  branches(state) {
+    if (getters.isLoggedIn) {
+      return state.session.user.branch;
+    }
+  },
+
+  defaultBranch(state) {
+    if (getters.isLoggedIn) {
+      return state.session.user.user_setting.default_branch;
+    }
+  },
+
   isRoot: (state, getters) => {
     if (getters.isLoggedIn) {
       return state.session.user.role.some((r) => r.name === 'Root');

@@ -9,7 +9,7 @@
         <slot> </slot>
       </div>
 
-      <div v-show="$slots.footer" class="content">
+      <div v-show="$slots.footer">
         <slot name="footer"> </slot>
       </div>
     </div>

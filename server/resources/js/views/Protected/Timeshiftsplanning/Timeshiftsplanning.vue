@@ -34,7 +34,16 @@
             class="ma-2"
           ></v-select>
 
-          <v-btn v-if="type === 'day'" small fab icon @click="dialogTimeShift = true">
+          <v-btn
+            v-if="type === 'day'"
+            small
+            fab
+            icon
+            @click="
+              dialogTimeShift = true;
+              event.date = calendar;
+            "
+          >
             <v-icon> mdi-plus</v-icon></v-btn
           >
 
@@ -42,12 +51,15 @@
           <v-btn icon class="ma-2" @click="$refs.calendar.next()">
             <v-icon>mdi-chevron-right</v-icon>
           </v-btn>
+          <v-btn v-if="type !== 'month'" icon class="ma-2 mr-4" @click="type = 'month'">
+            <v-icon>mdi-close</v-icon>
+          </v-btn>
         </div>
       </template>
 
       <v-calendar
         ref="calendar"
-        v-model="value"
+        v-model="calendar"
         show-week
         class="overflow-x-hidden"
         :weekdays="weekday"
@@ -58,9 +70,9 @@
         :event-color="getEventColor"
         @click:event="eventDay"
       >
-        <template #day-label="{ day }">
+        <template #day-label="{ day, date }">
           <div class="d-flex justify-center align-center pa-5">
-            <v-btn x-small fab icon @click="viewDay">{{ day }} </v-btn>
+            <v-btn x-small fab icon @click="viewDay(date)">{{ day }} </v-btn>
           </div>
         </template>
       </v-calendar>
@@ -70,7 +82,7 @@
       v-if="dialogTimeShift"
       v-model="dialogTimeShift"
       width="50vw"
-      title="add time shift"
+      title="Time shift"
       icon="mdi-calendar-account"
       @save="saveEvent()"
       @close="dialogTimeShift = false"
@@ -86,6 +98,11 @@
               hide-no-data
               dense
               solo
+              height="55"
+              :background-color="isDark ? '#28292b' : 'white'"
+              :menu-props="{
+                transition: 'slide-y-transition',
+              }"
             />
           </v-col>
 
@@ -105,11 +122,14 @@
                 <baseFieldLabel required label="Start Date" />
                 <v-text-field
                   v-model="event.date"
-                  prepend-inner-icon="mdi-calendar"
+                  height="55"
+                  solo
+                  prepend-inner-icon="mdi-account"
+                  :outlined="isDark"
+                  :color="isDark ? '#208ad6' : 'grey'"
+                  :background-color="isDark ? '#28292b' : 'white'"
                   readonly
                   v-bind="attrs"
-                  solo
-                  dense
                   v-on="on"
                 ></v-text-field>
               </template>
@@ -127,12 +147,26 @@
           </v-col>
           <v-col sm="3">
             <baseFieldLabel required label="Start Time" />
-            <v-select v-model="event.timeStart" :items="hours" hide-no-data dense solo />
+            <v-select
+              v-model="event.timeStart"
+              height="55"
+              :background-color="isDark ? '#28292b' : 'white'"
+              :items="hours"
+              hide-no-data
+              solo
+            />
           </v-col>
 
           <v-col sm="3">
             <baseFieldLabel required label="End Time" />
-            <v-select v-model="event.timeEnd" :items="hours" hide-no-data dense solo />
+            <v-select
+              v-model="event.timeEnd"
+              height="55"
+              :background-color="isDark ? '#28292b' : 'white'"
+              :items="hours"
+              hide-no-data
+              solo
+            />
           </v-col>
         </v-row>
         <v-btn v-show="false" type="submit" />
@@ -202,7 +236,7 @@
         { text: 'Mon - Fri', value: [1, 2, 3, 4, 5] },
         { text: 'Mon, Wed, Fri', value: [1, 3, 5] },
       ],
-      value: '',
+      calendar: '',
       colors: ['blue', 'indigo', 'deep-purple', 'cyan', 'green', 'orange', 'grey darken-1'],
       names: ['Meeting', 'Holiday', 'PTO', 'Travel', 'Event', 'Birthday', 'Conference', 'Party'],
     }),
@@ -229,7 +263,6 @@
         this.dialogTimeShift = true;
         this.eventIndex = this.events.findIndex((e) => e.id === event.event.id);
         this.event = this.events[this.eventIndex];
-
         this.editing = true;
       },
 
@@ -260,8 +293,9 @@
         this.dialogTimeShift = false;
       },
 
-      viewDay({ date }) {
+      viewDay(date) {
         this.type = 'day';
+        this.calendar = date;
       },
 
       getEvents({ start, end }) {

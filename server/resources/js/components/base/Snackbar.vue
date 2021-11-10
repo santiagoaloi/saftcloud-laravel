@@ -1,5 +1,11 @@
 <template>
-  <v-snackbar v-model="snackbar.data.value" :timeout="6000" :color="snackbar.data.color" transition="slide-y-reverse-transition" multi-line>
+  <v-snackbar
+    v-model="snackbar.data.value"
+    :timeout="6000"
+    :color="snackbar.data.color"
+    transition="slide-y-reverse-transition"
+    multi-line
+  >
     <v-icon class="mr-4 mt-n1"> {{ snackbar.data.icon }}</v-icon>
     {{ snackbar.data.text }}
     <template #action="{ attrs }">

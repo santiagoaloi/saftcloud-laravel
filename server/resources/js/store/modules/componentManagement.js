@@ -38,6 +38,8 @@ const state = {
   selectedComponentIndex: 0,
   componentsLinkedToGroup: [],
   selectedComponentGroups: [],
+  selectedComponentGroupsMenu: [],
+  selectedComponentGroupsMenuTrigger: false,
   showSelectedFieldsOnly: false,
   componentsConfigStructure: {},
   selectedComponentTableRow: [],
@@ -164,7 +166,7 @@ const getters = {
   },
 
   //* Returns true if the current groups selected do not contain any components associated to them.
-  isAllFilteredComponentsEmpty: (_, getters) => getters.allComponentsFiltered.length === 0,
+  isAllFilteredComponentsEmpty: (_, getters) => isEmpty(getters.allComponentsFiltered),
 
   //* Returns the color of the star icon depending on its state.
   isStarredColor: () => (component) => component.status.starred ? 'orange' : 'grey darken-1',

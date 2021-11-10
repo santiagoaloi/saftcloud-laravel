@@ -50,8 +50,8 @@
               >
                 <template #activator="{ on, attrs }">
                   <v-btn :ripple="false" block rounded v-bind="attrs" v-on="on">
-                    <v-icon size="25" color="teal accent-2" left>mdi-store</v-icon> Downtown Store
-                    21
+                    <v-icon size="25" color="teal accent-2" left>mdi-store</v-icon>
+                    {{ activeBranchName }}
                     <v-icon size="25" color="teal accent-2" right>
                       {{
                         !secureComponentDrawerBranch ? 'mdi-chevron-down' : 'mdi-chevron-right'
@@ -86,23 +86,33 @@
 
                   <v-divider></v-divider>
 
-                  <v-list two-line>
-                    <v-list-item-group v-model="selected" active-class="primary--text" mandatory>
-                      <template v-for="(item, index) in items">
-                        <v-list-item :key="item.title">
+                  <v-list>
+                    <v-list-item-group v-model="selected" active-class="white--text" mandatory>
+                      <template v-for="(branch, index) in user.branch">
+                        <v-list-item :key="branch.id" @click="activeBranch = branch.id">
                           <template #default="{ active }">
-                            <v-list-item-content>
-                              <v-list-item-title v-text="item.title"></v-list-item-title>
+                            <v-list-item-icon>
+                              <v-icon :color="active ? 'indigo lighten-2' : 'grey'">
+                                {{
+                                  active
+                                    ? 'mdi-checkbox-blank-circle'
+                                    : 'mdi-checkbox-blank-circle-outline'
+                                }}</v-icon
+                              >
+                            </v-list-item-icon>
 
-                              <v-list-item-subtitle
+                            <v-list-item-content>
+                              <v-list-item-title v-text="branch.name"></v-list-item-title>
+
+                              <!-- <v-list-item-subtitle
                                 class="text--primary"
                                 v-text="item.headline"
                               ></v-list-item-subtitle>
 
-                              <v-list-item-subtitle v-text="item.subtitle"></v-list-item-subtitle>
+                              <v-list-item-subtitle v-text="item.subtitle"></v-list-item-subtitle> -->
                             </v-list-item-content>
 
-                            <v-list-item-action>
+                            <!-- <v-list-item-action>
                               <v-list-item-action-text
                                 v-text="item.action"
                               ></v-list-item-action-text>
@@ -112,31 +122,20 @@
                               </v-icon>
 
                               <v-icon v-else color="yellow darken-3"> mdi-star </v-icon>
-                            </v-list-item-action>
+                            </v-list-item-action> -->
                           </template>
                         </v-list-item>
 
-                        <v-divider v-if="index < items.length - 1" :key="index"></v-divider>
+                        <v-divider
+                          v-if="index < user.branch.length - 1"
+                          :key="branch.id"
+                        ></v-divider>
                       </template>
                     </v-list-item-group>
                   </v-list>
                 </v-card>
               </v-menu>
             </div>
-
-            <!-- <baseFieldLabel color="white" label="Branch" />
-                <v-select
-                  v-model="activeBranch"
-                  :menu-props="{ 'offset-y': true }"
-                  item-color="primary lighten-4"
-                  hide-details
-                  :items="session.user.branch"
-                  item-text="name"
-                  item-value="entity_id"
-                  dense
-                  solo
-                >
-                </v-select> -->
           </v-container>
         </vue-diagonal>
       </template>
@@ -162,8 +161,6 @@
 
     data() {
       return {
-        secureComponentDrawerBranch: false,
-
         menu: false,
         selected: [2],
         items: [
@@ -202,7 +199,8 @@
     },
 
     computed: {
-      ...sync('drawers', ['secureDefaultDrawer']),
+      ...sync('theme', ['overlay']),
+      ...sync('drawers', ['secureDefaultDrawer', 'secureComponentDrawerBranch']),
       ...sync('componentManagement', ['navigationStructure']),
       ...sync('authentication', ['session', 'activeBranch']),
       user: sync('authentication@session.user'),
@@ -212,6 +210,11 @@
           this.user.entity.last_name,
         )}`;
       },
+
+      activeBranchName() {
+        const branch = this.user.branch.find((b) => b.id === this.activeBranch);
+        return branch.name;
+      },
     },
 
     created() {
@@ -220,6 +223,7 @@
 
     methods: {
       ...call('componentManagement/*'),
+
       badgeText() {
         if (this.$root.isRoot) {
           return 'Root';

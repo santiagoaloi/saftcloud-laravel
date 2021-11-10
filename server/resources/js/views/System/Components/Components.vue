@@ -2,10 +2,8 @@
   <div>
     <base-flex-container>
       <template #top>
-        <div class="removeGutters">
-          <components-toolbar />
-          <!-- <components-appbar /> -->
-        </div>
+        <components-toolbar />
+        <!-- <components-appbar /> -->
         <components-tabs />
       </template>
 
@@ -20,6 +18,10 @@
       <v-scroll-y-transition hide-on-leave>
         <components-no-data v-if="isAllFilteredComponentsEmpty" />
       </v-scroll-y-transition>
+
+      <template #footer>
+        <status-bar />
+      </template>
     </base-flex-container>
 
     <dialog-component v-if="dialogComponent" />
@@ -35,6 +37,7 @@
     components: {
       ComponentsToolbar: () =>
         import(/* webpackChunkName: 'secure-bundle-components' */ './ComponentToolbar'),
+      StatusBar: () => import(/* webpackChunkName: 'secure-bundle-components' */ './StatusBar'),
 
       // ComponentsAppbar: () => import(/* webpackChunkName: 'secure-bundle-components' */ './ComponentsAppbar'),
       ComponentsTabs: () =>
@@ -42,7 +45,6 @@
       ComponentsGrid: () =>
         import(/* webpackChunkName: 'secure-bundle-components' */ './ComponentsGrid'),
       ComponentsTable: () => import(/* webpackChunkName: 'components-table' */ './ComponentsTable'),
-
       ComponentsNoData: () =>
         import(/* webpackChunkName: 'components-no-data' */ './ComponentsNoData'),
       DialogComponent: () =>
