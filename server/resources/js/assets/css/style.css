@@ -306,30 +306,7 @@ input::-webkit-inner-spin-button {
   align-items: center;
 }
 
-.router-tab {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-}
-
-.router-tab__container {
-  background: unset;
-  transition: all 0.4s ease-in-out;
-}
-
 .v-application ul,
 .v-application ol {
   padding-left: 0;
-}
-
-.router-tab__header {
-  z-index: 9;
-  box-sizing: border-box;
-  border-bottom: unset;
-  transition: all 0.2s ease-in-out;
-  background-color: rgba(34, 37, 48, 0.7);
 }

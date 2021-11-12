@@ -37,8 +37,7 @@ const actions = {
           // get rid of the status key
           delete data.status;
 
-          console.log();
-
+          // Set the default branch workspace
           if (!state.activeBranch) {
             store.set('authentication/activeBranch', data.user.user_setting.default_branch);
           }
@@ -55,6 +54,7 @@ const actions = {
 
   // Logs out the user.
   async logout({ dispatch }, data) {
+    store.set('loaders/logoutLoader', true);
     return axios
       .post('api/logout', data)
       .then(() => {

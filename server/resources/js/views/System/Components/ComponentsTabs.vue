@@ -1,7 +1,6 @@
 <template>
   <div class="d-flex justify-space-between align-center">
     <v-tabs
-      v-once
       v-model="activeStatusTab"
       color="primary"
       show-arrows
@@ -13,10 +12,9 @@
         v-for="({ icon, name }, i) in componentStatusTabs"
         :key="i"
         :active-class="isDark ? 'white--text' : ''"
-        :disabled="isComponentsEmpty"
         :ripple="false"
       >
-        <v-icon v-once small left>
+        <v-icon small left>
           {{ icon }}
         </v-icon>
         {{ name }}
@@ -42,7 +40,7 @@
     computed: {
       ...sync('theme', ['isDark']),
       ...sync('componentManagement', ['activeStatusTab', 'componentStatusTabs', 'isTableLayout']),
-      ...get('componentManagement', ['isComponentsEmpty', 'isAllFilteredComponentsEmpty']),
+      ...get('componentManagement', ['isAllFilteredComponentsEmpty']),
     },
   };
 </script>

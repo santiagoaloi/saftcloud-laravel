@@ -72,17 +72,17 @@ $utilities: (
   'overflow': (
     property: overflow,
     class: overflow,
-    values: scroll hidden auto visible,
+    values: scroll hidden auto visible overlay,
   ),
   'overflow-y': (
     property: overflow-y,
     class: overflow-y,
-    values: scroll hidden auto visible,
+    values: scroll hidden auto visible overlay,
   ),
   'overflow-x': (
     property: overflow-x,
     class: overflow-x,
-    values: scroll hidden auto visible,
+    values: scroll hidden auto visible overlay,
   ),
   'user-select': (
     property: user-select,

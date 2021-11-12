@@ -3,7 +3,7 @@
     <!-- <secure-comp-toolbar v-if="$route.name.startsWith('Components')" /> -->
     <v-overlay
       v-if="overlayValue"
-      :z-index="6"
+      :z-index="5"
       :opacity="0.9"
       :color="$vuetify.theme.dark ? '#20202b' : 'rgba(108, 122, 137)'"
       :value="overlayValue"

@@ -8,12 +8,15 @@ export { default as application } from './application';
 
 export { default as authentication } from './authentication';
 export { default as componentStatusBar } from './componentStatusBar';
-export { default as componentManagement } from './componentManagement';
 export { default as entitiesManagement } from './entitiesManagement';
+export { default as componentManagement } from './componentManagement';
 
-// Validations
-export { default as validationStatesComponents } from './validationStatesComponents';
-export { default as validationStatesEntities } from './validationStatesEntities';
+// Loaders
+export { default as loaders } from './loaders';
 
 // Events
 export { default as eventsManagement } from './eventsManagement';
+
+// Validations
+export { default as validationStatesEntities } from './validationStatesEntities';
+export { default as validationStatesComponents } from './validationStatesComponents';

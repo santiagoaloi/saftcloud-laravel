@@ -117,7 +117,17 @@
 
       <v-menu origin="center center" transition="scroll-y-transition" :nudge-bottom="10" offset-y>
         <template #activator="{ on, attrs }">
-          <v-btn x-small fab class="mr-3" text dark plain v-bind="attrs" v-on="on">
+          <v-btn
+            :loading="logoutLoader"
+            x-small
+            fab
+            class="mr-3"
+            text
+            dark
+            plain
+            v-bind="attrs"
+            v-on="on"
+          >
             <v-avatar size="33px">
               <v-img :src="user.avatar || 'storage/defaults/avatar.png'">
                 <template #placeholder>
@@ -254,6 +264,7 @@
       ...sync('application', ['search']),
       user: sync('authentication@session.user'),
       ...sync('drawers', ['secureDefaultDrawer']),
+      ...sync('loaders', ['logoutLoader']),
 
       settingsMenuFiltered() {
         return this.settingsMenu.filter(

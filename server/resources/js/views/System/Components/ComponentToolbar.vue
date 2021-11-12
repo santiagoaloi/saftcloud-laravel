@@ -21,32 +21,43 @@
           </v-list>
         </v-card>
 
-        <v-expand-transition>
-          <v-card
+        <v-fade-transition>
+          <base-flex-container
             v-if="selectedComponentGroupsMenuTrigger"
             v-click-outside="onClickOutside"
+            width="350px"
+            top="56"
+          >
+            <!-- <v-card
             style="z-index: 1; position: absolute"
             width="350"
             elevation="5"
-          >
-            <v-card-actions class="px-1">
-              <v-list-item class="px-1">
-                <v-text-field
-                  placeholder="Filter groups"
-                  dense
-                  solo
-                  :outlined="isDark"
-                  :color="isDark ? '#208ad6' : 'grey'"
-                  :background-color="isDark ? '#28292b' : 'white'"
-                  hide-details
-                >
-                </v-text-field>
+            max-height="70vh"
+            class="overflow-y-scroll"
+          > -->
 
-                <v-row class="pl-4 mr-0" align="center" justify="end">
-                  <v-btn height="40" block> Add </v-btn>
-                </v-row>
-              </v-list-item>
-            </v-card-actions>
+            <template #top>
+              <v-sheet>
+                <v-card-actions class="px-1">
+                  <v-list-item class="px-1">
+                    <v-text-field
+                      placeholder="Filter groups"
+                      dense
+                      solo
+                      :outlined="isDark"
+                      :color="isDark ? '#208ad6' : 'grey'"
+                      :background-color="isDark ? '#28292b' : 'white'"
+                      hide-details
+                    >
+                    </v-text-field>
+
+                    <v-row class="pl-4 mr-0" align="center" justify="end">
+                      <v-btn height="40" block> Add </v-btn>
+                    </v-row>
+                  </v-list-item>
+                </v-card-actions>
+              </v-sheet>
+            </template>
 
             <v-list>
               <v-list-item-group
@@ -83,27 +94,28 @@
                 </template>
               </v-list-item-group>
             </v-list>
-          </v-card>
-        </v-expand-transition>
+          </base-flex-container>
+        </v-fade-transition>
       </div>
 
       <v-spacer></v-spacer>
 
       <v-btn
-        tile
+        rounded
         large
         class="ml-2"
         :color="isDark ? '#373b4f' : 'primary'"
-        @click.stop="dialogComponent = true"
+        :loading="dialogComponentLoader"
+        @click.stop="dialogComponentTrigger()"
       >
         <v-icon :left="$vuetify.breakpoint.lgAndUp" small> mdi-view-grid-plus </v-icon
         >{{ createComponentTitle }}
       </v-btn>
 
       <v-btn
-        tile
+        rounded
         large
-        class="ml-2"
+        class="mx-2"
         :color="isDark ? '#373b4f' : 'primary'"
         @click="addGroupDialog()"
       >
@@ -119,9 +131,11 @@
 <script>
   import { sync } from 'vuex-pathify';
   import componentGroups from '@/mixins/componentGroups';
+  import BaseFlexContainer from '@/components/Base/BaseFlexContainer.vue';
 
   export default {
     name: 'ComponentsToolbar',
+    components: { BaseFlexContainer },
     mixins: [componentGroups],
     data() {
       return {
@@ -132,6 +146,7 @@
     computed: {
       ...sync('theme', ['isDark']),
       ...sync('componentManagement', ['dialogComponent', 'dialogEditor']),
+      ...sync('loaders', ['dialogComponentLoader']),
 
       configStructureTitle() {
         return this.$vuetify.breakpoint.lgAndUp ? 'Config Structure' : '';
@@ -155,6 +170,11 @@
     },
 
     methods: {
+      dialogComponentTrigger() {
+        this.dialogComponent = true;
+        this.dialogComponentLoader = true;
+      },
+
       onClickOutside() {
         this.selectedComponentGroupsMenuTrigger = false;
       },
@@ -177,14 +197,7 @@
   };
 </script>
 <style scoped>
-  .testList {
-    min-height: 87vh;
-    width: 320px;
-    position: absolute;
-    z-index: 99;
-  }
-
   .selected {
-    background-color: red;
+    background-color: #08082c;
   }
 </style>

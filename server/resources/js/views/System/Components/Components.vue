@@ -1,23 +1,28 @@
 <template>
   <div>
-    <base-flex-container>
+    <base-flex-container class="dottedBackground">
       <template #top>
         <components-toolbar />
         <!-- <components-appbar /> -->
         <components-tabs />
       </template>
 
-      <v-scroll-y-transition hide-on-leave>
-        <components-table v-if="isTableLayout && !isAllFilteredComponentsEmpty" />
-      </v-scroll-y-transition>
+      <template #default="{ height }">
+        <v-fade-transition hide-on-leave>
+          <components-table
+            v-if="isTableLayout && !isAllFilteredComponentsEmpty"
+            :height="height"
+          />
+        </v-fade-transition>
 
-      <v-scroll-x-transition hide-on-leave>
-        <components-grid v-if="!isTableLayout && !isAllFilteredComponentsEmpty" />
-      </v-scroll-x-transition>
+        <v-scroll-x-transition hide-on-leave>
+          <components-grid v-if="!isTableLayout && !isAllFilteredComponentsEmpty" />
+        </v-scroll-x-transition>
 
-      <v-scroll-y-transition hide-on-leave>
-        <components-no-data v-if="isAllFilteredComponentsEmpty" />
-      </v-scroll-y-transition>
+        <v-scroll-y-transition hide-on-leave>
+          <components-no-data v-if="isAllFilteredComponentsEmpty" />
+        </v-scroll-y-transition>
+      </template>
 
       <template #footer>
         <status-bar />

@@ -9,6 +9,7 @@
       :items="allComponentsFiltered"
       style="cursor: pointer"
       calculate-widths
+      :height="$attrs.height - 59"
       @click:row="rowClicked"
       @dblclick:row="validateBeforeEdit"
     >
