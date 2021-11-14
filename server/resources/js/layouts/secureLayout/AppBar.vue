@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="select-none">
     <v-app-bar clipped-right app flat>
       <v-app-bar-nav-icon
         dark
@@ -97,7 +97,7 @@
         </template>
         <v-list link class="pa-2" outlined>
           <v-list-item v-for="(language, i) in languages" :key="i" :to="language.name">
-            <country-flag class="mr-0" :country="language.flag" />
+            <!-- <country-flag class="mr-0" :country="language.flag" /> -->
             <v-list-item-content>
               <v-list-item-title class="mr-5">
                 {{ language.name }}
@@ -183,14 +183,10 @@
 <script>
   import axios from 'axios';
   import { call, sync } from 'vuex-pathify';
-  import CountryFlag from 'vue-country-flag';
   import capitalize from 'lodash/capitalize';
 
   export default {
     name: 'SecureAppbar',
-    components: {
-      CountryFlag,
-    },
 
     data() {
       return {

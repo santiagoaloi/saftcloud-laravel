@@ -5,7 +5,7 @@
       :active-class="isDark ? 'gridCardDark' : 'gridcardLight'"
       mandatory
     >
-      <transition-group class="gallery-card-container pa-2" name="fade-transition">
+      <transition-group class="gallery-card-container px-4 py-2" name="fade-transition">
         <base-grid-card
           v-for="(component, index) in allComponentsFiltered"
           :key="index + 1"
@@ -24,10 +24,8 @@
               <div class="gallery-card-subtitle-wrapper">
                 <h5 class="gallery-card-subtitle">
                   <v-chip
-                    :dark="isDark"
-                    :color="isDark ? 'rgb(54, 57, 63)' : 'white'"
+                    :color="isDark ? '#4c536c' : 'white'"
                     :text-color="isDark ? 'grey lighten-1' : 'indigo darken-4'"
-                    label
                     class="col-12 pointer-events-none"
                     small
                   >

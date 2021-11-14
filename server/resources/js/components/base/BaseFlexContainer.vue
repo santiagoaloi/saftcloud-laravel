@@ -1,12 +1,12 @@
 <template>
-  <div class="flex-container" :style="`width: ${width};top: ${top}px`" v-on="$listeners">
-    <div class="flex-wrapper">
+  <div class="flex-container" :style="`top: ${top}px;width: ${width}px`">
+    <div :style="`width: ${width}px`" class="flex-wrapper">
       <div v-show="$slots.top" class="content mx-0" style="background: rgba(34, 37, 48, 0.9)">
         <slot name="top"> </slot>
       </div>
 
-      <div id="flex-content" v-resize="calculateHeight" class="flex-scrollable-content">
-        <slot :height="contentHeight"> </slot>
+      <div class="flex-scrollable-content">
+        <slot> </slot>
       </div>
 
       <div v-show="$slots.footer">
@@ -23,26 +23,11 @@
     props: {
       width: {
         type: [String],
-        default: () => '100%',
+        default: () => '',
       },
       top: {
         type: [String, Number],
         default: () => 0,
-      },
-    },
-    data() {
-      return {
-        contentHeight: '',
-      };
-    },
-
-    methods: {
-      calculateHeight() {
-        setTimeout(() => {
-          this.contentHeight = parseFloat(
-            getComputedStyle(document.getElementById('flex-content')).height,
-          );
-        }, 100);
       },
     },
   };
@@ -51,12 +36,11 @@
   .flex-container {
     /* give the outermost container a predefined size */
     position: absolute;
-    /* top: 0; */
     bottom: 0;
     left: 0;
     display: flex;
     flex-direction: column;
-    /* width: 100%; */
+    width: 100%;
   }
 
   .flex-wrapper {
@@ -76,6 +60,5 @@
     flex-grow: 1;
     overflow: auto;
     overflow: overlay;
-    /* for Firefox */
   }
 </style>

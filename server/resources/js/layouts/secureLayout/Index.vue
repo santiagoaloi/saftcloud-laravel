@@ -2,12 +2,10 @@
   <div>
     <secure-bar />
     <secure-drawer />
-
     <secure-view />
-    <secure-comp-drawer v-if="$route.name.startsWith('Components') && selectedComponent" />
+    <secure-comp-drawer v-if="$route.name.startsWith('Components')" />
     <secure-ent-drawer v-if="$route.name.startsWith('Entities')" />
     <snackbar />
-
     <!-- <session-timeout /> -->
   </div>
 </template>
@@ -32,10 +30,6 @@
           /* webpackChunkName: 'secure-snackbar' */
           '@/components/Base/Snackbar'
         ),
-    },
-
-    computed: {
-      ...get('componentManagement', ['selectedComponent']),
     },
   };
 </script>

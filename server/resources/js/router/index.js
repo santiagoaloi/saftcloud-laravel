@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
+import Vuetify from 'vuetify/lib/framework';
 import auth from '@/util/auth';
 import { store } from '@/store';
 import routes from '@/router/routes';
@@ -38,6 +39,7 @@ export function resetRouter() {
 }
 
 router.beforeEach(async (to, from, next) => {
+  console.log(Vuetify);
   if (to.matched.some((record) => record.meta.layout === 'secure-layout')) {
     await store.restored;
     if (auth.loggedIn() && to.matched.some((record) => record.name !== 'Login')) {

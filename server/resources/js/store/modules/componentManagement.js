@@ -98,11 +98,13 @@ const getters = {
   },
 
   //* Disables the right panel navigation arrows if the first component in the array is selected.
-  previousComponentDisabled: (state) => !state.componentCardGroup,
+  previousComponentDisabled: (state, getters) =>
+    !state.componentCardGroup || !getters.hasSelectedComponent,
 
   //* Disables the right panel navigation arrows if the last component in the array is selected.
   nextComponentDisabled: (state, getters) =>
-    state.componentCardGroup === getters.allComponentsFiltered.length - 1,
+    state.componentCardGroup === getters.allComponentsFiltered.length - 1 ||
+    !getters.hasSelectedComponent,
 
   //* Returns form fields matching the search string typed.
   filteredFormFields: (state, getters) => {
@@ -156,6 +158,9 @@ const getters = {
 
   //* Returns true if one or more component groups in the component group dropdown are selected.
   hasSelectedSomeGroups: (state) => !isEmpty(state.selectedComponentGroups),
+
+  //* Returns true if all groups in the component group dropdown are selected.
+  hasSelectedComponent: (_, getters) => !isEmpty(getters.selectedComponent),
 
   //* Returns true if the component has unsaved changes.
   hasUnsavedChanges: (_, getters) => (component) => {
@@ -297,7 +302,7 @@ const actions = {
 
   //* Retrieves all available componentes from the database.
   getComponents({ state }) {
-    state.loading = true;
+    store.set('componentManagement/loading', true);
     axios.get('api/component.showAll').then((response) => {
       if (response.status === 200) {
         if (

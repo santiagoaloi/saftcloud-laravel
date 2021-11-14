@@ -3,26 +3,21 @@
     <base-flex-container class="dottedBackground">
       <template #top>
         <components-toolbar />
-        <!-- <components-appbar /> -->
+        <v-divider></v-divider>
         <components-tabs />
       </template>
 
-      <template #default="{ height }">
-        <v-fade-transition hide-on-leave>
-          <components-table
-            v-if="isTableLayout && !isAllFilteredComponentsEmpty"
-            :height="height"
-          />
-        </v-fade-transition>
+      <v-fade-transition hide-on-leave>
+        <components-table v-if="isTableLayout && !isAllFilteredComponentsEmpty" />
+      </v-fade-transition>
 
-        <v-scroll-x-transition hide-on-leave>
-          <components-grid v-if="!isTableLayout && !isAllFilteredComponentsEmpty" />
-        </v-scroll-x-transition>
+      <v-scroll-x-transition hide-on-leave>
+        <components-grid v-if="!isTableLayout && !isAllFilteredComponentsEmpty" />
+      </v-scroll-x-transition>
 
-        <v-scroll-y-transition hide-on-leave>
-          <components-no-data v-if="isAllFilteredComponentsEmpty" />
-        </v-scroll-y-transition>
-      </template>
+      <v-scroll-y-transition hide-on-leave>
+        <components-no-data v-if="isAllFilteredComponentsEmpty" />
+      </v-scroll-y-transition>
 
       <template #footer>
         <status-bar />
@@ -63,7 +58,7 @@
     computed: {
       ...sync('theme', ['isDark']),
       ...sync('componentManagement', ['isTableLayout', 'dialogComponent', 'componentEditSheet']),
-      ...get('componentManagement', ['isAllFilteredComponentsEmpty', 'selectedComponent']),
+      ...get('componentManagement', ['isAllFilteredComponentsEmpty']),
     },
 
     created() {

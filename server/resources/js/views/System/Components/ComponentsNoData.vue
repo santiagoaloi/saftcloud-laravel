@@ -1,14 +1,19 @@
 <template>
-  <v-sheet v-once color="transparent" height="100%" class="d-flex justify-center align-center">
+  <v-sheet
+    v-once
+    color="transparent"
+    height="100%"
+    class="d-flex justify-center align-center select-none"
+  >
     <div class="flex-grow-1 align-center justify-center d-flex flex-column">
-      <v-img :aspect-ratio="1" width="250" contain src="storage/systemImages/noContent.svg" />
-      No components found. Select one or more groups or try a different search criteria
-      <span
-        :class="isDark ? 'secundary--text' : 'primary--text'"
-        class="cursor-pointer"
-        @click="dialogComponent = true"
-        ><b> create a new component</b></span
-      >
+      <v-img
+        class="bw-image"
+        :aspect-ratio="1"
+        width="350"
+        contain
+        src="storage/systemImages/noContent.svg"
+      />
+      No components found.
     </div>
   </v-sheet>
 </template>

@@ -1,5 +1,5 @@
 <template>
-  <v-item v-slot="{ toggle }">
+  <v-item v-slot="{ toggle }" class="select-none">
     <v-hover v-slot="{ hover: hoverCard }" open-delay="500">
       <v-sheet
         class="cursor-pointer"

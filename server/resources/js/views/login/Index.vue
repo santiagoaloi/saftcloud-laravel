@@ -1,5 +1,5 @@
 <template>
-  <v-container fill-height>
+  <v-container fill-height class="select-none">
     <v-row align="center" justify="space-between" class="mb-0">
       <v-col cols="12" lg="6">
         <v-row no-gutters align="center" justify="center">
@@ -43,9 +43,9 @@
           </v-alert>
 
           <v-card
-            elevation="4"
+            elevation="10"
             :class="{ shake: shake }"
-            class="pa-4"
+            class="pa-5"
             :color="$vuetify.theme.dark ? '#2f3136' : '#f6f8fa'"
           >
             <v-card-title class="py-10">
@@ -79,6 +79,8 @@
                     <v-text-field
                       ref="username"
                       v-model.trim="auth.email"
+                      :color="isDark ? '#208ad6' : 'grey'"
+                      flat
                       hide-details
                       solo
                       autofocus
@@ -88,8 +90,7 @@
                       type="text"
                       :disabled="loading"
                       spellcheck="false"
-                      :color="isDark ? '#208ad6' : 'grey'"
-                      :background-color="isDark ? '#28292b' : 'white'"
+                      height="55"
                       :error="errors.length > 0"
                       @keydown.enter.prevent="validatelogin()"
                       @focus="reset"
@@ -110,6 +111,8 @@
                         v-model.trim="auth.password"
                         hide-details
                         solo
+                        flat
+                        height="55"
                         prepend-inner-icon="mdi-shield-key-outline"
                         placeholder="Password"
                         :type="password_visible ? 'text' : 'password'"
@@ -117,7 +120,6 @@
                         :disabled="loading"
                         spellcheck="false"
                         :color="isDark ? '#208ad6' : 'grey'"
-                        :background-color="isDark ? '#28292b' : 'white'"
                         :error="errors.length > 0"
                         @click:append="password_visible = !password_visible"
                         @keydown.enter.prevent="validatelogin()"

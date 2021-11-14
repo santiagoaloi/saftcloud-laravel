@@ -50,7 +50,7 @@
                 @blur="reset"
               >
                 <template slot="selection" slot-scope="data">
-                  <country-flag :country="data.item.iso2" />
+                  <country-flag country="hr" size="normal" />
                   <v-list-item-content class="pt-4 pl-2">
                     <v-list-item-title>
                       {{ `${data.item.name}` }}
@@ -109,16 +109,13 @@
 
 <script>
   import { sync, get, call } from 'vuex-pathify';
-  import CountryFlag from 'vue-country-flag';
 
   export default {
     name: 'SignupStep0',
-    components: {
-      CountryFlag,
-    },
+
     computed: {
       ...sync('theme', ['isDark']),
-      ...sync('signup', ['signupForm', 'step', 'countriesLoading', 'countryCodes']),
+      ...sync('signup', ['signupForm', 'step', 'countryCodes']),
       ...get('signup', ['filterCountries']),
     },
 

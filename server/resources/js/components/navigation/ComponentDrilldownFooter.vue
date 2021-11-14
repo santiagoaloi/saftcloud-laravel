@@ -1,8 +1,17 @@
 <template>
-  <v-card tile class="text-center pa-2 transparent">
+  <v-sheet tile class="text-center pa-2 transparent select-none">
     <v-tooltip transition="false" color="black" top>
       <template #activator="{ on }">
-        <v-btn depressed dark large small :color="isDark ? '' : 'white'" @click="edit()" v-on="on">
+        <v-btn
+          :ripple="false"
+          depressed
+          dark
+          large
+          small
+          :color="isDark ? '' : 'white'"
+          @click="edit()"
+          v-on="on"
+        >
           <v-icon color="#208ad6" dark> mdi-pencil-outline </v-icon>
         </v-btn>
       </template>
@@ -12,6 +21,7 @@
     <v-tooltip transition="false" color="black" top>
       <template #activator="{ on }">
         <v-btn
+          :ripple="false"
           :to="`/${selectedComponent.name}`"
           depressed
           dark
@@ -29,6 +39,7 @@
     <v-tooltip transition="false" color="black" top>
       <template #activator="{ on }">
         <v-btn
+          :ripple="false"
           depressed
           dark
           large
@@ -53,6 +64,7 @@
     <v-tooltip transition="false" color="black" top>
       <template #activator="{ on }">
         <v-btn
+          :ripple="false"
           :disabled="!hasUnsavedChanges(selectedComponent)"
           depressed
           large
@@ -69,7 +81,7 @@
       </template>
       <span>Save</span>
     </v-tooltip>
-  </v-card>
+  </v-sheet>
 </template>
 
 <script>

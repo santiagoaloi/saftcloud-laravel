@@ -8,12 +8,11 @@
     :overlay-color="$vuetify.theme.dark ? '#20202b' : 'rgba(108, 122, 137)'"
     scrollable
     class="d-flex flex-column"
-    style="pointer-events: all !importantc"
     v-on="$listeners"
   >
     <v-toolbar
       src="storage/appbar/prism2.jpg"
-      class="pr-3"
+      class="pr-3 select-none"
       flat
       :dense="dense"
       dark

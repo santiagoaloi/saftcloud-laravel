@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="select-none">
     <v-expand-transition>
-      <v-sheet v-if="hasUnsavedChanges(selectedComponent)" color="transparent" class="px-2">
+      <v-sheet v-if="hasUnsavedChanges(selectedComponent)" color="transparent" class="px-3">
         <v-alert class="mt-3" elevation="1" colored-border color="pink" border="right" dense>
           <div class="d-flex justify-space-between align-center">
             Unsaved
@@ -35,7 +35,6 @@
             :color="isDark ? '#208ad6' : 'grey'"
             :prepend-inner-icon="selectedComponent.config_settings.icon.name"
             spellcheck="false"
-            flat
             solo
             :error-messages="errors[0]"
             :error="errors.length > 0"
@@ -93,6 +92,7 @@
             hide-no-data
             dense
             solo
+            hide-details
           />
         </div>
       </v-container>
@@ -105,7 +105,8 @@
             v-model="selectedComponent.config.general_config.isVisibleInSidebar"
             :ripple="false"
             hide-details
-            class="mt-2"
+            class="mt-2 ml-1"
+            inset
           />
         </v-list-item-icon>
         <v-list-item-content>

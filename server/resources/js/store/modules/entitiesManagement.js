@@ -49,9 +49,7 @@ const mutations = make.mutations(state);
 const getters = {
   //* returns true if at least one validation did not succeed.
   hasValidationErrors: (_, __, rootState) =>
-    Object.values(rootState.validationStatesEntities).some((innerObj) =>
-      Object.values(innerObj).includes(true),
-    ),
+    Object.values(rootState.validationStatesEntities).some((innerObj) => Object.values(innerObj).includes(true)),
 
   //* Loads all the configuration of the selected entity.
   selectedEntity: (state, getters) => getters.allEntitiesFiltered[state.selectedEntityIndex],
@@ -60,8 +58,7 @@ const getters = {
   previousEntityDisabled: (state) => !state.entityCardGroup,
 
   //* Disables the right panel navigation arrows if the last entity in the array is selected.
-  nextEntityDisabled: (state, getters) =>
-    state.entityCardGroup === getters.allEntitiesFiltered.length - 1,
+  nextEntityDisabled: (state, getters) => state.entityCardGroup === getters.allEntitiesFiltered.length - 1,
 
   //* Returns the name of the tab name selected within the form field editor
   activeEntityTabName: (state) => state.entityStatusTabs[state.activeStatusTab].value,
@@ -79,21 +76,19 @@ const getters = {
 
   // //* Filter privileges in the privileges dialog sinple tabe.
   filteredPrivileges: (state, getters) => {
-    if (state.selectedEntityType === 'Users' && getters.selectedEntity) {
-      if (getters.selectedEntity.role.length && state.allUsers.length) {
-        // Search field string
-        const search = state.searchPrivileges.toString().toLowerCase();
+    if (state.selectedEntityType === 'Users' && getters.hasSelectedEntity && !getters.isUsersEmpty) {
+      // Search field string
+      const search = state.searchPrivileges.toString().toLowerCase();
 
-        const privileges = [];
-        for (const role of getters.selectedEntity.role) {
-          for (const capability of role.capability) {
-            privileges.push({ name: capability.name, role: capability.pivot.role_id });
-          }
+      const privileges = [];
+      for (const role of getters.selectedEntity.role) {
+        for (const capability of role.capability) {
+          privileges.push({ name: capability.name, role: capability.pivot.role_id });
         }
-
-        // return all privileges or the ones matching the search string.
-        return privileges.filter((p) => p.name.toLowerCase().match(search));
       }
+
+      // return all privileges or the ones matching the search string.
+      return privileges.filter((p) => p.name.toLowerCase().includes(search));
     }
   },
 
@@ -106,6 +101,9 @@ const getters = {
     return !isEqual(origin, current);
   },
 
+  //* Returns true if the entity has unsaved changes.
+  hasSelectedEntity: (_, getters) => !isEmpty(getters.selectedEntity),
+
   //* Returns true if the current groups selected do not contain any entities associated to them.
   isAllFilteredEntitiesEmpty: (_, getters) => !getters.allEntitiesFiltered.length,
 
@@ -116,8 +114,7 @@ const getters = {
   isStarredIcon: () => (component) => component.status.starred ? 'mdi-star' : 'mdi-star-outline',
 
   //* Returns the active icon depending on its state.
-  isActiveIcon: () => (component) =>
-    component.status.active ? 'mdi-lightbulb-on' : 'mdi-lightbulb-on-outline',
+  isActiveIcon: () => (component) => component.status.active ? 'mdi-lightbulb-on' : 'mdi-lightbulb-on-outline',
 
   //* Returns color of the compoment card in the grid view, depending on the theme settings.
   isActiveColor: (_, __, rootState) => (component) =>

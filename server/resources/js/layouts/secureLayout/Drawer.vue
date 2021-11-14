@@ -7,7 +7,7 @@
         <vue-diagonal
           class="mt-n5"
           :deg="-7"
-          background="linear-gradient(331deg, rgba(34, 37, 48, 1) 0%, rgba(0, 10, 20 , 0.2) 0%)"
+          background="linear-gradient(331deg, rgba(34, 37, 48, 1) 0%, rgba(0, 10, 20 , 0.4) 0%)"
           space-after
           space-before
         >

@@ -12,8 +12,8 @@
                 maxlength="30"
                 autofocus
                 solo
-                prepend-inner-icon="mdi-account"
                 :outlined="isDark"
+                prepend-inner-icon="mdi-account"
                 :color="isDark ? '#208ad6' : 'grey'"
                 :error="errors.length > 0"
                 height="55"

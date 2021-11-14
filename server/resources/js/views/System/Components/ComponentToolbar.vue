@@ -1,147 +1,94 @@
 <template>
-  <div>
-    <div class="box">
-      <div :style="`z-index: ${zindex}`">
-        <v-card style="border-right: 1px solid grey" class="transparent" width="350" tile flat>
-          <v-list>
-            <v-list-item :ripple="false" @click="activateMenu()">
-              <v-list-item-avatar>
-                <v-icon>mdi-responsive</v-icon>
-              </v-list-item-avatar>
-
-              <v-list-item-content>
-                <h5 class="indigo--text text--lighten-2">Component Groups</h5>
-                <v-list-item-subtitle>+7 Selected</v-list-item-subtitle>
-              </v-list-item-content>
-
-              <v-list-item-icon>
-                <v-icon right> {{ menuGroups ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
-              </v-list-item-icon>
-            </v-list-item>
-          </v-list>
-        </v-card>
-
-        <v-fade-transition>
-          <base-flex-container
-            v-if="selectedComponentGroupsMenuTrigger"
-            v-click-outside="onClickOutside"
-            width="350px"
-            top="56"
-          >
-            <!-- <v-card
-            style="z-index: 1; position: absolute"
-            width="350"
-            elevation="5"
-            max-height="70vh"
-            class="overflow-y-scroll"
-          > -->
-
-            <template #top>
-              <v-sheet>
-                <v-card-actions class="px-1">
-                  <v-list-item class="px-1">
-                    <v-text-field
-                      placeholder="Filter groups"
-                      dense
-                      solo
-                      :outlined="isDark"
-                      :color="isDark ? '#208ad6' : 'grey'"
-                      :background-color="isDark ? '#28292b' : 'white'"
-                      hide-details
-                    >
-                    </v-text-field>
-
-                    <v-row class="pl-4 mr-0" align="center" justify="end">
-                      <v-btn height="40" block> Add </v-btn>
-                    </v-row>
-                  </v-list-item>
-                </v-card-actions>
-              </v-sheet>
-            </template>
-
-            <v-list>
-              <v-list-item-group
-                v-model="selectedComponentGroupsMenu"
-                active-class="selected"
-                multiple
+  <div class="box">
+    <base-expandable-button
+      v-model="selectedComponentGroupsMenuTrigger"
+      title="Component Groups"
+      subtitle="subtitle"
+      icon="mdi-responsive"
+      width="350"
+      :z-index="zIndex"
+      :nudge-top="56"
+    >
+      <template #listTop>
+        <v-sheet>
+          <v-card-actions class="px-1">
+            <v-list-item class="px-1">
+              <v-text-field
+                placeholder="Filter groups"
+                dense
+                solo
+                :outlined="isDark"
+                :color="isDark ? '#208ad6' : 'grey'"
+                :background-color="isDark ? '#28292b' : 'white'"
+                hide-details
               >
-                <template v-for="(item, index) in allGroups">
-                  <v-list-item :key="item.title" :ripple="false" @click="selectGroup(item)">
-                    <template #default="{ active }">
-                      <v-list-item-icon>
-                        <v-icon :color="active ? 'indigo lighten-2' : 'grey'">
-                          {{
-                            active
-                              ? 'mdi-checkbox-blank-circle'
-                              : 'mdi-checkbox-blank-circle-outline'
-                          }}</v-icon
-                        >
-                      </v-list-item-icon>
+              </v-text-field>
 
-                      <v-list-item-content>
-                        <v-list-item-title v-text="item.name"></v-list-item-title>
-                      </v-list-item-content>
+              <v-row class="pl-4 mr-0" align="center" justify="end">
+                <v-btn height="40" block> Add </v-btn>
+              </v-row>
+            </v-list-item>
+          </v-card-actions>
+        </v-sheet>
+      </template>
 
-                      <v-list-item-action>
-                        <v-avatar class="white--text" size="30" color="#282c3b">
-                          <h6>{{ countComponentsInGroup(item.id) }}</h6>
-                        </v-avatar>
-                      </v-list-item-action>
-                    </template>
-                  </v-list-item>
+      <v-sheet>
+        <v-list>
+          <v-list-item-group v-model="selectedComponentGroupsMenu" active-class="selected" multiple>
+            <template v-for="(item, index) in allGroups">
+              <v-list-item :key="item.title" :ripple="false" @click.stop="selectGroup(item)">
+                <template #default="{ active }">
+                  <v-list-item-icon>
+                    <v-icon :color="active ? 'indigo lighten-2' : 'grey'">
+                      {{
+                        active ? 'mdi-checkbox-blank-circle' : 'mdi-checkbox-blank-circle-outline'
+                      }}</v-icon
+                    >
+                  </v-list-item-icon>
 
-                  <v-divider v-if="index < allGroups.length - 1" :key="index"></v-divider>
+                  <v-list-item-content>
+                    <v-list-item-title v-text="item.name"></v-list-item-title>
+                  </v-list-item-content>
+
+                  <v-list-item-action>
+                    <v-avatar class="white--text" size="30" color="#282c3b">
+                      <h6>{{ countComponentsInGroup(item.id) }}</h6>
+                    </v-avatar>
+                  </v-list-item-action>
                 </template>
-              </v-list-item-group>
-            </v-list>
-          </base-flex-container>
-        </v-fade-transition>
-      </div>
+              </v-list-item>
 
-      <v-spacer></v-spacer>
+              <v-divider v-if="index < allGroups.length - 1" :key="index"></v-divider>
+            </template>
+          </v-list-item-group>
+        </v-list>
+      </v-sheet>
+    </base-expandable-button>
 
-      <v-btn
-        rounded
-        large
-        class="ml-2"
-        :color="isDark ? '#373b4f' : 'primary'"
-        :loading="dialogComponentLoader"
-        @click.stop="dialogComponentTrigger()"
-      >
-        <v-icon :left="$vuetify.breakpoint.lgAndUp" small> mdi-view-grid-plus </v-icon
-        >{{ createComponentTitle }}
-      </v-btn>
+    <base-expandable-button
+      title="Fetch Components"
+      subtitle="Last fetched just now"
+      icon="mdi-responsive"
+    >
+    </base-expandable-button>
 
-      <v-btn
-        rounded
-        large
-        class="mx-2"
-        :color="isDark ? '#373b4f' : 'primary'"
-        @click="addGroupDialog()"
-      >
-        <v-icon :left="$vuetify.breakpoint.lgAndUp" small> mdi-view-grid-plus </v-icon
-        >{{ createGroupTitle }}
-      </v-btn>
-    </div>
-
-    <v-divider></v-divider>
+    <base-expandable-button
+      v-model="dialogComponent"
+      title="Create New Component"
+      subtitle="There are 15 components"
+      icon="mdi-responsive"
+    >
+    </base-expandable-button>
   </div>
 </template>
 
 <script>
   import { sync } from 'vuex-pathify';
   import componentGroups from '@/mixins/componentGroups';
-  import BaseFlexContainer from '@/components/Base/BaseFlexContainer.vue';
 
   export default {
     name: 'ComponentsToolbar',
-    components: { BaseFlexContainer },
     mixins: [componentGroups],
-    data() {
-      return {
-        menuGroups: false,
-      };
-    },
 
     computed: {
       ...sync('theme', ['isDark']),
@@ -160,7 +107,7 @@
         return this.$vuetify.breakpoint.lgAndUp ? 'Create group' : '';
       },
 
-      zindex() {
+      zIndex() {
         return this.selectedComponentGroupsMenuTrigger ? 8 : 3;
       },
     },

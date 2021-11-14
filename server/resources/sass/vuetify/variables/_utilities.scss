@@ -85,8 +85,13 @@ $utilities: (
     values: scroll hidden auto visible overlay,
   ),
   'user-select': (
-    property: user-select,
+    property: 'user-select',
     class: select,
+    values: none,
+  ),
+  'user-drag': (
+    property: 'user-drag',
+    class: drag,
     values: none,
   ),
 );

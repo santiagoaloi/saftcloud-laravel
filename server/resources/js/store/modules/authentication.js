@@ -7,7 +7,6 @@ import { store } from '@/store';
 
 const axiosDefaults = require('axios/lib/defaults');
 
-// Default validation states definitions (they should all have validation errors to false)
 const getDefaultState = () => ({
   session: {},
   activeBranch: null,

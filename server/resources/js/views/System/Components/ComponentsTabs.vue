@@ -4,7 +4,7 @@
       v-model="activeStatusTab"
       color="primary"
       show-arrows
-      class="col-10 mt-n3"
+      class="ml-5"
       background-color="transparent"
       slider-size="2"
     >
@@ -21,8 +21,8 @@
       </v-tab>
     </v-tabs>
 
-    <div class="mr-4">
-      <v-btn plain :disabled="isAllFilteredComponentsEmpty" @click="isTableLayout = !isTableLayout">
+    <div class="mr-3">
+      <v-btn :disabled="isAllFilteredComponentsEmpty" plain @click="isTableLayout = !isTableLayout">
         <v-icon left>
           {{ isTableLayout ? ' mdi-view-grid-outline' : ' mdi-format-list-bulleted-square' }}
         </v-icon>

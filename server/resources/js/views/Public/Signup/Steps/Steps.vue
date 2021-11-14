@@ -1,21 +1,23 @@
 <template>
   <v-container class="fill-height">
-    <v-img src="https://cdn.vuetifyjs.com/images/cards/cooking.png" class="white--text align-end" gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)" height="200px">
+    <v-img
+      src="https://cdn.vuetifyjs.com/images/cards/cooking.png"
+      class="white--text align-end"
+      gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
+      height="200px"
+    >
       <v-card-title> Join us</v-card-title>
     </v-img>
 
     <signup-alert ref="signupAlert" class="mt-4" />
     <v-card class="my-4" width="100%">
       <v-card-title> Top western road trips </v-card-title>
-
       <v-card-subtitle> 1,000 miles of wonder </v-card-subtitle>
     </v-card>
     <v-row>
       <v-col class="text-center" cols="12" lg="6">
         <v-expand-transition>
-          <keep-alive>
-            <component :is="`step${step}`" />
-          </keep-alive>
+          <component :is="`step${step}`" />
         </v-expand-transition>
       </v-col>
       <v-col cols="12" lg="6">
@@ -25,13 +27,17 @@
           <v-card-text>
             <div class="my-4 text-subtitle-1">$ • Italian, Cafe</div>
 
-            <div>Small plates, salads & sandwiches - an intimate setting with 12 indoor seats plus patio seating.</div>
+            <div>
+              Small plates, salads & sandwiches - an intimate setting with 12 indoor seats plus
+              patio seating.
+            </div>
           </v-card-text>
 
           <v-divider class="mx-4"></v-divider>
 
           <v-card-title>Tonight's availability</v-card-title>
 
+          <gb-flag code="fr" size="small" />
           <v-card-text>
             <v-chip-group active-class="deep-purple accent-4 white--text" column>
               <v-chip>5:30PM</v-chip>

@@ -1,6 +1,6 @@
 <template>
   <v-navigation-drawer
-    :value="drawer"
+    value="true"
     mobile-breakpoint="0"
     clipped
     width="350"
@@ -14,11 +14,14 @@
     </template>
 
     <!-- Drawer content -->
-    <component-drilldown />
+    <component-drilldown v-show="hasSelectedComponent" />
+
+    <!-- Drawer content when empty -->
+    <component-drilldown-empty v-show="!hasSelectedComponent" />
 
     <!-- Drawer fixed bottom -->
     <template #append>
-      <component-drilldown-footer />
+      <component-drilldown-footer v-show="hasSelectedComponent" />
     </template>
   </v-navigation-drawer>
 </template>
@@ -30,6 +33,13 @@
   Vue.component('ComponentDrilldown', () =>
     import(/* webpackChunkName: 'drawer-bundle' */ '@/components/Navigation/ComponentDrilldown'),
   );
+
+  Vue.component('ComponentDrilldownEmpty', () =>
+    import(
+      /* webpackChunkName: 'drawer-bundle' */ '@/components/Navigation/ComponentDrilldownEmpty'
+    ),
+  );
+
   Vue.component('ComponentDrilldownBar', () =>
     import(/* webpackChunkName: 'drawer-bundle' */ '@/components/Navigation/ComponentDrilldownBar'),
   );
@@ -44,14 +54,7 @@
     computed: {
       ...sync('theme', ['isDark']),
       ...sync('drawers', ['secureComponentDrawer']),
-      ...get('componentManagement', ['selectedComponent']),
-
-      drawer() {
-        if (!this.selectedComponent || !this.secureComponentDrawer) {
-          return false;
-        }
-        return true;
-      },
+      ...get('componentManagement', ['hasSelectedComponent']),
     },
   };
 </script>
