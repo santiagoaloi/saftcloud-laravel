@@ -233,10 +233,6 @@
         }
         return null;
       },
-
-      parsedDate() {
-        return moment(this.date).format('MMMM Do');
-      },
     },
 
     methods: {
@@ -257,7 +253,7 @@
           store.set(`eventsManagement/events@${this.eventIndex}`, this.event);
           this.editing = false;
           this.calendar = this.event.date;
-          this.snackbarSuccess(`Event saved, current date: ${this.parsedDate}`);
+          this.snackbarSuccess(`Event saved, current date: ${moment(this.event.date).format('MMMM Do')}`);
         } else {
           const payload = {
             id: uuidv4(),
@@ -273,7 +269,7 @@
           };
 
           this.calendar = this.event.date;
-          this.snackbarSuccess(`Event created, current date: ${this.parsedDate}`);
+          this.snackbarSuccess(`Event created, current date: ${moment(this.event.date).format('MMMM Do')}`);
           store.set(`eventsManagement/events@${this.events.length}`, payload);
         }
 
