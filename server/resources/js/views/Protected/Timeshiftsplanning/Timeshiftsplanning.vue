@@ -87,12 +87,15 @@
             <baseFieldLabel required label="Employee" />
             <v-select
               v-model="event.selectedEmployee"
+              :menu-props="{ transition: 'slide-y-transition' }"
+              item-color="bluegrey"
+              multiple
               hide-details
               :items="allUsers"
               hide-no-data
               :item-text="
                 (item) => {
-                  return ` ${item.entity.first_name} ${item.entity.last_name} `;
+                  return fullName(item);
                 }
               "
               item-value="entity.first_name"
@@ -100,9 +103,6 @@
               solo
               height="55"
               :background-color="isDark ? '#28292b' : 'white'"
-              :menu-props="{
-                transition: 'slide-y-transition',
-              }"
             />
           </v-col>
 
@@ -179,6 +179,7 @@
   import { v4 as uuidv4 } from 'uuid';
   import { sync, call } from 'vuex-pathify';
   import moment from 'moment';
+  import { capitalize } from 'lodash';
   import activeView from '@/mixins/activeView';
   import { store } from '@/store';
 
@@ -264,7 +265,7 @@
       ...call('snackbar/*'),
 
       fullName(item) {
-        console.log(item);
+        return ` ${capitalize(item.entity.first_name)} ${capitalize(item.entity.last_name)} `;
       },
 
       eventDay(event) {
