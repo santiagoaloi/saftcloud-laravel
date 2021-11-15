@@ -154,6 +154,7 @@
 <script>
   import { v4 as uuidv4 } from 'uuid';
   import { sync, call } from 'vuex-pathify';
+  import moment from 'moment';
   import activeView from '@/mixins/activeView';
   import { store } from '@/store';
 
@@ -232,6 +233,10 @@
         }
         return null;
       },
+
+      parsedDate() {
+        return moment(this.date).format('MMMM Do');
+      },
     },
 
     methods: {
@@ -252,7 +257,7 @@
           store.set(`eventsManagement/events@${this.eventIndex}`, this.event);
           this.editing = false;
           this.calendar = this.event.date;
-          this.snackbarSuccess(`Event saved, current date: ${this.event.date}`);
+          this.snackbarSuccess(`Event saved, current date: ${this.parsedDate}`);
         } else {
           const payload = {
             id: uuidv4(),
@@ -268,7 +273,7 @@
           };
 
           this.calendar = this.event.date;
-          this.snackbarSuccess(`Event created, current date: ${this.event.date}`);
+          this.snackbarSuccess(`Event created, current date: ${this.parsedDate}`);
           store.set(`eventsManagement/events@${this.events.length}`, payload);
         }
 
