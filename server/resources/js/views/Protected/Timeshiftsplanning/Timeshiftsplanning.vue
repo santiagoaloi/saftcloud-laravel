@@ -88,8 +88,14 @@
             <v-select
               v-model="event.selectedEmployee"
               hide-details
-              :items="employees"
+              :items="allUsers"
               hide-no-data
+              :item-text="
+                (item) => {
+                  return ` ${item.entity.first_name} ${item.entity.last_name} `;
+                }
+              "
+              item-value="entity.first_name"
               dense
               solo
               height="55"
@@ -218,7 +224,7 @@
         '14:45',
       ],
 
-      employees: ['Pablo', 'Rene', 'Santiago'],
+      // employees: ['Pablo', 'Rene', 'Santiago'],
       dialogTimeShift: false,
       type: 'month',
       types: ['month', 'week', 'day', '4day'],
@@ -237,6 +243,7 @@
     }),
     computed: {
       ...sync('eventsManagement', ['events']),
+      ...sync('entitiesManagement', ['allUsers']),
 
       selectedDatetimeStart() {
         if (this.event.date && this.event.timeStart) {
@@ -255,6 +262,10 @@
 
     methods: {
       ...call('snackbar/*'),
+
+      fullName(item) {
+        console.log(item);
+      },
 
       eventDay(event) {
         this.dialogTimeShift = true;
