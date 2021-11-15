@@ -78,6 +78,7 @@
       width="50vw"
       title="Time shift"
       icon="mdi-calendar-account"
+      persistent
       @save="saveEvent()"
       @close="dialogTimeShift = false"
     >
@@ -241,6 +242,7 @@
       calendar: '',
       colors: ['blue', 'indigo', 'deep-purple', 'cyan', 'green', 'orange', 'grey darken-1'],
       names: ['Meeting', 'Holiday', 'PTO', 'Travel', 'Event', 'Birthday', 'Conference', 'Party'],
+      colors: ['blue', 'indigo', 'deep-purple', 'cyan', 'green', 'orange', 'grey darken-1'],
     }),
     computed: {
       ...sync('eventsManagement', ['events']),
@@ -285,22 +287,25 @@
           this.calendar = this.event.date;
           this.snackbarSuccess(`Event saved, current date: ${moment(this.event.date).format('MMMM Do')}`, 'centered');
         } else {
-          const payload = {
-            id: uuidv4(),
-            name: this.event.selectedEmployee,
-            selectedEmployee: this.event.selectedEmployee,
-            color: 'primary',
-            start: this.selectedDatetimeStart,
-            end: this.selectedDatetimeEnd,
-            timed: false,
-            timeStart: this.event.timeStart,
-            timeEnd: this.event.timeEnd,
-            date: this.event.date,
-          };
+          for (const employee of this.event.selectedEmployee) {
+            const payload = {
+              id: uuidv4(),
+              name: employee,
+              selectedEmployee: employee,
+              start: this.selectedDatetimeStart,
+              end: this.selectedDatetimeEnd,
+              timed: false,
+              timeStart: this.event.timeStart,
+              timeEnd: this.event.timeEnd,
+              date: this.event.date,
+              color: this.colors[this.rnd(0, this.colors.length - 1)],
+            };
+
+            store.set(`eventsManagement/events@${this.events.length}`, payload);
+          }
 
           this.calendar = this.event.date;
           this.snackbarSuccess(`Event created, current date: ${moment(this.event.date).format('MMMM Do')}`, 'centered');
-          store.set(`eventsManagement/events@${this.events.length}`, payload);
         }
 
         this.dialogTimeShift = false;
