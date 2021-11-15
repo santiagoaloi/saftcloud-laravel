@@ -16,7 +16,7 @@ const actions = {
   ...make.actions(state),
 
   snackbarSuccess(_, message) {
-    const snackbar = { value: true, text: message, color: 'primary', icon: 'mdi-check' };
+    const snackbar = { value: true, text: message, color: 'grey', icon: 'mdi-check' };
     store.set('snackbar/data', { ...snackbar });
   },
 

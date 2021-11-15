@@ -10,7 +10,7 @@
           <v-select v-model="mode" :items="modes" dense solo hide-details label="event-overlap-mode" class="ma-2"></v-select>
           <v-select v-model="weekday" :items="weekdays" dense solo hide-details label="weekdays" class="ma-2"></v-select>
 
-          <v-btn
+          <!-- <v-btn
             v-if="type === 'day'"
             small
             fab
@@ -21,7 +21,25 @@
             "
           >
             <v-icon> mdi-plus</v-icon></v-btn
-          >
+          > -->
+
+          <v-tooltip v-if="type === 'day'" bottom max-width="250">
+            <template #activator="{ on }">
+              <v-btn
+                small
+                fab
+                icon
+                v-on="on"
+                @click="
+                  dialogTimeShift = true;
+                  event.date = calendar;
+                "
+              >
+                <v-icon> mdi-plus</v-icon></v-btn
+              >
+            </template>
+            <span>Add a new event</span>
+          </v-tooltip>
 
           <v-spacer></v-spacer>
           <v-btn icon class="ma-2" @click="$refs.calendar.next()">
