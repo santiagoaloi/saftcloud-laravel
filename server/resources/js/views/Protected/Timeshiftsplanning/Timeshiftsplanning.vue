@@ -6,33 +6,9 @@
           <v-btn icon class="ma-2" @click="$refs.calendar.prev()">
             <v-icon>mdi-chevron-left</v-icon>
           </v-btn>
-          <v-select
-            v-model="type"
-            :items="types"
-            dense
-            hide-details
-            class="ma-2"
-            label="type"
-            solo
-          ></v-select>
-          <v-select
-            v-model="mode"
-            :items="modes"
-            dense
-            solo
-            hide-details
-            label="event-overlap-mode"
-            class="ma-2"
-          ></v-select>
-          <v-select
-            v-model="weekday"
-            :items="weekdays"
-            dense
-            solo
-            hide-details
-            label="weekdays"
-            class="ma-2"
-          ></v-select>
+          <v-select v-model="type" :items="types" dense hide-details class="ma-2" label="type" solo></v-select>
+          <v-select v-model="mode" :items="modes" dense solo hide-details label="event-overlap-mode" class="ma-2"></v-select>
+          <v-select v-model="weekday" :items="weekdays" dense solo hide-details label="weekdays" class="ma-2"></v-select>
 
           <v-btn
             v-if="type === 'day'"
@@ -177,7 +153,7 @@
 
 <script>
   import { v4 as uuidv4 } from 'uuid';
-  import { sync } from 'vuex-pathify';
+  import { sync, call } from 'vuex-pathify';
   import activeView from '@/mixins/activeView';
   import { store } from '@/store';
 
@@ -259,6 +235,8 @@
     },
 
     methods: {
+      ...call('snackbar/*'),
+
       eventDay(event) {
         this.dialogTimeShift = true;
         this.eventIndex = this.events.findIndex((e) => e.id === event.event.id);
@@ -273,6 +251,8 @@
           this.event.name = this.event.selectedEmployee;
           store.set(`eventsManagement/events@${this.eventIndex}`, this.event);
           this.editing = false;
+          this.calendar = this.event.date;
+          this.snackbarSuccess(`Event saved, current date: ${this.event.date}`);
         } else {
           const payload = {
             id: uuidv4(),
@@ -287,6 +267,8 @@
             date: this.event.date,
           };
 
+          this.calendar = this.event.date;
+          this.snackbarSuccess(`Event created, current date: ${this.event.date}`);
           store.set(`eventsManagement/events@${this.events.length}`, payload);
         }
 

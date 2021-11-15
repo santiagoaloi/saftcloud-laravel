@@ -64,9 +64,7 @@ const mutations = make.mutations(state);
 const getters = {
   //* returns true if at least one validation did not succeed.
   hasValidationErrors: (_, __, rootState) =>
-    Object.values(rootState.validationStatesComponents).some((innerObj) =>
-      Object.values(innerObj).includes(true),
-    ),
+    Object.values(rootState.validationStatesComponents).some((innerObj) => Object.values(innerObj).includes(true)),
 
   //* returns the group name where this component belongs.
   mapComponentGroup: (state, getters) => (component) => {
@@ -77,42 +75,33 @@ const getters = {
   //* returns the parent group name where this component belongs.
   mapGroupParent: (state, getters) => (component) => {
     if (getters.isAllGroupsEmpty) return;
-    const parentGroupId = state.allGroups.find(
-      (g) => g.id === component.component_group_id,
-    ).component_group_id;
+    const parentGroupId = state.allGroups.find((g) => g.id === component.component_group_id).component_group_id;
     return state.allGroups.find((g) => g.id === parentGroupId).name;
   },
 
   //* Loads all the configuration of the selected component.
-  selectedComponent: (state, getters) =>
-    getters.allComponentsFiltered[state.selectedComponentIndex],
+  selectedComponent: (state, getters) => getters.allComponentsFiltered[state.selectedComponentIndex],
 
   //* Loads all the field settings of the selected field in component form field tab.
   selectedComponentFormField: (state, getters) => {
     if (getters.selectedComponent) {
-      const index = getters.selectedComponent.config.form_fields.findIndex(
-        (f) => f.field === state.selectedComponentActiveField,
-      );
+      const index = getters.selectedComponent.config.form_fields.findIndex((f) => f.field === state.selectedComponentActiveField);
       return getters.selectedComponent.config.form_fields[index];
     }
   },
 
   //* Disables the right panel navigation arrows if the first component in the array is selected.
-  previousComponentDisabled: (state, getters) =>
-    !state.componentCardGroup || !getters.hasSelectedComponent,
+  previousComponentDisabled: (state, getters) => !state.componentCardGroup || !getters.hasSelectedComponent,
 
   //* Disables the right panel navigation arrows if the last component in the array is selected.
   nextComponentDisabled: (state, getters) =>
-    state.componentCardGroup === getters.allComponentsFiltered.length - 1 ||
-    !getters.hasSelectedComponent,
+    state.componentCardGroup === getters.allComponentsFiltered.length - 1 || !getters.hasSelectedComponent,
 
   //* Returns form fields matching the search string typed.
   filteredFormFields: (state, getters) => {
     if (getters.selectedComponent) {
       const searchFields = state.searchFields.toString().toLowerCase();
-      return getters.selectedComponent.config.form_fields.filter((field) =>
-        field.label.toLowerCase().match(searchFields),
-      );
+      return getters.selectedComponent.config.form_fields.filter((field) => field.label.toLowerCase().match(searchFields));
     }
   },
 
@@ -180,8 +169,7 @@ const getters = {
   isStarredIcon: () => (component) => component.status.starred ? 'mdi-star' : 'mdi-star-outline',
 
   //* Returns the active icon depending on its state.
-  isActiveIcon: () => (component) =>
-    component.status.active ? 'mdi-lightbulb-on' : 'mdi-lightbulb-on-outline',
+  isActiveIcon: () => (component) => component.status.active ? 'mdi-lightbulb-on' : 'mdi-lightbulb-on-outline',
 
   //* Returns color of the compoment card in the grid view, depending on the theme settings.
   isActiveColor: (_, __, rootState) => (component) =>
@@ -194,8 +182,7 @@ const getters = {
       : 'black',
 
   //* Returns the modular icon depending on its state.
-  isModularIcon: () => (component) =>
-    component.status.modular ? 'mdi-view-module' : 'mdi-view-module-outline',
+  isModularIcon: () => (component) => component.status.modular ? 'mdi-view-module' : 'mdi-view-module-outline',
 
   //* Returns color of the card modular icon in the grid view, depending on the theme settings.
   isModularColor: (_, __, rootState) => (component) =>
@@ -234,10 +221,7 @@ const actions = {
   //* Retrieves the last record of the component configuration structure.
   getComponentsConfigStructure() {
     axios.get('api/componentDefaultLast').then((response) => {
-      store.set(
-        'componentManagement/componentsConfigStructure',
-        JSON.stringify(response.data, null, 2),
-      );
+      store.set('componentManagement/componentsConfigStructure', JSON.stringify(response.data, null, 2));
     });
   },
 
@@ -305,10 +289,7 @@ const actions = {
     store.set('componentManagement/loading', true);
     axios.get('api/component.showAll').then((response) => {
       if (response.status === 200) {
-        if (
-          !isEqual(state.allComponents, response.data.components) ||
-          !state.allComponents.length
-        ) {
+        if (!isEqual(state.allComponents, response.data.components) || !state.allComponents.length) {
           store.set('componentManagement/allComponents', response.data.components);
           store.set('componentManagement/loading', false);
         }
@@ -342,9 +323,7 @@ const actions = {
 
   //* Saves the component group configuration settings.
   saveGroup({ state, dispatch }) {
-    const parent = state.allGroups.find(
-      (g) => g.name === state.dbGroupNames[state.groupParent - 1],
-    );
+    const parent = state.allGroups.find((g) => g.name === state.dbGroupNames[state.groupParent - 1]);
     axios
       .post('api/componentGroup', {
         name: state.groupName,
@@ -366,13 +345,9 @@ const actions = {
         }
       })
       .catch((error) => {
-        dispatch(
-          'snackbar/snackbarError',
-          `${error.response.status} ${error.response.statusText}`,
-          {
-            root: true,
-          },
-        );
+        dispatch('snackbar/snackbarError', `${error.response.status} ${error.response.statusText}`, {
+          root: true,
+        });
       });
   },
 
@@ -470,13 +445,9 @@ const actions = {
         }
       })
       .catch((error) => {
-        dispatch(
-          'snackbar/snackbarError',
-          `${error.response.status} ${error.response.statusText}`,
-          {
-            root: true,
-          },
-        );
+        dispatch('snackbar/snackbarError', `${error.response.status} ${error.response.statusText}`, {
+          root: true,
+        });
       });
   },
 
@@ -493,37 +464,23 @@ const actions = {
         store.set('componentManagement/dialogComponent', false);
 
         //* Autoselect latest created component
-        const activeGroup = state.allGroups.find(
-          (item) => item.id === state.componentSettings.component_group_id,
-        );
+        const activeGroup = state.allGroups.find((item) => item.id === state.componentSettings.component_group_id);
 
-        const groupExists = state.selectedComponentGroups.find(
-          (item) => item.id === activeGroup.id,
-        );
+        const groupExists = state.selectedComponentGroups.find((item) => item.id === activeGroup.id);
 
         if (!groupExists) state.selectedComponentGroups.push(activeGroup);
 
-        store.set(
-          'componentManagement/componentCardGroup',
-          getters.allComponentsFiltered.length - 1,
-        );
+        store.set('componentManagement/componentCardGroup', getters.allComponentsFiltered.length - 1);
 
-        store.set(
-          'componentManagement/selectedComponentIndex',
-          getters.allComponentsFiltered.length - 1,
-        );
+        store.set('componentManagement/selectedComponentIndex', getters.allComponentsFiltered.length - 1);
 
         store.set('componentManagement/componentSettings', initialComponentSettings());
 
         dispatch('getNavigationStructure');
 
-        dispatch(
-          'snackbar/snackbarSuccess',
-          `"${state.componentSettings.title}" component created`,
-          {
-            root: true,
-          },
-        );
+        dispatch('snackbar/snackbarSuccess', `"${state.componentSettings.title}" component created`, {
+          root: true,
+        });
 
         store.set('componentManagement/loading', false);
 
