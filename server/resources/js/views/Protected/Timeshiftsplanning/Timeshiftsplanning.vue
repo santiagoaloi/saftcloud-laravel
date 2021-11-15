@@ -253,7 +253,7 @@
           store.set(`eventsManagement/events@${this.eventIndex}`, this.event);
           this.editing = false;
           this.calendar = this.event.date;
-          this.snackbarSuccess(`Event saved, current date: ${moment(this.event.date).format('MMMM Do')}`);
+          this.snackbarSuccess(`Event saved, current date: ${moment(this.event.date).format('MMMM Do')}`, 'centered');
         } else {
           const payload = {
             id: uuidv4(),
@@ -269,7 +269,7 @@
           };
 
           this.calendar = this.event.date;
-          this.snackbarSuccess(`Event created, current date: ${moment(this.event.date).format('MMMM Do')}`);
+          this.snackbarSuccess(`Event created, current date: ${moment(this.event.date).format('MMMM Do')}`, 'centered');
           store.set(`eventsManagement/events@${this.events.length}`, payload);
         }
 
