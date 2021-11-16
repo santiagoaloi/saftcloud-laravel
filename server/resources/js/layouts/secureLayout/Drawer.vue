@@ -15,14 +15,7 @@
             <div class="title font-weight-bold">SaftCloud ™</div>
             <div class="overline white--text">v5.0.2</div>
             <div class="mx-auto mx-1 d-flex flex-column justify-space-between align-center px-2">
-              <v-badge
-                offset-x="35"
-                offset-y="16"
-                bordered
-                :color="badgeColor()"
-                :content="badgeText()"
-                bottom
-              >
+              <v-badge offset-x="35" offset-y="16" bordered :color="badgeColor()" :content="badgeText()" bottom>
                 <v-avatar size="120">
                   <v-img :src="user.avatar || 'storage/defaults/avatar.png'"></v-img>
                 </v-avatar>
@@ -32,10 +25,7 @@
                 {{ fullName }}
               </div>
 
-              <small
-                style="max-width: 200px"
-                class="mt-n2 mb-4 text-truncate d-inline-block grey--text"
-              >
+              <small style="max-width: 200px" class="mt-n2 mb-4 text-truncate d-inline-block grey--text">
                 {{ user.email }}
               </small>
             </div>
@@ -53,9 +43,7 @@
                     <v-icon size="25" color="teal accent-2" left>mdi-store</v-icon>
                     {{ activeBranchName }}
                     <v-icon size="25" color="teal accent-2" right>
-                      {{
-                        !secureComponentDrawerBranch ? 'mdi-chevron-down' : 'mdi-chevron-right'
-                      }}</v-icon
+                      {{ !secureComponentDrawerBranch ? 'mdi-chevron-down' : 'mdi-chevron-right' }}</v-icon
                     >
                   </v-btn>
                 </template>
@@ -80,8 +68,8 @@
                   <v-card-title> Switch workspace</v-card-title>
 
                   <v-card-subtitle>
-                    You can switch to another branch location anytime without loosing any changes in
-                    your current branch. Set a default one, request accesss or remove them.
+                    You can switch to another branch location anytime without loosing any changes in your current branch. Set a
+                    default one, request accesss or remove them.
                   </v-card-subtitle>
 
                   <v-divider></v-divider>
@@ -93,11 +81,7 @@
                           <template #default="{ active }">
                             <v-list-item-icon>
                               <v-icon :color="active ? 'indigo lighten-2' : 'grey'">
-                                {{
-                                  active
-                                    ? 'mdi-checkbox-blank-circle'
-                                    : 'mdi-checkbox-blank-circle-outline'
-                                }}</v-icon
+                                {{ active ? 'mdi-checkbox-blank-circle' : 'mdi-checkbox-blank-circle-outline' }}</v-icon
                               >
                             </v-list-item-icon>
 
@@ -107,10 +91,7 @@
                           </template>
                         </v-list-item>
 
-                        <v-divider
-                          v-if="index < user.branch.length - 1"
-                          :key="branch.id"
-                        ></v-divider>
+                        <v-divider v-if="index < user.branch.length - 1" :key="branch.id"></v-divider>
                       </template>
                     </v-list-item-group>
                   </v-list>
@@ -132,9 +113,7 @@
   import { sync, call } from 'vuex-pathify';
   import capitalize from 'lodash/capitalize';
 
-  Vue.component('MainMenu', () =>
-    import(/* webpackChunkName: 'components-drawer-menu' */ '@/components/Navigation/MainMenu'),
-  );
+  Vue.component('MainMenu', () => import(/* webpackChunkName: 'components-drawer-menu' */ '@/components/Navigation/MainMenu'));
 
   // @vue/component
   export default {
@@ -187,9 +166,7 @@
       user: sync('authentication@session.user'),
 
       fullName() {
-        return `${capitalize(this.user.entity.first_name)} ${capitalize(
-          this.user.entity.last_name,
-        )}`;
+        return `${capitalize(this.user.entity.first_name)} ${capitalize(this.user.entity.last_name)}`;
       },
 
       activeBranchName() {

@@ -26,13 +26,7 @@
               :key="icon"
               :class="{ 'show-btns': hoverCard, 'hide-btns': !hoverCard }"
             >
-              <v-btn
-                color="white"
-                small
-                icon
-                :ripple="false"
-                @click.native.stop="trigger(event, item)"
-              >
+              <v-btn color="white" small icon :ripple="false" @click.native.stop="trigger(event, item)">
                 <v-icon :color="trigger(color, item)">
                   {{ trigger(icon, item) }}
                 </v-icon>

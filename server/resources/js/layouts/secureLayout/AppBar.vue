@@ -1,14 +1,7 @@
 <template>
   <div class="select-none">
     <v-app-bar clipped-right app flat>
-      <v-app-bar-nav-icon
-        dark
-        class="ml-n2 mr-3"
-        text
-        x-small
-        fab
-        @click="secureDefaultDrawer = !secureDefaultDrawer"
-      />
+      <v-app-bar-nav-icon dark class="ml-n2 mr-3" text x-small fab @click="secureDefaultDrawer = !secureDefaultDrawer" />
 
       <h4 style="position: absolute" class="white--text ml-8">
         {{ routeTitle }}
@@ -37,17 +30,7 @@
 
       <v-tooltip transition="false" color="black" bottom>
         <template #activator="{ on }">
-          <v-btn
-            x-small
-            fab
-            class="mr-3"
-            color="white"
-            text
-            dark
-            plain
-            v-on="on"
-            @click="setTheme()"
-          >
+          <v-btn x-small fab class="mr-3" color="white" text dark plain v-on="on" @click="setTheme()">
             <v-icon v-if="isDark"> mdi-lightbulb-on-outline </v-icon>
             <v-icon v-else> mdi-lightbulb-outline </v-icon>
           </v-btn>
@@ -117,17 +100,7 @@
 
       <v-menu origin="center center" transition="scroll-y-transition" :nudge-bottom="10" offset-y>
         <template #activator="{ on, attrs }">
-          <v-btn
-            :loading="logoutLoader"
-            x-small
-            fab
-            class="mr-3"
-            text
-            dark
-            plain
-            v-bind="attrs"
-            v-on="on"
-          >
+          <v-btn :loading="logoutLoader" x-small fab class="mr-3" text dark plain v-bind="attrs" v-on="on">
             <v-avatar size="33px">
               <v-img :src="user.avatar || 'storage/defaults/avatar.png'">
                 <template #placeholder>
@@ -263,15 +236,11 @@
       ...sync('loaders', ['logoutLoader']),
 
       settingsMenuFiltered() {
-        return this.settingsMenu.filter(
-          (menu) => menu.roles.includes(...this.$root.roles) || !menu.roles.length,
-        );
+        return this.settingsMenu.filter((menu) => menu.roles.includes(...this.$root.roles) || !menu.roles.length);
       },
 
       fullName() {
-        return `${capitalize(this.user.entity.first_name)} ${capitalize(
-          this.user.entity.last_name,
-        )} `;
+        return `${capitalize(this.user.entity.first_name)} ${capitalize(this.user.entity.last_name)} `;
       },
 
       routeTitle() {

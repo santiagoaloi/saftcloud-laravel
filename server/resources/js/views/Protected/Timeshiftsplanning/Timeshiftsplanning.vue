@@ -3,55 +3,113 @@
     <base-flex-container>
       <template #top>
         <div class="d-flex align-center">
-          <v-btn icon class="ma-2" @click="$refs.calendar.prev()">
-            <v-icon>mdi-chevron-left</v-icon>
-          </v-btn>
-          <v-select v-model="type" :items="types" dense hide-details class="ma-2" label="type" solo></v-select>
-          <v-select v-model="mode" :items="modes" dense solo hide-details label="event-overlap-mode" class="ma-2"></v-select>
-          <v-select v-model="weekday" :items="weekdays" dense solo hide-details label="weekdays" class="ma-2"></v-select>
-
-          <!-- <v-btn
-            v-if="type === 'day'"
-            small
-            fab
-            icon
-            @click="
-              dialogTimeShift = true;
-              event.date = calendar;
-            "
-          >
-            <v-icon> mdi-plus</v-icon></v-btn
-          > -->
-
-          <v-tooltip v-if="type === 'day'" bottom max-width="250">
+          <v-tooltip bottom max-width="250">
             <template #activator="{ on }">
-              <v-btn
-                small
-                fab
-                icon
-                v-on="on"
-                @click="
-                  dialogTimeShift = true;
-                  event.date = calendar;
-                "
-              >
-                <v-icon> mdi-plus</v-icon></v-btn
-              >
+              <v-btn icon class="ma-2" v-on="on" @click="$refs.calendar.prev()">
+                <v-icon>mdi-chevron-left</v-icon>
+              </v-btn>
             </template>
-            <span>Add a new event</span>
+            Previous Month
+          </v-tooltip>
+
+          <v-toolbar-title v-if="$refs.calendar" class="mr-2">
+            {{ $refs.calendar.title }}
+          </v-toolbar-title>
+
+          <v-menu
+            v-model="selectedDateTrigger"
+            :close-on-content-click="false"
+            transition="scale-transition"
+            offset-y
+            min-width="auto"
+          >
+            <template #activator="{ on }">
+              <v-btn class="mx-2" color="#393d47" v-on="on">
+                <v-tooltip bottom max-width="250">
+                  <template #activator="{ on }">
+                    <v-icon left class="mr-5" v-on="on" @click.stop="previousDay()"> mdi-chevron-left</v-icon>
+                  </template>
+                  Previous day
+                </v-tooltip>
+
+                {{ calendar }}
+
+                <v-tooltip bottom max-width="250">
+                  <template #activator="{ on }">
+                    <v-icon right class="ml-5" v-on="on" @click.stop="nextDay()"> mdi-chevron-right</v-icon>
+                  </template>
+                  Next day
+                </v-tooltip>
+              </v-btn>
+            </template>
+            <v-date-picker v-model="calendar" show-week no-title scrollable @change="selectedDateTrigger = false">
+            </v-date-picker>
+          </v-menu>
+
+          <v-select
+            v-model="type"
+            item-color="bluegrey"
+            :items="types"
+            dense
+            hide-details
+            class="ma-2"
+            label="type"
+            solo
+          ></v-select>
+          <v-select
+            v-model="mode"
+            item-color="bluegrey"
+            :items="modes"
+            dense
+            solo
+            hide-details
+            label="event-overlap-mode"
+            class="ma-2"
+          ></v-select>
+          <v-select
+            v-model="weekday"
+            item-color="bluegrey"
+            :items="weekdays"
+            dense
+            solo
+            hide-details
+            label="weekdays"
+            class="ma-2"
+          ></v-select>
+
+          <v-tooltip v-if="type === 'day'" bottom>
+            <template #activator="{ on }">
+              <v-btn small fab icon v-on="on" @click="openTimeShiftDialog()"> <v-icon> mdi-plus</v-icon></v-btn>
+            </template>
+            <span>Add new event</span>
           </v-tooltip>
 
           <v-spacer></v-spacer>
-          <v-btn icon class="ma-2" @click="$refs.calendar.next()">
-            <v-icon>mdi-chevron-right</v-icon>
-          </v-btn>
-          <v-btn v-if="type !== 'month'" icon class="ma-2 mr-4" @click="type = 'month'">
-            <v-icon>mdi-close</v-icon>
-          </v-btn>
+
+          <v-btn color="#393d47" class="ma-2" @click="clearEvents()"> <v-icon left>mdi-close</v-icon> Clear events </v-btn>
+
+          <v-tooltip v-if="type === 'day'" bottom max-width="250">
+            <template #activator="{ on }">
+              <v-btn icon v-on="on" @click="type = 'month'">
+                <v-icon>mdi-close</v-icon>
+              </v-btn>
+            </template>
+            Close day view
+          </v-tooltip>
+
+          <v-tooltip bottom max-width="250">
+            <template #activator="{ on }">
+              <v-btn icon class="ma-2" v-on="on" @click="$refs.calendar.next()">
+                <v-icon>mdi-chevron-right</v-icon>
+              </v-btn>
+            </template>
+            Next Month
+          </v-tooltip>
         </div>
       </template>
 
       <v-calendar
+        :key="calKey"
         ref="calendar"
         v-model="calendar"
         show-week
@@ -66,7 +124,14 @@
       >
         <template #day-label="{ day, date }">
           <div class="d-flex justify-center align-center pa-5">
-            <v-btn x-small fab icon @click="viewDay(date)">{{ day }} </v-btn>
+            <v-btn
+              fab
+              :icon="date !== calendar ? true : false"
+              :color="date === calendar ? 'primary' : null"
+              x-small
+              @click="viewDay(date)"
+              >{{ day }}
+            </v-btn>
           </div>
         </template>
       </v-calendar>
@@ -80,34 +145,59 @@
       icon="mdi-calendar-account"
       persistent
       @save="saveEvent()"
-      @close="dialogTimeShift = false"
+      @close="(dialogTimeShift = false), (fullTime = false)"
     >
       <v-form @submit.prevent="addRecord()">
         <v-row>
           <v-col sm="6">
             <baseFieldLabel required label="Employee" />
             <v-select
-              v-model="event.selectedEmployee"
-              :menu-props="{ transition: 'slide-y-transition' }"
+              v-model="selectedEmployee"
+              :menu-props="{ 'transition': 'slide-y-transition', 'offset-y': true }"
               item-color="bluegrey"
-              multiple
+              :multiple="!editing"
               hide-details
               :items="allUsers"
               hide-no-data
               :item-text="
                 (item) => {
-                  return fullName(item);
+                  return fullEmployeeName(item);
                 }
               "
-              item-value="entity.first_name"
+              item-value="entity.id"
               dense
               solo
               height="55"
               :background-color="isDark ? '#28292b' : 'white'"
-            />
+            >
+              <template v-if="!editing" #prepend-item>
+                <v-list-item @click="toggleEmployees">
+                  <v-list-item-action>
+                    <v-icon :color="selectedEmployee.length > 0 ? 'white' : ''">
+                      {{ icon }}
+                    </v-icon>
+                  </v-list-item-action>
+                  <v-list-item-content>
+                    <v-list-item-title> Select All Employees </v-list-item-title>
+                  </v-list-item-content>
+                </v-list-item>
+                <v-divider></v-divider>
+              </template>
+
+              <template #selection="{ item, index }">
+                <v-chip v-if="index === 0">
+                  <span>{{ fullEmployeeName(item) }}</span>
+                </v-chip>
+                <span v-if="index === 1" class="white--text"> (+{{ selectedEmployee.length - 1 }} others) </span>
+              </template>
+            </v-select>
           </v-col>
 
-          <v-col sm="6"> </v-col>
+          <v-col sm="6">
+            <baseFieldLabel required label="Full time" />
+
+            <v-switch v-model="fullTime" inset hide-details class="mt-4 ml-2" color="indigo lighten-2" />
+          </v-col>
 
           <v-col cols="6">
             <v-menu
@@ -136,6 +226,7 @@
               </template>
               <v-date-picker
                 v-model="event.date"
+                show-week
                 no-title
                 scrollable
                 @change="
@@ -150,11 +241,13 @@
             <baseFieldLabel required label="Start Time" />
             <v-select
               v-model="event.timeStart"
+              item-color="bluegrey"
               height="55"
               :background-color="isDark ? '#28292b' : 'white'"
               :items="hours"
               hide-no-data
               solo
+              :disabled="fullTime"
             />
           </v-col>
 
@@ -162,11 +255,13 @@
             <baseFieldLabel required label="End Time" />
             <v-select
               v-model="event.timeEnd"
+              item-color="bluegrey"
               height="55"
               :background-color="isDark ? '#28292b' : 'white'"
               :items="hours"
               hide-no-data
               solo
+              :disabled="fullTime"
             />
           </v-col>
         </v-row>
@@ -184,19 +279,27 @@
   import activeView from '@/mixins/activeView';
   import { store } from '@/store';
 
+  const randomHexColor = require('random-hex-color');
+
+  const initialEvent = () => ({
+    date: '',
+    timeStart: '',
+    timeEnd: '',
+  });
+
   export default {
     name: 'Timeshiftsplanning',
     mixins: [activeView],
     data: () => ({
+      selectedEmployee: [],
+
+      calKey: 0,
       eventIndex: 0,
       editing: false,
-      event: {
-        date: '',
-        timeStart: '',
-        timeEnd: '',
-        selectedEmployee: '',
-      },
-
+      event: initialEvent(),
+      selectedDate: '',
+      fullTime: false,
+      selectedDateTrigger: false,
       menuStart: false,
       menuEnd: false,
       hours: [
@@ -224,13 +327,14 @@
         '14:15',
         '14:30',
         '14:45',
+        '15:00',
       ],
 
       // employees: ['Pablo', 'Rene', 'Santiago'],
       dialogTimeShift: false,
       type: 'month',
       types: ['month', 'week', 'day', '4day'],
-      mode: 'stack',
+      mode: 'column',
       modes: ['stack', 'column'],
       weekday: [0, 1, 2, 3, 4, 5, 6],
       weekdays: [
@@ -239,14 +343,27 @@
         { text: 'Mon - Fri', value: [1, 2, 3, 4, 5] },
         { text: 'Mon, Wed, Fri', value: [1, 3, 5] },
       ],
-      calendar: '',
+      calendar: moment().format('YYYY-MM-DD'),
       colors: ['blue', 'indigo', 'deep-purple', 'cyan', 'green', 'orange', 'grey darken-1'],
       names: ['Meeting', 'Holiday', 'PTO', 'Travel', 'Event', 'Birthday', 'Conference', 'Party'],
-      colors: ['blue', 'indigo', 'deep-purple', 'cyan', 'green', 'orange', 'grey darken-1'],
     }),
     computed: {
       ...sync('eventsManagement', ['events']),
       ...sync('entitiesManagement', ['allUsers']),
+
+      icon() {
+        if (this.selectedAllEmployees) return 'mdi-close-box';
+        if (this.selectedSomeEmployees) return 'mdi-minus-box';
+        return 'mdi-checkbox-blank-outline';
+      },
+
+      selectedAllEmployees() {
+        return this.selectedEmployee.length === this.allUsers.length;
+      },
+
+      selectedSomeEmployees() {
+        return this.selectedEmployee.length > 0 && !this.selectedAllEmployees;
+      },
 
       selectedDatetimeStart() {
         if (this.event.date && this.event.timeStart) {
@@ -263,52 +380,112 @@
       },
     },
 
+    watch: {
+      fullTime: {
+        handler(val) {
+          if (val) {
+            [this.event.timeStart] = this.hours;
+            this.event.timeEnd = this.hours[this.hours.length - 1];
+          }
+        },
+        deep: true,
+      },
+    },
+
+    mounted() {
+      this.calKey += 1;
+    },
+
     methods: {
       ...call('snackbar/*'),
 
-      fullName(item) {
-        return ` ${capitalize(item.entity.first_name)} ${capitalize(item.entity.last_name)} `;
+      toggleEmployees() {
+        this.$nextTick(() => {
+          if (this.selectedAllEmployees) {
+            this.selectedEmployee = [];
+          } else {
+            for (const employee of this.allUsers) {
+              this.selectedEmployee.push(employee.entity.id);
+            }
+          }
+        });
+      },
+
+      clearEvents() {
+        store.set(`eventsManagement/events`, []);
+        this.snackbarSuccess(`Events cleared`);
+      },
+
+      nextDay() {
+        this.calendar = moment(this.calendar).add(1, 'd').format('YYYY-MM-DD');
+      },
+
+      previousDay() {
+        this.calendar = moment(this.calendar).subtract(1, 'd').format('YYYY-MM-DD');
+      },
+
+      openTimeShiftDialog() {
+        this.dialogTimeShift = true;
+        Object.assign(this.event, initialEvent());
+        this.event.date = this.calendar;
       },
 
       eventDay(event) {
         this.dialogTimeShift = true;
         this.eventIndex = this.events.findIndex((e) => e.id === event.event.id);
         this.event = this.events[this.eventIndex];
+        this.selectedEmployee.push(this.event.id);
         this.editing = true;
+      },
+
+      lookupEmployee(id) {
+        return this.allUsers.find((e) => e.entity.id === id);
+      },
+
+      fullEmployeeName(item) {
+        if (this.editing) {
+          return 'item.name';
+        }
+        return `${capitalize(item.entity.first_name)} ${capitalize(item.entity.last_name)} `;
       },
 
       saveEvent() {
         if (this.editing) {
           this.event.start = `${this.event.date} ${this.event.timeStart}`;
           this.event.end = `${this.event.date} ${this.event.timeEnd}`;
-          this.event.name = this.event.selectedEmployee;
+          this.event.id = this.selectedEmployee;
+          this.event.name = this.fullEmployeeName(this.lookupEmployee(this.event.id));
           store.set(`eventsManagement/events@${this.eventIndex}`, this.event);
           this.editing = false;
           this.calendar = this.event.date;
           this.snackbarSuccess(`Event saved, current date: ${moment(this.event.date).format('MMMM Do')}`, 'centered');
+          this.dialogTimeShift = false;
+          this.fullTime = false;
         } else {
-          for (const employee of this.event.selectedEmployee) {
+          for (const employee of this.selectedEmployee) {
             const payload = {
-              id: uuidv4(),
-              name: employee,
-              selectedEmployee: employee,
-              start: this.selectedDatetimeStart,
+              color: randomHexColor(),
+              name: this.fullEmployeeName(this.lookupEmployee(employee)),
+              id: this.lookupEmployee(employee).entity.id,
               end: this.selectedDatetimeEnd,
+              start: this.selectedDatetimeStart,
               timed: false,
               timeStart: this.event.timeStart,
               timeEnd: this.event.timeEnd,
               date: this.event.date,
-              color: this.colors[this.rnd(0, this.colors.length - 1)],
             };
 
             store.set(`eventsManagement/events@${this.events.length}`, payload);
-          }
 
-          this.calendar = this.event.date;
-          this.snackbarSuccess(`Event created, current date: ${moment(this.event.date).format('MMMM Do')}`, 'centered');
+            if (this.selectedEmployee[this.selectedEmployee.length - 1] === employee) {
+              this.snackbarSuccess(`Event created, current date: ${moment(this.event.date).format('MMMM Do')}`, 'centered');
+              this.dialogTimeShift = false;
+              this.fullTime = false;
+            }
+          }
         }
 
-        this.dialogTimeShift = false;
+        this.calendar = this.event.date;
       },
 
       viewDay(date) {
