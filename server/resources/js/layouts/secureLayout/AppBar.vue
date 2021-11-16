@@ -12,6 +12,7 @@
       <v-text-field
         v-model="search"
         v-lazy-input:debounce="200"
+        clearable
         spellcheck="false"
         outlined
         :color="isDark ? '#208ad6' : 'grey'"
