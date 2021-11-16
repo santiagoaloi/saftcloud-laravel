@@ -150,5 +150,5 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::get('/test1', [TestFunctionController::class, 'test7']);
     Route::get('/test2', [TestFunctionController::class, 'test8']);
-    Route::get('/test3', [TestFunctionController::class, 'test9']);
+    Route::get('/test3', [TestFunctionController::class, 'test3']);
 });

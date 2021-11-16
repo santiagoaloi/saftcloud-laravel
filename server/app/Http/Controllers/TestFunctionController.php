@@ -72,8 +72,9 @@ class TestFunctionController extends Controller {
         return $query->getComponentNames();
     }
 
-    public function test3(User $pepe){
-        return $pepe;
+    public function test3(Request $request){
+        // return User::branch()->with($request)->get();
+
         // session()->regenerate(); // regenera el token de la sesion
 
         if (Auth::check()) {
@@ -102,7 +103,7 @@ class TestFunctionController extends Controller {
 
         // $user = User::first();
 
-        // // $user = UserController::attachUser($user, 1);
+        // // $user = UserController::attach($user, 1);
         // // return $user;
 
         // return $this->model;

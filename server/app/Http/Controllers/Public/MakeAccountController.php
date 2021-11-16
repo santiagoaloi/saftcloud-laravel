@@ -64,9 +64,20 @@ class MakeAccountController extends Controller {
         ]);
 
         $funcUser = New UserController;
-        $funcUser->attachUser($company_branch, $user);
+
+        $branches['items'] = $company_branch;
+        $branches['name'] = 'role';
+        $request = new Request($branches);
+
+        $funcUser->attach($user, $request);
+
         $role = Role::findOrFail(2);
-        $funcUser->attachUser($role, $user);
+
+        $roles['items'] = $role;
+        $roles['name'] = 'role';
+        $request = new Request($roles);
+
+        $funcUser->attach($user, $request);
 
         return response([
             'status' => 'Success',

@@ -12,12 +12,6 @@ use Illuminate\Database\QueryException;
 
 class UserController extends Controller {
 
-    private $model = 'user';
-
-    // public function __construct() {
-    //     $this->middleware(['permission:user.edit']);
-    // }
-
     public function store(Request $request) {
         //** TEST PARA SUBIR ARCHIVOS AL CREAR UN USUARIO */
         // if($request->hasFile('picture')){
@@ -84,7 +78,9 @@ class UserController extends Controller {
 
     public function showAll() {
         $this->authorize(ability: 'showAll', arguments: [User::class, 'User.showAll']);
-        $users = User::get();
+        $branch = Auth::user()->branch[0];
+        $users = $branch->user;
+
         foreach($users as $user){
             $user->userSetting;
             $user->entity;

@@ -17,7 +17,9 @@ class EntityCapacitiesSeeder extends Seeder {
             ["id"=>2, "name"=>"Root entity" , "description"=> "", "task"=>""],
             ["id"=>3, "name"=>"Company" , "description"=> "", "task"=>""],
             ["id"=>4, "name"=>"Owner" , "description"=> "", "task"=>""],
-            ["id"=>5, "name"=>"Emplyed" , "description"=> "", "task"=>""],
+            ["id"=>5, "name"=>"Employed" , "description"=> "", "task"=>""],
+            ["id"=>6, "name"=>"Customer" , "description"=> "", "task"=>""],
+            ["id"=>7, "name"=>"Supplier" , "description"=> "", "task"=>""],
         ]);
     }
 }
