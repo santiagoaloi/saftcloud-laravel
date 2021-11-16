@@ -1,5 +1,5 @@
 <template>
-  <v-item v-slot="{ toggle }">
+  <v-item v-slot="{ toggle }" class="select-none">
     <v-hover v-slot="{ hover: hoverCard }" open-delay="500">
       <v-sheet
         class="cursor-pointer"
@@ -19,24 +19,26 @@
           </v-avatar>
 
           <v-spacer />
-          <!-- 
-          <div
-            v-for="{ event, color, icon } in statusIcons"
-            :key="icon"
-            :class="{ 'show-btns': hoverCard, 'hide-btns': !hoverCard }"
-          >
-            <v-btn
-              color="white"
-              small
-              icon
-              :ripple="false"
-              @click.native.stop="trigger(event, item)"
+
+          <template v-if="!noActions">
+            <div
+              v-for="{ event, color, icon } in statusIcons"
+              :key="icon"
+              :class="{ 'show-btns': hoverCard, 'hide-btns': !hoverCard }"
             >
-              <v-icon :color="trigger(color, item)">
-                {{ trigger(icon, item) }}
-              </v-icon>
-            </v-btn>
-          </div> -->
+              <v-btn
+                color="white"
+                small
+                icon
+                :ripple="false"
+                @click.native.stop="trigger(event, item)"
+              >
+                <v-icon :color="trigger(color, item)">
+                  {{ trigger(icon, item) }}
+                </v-icon>
+              </v-btn>
+            </div>
+          </template>
         </v-card-actions>
 
         <span class="gallery-card-title pl-2">
@@ -99,6 +101,11 @@
       methods: {
         type: [Object],
         default: () => {},
+      },
+
+      noActions: {
+        type: [Boolean],
+        default: () => false,
       },
     },
 

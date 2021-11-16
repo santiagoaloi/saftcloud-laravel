@@ -1,5 +1,5 @@
 <template>
-  <v-card :class="{ 'black--text': !isDark }" flat tile>
+  <v-card class="select-none" :class="{ 'black--text': !isDark }" flat tile>
     <v-divider />
     <v-card-actions class="pa-0 mr-3">
       <small class="py-2 col-9 text-truncate">

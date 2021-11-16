@@ -172,10 +172,17 @@
         'dbTables',
         'groupName',
       ]),
+      ...sync('loaders', ['dialogComponentLoader']),
     },
 
     created() {
       this.getDbTables();
+    },
+
+    mounted() {
+      setTimeout(() => {
+        this.dialogComponentLoader = false;
+      }, 400);
     },
 
     methods: {

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="select-none">
     <v-app-bar app src="storage/appbar/prism2.jpg">
       <v-container data-aos="fade" data-aos-delay="300" class="py-0 px-0 fill-height">
         <router-link to="/" class="d-flex align-center text-decoration-none">

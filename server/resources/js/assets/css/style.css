@@ -111,11 +111,9 @@ input::-webkit-inner-spin-button {
 }
 
 .v-tab {
-  /* font-size: 0.8rem !important; */
-  font-weight: 200 !important;
-  text-transform: none !important;
-  text-align: left;
-  justify-content: start !important;
+  font-size: 0.6rem !important;
+  font-weight: 400 !important;
+  text-transform: uppercase !important;
 }
 
 .v-tab:before {
@@ -188,7 +186,7 @@ input::-webkit-inner-spin-button {
   background-color: #282c3b;
 }
 
-.dottedBackground {
+/* .dottedBackground {
   background: transparent;
   background-size: 35px 32px !important;
   background-image: radial-gradient(
@@ -196,7 +194,7 @@ input::-webkit-inner-spin-button {
     rgb(92, 86, 86) 0.5px,
     rgba(0, 0, 0, 0) 0.6px
   ) !important;
-}
+} */
 
 .gallery-card-container {
   display: grid;
@@ -219,7 +217,7 @@ input::-webkit-inner-spin-button {
 }
 
 .hoverElevationSoft {
-  border-radius: 8px;
+  border-radius: 4px;
   -webkit-transition-property: color, background-color, -webkit-box-shadow, -webkit-transform;
   transition-property: color, background-color, box-shadow, transform, -webkit-box-shadow,
     -webkit-transform;
@@ -306,30 +304,34 @@ input::-webkit-inner-spin-button {
   align-items: center;
 }
 
-.router-tab {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-}
-
-.router-tab__container {
-  background: unset;
-  transition: all 0.4s ease-in-out;
-}
-
 .v-application ul,
 .v-application ol {
   padding-left: 0;
 }
 
-.router-tab__header {
-  z-index: 9;
-  box-sizing: border-box;
-  border-bottom: unset;
-  transition: all 0.2s ease-in-out;
-  background-color: rgba(34, 37, 48, 0.7);
+.v-data-table {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.v-data-table__wrapper {
+  height: 100%;
+}
+
+.v-data-footer {
+  width: 100%;
+}
+
+.theme--dark.v-data-table.solidBackground {
+  background-color: #222530e6 !important;
+  /* background-color: transparent !important; */
+}
+
+.theme--dark.v-data-table.v-data-table--fixed-header thead th {
+  background: #222530e6 !important;
+}
+
+.bw-image {
+  filter: grayscale(100%);
 }

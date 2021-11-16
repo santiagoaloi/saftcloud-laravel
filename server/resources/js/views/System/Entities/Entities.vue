@@ -1,6 +1,6 @@
 <template>
   <div>
-    <base-flex-container>
+    <base-flex-container class="dottedBackground">
       <template #top>
         <div class="removeGutters">
           <entities-appbar />

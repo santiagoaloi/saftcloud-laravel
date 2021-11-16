@@ -1,15 +1,15 @@
 <template>
   <div>
-    <base-flex-container>
+    <base-flex-container class="dottedBackground">
       <template #top>
         <components-toolbar />
-        <!-- <components-appbar /> -->
+        <v-divider></v-divider>
         <components-tabs />
       </template>
 
-      <v-scroll-y-transition hide-on-leave>
+      <v-fade-transition hide-on-leave>
         <components-table v-if="isTableLayout && !isAllFilteredComponentsEmpty" />
-      </v-scroll-y-transition>
+      </v-fade-transition>
 
       <v-scroll-x-transition hide-on-leave>
         <components-grid v-if="!isTableLayout && !isAllFilteredComponentsEmpty" />
@@ -58,7 +58,7 @@
     computed: {
       ...sync('theme', ['isDark']),
       ...sync('componentManagement', ['isTableLayout', 'dialogComponent', 'componentEditSheet']),
-      ...get('componentManagement', ['isAllFilteredComponentsEmpty', 'selectedComponent']),
+      ...get('componentManagement', ['isAllFilteredComponentsEmpty']),
     },
 
     created() {

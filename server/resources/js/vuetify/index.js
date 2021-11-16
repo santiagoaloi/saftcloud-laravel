@@ -1,10 +1,9 @@
 import Vue from 'vue';
 import Vuetify from 'vuetify/lib/framework';
 import minifyTheme from 'minify-css-string';
+import { VItem } from 'vuetify/lib';
 import { store } from '@/store';
 import config from '../configs';
-
-import { VItem } from 'vuetify/lib';
 
 export default async () => {
   await store.restored;

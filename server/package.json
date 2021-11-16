@@ -12,6 +12,7 @@
     "production": "mix --production"
   },
   "dependencies": {
+    "@growthbunker/vueflags": "^0.1.14",
     "aos": "^2.3.4",
     "axios": "^0.21",
     "depcheck": "^1.4.2",
@@ -21,12 +22,12 @@
     "lodash": "^4.17.21",
     "vee-validate": "^3.4.5",
     "vue": "^2.6.11",
-    "vue-country-flag": "^2.0.4",
     "vue-router": "^3.2.0",
     "vue-sweetalert2": "^5.0.2",
     "vue-typer": "^1.2.0",
     "vuedraggable": "^2.24.3",
     "vuetify": "^2.5.12",
+    "vuetify-loader": "^1.7.1",
     "vuex": "^3.4.0",
     "vuex-pathify": "^1.4.5",
     "vuex-persist": "^3.1.3"
@@ -52,7 +53,6 @@
     "vue-diagonal": "^0.1.0",
     "vue-head": "^2.2.0",
     "vue-lazy-input": "^1.1.0",
-    "vuetify-loader": "^1.7.1",
     "webpack": "5.51.1",
     "webpack-dev-server": "4.2.1"
   },

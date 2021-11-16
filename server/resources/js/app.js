@@ -13,6 +13,10 @@ Vue.config.devtools = true;
 // Application
 import App from './App.vue';
 
+//flags
+import VueFlags from '@growthbunker/vueflags';
+Vue.use(VueFlags);
+
 // Styles amd Animations
 import AOS from 'aos';
 import 'aos/dist/aos.css';

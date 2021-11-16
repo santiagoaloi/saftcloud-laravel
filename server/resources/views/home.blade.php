@@ -10,7 +10,7 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <title>SaftCloud</title>
     </head>
-        <body style="background: #24292e;overflow:hidden">
+        <body  style="background: #24292e;overflow:hidden">
         <noscript>
             <strong>We're sorry but SaftCloud doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
         </noscript>

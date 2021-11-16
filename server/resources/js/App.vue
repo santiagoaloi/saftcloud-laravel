@@ -25,6 +25,12 @@
   export default {
     name: 'App',
 
+    beforeRouteEnter(to, from, next) {
+      next((vm) => {
+        console.log('hello');
+      });
+    },
+
     head: {
       link: [...config.icons.map((href) => ({ rel: 'stylesheet', href }))],
     },
@@ -34,9 +40,9 @@
         return this.$route.meta.layout;
       },
 
-      // vuetfiy() {
-      //   return this.$vuetify;
-      // },
+      vuetfiy() {
+        return this.$vuetify;
+      },
     },
 
     created() {

@@ -1,42 +1,24 @@
 <template>
-  <div>
+  <div class="h-full select-none">
     <v-data-table
       v-model="selectedComponentTableRow"
+      height="100%"
       fixed-header
-      checkbox-color="primary"
       item-key="id"
       :headers="headers"
       :items="allComponentsFiltered"
       style="cursor: pointer"
       calculate-widths
+      class="solidBackground"
       @click:row="rowClicked"
       @dblclick:row="validateBeforeEdit"
     >
       <template #[`item.avatar`]="{ item }">
-        <v-hover v-slot="{ hover }">
-          <v-avatar
-            class="cursor-pointer"
-            size="35"
-            rounded
-            :color="item.config_settings.icon.color"
-            @click="setComponentTableIcon(item), (dialogIcons = true)"
-          >
-            <v-expand-transition>
-              <div
-                v-if="hover"
-                class="d-flex black v-card--reveal white--text"
-                style="height: 100%"
-              >
-                <v-icon size="20" dark> mdi-pencil </v-icon>
-              </div>
-            </v-expand-transition>
-            <v-fade-transition hide-on-leave>
-              <v-icon v-if="!hover" size="20" dark>
-                {{ item.config_settings.icon.name }}
-              </v-icon>
-            </v-fade-transition>
-          </v-avatar>
-        </v-hover>
+        <v-avatar class="cursor-pointer" size="35" rounded :color="item.config_settings.icon.color">
+          <v-icon size="20" dark>
+            {{ item.config_settings.icon.name }}
+          </v-icon>
+        </v-avatar>
       </template>
 
       <template #[`item.name`]="{ item }">
@@ -54,7 +36,7 @@
       </template>
 
       <template #[`item.config.general_config.title`]="{ item }">
-        <span class="gallery-card-title pl-2">
+        <span class="pl-2">
           <template v-if="item.config.general_config.title">
             {{ item.config.general_config.title }}
           </template>
@@ -122,7 +104,6 @@
         </v-tooltip>
       </template>
     </v-data-table>
-    <base-dialog-icons v-if="dialogIcons" v-model="dialogIcons" :icon="componentIcon" />
   </div>
 </template>
 
@@ -135,6 +116,7 @@
     mixins: [componentActions],
     data() {
       return {
+        contentHeight: 0,
         headers: [
           {
             text: 'Avatar',
@@ -172,7 +154,6 @@
             width: 160,
           },
         ],
-        dialogIcons: false,
         componentIcon: '',
       };
     },
@@ -222,10 +203,6 @@
         }
       },
 
-      setComponentTableIcon(item) {
-        this.componentIcon = item.config_settings.icon;
-      },
-
       rowClicked(row) {
         this.toggleSelection(row.id, row);
         const index = this.allComponentsFiltered.findIndex((component) => component.id === row.id);
@@ -235,10 +212,6 @@
 
       toggleSelection(id, row) {
         this.selectedComponentTableRow = [row];
-      },
-
-      calculateHeight() {
-        return Number(this.$vuetify.breakpoint.height - 360);
       },
     },
   };

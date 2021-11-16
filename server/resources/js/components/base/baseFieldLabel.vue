@@ -1,5 +1,5 @@
 <template>
-  <div class="ml-1 mb-1">
+  <div class="ml-1 mb-1 select-none">
     <div class="d-flex grey--text text--darken-1 font-weight-bold label-text">
       <span :class="`${color}--text`"> {{ lowerCase ? labelLowercase : labelUppercase }} </span>
       <div v-if="required" class="ml-1 pink--text text--accent-2">▪</div>

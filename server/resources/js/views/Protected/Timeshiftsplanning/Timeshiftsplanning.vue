@@ -6,35 +6,11 @@
           <v-btn icon class="ma-2" @click="$refs.calendar.prev()">
             <v-icon>mdi-chevron-left</v-icon>
           </v-btn>
-          <v-select
-            v-model="type"
-            :items="types"
-            dense
-            hide-details
-            class="ma-2"
-            label="type"
-            solo
-          ></v-select>
-          <v-select
-            v-model="mode"
-            :items="modes"
-            dense
-            solo
-            hide-details
-            label="event-overlap-mode"
-            class="ma-2"
-          ></v-select>
-          <v-select
-            v-model="weekday"
-            :items="weekdays"
-            dense
-            solo
-            hide-details
-            label="weekdays"
-            class="ma-2"
-          ></v-select>
+          <v-select v-model="type" :items="types" dense hide-details class="ma-2" label="type" solo></v-select>
+          <v-select v-model="mode" :items="modes" dense solo hide-details label="event-overlap-mode" class="ma-2"></v-select>
+          <v-select v-model="weekday" :items="weekdays" dense solo hide-details label="weekdays" class="ma-2"></v-select>
 
-          <v-btn
+          <!-- <v-btn
             v-if="type === 'day'"
             small
             fab
@@ -45,7 +21,25 @@
             "
           >
             <v-icon> mdi-plus</v-icon></v-btn
-          >
+          > -->
+
+          <v-tooltip v-if="type === 'day'" bottom max-width="250">
+            <template #activator="{ on }">
+              <v-btn
+                small
+                fab
+                icon
+                v-on="on"
+                @click="
+                  dialogTimeShift = true;
+                  event.date = calendar;
+                "
+              >
+                <v-icon> mdi-plus</v-icon></v-btn
+              >
+            </template>
+            <span>Add a new event</span>
+          </v-tooltip>
 
           <v-spacer></v-spacer>
           <v-btn icon class="ma-2" @click="$refs.calendar.next()">
@@ -84,6 +78,7 @@
       width="50vw"
       title="Time shift"
       icon="mdi-calendar-account"
+      persistent
       @save="saveEvent()"
       @close="dialogTimeShift = false"
     >
@@ -93,16 +88,22 @@
             <baseFieldLabel required label="Employee" />
             <v-select
               v-model="event.selectedEmployee"
+              :menu-props="{ transition: 'slide-y-transition' }"
+              item-color="bluegrey"
+              multiple
               hide-details
-              :items="employees"
+              :items="allUsers"
               hide-no-data
+              :item-text="
+                (item) => {
+                  return fullName(item);
+                }
+              "
+              item-value="entity.first_name"
               dense
               solo
               height="55"
               :background-color="isDark ? '#28292b' : 'white'"
-              :menu-props="{
-                transition: 'slide-y-transition',
-              }"
             />
           </v-col>
 
@@ -177,7 +178,9 @@
 
 <script>
   import { v4 as uuidv4 } from 'uuid';
-  import { sync } from 'vuex-pathify';
+  import { sync, call } from 'vuex-pathify';
+  import moment from 'moment';
+  import { capitalize } from 'lodash';
   import activeView from '@/mixins/activeView';
   import { store } from '@/store';
 
@@ -223,7 +226,7 @@
         '14:45',
       ],
 
-      employees: ['Pablo', 'Rene', 'Santiago'],
+      // employees: ['Pablo', 'Rene', 'Santiago'],
       dialogTimeShift: false,
       type: 'month',
       types: ['month', 'week', 'day', '4day'],
@@ -239,9 +242,11 @@
       calendar: '',
       colors: ['blue', 'indigo', 'deep-purple', 'cyan', 'green', 'orange', 'grey darken-1'],
       names: ['Meeting', 'Holiday', 'PTO', 'Travel', 'Event', 'Birthday', 'Conference', 'Party'],
+      colors: ['blue', 'indigo', 'deep-purple', 'cyan', 'green', 'orange', 'grey darken-1'],
     }),
     computed: {
       ...sync('eventsManagement', ['events']),
+      ...sync('entitiesManagement', ['allUsers']),
 
       selectedDatetimeStart() {
         if (this.event.date && this.event.timeStart) {
@@ -259,6 +264,12 @@
     },
 
     methods: {
+      ...call('snackbar/*'),
+
+      fullName(item) {
+        return ` ${capitalize(item.entity.first_name)} ${capitalize(item.entity.last_name)} `;
+      },
+
       eventDay(event) {
         this.dialogTimeShift = true;
         this.eventIndex = this.events.findIndex((e) => e.id === event.event.id);
@@ -273,21 +284,28 @@
           this.event.name = this.event.selectedEmployee;
           store.set(`eventsManagement/events@${this.eventIndex}`, this.event);
           this.editing = false;
+          this.calendar = this.event.date;
+          this.snackbarSuccess(`Event saved, current date: ${moment(this.event.date).format('MMMM Do')}`, 'centered');
         } else {
-          const payload = {
-            id: uuidv4(),
-            name: this.event.selectedEmployee,
-            selectedEmployee: this.event.selectedEmployee,
-            color: 'primary',
-            start: this.selectedDatetimeStart,
-            end: this.selectedDatetimeEnd,
-            timed: false,
-            timeStart: this.event.timeStart,
-            timeEnd: this.event.timeEnd,
-            date: this.event.date,
-          };
+          for (const employee of this.event.selectedEmployee) {
+            const payload = {
+              id: uuidv4(),
+              name: employee,
+              selectedEmployee: employee,
+              start: this.selectedDatetimeStart,
+              end: this.selectedDatetimeEnd,
+              timed: false,
+              timeStart: this.event.timeStart,
+              timeEnd: this.event.timeEnd,
+              date: this.event.date,
+              color: this.colors[this.rnd(0, this.colors.length - 1)],
+            };
 
-          store.set(`eventsManagement/events@${this.events.length}`, payload);
+            store.set(`eventsManagement/events@${this.events.length}`, payload);
+          }
+
+          this.calendar = this.event.date;
+          this.snackbarSuccess(`Event created, current date: ${moment(this.event.date).format('MMMM Do')}`, 'centered');
         }
 
         this.dialogTimeShift = false;

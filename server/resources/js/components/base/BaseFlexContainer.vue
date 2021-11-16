@@ -1,11 +1,11 @@
-<template functional>
-  <div class="flex-container">
-    <div class="flex-wrapper">
+<template>
+  <div class="flex-container" :style="`top: ${top}px;width: ${width}px`">
+    <div :style="`width: ${width}px`" class="flex-wrapper">
       <div v-show="$slots.top" class="content mx-0" style="background: rgba(34, 37, 48, 0.9)">
         <slot name="top"> </slot>
       </div>
 
-      <div class="flex-scrollable-content content dottedBackground">
+      <div class="flex-scrollable-content">
         <slot> </slot>
       </div>
 
@@ -19,13 +19,23 @@
 <script>
   export default {
     name: 'FlexContainer',
+
+    props: {
+      width: {
+        type: [String],
+        default: () => '',
+      },
+      top: {
+        type: [String, Number],
+        default: () => 0,
+      },
+    },
   };
 </script>
 <style scoped>
   .flex-container {
     /* give the outermost container a predefined size */
     position: absolute;
-    top: 0;
     bottom: 0;
     left: 0;
     display: flex;
@@ -49,7 +59,6 @@
   .flex-scrollable-content {
     flex-grow: 1;
     overflow: auto;
-    /* for Firefox */
-    min-height: 0;
+    overflow: overlay;
   }
 </style>

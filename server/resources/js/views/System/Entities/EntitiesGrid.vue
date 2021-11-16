@@ -9,6 +9,7 @@
         <base-grid-card
           v-for="(entity, index) in allEntitiesFiltered"
           :key="index + 1"
+          no-actions
           class="d-flex flex-column justify-space-between pa-4 hoverElevationSoft"
           :item="entity"
           :index="index"

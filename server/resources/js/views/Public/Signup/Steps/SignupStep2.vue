@@ -27,14 +27,14 @@
                 @blur="reset"
               >
                 <template slot="selection" slot-scope="data">
-                  <country-flag class="mr-2" :country="data.item.iso2" />
+                  <!-- <country-flag class="mr-2" :country="data.item.iso2" /> -->
                   <span class="mr-2">{{ data.item.name }} </span>
                 </template>
 
                 <template #item="{ item, on }">
                   <v-list-item :ripple="false" v-on="on">
                     <v-list-item-avatar>
-                      <country-flag class="mr-2" :country="item.iso2" />
+                      <!-- <country-flag class="mr-2" :country="item.iso2" /> -->
                     </v-list-item-avatar>
                     <v-list-item-content>
                       <v-list-item-title> {{ item.name }} </v-list-item-title>
@@ -147,13 +147,9 @@
 
 <script>
   import { sync, get, call } from 'vuex-pathify';
-  import CountryFlag from 'vue-country-flag';
 
   export default {
     name: 'SignupStep2',
-    components: {
-      CountryFlag,
-    },
 
     computed: {
       ...sync('theme', ['isDark']),
