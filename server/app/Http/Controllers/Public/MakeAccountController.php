@@ -1,13 +1,14 @@
 <?php
 
 namespace App\Http\Controllers\Public;
-use App\Models\Private\RootAccount;
+use App\Models\User;
 use App\Models\Roles\Role;
 
-use App\Http\Controllers\Private\UserController;
-
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+
+use App\Models\Private\RootAccount;
+use App\Http\Controllers\Controller;
+use App\Http\Controllers\Private\UserController;
 
 class MakeAccountController extends Controller {
 
@@ -43,13 +44,13 @@ class MakeAccountController extends Controller {
         ]);
 
         // CREACION DE SUCURSAL
-        $company_branch = $entity->branch()->create([
+        $branch = $entity->branch()->create([
             'email'     => $postdata['email'],
             'name'      => 'example branch'
         ]);
 
         // CREACION DE PUNTO DE VENTA
-        $company_branch->pointOfSale()->create([
+        $branch->pointOfSale()->create([
             'ptoVta'                => 1,
             'look_up_list_value_id' => 44,
             'name'                  => 'caja 1',
@@ -63,21 +64,8 @@ class MakeAccountController extends Controller {
             'password'              =>  bcrypt('password')
         ]);
 
-        $funcUser = New UserController;
-
-        $branches['items'] = $company_branch;
-        $branches['name'] = 'role';
-        $request = new Request($branches);
-
-        $funcUser->attach($user, $request);
-
-        $role = Role::findOrFail(2);
-
-        $roles['items'] = $role;
-        $roles['name'] = 'role';
-        $request = new Request($roles);
-
-        $funcUser->attach($user, $request);
+        $this->attachBranch($user, $branch);
+        $this->attachRole($user);
 
         return response([
             'status' => 'Success',
@@ -85,4 +73,13 @@ class MakeAccountController extends Controller {
         ], 200);
     }
 
+    // AGREGA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
+    public function attachBranch(User $user, $branch){
+        $user->branch()->attach($branch);
+    }
+
+    // AGREGA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
+    public function attachRole(User $user){
+        $user->role()->attach(2);
+    }
 }

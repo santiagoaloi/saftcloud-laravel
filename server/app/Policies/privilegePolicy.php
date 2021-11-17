@@ -22,6 +22,7 @@ class privilegePolicy {
 
     public function store(User $user, $capability) {
         $user = Auth::user();
+        $user = auth()->user();
         $capabilities = getRolCapabilities($user);
 
         if(in_array($capability, $capabilities) OR AccountVerification::checkRootRole()) {
