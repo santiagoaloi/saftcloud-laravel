@@ -142,7 +142,7 @@
               <v-hover>
                 <v-hover v-slot="{ hover }">
                   <v-list-item-avatar v-if="!hover">
-                    <v-img :src="event.avatar">
+                    <v-img :src="event.avatar || 'storage/defaults/avatar.png'">
                       <template #placeholder>
                         <v-row class="fill-height ma-0" align="center" justify="center">
                           <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
@@ -272,20 +272,18 @@
                   </template>
 
                   <template #item="data">
-                    <template>
-                      <v-list-item-avatar size="25">
-                        <v-img :src="data.item.avatar || 'storage/defaults/avatar.png'">
-                          <template #placeholder>
-                            <v-row class="fill-height ma-0" align="center" justify="center">
-                              <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
-                            </v-row>
-                          </template>
-                        </v-img>
-                      </v-list-item-avatar>
-                      <v-list-item-content>
-                        <v-list-item-title> {{ fullEmployeeName(data.item) }} </v-list-item-title>
-                      </v-list-item-content>
-                    </template>
+                    <v-list-item-avatar size="25">
+                      <v-img :src="data.item.avatar || 'storage/defaults/avatar.png'">
+                        <template #placeholder>
+                          <v-row class="fill-height ma-0" align="center" justify="center">
+                            <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
+                          </v-row>
+                        </template>
+                      </v-img>
+                    </v-list-item-avatar>
+                    <v-list-item-content>
+                      <v-list-item-title> {{ fullEmployeeName(data.item) }} </v-list-item-title>
+                    </v-list-item-content>
                   </template>
 
                   <template #selection="{ item, index }">
