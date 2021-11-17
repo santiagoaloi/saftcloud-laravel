@@ -11,6 +11,7 @@ const getDefaultState = () => ({
   dialogCrud: false,
   dialogCustomize: false,
   loading: true,
+  titleBarSlot: '',
 });
 
 const state = getDefaultState();

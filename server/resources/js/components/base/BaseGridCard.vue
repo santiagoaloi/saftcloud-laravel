@@ -11,7 +11,13 @@
       >
         <v-card-actions class="px-0">
           <v-avatar size="80" :color="iconColor">
-            <v-img v-if="avatar" :src="avatar"></v-img>
+            <v-img v-if="avatar" :src="avatar">
+              <template #placeholder>
+                <v-row class="fill-height ma-0" align="center" justify="center">
+                  <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
+                </v-row>
+              </template>
+            </v-img>
 
             <v-icon v-else size="40" dark>
               {{ icon }}
@@ -26,13 +32,7 @@
               :key="icon"
               :class="{ 'show-btns': hoverCard, 'hide-btns': !hoverCard }"
             >
-              <v-btn
-                color="white"
-                small
-                icon
-                :ripple="false"
-                @click.native.stop="trigger(event, item)"
-              >
+              <v-btn color="white" small icon :ripple="false" @click.native.stop="trigger(event, item)">
                 <v-icon :color="trigger(color, item)">
                   {{ trigger(icon, item) }}
                 </v-icon>

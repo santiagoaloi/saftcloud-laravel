@@ -2,16 +2,7 @@
   <v-sheet tile class="text-center pa-2 transparent select-none">
     <v-tooltip transition="false" color="black" top>
       <template #activator="{ on }">
-        <v-btn
-          :ripple="false"
-          depressed
-          dark
-          large
-          small
-          :color="isDark ? '' : 'white'"
-          @click="edit()"
-          v-on="on"
-        >
+        <v-btn :ripple="false" depressed dark large small :color="isDark ? '' : 'white'" @click="edit()" v-on="on">
           <v-icon color="#208ad6" dark> mdi-pencil-outline </v-icon>
         </v-btn>
       </template>
@@ -47,12 +38,7 @@
           :color="isDark ? '' : 'white'"
           v-on="on"
           @click.stop="
-            removeComponentWarning(
-              selectedComponent.id,
-              'delete',
-              'component',
-              selectedComponent.config.general_config.title,
-            )
+            removeComponentWarning(selectedComponent.id, 'delete', 'component', selectedComponent.config.general_config.title)
           "
         >
           <v-icon color="pink lighten-1" dark> mdi-trash-can-outline </v-icon>
@@ -101,11 +87,7 @@
     computed: {
       ...sync('theme', ['isDark']),
       ...sync('componentManagement', ['componentEditSheet']),
-      ...get('componentManagement', [
-        'selectedComponent',
-        'hasUnsavedChanges',
-        'hasValidationErrors',
-      ]),
+      ...get('componentManagement', ['selectedComponent', 'hasUnsavedChanges', 'hasValidationErrors']),
     },
 
     methods: {

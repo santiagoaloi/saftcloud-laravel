@@ -1,18 +1,9 @@
 <template>
   <div class="select-none">
     <v-app-bar clipped-right app flat>
-      <v-app-bar-nav-icon
-        dark
-        class="ml-n2 mr-3"
-        text
-        x-small
-        fab
-        @click="secureDefaultDrawer = !secureDefaultDrawer"
-      />
+      <v-app-bar-nav-icon dark class="ml-n2 mr-3" text x-small fab @click="secureDefaultDrawer = !secureDefaultDrawer" />
 
-      <h4 style="position: absolute" class="white--text ml-8">
-        {{ routeTitle }}
-      </h4>
+      <h4 style="position: absolute" class="white--text ml-8">{{ routeTitle }} {{ titleBarSlot }}</h4>
 
       <div class="flex-grow-1" />
 
@@ -33,21 +24,15 @@
         rounded
         @focus="expand = true"
         @blur="expand = false"
-      />
+      >
+        <template #append>
+          <v-btn class="mr-n4" x-small fab text @click="search = ''"> <v-icon> mdi-close </v-icon> </v-btn>
+        </template>
+      </v-text-field>
 
       <v-tooltip transition="false" color="black" bottom>
         <template #activator="{ on }">
-          <v-btn
-            x-small
-            fab
-            class="mr-3"
-            color="white"
-            text
-            dark
-            plain
-            v-on="on"
-            @click="setTheme()"
-          >
+          <v-btn x-small fab class="mr-3" color="white" text dark plain v-on="on" @click="setTheme()">
             <v-icon v-if="isDark"> mdi-lightbulb-on-outline </v-icon>
             <v-icon v-else> mdi-lightbulb-outline </v-icon>
           </v-btn>
@@ -117,17 +102,7 @@
 
       <v-menu origin="center center" transition="scroll-y-transition" :nudge-bottom="10" offset-y>
         <template #activator="{ on, attrs }">
-          <v-btn
-            :loading="logoutLoader"
-            x-small
-            fab
-            class="mr-3"
-            text
-            dark
-            plain
-            v-bind="attrs"
-            v-on="on"
-          >
+          <v-btn :loading="logoutLoader" x-small fab class="mr-3" text dark plain v-bind="attrs" v-on="on">
             <v-avatar size="33px">
               <v-img :src="user.avatar || 'storage/defaults/avatar.png'">
                 <template #placeholder>
@@ -184,6 +159,7 @@
   import axios from 'axios';
   import { call, sync } from 'vuex-pathify';
   import capitalize from 'lodash/capitalize';
+  import { store } from '@/store';
 
   export default {
     name: 'SecureAppbar',
@@ -258,20 +234,18 @@
     computed: {
       ...sync('theme', ['isDark']),
       ...sync('application', ['search']),
+      ...sync('activeView', ['titleBarSlot']),
+
       user: sync('authentication@session.user'),
       ...sync('drawers', ['secureDefaultDrawer']),
       ...sync('loaders', ['logoutLoader']),
 
       settingsMenuFiltered() {
-        return this.settingsMenu.filter(
-          (menu) => menu.roles.includes(...this.$root.roles) || !menu.roles.length,
-        );
+        return this.settingsMenu.filter((menu) => menu.roles.includes(...this.$root.roles) || !menu.roles.length);
       },
 
       fullName() {
-        return `${capitalize(this.user.entity.first_name)} ${capitalize(
-          this.user.entity.last_name,
-        )} `;
+        return `${capitalize(this.user.entity.first_name)} ${capitalize(this.user.entity.last_name)} `;
       },
 
       routeTitle() {
@@ -285,6 +259,12 @@
 
     methods: {
       ...call('authentication/*'),
+
+      clearSearch() {
+        setTimeout(() => {
+          store.set('application/search', '');
+        }, 500);
+      },
 
       setTheme() {
         this.$vuetify.theme.dark = !this.$vuetify.theme.dark;

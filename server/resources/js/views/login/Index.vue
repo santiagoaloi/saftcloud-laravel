@@ -5,13 +5,7 @@
         <v-row no-gutters align="center" justify="center">
           <div>
             <v-avatar :size="$vuetify.breakpoint.smAndDown ? '8em' : '16em'">
-              <v-img
-                eager
-                class="rounded"
-                aspect-ratio="2"
-                src="storage/logo.png"
-                :transition="false"
-              >
+              <v-img eager class="rounded" aspect-ratio="2" src="storage/logo.png" :transition="false">
                 <!-- Spinner loader -->
                 <template #placeholder>
                   <v-row class="fill-height ma-0" align="center" justify="center">
@@ -42,12 +36,7 @@
             Your session has expired <strong> due to inactivity.</strong>
           </v-alert>
 
-          <v-card
-            elevation="10"
-            :class="{ shake: shake }"
-            class="pa-5"
-            :color="$vuetify.theme.dark ? '#2f3136' : '#f6f8fa'"
-          >
+          <v-card elevation="10" :class="{ shake: shake }" class="pa-5" :color="$vuetify.theme.dark ? '#2f3136' : '#f6f8fa'">
             <v-card-title class="py-10">
               <h1>Welcome back!</h1>
             </v-card-title>
@@ -71,11 +60,7 @@
                 <v-col cols="12" sm="12" md="12" />
 
                 <v-col cols="12" sm="6" md="12">
-                  <validation-provider
-                    v-slot="{ errors, reset }"
-                    name="account name"
-                    rules="required"
-                  >
+                  <validation-provider v-slot="{ errors, reset }" name="account name" rules="required">
                     <v-text-field
                       ref="username"
                       v-model.trim="auth.email"
@@ -102,11 +87,7 @@
 
                 <v-col cols="12" sm="6" md="12">
                   <div id="passwordField">
-                    <validation-provider
-                      v-slot="{ errors, reset }"
-                      name="account password"
-                      rules="required"
-                    >
+                    <validation-provider v-slot="{ errors, reset }" name="account password" rules="required">
                       <v-text-field
                         v-model.trim="auth.password"
                         hide-details
@@ -133,9 +114,7 @@
                   <v-card-actions class="mt-n2">
                     <div class="flex-grow-1" />
 
-                    <v-btn disabled class="mt-3" text small @click="forgot = true">
-                      Forgot your password?
-                    </v-btn>
+                    <v-btn disabled class="mt-3" text small @click="forgot = true"> Forgot your password? </v-btn>
                   </v-card-actions>
                 </v-col>
 

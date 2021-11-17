@@ -40,9 +40,7 @@
                 <template #default="{ active }">
                   <v-list-item-icon>
                     <v-icon :color="active ? 'indigo lighten-2' : 'grey'">
-                      {{
-                        active ? 'mdi-checkbox-blank-circle' : 'mdi-checkbox-blank-circle-outline'
-                      }}</v-icon
+                      {{ active ? 'mdi-checkbox-blank-circle' : 'mdi-checkbox-blank-circle-outline' }}</v-icon
                     >
                   </v-list-item-icon>
 
@@ -65,11 +63,7 @@
       </v-sheet>
     </base-expandable-button>
 
-    <base-expandable-button
-      title="Fetch Components"
-      subtitle="Last fetched just now"
-      icon="mdi-responsive"
-    >
+    <base-expandable-button title="Fetch Components" subtitle="Last fetched just now" icon="mdi-responsive">
     </base-expandable-button>
 
     <base-expandable-button
@@ -133,9 +127,7 @@
       selectGroup(group) {
         const groupFound = this.selectedComponentGroups.find((g) => g.id === group.id);
         if (groupFound) {
-          this.selectedComponentGroups = this.selectedComponentGroups.filter(
-            (g) => g.id !== group.id,
-          );
+          this.selectedComponentGroups = this.selectedComponentGroups.filter((g) => g.id !== group.id);
         } else {
           this.selectedComponentGroups = [...this.selectedComponentGroups, group];
         }

@@ -1,13 +1,6 @@
 <template>
   <div class="d-flex justify-space-between align-center">
-    <v-tabs
-      v-model="activeStatusTab"
-      color="primary"
-      show-arrows
-      class="ml-5"
-      background-color="transparent"
-      slider-size="2"
-    >
+    <v-tabs v-model="activeStatusTab" color="primary" show-arrows class="ml-5" background-color="transparent" slider-size="2">
       <v-tab
         v-for="({ icon, name }, i) in componentStatusTabs"
         :key="i"

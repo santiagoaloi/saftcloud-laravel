@@ -19,15 +19,7 @@
       </v-tooltip>
       <v-tooltip transition="false" color="black" bottom>
         <template #activator="{ on }">
-          <v-btn
-            :disabled="nextComponentDisabled"
-            class="mt-n2"
-            fab
-            text
-            x-small
-            v-on="on"
-            @click="nextComponent()"
-          >
+          <v-btn :disabled="nextComponentDisabled" class="mt-n2" fab text x-small v-on="on" @click="nextComponent()">
             <v-icon>mdi-chevron-right</v-icon>
           </v-btn>
         </template>

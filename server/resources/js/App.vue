@@ -15,22 +15,16 @@
   import auth from '@/util/auth';
   import { resetRouter } from '@/router';
 
-  Vue.component('SecureLayout', () =>
-    import(/* webpackChunkName: 'secure-Layout' */ '@/layouts/secureLayout'),
-  );
-  Vue.component('PublicLayout', () =>
-    import(/* webpackChunkName: 'public-Layout' */ '@/layouts/publicLayout'),
-  );
+  Vue.component('SecureLayout', () => import(/* webpackChunkName: 'secure-Layout' */ '@/layouts/secureLayout'));
+  Vue.component('PublicLayout', () => import(/* webpackChunkName: 'public-Layout' */ '@/layouts/publicLayout'));
 
   export default {
     name: 'App',
-
-    beforeRouteEnter(to, from, next) {
-      next((vm) => {
-        console.log('hello');
-      });
+    data() {
+      return {
+        isMounted: false,
+      };
     },
-
     head: {
       link: [...config.icons.map((href) => ({ rel: 'stylesheet', href }))],
     },
@@ -62,16 +56,21 @@
       }, 700);
     },
 
+    mounted() {
+      this.isMounted = true;
+    },
+
     methods: {
       buildRoutes() {
         // * Clear routes and routes matcher.
-        resetRouter();
+        if (this.isMounted) {
+          resetRouter();
+        }
 
         // * Waits for indexeddb to be ready.
         setTimeout(() => {
           axios.get('/api/getComponentNames/').then((response) => {
             const { components } = response.data;
-            Object.freeze(components);
 
             // * add new routes
             //   if(components[0] != 'Blank'){
@@ -85,8 +84,7 @@
                   id: component.id,
                   icon: component.configSettings.icon || null,
                 },
-                component: () =>
-                  import(`./views/Protected/${component.name}/${component.name}.vue`),
+                component: () => import(`./views/Protected/${component.name}/${component.name}.vue`),
               });
             }
           });

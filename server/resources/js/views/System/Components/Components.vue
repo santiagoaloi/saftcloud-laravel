@@ -35,24 +35,16 @@
   export default {
     name: 'ComponentsManagement',
     components: {
-      ComponentsToolbar: () =>
-        import(/* webpackChunkName: 'secure-bundle-components' */ './ComponentToolbar'),
+      ComponentsToolbar: () => import(/* webpackChunkName: 'secure-bundle-components' */ './ComponentToolbar'),
       StatusBar: () => import(/* webpackChunkName: 'secure-bundle-components' */ './StatusBar'),
 
       // ComponentsAppbar: () => import(/* webpackChunkName: 'secure-bundle-components' */ './ComponentsAppbar'),
-      ComponentsTabs: () =>
-        import(/* webpackChunkName: 'secure-bundle-components' */ './ComponentsTabs'),
-      ComponentsGrid: () =>
-        import(/* webpackChunkName: 'secure-bundle-components' */ './ComponentsGrid'),
+      ComponentsTabs: () => import(/* webpackChunkName: 'secure-bundle-components' */ './ComponentsTabs'),
+      ComponentsGrid: () => import(/* webpackChunkName: 'secure-bundle-components' */ './ComponentsGrid'),
       ComponentsTable: () => import(/* webpackChunkName: 'components-table' */ './ComponentsTable'),
-      ComponentsNoData: () =>
-        import(/* webpackChunkName: 'components-no-data' */ './ComponentsNoData'),
-      DialogComponent: () =>
-        import(/* webpackChunkName: 'components-dialog-new-component' */ './DialogComponent'),
-      ComponentEditSheet: () =>
-        import(
-          /* webpackChunkName: 'components-edit-sheet' */ './ComponentsEdit/ComponentsEditSheet'
-        ),
+      ComponentsNoData: () => import(/* webpackChunkName: 'components-no-data' */ './ComponentsNoData'),
+      DialogComponent: () => import(/* webpackChunkName: 'components-dialog-new-component' */ './DialogComponent'),
+      ComponentEditSheet: () => import(/* webpackChunkName: 'components-edit-sheet' */ './ComponentsEdit/ComponentsEditSheet'),
     },
 
     computed: {

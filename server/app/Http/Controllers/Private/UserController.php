@@ -37,7 +37,9 @@ class UserController extends Controller {
             $person->user()->create([
                 'role_id'          =>  2,
                 'email'            =>  $request['email'],
-                'password'         =>  bcrypt('password')
+                'password'         =>  bcrypt('password'),
+                'avatar'           =>  $request['avatar'],
+
             ]);
             $user = $person->user;
             $br = new Request(['items'=>$branch, 'name'=>'branch']);
