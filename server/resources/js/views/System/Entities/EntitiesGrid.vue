@@ -1,10 +1,6 @@
 <template>
   <div>
-    <v-item-group
-      v-model="entityCardGroup"
-      :active-class="isDark ? 'gridCardDark' : 'gridcardLight'"
-      mandatory
-    >
+    <v-item-group v-model="entityCardGroup" :active-class="isDark ? 'gridCardDark' : 'gridcardLight'" mandatory>
       <transition-group class="gallery-card-container pa-2" name="fade-transition">
         <base-grid-card
           v-for="(entity, index) in allEntitiesFiltered"
@@ -17,11 +13,7 @@
           :icon="selectedEntityType === 'Roles' ? 'mdi-security' : 'mdi-account'"
           icon-color="primary"
           :avatar="selectedEntityType === 'Roles' ? null : entity.avatar"
-          :title="
-            selectedEntityType === 'Roles'
-              ? entity.name
-              : fullName(entity.entity.first_name, entity.entity.last_name)
-          "
+          :title="selectedEntityType === 'Roles' ? entity.name : fullName(entity.entity.first_name, entity.entity.last_name)"
           :methods="mapMethods"
           @click.native="setSelectedEntity(index)"
         >
@@ -54,9 +46,7 @@
                   <h5 class="gallery-card-subtitle">
                     <v-tooltip transition="false" color="black" bottom>
                       <template #activator="{ on }">
-                        <v-icon :color="isDark ? 'white' : '#28292b'" v-on="on">
-                          mdi-alert-outline
-                        </v-icon>
+                        <v-icon :color="isDark ? 'white' : '#28292b'" v-on="on"> mdi-alert-outline </v-icon>
                       </template>
                       <span>Unsaved</span>
                     </v-tooltip>

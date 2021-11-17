@@ -1,7 +1,10 @@
 import axios from 'axios';
 import { make } from 'vuex-pathify';
 import { isEqual, isEmpty, cloneDeep } from 'lodash';
+import { AvatarGenerator } from 'random-avatar-generator';
 import { store } from '@/store';
+
+const avatarGenerator = new AvatarGenerator();
 
 // When this function is called, the users settings form is back to default values.
 const initialUserSettings = () => ({
@@ -191,6 +194,8 @@ const actions = {
       ...state.user,
       entity_id: rootState.authentication.activeBranch,
     };
+
+    post.avatar = avatarGenerator.generateRandomAvatar();
 
     return axios.post('api/user', post).then((response) => {
       if (response.status === 200) {
