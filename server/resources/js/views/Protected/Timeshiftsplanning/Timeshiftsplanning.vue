@@ -11,12 +11,12 @@
             </template>
             Previous Month
           </v-tooltip>
-
+          <!-- 
           <v-responsive width="170">
             <v-toolbar-title v-if="$refs.calendar">
               {{ $refs.calendar.title }}
             </v-toolbar-title>
-          </v-responsive>
+          </v-responsive> -->
 
           <v-menu
             v-model="selectedDateTrigger"
@@ -120,7 +120,6 @@
       </template>
 
       <v-calendar
-        :key="calKey"
         ref="calendar"
         v-model="calendar"
         show-week
@@ -135,6 +134,7 @@
         first-interval="9"
         interval-count="7"
         @click:event="eventDay"
+        @change="getEvents"
       >
         <template v-if="type === 'day'" #event="{ event, timed, eventSummary }">
           <v-card color="#222530" flat tile height="100%">
@@ -409,8 +409,6 @@
   import activeView from '@/mixins/activeView';
   import { store } from '@/store';
 
-  const randomHexColor = require('random-hex-color');
-
   const initialEvent = () => ({
     date: '',
     timeStart: '',
@@ -477,6 +475,7 @@
       dialogRemoveEvent: false,
       removeId: '',
       removeName: '',
+      hello: '',
     }),
     computed: {
       ...sync('eventsManagement', ['events']),
@@ -527,12 +526,13 @@
       },
     },
 
-    mounted() {
-      this.calKey += 1;
-    },
-
     methods: {
       ...call('snackbar/*'),
+
+      getEvents({ start, end }) {
+        const month = moment().month(start.month).format('MMMM');
+        this.titleBarSlot = `| ${month} ${start.year}`;
+      },
 
       removeEventTrigger(item) {
         this.dialogRemoveEvent = true;

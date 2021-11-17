@@ -3,9 +3,7 @@
     <v-app-bar clipped-right app flat>
       <v-app-bar-nav-icon dark class="ml-n2 mr-3" text x-small fab @click="secureDefaultDrawer = !secureDefaultDrawer" />
 
-      <h4 style="position: absolute" class="white--text ml-8">
-        {{ routeTitle }}
-      </h4>
+      <h4 style="position: absolute" class="white--text ml-8">{{ routeTitle }} {{ titleBarSlot }}</h4>
 
       <div class="flex-grow-1" />
 
@@ -236,6 +234,8 @@
     computed: {
       ...sync('theme', ['isDark']),
       ...sync('application', ['search']),
+      ...sync('activeView', ['titleBarSlot']),
+
       user: sync('authentication@session.user'),
       ...sync('drawers', ['secureDefaultDrawer']),
       ...sync('loaders', ['logoutLoader']),

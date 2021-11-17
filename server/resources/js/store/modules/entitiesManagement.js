@@ -73,7 +73,7 @@ const getters = {
     return state[entity].filter((ent) => {
       const search = rootState.application.search.toLowerCase();
       const title = ent[entityName].toLowerCase();
-      return !search || title.match(search);
+      return !search || title.includes(search);
     });
   },
 
