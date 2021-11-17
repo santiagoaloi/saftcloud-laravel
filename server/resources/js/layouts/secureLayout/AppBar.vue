@@ -25,6 +25,7 @@
         :class="expand ? 'expanded' : 'shrinked'"
         class="mx-11 pr-12"
         rounded
+        @click:clear="search = ''"
         @focus="expand = true"
         @blur="expand = false"
       />
