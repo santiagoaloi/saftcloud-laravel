@@ -12,7 +12,6 @@
       <v-text-field
         v-model="search"
         v-lazy-input:debounce="200"
-        clearable
         spellcheck="false"
         outlined
         :color="isDark ? '#208ad6' : 'grey'"
@@ -25,10 +24,13 @@
         :class="expand ? 'expanded' : 'shrinked'"
         class="mx-11 pr-12"
         rounded
-        @click:clear="search = ''"
         @focus="expand = true"
         @blur="expand = false"
-      />
+      >
+        <template #append>
+          <v-btn class="mr-n4" x-small fab text @click="search = ''"> <v-icon> mdi-close </v-icon> </v-btn>
+        </template>
+      </v-text-field>
 
       <v-tooltip transition="false" color="black" bottom>
         <template #activator="{ on }">
@@ -159,6 +161,7 @@
   import axios from 'axios';
   import { call, sync } from 'vuex-pathify';
   import capitalize from 'lodash/capitalize';
+  import { store } from '@/store';
 
   export default {
     name: 'SecureAppbar',
@@ -256,6 +259,12 @@
 
     methods: {
       ...call('authentication/*'),
+
+      clearSearch() {
+        setTimeout(() => {
+          store.set('application/search', '');
+        }, 500);
+      },
 
       setTheme() {
         this.$vuetify.theme.dark = !this.$vuetify.theme.dark;
