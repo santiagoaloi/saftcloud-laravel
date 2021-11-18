@@ -46,7 +46,7 @@ class privilegePolicy {
     public function showAll(User $user, $capability) {
         $capabilities = getRolCapabilities($user);
 
-        if(in_array($capability, $capabilities)) {
+        if(in_array($capability, $capabilities) OR AccountVerification::checkRootRole()) {
             return true;
         }
         return false;
