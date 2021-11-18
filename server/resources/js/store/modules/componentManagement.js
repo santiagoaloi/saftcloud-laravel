@@ -12,7 +12,7 @@ const initialComponentSettings = () => ({
   component_group_id: '',
 });
 
-const state = {
+const initialState = () => ({
   loading: false,
   editingCapability: false,
   capability: {},
@@ -57,8 +57,9 @@ const state = {
   ],
   navigationStructure: {},
   componentsLinkedToGroupDialog: false,
-};
+});
 
+const state = initialState();
 const mutations = make.mutations(state);
 
 const getters = {

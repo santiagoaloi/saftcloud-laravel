@@ -418,6 +418,11 @@
   export default {
     name: 'Timeshiftsplanning',
     mixins: [activeView],
+    events: {
+      timeShiftsPlanningCalNext() {
+        this.calNext();
+      },
+    },
     data: () => ({
       selectedEmployee: [],
       calKey: 0,
@@ -529,9 +534,13 @@
     methods: {
       ...call('snackbar/*'),
 
-      getEvents({ start, end }) {
+      calNext() {
+        this.$refs.calendar.next();
+      },
+
+      getEvents({ start }) {
         const month = moment().month(start.month).format('MMMM');
-        this.titleBarSlot = `| ${month} ${start.year}`;
+        this.titleBarSlot = `${month} ${start.year}`;
       },
 
       removeEventTrigger(item) {

@@ -1,9 +1,8 @@
 import { make } from 'vuex-pathify';
 
-const state = {
-  events: [],
-};
+const initialState = () => ({ events: [] });
 
+const state = initialState();
 const mutations = make.mutations(state);
 
 const actions = {
