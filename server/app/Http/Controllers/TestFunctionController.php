@@ -72,7 +72,9 @@ class TestFunctionController extends Controller {
         return $query->getComponentNames();
     }
 
-    public function test3(Request $request){
+    public function test3(User $user){
+        return $user;
+
         // return User::branch()->with($request)->get();
 
         // session()->regenerate(); // regenera el token de la sesion

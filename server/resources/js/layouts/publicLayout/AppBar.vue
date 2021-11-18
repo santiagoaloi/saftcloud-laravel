@@ -10,15 +10,66 @@
         <v-spacer />
 
         <template v-if="$vuetify.breakpoint.mdAndUp">
-          <v-btn height="36" rounded class="mr-3" color="white" text dark plain x-large @click="testFunction()"> Test </v-btn>
-          <v-btn rounded to="/Signup" height="36" class="mr-3" color="white" text dark x-large plain> Team </v-btn>
-          <v-btn rounded to="/Signup" height="36" class="mr-3" color="white" text dark x-large plain> Company </v-btn>
+          <v-btn
+            height="36"
+            rounded
+            class="mr-3"
+            color="white"
+            text
+            dark
+            plain
+            x-large
+            @click="testFunction()"
+          >
+            Test
+          </v-btn>
+          <v-btn
+            rounded
+            to="/Signup"
+            height="36"
+            class="mr-3"
+            color="white"
+            text
+            dark
+            x-large
+            plain
+          >
+            Team
+          </v-btn>
+          <v-btn
+            rounded
+            to="/Signup"
+            height="36"
+            class="mr-3"
+            color="white"
+            text
+            dark
+            x-large
+            plain
+          >
+            Company
+          </v-btn>
           <v-btn rounded to="/signup" height="36" class="mr-3" dark x-large plain>
             <v-icon left> mdi-account-plus </v-icon>Sign up
           </v-btn>
-          <v-btn min-width="100px" to="/Components" height="36" class="mr-3" rounded dark color="primary" x-large>
+          <v-btn
+            min-width="100px"
+            to="/Components"
+            height="36"
+            class="mr-3"
+            rounded
+            dark
+            color="primary"
+            x-large
+          >
             <v-avatar class="ml-n4 mr-3" size="28" left>
-              <v-img :src="user ? user.avatar || 'storage/defaults/avatar.png' : 'storage/defaults/avatar.png'">
+              <v-img
+                :src="
+                  user
+                    ? user.avatar || 'storage/defaults/avatar.png'
+                    : 'storage/defaults/avatar.png'
+                "
+              >
                 <template #placeholder>
                   <v-row class="fill-height ma-0" align="center" justify="center">
                     <v-progress-circular indeterminate color="white" />
@@ -37,7 +88,17 @@
 
         <v-tooltip transition="false" color="black" bottom>
           <template #activator="{ on }">
-            <v-btn fab class="mr-3" color="white" text dark small plain v-on="on" @click="setTheme()">
+            <v-btn
+              fab
+              class="mr-3"
+              color="white"
+              text
+              dark
+              small
+              plain
+              v-on="on"
+              @click="setTheme()"
+            >
               <v-icon v-if="isDark"> mdi-lightbulb-on-outline </v-icon>
               <v-icon v-else> mdi-lightbulb-outline </v-icon>
             </v-btn>
@@ -76,9 +137,9 @@
       },
 
       async testFunction() {
-        const post = { branch: 1 };
+        const post = { user: 1 };
         axios
-          .get('api/test3', post)
+          .get('api/test3/1')
           .then((response) => {
             if (response.status === 200) {
               console.log(response);
