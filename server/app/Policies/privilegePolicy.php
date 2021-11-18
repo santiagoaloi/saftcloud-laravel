@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Models\User;
 use App\Helpers\AccountVerification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Auth\Access\HandlesAuthorization;
@@ -18,8 +19,7 @@ class privilegePolicy {
         //
     }
 
-    public function store($capability) {
-        $user = Auth::user();
+    public function store(User $user, $capability) {
         $capabilities = getRolCapabilities($user);
 
         if(in_array($capability, $capabilities) OR AccountVerification::checkRootRole()) {
@@ -34,8 +34,7 @@ class privilegePolicy {
      * @param  \App\Models\User  $user
      * @return mixed
      */
-    public function show($capability) {
-        $user = Auth::user();
+    public function show(User $user, $capability) {
         $capabilities = getRolCapabilities($user);
 
         if(in_array($capability, $capabilities) OR AccountVerification::checkRootRole()) {
@@ -44,18 +43,16 @@ class privilegePolicy {
         return false;
     }
 
-     public function showAll($capability) {
-        $user = Auth::user();
+    public function showAll(User $user, $capability) {
         $capabilities = getRolCapabilities($user);
 
-        if(in_array($capability, $capabilities) OR AccountVerification::checkRootRole()) {
+        if(in_array($capability, $capabilities)) {
             return true;
         }
         return false;
     }
 
-    public function showTrashed($capability) {
-        $user = Auth::user();
+    public function showTrashed(User $user, $capability) {
         $capabilities = getRolCapabilities($user);
 
         if(in_array($capability, $capabilities) OR AccountVerification::checkRootRole()) {
@@ -71,8 +68,7 @@ class privilegePolicy {
      * @return mixed
      */
 
-    public function recoveryTrashed($capability) {
-        $user = Auth::user();
+    public function recoveryTrashed(User $user, $capability) {
         $capabilities = getRolCapabilities($user);
 
         if(in_array($capability, $capabilities) OR AccountVerification::checkRootRole()) {
@@ -87,8 +83,7 @@ class privilegePolicy {
      * @param  \App\Models\User  $user
      * @return mixed
      */
-    public function update($capability) {
-        $user = Auth::user();
+    public function update(User $user, $capability) {
         $capabilities = getRolCapabilities($user);
 
         if(in_array($capability, $capabilities) OR AccountVerification::checkRootRole()) {
@@ -97,8 +92,7 @@ class privilegePolicy {
         return false;
     }
 
-    public function updateAll($capability) {
-        $user = Auth::user();
+    public function updateAll(User $user, $capability) {
         $capabilities = getRolCapabilities($user);
 
         if(in_array($capability, $capabilities) OR AccountVerification::checkRootRole()) {
@@ -113,8 +107,7 @@ class privilegePolicy {
      * @param  \App\Models\User  $user
      * @return mixed
      */
-    public function destroy($capability) {
-        $user = Auth::user();
+    public function destroy(User $user, $capability) {
         $capabilities = getRolCapabilities($user);
 
         if(in_array($capability, $capabilities) OR AccountVerification::checkRootRole()) {
@@ -129,8 +122,7 @@ class privilegePolicy {
      * @param  \App\Models\User  $user
      * @return mixed
      */
-    public function forceDelete($capability) {
-        $user = Auth::user();
+    public function forceDelete(User $user, $capability) {
         $capabilities = getRolCapabilities($user);
 
         if(in_array($capability, $capabilities) OR AccountVerification::checkRootRole()) {
@@ -139,8 +131,7 @@ class privilegePolicy {
         return false;
     }
 
-    public function attach($capability) {
-        $user = Auth::user();
+    public function attach(User $user, $capability) {
         $capabilities = getRolCapabilities($user);
 
         if(in_array($capability, $capabilities) OR AccountVerification::checkRootRole()) {
@@ -149,8 +140,7 @@ class privilegePolicy {
         return false;
     }
 
-    public function detach($capability) {
-        $user = Auth::user();
+    public function detach(User $user, $capability) {
         $capabilities = getRolCapabilities($user);
 
         if(in_array($capability, $capabilities) OR AccountVerification::checkRootRole()) {
@@ -159,8 +149,7 @@ class privilegePolicy {
         return false;
     }
 
-    public function sync($capability) {
-        $user = Auth::user();
+    public function sync(User $user, $capability) {
         $capabilities = getRolCapabilities($user);
 
         if(in_array($capability, $capabilities) OR AccountVerification::checkRootRole()) {

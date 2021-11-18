@@ -95,8 +95,7 @@ class publicPrivilegePolicy {
      * @return mixed
     */
     public function update(User $user, $capability) {
-        $userC = New UserController;
-        $capabilities = $userC->getRolCapabilities($user);
+        $capabilities = getRolCapabilities($user);
 
         if(in_array($capability, $capabilities) OR AccountVerification::checkRootRole()) {
             return true;

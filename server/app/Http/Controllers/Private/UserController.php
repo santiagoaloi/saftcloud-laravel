@@ -37,9 +37,7 @@ class UserController extends Controller {
             $person->user()->create([
                 'role_id'          =>  2,
                 'email'            =>  $request['email'],
-                'password'         =>  bcrypt('password'),
-                'avatar'           =>  $request['avatar'],
-
+                'password'         =>  bcrypt('password')
             ]);
             $user = $person->user;
             $br = new Request(['items'=>$branch, 'name'=>'branch']);
@@ -80,6 +78,7 @@ class UserController extends Controller {
 
     public function showAll() {
         $this->authorize(ability: 'showAll', arguments: [User::class, 'User.showAll']);
+
         $branch = Auth::user()->branch[0];
         $users = $branch->user;
 
