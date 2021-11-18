@@ -19,7 +19,7 @@ const initialRoleSettings = () => ({
   description: '',
 });
 
-const state = {
+const initialState = () => ({
   allUsers: [],
   allRoles: [],
   groupName: '',
@@ -45,8 +45,9 @@ const state = {
     { name: 'Starred', value: 'starred', icon: 'mdi-star' },
     { name: 'Banned', value: 'banned', icon: 'mdi-lightbulb-on' },
   ],
-};
+});
 
+const state = initialState();
 const mutations = make.mutations(state);
 
 const getters = {

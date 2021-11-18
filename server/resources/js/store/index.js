@@ -34,7 +34,6 @@ const vuexLocal = new VuexPersist({
   reducer: (state) => ({
     theme: {
       isDark: state.theme.isDark,
-      // overlay: state.theme.overlay,
     },
 
     authentication: {

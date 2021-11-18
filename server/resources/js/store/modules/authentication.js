@@ -21,8 +21,11 @@ const actions = {
   ...make.actions(state),
 
   // Reset state to default values.
-  resetState() {
+  resetState({ dispatch }) {
     store.set('authentication/session', getDefaultState());
+    dispatch('eventsManagement/initialState', { root: true });
+    dispatch('componentsManagement/initialState', { root: true });
+    dispatch('entitiesManagement/initialState', { root: true });
   },
 
   // Sends login form payload to backend.

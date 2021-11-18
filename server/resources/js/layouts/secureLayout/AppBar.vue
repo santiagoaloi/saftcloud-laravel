@@ -3,11 +3,20 @@
     <v-app-bar clipped-right app flat>
       <v-app-bar-nav-icon dark class="ml-n2 mr-3" text x-small fab @click="secureDefaultDrawer = !secureDefaultDrawer" />
 
-      <h4 style="position: absolute" class="white--text ml-8">{{ routeTitle }} {{ titleBarSlot }}</h4>
+      <h4 style="position: relative" class="white--text ml-8">{{ routeTitle }}</h4>
+
+      <div class="flex-grow-1" />
+
+      <div class="d-flex justify-space-between">
+        <template v-if="appBarSlot">
+          <component :is="appBarSlot" />
+        </template>
+      </div>
 
       <div class="flex-grow-1" />
 
       <v-text-field
+        v-if="!['Timeshiftsplanning'].includes($route.name)"
         v-model="search"
         v-lazy-input:debounce="200"
         spellcheck="false"
@@ -240,6 +249,9 @@
       ...sync('drawers', ['secureDefaultDrawer']),
       ...sync('loaders', ['logoutLoader']),
 
+      appBarSlot() {
+        return this.$route.meta.appBarSlot;
+      },
       settingsMenuFiltered() {
         return this.settingsMenu.filter((menu) => menu.roles.includes(...this.$root.roles) || !menu.roles.length);
       },

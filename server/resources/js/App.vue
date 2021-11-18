@@ -83,6 +83,7 @@
                   title: component.title,
                   id: component.id,
                   icon: component.configSettings.icon || null,
+                  appBarSlot: `Slot${component.name}`,
                 },
                 component: () => import(`./views/Protected/${component.name}/${component.name}.vue`),
               });
