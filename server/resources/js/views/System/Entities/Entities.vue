@@ -2,7 +2,7 @@
   <div>
     <base-flex-container class="dottedBackground">
       <template #top>
-        <div class="removeGutters">
+        <div>
           <entities-appbar />
           <entities-tabs />
         </div>
@@ -39,14 +39,10 @@
       EntitiesTabs: () => import(/* webpackChunkName: 'entities-bundle' */ './EntitiesTabs.vue'),
       EntitiesAppbar: () => import(/* webpackChunkName: 'entities-bundle' */ './EntitiesAppbar'),
       EntitiesNoData: () => import(/* webpackChunkName: 'entities-no-data' */ './EntitiesNoData'),
-      DialogAssignRoles: () =>
-        import(/* webpackChunkName: 'entities-dialog-assign-roles' */ './DialogAssignRoles'),
       DialogEntity: () => import(/* webpackChunkName: 'entities-dialog-entity' */ './DialogEntity'),
-
-      DialogPrivileges: () =>
-        import(/* webpackChunkName: 'entities-dialog-privileges' */ './DialogPrivileges'),
-      EntitiesEditSheet: () =>
-        import(/* webpackChunkName: 'entities-edit-sheet' */ './EntitiesEdit/EntitiesEditSheet'),
+      DialogPrivileges: () => import(/* webpackChunkName: 'entities-dialog-privileges' */ './DialogPrivileges'),
+      DialogAssignRoles: () => import(/* webpackChunkName: 'entities-dialog-assign-roles' */ './DialogAssignRoles'),
+      EntitiesEditSheet: () => import(/* webpackChunkName: 'entities-edit-sheet' */ './EntitiesEdit/EntitiesEditSheet'),
     },
 
     computed: {
@@ -58,11 +54,7 @@
         'dialogAssignRoles',
         'entitiesEditSheet',
       ]),
-      ...get('entitiesManagement', [
-        'isAllFilteredEntitiesEmpty',
-        'selectedEntityType',
-        'selectedEntity',
-      ]),
+      ...get('entitiesManagement', ['isAllFilteredEntitiesEmpty', 'selectedEntityType', 'selectedEntity']),
     },
 
     created() {
@@ -73,9 +65,6 @@
 
     methods: {
       ...call('entitiesManagement/*'),
-      calculateHeight() {
-        return Number(this.$vuetify.breakpoint.height - 200);
-      },
     },
   };
 </script>

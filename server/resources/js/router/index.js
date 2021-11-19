@@ -40,8 +40,6 @@ export function resetRouter() {
 
 router.beforeEach(async (to, from, next) => {
   if (to.matched.some((record) => record.meta.layout === 'secure-layout')) {
-    console.log(to);
-
     await store.restored;
     if (auth.loggedIn() && to.matched.some((record) => record.name !== 'Login')) {
       next();

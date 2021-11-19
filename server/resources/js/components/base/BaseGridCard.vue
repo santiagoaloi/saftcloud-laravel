@@ -6,12 +6,12 @@
         height="300"
         width="100%"
         :color="isDark ? '#282c3b' : 'white'"
-        @click.passive="toggle()"
+        @click.stop="toggle()"
         v-on="$listeners"
       >
         <v-card-actions class="px-0">
           <v-avatar size="80" :color="iconColor">
-            <v-img v-if="avatar" :src="avatar">
+            <v-img v-if="avatar" :src="`https://i.pravatar.cc/150?img=${index}`">
               <template #placeholder>
                 <v-row class="fill-height ma-0" align="center" justify="center">
                   <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
@@ -45,7 +45,7 @@
           <template v-if="title">
             <h2>{{ title }}</h2>
           </template>
-          <template v-else v-once>
+          <template v-else v>
             <base-typing-indicator class="ml-n2" />
           </template>
         </span>

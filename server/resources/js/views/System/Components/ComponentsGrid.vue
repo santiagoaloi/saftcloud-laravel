@@ -1,10 +1,6 @@
 <template>
   <div>
-    <v-item-group
-      v-model="componentCardGroup"
-      :active-class="isDark ? 'gridCardDark' : 'gridcardLight'"
-      mandatory
-    >
+    <v-item-group v-model="componentCardGroup" :active-class="isDark ? 'gridCardDark' : 'gridcardLight'" mandatory>
       <transition-group class="gallery-card-container px-4 py-2" name="fade-transition">
         <base-grid-card
           v-for="(component, index) in allComponentsFiltered"
@@ -45,9 +41,7 @@
                   <h5 class="gallery-card-subtitle">
                     <v-tooltip transition="false" color="black" bottom>
                       <template #activator="{ on }">
-                        <v-icon :color="isDark ? 'white' : '#28292b'" v-on="on">
-                          mdi-alert-outline
-                        </v-icon>
+                        <v-icon :color="isDark ? 'white' : '#28292b'" v-on="on"> mdi-alert-outline </v-icon>
                       </template>
                       <span>Unsaved</span>
                     </v-tooltip>

@@ -123,7 +123,6 @@
         ref="calendar"
         v-model="calendar"
         show-week
-        class="overflow-x-hidden"
         :weekdays="weekday"
         :type="type"
         :events="events"
@@ -133,6 +132,8 @@
         interval-height="100"
         first-interval="9"
         interval-count="7"
+        :categories="categories"
+        category-show-all
         @click:event="eventDay"
         @change="getEvents"
       >
@@ -142,7 +143,7 @@
               <v-hover>
                 <v-hover v-slot="{ hover }">
                   <v-list-item-avatar v-if="!hover">
-                    <v-img :src="event.avatar || 'storage/defaults/avatar.png'">
+                    <v-img :src="`https://i.pravatar.cc/150?img=${Math.random().toFixed(2)}`">
                       <template #placeholder>
                         <v-row class="fill-height ma-0" align="center" justify="center">
                           <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
@@ -413,6 +414,7 @@
     date: '',
     timeStart: '',
     timeEnd: '',
+    category: '',
   });
 
   export default {
@@ -465,7 +467,7 @@
       // employees: ['Pablo', 'Rene', 'Santiago'],
       dialogTimeShift: false,
       type: 'month',
-      types: ['month', 'week', 'day', '4day'],
+      types: ['month', 'week', 'day', '4day', 'category'],
       mode: 'column',
       modes: ['stack', 'column'],
       weekday: [0, 1, 2, 3, 4, 5, 6],
@@ -485,6 +487,10 @@
     computed: {
       ...sync('eventsManagement', ['events']),
       ...sync('entitiesManagement', ['allUsers']),
+
+      categories() {
+        return this.allUsers.map((user) => this.fullEmployeeName(user));
+      },
 
       computedDateFormattedMomentjs() {
         return this.event.date ? moment(this.event.date).format('dddd, MMMM Do YYYY') : '';
@@ -601,7 +607,7 @@
       },
 
       fullEmployeeName(item) {
-        return `${capitalize(item.entity.first_name)} ${capitalize(item.entity.last_name)} `;
+        return `${capitalize(item.entity.first_name)} ${capitalize(item.entity.last_name)}`;
       },
 
       validateEventForm() {
@@ -619,6 +625,7 @@
           this.event.start = `${this.event.date} ${this.event.timeStart}`;
           this.event.end = `${this.event.date} ${this.event.timeEnd}`;
           this.event.name = this.fullEmployeeName(this.selectedEmployee);
+          this.event.category = this.fullEmployeeName(this.selectedEmployee);
           this.event.entity = { ...this.selectedEmployee.entity };
           this.calendar = this.event.date;
           this.snackbarSuccess(`Event saved, current date: ${moment(this.event.date).format('dddd, MMMM Do YYYY')}`);
@@ -641,6 +648,7 @@
               entity: { ...employee.entity },
               timeEnd: this.event.timeEnd,
               date: this.event.date,
+              category: `${capitalize(employee.entity.first_name)} ${capitalize(employee.entity.last_name)}`,
             };
 
             store.set(`eventsManagement/events@${this.events.length}`, payload);

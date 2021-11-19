@@ -219,17 +219,14 @@ input::-webkit-inner-spin-button {
 .hoverElevationSoft {
   border-radius: 4px;
   -webkit-transition-property: color, background-color, -webkit-box-shadow, -webkit-transform;
-  transition-property: color, background-color, box-shadow, transform, -webkit-box-shadow,
-    -webkit-transform;
+  transition-property: color, background-color, box-shadow, transform, -webkit-box-shadow, -webkit-transform;
   transition-duration: 0.5s;
-  box-shadow: 0 10px 60px -12px rgb(50 50 93 / 25%), 0 18px 36px -18px rgb(0 0 0 / 30%),
-    0 -12px 36px -8px rgb(0 0 0 / 3%) !important;
+  box-shadow: 0 10px 60px -12px rgb(50 50 93 / 25%), 0 18px 36px -18px rgb(0 0 0 / 30%), 0 -12px 36px -8px rgb(0 0 0 / 3%) !important;
 }
 
 .hoverElevationSoft:hover {
   transform: translateY(1px) !important;
-  box-shadow: 0 13px 27px -5px rgb(50 50 93 / 25%), 0 8px 16px -8px rgb(0 0 0 / 30%),
-    0 -6px 16px -6px rgb(0 0 0 / 3%) !important;
+  box-shadow: 0 13px 27px -5px rgb(50 50 93 / 25%), 0 8px 16px -8px rgb(0 0 0 / 30%), 0 -6px 16px -6px rgb(0 0 0 / 3%) !important;
 }
 .v-card--link:before {
   background: white;
@@ -334,4 +331,17 @@ input::-webkit-inner-spin-button {
 
 .bw-image {
   filter: grayscale(100%);
+}
+
+.v-calendar-category .v-calendar-daily__head {
+  background-color: unset !important;
+  overflow: scroll !important;
+}
+
+.v-calendar-category .v-calendar-daily__intervals-body {
+  background-color: unset !important;
+}
+
+.v-calendar-category .v-calendar-daily__intervals-head {
+  background-color: unset !important;
 }

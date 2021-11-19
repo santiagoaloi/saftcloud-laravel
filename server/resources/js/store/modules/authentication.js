@@ -2,8 +2,8 @@
 import axios from 'axios';
 import { make } from 'vuex-pathify';
 import { isEmpty } from 'lodash';
-import router from '@/router';
 import { store } from '@/store';
+import router, { resetRouter } from '@/router';
 
 const axiosDefaults = require('axios/lib/defaults');
 
@@ -29,7 +29,7 @@ const actions = {
   },
 
   // Sends login form payload to backend.
-  async login({ commit, state }, data) {
+  async login({ commit, state, dispatch }, data) {
     return axios
       .post('api/login', data)
       .then((response) => {
@@ -44,6 +44,8 @@ const actions = {
             store.set('authentication/activeBranch', data.user.user_setting.default_branch);
           }
 
+          dispatch('buildRoutes');
+
           // Creates an "origin" of the login response data...
           // data.user.origin = cloneDeep(data);
           commit('session', data);
@@ -52,6 +54,35 @@ const actions = {
         }
       })
       .catch(() => false);
+  },
+
+  buildRoutes({ state }) {
+    // if (state.session.user.privileges)
+    // * Clear routes and routes matcher.
+    resetRouter();
+
+    // * Waits for indexeddb to be ready.
+    setTimeout(() => {
+      axios.get('/api/getComponentNames/').then((response) => {
+        const { components } = response.data;
+
+        // * add new routes
+        for (const component of components) {
+          router.addRoute({
+            path: `/${component.name}`,
+            name: `${component.name}`,
+            meta: {
+              layout: 'secure-layout',
+              title: component.title,
+              id: component.id,
+              icon: component.configSettings.icon || null,
+              appBarSlot: `Slot${component.name}`,
+            },
+            component: () => import(`@/views/Protected/${component.name}/${component.name}.vue`),
+          });
+        }
+      });
+    }, 500);
   },
 
   // Logs out the user.
