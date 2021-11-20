@@ -173,7 +173,7 @@
         </template>
 
         <template #day-label="{ day, date }">
-          <div class="d-flex justify-center align-center pa-5">
+          <div v-if="type === 'day'" class="d-flex justify-center align-center pa-5">
             <v-btn
               fab
               :icon="date !== calendar ? true : false"
@@ -183,6 +183,23 @@
               >{{ day }}
             </v-btn>
           </div>
+        </template>
+
+        <template #category="{ category }">
+          <div class="text-center mb-4">
+            <v-avatar size="80" :color="iconColor">
+              <v-img :src="`https://i.pravatar.cc/150?img=${Math.floor(Math.random() * 10)}`">
+                <template #placeholder>
+                  <v-row class="fill-height ma-0" align="center" justify="center">
+                    <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
+                  </v-row>
+                </template>
+              </v-img>
+            </v-avatar>
+          </div>
+
+          <div class="text-center">{{ category }}</div>
+          <!-- <v-img :src="getCategoryImage(category)"></v-img> -->
         </template>
 
         <template #day-body="{ day, date }">
@@ -539,6 +556,12 @@
 
     methods: {
       ...call('snackbar/*'),
+
+      // getCategoryImage(category){
+
+      // let user = this.events.find((user) => user.name === category)
+
+      // },
 
       calNext() {
         this.$refs.calendar.next();

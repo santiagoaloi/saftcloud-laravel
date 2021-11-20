@@ -34,10 +34,7 @@
   export default {
     name: 'EntitiesEditSheetMenu',
     data: () => ({
-      menuItems: [
-        { header: 'User Settings' },
-        { icon: 'mdi-view-dashboard-outline', text: 'Basic', link: '/Entities/Basic' },
-      ],
+      menuItems: [{ header: 'User Settings' }, { icon: 'mdi-view-dashboard-outline', text: 'Basic', link: '/Entities/Basic' }],
     }),
 
     computed: {

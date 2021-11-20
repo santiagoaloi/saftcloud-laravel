@@ -44,26 +44,26 @@ const actions = {
             store.set('authentication/activeBranch', data.user.user_setting.default_branch);
           }
 
-          dispatch('buildRoutes');
-
           // Creates an "origin" of the login response data...
           // data.user.origin = cloneDeep(data);
           commit('session', data);
           axiosDefaults.headers.common.Authorization = `Bearer ${response.data.token}`;
+
+          dispatch('buildRoutes');
+
           return true;
         }
       })
       .catch(() => false);
   },
 
-  buildRoutes({ state }) {
-    // if (state.session.user.privileges)
+  async buildRoutes({ state }) {
     // * Clear routes and routes matcher.
     resetRouter();
 
     // * Waits for indexeddb to be ready.
-    setTimeout(() => {
-      axios.get('/api/getComponentNames/').then((response) => {
+    return axios.get('api/getComponentNames/').then((response) => {
+      if (response) {
         const { components } = response.data;
 
         // * add new routes
@@ -80,9 +80,13 @@ const actions = {
             },
             component: () => import(`@/views/Protected/${component.name}/${component.name}.vue`),
           });
+
+          if (components[components.length - 1] === component) {
+            return true;
+          }
         }
-      });
-    }, 500);
+      }
+    });
   },
 
   // Logs out the user.

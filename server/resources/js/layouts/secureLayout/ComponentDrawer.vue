@@ -1,13 +1,5 @@
 <template>
-  <v-navigation-drawer
-    value="true"
-    mobile-breakpoint="0"
-    clipped
-    width="350"
-    hide-overlay
-    right
-    app
-  >
+  <v-navigation-drawer value="true" mobile-breakpoint="0" clipped width="350" hide-overlay right app>
     <!-- Drawer fixed top -->
     <template #prepend>
       <component-drilldown-bar />
@@ -35,18 +27,14 @@
   );
 
   Vue.component('ComponentDrilldownEmpty', () =>
-    import(
-      /* webpackChunkName: 'drawer-bundle' */ '@/components/Navigation/ComponentDrilldownEmpty'
-    ),
+    import(/* webpackChunkName: 'drawer-bundle' */ '@/components/Navigation/ComponentDrilldownEmpty'),
   );
 
   Vue.component('ComponentDrilldownBar', () =>
     import(/* webpackChunkName: 'drawer-bundle' */ '@/components/Navigation/ComponentDrilldownBar'),
   );
   Vue.component('ComponentDrilldownFooter', () =>
-    import(
-      /* webpackChunkName: 'drawer-bundle' */ '@/components/Navigation/ComponentDrilldownFooter'
-    ),
+    import(/* webpackChunkName: 'drawer-bundle' */ '@/components/Navigation/ComponentDrilldownFooter'),
   );
 
   export default {

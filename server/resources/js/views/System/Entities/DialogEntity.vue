@@ -3,7 +3,7 @@
     v-model="dialogEntity"
     :title="`Add new ${identityTypeButton}`"
     persistent
-    max-width="900"
+    width="900"
     icon="mdi-plus"
     :loading="loading"
     @save="validateEntity()"

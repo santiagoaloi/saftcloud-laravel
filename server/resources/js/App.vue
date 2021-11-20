@@ -12,7 +12,10 @@
   import config from './configs';
   import auth from '@/util/auth';
 
-  Vue.component('SecureLayout', () => import(/* webpackChunkName: 'secure-Layout' */ '@/layouts/secureLayout'));
+  const SecureLayout = Vue.component('SecureLayout', () =>
+    import(/* webpackChunkName: 'secure-Layout' */ '@/layouts/secureLayout'),
+  );
+
   Vue.component('PublicLayout', () => import(/* webpackChunkName: 'public-Layout' */ '@/layouts/publicLayout'));
 
   export default {
@@ -23,14 +26,24 @@
     },
 
     computed: {
-      ...call('authentication', ['buildRoutes']),
-
       layout() {
         return this.$route.meta.layout;
       },
     },
 
-    created() {
+    async created() {
+      if (auth.loggedIn()) {
+        try {
+          const built = await this.buildRoutes();
+
+          if (built) {
+            return SecureLayout;
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      }
+
       // ** Define event bus
       window.eventBus = this;
 
@@ -38,13 +51,10 @@
       window.eventBus.$on('BUS_BUILD_ROUTES', () => {
         this.buildRoutes();
       });
+    },
 
-      // * Waits for auth to be ready.
-      setTimeout(() => {
-        if (auth.loggedIn()) {
-          this.buildRoutes();
-        }
-      }, 700);
+    methods: {
+      ...call('authentication/*'),
     },
   };
 </script>

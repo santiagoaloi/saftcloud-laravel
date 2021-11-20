@@ -334,14 +334,14 @@ input::-webkit-inner-spin-button {
 }
 
 .v-calendar-category .v-calendar-daily__head {
-  background-color: unset !important;
-  overflow: scroll !important;
+  background-color: #2225 !important;
+  /* overflow: #2225 !important; */
 }
 
 .v-calendar-category .v-calendar-daily__intervals-body {
-  background-color: unset !important;
+  background-color: #2225 !important;
 }
 
 .v-calendar-category .v-calendar-daily__intervals-head {
-  background-color: unset !important;
+  background-color: #2225 !important;
 }

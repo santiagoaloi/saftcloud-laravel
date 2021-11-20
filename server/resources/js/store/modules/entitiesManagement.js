@@ -84,12 +84,9 @@ const getters = {
       // Search field string
       const search = state.searchPrivileges.toString().toLowerCase();
 
-      const privileges = [];
-      for (const role of getters.selectedEntity.role) {
-        for (const capability of role.capability) {
-          privileges.push({ name: capability.name, role: capability.pivot.role_id });
-        }
-      }
+      const privileges = getters.selectedEntity.role.flatMap((role) =>
+        role.capability.flatMap((privilege) => ({ name: privilege.name, role: privilege.pivot.role_id })),
+      );
 
       // return all privileges or the ones matching the search string.
       return privileges.filter((p) => p.name.toLowerCase().includes(search));

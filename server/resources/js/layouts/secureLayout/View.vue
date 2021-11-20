@@ -2,7 +2,6 @@
   <v-main style="min-height: 100vh">
     <v-overlay
       v-if="overlayValue"
-      v-once
       :z-index="5"
       :opacity="0.9"
       :color="$vuetify.theme.dark ? '#20202b' : 'rgba(108, 122, 137)'"

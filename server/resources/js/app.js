@@ -32,9 +32,10 @@ vuetify().then((v) => {
     created() {
       AOS.init();
     },
+
     store,
-    router,
     vuetify,
+    router,
     render: (h) => h(App),
   }).$mount('#app');
 });

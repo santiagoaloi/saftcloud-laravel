@@ -1,5 +1,5 @@
 <template>
-  <v-main style="min-height: 120vh">
+  <v-main style="min-height: 100vh">
     <v-fade-transition mode="out-in" :duration="520" hide-on-leave>
       <router-view />
     </v-fade-transition>

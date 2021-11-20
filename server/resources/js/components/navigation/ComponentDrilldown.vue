@@ -14,20 +14,13 @@
     <v-card-title> Edit Component View </v-card-title>
 
     <v-card-subtitle>
-      Edit your module quickly, change group, component label, description, enable sidebar
-      visibility and more...
+      Edit your module quickly, change group, component label, description, enable sidebar visibility and more...
     </v-card-subtitle>
 
     <ValidationObserver ref="componentDrilldownFormValidation" slim>
       <v-container>
         <baseFieldLabel required label="Component label" />
-        <validation-provider
-          v-slot="{ errors, invalid }"
-          immediate
-          mode="aggressive"
-          name="component label"
-          rules="required"
-        >
+        <validation-provider v-slot="{ errors, invalid }" immediate mode="aggressive" name="component label" rules="required">
           <v-text-field
             v-model="selectedComponent.config.general_config.title"
             v-lazy-input:debounce="100"
@@ -46,13 +39,7 @@
             <template #append>
               <v-tooltip transition="false" color="black" bottom>
                 <template #activator="{ on }">
-                  <v-btn
-                    small
-                    icon
-                    :ripple="false"
-                    v-on="on"
-                    @click.stop="setStarred(selectedComponent)"
-                  >
+                  <v-btn small icon :ripple="false" v-on="on" @click.stop="setStarred(selectedComponent)">
                     <v-icon :color="isStarredColor(selectedComponent)">
                       {{ isStarredIcon(selectedComponent) }}
                     </v-icon>
@@ -139,9 +126,7 @@
         </v-list-item-icon>
         <v-list-item-content>
           <v-list-item-title>Fields</v-list-item-title>
-          <v-list-item-subtitle>
-            {{ selectedComponent.config.columns.length }}</v-list-item-subtitle
-          >
+          <v-list-item-subtitle> {{ selectedComponent.config.columns.length }}</v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
 
@@ -157,9 +142,7 @@
           <v-list-item-subtitle>
             {{ selectedComponent.created_at | momentDate }}
           </v-list-item-subtitle>
-          <v-list-item-subtitle>
-            {{ selectedComponent.created_at | momentDateAgo }}</v-list-item-subtitle
-          >
+          <v-list-item-subtitle> {{ selectedComponent.created_at | momentDateAgo }}</v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
 
@@ -173,9 +156,7 @@
           <v-list-item-subtitle>
             {{ selectedComponent.updated_at | momentDate }}
           </v-list-item-subtitle>
-          <v-list-item-subtitle
-            >{{ selectedComponent.updated_at | momentDateAgo }}
-          </v-list-item-subtitle>
+          <v-list-item-subtitle>{{ selectedComponent.updated_at | momentDateAgo }} </v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
     </v-list>

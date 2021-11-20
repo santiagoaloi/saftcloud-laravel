@@ -59,16 +59,7 @@
 
     <v-tooltip transition="false" color="black" bottom>
       <template #activator="{ on }">
-        <v-btn
-          dark
-          :disabled="previousEntityDisabled"
-          class="mr-2"
-          fab
-          text
-          x-small
-          v-on="on"
-          @click="validateBeforePrevious()"
-        >
+        <v-btn dark :disabled="previousEntityDisabled" class="mr-2" fab text x-small v-on="on" @click="validateBeforePrevious()">
           <v-icon>mdi-chevron-left</v-icon>
         </v-btn>
       </template>
@@ -77,15 +68,7 @@
 
     <v-tooltip transition="false" color="black" bottom>
       <template #activator="{ on }">
-        <v-btn
-          dark
-          :disabled="nextEntityDisabled"
-          fab
-          text
-          x-small
-          v-on="on"
-          @click="validateBeforeNext()"
-        >
+        <v-btn dark :disabled="nextEntityDisabled" fab text x-small v-on="on" @click="validateBeforeNext()">
           <v-icon>mdi-chevron-right</v-icon>
         </v-btn>
       </template>

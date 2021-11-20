@@ -33,10 +33,8 @@
   export default {
     name: 'EntitiesEdit',
     components: {
-      EntitiesEditSheetAppbar: () =>
-        import(/* webpackChunkName:   'ent-edit-bundle' */ './EntitiesEditSheetAppbar'),
-      EntitiesEditSheetDrawer: () =>
-        import(/* webpackChunkName:   'ent-edit-bundle' */ './EntitiesEditSheetDrawer'),
+      EntitiesEditSheetAppbar: () => import(/* webpackChunkName:   'ent-edit-bundle' */ './EntitiesEditSheetAppbar'),
+      EntitiesEditSheetDrawer: () => import(/* webpackChunkName:   'ent-edit-bundle' */ './EntitiesEditSheetDrawer'),
     },
 
     computed: {
@@ -45,9 +43,7 @@
       ...get('entitiesManagement', ['selectedEntity']),
 
       height() {
-        return `height:${
-          this.$vuetify.breakpoint.height - this.$vuetify.application.top
-        }px;overflow:auto`;
+        return `height:${this.$vuetify.breakpoint.height - this.$vuetify.application.top}px;overflow:auto`;
       },
     },
   };

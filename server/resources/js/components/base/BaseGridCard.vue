@@ -11,7 +11,7 @@
       >
         <v-card-actions class="px-0">
           <v-avatar size="80" :color="iconColor">
-            <v-img v-if="avatar" :src="`https://i.pravatar.cc/150?img=${index}`">
+            <v-img :src="`https://i.pravatar.cc/150?img=${index}`">
               <template #placeholder>
                 <v-row class="fill-height ma-0" align="center" justify="center">
                   <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
@@ -19,9 +19,9 @@
               </template>
             </v-img>
 
-            <v-icon v-else size="40" dark>
+            <!-- <v-icon v-else size="40" dark>
               {{ icon }}
-            </v-icon>
+            </v-icon> -->
           </v-avatar>
 
           <v-spacer />
