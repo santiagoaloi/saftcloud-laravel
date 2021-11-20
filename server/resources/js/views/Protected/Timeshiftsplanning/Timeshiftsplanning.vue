@@ -155,7 +155,7 @@
                   <v-list-item-avatar v-else>
                     <v-tooltip bottom>
                       <template #activator="{ on }">
-                        <v-btn color="white" outlined text fab icon @click="removeEventTrigger(event)" v-on="on" @click.stop>
+                        <v-btn color="white" outlined text fab icon @click="removeEventTrigger(event)" v-on="on">
                           <v-icon> mdi-delete-outline</v-icon>
                         </v-btn>
                       </template>
@@ -173,7 +173,7 @@
         </template>
 
         <template #day-label="{ day, date }">
-          <div v-if="type === 'day'" class="d-flex justify-center align-center pa-5">
+          <div v-if="type === 'month'" class="d-flex justify-center align-center pa-5">
             <v-btn
               fab
               :icon="date !== calendar ? true : false"
