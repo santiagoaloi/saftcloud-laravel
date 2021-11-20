@@ -291,7 +291,7 @@
 
                   <template #item="data">
                     <v-list-item-avatar size="25">
-                      <v-img :src="data.item.avatar || 'storage/defaults/avatar.png'">
+                      <v-img :src="`https://i.pravatar.cc/150?img=${Math.floor(Math.random() * 10)}`">
                         <template #placeholder>
                           <v-row class="fill-height ma-0" align="center" justify="center">
                             <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
@@ -357,16 +357,7 @@
                     ></v-text-field>
                   </validation-provider>
                 </template>
-                <v-date-picker
-                  v-model="event.date"
-                  show-week
-                  no-title
-                  scrollable
-                  @change="
-                    $refs.menu.save(event.date);
-                    menuStart = false;
-                  "
-                >
+                <v-date-picker v-model="event.date" range show-week no-title scrollable @change="$refs.menu.save(event.date)">
                 </v-date-picker>
               </v-menu>
             </v-col>
@@ -510,7 +501,7 @@
       },
 
       computedDateFormattedMomentjs() {
-        return this.event.date ? moment(this.event.date).format('dddd, MMMM Do YYYY') : '';
+        return `${moment(this.event.date[0]).format('MMMM Do YYYY')} to ${moment(this.event.date[1]).format('MMMM Do YYYY')}`;
       },
 
       icon() {
