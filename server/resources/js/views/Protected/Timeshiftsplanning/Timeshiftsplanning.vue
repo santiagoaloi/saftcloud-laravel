@@ -520,14 +520,14 @@
 
       selectedDatetimeStart() {
         if (this.event.date && this.event.timeStart) {
-          return `${this.event.date} ${this.event.timeStart}`;
+          return `${this.event.date[0]} ${this.event.timeStart}`;
         }
         return null;
       },
 
       selectedDatetimeEnd() {
         if (this.event.date && this.event.timeEnd) {
-          return `${this.event.date} ${this.event.timeEnd}`;
+          return `${this.event.date[1]} ${this.event.timeEnd}`;
         }
         return null;
       },
@@ -652,7 +652,7 @@
             const payload = {
               avatar: employee.avatar,
               // color: randomHexColor(),
-              color: 'transparent',
+              color: 'blue-grey darken-3',
               name: `${capitalize(employee.entity.first_name)} ${capitalize(employee.entity.last_name)}`,
               id: uuidv4(),
               end: this.selectedDatetimeEnd,
