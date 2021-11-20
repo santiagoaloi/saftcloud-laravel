@@ -357,7 +357,10 @@
                     ></v-text-field>
                   </validation-provider>
                 </template>
-                <v-date-picker v-model="event.date" range show-week no-title scrollable @change="$refs.menu.save(event.date)">
+                <v-date-picker v-model="event.date" range show-week no-title scrollable>
+                  <v-spacer></v-spacer>
+                  <v-btn text color="white" @click="menuStart = false"> Cancel </v-btn>
+                  <v-btn text color="white" @click="$refs.menu.save(event.date)"> OK </v-btn>
                 </v-date-picker>
               </v-menu>
             </v-col>
