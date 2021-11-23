@@ -1,6 +1,5 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Vuetify from 'vuetify/lib/framework';
 import auth from '@/util/auth';
 import { store } from '@/store';
 import routes from '@/router/routes';
@@ -48,7 +47,7 @@ router.beforeEach(async (to, from, next) => {
       next({ path: '/Login' });
     }
   } else if (auth.loggedIn() && to.matched.some((record) => record.name === 'Login')) {
-    next({ path: '/Components' });
+    next({ path: '/Entities' });
   } else {
     next();
   }

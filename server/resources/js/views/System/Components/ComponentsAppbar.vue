@@ -5,21 +5,14 @@
 
       <div class="flex-grow-1" />
       <v-btn plain class="mx-2" @click="dialogEditor = true">
-        <v-icon :left="$vuetify.breakpoint.lgAndUp" small> mdi-code-json </v-icon
-        >{{ configStructureTitle }}
+        <v-icon :left="$vuetify.breakpoint.lgAndUp" small> mdi-code-json </v-icon>{{ configStructureTitle }}
       </v-btn>
-      <v-btn
-        class="ml-2"
-        :color="isDark ? 'accent' : 'primary'"
-        @click.stop="dialogComponent = true"
-      >
-        <v-icon :left="$vuetify.breakpoint.lgAndUp" small> mdi-view-grid-plus </v-icon
-        >{{ createComponentTitle }}
+      <v-btn class="ml-2" :color="isDark ? 'accent' : 'primary'" @click.stop="dialogComponent = true">
+        <v-icon :left="$vuetify.breakpoint.lgAndUp" small> mdi-view-grid-plus </v-icon>{{ createComponentTitle }}
       </v-btn>
 
       <v-btn class="ml-2" :color="isDark ? 'accent' : 'primary'" @click="addGroupDialog()">
-        <v-icon :left="$vuetify.breakpoint.lgAndUp" small> mdi-view-grid-plus </v-icon
-        >{{ createGroupTitle }}
+        <v-icon :left="$vuetify.breakpoint.lgAndUp" small> mdi-view-grid-plus </v-icon>{{ createGroupTitle }}
       </v-btn>
     </div>
 
@@ -42,12 +35,9 @@
     name: 'ComponentsAppbar',
 
     components: {
-      DialogConfigEditor: () =>
-        import(/* webpackChunkName: 'components-dialog-config-editor' */ './DialogConfigEditor'),
-      ComponentsGroups: () =>
-        import(/* webpackChunkName: 'secure-bundle-comp' */ './ComponentsGroups'),
-      ComponentsGroupsChips: () =>
-        import(/* webpackChunkName: 'secure-bundle-comp' */ './ComponentsGroupsChips'),
+      DialogConfigEditor: () => import(/* webpackChunkName: 'components-dialog-config-editor' */ './DialogConfigEditor'),
+      ComponentsGroups: () => import(/* webpackChunkName: 'secure-bundle-comp' */ './ComponentsGroups'),
+      ComponentsGroupsChips: () => import(/* webpackChunkName: 'secure-bundle-comp' */ './ComponentsGroupsChips'),
     },
     mixins: [componentGroups],
 

@@ -70,11 +70,16 @@ const getters = {
   //* Returns entities that belongs to a status or matching search.
   allEntitiesFiltered: (state, _, rootState) => {
     const entity = state.selectedEntityType === 'Roles' ? 'allRoles' : 'allUsers';
-    const entityName = state.selectedEntityType === 'Roles' ? 'name' : 'email';
-    return state[entity].filter((ent) => {
+    const userFields = ['email', 'id'];
+    const userMetaFields = ['first_name', 'last_name'];
+    const roleFields = ['name'];
+
+    return state[entity].filter((entity) => {
       const search = rootState.application.search.toLowerCase();
-      const title = ent[entityName].toLowerCase();
-      return !search || title.includes(search);
+      return state.selectedEntityType === 'Roles'
+        ? roleFields.some((field) => entity[field].toString().toLowerCase().includes(search))
+        : userFields.some((field) => entity[field].toString().toLowerCase().includes(search)) ||
+            userMetaFields.some((field) => entity.entity[field].toString().toLowerCase().includes(search));
     });
   },
 
@@ -97,9 +102,11 @@ const getters = {
   isUsersEmpty: (state) => isEmpty(state.allUsers),
 
   //* Returns true if the entity has unsaved changes.
-  hasUnsavedChanges: () => (entity) => {
-    const { origin, ...current } = entity;
-    return !isEqual(origin, current);
+  hasUnsavedChanges: (_, getters) => (entity) => {
+    if (getters.hasSelectedEntity) {
+      const { origin, ...current } = entity;
+      return !isEqual(origin, current);
+    }
   },
 
   //* Returns true if the entity has unsaved changes.
@@ -162,13 +169,9 @@ const actions = {
   },
 
   //* When an entity is selected in the entities view, it loads its configuration.
-  setSelectedEntity({ rootState, state }, index) {
+  setSelectedEntity({ state }, index) {
     if (state.selectedEntityIndex !== index) {
       store.set('entitiesManagement/selectedEntityIndex', index);
-    }
-
-    if (!rootState.drawers.secureEntitiesDrawer) {
-      store.set('drawers/secureEntitiesDrawer', true);
     }
   },
 
@@ -248,6 +251,19 @@ const actions = {
     return axios.post(`api/user.sync/${userId}`, roles);
   },
 
+  //* Saves Entity User Metadata
+  async saveUserMetadata({ getters }) {
+    const entity = { ...getters.selectedEntity.entity };
+    return axios.patch(`api/entity/${entity.id}`, entity);
+  },
+
+  //* Saves Entity User Email
+  async saveUserEmail({ getters }) {
+    const userId = getters.selectedEntity.id;
+    const { email } = getters.selectedEntity;
+    return axios.patch(`api/user/${userId}`, { email });
+  },
+
   //* Get User
   async getUser({ getters }) {
     const user = { ...getters.selectedEntity.id };
@@ -266,12 +282,6 @@ const actions = {
       .catch(() => {
         dispatch('snackbar/snackbarError', 'There was an error fetching the users', { root: true });
       });
-  },
-
-  //* Saves Entity User Roles
-  async saveUserMetadata({ getters }) {
-    const entity = { ...getters.selectedEntity.entity };
-    return axios.patch(`api/entity/${entity.id}`, entity);
   },
 
   //* Saves Entity User Settings

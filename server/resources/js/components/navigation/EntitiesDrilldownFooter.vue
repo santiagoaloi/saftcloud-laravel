@@ -3,15 +3,7 @@
     <div class="text-end pr-3 pb-2">
       <v-tooltip v-if="selectedEntityType === 'Users'" transition="false" color="black" top>
         <template #activator="{ on }">
-          <v-btn
-            depressed
-            dark
-            large
-            small
-            :color="isDark ? '' : 'white'"
-            @click="edit()"
-            v-on="on"
-          >
+          <v-btn depressed dark large small :color="isDark ? '' : 'white'" @click="edit()" v-on="on">
             <v-icon color="#208ad6" dark> mdi-pencil-outline </v-icon>
           </v-btn>
         </template>
@@ -94,13 +86,7 @@
     },
     computed: {
       ...sync('theme', ['isDark']),
-      ...get('entitiesManagement', [
-        'selectedEntity',
-        'hasUnsavedChanges',
-        'hasValidationErrors',
-        'selectedEntityType',
-        'entitiesEditSheet',
-      ]),
+      ...get('entitiesManagement', ['selectedEntity', 'hasUnsavedChanges', 'hasValidationErrors', 'selectedEntityType']),
       ...sync('entitiesManagement', ['entitiesEditSheet']),
 
       identityMethod() {
@@ -130,7 +116,7 @@
         }
 
         if (!isEqual(this.selectedEntity.email, this.selectedEntity.origin.email)) {
-          functionGroups.push(this.saveUserMetadata());
+          functionGroups.push(this.saveUserEmail());
         }
 
         try {

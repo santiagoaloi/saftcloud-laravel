@@ -1,10 +1,22 @@
 <template>
   <div>
-    <v-item-group v-model="componentCardGroup" :active-class="isDark ? 'gridCardDark' : 'gridcardLight'" mandatory>
-      <transition-group class="gallery-card-container px-4 py-2" name="fade-transition">
+    <v-item-group
+      v-model="componentCardGroup"
+      class="gallery-card-container pa-2"
+      :active-class="isDark ? 'gridCardDark' : 'gridcardLight'"
+    >
+      <v-lazy
+        v-for="(component, index) in allComponentsFiltered"
+        :key="index"
+        :options="{
+          threshold: 0.8,
+        }"
+        min-height="200"
+        transition="scroll-y-reverse-transition"
+        width="100%"
+      >
         <base-grid-card
-          v-for="(component, index) in allComponentsFiltered"
-          :key="index + 1"
+          icon-only
           class="d-flex flex-column justify-space-between pa-4 hoverElevationSoft"
           :item="component"
           :index="index"
@@ -51,7 +63,7 @@
             </div>
           </template>
         </base-grid-card>
-      </transition-group>
+      </v-lazy>
     </v-item-group>
   </div>
 </template>
@@ -64,6 +76,7 @@
 
     data() {
       return {
+        componentCardGroup1: 0,
         icons: [
           {
             event: 'setStarred',

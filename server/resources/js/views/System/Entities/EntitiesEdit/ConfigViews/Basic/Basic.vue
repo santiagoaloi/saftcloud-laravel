@@ -18,13 +18,7 @@
         <v-col sm="4">
           <div class="mt-2">
             <baseFieldLabel required label="first name" />
-            <validation-provider
-              v-slot="{ errors }"
-              immediate
-              mode="aggressive"
-              name="first name"
-              rules="required"
-            >
+            <validation-provider v-slot="{ errors }" immediate mode="aggressive" name="first name" rules="required">
               <v-text-field
                 v-model="selectedEntity.entity.first_name"
                 :outlined="isDark"
@@ -40,13 +34,7 @@
 
           <div class="mt-2">
             <baseFieldLabel required label="last name" />
-            <validation-provider
-              v-slot="{ errors }"
-              immediate
-              mode="aggressive"
-              name="last name"
-              rules="required"
-            >
+            <validation-provider v-slot="{ errors }" immediate mode="aggressive" name="last name" rules="required">
               <v-text-field
                 v-model="selectedEntity.entity.last_name"
                 :outlined="isDark"
@@ -62,13 +50,7 @@
 
           <div class="mt-2">
             <baseFieldLabel required label="Email" />
-            <validation-provider
-              v-slot="{ errors }"
-              immediate
-              mode="aggressive"
-              name="email"
-              rules="required"
-            >
+            <validation-provider v-slot="{ errors }" immediate mode="aggressive" name="email" rules="required">
               <v-text-field
                 v-model="selectedEntity.email"
                 :outlined="isDark"

@@ -1,17 +1,17 @@
 <template>
-  <v-item v-slot="{ toggle }" class="select-none">
+  <v-item v-slot="{ toggle, active }" :value="index || 0" class="select-none">
     <v-hover v-slot="{ hover: hoverCard }" open-delay="500">
       <v-sheet
         class="cursor-pointer"
         height="300"
         width="100%"
         :color="isDark ? '#282c3b' : 'white'"
-        @click.stop="toggle()"
+        @click.stop="!active ? toggle() : null"
         v-on="$listeners"
       >
         <v-card-actions class="px-0">
-          <v-avatar size="80" :color="iconColor">
-            <v-img :src="`https://i.pravatar.cc/150?img=${index}`">
+          <v-avatar size="90" :color="iconColor">
+            <v-img v-if="!icon || !iconOnly" :src="avatar || `https://i.pravatar.cc/150?img=${index}`">
               <template #placeholder>
                 <v-row class="fill-height ma-0" align="center" justify="center">
                   <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
@@ -19,9 +19,9 @@
               </template>
             </v-img>
 
-            <!-- <v-icon v-else size="40" dark>
+            <v-icon v-if="iconOnly" size="40" dark>
               {{ icon }}
-            </v-icon> -->
+            </v-icon>
           </v-avatar>
 
           <v-spacer />
@@ -75,7 +75,12 @@
 
       icon: {
         type: [String],
-        default: () => 'mdi-home',
+        default: () => null,
+      },
+
+      iconOnly: {
+        type: [Boolean],
+        default: () => false,
       },
 
       avatar: {

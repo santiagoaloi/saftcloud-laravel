@@ -3,41 +3,15 @@
     <v-app-bar clipped-right app flat>
       <v-app-bar-nav-icon dark class="ml-n2 mr-3" text x-small fab @click="secureDefaultDrawer = !secureDefaultDrawer" />
 
-      <h4 style="position: relative" class="white--text ml-8">{{ routeTitle }}</h4>
+      <baseAppbarTitle></baseAppbarTitle>
 
       <div class="flex-grow-1" />
 
-      <div class="d-flex justify-space-between">
-        <template v-if="appBarSlot">
-          <component :is="appBarSlot" />
-        </template>
-      </div>
+      <baseAppbarSlot></baseAppbarSlot>
 
       <div class="flex-grow-1" />
 
-      <v-text-field
-        v-if="!['Timeshiftsplanning'].includes($route.name)"
-        v-model="search"
-        v-lazy-input:debounce="200"
-        spellcheck="false"
-        outlined
-        :color="isDark ? '#208ad6' : 'grey'"
-        dense
-        flat
-        solo
-        hide-details
-        :placeholder="'Search ' + ($route.meta.search || '...')"
-        prepend-inner-icon="mdi-magnify"
-        :class="expand ? 'expanded' : 'shrinked'"
-        class="mx-11 pr-12"
-        rounded
-        @focus="expand = true"
-        @blur="expand = false"
-      >
-        <template #append>
-          <v-btn class="mr-n4" x-small fab text @click="search = ''"> <v-icon> mdi-close </v-icon> </v-btn>
-        </template>
-      </v-text-field>
+      <baseSearchField />
 
       <v-tooltip transition="false" color="black" bottom>
         <template #activator="{ on }">
@@ -49,7 +23,7 @@
         <span> {{ isDark ? ' Light mode' : 'Dark mode' }}</span>
       </v-tooltip>
 
-      <v-btn x-small fab class="mr-3" text dark plain to="/">
+      <v-btn x-small fab class="mr-3" text dark plain to="/Homepage">
         <v-icon>mdi-home-variant</v-icon>
       </v-btn>
 
@@ -168,14 +142,12 @@
   import axios from 'axios';
   import { call, sync } from 'vuex-pathify';
   import capitalize from 'lodash/capitalize';
-  import { store } from '@/store';
 
   export default {
     name: 'SecureAppbar',
 
     data() {
       return {
-        expand: false,
         imageLoadingFailed: false,
         notificationCount: 0,
 
@@ -242,16 +214,10 @@
 
     computed: {
       ...sync('theme', ['isDark']),
-      ...sync('application', ['search']),
-      ...sync('activeView', ['titleBarSlot']),
-
       user: sync('authentication@session.user'),
       ...sync('drawers', ['secureDefaultDrawer']),
       ...sync('loaders', ['logoutLoader']),
 
-      appBarSlot() {
-        return this.$route.meta.appBarSlot;
-      },
       settingsMenuFiltered() {
         return this.settingsMenu.filter((menu) => menu.roles.includes(...this.$root.roles) || !menu.roles.length);
       },
@@ -259,24 +225,10 @@
       fullName() {
         return `${capitalize(this.user.entity.first_name)} ${capitalize(this.user.entity.last_name)} `;
       },
-
-      routeTitle() {
-        return this.$route.meta.title;
-      },
-
-      routeIcon() {
-        return this.$route.meta.icon;
-      },
     },
 
     methods: {
       ...call('authentication/*'),
-
-      clearSearch() {
-        setTimeout(() => {
-          store.set('application/search', '');
-        }, 500);
-      },
 
       setTheme() {
         this.$vuetify.theme.dark = !this.$vuetify.theme.dark;
@@ -291,8 +243,3 @@
     },
   };
 </script>
-<style scoped>
-  .darkBorder {
-    border-bottom: solid 1px #404859;
-  }
-</style>

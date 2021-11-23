@@ -64,6 +64,7 @@
                     <v-text-field
                       ref="username"
                       v-model.trim="auth.email"
+                      rounded
                       :color="isDark ? '#208ad6' : 'grey'"
                       flat
                       hide-details
@@ -102,6 +103,7 @@
                         spellcheck="false"
                         :color="isDark ? '#208ad6' : 'grey'"
                         :error="errors.length > 0"
+                        rounded
                         @click:append="password_visible = !password_visible"
                         @keydown.enter.prevent="validatelogin()"
                         @focus="reset"
@@ -112,15 +114,16 @@
                   </div>
 
                   <v-card-actions class="mt-n2">
-                    <div class="flex-grow-1" />
-
                     <v-btn disabled class="mt-3" text small @click="forgot = true"> Forgot your password? </v-btn>
                   </v-card-actions>
                 </v-col>
 
                 <v-col cols="12" sm="12" md="12">
                   <v-card-actions class="mt-n7">
+                    <v-spacer></v-spacer>
+
                     <v-btn
+                      rounded
                       width="40%"
                       color="primary"
                       class="ml-n2 white--text"
@@ -170,9 +173,14 @@
       ...sync('loaders', ['logoutLoader']),
     },
 
-    deactivated() {},
+    activated() {
+      this.loading = false;
+      Object.assign(this.$data, initialState());
+      store.set('loaders/logoutLoader', false);
+    },
 
     mounted() {
+      this.loading = false;
       Object.assign(this.$data, initialState());
       store.set('loaders/logoutLoader', false);
     },
@@ -192,9 +200,7 @@
                   this.shake = false;
                 }, 500);
               } else {
-                window.eventBus.$emit('BUS_BUILD_ROUTES');
-                this.hasSessionExpired = false;
-                this.$router.push('/Components');
+                this.$router.push('/Entities');
               }
             });
           } else {

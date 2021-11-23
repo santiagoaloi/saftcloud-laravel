@@ -32,10 +32,12 @@
               <v-divider class="mt-2" />
 
               <!-- keep alive is important to cross-validate compoment edit navigation drawer sections -->
-              <v-fade-transition mode="out-in" :duration="520" hide-on-leave>
-                <keep-alive>
-                  <router-view />
+
+              <v-fade-transition leave-absolute>
+                <keep-alive v-if="$route.meta.keepAlive">
+                  <router-view></router-view>
                 </keep-alive>
+                <router-view v-else></router-view>
               </v-fade-transition>
             </v-card-text>
           </v-col>
@@ -51,10 +53,8 @@
   export default {
     name: 'ComponentsEdit',
     components: {
-      ComponentsEditSheetAppbar: () =>
-        import(/* webpackChunkName:   'edit-bundle' */ './ComponentsEditSheetAppbar'),
-      ComponentsEditSheetDrawer: () =>
-        import(/* webpackChunkName:   'edit-bundle' */ './ComponentsEditSheetDrawer'),
+      ComponentsEditSheetAppbar: () => import(/* webpackChunkName:   'edit-bundle' */ './ComponentsEditSheetAppbar'),
+      ComponentsEditSheetDrawer: () => import(/* webpackChunkName:   'edit-bundle' */ './ComponentsEditSheetDrawer'),
     },
 
     computed: {
@@ -63,9 +63,7 @@
       ...get('componentManagement', ['selectedComponent', 'mapComponentGroup', 'mapGroupParent']),
 
       height() {
-        return `height:${
-          this.$vuetify.breakpoint.height - this.$vuetify.application.top
-        }px;overflow:auto`;
+        return `height:${this.$vuetify.breakpoint.height - this.$vuetify.application.top}px;overflow:auto`;
       },
     },
   };

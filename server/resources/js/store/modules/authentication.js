@@ -61,7 +61,6 @@ const actions = {
     // * Clear routes and routes matcher.
     resetRouter();
 
-    // * Waits for indexeddb to be ready.
     return axios.get('api/getComponentNames/').then((response) => {
       if (response) {
         const { components } = response.data;
@@ -101,6 +100,7 @@ const actions = {
         return true;
       })
       .catch(() => {
+        axiosDefaults.headers.common.Authorization = undefined;
         dispatch('resetState');
         router.push('/Login');
         return false;

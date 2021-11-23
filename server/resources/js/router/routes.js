@@ -5,7 +5,7 @@ export default [
   {
     path: '/',
     name: 'initial',
-    meta: { layout: 'public-layout' },
+    meta: { layout: 'public-layout', keepAlive: true },
     component: () => import(/* webpackChunkName: 'homepage' */ '@/views/Public/Homepage/Index.vue'),
   },
   ...staticRoutes,

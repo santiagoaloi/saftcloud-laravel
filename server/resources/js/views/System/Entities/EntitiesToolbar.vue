@@ -9,7 +9,7 @@
       :z-index="zIndex"
       :nudge-top="56"
     >
-      <template #listTop>
+      <!-- <template #listTop>
         <v-sheet>
           <v-card-actions class="px-1">
             <v-list-item class="px-1">
@@ -30,7 +30,7 @@
             </v-list-item>
           </v-card-actions>
         </v-sheet>
-      </template>
+      </template> -->
 
       <v-sheet>
         <v-list>
@@ -66,10 +66,6 @@
     <base-expandable-button title="Fetch Components" subtitle="Last fetched just now" icon="mdi-responsive">
     </base-expandable-button>
 
-    <v-btn plain class="mx-2" @click="dialogEditor = true">
-      <v-icon :left="$vuetify.breakpoint.lgAndUp" small> mdi-code-json </v-icon>{{ configStructureTitle }}
-    </v-btn>
-
     <base-expandable-button
       v-model="dialogComponent"
       title="Create New Component"
@@ -77,8 +73,6 @@
       icon="mdi-responsive"
     >
     </base-expandable-button>
-
-    ä <dialog-config-editor v-if="dialogEditor" />
   </div>
 </template>
 
@@ -88,10 +82,8 @@
 
   export default {
     name: 'ComponentsToolbar',
-    components: {
-      DialogConfigEditor: () => import(/* webpackChunkName: 'components-dialog-config-editor' */ './DialogConfigEditor'),
-    },
     mixins: [componentGroups],
+
     computed: {
       ...sync('theme', ['isDark']),
       ...sync('componentManagement', ['dialogComponent', 'dialogEditor']),

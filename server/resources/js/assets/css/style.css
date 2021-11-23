@@ -218,10 +218,10 @@ input::-webkit-inner-spin-button {
 
 .hoverElevationSoft {
   border-radius: 4px;
-  -webkit-transition-property: color, background-color, -webkit-box-shadow, -webkit-transform;
-  transition-property: color, background-color, box-shadow, transform, -webkit-box-shadow, -webkit-transform;
+  -webkit-transition-property: -webkit-box-shadow, -webkit-transform;
+  transition-property: box-shadow, transform, -webkit-box-shadow, -webkit-transform;
   transition-duration: 0.5s;
-  box-shadow: 0 10px 60px -12px rgb(50 50 93 / 25%), 0 18px 36px -18px rgb(0 0 0 / 30%), 0 -12px 36px -8px rgb(0 0 0 / 3%) !important;
+  box-shadow: 0 10px 60px -12px rgb(50 50 93 / 0%), 0 18px 36px -50px rgb(0 0 0 / 20%), 0 -12px 36px -8px rgb(0 0 0 / 0%) !important;
 }
 
 .hoverElevationSoft:hover {
@@ -344,4 +344,8 @@ input::-webkit-inner-spin-button {
 
 .v-calendar-category .v-calendar-daily__intervals-head {
   background-color: #2225 !important;
+}
+
+.leaveTransition {
+  display: none;
 }

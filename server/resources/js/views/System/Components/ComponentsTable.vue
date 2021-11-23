@@ -9,7 +9,7 @@
       :items="allComponentsFiltered"
       style="cursor: pointer"
       calculate-widths
-      class="solidBackground"
+      class="solidBackground px-3"
       @click:row="rowClicked"
       @dblclick:row="validateBeforeEdit"
     >
@@ -58,14 +58,7 @@
 
         <v-tooltip transition="false" color="black" bottom>
           <template #activator="{ on }">
-            <v-btn
-              color="white"
-              small
-              icon
-              :ripple="false"
-              v-on="on"
-              @click.stop="setStarred(item)"
-            >
+            <v-btn color="white" small icon :ripple="false" v-on="on" @click.stop="setStarred(item)">
               <v-icon :color="isStarredColor(item)">
                 {{ isStarredIcon(item) }}
               </v-icon>
@@ -76,14 +69,7 @@
 
         <v-tooltip transition="false" color="black" bottom>
           <template #activator="{ on }">
-            <v-btn
-              color="white"
-              small
-              icon
-              :ripple="false"
-              v-on="on"
-              @click.stop="setModular(item)"
-            >
+            <v-btn color="white" small icon :ripple="false" v-on="on" @click.stop="setModular(item)">
               <v-icon :color="isModularColor(item)">
                 {{ isModularIcon(item) }}
               </v-icon>
@@ -173,11 +159,7 @@
         'hasUnsavedChanges',
         'selectedComponent',
       ]),
-      ...sync('componentManagement', [
-        'selectedComponentTableRow',
-        'componentCardGroup',
-        'componentEditSheet',
-      ]),
+      ...sync('componentManagement', ['selectedComponentTableRow', 'componentCardGroup', 'componentEditSheet']),
     },
 
     watch: {

@@ -127,7 +127,7 @@ const getters = {
       const search = rootState.application.search.toLowerCase();
       const title = component.config.general_config.title.toLowerCase();
       return (
-        (!search || title.match(search)) &&
+        (!search || title.includes(search)) &&
         (status === 'all' ||
           (status === 'inactive' && !component.status.active) ||
           (status === 'navigation' && component.config.general_config.isVisibleInSidebar) ||

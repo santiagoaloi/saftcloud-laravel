@@ -1,18 +1,30 @@
 <template>
   <div>
-    <v-item-group v-model="entityCardGroup" :active-class="isDark ? 'gridCardDark' : 'gridcardLight'" mandatory>
-      <transition-group class="gallery-card-container pa-2" name="fade-transition">
+    <v-item-group
+      v-model="entityCardGroup"
+      class="gallery-card-container pa-2"
+      :active-class="isDark ? 'gridCardDark' : 'gridcardLight'"
+    >
+      <v-lazy
+        v-for="(entity, index) in allEntitiesFiltered"
+        :key="index"
+        :options="{
+          threshold: 0.8,
+        }"
+        min-height="200"
+        transition="scroll-y-reverse-transition"
+        width="100%"
+      >
         <base-grid-card
-          v-for="(entity, index) in allEntitiesFiltered"
-          :key="index + 1"
           no-actions
           class="d-flex flex-column justify-space-between pa-4 hoverElevationSoft"
           :item="entity"
           :index="index"
           :status-icons="icons"
-          :icon="selectedEntityType === 'Roles' ? 'mdi-security' : 'mdi-account'"
-          icon-color="primary"
-          :avatar="selectedEntityType === 'Roles' ? null : entity.avatar"
+          icon="mdi-shield-lock-outline"
+          :icon-color="selectedEntityType === 'Roles' ? 'primary' : 'transparent'"
+          :icon-only="selectedEntityType === 'Roles'"
+          :avatar="entity.avatar"
           :title="selectedEntityType === 'Roles' ? entity.name : fullName(entity.entity.first_name, entity.entity.last_name)"
           :methods="mapMethods"
           @click.native="setSelectedEntity(index)"
@@ -22,10 +34,8 @@
               <div class="gallery-card-subtitle-wrapper">
                 <h5 class="gallery-card-subtitle">
                   <v-chip
-                    :dark="isDark"
-                    :color="isDark ? 'rgb(54, 57, 63)' : 'white'"
-                    :text-color="isDark ? 'grey lighten-1' : 'indigo darken-4'"
-                    label
+                    :color="isDark ? '#4c536c' : 'white'"
+                    :text-color="isDark ? 'white' : 'indigo darken-4'"
                     class="col-12 pointer-events-none"
                     small
                   >
@@ -35,7 +45,7 @@
                     </template>
 
                     <template v-if="selectedEntityType === 'Users'">
-                      {{ entity.email }}
+                      <span class="d-inline-block text-truncate" style="max-width: 200px"> {{ entity.email }} </span>
                     </template>
                   </v-chip>
                 </h5>
@@ -56,7 +66,7 @@
             </div>
           </template>
         </base-grid-card>
-      </transition-group>
+      </v-lazy>
     </v-item-group>
   </div>
 </template>
@@ -69,6 +79,7 @@
     name: 'EntitiesGridView',
     data() {
       return {
+        isMounted: false,
         icons: [
           {
             event: 'setStarred',
@@ -79,6 +90,7 @@
         ],
       };
     },
+
     computed: {
       ...sync('theme', ['isDark']),
       ...sync('entitiesManagement', ['entityCardGroup', 'allUsers', 'selectedEntityType']),
@@ -101,6 +113,9 @@
       },
     },
 
+    mounted() {
+      this.isMounted = true;
+    },
     methods: {
       ...call('entitiesManagement/*'),
 

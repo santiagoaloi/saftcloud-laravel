@@ -20,8 +20,7 @@
           :color="isDark ? 'accent' : 'primary'"
           @click.stop="(dialogEntity = true), (identityTypeButton = 'User')"
         >
-          <v-icon :left="$vuetify.breakpoint.lgAndUp" small> mdi-account-plus </v-icon
-          >{{ createUser }}
+          <v-icon :left="$vuetify.breakpoint.lgAndUp" small> mdi-account-plus </v-icon>{{ createUser }}
         </v-btn>
       </div>
     </div>
@@ -40,12 +39,7 @@
 
     computed: {
       ...sync('theme', ['isDark']),
-      ...sync('entitiesManagement', [
-        'dialogEntity',
-        'dialogEditor',
-        'identityTypeButton',
-        'selectedEntityType',
-      ]),
+      ...sync('entitiesManagement', ['dialogEntity', 'dialogEditor', 'identityTypeButton', 'selectedEntityType']),
 
       createUser() {
         return this.$vuetify.breakpoint.lgAndUp ? 'Create User' : '';

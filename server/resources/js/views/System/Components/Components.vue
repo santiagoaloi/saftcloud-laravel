@@ -3,17 +3,15 @@
     <base-flex-container class="dottedBackground">
       <template #top>
         <components-toolbar />
-        <v-divider></v-divider>
+        <v-divider />
         <components-tabs />
       </template>
 
-      <v-fade-transition hide-on-leave>
-        <components-table v-if="isTableLayout && !isAllFilteredComponentsEmpty" />
-      </v-fade-transition>
-
-      <v-scroll-x-transition hide-on-leave>
-        <components-grid v-if="!isTableLayout && !isAllFilteredComponentsEmpty" />
-      </v-scroll-x-transition>
+      <keep-alive>
+        <v-scroll-y-transition hide-on-leave>
+          <component :is="isTableLayout ? 'componentsTable' : 'componentsGrid'" />
+        </v-scroll-y-transition>
+      </keep-alive>
 
       <v-scroll-y-transition hide-on-leave>
         <components-no-data v-if="isAllFilteredComponentsEmpty" />

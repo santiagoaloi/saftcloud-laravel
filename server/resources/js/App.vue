@@ -1,7 +1,10 @@
 <template>
   <v-app>
-    <v-fade-transition mode="out-in" :duration="520" hide-on-leave>
-      <component :is="layout" />
+    <v-fade-transition mode="out-in" leave-active-class="leaveTransition">
+      <keep-alive v-if="$route.meta.keepAlive">
+        <component :is="layout" />
+      </keep-alive>
+      <component :is="layout" v-else />
     </v-fade-transition>
   </v-app>
 </template>
@@ -12,10 +15,7 @@
   import config from './configs';
   import auth from '@/util/auth';
 
-  const SecureLayout = Vue.component('SecureLayout', () =>
-    import(/* webpackChunkName: 'secure-Layout' */ '@/layouts/secureLayout'),
-  );
-
+  Vue.component('SecureLayout', () => import(/* webpackChunkName: 'secure-Layout' */ '@/layouts/secureLayout'));
   Vue.component('PublicLayout', () => import(/* webpackChunkName: 'public-Layout' */ '@/layouts/publicLayout'));
 
   export default {
@@ -36,9 +36,9 @@
         try {
           const built = await this.buildRoutes();
 
-          if (built) {
-            return SecureLayout;
-          }
+          // if (built) {
+          //   return SecureLayout;
+          // }
         } catch (error) {
           console.log(error);
         }

@@ -2,13 +2,13 @@ export default [
   {
     path: '/Components',
     name: 'Components',
-    meta: { layout: 'secure-layout', title: 'Manage components', search: 'components...' },
+    meta: { layout: 'secure-layout', title: 'Manage components', search: 'components...', keepAlive: true },
     component: () => import(/* webpackChunkName: 'components' */ '@/views/System/Components/Components.vue'),
     children: [
       {
         path: '/Components/Basic',
         name: 'Components/Basic',
-        meta: { layout: 'secure-layout', title: 'Manage components' },
+        meta: { layout: 'secure-layout', title: 'Manage components', keepAlive: true },
         component: () =>
           import(
             /* webpackChunkName: 'components-basic' */ '@/views/System/Components/ComponentsEdit/ConfigViews/Basic/Basic.vue'
@@ -17,7 +17,7 @@ export default [
       {
         path: '/Components/FormFields',
         name: 'Components/FormFields',
-        meta: { layout: 'secure-layout', title: 'Manage components' },
+        meta: { layout: 'secure-layout', title: 'Manage components', keepAlive: true },
         component: () =>
           import(
             /* webpackChunkName: 'components-form-fields' */ '@/views/System/Components/ComponentsEdit/ConfigViews/FormFields/FormFields.vue'
@@ -26,7 +26,7 @@ export default [
       {
         path: '/Components/Query',
         name: 'Components/Query',
-        meta: { layout: 'secure-layout', title: 'Manage components' },
+        meta: { layout: 'secure-layout', title: 'Manage components', keepAlive: true },
         component: () =>
           import(
             /* webpackChunkName: 'components-query' */ '@/views/System/Components/ComponentsEdit/ConfigViews/Query/Query.vue'
@@ -35,7 +35,7 @@ export default [
       {
         path: '/Components/Capabilities',
         name: 'Components/Capabilities',
-        meta: { layout: 'secure-layout', title: 'Manage components' },
+        meta: { layout: 'secure-layout', title: 'Manage components', keepAlive: true },
         component: () =>
           import(
             /* webpackChunkName: 'components-capabilities' */ '@/views/System/Components/ComponentsEdit/ConfigViews/Capabilities/Capabilities.vue'

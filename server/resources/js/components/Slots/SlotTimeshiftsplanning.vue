@@ -13,7 +13,7 @@
 </template>
 
 <script>
-  import { sync, call } from 'vuex-pathify';
+  import { sync } from 'vuex-pathify';
 
   export default {
     name: 'AppBarSlot',
