@@ -27,9 +27,9 @@
     "/dist/js/entities-table.js": "/dist/js/entities-table.js",
     "/dist/js/entities-bundle.js": "/dist/js/entities-bundle.js",
     "/dist/js/entities-no-data.js": "/dist/js/entities-no-data.js",
+    "/dist/js/entities-dialog-assign-roles.js": "/dist/js/entities-dialog-assign-roles.js",
     "/dist/js/entities-dialog-entity.js": "/dist/js/entities-dialog-entity.js",
     "/dist/js/entities-dialog-privileges.js": "/dist/js/entities-dialog-privileges.js",
-    "/dist/js/entities-dialog-assign-roles.js": "/dist/js/entities-dialog-assign-roles.js",
     "/dist/js/entities-edit-sheet.js": "/dist/js/entities-edit-sheet.js",
     "/dist/js/signup-bundle.js": "/dist/js/signup-bundle.js",
     "/dist/js/secure-bundle.js": "/dist/js/secure-bundle.js",
@@ -51,5 +51,6 @@
     "/dist/js/signup-step2.js": "/dist/js/signup-step2.js",
     "/dist/js/signup-step3.js": "/dist/js/signup-step3.js",
     "/dist/js/signup-step4.js": "/dist/js/signup-step4.js",
-    "/dist/js/vendor.js": "/dist/js/vendor.js"
+    "/dist/js/vendor.js": "/dist/js/vendor.js",
+    "/dist/js/components-dialog-config-editor.js": "/dist/js/components-dialog-config-editor.js"
 }
