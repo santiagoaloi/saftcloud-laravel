@@ -160,7 +160,7 @@ class ComponentController extends Controller {
     }
 
     public function getModules(){
-        $query = DB::select("SELECT id, JSON_EXTRACT(config, '$.general_config.title') as title, JSON_EXTRACT(status, '$.modular') as modular, JSON_EXTRACT(status, '$.active') as active,component_group_id FROM components where deleted_at is NULL HAVING modular = true AND active = true");
+        $query = DB::select("SELECT id, JSON_EXTRACT(config, '$.general_config.title') as title, JSON_EXTRACT(status, '$.modular') as modular, JSON_EXTRACT(status, '$.active') as active FROM components where deleted_at is NULL HAVING modular = true AND active = true");
 
         return response([
             'modules' => $query
