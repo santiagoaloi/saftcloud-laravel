@@ -118,6 +118,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::resource('/userSetting', userSettingController::class);
 
     // ROOT CONTROLLERS
+
+    Route::get('/getModules', [ComponentController::class, 'getModules']);
     Route::get('/getComponentNames', [ComponentController::class, 'getComponentNames']);
     Route::get('/componentConstructor/{id}', [ComponentController::class, 'componentConstructor']);
     Route::resource('/componentDefault', ComponentDefaultController::class);
