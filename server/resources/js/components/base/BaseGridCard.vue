@@ -60,6 +60,9 @@
 
 <script>
   import { sync } from 'vuex-pathify';
+  import Vue from 'vue';
+
+  Vue.use(require('vue-shortkey'));
 
   export default {
     name: 'GridCard',

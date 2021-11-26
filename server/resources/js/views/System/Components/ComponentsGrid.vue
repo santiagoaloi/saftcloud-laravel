@@ -2,8 +2,10 @@
   <div>
     <v-item-group
       v-model="componentCardGroup"
+      v-shortkey="{ left: ['arrowleft'], right: ['arrowright'] }"
       class="gallery-card-container pa-2"
       :active-class="isDark ? 'gridCardDark' : 'gridcardLight'"
+      @shortkey="action()"
     >
       <v-lazy
         v-for="(component, index) in allComponentsFiltered"
@@ -136,6 +138,18 @@
 
     methods: {
       ...call('componentManagement/*'),
+
+      action(event) {
+        switch (event.srcKey) {
+          case 'left':
+            this.previousComponent();
+            break;
+          case 'down':
+            this.nextComponent();
+
+            break;
+        }
+      },
     },
   };
 </script>

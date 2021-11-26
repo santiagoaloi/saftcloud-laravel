@@ -35,7 +35,6 @@
 
             <v-card-title>Tonight's availability</v-card-title>
 
-            <gb-flag code="fr" size="small" />
             <v-card-text>
               <v-chip-group active-class="deep-purple accent-4 white--text" column>
                 <v-chip>5:30PM</v-chip>

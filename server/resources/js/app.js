@@ -14,8 +14,10 @@ Vue.config.devtools = true;
 import App from './App.vue';
 
 //flags
-import VueFlags from '@growthbunker/vueflags';
-Vue.use(VueFlags);
+import CountryFlag from 'vue-country-flag';
+Vue.component('country-flag', CountryFlag);
+
+Vue.use(require('vue-shortkey'));
 
 // Styles amd Animations
 import AOS from 'aos';

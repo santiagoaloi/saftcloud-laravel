@@ -1,10 +1,7 @@
 <template>
   <v-app>
-    <v-fade-transition mode="out-in" leave-active-class="leaveTransition">
-      <keep-alive v-if="$route.meta.keepAlive">
-        <component :is="layout" />
-      </keep-alive>
-      <component :is="layout" v-else />
+    <v-fade-transition leave-active-class="leaveTransition">
+      <component :is="layout" />
     </v-fade-transition>
   </v-app>
 </template>

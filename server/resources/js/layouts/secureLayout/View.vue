@@ -8,7 +8,9 @@
       :value="overlayValue"
     />
 
-    <router-view />
+    <v-fade-transition leave-active-class="leaveTransition">
+      <router-view />
+    </v-fade-transition>
   </v-main>
 </template>
 
