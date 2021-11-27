@@ -1,7 +1,9 @@
 <template>
   <v-main :style="$route.name === 'Login' ? loginBackground : ''" style="min-height: 100vh">
-    <v-fade-transition mode="out-in" :duration="520" hide-on-leave>
-      <router-view />
+    <v-fade-transition mode="out-in" :duration="520">
+      <keep-alive>
+        <router-view />
+      </keep-alive>
     </v-fade-transition>
   </v-main>
 </template>

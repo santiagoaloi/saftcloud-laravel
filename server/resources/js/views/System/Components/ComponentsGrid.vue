@@ -2,10 +2,8 @@
   <div>
     <v-item-group
       v-model="componentCardGroup"
-      v-shortkey="{ left: ['arrowleft'], right: ['arrowright'] }"
       class="gallery-card-container pa-2"
       :active-class="isDark ? 'gridCardDark' : 'gridcardLight'"
-      @shortkey="action()"
     >
       <v-lazy
         v-for="(component, index) in allComponentsFiltered"
@@ -16,6 +14,7 @@
         min-height="200"
         transition="scroll-y-reverse-transition"
         width="100%"
+        @click.native.prevent="setSelectedComponent(index)"
       >
         <base-grid-card
           icon-only
@@ -27,7 +26,6 @@
           :icon-color="component.config_settings.icon.color"
           :title="component.config.general_config.title"
           :methods="mapMethods"
-          @click.native="setSelectedComponent(index)"
         >
           <template #footer>
             <div class="gallery-card-subtitle-container">
@@ -78,7 +76,6 @@
 
     data() {
       return {
-        componentCardGroup1: 0,
         icons: [
           {
             event: 'setStarred',
@@ -104,13 +101,12 @@
 
     computed: {
       ...sync('theme', ['isDark']),
-      ...sync('componentManagement', ['componentCardGroup', 'componentEditSheet']),
+      ...sync('componentManagement', ['componentCardGroup']),
       ...get('componentManagement', [
         'allComponentsFiltered',
         'mapComponentGroup',
         'mapGroupParent',
         'hasUnsavedChanges',
-        'selectedComponent',
         'isModularIcon',
         'isModularColor',
         'isStarredColor',
@@ -138,18 +134,6 @@
 
     methods: {
       ...call('componentManagement/*'),
-
-      action(event) {
-        switch (event.srcKey) {
-          case 'left':
-            this.previousComponent();
-            break;
-          case 'down':
-            this.nextComponent();
-
-            break;
-        }
-      },
     },
   };
 </script>

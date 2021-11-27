@@ -57,6 +57,7 @@ const initialState = () => ({
   ],
   navigationStructure: {},
   componentsLinkedToGroupDialog: false,
+  activeSheet: '',
 });
 
 const state = initialState();

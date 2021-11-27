@@ -26,13 +26,7 @@
         <v-col sm="4">
           <div class="mt-2">
             <baseFieldLabel required label="component name" />
-            <validation-provider
-              v-slot="{ errors, invalid }"
-              immediate
-              mode="aggressive"
-              name="field label"
-              rules="required"
-            >
+            <validation-provider v-slot="{ errors, invalid }" immediate mode="aggressive" name="field label" rules="required">
               <v-text-field
                 v-model="selectedComponent.config.general_config.title"
                 :outlined="isDark"
@@ -82,17 +76,11 @@
             <baseFieldLabel class="mb-n3" label="Navigation drawer settings" />
             <v-list-item two-line>
               <v-list-item-icon>
-                <v-switch
-                  v-model="selectedComponent.config.general_config.isVisibleInSidebar"
-                  hide-details
-                  class="mt-2"
-                />
+                <v-switch v-model="selectedComponent.config.general_config.isVisibleInSidebar" hide-details class="mt-2" />
               </v-list-item-icon>
               <v-list-item-content>
                 <v-list-item-title>Visible in sidebar</v-list-item-title>
-                <v-list-item-subtitle>
-                  Display this component in the left navigation drawer.
-                </v-list-item-subtitle>
+                <v-list-item-subtitle> Display this component in the left navigation drawer. </v-list-item-subtitle>
               </v-list-item-content>
             </v-list-item>
           </div>
@@ -111,7 +99,6 @@
 
   export default {
     name: 'ComponentsEditViewsBasic',
-    components: {},
     data() {
       return {
         dialogIcons: false,

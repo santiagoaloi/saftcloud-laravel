@@ -76,11 +76,7 @@
 
         <v-col cols="12" lg="6">
           <baseFieldLabel required label="Component name" />
-          <validation-provider
-            v-slot="{ errors, reset }"
-            name="component name"
-            rules="alpha|required"
-          >
+          <validation-provider v-slot="{ errors, reset }" name="component name" rules="alpha|required">
             <v-text-field
               v-model="componentSettings.name"
               spellcheck="false"
@@ -165,13 +161,7 @@
 
     computed: {
       ...sync('theme', ['isDark']),
-      ...sync('componentManagement', [
-        'allGroups',
-        'dialogComponent',
-        'componentSettings',
-        'dbTables',
-        'groupName',
-      ]),
+      ...sync('componentManagement', ['allGroups', 'dialogComponent', 'componentSettings', 'dbTables', 'groupName']),
       ...sync('loaders', ['dialogComponentLoader']),
     },
 

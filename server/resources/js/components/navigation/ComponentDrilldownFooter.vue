@@ -119,7 +119,7 @@
 
       edit() {
         if (!this.hasValidationErrors) {
-          this.componentEditSheet = !this.componentEditSheet;
+          this.componentEditSheet = true;
         } else {
           this.snackbarError('The component label is invalid');
         }

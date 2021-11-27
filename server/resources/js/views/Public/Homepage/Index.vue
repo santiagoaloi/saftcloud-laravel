@@ -2,7 +2,7 @@
   <div>
     <div class="select-none">
       <base-flex-container>
-        <v-carousel :show-arrows="false" hide-delimiters style="position: absolute" progress height="100%" cycle>
+        <v-carousel :show-arrows="false" hide-delimiters style="position: absolute" height="100%" cycle>
           <v-carousel-item v-for="(slide, i) in slides" :key="i">
             <v-img
               :height="height"
@@ -49,8 +49,27 @@
         </v-container>
       </v-sheet>
     </div>
-    <Feature2 />
-    <Feature1 />
+
+    <v-lazy
+      :options="{
+        threshold: 0.8,
+      }"
+      min-height="200"
+      transition="scroll-y-reverse-transition"
+      width="100%"
+    >
+      <Feature2 />
+    </v-lazy>
+    <v-lazy
+      :options="{
+        threshold: 0.8,
+      }"
+      min-height="200"
+      transition="scroll-y-reverse-transition"
+      width="100%"
+    >
+      <Feature1 />
+    </v-lazy>
   </div>
 </template>
 

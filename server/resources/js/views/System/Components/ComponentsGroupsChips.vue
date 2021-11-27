@@ -1,12 +1,7 @@
 <template>
   <div>
     <div class="d-flex justify-end">
-      <v-chip
-        v-if="!selectedComponentGroups.length"
-        :ripple="false"
-        class="mr-n3 mt-3 pointer-events-none"
-        label
-      >
+      <v-chip v-if="!selectedComponentGroups.length" :ripple="false" class="mr-n3 mt-3 pointer-events-none" label>
         You haven't chosen any groups yet...
       </v-chip>
 

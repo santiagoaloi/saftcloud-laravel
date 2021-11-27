@@ -17,8 +17,6 @@ import App from './App.vue';
 import CountryFlag from 'vue-country-flag';
 Vue.component('country-flag', CountryFlag);
 
-Vue.use(require('vue-shortkey'));
-
 // Styles amd Animations
 import AOS from 'aos';
 import 'aos/dist/aos.css';
@@ -34,7 +32,6 @@ vuetify().then((v) => {
     created() {
       AOS.init();
     },
-
     store,
     vuetify,
     router,

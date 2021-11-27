@@ -14,6 +14,7 @@ const initialSignupForm = () => ({
   country: null,
   zipcode: '',
   address: '',
+  selectedViews: [],
 });
 
 const state = {
@@ -22,6 +23,7 @@ const state = {
   countryCodes: [],
   signupForm: initialSignupForm(),
   states: [],
+  availableViews: [],
 };
 
 const mutations = make.mutations(state);
@@ -77,6 +79,17 @@ const actions = {
       .then((response) => {
         if (response.status === 200) {
           commit('states', response.data.records);
+        }
+      })
+      .catch(() => {});
+  },
+
+  getAvailableViews({ commit }) {
+    axios
+      .get('api/getModules')
+      .then((response) => {
+        if (response.status) {
+          commit('availableViews', response.data.modules);
         }
       })
       .catch(() => {});
