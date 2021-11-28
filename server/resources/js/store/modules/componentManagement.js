@@ -473,9 +473,7 @@ const actions = {
         if (!groupExists) state.selectedComponentGroups.push(activeGroup);
 
         store.set('componentManagement/componentCardGroup', getters.allComponentsFiltered.length - 1);
-
         store.set('componentManagement/selectedComponentIndex', getters.allComponentsFiltered.length - 1);
-
         store.set('componentManagement/componentSettings', initialComponentSettings());
 
         dispatch('getNavigationStructure');

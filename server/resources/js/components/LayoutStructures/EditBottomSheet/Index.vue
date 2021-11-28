@@ -52,8 +52,6 @@
 </template>
 
 <script>
-  // import { sync, get } from 'vuex-pathify';
-
   export default {
     name: 'EditSheet',
 

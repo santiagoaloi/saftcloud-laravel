@@ -23,18 +23,18 @@
   import { sync, get } from 'vuex-pathify';
 
   Vue.component('ComponentDrilldown', () =>
-    import(/* webpackChunkName: 'drawer-bundle' */ '@/components/Navigation/ComponentDrilldown'),
+    import(/* webpackChunkName: 'drawer-bundle' */ '@/components/Navigation/ComponentDrilldown/ComponentDrilldown'),
   );
 
   Vue.component('ComponentDrilldownEmpty', () =>
-    import(/* webpackChunkName: 'drawer-bundle' */ '@/components/Navigation/ComponentDrilldownEmpty'),
+    import(/* webpackChunkName: 'drawer-bundle' */ '@/components/Navigation/ComponentDrilldown/ComponentDrilldownEmpty'),
   );
 
   Vue.component('ComponentDrilldownBar', () =>
-    import(/* webpackChunkName: 'drawer-bundle' */ '@/components/Navigation/ComponentDrilldownBar'),
+    import(/* webpackChunkName: 'drawer-bundle' */ '@/components/Navigation/ComponentDrilldown/ComponentDrilldownBar'),
   );
   Vue.component('ComponentDrilldownFooter', () =>
-    import(/* webpackChunkName: 'drawer-bundle' */ '@/components/Navigation/ComponentDrilldownFooter'),
+    import(/* webpackChunkName: 'drawer-bundle' */ '@/components/Navigation/ComponentDrilldown/ComponentDrilldownFooter'),
   );
 
   export default {

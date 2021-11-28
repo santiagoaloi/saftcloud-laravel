@@ -1,9 +1,6 @@
 <template>
   <div>
-    <v-container
-      :style="'min-height:' + (screenHeight - $vuetify.application.top) + 'px;'"
-      class="fill-height"
-    >
+    <v-container :style="'min-height:' + (screenHeight - $vuetify.application.top) + 'px;'" class="fill-height">
       <v-row
         data-aos="fade"
         data-aos-anchor-placement="center-bottom"
@@ -18,9 +15,7 @@
               <div v-if="step === 0">
                 <v-card-text>
                   <p class="display-1 text--primary">Verify your new account</p>
-                  <div class="text-h6 text-lg-h5 mt-5 mb-5">
-                    We've sent you a verification code to abc123@gmail.com
-                  </div>
+                  <div class="text-h6 text-lg-h5 mt-5 mb-5">We've sent you a verification code to abc123@gmail.com</div>
                   <ValidationObserver ref="step0" slim>
                     <v-row justify="center">
                       <v-col sm="6">
@@ -42,12 +37,8 @@
                     </v-row>
                   </ValidationObserver>
                 </v-card-text>
-                <v-btn class="mx-1" large color="grey lighten-2" @click="nextStep(1)">
-                  Send verification code again
-                </v-btn>
-                <v-btn class="mx-1" large color="primary" @click="nextStep(1)">
-                  Verify my account
-                </v-btn>
+                <v-btn class="mx-1" large color="grey lighten-2" @click="nextStep(1)"> Send verification code again </v-btn>
+                <v-btn class="mx-1" large color="primary" @click="nextStep(1)"> Verify my account </v-btn>
               </div>
             </v-scroll-x-transition>
 
@@ -57,8 +48,8 @@
                 <v-card-text>
                   <p class="display-1 text--primary">Create a password</p>
                   <div class="text-h6 text-lg-h5 mt-5 mb-5">
-                    You're almost there! - Once you create a password for your account, you will be
-                    re-directed to your brand new application admin dashboard.
+                    You're almost there! - Once you create a password for your account, you will be re-directed to your brand new
+                    application admin dashboard.
                   </div>
                   <ValidationObserver ref="step0" slim>
                     <v-row justify="center">
@@ -68,11 +59,7 @@
                       </v-col>
                       <v-col sm="6">
                         <span>Password</span>
-                        <validation-provider
-                          v-slot="{ errors }"
-                          name="account password"
-                          rules="required"
-                        >
+                        <validation-provider v-slot="{ errors }" name="account password" rules="required">
                           <v-text-field
                             type="password"
                             solo
@@ -83,11 +70,7 @@
                         </validation-provider> </v-col
                       ><v-col sm="6">
                         <span>Repeat password</span>
-                        <validation-provider
-                          v-slot="{ errors }"
-                          name="account password repeat"
-                          rules="required"
-                        >
+                        <validation-provider v-slot="{ errors }" name="account password repeat" rules="required">
                           <v-text-field
                             type="password"
                             solo

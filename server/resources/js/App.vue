@@ -12,11 +12,11 @@
   import config from './configs';
   import auth from '@/util/auth';
 
-  Vue.component('SecureLayout', () => import(/* webpackChunkName: 'secure-Layout' */ '@/layouts/secureLayout/Index.vue'));
-  Vue.component('PublicLayout', () => import(/* webpackChunkName: 'public-Layout' */ '@/layouts/publicLayout/Index.vue'));
+  Vue.component('SecureLayout', () => import(/* webpackChunkName: 'secure-layout' */ '@/layouts/secureLayout/Index.vue'));
+  Vue.component('PublicLayout', () => import(/* webpackChunkName: 'public-layout' */ '@/layouts/publicLayout/Index.vue'));
 
   export default {
-    name: 'App',
+    name: 'MainApp',
 
     head: {
       link: [...config.icons.map((href) => ({ rel: 'stylesheet', href }))],
@@ -31,7 +31,7 @@
     async created() {
       if (auth.loggedIn()) {
         try {
-          const built = await this.buildRoutes();
+          await this.buildRoutes();
 
           // if (built) {
           //   return SecureLayout;

@@ -126,9 +126,11 @@
                       rounded
                       width="40%"
                       color="primary"
-                      class="ml-n2 white--text"
+                      class="ml-n2 white--text hoverElevationSoft"
                       large
                       :loading="loading"
+                      elevation="7"
+                      :ripple="false"
                       @click.prevent="validatelogin()"
                     >
                       Login

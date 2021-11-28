@@ -60,7 +60,6 @@
             text: 'Basic',
             componentPath: 'views/System/Components/ComponentsEdit/ConfigViews/Basic/Basic.vue',
           },
-
           {
             icon: 'mdi-view-dashboard-outline',
             text: 'Capabilities',
@@ -73,18 +72,12 @@
             componentPath: 'views/System/Components/ComponentsEdit/ConfigViews/Query/Query.vue',
             disabled: false,
           },
-          // {
-          //   icon: 'mdi-view-dashboard-outline',
-          //   text: 'Columns',
-          //   componentPath: '',
-          //   disabled: true,
-          // },
-          // {
-          //   icon: 'mdi-view-dashboard-outline',
-          //   text: 'Fields',
-          //   componentPath: '/Components/FormFields',
-          //   disabled: false,
-          // },
+          {
+            icon: 'mdi-view-dashboard-outline',
+            text: 'Fields',
+            componentPath: 'views/System/Components/ComponentsEdit/ConfigViews/FormFields/FormFields.vue',
+            disabled: false,
+          },
         ],
       };
     },
@@ -92,7 +85,7 @@
     computed: {
       ...sync('theme', ['isDark']),
       ...sync('componentManagement', ['isTableLayout', 'dialogComponent', 'componentEditSheet']),
-      ...get('componentManagement', ['isAllFilteredComponentsEmpty']),
+      ...get('componentManagement', ['isAllFilteredComponentsEmpty', 'selectedComponent']),
 
       componentTitle() {
         return this.selectedComponent.config.general_config.title;

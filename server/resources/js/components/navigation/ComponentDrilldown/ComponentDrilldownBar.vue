@@ -38,7 +38,6 @@
     name: 'ComponentDrilldownBar',
     computed: {
       ...sync('theme', ['isDark']),
-      ...sync('drawers', ['secureComponentDrawer']),
       ...sync('componentManagement', ['componentCardGroup']),
       ...get('componentManagement', ['previousComponentDisabled', 'nextComponentDisabled']),
     },

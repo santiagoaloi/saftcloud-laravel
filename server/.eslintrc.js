@@ -3,7 +3,7 @@ module.exports = {
 
   env: {
     node: true,
-    browser: true,
+    browser: false,
     commonjs: true,
     es6: true,
   },

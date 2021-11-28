@@ -2,10 +2,10 @@
   <div>
     <div class="select-none">
       <base-flex-container>
-        <v-carousel :show-arrows="false" hide-delimiters style="position: absolute" height="100%" cycle>
+        <v-carousel :show-arrows="false" hide-delimiters style="position: absolute" :height="height" cycle>
           <v-carousel-item v-for="(slide, i) in slides" :key="i">
             <v-img
-              :height="height"
+              height="height"
               :transition="false"
               gradient="to top right, rgba(100,115,201,0.4), rgba(25,32,72,1)"
               :src="slide.src"
@@ -42,7 +42,7 @@
                 <v-btn dark x-large class="my-1 mx-sm-1 hoverElevationSoft"> Contact Sales </v-btn>
               </div>
             </v-card>
-            <div data-aos-onces="true" data-aos="fade-up" style="position: absolute; margin-left: 380px">
+            <div data-aos-once="true" data-aos-delay="600" data-aos="fade-up" style="position: absolute; margin-left: 380px">
               <v-img src="storage/header/1.png" height="580" contain :transition="false" />
             </div>
           </div>
@@ -50,26 +50,9 @@
       </v-sheet>
     </div>
 
-    <v-lazy
-      :options="{
-        threshold: 0.8,
-      }"
-      min-height="200"
-      transition="scroll-y-reverse-transition"
-      width="100%"
-    >
-      <Feature2 />
-    </v-lazy>
-    <v-lazy
-      :options="{
-        threshold: 0.8,
-      }"
-      min-height="200"
-      transition="scroll-y-reverse-transition"
-      width="100%"
-    >
-      <Feature1 />
-    </v-lazy>
+    <Feature2 />
+
+    <Feature1 />
   </div>
 </template>
 
@@ -81,7 +64,7 @@
     components: {
       VueTyper,
       Feature1: () => import(/* webpackChunkName: 'feature' */ '@/components/Landing/Feature1'),
-      Feature2: () => import(/* webpackChunkName: 'feature    ' */ '@/components/Landing/Feature2'),
+      Feature2: () => import(/* webpackChunkName: 'feature2' */ '@/components/Landing/Feature2'),
     },
 
     data() {

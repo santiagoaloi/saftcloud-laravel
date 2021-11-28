@@ -23,14 +23,13 @@
 
 <script>
   import { sync, get } from 'vuex-pathify';
+
   export default {
     name: 'ComponentsEditViewsFormFields',
     components: {
       FormFieldsList: () => import(/* webpackChunkName: 'form-fields-list' */ './FormFieldsList'),
-      FormFieldsToolbar: () =>
-        import(/* webpackChunkName: 'form-fields-toolbar' */ './FormFieldsToolbar'),
-      FormFieldsRightPanel: () =>
-        import(/* webpackChunkName: 'form-fields-right-panel' */ './FormFieldsRightPanel'),
+      FormFieldsToolbar: () => import(/* webpackChunkName: 'form-fields-toolbar' */ './FormFieldsToolbar'),
+      FormFieldsRightPanel: () => import(/* webpackChunkName: 'form-fields-right-panel' */ './FormFieldsRightPanel'),
     },
   };
 </script>

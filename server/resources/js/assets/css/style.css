@@ -217,7 +217,7 @@ input::-webkit-inner-spin-button {
 }
 
 .hoverElevationSoft {
-  border-radius: 4px;
+  /* border-radius: 4px; */
   -webkit-transition-property: -webkit-box-shadow, -webkit-transform;
   transition-property: box-shadow, transform, -webkit-box-shadow, -webkit-transform;
   transition-duration: 0.5s;

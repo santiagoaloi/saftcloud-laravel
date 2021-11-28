@@ -71,6 +71,19 @@ mix
   // .sass('resources/sass/app.scss', 'public/dist/css')
 
   .webpackConfig({
+    devServer: {
+      client: {
+        overlay: {
+          errors: true,
+          warnings: false,
+        },
+      },
+    },
+
+    stats: {
+      warnings: false,
+    },
+
     resolve: {
       extensions: ['.js', '.vue', '.json'],
       alias: {

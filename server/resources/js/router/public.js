@@ -7,14 +7,6 @@ export default [
     },
     component: () => import(/* webpackChunkName: 'public-login-page' */ '@/views/Login/Index.vue'),
   },
-  // {
-  //   path: '/Homepage',
-  //   name: 'Homepage',
-  //   meta: {
-  //     layout: 'public-layout',
-  //   },
-  //   component: () => import(/* webpackChunkName: 'public-homepage' , webpackPreload: true */ '@/views/Public/Homepage/Index.vue'),
-  // },
 
   {
     path: '/Signup',

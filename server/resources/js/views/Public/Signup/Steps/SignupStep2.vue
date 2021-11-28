@@ -9,6 +9,7 @@
             <validation-provider v-slot="{ errors, reset }" name="country" rules="required">
               <v-autocomplete
                 v-model="signupForm.country"
+                auto-select-first
                 height="55"
                 maxlength="30"
                 :items="countryCodes"
@@ -20,6 +21,7 @@
                 :color="isDark ? '#208ad6' : 'grey'"
                 :background-color="isDark ? '#28292b' : 'white'"
                 :error="errors.length > 0"
+                :menu-props="{ disableKeys: true }"
                 @keydown.enter.prevent="validateAndProceed()"
                 @change="getStates({ id: $event })"
                 @focus="reset"

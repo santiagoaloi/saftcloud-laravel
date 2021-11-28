@@ -1,6 +1,11 @@
 <template>
   <div>
-    <vue-diagonal :deg="-7" :background="isDark ? 'rgba(44, 47 , 51, 0.8)' : '#d4dbe0'" style="margin-bottom: -8%" :space-before="!['Homepage', 'initial'].includes($route.name)">
+    <vue-diagonal
+      :deg="-7"
+      :background="isDark ? 'rgba(44, 47 , 51, 0.8)' : '#d4dbe0'"
+      style="margin-bottom: -8%"
+      :space-before="!['Homepage', 'initial'].includes($route.name)"
+    >
       <v-footer color="transparent" class="pb-10">
         <v-container class="py-5">
           <v-row>
@@ -12,7 +17,9 @@
                   <router-link v-if="link.to" class="text-decoration-none text--primary" :to="link.to">
                     {{ link.label }}
                   </router-link>
-                  <a v-else class="text-decoration-none text--primary" :href="link.href" :target="link.target || 'blank'">{{ link.label }}</a>
+                  <a v-else class="text-decoration-none text--primary" :href="link.href" :target="link.target || 'blank'">{{
+                    link.label
+                  }}</a>
                 </div>
               </div>
             </v-col>
