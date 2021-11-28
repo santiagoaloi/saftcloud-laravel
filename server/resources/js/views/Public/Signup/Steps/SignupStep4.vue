@@ -3,8 +3,8 @@
     <v-card-text class="text-left">
       <h2>Let's review those details now</h2>
       <div class="mt-5 mb-5 text-h5">
-        let's double check the information your provided before we can move forward with the
-        registration of your shiny new account "<b>{{ signupForm.companyName }}</b
+        let's double check the information your provided before we can move forward with the registration of your shiny new
+        account "<b>{{ signupForm.companyName }}</b
         >"
       </div>
       <div class="mt-10 text-h5">
@@ -27,24 +27,15 @@
           {{ getCountryName(signupForm.country) }}
         </b>
         on the address
-        <b>
-          {{ signupForm.address }} ({{ signupForm.zipcode }}), {{ signupForm.state }},
-          {{ signupForm.city }}.
-        </b>
+        <b> {{ signupForm.address }} ({{ signupForm.zipcode }}), {{ signupForm.state }}, {{ signupForm.city }}. </b>
       </div>
     </v-card-text>
 
-    <v-checkbox
-      v-model="terms"
-      :color="isDark ? 'indigo lighten-2' : 'indigo'"
-      :dark="isDark"
-      :ripple="false"
-      class="mt-10"
-    >
+    <v-checkbox v-model="terms" :color="isDark ? 'indigo lighten-2' : 'indigo'" :dark="isDark" :ripple="false" class="mt-10">
       <template #label>
         <div>
-          I confirm that my information is genuine and that I represent the business I'm creating
-          the account for, as well as reading and accepting
+          I confirm that my information is genuine and that I represent the business I'm creating the account for, as well as
+          reading and accepting
           <a target="_blank" href="https://vuetifyjs.com" @click.stop> our terms and conditions </a>
           thoroughly.
         </div>
@@ -52,16 +43,7 @@
     </v-checkbox>
 
     <v-btn dark class="mx-1" large color="grey darken-2" @click="step--"> Back </v-btn>
-    <v-btn
-      :disabled="!terms"
-      class="mx-1"
-      large
-      color="primary"
-      :loading="loading"
-      @click="accountCreation()"
-    >
-      Sign up
-    </v-btn>
+    <v-btn :disabled="!terms" class="mx-1" large color="primary" :loading="loading" @click="accountCreation()"> Sign up </v-btn>
   </div>
 </template>
 

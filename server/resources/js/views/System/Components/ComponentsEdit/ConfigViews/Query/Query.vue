@@ -1,17 +1,11 @@
 <template>
-  <div>
-    <v-card flat width="100%" class="queryHeight mx-auto">
-      <ValidationObserver ref="componentsEditQuery" slim>
-        <validation-provider name="component query" rules="required">
-          <base-editor
-            :key="editorKey"
-            v-model="selectedComponent.config.general_config.sql_query"
-            mode="sql"
-          />
-        </validation-provider>
-      </ValidationObserver>
-    </v-card>
-  </div>
+  <v-card flat width="100%" class="mx-auto h-full">
+    <ValidationObserver ref="componentsEditQuery" slim>
+      <validation-provider name="component query" rules="required">
+        <base-editor :key="editorKey" v-model="selectedComponent.config.general_config.sql_query" mode="sql" />
+      </validation-provider>
+    </ValidationObserver>
+  </v-card>
 </template>
 
 <script>

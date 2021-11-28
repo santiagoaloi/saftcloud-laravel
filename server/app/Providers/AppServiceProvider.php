@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\ResourceRegistrar;
+use Illuminate\Routing\Router;
+use Illuminate\Routing\ResourceRegistrar as BaseResourceRegistrar;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -18,13 +21,8 @@ class AppServiceProvider extends ServiceProvider
         });
     }
 
-    /**
-     * Bootstrap any application services.
-     *
-     * @return void
-     */
     public function boot()
     {
-        //
+        $this->app->bind(BaseResourceRegistrar::class, ResourceRegistrar::class);
     }
 }

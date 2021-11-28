@@ -47,6 +47,30 @@
               />
             </validation-provider>
           </v-col>
+          <v-col sm="12">
+            <baseFieldLabel label="Company Alias" />
+            <validation-provider v-slot="{ errors, reset }" name="selected views" rules="required">
+              <v-autocomplete
+                v-model="signupForm.selectedViews"
+                multiple
+                height="55"
+                maxlength="30"
+                :items="availableViews"
+                solo
+                attach
+                item-text="title"
+                item-value="id"
+                :outlined="isDark"
+                :color="isDark ? '#208ad6' : 'grey'"
+                :background-color="isDark ? '#28292b' : 'white'"
+                :error="errors.length > 0"
+                @keydown.enter.prevent="validateAndProceed()"
+                @focus="reset"
+                @input="reset"
+                @blur="reset"
+              />
+            </validation-provider>
+          </v-col>
         </v-row>
       </ValidationObserver>
     </v-card-text>
@@ -56,15 +80,21 @@
 </template>
 
 <script>
-  import { sync } from 'vuex-pathify';
+  import { sync, call } from 'vuex-pathify';
 
   export default {
     name: 'SignupStep3',
     computed: {
       ...sync('theme', ['isDark']),
-      ...sync('signup', ['signupForm', 'step']),
+      ...sync('signup', ['signupForm', 'step', 'availableViews']),
+    },
+
+    created() {
+      this.getAvailableViews();
     },
     methods: {
+      ...call('signup/*'),
+
       validateAndProceed() {
         this.$refs.step3.validate().then((success) => {
           if (success) {

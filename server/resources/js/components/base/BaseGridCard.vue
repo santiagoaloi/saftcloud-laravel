@@ -6,8 +6,7 @@
         height="300"
         width="100%"
         :color="isDark ? '#282c3b' : 'white'"
-        @click.stop="!active ? toggle() : null"
-        v-on="$listeners"
+        @click.prevent="!active ? toggle() : null"
       >
         <v-card-actions class="px-0">
           <v-avatar size="90" :color="iconColor">
@@ -60,6 +59,9 @@
 
 <script>
   import { sync } from 'vuex-pathify';
+  import Vue from 'vue';
+
+  Vue.use(require('vue-shortkey'));
 
   export default {
     name: 'GridCard',

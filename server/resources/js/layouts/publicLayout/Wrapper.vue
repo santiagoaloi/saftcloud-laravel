@@ -2,7 +2,17 @@
   <div>
     <public-bar />
     <public-view />
-    <public-footer v-if="!$route.name.startsWith('Login')" />
+
+    <v-lazy
+      v-if="!$route.name.startsWith('Login')"
+      :options="{
+        threshold: 0.8,
+      }"
+      min-height="200"
+      width="100%"
+    >
+      <public-footer />
+    </v-lazy>
     <snackbar />
   </div>
 </template>

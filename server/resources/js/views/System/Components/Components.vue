@@ -23,7 +23,13 @@
     </base-flex-container>
 
     <dialog-component v-if="dialogComponent" />
-    <component-edit-sheet v-if="componentEditSheet" />
+    <edit-bottom-sheet
+      v-if="componentEditSheet"
+      v-model="componentEditSheet"
+      :menu-items="menuItems"
+      :toolbar-title="componentTitle"
+      toolbar-icon="mdi-pencil"
+    />
   </div>
 </template>
 
@@ -33,22 +39,64 @@
   export default {
     name: 'ComponentsManagement',
     components: {
+      EditBottomSheet: () =>
+        import(/* webpackChunkName: 'secure-bundle-components' */ '@/components/LayoutStructures/EditBottomSheet/Index.vue'),
       ComponentsToolbar: () => import(/* webpackChunkName: 'secure-bundle-components' */ './ComponentToolbar'),
       StatusBar: () => import(/* webpackChunkName: 'secure-bundle-components' */ './StatusBar'),
-
       // ComponentsAppbar: () => import(/* webpackChunkName: 'secure-bundle-components' */ './ComponentsAppbar'),
       ComponentsTabs: () => import(/* webpackChunkName: 'secure-bundle-components' */ './ComponentsTabs'),
       ComponentsGrid: () => import(/* webpackChunkName: 'secure-bundle-components' */ './ComponentsGrid'),
       ComponentsTable: () => import(/* webpackChunkName: 'components-table' */ './ComponentsTable'),
       ComponentsNoData: () => import(/* webpackChunkName: 'components-no-data' */ './ComponentsNoData'),
       DialogComponent: () => import(/* webpackChunkName: 'components-dialog-new-component' */ './DialogComponent'),
-      ComponentEditSheet: () => import(/* webpackChunkName: 'components-edit-sheet' */ './ComponentsEdit/ComponentsEditSheet'),
+    },
+
+    data() {
+      return {
+        menuItems: [
+          { header: 'Component Settings' },
+          {
+            icon: 'mdi-view-dashboard-outline',
+            text: 'Basic',
+            componentPath: 'views/System/Components/ComponentsEdit/ConfigViews/Basic/Basic.vue',
+          },
+
+          {
+            icon: 'mdi-view-dashboard-outline',
+            text: 'Capabilities',
+            componentPath: 'views/System/Components/ComponentsEdit/ConfigViews/Capabilities/Capabilities.vue',
+            disabled: false,
+          },
+          {
+            icon: 'mdi-view-dashboard-outline',
+            text: 'Query',
+            componentPath: 'views/System/Components/ComponentsEdit/ConfigViews/Query/Query.vue',
+            disabled: false,
+          },
+          // {
+          //   icon: 'mdi-view-dashboard-outline',
+          //   text: 'Columns',
+          //   componentPath: '',
+          //   disabled: true,
+          // },
+          // {
+          //   icon: 'mdi-view-dashboard-outline',
+          //   text: 'Fields',
+          //   componentPath: '/Components/FormFields',
+          //   disabled: false,
+          // },
+        ],
+      };
     },
 
     computed: {
       ...sync('theme', ['isDark']),
       ...sync('componentManagement', ['isTableLayout', 'dialogComponent', 'componentEditSheet']),
       ...get('componentManagement', ['isAllFilteredComponentsEmpty']),
+
+      componentTitle() {
+        return this.selectedComponent.config.general_config.title;
+      },
     },
 
     created() {
