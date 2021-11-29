@@ -75,6 +75,8 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::post('/makeAccount', [MakeAccountController::class, 'accountCreation']);
 Route::get('/listIcons', [IconController::class, 'listIcons']);
 
+Route::get('/getModules', [ComponentController::class, 'getModules']);
+
 // Protected routes
 Route::group(['middleware' => ['auth:sanctum']], function () {
     // GENERAL CONFIG CONTROLLERS
@@ -119,7 +121,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     // ROOT CONTROLLERS
 
-    Route::get('/getModules', [ComponentController::class, 'getModules']);
     Route::get('/getComponentNames', [ComponentController::class, 'getComponentNames']);
     Route::get('/componentConstructor/{id}', [ComponentController::class, 'componentConstructor']);
     Route::resource('/componentDefault', ComponentDefaultController::class);
