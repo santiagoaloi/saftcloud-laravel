@@ -77,7 +77,6 @@ Route::get('/listIcons', [IconController::class, 'listIcons']);
 
 Route::get('/getModules', [ComponentController::class, 'getModules']);
 
-
 // Protected routes
 Route::group(['middleware' => ['auth:sanctum']], function () {
     // GENERAL CONFIG CONTROLLERS
