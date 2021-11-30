@@ -1,7 +1,9 @@
 <template>
   <v-app>
-    <v-fade-transition leave-active-class="leaveTransition">
-      <component :is="layout" />
+    <v-fade-transition leave-active-class="leaveTransition" mode="out-in" :duration="520">
+      <keep-alive>
+        <component :is="layout" />
+      </keep-alive>
     </v-fade-transition>
   </v-app>
 </template>
@@ -32,10 +34,6 @@
       if (auth.loggedIn()) {
         try {
           await this.buildRoutes();
-
-          // if (built) {
-          //   return SecureLayout;
-          // }
         } catch (error) {
           console.log(error);
         }

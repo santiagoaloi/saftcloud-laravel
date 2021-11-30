@@ -91,7 +91,7 @@
     },
 
     methods: {
-      ...call('componentManagement/*'),
+      ...sync('componentManagement', ['saveComponent']),
       ...call('snackbar/*'),
 
       async save() {

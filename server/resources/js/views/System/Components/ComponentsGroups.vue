@@ -116,17 +116,8 @@
     >
       <v-expand-transition appear>
         <v-sheet v-if="componentsLinkedToGroup.length" color="transparent">
-          <v-alert
-            dismissible
-            border="left"
-            colored-border
-            color="grey darken-2"
-            elevation="2"
-            class="text-left"
-          >
-            <div>
-              These componets are still associated with the group "{{ groupNameBeingRemoved }}"
-            </div>
+          <v-alert dismissible border="left" colored-border color="grey darken-2" elevation="2" class="text-left">
+            <div>These componets are still associated with the group "{{ groupNameBeingRemoved }}"</div>
             <div>You can remove the components permanently and then remove the group.</div>
           </v-alert>
         </v-sheet>
@@ -141,12 +132,7 @@
         :items-per-page="-1"
       >
         <template #[`item.avatar`]="{ item }">
-          <v-avatar
-            class="cursor-pointer"
-            size="30"
-            rounded
-            :color="item.config_settings.icon.color"
-          >
+          <v-avatar class="cursor-pointer" size="30" rounded :color="item.config_settings.icon.color">
             <v-icon size="25" dark>
               {{ item.config_settings.icon.name }}
             </v-icon>
@@ -172,14 +158,7 @@
               </v-list-item>
 
               <v-list-item
-                @click.stop="
-                  removeComponentWarning(
-                    item.id,
-                    'post',
-                    'forceDestroy',
-                    item.config.general_config.title,
-                  )
-                "
+                @click.stop="removeComponentWarning(item.id, 'post', 'forceDestroy', item.config.general_config.title)"
               >
                 <v-list-item-action>
                   <v-btn small icon dark color="#4C4C4C">
@@ -208,7 +187,7 @@
 </template>
 
 <script>
-  import { sync, get, call } from 'vuex-pathify';
+  import { sync, call } from 'vuex-pathify';
   import componentGroups from '@/mixins/componentGroups';
   import componentActions from '@/mixins/componentActions';
 
@@ -249,11 +228,7 @@
     },
 
     computed: {
-      ...sync('componentManagement', [
-        'componentsLinkedToGroupDialog',
-        'componentsLinkedToGroup',
-        'groupNameBeingRemoved',
-      ]),
+      ...sync('componentManagement', ['componentsLinkedToGroupDialog', 'componentsLinkedToGroup', 'groupNameBeingRemoved']),
     },
 
     mounted() {

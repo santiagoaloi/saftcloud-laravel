@@ -4,9 +4,7 @@
     <v-card-actions class="pa-0 mr-3">
       <small class="py-2 col-9 text-truncate">
         {{ statusBarValue }}
-        <span v-if="search" :class="{ 'text--lighten-3': isDark }" class="indigo--text">
-          matching "{{ search }}" in search.</span
-        >
+        <span v-if="search" :class="{ 'text--lighten-3': isDark }" class="indigo--text"> matching "{{ search }}" in search.</span>
       </small>
       <v-spacer></v-spacer>
       <small class="py-2 text-end col-3 text-truncate">

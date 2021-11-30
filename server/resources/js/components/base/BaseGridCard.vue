@@ -2,7 +2,7 @@
   <v-item v-slot="{ toggle, active }" :value="index || 0" class="select-none">
     <v-hover v-slot="{ hover: hoverCard }" open-delay="500">
       <v-sheet
-        class="cursor-pointer"
+        class="d-flex flex-column justify-space-between pa-4 hoverElevationSoft cursor-pointer"
         height="300"
         width="100%"
         :color="isDark ? '#282c3b' : 'white'"
@@ -27,11 +27,11 @@
 
           <template v-if="!noActions">
             <div
-              v-for="{ event, color, icon } in statusIcons"
+              v-for="{ method, color, icon } in statusIcons"
               :key="icon"
               :class="{ 'show-btns': hoverCard, 'hide-btns': !hoverCard }"
             >
-              <v-btn color="white" small icon :ripple="false" @click.native.stop="trigger(event, item)">
+              <v-btn color="white" small icon :ripple="false" @click.native.stop="trigger(method, item)">
                 <v-icon :color="trigger(color, item)">
                   {{ trigger(icon, item) }}
                 </v-icon>
@@ -44,12 +44,12 @@
           <template v-if="title">
             <h2>{{ title }}</h2>
           </template>
-          <template v-else v>
+          <template v-else>
             <base-typing-indicator class="ml-n2" />
           </template>
         </span>
 
-        <div v-show="$slots.footer" class="content">
+        <div v-if="$slots.footer" class="content">
           <slot name="footer"> </slot>
         </div>
       </v-sheet>
@@ -59,9 +59,6 @@
 
 <script>
   import { sync } from 'vuex-pathify';
-  import Vue from 'vue';
-
-  Vue.use(require('vue-shortkey'));
 
   export default {
     name: 'GridCard',

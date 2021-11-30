@@ -1,7 +1,7 @@
 <template>
   <v-list subheader>
     <v-subheader>Metadata</v-subheader>
-    <v-list-item v-for="meta in metadata" :key="meta.title">
+    <v-list-item v-for="meta in metadata()" :key="meta.title">
       <v-list-item-icon>
         <v-icon> {{ meta.icon }} </v-icon>
       </v-list-item-icon>
@@ -25,7 +25,9 @@
 
     computed: {
       ...get('componentManagement', ['selectedComponent']),
+    },
 
+    methods: {
       metadata() {
         return [
           {

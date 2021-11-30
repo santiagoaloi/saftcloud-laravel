@@ -1,6 +1,6 @@
 <template>
   <div>
-    <base-flex-container class="dottedBackground">
+    <base-flex-container>
       <template #top>
         <components-toolbar />
         <v-divider />
@@ -22,7 +22,6 @@
       </template>
     </base-flex-container>
 
-    <dialog-component v-if="dialogComponent" />
     <edit-bottom-sheet
       v-if="componentEditSheet"
       v-model="componentEditSheet"
@@ -30,6 +29,8 @@
       :toolbar-title="componentTitle"
       toolbar-icon="mdi-pencil"
     />
+
+    <dialog-component v-if="dialogComponent" />
   </div>
 </template>
 
@@ -99,7 +100,7 @@
     },
 
     methods: {
-      ...call('componentManagement/*'),
+      ...call('componentManagement', ['getComponents', 'getDbGroupNames', 'getDbTablesAndColumns']),
     },
   };
 </script>
