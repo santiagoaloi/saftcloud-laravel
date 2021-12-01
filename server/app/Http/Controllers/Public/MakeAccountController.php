@@ -6,9 +6,9 @@ use App\Models\Roles\Role;
 
 use Illuminate\Http\Request;
 
+use App\Models\Private\Branch;
 use App\Models\Private\RootAccount;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Private\UserController;
 
 class MakeAccountController extends Controller {
 
@@ -67,6 +67,10 @@ class MakeAccountController extends Controller {
         $this->attachBranch($user, $branch);
         $this->attachRole($user);
 
+        $selectedViews = $postdata['selectedViews'];
+        $this->attachComponentToAccount($account, $selectedViews);
+        $this->attachComponentToBranch($branch, $selectedViews);
+
         return response([
             'status' => 'Success',
             'message' => 'testeo'
@@ -81,5 +85,15 @@ class MakeAccountController extends Controller {
     // AGREGA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
     public function attachRole(User $user){
         $user->role()->attach(2);
+    }
+
+    // AGREGA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
+    public function attachComponentToAccount(RootAccount $account, $component){
+        $account->component()->attach($component);
+    }
+
+    // AGREGA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
+    public function attachComponentToBranch(Branch $branch, $component){
+        $branch->component()->attach($component);
     }
 }

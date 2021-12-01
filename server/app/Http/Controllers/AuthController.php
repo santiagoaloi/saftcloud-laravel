@@ -80,6 +80,8 @@ class AuthController extends Controller {
             $user->privileges = $UserController->getRolCapabilities($user);
             $user->origin = clone$user;
 
+            $user->entity->rootAccount->component;
+
             return response([
                 'user' => $user,
                 'token' => $token,

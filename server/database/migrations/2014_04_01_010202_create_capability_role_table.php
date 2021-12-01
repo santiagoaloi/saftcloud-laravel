@@ -14,7 +14,6 @@ class CreateCapabilityRoleTable extends Migration {
         Schema::create('capability_role', function (Blueprint $table) {
             $table->foreignId('capability_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
             $table->foreignId('role_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
-            $table->softDeletes();
             $table->timestamps();
         });
     }

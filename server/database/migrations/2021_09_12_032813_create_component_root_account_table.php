@@ -4,18 +4,17 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateBranchComponentTable extends Migration {
+class CreateComponentRootAccountTable extends Migration {
     /**
      * Run the migrations.
      *
      * @return void
      */
     public function up() {
-        Schema::create('branch_component', function (Blueprint $table) {
-            $table->foreignId('branch_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
+        Schema::create('component_root_account', function (Blueprint $table) {
+            $table->id();
             $table->foreignId('component_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
-            $table->longText('config');
-            $table->longText('config_settings');
+            $table->foreignId('root_account_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
             $table->timestamps();
         });
     }
@@ -26,6 +25,6 @@ class CreateBranchComponentTable extends Migration {
      * @return void
      */
     public function down() {
-        Schema::dropIfExists('branch_component');
+        Schema::dropIfExists('component_root_account');
     }
 }

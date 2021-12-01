@@ -15,7 +15,6 @@ class CreateBranchUserTable extends Migration {
             $table->id();
             $table->foreignId('branch_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
             $table->foreignId('user_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
-            $table->softDeletes();
             $table->timestamps();
         });
     }

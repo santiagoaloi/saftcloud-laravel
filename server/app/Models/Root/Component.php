@@ -13,4 +13,16 @@ class Component extends Model {
     public function componentGroup(){
         return $this->belongsTo('App\Models\Pos\ComponentGroup');
     }
+
+    public function rootAccount(){
+        return $this->belongsToMany('App\Models\Private\RootAccount');
+    }
+
+    public function role(){
+        return $this->belongsToMany('App\Models\Roles\Role');
+    }
+
+    public function branch(){
+        return $this->belongsToMany('App\Models\Private\Branch');
+    }
 }
