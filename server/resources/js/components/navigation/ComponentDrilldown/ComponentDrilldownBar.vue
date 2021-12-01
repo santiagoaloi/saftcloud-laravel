@@ -43,7 +43,7 @@
     },
 
     methods: {
-      ...call('componentManagement/*'),
+      ...call('componentManagement', ['previousComponent', 'nextComponent']),
     },
   };
 </script>

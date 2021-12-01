@@ -1,25 +1,23 @@
 <template>
   <div>
     <div class="select-none">
-      <base-flex-container>
-        <v-carousel :show-arrows="false" hide-delimiters style="position: absolute" :height="height" cycle>
-          <v-carousel-item v-for="(slide, i) in slides" :key="i">
-            <v-img
-              height="height"
-              :transition="false"
-              gradient="to top right, rgba(100,115,201,0.4), rgba(25,32,72,1)"
-              :src="slide.src"
-              eager
-            >
-              <template #placeholder>
-                <v-row class="fill-height ma-0" align="center" justify="center">
-                  <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
-                </v-row>
-              </template>
-            </v-img>
-          </v-carousel-item>
-        </v-carousel>
-      </base-flex-container>
+      <v-carousel :show-arrows="false" hide-delimiters style="position: absolute" :height="height" cycle>
+        <v-carousel-item v-for="(slide, i) in slides" :key="i">
+          <v-img
+            height="height"
+            :transition="false"
+            gradient="to top right, rgba(100,115,201,0.4), rgba(25,32,72,1)"
+            :src="slide.src"
+            eager
+          >
+            <template #placeholder>
+              <v-row class="fill-height ma-0" align="center" justify="center">
+                <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
+              </v-row>
+            </template>
+          </v-img>
+        </v-carousel-item>
+      </v-carousel>
 
       <v-sheet class="d-flex flex-column justify-center transparent" min-height="90vh">
         <v-container>

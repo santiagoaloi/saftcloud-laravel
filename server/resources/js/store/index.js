@@ -60,6 +60,5 @@ const vuexLocal = new VuexPersist({
 
 export const store = new Vuex.Store({
   modules,
-  // plugins: [pathify.plugin, vuexLocal.plugin],
   plugins: [pathify.plugin, vuexLocal.plugin],
 });

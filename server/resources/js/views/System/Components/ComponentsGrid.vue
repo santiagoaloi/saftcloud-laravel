@@ -18,7 +18,6 @@
       >
         <base-grid-card
           icon-only
-          class="d-flex flex-column justify-space-between pa-4 hoverElevationSoft"
           :item="component"
           :index="index"
           :status-icons="icons"
@@ -29,37 +28,8 @@
         >
           <template #footer>
             <div class="gallery-card-subtitle-container">
-              <div class="gallery-card-subtitle-wrapper">
-                <h5 class="gallery-card-subtitle">
-                  <v-chip
-                    :color="isDark ? '#4c536c' : 'white'"
-                    :text-color="isDark ? 'grey lighten-1' : 'indigo darken-4'"
-                    class="col-12 pointer-events-none"
-                    small
-                  >
-                    <v-icon x-small> mdi-folder-outline </v-icon>
-                    <div class="col-12 text-truncate">
-                      <template v-if="mapComponentGroup(component).component_group_id">
-                        {{ mapGroupParent(component) }}
-                        <v-icon small> mdi-menu-right </v-icon>
-                      </template>
-                      {{ mapComponentGroup(component).name }}
-                    </div>
-                  </v-chip>
-                </h5>
-              </div>
-              <v-fade-transition>
-                <div v-if="hasUnsavedChanges(component)" class="gallery-card-subtitle-wrapper">
-                  <h5 class="gallery-card-subtitle">
-                    <v-tooltip transition="false" color="black" bottom>
-                      <template #activator="{ on }">
-                        <v-icon :color="isDark ? 'white' : '#28292b'" v-on="on"> mdi-alert-outline </v-icon>
-                      </template>
-                      <span>Unsaved</span>
-                    </v-tooltip>
-                  </h5>
-                </div>
-              </v-fade-transition>
+              <components-grid-group-chips :component="component" />
+              <base-unsaved-changes-icon :unsaved="hasUnsavedChanges(component)" />
             </div>
           </template>
         </base-grid-card>
@@ -74,23 +44,27 @@
   export default {
     name: 'ComponentsGridView',
 
+    components: {
+      ComponentsGridGroupChips: () => import('./ComponentsGridGroupChips'),
+    },
+
     data() {
       return {
         icons: [
           {
-            event: 'setStarred',
+            method: 'setStarred',
             color: 'isStarredColor',
             icon: 'isStarredIcon',
             tooltip: 'Star',
           },
           {
-            event: 'setModular',
+            method: 'setModular',
             color: 'isModularColor',
             icon: 'isModularIcon',
             tooltip: 'Modular',
           },
           {
-            event: 'setActive',
+            method: 'setActive',
             color: 'isActiveColor',
             icon: 'isActiveIcon',
             tooltip: 'Active',
@@ -104,8 +78,6 @@
       ...sync('componentManagement', ['componentCardGroup']),
       ...get('componentManagement', [
         'allComponentsFiltered',
-        'mapComponentGroup',
-        'mapGroupParent',
         'hasUnsavedChanges',
         'isModularIcon',
         'isModularColor',

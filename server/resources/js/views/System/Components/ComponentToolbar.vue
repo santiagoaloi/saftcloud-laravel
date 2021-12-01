@@ -63,8 +63,7 @@
       </v-sheet>
     </base-expandable-button>
 
-    <base-expandable-button title="Fetch Components" subtitle="Last fetched just now" icon="mdi-responsive">
-    </base-expandable-button>
+    <base-expandable-button title="Fetch Components" subtitle="Last fetched just now" icon="mdi-responsive" />
 
     <v-btn plain class="mx-2" @click="dialogEditor = true">
       <v-icon :left="$vuetify.breakpoint.lgAndUp" small> mdi-code-json </v-icon>{{ configStructureTitle }}
@@ -78,7 +77,7 @@
     >
     </base-expandable-button>
 
-    ä <dialog-config-editor v-if="dialogEditor" />
+    <dialog-config-editor v-if="dialogEditor" />
   </div>
 </template>
 

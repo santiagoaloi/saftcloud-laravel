@@ -18,21 +18,9 @@
     </v-card-actions>
     <v-divider class="mt-3" />
 
-    <v-data-table
-      :search="search"
-      fixed-header
-      :headers="columns"
-      :items="records"
-      style="cursor: pointer"
-    />
+    <v-data-table :search="search" fixed-header :headers="columns" :items="records" style="cursor: pointer" />
 
-    <base-dialog
-      v-model="dialog"
-      width="50vw"
-      title="add record"
-      @save="addRecord()"
-      @close="dialog = false"
-    >
+    <base-dialog v-model="dialog" width="50vw" title="add record" @save="addRecord()" @close="dialog = false">
       <v-form @submit.prevent="addRecord()">
         <v-row>
           <v-col v-for="(field, i) in formFields" :key="i" sm="6">

@@ -28,11 +28,13 @@
       </template>
 
       <template #[`item.group`]="{ item }">
-        <v-icon style="margin-top: -2px" class="mr-1" small> mdi-folder-outline </v-icon>
+        <!-- <v-icon style="margin-top: -2px" class="mr-1" small> mdi-folder-outline </v-icon>
         <template v-if="mapComponentGroup(item).component_group_id">
           {{ mapGroupParent(item) }} <v-icon small> mdi-menu-right </v-icon>
         </template>
-        {{ mapComponentGroup(item).name }}
+        {{ mapComponentGroup(item).name }} -->
+
+        <components-grid-group-chips :component="item" />
       </template>
 
       <template #[`item.config.general_config.title`]="{ item }">
@@ -99,6 +101,9 @@
 
   export default {
     name: 'ComponentsTableView',
+    components: {
+      ComponentsGridGroupChips: () => import('./ComponentsGridGroupChips'),
+    },
     mixins: [componentActions],
     data() {
       return {
