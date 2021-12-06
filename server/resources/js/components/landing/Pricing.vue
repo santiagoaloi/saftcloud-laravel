@@ -9,8 +9,7 @@
       <v-responsive max-width="1200" class="mx-auto text-center">
         <h2 class="text-h3 mb-2 white--text">Pricing</h2>
         <div class="text-h6 text-lg-h5 white--text">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus impedit error labore
-          doloremque fugit.
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus impedit error labore doloremque fugit.
         </div>
       </v-responsive>
 
@@ -45,11 +44,7 @@
             <v-divider class="my-4" />
 
             <div class="text-h6">
-              <div
-                v-for="(feat, j) in plan.features"
-                :key="j"
-                class="d-flex align-center justify-space-between my-1"
-              >
+              <div v-for="(feat, j) in plan.features" :key="j" class="d-flex align-center justify-space-between my-1">
                 <div>
                   <span v-if="feat.value" class="font-weight-black mr-1">{{ feat.value }}</span>
                   <span class="text-truncate font-weight-regular">{{ feat.label }}</span>
@@ -58,9 +53,7 @@
               </div>
             </div>
             <v-divider class="my-4" />
-            <v-btn x-large block :outlined="!plan.featured" :color="plan.featured ? 'primary' : ''">
-              Subscribe
-            </v-btn>
+            <v-btn x-large block :outlined="!plan.featured" :color="plan.featured ? 'primary' : ''"> Subscribe </v-btn>
           </v-card>
         </v-col>
       </v-row>

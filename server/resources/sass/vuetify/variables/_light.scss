@@ -1,11 +1,11 @@
-$text-base: #e5eaed;
+$text-base: #2e373d;
 $material-light: (
-  'cards': #f0f3f5,
+  'cards': #ffffff,
   'status-bar': (
     'regular': map-get($blue-grey, 'lighten   -2'),
   ),
   'app-bar': #36393f,
-  'background': #d4dbe0,
+  'background': #eeeeee,
   //"surface": #dbe4ec,
   'calendar':
     (
@@ -15,8 +15,8 @@ $material-light: (
     ),
   'dividers': rgba(map-get($shades, 'black'), 0.05),
   'text': (
-    'primary': #3e4658,
-    'secondary': #2f343f,
+    'primary': #3d424b,
+    'secondary': #3d424b,
     'link-hover': transparent,
   ),
   'text-fields': (

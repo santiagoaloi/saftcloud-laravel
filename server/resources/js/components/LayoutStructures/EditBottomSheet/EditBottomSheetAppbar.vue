@@ -1,16 +1,9 @@
 <template>
-  <v-app-bar :class="{ darkBorder: isDark }" :flat="isDark" src="storage/appbar/prism2.jpg">
+  <v-app-bar flat src="storage/appbar/prism2.jpg">
     <v-icon dark class="mr-4"> {{ icon }} </v-icon>
 
-    <h4 class="white--text">Editing</h4>
-    <h4 class="ml-2 white--text">
-      <template v-if="title">
-        {{ title }}
-      </template>
-      <template v-else>
-        <base-typing-indicator />
-      </template>
-    </h4>
+    <h4 v-if="title" class="ml-2 white--text">Editing {{ title }}</h4>
+    <base-typing-indicator v-else />
 
     <v-spacer />
 
@@ -29,16 +22,6 @@
         </v-btn>
       </template>
       <span>Save changes</span>
-    </v-tooltip>
-
-    <v-tooltip transition="false" color="black" bottom>
-      <template #activator="{ on }">
-        <v-btn fab class="mx-2" color="white" text x-small v-on="on" @click="isDark = !isDark">
-          <v-icon v-if="isDark"> mdi-lightbulb-on-outline </v-icon>
-          <v-icon v-else> mdi-lightbulb-outline </v-icon>
-        </v-btn>
-      </template>
-      <span> {{ isDark ? ' Light mode' : 'Dark mode' }}</span>
     </v-tooltip>
 
     <v-divider inset vertical class="mx-3 grey" />

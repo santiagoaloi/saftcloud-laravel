@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <fragment>
     <v-text-field
       v-model="searchFields"
       hide-details
@@ -27,9 +27,7 @@
         >
           <transition-group appear name="slide-y-transition">
             <v-list-item
-              v-for="(item, i) in displayEnabledFormFieldsOnly
-                ? filteredSelectedFields
-                : filteredFormFields"
+              v-for="(item, i) in displayEnabledFormFieldsOnly ? filteredSelectedFields : filteredFormFields"
               :key="i + i"
               :disabled="hasValidationErrors"
               dense
@@ -56,15 +54,13 @@
                 </v-chip>
               </v-list-item-action>
 
-              <v-icon v-if="!displayEnabledFormFieldsOnly" class="drag my-handle">
-                mdi-drag-vertical
-              </v-icon>
+              <v-icon v-if="!displayEnabledFormFieldsOnly" class="drag my-handle"> mdi-drag-vertical </v-icon>
             </v-list-item>
           </transition-group>
         </draggable>
       </v-list>
     </v-list-item-group>
-  </div>
+  </fragment>
 </template>
 
 <script>
@@ -79,17 +75,8 @@
 
     computed: {
       ...sync('theme', ['isDark']),
-      ...sync('componentManagement', [
-        'searchFields',
-        'displayEnabledFormFieldsOnly',
-        'selectedFieldItemGroup',
-      ]),
-      ...get('componentManagement', [
-        'selectedComponent',
-        'filteredFormFields',
-        'filteredSelectedFields',
-        'hasValidationErrors',
-      ]),
+      ...sync('componentManagement', ['searchFields', 'displayEnabledFormFieldsOnly', 'selectedFieldItemGroup']),
+      ...get('componentManagement', ['selectedComponent', 'filteredFormFields', 'filteredSelectedFields', 'hasValidationErrors']),
     },
 
     mounted() {

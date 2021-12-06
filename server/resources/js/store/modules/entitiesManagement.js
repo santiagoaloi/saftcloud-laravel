@@ -171,7 +171,7 @@ const actions = {
   //* When an entity is selected in the entities view, it loads its configuration.
   setSelectedEntity({ state }, index) {
     if (state.selectedEntityIndex !== index) {
-      store.set('entitiesManagement/selectedEntityIndex', index);
+      store.set('entitiesManagement/selectedEntityIndex', state.entityCardGroup);
     }
   },
 

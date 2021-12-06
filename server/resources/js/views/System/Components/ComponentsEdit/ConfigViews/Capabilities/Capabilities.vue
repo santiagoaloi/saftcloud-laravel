@@ -14,15 +14,7 @@
 
         <v-tooltip transition="false" color="black" bottom>
           <template #activator="{ on }">
-            <v-btn
-              class="ml-3"
-              color="white"
-              small
-              icon
-              :ripple="false"
-              @click="remove(item)"
-              v-on="on"
-            >
+            <v-btn class="ml-3" color="white" small icon :ripple="false" @click="remove(item)" v-on="on">
               <v-icon> mdi-delete </v-icon>
             </v-btn>
           </template>
@@ -37,7 +29,6 @@
 <script>
   import { sync, get, call } from 'vuex-pathify';
   import DialogCapability from './DialogCapability';
-  import { store } from '@/store';
 
   export default {
     name: 'ComponentsEditViewsCapabilities',
@@ -86,9 +77,7 @@
       remove(capability) {
         this.removeCapability(capability).then((removed) => {
           if (removed) {
-            this.selectedComponent.capabilities = this.selectedComponent.capabilities.filter(
-              (item) => item.id !== capability.id,
-            );
+            this.selectedComponent.capabilities = this.selectedComponent.capabilities.filter((item) => item.id !== capability.id);
           }
         });
       },

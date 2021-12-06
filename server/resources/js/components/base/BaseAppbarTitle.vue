@@ -1,5 +1,5 @@
 <template>
-  <h4 class="white--text ml-8">
+  <h4 class="white--text">
     {{ routeTitle }}
   </h4>
 </template>

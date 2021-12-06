@@ -1,7 +1,11 @@
 <template>
-  <v-main :style="themeBackground">
-    <v-fade-transition hide-on-leave mode="out-in" :duration="100">
-      <router-view />
+  <v-main :style="!isDark ? loginBackgroundLight : loginBackgroundDark">
+    <v-fade-transition leave-active-class="leaveTransition" mode="out-in" :duration="520">
+      <keep-alive>
+        <v-container fluid class="fill-height pt-0">
+          <router-view />
+        </v-container>
+      </keep-alive>
     </v-fade-transition>
   </v-main>
 </template>
@@ -13,22 +17,9 @@
     name: 'PublicView',
     computed: {
       ...sync('theme', ['isDark']),
-
-      themeBackground() {
-        if (this.$route.name === 'Login' && this.isDark) {
-          return this.loginBackgroundDark;
-        }
-
-        if (this.$route.name === 'Login' && !this.isDark) {
-          return this.loginBackgroundLight;
-        }
-
-        return null;
-      },
-
       loginBackgroundLight() {
         return {
-          'background-image': `linear-gradient(rgba(0, 0, 0, 0.3),rgba(0, 0, 0, 0.8)), url(storage/backgrounds/back3.png)`,
+          'background-image': `linear-gradient(rgba(200, 200, 200, 0.2),rgba(0, 0, 0, 0.9)), url(storage/backgrounds/back3.png)`,
           'background-repeat': 'no-repeat',
           'background-size': 'cover',
           'background-attachment': 'fixed',

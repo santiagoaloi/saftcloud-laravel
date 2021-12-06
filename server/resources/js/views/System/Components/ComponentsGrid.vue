@@ -1,41 +1,28 @@
 <template>
-  <div>
-    <v-item-group
-      v-model="componentCardGroup"
-      class="gallery-card-container pa-2"
-      :active-class="isDark ? 'gridCardDark' : 'gridcardLight'"
+  <v-item-group
+    v-model="componentCardGroup"
+    class="gallery-card-container pa-4"
+    :active-class="isDark ? 'gridCardDark' : 'gridcardLight'"
+  >
+    <base-grid-card
+      v-for="(component, i) in allComponentsFiltered"
+      :key="i"
+      icon-only
+      :item="component"
+      :index="i"
+      :status-icons="icons"
+      :icon="component.config_settings.icon.name"
+      :icon-color="component.config_settings.icon.color"
+      :title="component.config.general_config.title"
+      :methods="mapMethods"
+      @click.native.prevent="setSelectedComponent(i)"
     >
-      <v-lazy
-        v-for="(component, index) in allComponentsFiltered"
-        :key="index"
-        :options="{
-          threshold: 0.8,
-        }"
-        min-height="200"
-        transition="scroll-y-reverse-transition"
-        width="100%"
-        @click.native.prevent="setSelectedComponent(index)"
-      >
-        <base-grid-card
-          icon-only
-          :item="component"
-          :index="index"
-          :status-icons="icons"
-          :icon="component.config_settings.icon.name"
-          :icon-color="component.config_settings.icon.color"
-          :title="component.config.general_config.title"
-          :methods="mapMethods"
-        >
-          <template #footer>
-            <div class="gallery-card-subtitle-container">
-              <components-grid-group-chips :component="component" />
-              <base-unsaved-changes-icon :unsaved="hasUnsavedChanges(component)" />
-            </div>
-          </template>
-        </base-grid-card>
-      </v-lazy>
-    </v-item-group>
-  </div>
+      <template #footer>
+        <components-grid-group-chips :component="component" />
+        <base-unsaved-changes-icon :unsaved="hasUnsavedChanges(component)" />
+      </template>
+    </base-grid-card>
+  </v-item-group>
 </template>
 
 <script>

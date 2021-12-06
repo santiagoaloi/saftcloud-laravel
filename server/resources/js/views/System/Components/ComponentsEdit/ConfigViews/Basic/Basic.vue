@@ -29,6 +29,7 @@
             <validation-provider v-slot="{ errors, invalid }" immediate mode="aggressive" name="field label" rules="required">
               <v-text-field
                 v-model="selectedComponent.config.general_config.title"
+                height="55"
                 :outlined="isDark"
                 :solo="!isDark"
                 :color="isDark ? '#208ad6' : 'grey'"
@@ -59,6 +60,7 @@
             <baseFieldLabel required label="Component group " />
             <v-autocomplete
               v-model="selectedComponent.component_group_id"
+              height="55"
               solo
               :color="isDark ? '#208ad6' : 'grey'"
               :background-color="isDark ? '#28292b' : 'white'"

@@ -1,9 +1,7 @@
 <template>
   <v-app>
     <v-fade-transition leave-active-class="leaveTransition" mode="out-in" :duration="520">
-      <keep-alive>
-        <component :is="layout" />
-      </keep-alive>
+      <component :is="layout" />
     </v-fade-transition>
   </v-app>
 </template>
@@ -16,6 +14,7 @@
 
   Vue.component('SecureLayout', () => import(/* webpackChunkName: 'secure-layout' */ '@/layouts/secureLayout/Index.vue'));
   Vue.component('PublicLayout', () => import(/* webpackChunkName: 'public-layout' */ '@/layouts/publicLayout/Index.vue'));
+  Vue.component('NotFoundLayout', () => import(/* webpackChunkName: 'not-found-layout' */ '@/layouts/notFoundLayout/Index.vue'));
 
   export default {
     name: 'MainApp',

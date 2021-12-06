@@ -1,6 +1,10 @@
 <template>
   <div>
     <vue-diagonal
+      v-if="$route.name !== 'Login'"
+      :key="$route.fullPath"
+      data-aos="fade"
+      data-aos-delay="300"
       :deg="-7"
       :background="isDark ? 'rgba(44, 47 , 51, 0.8)' : '#d4dbe0'"
       style="margin-bottom: -8%"

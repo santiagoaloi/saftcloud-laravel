@@ -9,9 +9,7 @@
     />
 
     <v-fade-transition leave-active-class="leaveTransition" mode="out-in" :duration="520">
-      <keep-alive>
-        <router-view />
-      </keep-alive>
+      <router-view />
     </v-fade-transition>
   </v-main>
 </template>

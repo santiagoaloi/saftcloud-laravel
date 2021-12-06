@@ -50,12 +50,20 @@ axios.interceptors.response.use(
         store.set('snackbar/data@color', 'pink darken-1');
       }
 
-      //* If session fails to validate the token, kill the session.
+      //* if function required elevated privileges.
       if (error.response.data.message === 'This action is unauthorized.') {
+        store.set('snackbar/data@value', true);
+        store.set('snackbar/data@text', 'Insufficient privileges, this action requires higher clearance');
+        store.set('snackbar/data@icon', 'mdi-alert-octagon');
+        store.set('snackbar/data@color', 'pink darken-1');
+      }
+
+      //* SQL connectivty error
+      if (error.response.data.message.includes('No connection could be made')) {
         store.set('snackbar/data@value', true);
         store.set(
           'snackbar/data@text',
-          'Insufficient privileges, this action requires higher clearance',
+          'Database connectivty error. No connection could be made because the target machine actively refused it ',
         );
         store.set('snackbar/data@icon', 'mdi-alert-octagon');
         store.set('snackbar/data@color', 'pink darken-1');

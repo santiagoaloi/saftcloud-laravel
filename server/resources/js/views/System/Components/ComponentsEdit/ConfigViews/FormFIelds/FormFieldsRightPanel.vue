@@ -5,17 +5,12 @@
         <v-tabs
           v-model="activeFormFieldTab"
           color="accent"
-          showArrows
+          show-arrows
           class="col-12 mt-n3 px-0"
           background-color="transparent"
-          sliderSize="1"
+          slider-size="1"
         >
-          <v-tab
-            :activeClass="isDark ? 'white--text' : ''"
-            :key="i"
-            v-for="(tab, i) in formFieldTabs"
-            :ripple="false"
-          >
+          <v-tab v-for="(tab, i) in formFieldTabs" :key="i" :active-class="isDark ? 'white--text' : ''" :ripple="false">
             <v-icon :color="tab.color" small left>
               {{ tab.icon }}
             </v-icon>
@@ -32,6 +27,7 @@
 
 <script>
   import { sync, get } from 'vuex-pathify';
+
   export default {
     name: 'ComponentsEditViewsFormFieldsRightPanel',
     components: {

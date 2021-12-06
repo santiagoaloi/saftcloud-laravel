@@ -9,13 +9,10 @@
 
       <keep-alive>
         <v-scroll-y-transition hide-on-leave>
-          <component :is="isTableLayout ? 'componentsTable' : 'componentsGrid'" />
+          <component :is="isTableLayout ? 'componentsTable' : 'componentsGrid'" v-if="!isAllFilteredComponentsEmpty" />
+          <components-no-data v-else />
         </v-scroll-y-transition>
       </keep-alive>
-
-      <v-scroll-y-transition hide-on-leave>
-        <components-no-data v-if="isAllFilteredComponentsEmpty" />
-      </v-scroll-y-transition>
 
       <template #footer>
         <status-bar />
@@ -30,7 +27,7 @@
       toolbar-icon="mdi-pencil"
     />
 
-    <dialog-component v-if="dialogComponent" />
+    <dialog-component />
   </div>
 </template>
 
@@ -44,7 +41,6 @@
         import(/* webpackChunkName: 'secure-bundle-components' */ '@/components/LayoutStructures/EditBottomSheet/Index.vue'),
       ComponentsToolbar: () => import(/* webpackChunkName: 'secure-bundle-components' */ './ComponentToolbar'),
       StatusBar: () => import(/* webpackChunkName: 'secure-bundle-components' */ './StatusBar'),
-      // ComponentsAppbar: () => import(/* webpackChunkName: 'secure-bundle-components' */ './ComponentsAppbar'),
       ComponentsTabs: () => import(/* webpackChunkName: 'secure-bundle-components' */ './ComponentsTabs'),
       ComponentsGrid: () => import(/* webpackChunkName: 'secure-bundle-components' */ './ComponentsGrid'),
       ComponentsTable: () => import(/* webpackChunkName: 'components-table' */ './ComponentsTable'),
@@ -54,6 +50,7 @@
 
     data() {
       return {
+        wrap: true,
         menuItems: [
           { header: 'Component Settings' },
           {

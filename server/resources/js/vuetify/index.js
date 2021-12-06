@@ -22,10 +22,6 @@ export default async () => {
       options: {
         minifyTheme,
         variations: false,
-        themeCache: {
-          get: (key) => localStorage.getItem(key),
-          set: (key, value) => localStorage.setItem(key, value),
-        },
       },
     },
   });

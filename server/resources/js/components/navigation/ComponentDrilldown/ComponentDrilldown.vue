@@ -15,7 +15,7 @@
 
 <script>
   import Vue from 'vue';
-  import { sync, get } from 'vuex-pathify';
+  import { sync, get, call } from 'vuex-pathify';
   import { store } from '@/store';
 
   Vue.component('ComponentDrilldownMetadata', () =>
@@ -47,6 +47,8 @@
     },
 
     methods: {
+      ...call('componentManagement', ['rollbackChanges']),
+
       setInvalid(invalid, field) {
         store.set(`validationStatesComponents/componentsEditBasic@${field}`, invalid);
       },

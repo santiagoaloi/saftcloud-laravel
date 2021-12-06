@@ -36,11 +36,11 @@
         <v-list>
           <v-list-item-group v-model="selectedComponentGroupsMenu" active-class="selected" multiple>
             <template v-for="(item, index) in allGroups">
-              <v-list-item :key="item.title" :ripple="false" @click.stop="selectGroup(item)">
+              <v-list-item :key="item.title" :ripple="false" @click.stop="selectGroup({ item })">
                 <template #default="{ active }">
                   <v-list-item-icon>
                     <v-icon :color="active ? 'indigo lighten-2' : 'grey'">
-                      {{ active ? 'mdi-checkbox-blank-circle' : 'mdi-checkbox-blank-circle-outline' }}</v-icon
+                      {{ active ? 'mdi-check-circle' : 'mdi-checkbox-blank-circle-outline' }}</v-icon
                     >
                   </v-list-item-icon>
 
@@ -82,7 +82,7 @@
 </template>
 
 <script>
-  import { sync } from 'vuex-pathify';
+  import { sync, call } from 'vuex-pathify';
   import componentGroups from '@/mixins/componentGroups';
 
   export default {
@@ -118,6 +118,17 @@
     },
 
     methods: {
+      ...call('componentManagement', ['selectGroup']),
+
+      // selectGroup(group) {
+      //   const groupFound = this.selectedComponentGroups.find((g) => g.id === group.id);
+      //   if (groupFound) {
+      //     this.selectedComponentGroups = this.selectedComponentGroups.filter((g) => g.id !== group.id);
+      //   } else {
+      //     this.selectedComponentGroups = [...this.selectedComponentGroups, group];
+      //   }
+      // },
+
       dialogComponentTrigger() {
         this.dialogComponent = true;
         this.dialogComponentLoader = true;
@@ -129,15 +140,6 @@
 
       activateMenu() {
         this.selectedComponentGroupsMenuTrigger = !this.selectedComponentGroupsMenuTrigger;
-      },
-
-      selectGroup(group) {
-        const groupFound = this.selectedComponentGroups.find((g) => g.id === group.id);
-        if (groupFound) {
-          this.selectedComponentGroups = this.selectedComponentGroups.filter((g) => g.id !== group.id);
-        } else {
-          this.selectedComponentGroups = [...this.selectedComponentGroups, group];
-        }
       },
     },
   };

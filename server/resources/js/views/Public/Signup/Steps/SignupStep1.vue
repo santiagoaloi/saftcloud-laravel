@@ -33,6 +33,7 @@
             <validation-provider v-slot="{ errors, reset }" name="country code" rules="required">
               <v-autocomplete
                 v-model="signupForm.phone_code"
+                auto-select-first
                 height="55"
                 maxlength="30"
                 :items="countryCodes"
@@ -48,6 +49,7 @@
                 @focus="reset"
                 @input="reset"
                 @blur="reset"
+                @change="goNext($event.target)"
               >
                 <template slot="selection" slot-scope="data">
                   <country-flag country="hr" size="normal" />

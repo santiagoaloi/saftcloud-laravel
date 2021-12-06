@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <fragment>
     <v-card-text>
       <ValidationObserver ref="step0" slim>
         <v-row>
@@ -48,7 +48,7 @@
       </ValidationObserver>
     </v-card-text>
     <v-btn large color="primary" @click="validateAndProceed()"> Continue </v-btn>
-  </div>
+  </fragment>
 </template>
 
 <script>

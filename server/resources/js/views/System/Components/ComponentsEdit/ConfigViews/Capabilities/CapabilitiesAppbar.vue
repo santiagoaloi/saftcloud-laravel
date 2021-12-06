@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <fragment>
     <div class="d-flex justify-end align-center">
       <div class="d-flex">
         <v-btn class="ml-2" :color="isDark ? 'accent' : 'primary'" @click.stop="add()">
@@ -8,7 +8,7 @@
       </div>
     </div>
     <v-divider class="mt-3" />
-  </div>
+  </fragment>
 </template>
 
 <script>

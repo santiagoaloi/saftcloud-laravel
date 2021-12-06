@@ -5,7 +5,7 @@ import Vuex from 'vuex';
 // libraries
 import VuexPersist from 'vuex-persist';
 import localforage from 'localforage';
-import { omit, pick } from 'lodash';
+import { omit } from 'lodash';
 import pathify from '@/plugins/vuex-pathify';
 
 // All Vuex Modules definned in ./modules/index.js
@@ -44,16 +44,16 @@ const vuexLocal = new VuexPersist({
       ...componentManagementFiltered(state.componentManagement),
     },
 
-    // componentManagement: {
-    //   ...state.componentManagement,
-    // },
-
     entitiesManagement: {
       ...state.entitiesManagement,
     },
 
     eventsManagement: {
       ...state.eventsManagement,
+    },
+
+    application: {
+      ...state.previousRoute,
     },
   }),
 });

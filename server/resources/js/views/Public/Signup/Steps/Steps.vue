@@ -1,5 +1,5 @@
 <template>
-  <v-sheet color="transparent" :height="height">
+  <v-sheet color="transparent" min-height="100vh">
     <v-container>
       <v-img
         src="https://cdn.vuetifyjs.com/images/cards/cooking.png"

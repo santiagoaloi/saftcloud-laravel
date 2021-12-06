@@ -11,4 +11,10 @@ export default [
   },
   ...staticRoutes,
   ...publicRoutes,
+
+  {
+    path: '/:catchAll(.*)',
+    meta: { layout: 'not-found-layout' },
+    component: () => import('@/views/System/404/notFound.vue'),
+  },
 ];
