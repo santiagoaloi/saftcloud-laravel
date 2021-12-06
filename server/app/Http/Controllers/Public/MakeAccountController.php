@@ -64,6 +64,11 @@ class MakeAccountController extends Controller {
             'password'              =>  bcrypt('password')
         ]);
 
+        // CREACION DE CONFIGURACION DE USUARIO
+        $user->userSetting()->create([
+            'default_branch'    =>  $branch->id
+        ]);
+
         $this->attachBranch($user, $branch);
         $this->attachRole($user);
 
