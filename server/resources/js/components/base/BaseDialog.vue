@@ -1,6 +1,6 @@
 <template>
   <v-dialog
-    v-model="internalValue"
+    v-model="showDialog"
     v-bind="$attrs"
     :fullscreen="$vuetify.breakpoint.smAndDown || isMaximized || fullscreen"
     :hide-overlay="noOverlay || fullscreen"
@@ -73,6 +73,7 @@
     props: {
       value: {
         type: [Boolean],
+        required: true,
         default: false,
       },
 
@@ -153,20 +154,13 @@
 
     data() {
       return {
-        internalValue: this.value,
         isMaximized: false,
       };
     },
 
-    watch: {
-      internalValue(val, oldVal) {
-        if (val === oldVal) return; // Don't do anything.
-        this.$emit('input', val); // emit input change to v-model
-      },
-
-      value(val, oldVal) {
-        if (val === oldVal) return;
-        this.internalValue = val;
+    computed: {
+      showDialog() {
+        return this.value;
       },
     },
 

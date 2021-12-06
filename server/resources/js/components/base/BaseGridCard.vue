@@ -1,5 +1,5 @@
 <template>
-  <v-item v-slot="{ toggle, active }" :value="index || 0" class="select-none">
+  <v-item v-slot="{ toggle, active }" x class="select-none">
     <v-hover v-slot="{ hover: hoverCard }" open-delay="500">
       <v-sheet
         class="d-flex flex-column justify-space-between pa-4 hoverElevationSoft cursor-pointer"
@@ -50,7 +50,9 @@
         </span>
 
         <div v-if="$slots.footer" class="content">
-          <slot name="footer"> </slot>
+          <div class="gallery-card-subtitle-container">
+            <slot name="footer"> </slot>
+          </div>
         </div>
       </v-sheet>
     </v-hover>
@@ -99,7 +101,7 @@
 
       index: {
         type: [Number],
-        default: () => 1,
+        default: () => 0,
       },
 
       methods: {
@@ -118,6 +120,7 @@
     },
 
     methods: {
+      // Executes a function with its argumentss
       trigger(fn, args) {
         return this.methods[fn](args);
       },

@@ -1,8 +1,8 @@
 <template>
-  <v-container fill-height class="select-none">
+  <v-container class="fill-height">
     <v-row align="center" justify="space-between" class="mb-0">
       <v-col cols="12" lg="6">
-        <v-row no-gutters align="center" justify="center">
+        <v-row align="center" justify="center">
           <div>
             <v-avatar :size="$vuetify.breakpoint.smAndDown ? '8em' : '16em'">
               <v-img eager class="rounded" aspect-ratio="2" src="storage/logo.png" :transition="false">
@@ -17,13 +17,13 @@
           </div>
         </v-row>
 
-        <v-row class="mt-10" no-gutters align="center" justify="center">
+        <v-row class="mt-10" align="center" justify="center">
           <div class="topFont topSlide shadows mx-10 white--text">
             <h1>SaftCloud ™</h1>
           </div>
         </v-row>
 
-        <v-row class="mt-2" no-gutters align="center" justify="center">
+        <v-row class="mt-2" align="center" justify="center">
           <div class="subFont topSlide shadows mx-10 text-center white--text">
             <h2>Point of sales made easy for everyone.</h2>
           </div>
@@ -36,7 +36,8 @@
             Your session has expired <strong> due to inactivity.</strong>
           </v-alert>
 
-          <v-card elevation="10" :class="{ shake: shake }" class="pa-5" :color="$vuetify.theme.dark ? '#2f3136' : '#f6f8fa'">
+          <v-card class="modal pa-5" elevation="10" :class="{ shake: shake }">
+            <v-card></v-card>
             <v-card-title class="py-10">
               <h1>Welcome back!</h1>
             </v-card-title>
@@ -64,8 +65,9 @@
                     <v-text-field
                       ref="username"
                       v-model.trim="auth.email"
-                      rounded
+                      background-color="rgba(56, 54, 54, 0.2)"
                       :color="isDark ? '#208ad6' : 'grey'"
+                      rounded
                       flat
                       hide-details
                       solo
@@ -102,6 +104,7 @@
                         :disabled="loading"
                         spellcheck="false"
                         :color="isDark ? '#208ad6' : 'grey'"
+                        background-color="rgba(56, 54, 54, 0.2)"
                         :error="errors.length > 0"
                         rounded
                         @click:append="password_visible = !password_visible"
@@ -216,3 +219,19 @@
     },
   };
 </script>
+
+<style scoped>
+  @supports (-webkit-backdrop-filter: none) or (backdrop-filter: none) {
+    .modal {
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+      background-color: rgba(56, 54, 54, 0.2);
+    }
+  }
+
+  @supports not ((-webkit-backdrop-filter: none) or (backdrop-filter: none)) {
+    .modal {
+      background-color: rgba(56, 54, 54, 0.2);
+    }
+  }
+</style>

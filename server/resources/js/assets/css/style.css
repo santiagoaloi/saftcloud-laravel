@@ -1,6 +1,14 @@
-html {
-  overflow-y: auto;
-  overflow-y: overlay;
+@supports not (overflow-y: overlay) {
+  html {
+    overflow-y: scroll;
+  }
+}
+
+@supports (overflow-y: overlay) {
+  html {
+    /* overflow-y: auto; */
+    overflow-y: overlay;
+  }
 }
 
 .v-dialog--scrollable,
@@ -348,4 +356,13 @@ input::-webkit-inner-spin-button {
 
 .leaveTransition {
   display: none;
+}
+
+.v-input input {
+  height: 100% !important;
+  max-height: unset;
+}
+
+.v-select__selections {
+  height: 100%;
 }

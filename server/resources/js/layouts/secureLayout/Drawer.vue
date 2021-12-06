@@ -1,7 +1,7 @@
 <template>
-  <div class="select-none">
+  <fragment>
     <!-- Navigation -->
-    <v-navigation-drawer v-model="secureDefaultDrawer" dark width="250" app class="elevation-1">
+    <v-navigation-drawer v-model="secureDefaultDrawer" dark width="250" app class="elevation-1 select-none">
       <!-- Navigation menu fixed  -->
       <template #prepend>
         <vue-diagonal
@@ -105,7 +105,7 @@
       <!-- Navigation menu -->
       <main-menu class="pa-2" :menu="navigationStructure.menu" />
     </v-navigation-drawer>
-  </div>
+  </fragment>
 </template>
 
 <script>

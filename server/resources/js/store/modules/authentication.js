@@ -49,7 +49,7 @@ const actions = {
           commit('session', data);
           axiosDefaults.headers.common.Authorization = `Bearer ${response.data.token}`;
 
-          dispatch('buildRoutes');
+          // dispatch('buildRoutes');
 
           return true;
         }

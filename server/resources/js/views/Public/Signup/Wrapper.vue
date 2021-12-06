@@ -1,9 +1,9 @@
 <template>
-  <div>
+  <v-container fluid>
     <Steps />
     <Pricing />
     <Faq />
-  </div>
+  </v-container>
 </template>
 
 <script>

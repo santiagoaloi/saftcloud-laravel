@@ -17,6 +17,10 @@ import App from './App.vue';
 import CountryFlag from 'vue-country-flag';
 Vue.component('country-flag', CountryFlag);
 
+//Fragment
+import Fragment from 'vue-fragment';
+Vue.use(Fragment.Plugin);
+
 // Styles amd Animations
 import AOS from 'aos';
 import 'aos/dist/aos.css';

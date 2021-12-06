@@ -1,5 +1,5 @@
 <template>
-  <v-bottom-sheet v-model="internalValue" eager no-click-animation persistent fullscreen>
+  <v-bottom-sheet v-model="internalValue" no-click-animation persistent fullscreen>
     <v-sheet height="100%">
       <base-flex-container>
         <template #top>
@@ -11,7 +11,7 @@
             <edit-sheet-drawer :menu="menuItems" @switchActiveSheet="switchActiveSheet" />
           </v-col>
           <v-col>
-            <v-fade-transition hide-on-leave>
+            <v-fade-transition leave-active-class="leaveTransition" mode="out-in" :duration="100">
               <component :is="activeSheet" class="pa-4"></component>
             </v-fade-transition>
             <!-- <v-card-text class="overflow-auto">
@@ -54,7 +54,6 @@
 <script>
   export default {
     name: 'EditSheet',
-
     components: {
       EditSheetAppbar: () => import(/* webpackChunkName:'EditSheetAppbar' */ './EditBottomSheetAppbar'),
       EditSheetDrawer: () => import(/* webpackChunkName: 'EditSheetDrawer' */ './EditBottomSheetDrawer'),
@@ -83,19 +82,12 @@
     data() {
       return {
         activeSheet: null,
-        internalValue: this.value,
       };
     },
 
-    watch: {
-      internalValue(val, oldVal) {
-        if (val === oldVal) return; // Don't do anything.
-        this.$emit('input', val); // emit input change to v-model
-      },
-
-      value(val, oldVal) {
-        if (val === oldVal) return;
-        this.internalValue = val;
+    computed: {
+      internalValue() {
+        return this.value;
       },
     },
 

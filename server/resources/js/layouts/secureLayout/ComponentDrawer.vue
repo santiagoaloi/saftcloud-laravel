@@ -5,15 +5,17 @@
       <component-drilldown-bar />
     </template>
 
-    <!-- Drawer content -->
-    <component-drilldown v-show="hasSelectedComponent" />
+    <template #default>
+      <!-- Drawer content -->
+      <component-drilldown v-if="hasSelectedComponent" />
 
-    <!-- Drawer content when empty -->
-    <component-drilldown-empty v-show="!hasSelectedComponent" />
+      <!-- Drawer content when empty -->
+      <component-drilldown-empty v-if="!hasSelectedComponent" />
+    </template>
 
     <!-- Drawer fixed bottom -->
     <template #append>
-      <component-drilldown-footer v-show="hasSelectedComponent" />
+      <component-drilldown-footer v-if="hasSelectedComponent" />
     </template>
   </v-navigation-drawer>
 </template>

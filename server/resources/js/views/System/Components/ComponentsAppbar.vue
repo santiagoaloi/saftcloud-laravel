@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <fragment>
     <div class="d-flex justify-end align-center transparent">
       <components-groups />
 
@@ -24,7 +24,7 @@
 
     <v-divider class="mt-3"></v-divider>
     <dialog-config-editor v-if="dialogEditor" />
-  </div>
+  </fragment>
 </template>
 
 <script>

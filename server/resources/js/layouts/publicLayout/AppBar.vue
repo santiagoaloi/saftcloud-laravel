@@ -1,9 +1,9 @@
 <template>
-  <div class="select-none">
-    <v-app-bar app src="storage/appbar/prism2.jpg">
+  <fragment>
+    <v-app-bar v-show="imageLoaded" class="select-none" elevation="5" app src="storage/appbar/prism2.jpg">
       <v-container data-aos="fade" data-aos-delay="300" class="py-0 px-0 fill-height">
         <router-link to="/" class="d-flex align-center text-decoration-none">
-          <img class="mr-4" src="storage/logo.png" height="45" />
+          <img class="mr-4" src="storage/logo.png" height="45" @load="imageLoaded = true" />
           <span class="font-weight-black headline white--text"> SaftCloud ™</span>
         </router-link>
 
@@ -46,7 +46,7 @@
         </v-tooltip>
       </v-container>
     </v-app-bar>
-  </div>
+  </fragment>
 </template>
 
 <script>
@@ -59,6 +59,7 @@
 
     data() {
       return {
+        imageLoaded: false,
         responsiveMenu: false,
         store,
       };

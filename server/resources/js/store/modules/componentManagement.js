@@ -82,7 +82,7 @@ const getters = {
   },
 
   //* Loads all the configuration of the selected component.
-  selectedComponent: (state, getters) => getters.allComponentsFiltered[state.selectedComponentIndex],
+  selectedComponent: (state, getters) => getters.allComponentsFiltered[state.componentCardGroup],
 
   //* Loads all the field settings of the selected field in component form field tab.
   selectedComponentFormField: (state, getters) => {
@@ -299,6 +299,16 @@ const actions = {
     });
   },
 
+  selectGroup({ state }, { item }) {
+    const groupFound = state.selectedComponentGroups.find((g) => g.id === item.id);
+    if (groupFound) {
+      const removeGroup = state.selectedComponentGroups.filter((g) => g.id !== item.id);
+      store.set('componentManagement/selectedComponentGroups', removeGroup);
+    } else {
+      store.set(`componentManagement/selectedComponentGroups@${state.selectedComponentGroups.length}`, item);
+    }
+  },
+
   //* Soft removes a component group (it can be restored).
   removeGroup({ dispatch }, id) {
     axios
@@ -373,14 +383,10 @@ const actions = {
       });
   },
 
-  //* When a component is selected in the components view, it loads its configuration.
-  setSelectedComponent({ rootState, state }, index) {
+  //* When a component is selected, it loads its configuration.
+  setSelectedComponent({ state }, index) {
     if (state.selectedComponentIndex !== index) {
-      store.set('componentManagement/selectedComponentIndex', index);
-    }
-
-    if (!rootState.drawers.secureComponentDrawer) {
-      store.set('drawers/secureComponentDrawer', true);
+      store.set('componentManagement/selectedComponentIndex', state.componentCardGroup);
     }
   },
 
@@ -465,11 +471,9 @@ const actions = {
         store.set('componentManagement/activeStatusTab', 0);
         store.set('componentManagement/dialogComponent', false);
 
-        //* Autoselect latest created component
+        //!  REFACTOR AND USE NEW ACTION "selectGroup"
         const activeGroup = state.allGroups.find((item) => item.id === state.componentSettings.component_group_id);
-
         const groupExists = state.selectedComponentGroups.find((item) => item.id === activeGroup.id);
-
         if (!groupExists) state.selectedComponentGroups.push(activeGroup);
 
         store.set('componentManagement/componentCardGroup', getters.allComponentsFiltered.length - 1);

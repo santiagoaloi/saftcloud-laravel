@@ -6,8 +6,10 @@
     transition="slide-y-reverse-transition"
     multi-line
   >
-    <v-icon class="mr-4 mt-n1"> {{ snackbar.data.icon }}</v-icon>
-    {{ snackbar.data.text }}
+    <div class="d-flex">
+      <v-icon class="mr-4"> {{ snackbar.data.icon }}</v-icon>
+      {{ snackbar.data.text }}
+    </div>
     <template #action="{ attrs }">
       <v-btn dark text fab x-small v-bind="attrs" @click="snackbar.data.value = false">
         <v-icon>mdi-close</v-icon>

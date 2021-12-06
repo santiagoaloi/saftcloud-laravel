@@ -89,7 +89,7 @@
 </template>
 
 <script>
-  import { get, sync } from 'vuex-pathify';
+  import { get, sync, call } from 'vuex-pathify';
 
   export default {
     name: 'ComponentDrilldownForms',
@@ -97,6 +97,14 @@
       ...sync('theme', ['isDark']),
       ...get('componentManagement', ['selectedComponent', 'isStarredColor', 'isStarredIcon']),
       ...sync('componentManagement', ['allGroups']),
+    },
+
+    methods: {
+      ...call('componentManagement', ['selectGroup']),
+
+      // selectNewGroup() {
+      //   this.selectGroup(this.selectedComponent.component_group_id);
+      // },
     },
   };
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <fragment>
     <secure-bar />
     <secure-drawer />
     <secure-view />
@@ -7,12 +7,10 @@
     <secure-ent-drawer v-if="$route.name.startsWith('Entities')" />
     <snackbar />
     <!-- <session-timeout /> -->
-  </div>
+  </fragment>
 </template>
 
 <script>
-  import { get } from 'vuex-pathify';
-
   export default {
     name: 'SecureLayout',
     components: {
