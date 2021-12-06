@@ -80,7 +80,11 @@ class AuthController extends Controller {
             $user->privileges = $UserController->getRolCapabilities($user);
             $user->origin = clone$user;
 
-            $user->entity->rootAccount->component;
+            // $user['test'] = collect($user->role)->pluck("component");
+            
+            foreach($user->role as $role){
+                $user['modules'] = $role->component;
+            }
 
             return response([
                 'user' => $user,
