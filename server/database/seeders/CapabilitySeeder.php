@@ -349,7 +349,7 @@ class CapabilitySeeder extends Seeder {
             ["id"=>311, "name"=>"ComponentDefault.forceDestroy"],
             ["id"=>312, "name"=>"ComponentDefault.attach"],
 
-            ["id"=>313, "name"=>".ComponentGroup.create"],
+            ["id"=>313, "name"=>"ComponentGroup.create"],
             ["id"=>314, "name"=>"ComponentGroup.read"],
             ["id"=>315, "name"=>"ComponentGroup.show"],
             ["id"=>316, "name"=>"ComponentGroup.showAll"],

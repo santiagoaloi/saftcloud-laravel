@@ -86,15 +86,15 @@ class AuthController extends Controller {
             //     $user['modules'] = $role->component;
             // }
 
-            $result = [];
-
-            $modules = $user->branch[0]->entity->rootAccount->component;
-            foreach($modules as $module){
-                $result[] = $module->name;
+            $roles = $user->role;
+            foreach($roles as $role){
+                $modules = $role->component;
+                $arr = [];
+                foreach($modules as $module){
+                    $arr[] = [$module->name];
+                };
+                $user['modules'] = $arr;
             };
-
-            $user['modules'] = $result;
-
 
             return response([
                 'user' => $user,

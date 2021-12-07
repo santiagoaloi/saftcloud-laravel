@@ -163,4 +163,5 @@ class RoleController extends Controller {
         };
         return $privilege;
     }
+
 }

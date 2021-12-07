@@ -150,4 +150,15 @@ class BranchController extends Controller {
         }
         $branch->$class()->sync($arr);
     }
+
+    public function getBranchModules(Branch $branch){
+        $result = [];
+        $modules = $branch->component;
+        foreach($modules as $module){
+            $result[] = ['id'=>$module->id, 'name'=>$module->name];
+        };
+
+        $user['modules'] = $result;
+    }
+
 }

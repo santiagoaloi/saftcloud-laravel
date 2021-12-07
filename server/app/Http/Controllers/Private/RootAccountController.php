@@ -150,4 +150,15 @@ class RootAccountController extends Controller {
         }
         $rootAccount->$class()->sync($arr);
     }
+
+    public function getRootAccountModules(RootAccount $rootAccount){
+        $result = [];
+        $modules = $rootAccount->component;
+        foreach($modules as $module){
+            $result[] = ['id'=>$module->id, 'name'=>$module->name];
+        };
+
+        $user['modules'] = $result;
+    }
+
 }
