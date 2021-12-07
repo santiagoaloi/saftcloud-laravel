@@ -121,8 +121,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
 
     // MODULES
-    Route::get('/getRootAccountModules/{id}', [ComponentController::class, 'getRootAccountModules']);
-    Route::get('/getBranchModules/{id}', [ComponentController::class, 'getBranchModules']);
+    Route::get('/getRootAccountModules/{id}', [RootAccountController::class, 'getRootAccountModules']);
+    Route::get('/getBranchModules/{id}', [BranchController::class, 'getBranchModules']);
 
     // ROOT CONTROLLERS
     Route::get('/getComponentNames', [ComponentController::class, 'getComponentNames']);
