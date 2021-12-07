@@ -158,7 +158,9 @@ class RootAccountController extends Controller {
             $result[] = ['id'=>$module->id, 'name'=>$module->name];
         };
 
-        $user['modules'] = $result;
+        return response([
+            'modules' => $result
+        ], 200);
     }
 
 }
