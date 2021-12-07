@@ -1,4 +1,4 @@
-<template>
+<template v-if="$route.name.startsWith('Components')">
   <v-navigation-drawer value="true" mobile-breakpoint="0" clipped width="350" hide-overlay right app>
     <!-- Drawer fixed top -->
     <template #prepend>
@@ -21,26 +21,22 @@
 </template>
 
 <script>
-  import Vue from 'vue';
   import { sync, get } from 'vuex-pathify';
-
-  Vue.component('ComponentDrilldown', () =>
-    import(/* webpackChunkName: 'drawer-bundle' */ '@/components/Navigation/ComponentDrilldown/ComponentDrilldown'),
-  );
-
-  Vue.component('ComponentDrilldownEmpty', () =>
-    import(/* webpackChunkName: 'drawer-bundle' */ '@/components/Navigation/ComponentDrilldown/ComponentDrilldownEmpty'),
-  );
-
-  Vue.component('ComponentDrilldownBar', () =>
-    import(/* webpackChunkName: 'drawer-bundle' */ '@/components/Navigation/ComponentDrilldown/ComponentDrilldownBar'),
-  );
-  Vue.component('ComponentDrilldownFooter', () =>
-    import(/* webpackChunkName: 'drawer-bundle' */ '@/components/Navigation/ComponentDrilldown/ComponentDrilldownFooter'),
-  );
 
   export default {
     name: 'SecureComponentDrawer',
+
+    components: {
+      ComponentDrilldown: () =>
+        import(/* webpackChunkName: 'drawer-bundle' */ '@/components/Navigation/ComponentDrilldown/ComponentDrilldown'),
+      ComponentDrilldownEmpty: () =>
+        import(/* webpackChunkName: 'drawer-bundle' */ '@/components/Navigation/ComponentDrilldown/ComponentDrilldownEmpty'),
+      ComponentDrilldownBar: () =>
+        import(/* webpackChunkName: 'drawer-bundle' */ '@/components/Navigation/ComponentDrilldown/ComponentDrilldownBar'),
+      ComponentDrilldownFooter: () =>
+        import(/* webpackChunkName: 'drawer-bundle' */ '@/components/Navigation/ComponentDrilldown/ComponentDrilldownFooter'),
+    },
+
     computed: {
       ...sync('theme', ['isDark']),
       ...sync('drawers', ['secureComponentDrawer']),

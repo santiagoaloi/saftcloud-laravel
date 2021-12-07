@@ -120,6 +120,11 @@ const getters = {
   //* Returns the name of the tab name selected within the form field editor
   activeComponentTabName: (state) => state.componentStatusTabs[state.activeStatusTab].value,
 
+  allComponentsFilteredUniqueGroups: (state, getters) => {
+    const unique = [...new Set(getters.allComponentsFiltered.map((item) => item.component_group_id))];
+    return unique;
+  },
+
   //* Returns components that belongs to a group, status or matching search string.
   allComponentsFiltered: (state, getters, rootState) => {
     if (!getters.hasSelectedSomeGroups) return {};

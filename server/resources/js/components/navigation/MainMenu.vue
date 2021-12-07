@@ -1,5 +1,5 @@
 <template>
-  <v-list nav dense>
+  <v-list rounded nav dense class="pa-3">
     <div v-for="(item, index) in menu" :key="index">
       <div v-if="item.key || item.text" class="pa-1 mt-2 overline">
         {{ item.text }}

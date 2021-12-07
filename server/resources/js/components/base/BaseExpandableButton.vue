@@ -1,6 +1,7 @@
 <template>
   <div :style="`z-index: ${zIndex};width: ${width}`">
-    <v-sheet :width="width">
+    <v-overlay v-if="value" :z-index="0" :opacity="0.9" color="#20202b" @click="internalValue = false" />
+    <v-sheet style="z-index: 16" :width="width">
       <v-list color="#222530e6">
         <v-list-item :ripple="false" @click="internalValue = !internalValue">
           <v-list-item-avatar>
@@ -12,21 +13,21 @@
             <v-list-item-subtitle>{{ subtitle }}</v-list-item-subtitle>
           </v-list-item-content>
 
-          <v-list-item-icon>
-            <v-icon right> {{ internalValue ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
+          <v-list-item-icon v-if="!hideIcon">
+            <v-icon right :class="{ iconActive: internalValue }"> mdi-chevron-up </v-icon>
           </v-list-item-icon>
         </v-list-item>
       </v-list>
     </v-sheet>
 
-    <v-fade-transition>
+    <v-expand-transition>
       <base-flex-container v-show="internalValue" :width="width" :top="nudgeTop">
         <template #top>
           <slot name="listTop"> </slot>
         </template>
         <slot></slot>
       </base-flex-container>
-    </v-fade-transition>
+    </v-expand-transition>
   </div>
 </template>
 
@@ -63,6 +64,10 @@
         type: [Number],
         default: () => 1,
       },
+      hideIcon: {
+        type: [Boolean],
+        default: () => false,
+      },
     },
     data() {
       return {
@@ -83,3 +88,8 @@
     },
   };
 </script>
+<style scoped>
+  .iconActive {
+    transform: rotate(180deg);
+  }
+</style>

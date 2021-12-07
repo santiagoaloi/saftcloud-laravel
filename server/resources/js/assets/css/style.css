@@ -366,3 +366,13 @@ input::-webkit-inner-spin-button {
 .v-select__selections {
   height: 100%;
 }
+
+.strech .v-btn__content {
+  justify-content: space-between;
+}
+
+/* .v-list-item .v-list-item--highlighted:before {
+  background-co
+  
+  lor: red !important;
+} */

@@ -71,6 +71,7 @@
 
     <base-expandable-button
       v-model="dialogComponent"
+      hide-icon
       title="Create New Component"
       subtitle="There are 15 components"
       icon="mdi-responsive"

@@ -11,15 +11,6 @@
           subgroup
           small
         >
-          <template v-if="level2Item.items">
-            <!-- menu level 3 -->
-            <nav-menu-item
-              v-for="(level3Item, level3Index) in level2Item.items"
-              :key="level3Index"
-              :menu-item="level3Item"
-              small
-            />
-          </template>
         </nav-menu-item>
       </template>
     </nav-menu-item>

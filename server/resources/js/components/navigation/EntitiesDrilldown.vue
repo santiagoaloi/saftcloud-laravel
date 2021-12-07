@@ -86,9 +86,9 @@
           <v-autocomplete
             v-model="selectedEntity.capability"
             outlined
+            solo
             :color="isDark ? '#208ad6' : 'grey'"
             item-color="indigo lighten-4"
-            :background-color="isDark ? '#28292b' : 'white'"
             :items="allCapabilities"
             :maxlength="25"
             item-value="id"
@@ -142,6 +142,24 @@
               </v-tooltip>
             </template>
           </v-autocomplete>
+        </div>
+
+        <div class="mt-2">
+          <baseFieldLabel required label="Allow Modulel Navigation " />
+          <v-autocomplete
+            outlined
+            :color="isDark ? '#208ad6' : 'grey'"
+            item-color="indigo lighten-4"
+            :items="['Module1', 'Module2']"
+            :maxlength="25"
+            hide-no-data
+            dense
+            solo
+            hide-details
+            multiple
+            :ripple="false"
+            @click="getBranchModules()"
+          />
         </div>
       </template>
     </v-container>
@@ -279,8 +297,13 @@
         'allCapabilities',
         'dialogPrivileges',
         'dialogAssignRoles',
+        'allBrachModules',
       ]),
     },
+
+    // created() {
+    //   this.getBrachModules();
+    // },
 
     methods: {
       ...call('entitiesManagement/*'),

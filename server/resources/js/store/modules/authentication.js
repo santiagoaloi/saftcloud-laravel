@@ -22,7 +22,9 @@ const actions = {
 
   // Reset state to default values.
   resetState({ dispatch }) {
+    store.set('authentication/activeBranch', null);
     store.set('authentication/session', getDefaultState());
+
     dispatch('eventsManagement/initialState', { root: true });
     dispatch('componentsManagement/initialState', { root: true });
     dispatch('entitiesManagement/initialState', { root: true });

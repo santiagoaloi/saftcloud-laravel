@@ -101,10 +101,6 @@
 
     methods: {
       ...call('componentManagement', ['selectGroup']),
-
-      // selectNewGroup() {
-      //   this.selectGroup(this.selectedComponent.component_group_id);
-      // },
     },
   };
 </script>

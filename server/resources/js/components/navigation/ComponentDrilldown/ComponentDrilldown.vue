@@ -4,8 +4,10 @@
       <base-unsaved-changes v-if="hasUnsavedChanges(selectedComponent)" @rollBack="rollbackChanges(selectedComponent)" />
     </v-expand-transition>
 
-    <v-card-title> {{ title }} </v-card-title>
-    <v-card-subtitle> {{ subTitle }} </v-card-subtitle>
+    <v-card-title> Edit Component View </v-card-title>
+    <v-card-subtitle>
+      Edit your module quickly, change group, component label, description, enable sidebar visibility and more..</v-card-subtitle
+    >
 
     <component-drilldown-forms />
     <v-divider />
@@ -36,14 +38,6 @@
     computed: {
       ...sync('theme', ['isDark']),
       ...get('componentManagement', ['hasUnsavedChanges', 'selectedComponent']),
-
-      title() {
-        return 'Edit Component View';
-      },
-
-      subTitle() {
-        return 'Edit your module quickly, change group, component label, description, enable sidebar visibility and more..';
-      },
     },
 
     methods: {

@@ -39,9 +39,11 @@
                 offset-x
               >
                 <template #activator="{ on, attrs }">
-                  <v-btn :ripple="false" block rounded v-bind="attrs" v-on="on">
+                  <v-btn class="strech" :ripple="false" block rounded v-bind="attrs" v-on="on">
                     <v-icon size="25" color="teal accent-2" left>mdi-store</v-icon>
+
                     {{ activeBranchName }}
+
                     <v-icon size="25" color="teal accent-2" right>
                       {{ !secureComponentDrawerBranch ? 'mdi-chevron-down' : 'mdi-chevron-right' }}</v-icon
                     >
@@ -81,12 +83,12 @@
                           <template #default="{ active }">
                             <v-list-item-icon>
                               <v-icon :color="active ? 'indigo lighten-2' : 'grey'">
-                                {{ active ? 'mdi-checkbox-blank-circle' : 'mdi-checkbox-blank-circle-outline' }}</v-icon
+                                {{ active ? 'mdi-check-circle' : 'mdi-checkbox-blank-circle-outline' }}</v-icon
                               >
                             </v-list-item-icon>
 
                             <v-list-item-content>
-                              <v-list-item-title v-text="branch.name"></v-list-item-title>
+                              <v-list-item-title v-text="branch.name || 'Default Branch'"></v-list-item-title>
                             </v-list-item-content>
                           </template>
                         </v-list-item>
@@ -171,7 +173,7 @@
 
       activeBranchName() {
         const branch = this.user.branch.find((b) => b.id === this.activeBranch);
-        return branch.name;
+        return branch.name || 'Default Branch';
       },
     },
 

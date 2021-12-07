@@ -3,7 +3,7 @@
     <secure-bar />
     <secure-drawer />
     <secure-view />
-    <secure-comp-drawer v-if="$route.name.startsWith('Components')" />
+    <secure-comp-drawer />
     <secure-ent-drawer v-if="$route.name.startsWith('Entities')" />
     <snackbar />
     <!-- <session-timeout /> -->

@@ -45,6 +45,8 @@ const initialState = () => ({
     { name: 'Starred', value: 'starred', icon: 'mdi-star' },
     { name: 'Banned', value: 'banned', icon: 'mdi-lightbulb-on' },
   ],
+
+  allBranchModules: [],
 });
 
 const state = initialState();
@@ -164,6 +166,15 @@ const actions = {
     axios.get('api/capability.showAll').then((response) => {
       if (response.status === 200) {
         store.set('entitiesManagement/allCapabilities', response.data.records);
+      }
+    });
+  },
+
+  //* Get Branch Modules.
+  getBranchModules({ rootState }) {
+    axios.get(`api/getBranchModules/${rootState.authentication.activeBranch}`).then((response) => {
+      if (response.status === 200) {
+        store.set('entitiesManagement/allBranchModules', response.data.records);
       }
     });
   },

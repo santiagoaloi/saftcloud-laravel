@@ -1,13 +1,5 @@
 <template>
   <v-main style="min-height: 100vh">
-    <v-overlay
-      v-if="overlayValue"
-      :z-index="5"
-      :opacity="0.9"
-      :color="isDark ? '#20202b' : 'rgba(108, 122, 137)'"
-      :value="overlayValue"
-    />
-
     <v-fade-transition leave-active-class="leaveTransition" mode="out-in" :duration="520">
       <router-view />
     </v-fade-transition>
@@ -24,13 +16,6 @@
       ...sync('theme', ['isDark']),
       ...sync('componentManagement', ['selectedComponentGroupsMenuTrigger']),
       ...sync('drawers', ['secureComponentDrawerBranch']),
-
-      overlayValue() {
-        if (this.selectedComponentGroupsMenuTrigger || this.secureComponentDrawerBranch) {
-          return true;
-        }
-        return false;
-      },
     },
   };
 </script>
