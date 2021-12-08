@@ -13,7 +13,7 @@ import * as modules from './modules';
 
 // Blacklist module keys
 const componentManagementFiltered = (module) => {
-  const blackList = ['selectedComponentGroupsMenuTrigger'];
+  const blackList = ['selectedComponentIndex'];
   return omit(module, blackList);
 };
 

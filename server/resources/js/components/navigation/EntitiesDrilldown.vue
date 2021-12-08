@@ -147,12 +147,15 @@
         <div class="mt-2">
           <baseFieldLabel required label="Allow Modulel Navigation " />
           <v-autocomplete
+            v-model="selectedEntity.modules"
             outlined
             :color="isDark ? '#208ad6' : 'grey'"
             item-color="indigo lighten-4"
-            :items="['Module1', 'Module2']"
+            :items="allBranchModules"
             :maxlength="25"
             hide-no-data
+            item-value="id"
+            item-text="name"
             dense
             solo
             hide-details
@@ -289,6 +292,7 @@
         'isAllFilteredEntitiesEmpty',
         'isStarredColor',
         'isStarredIcon',
+        'allBranchModules',
       ]),
       ...sync('entitiesManagement', [
         'entityCardGroup',

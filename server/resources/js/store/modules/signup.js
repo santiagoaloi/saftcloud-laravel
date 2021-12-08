@@ -84,9 +84,9 @@ const actions = {
       .catch(() => {});
   },
 
-  getAvailableViews({ commit }) {
+  getActiveModules({ commit }) {
     axios
-      .get('api/getModules')
+      .get('api/getActiveModules')
       .then((response) => {
         if (response.status) {
           commit('availableViews', response.data.modules);

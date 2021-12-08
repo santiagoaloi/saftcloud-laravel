@@ -81,8 +81,13 @@ const getters = {
     return state.allGroups.find((g) => g.id === parentGroupId).name;
   },
 
+  // selectedComponent: (_, getters) => (group) => {
+  //   return getters.allComponentsFiltered.filter((c) => c.component_group_id === group);
+
+  // },
+
   //* Loads all the configuration of the selected component.
-  selectedComponent: (state, getters) => getters.allComponentsFiltered[state.componentCardGroup],
+  selectedComponent: (state, getters) => getters.allComponentsFiltered[state.selectedComponentIndex],
 
   //* Loads all the field settings of the selected field in component form field tab.
   selectedComponentFormField: (state, getters) => {
@@ -120,10 +125,9 @@ const getters = {
   //* Returns the name of the tab name selected within the form field editor
   activeComponentTabName: (state) => state.componentStatusTabs[state.activeStatusTab].value,
 
-  allComponentsFilteredUniqueGroups: (state, getters) => {
-    const unique = [...new Set(getters.allComponentsFiltered.map((item) => item.component_group_id))];
-    return unique;
-  },
+  allComponentsFilteredUniqueGroups: (state, getters) => [
+    ...new Set(getters.allComponentsFiltered.map((item) => item.component_group_id)),
+  ],
 
   //* Returns components that belongs to a group, status or matching search string.
   allComponentsFiltered: (state, getters, rootState) => {
@@ -391,7 +395,7 @@ const actions = {
   //* When a component is selected, it loads its configuration.
   setSelectedComponent({ state }, index) {
     if (state.selectedComponentIndex !== index) {
-      store.set('componentManagement/selectedComponentIndex', state.componentCardGroup);
+      store.set('componentManagement/selectedComponentIndex', index);
     }
   },
 

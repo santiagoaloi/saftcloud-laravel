@@ -178,9 +178,16 @@
           },
 
           {
+            icon: 'mdi-key-chain-variant',
+            href: '',
+            title: 'Global Privileges',
+            roles: ['Root'],
+          },
+
+          {
             icon: 'mdi-puzzle-outline',
             href: '/Components',
-            title: 'Components',
+            title: 'Modules',
             roles: ['Root'],
           },
 
@@ -191,24 +198,6 @@
             roles: ['Admin', 'Root'],
           },
         ],
-
-        userMenu: [
-          {
-            icon: 'mdi-cogs',
-            href: '/secure/config/general',
-            title: 'Configuration',
-            roles: [],
-          },
-
-          {
-            icon: 'mdi-security',
-            href: '/core/users',
-            title: 'Users and Groups',
-            roles: [],
-          },
-        ],
-
-        miniVariant: false,
       };
     },
 

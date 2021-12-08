@@ -1,13 +1,6 @@
 <template>
   <div class="pa-4">
-    <v-item-group
-      v-model="componentCardGroup"
-      class="pa-1"
-      :active-class="isDark ? 'gridCardDark' : 'gridcardLight'"
-      style="width: 100%"
-    >
-      <components-grid-content />
-    </v-item-group>
+    <components-grid-content />
   </div>
 </template>
 
@@ -24,6 +17,10 @@
     computed: {
       ...sync('theme', ['isDark']),
       ...sync('componentManagement', ['componentCardGroup']),
+    },
+
+    mounted() {
+      this.componentCardGroup = 0;
     },
   };
 </script>

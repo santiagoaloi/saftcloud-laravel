@@ -90,7 +90,7 @@
     },
 
     created() {
-      this.getAvailableViews();
+      this.getActiveModules();
     },
     methods: {
       ...call('signup/*'),

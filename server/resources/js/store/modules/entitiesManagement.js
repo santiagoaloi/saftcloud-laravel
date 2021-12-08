@@ -174,7 +174,7 @@ const actions = {
   getBranchModules({ rootState }) {
     axios.get(`api/getBranchModules/${rootState.authentication.activeBranch}`).then((response) => {
       if (response.status === 200) {
-        store.set('entitiesManagement/allBranchModules', response.data.records);
+        store.set('entitiesManagement/allBranchModules', response.data.modules);
       }
     });
   },
@@ -296,35 +296,71 @@ const actions = {
   },
 
   //* Saves Entity User Settings
+  // async saveRole({ state, dispatch, getters }) {
+  //   const roleId = getters.selectedEntity.id;
+  //   const capabilities = { name: 'capability', items: getters.selectedEntity.capability };
+
+  //   return axios.post(`api/role.sync/${roleId}`, capabilities).then((response) => {
+
+  //     if (response.status === 200) {
+  //       const meta = {
+  //         name: getters.selectedEntity.name,
+  //         description: getters.selectedEntity.description,
+  //       };
+
+  //       return axios
+  //         .put(`api/role/${roleId}`, meta)
+
+  //         .then((response) => {
+  //           if (response.status === 200) {
+  //             const index = state.allRoles.findIndex((r) => r.id === getters.selectedEntity.id);
+
+  //             axios.get(`api/role/${getters.selectedEntity.id}`).then((responseMeta) => {
+  //               store.set(`entitiesManagement/allRoles@${index}`, responseMeta.data.record);
+  //             });
+
+  //             return true;
+  //           }
+  //         })
+  //         .catch(() => {
+  //           dispatch('snackbar/snackbarError', 'There was an error saving', { root: true });
+  //         });
+  //     }
+  //   });
+  // },
+
   async saveRole({ state, dispatch, getters }) {
     const roleId = getters.selectedEntity.id;
     const capabilities = { name: 'capability', items: getters.selectedEntity.capability };
+    const components = { name: 'component', items: getters.selectedEntity.modules };
 
-    return axios.post(`api/role.sync/${roleId}`, capabilities).then((response) => {
-      if (response.status === 200) {
-        const meta = {
-          name: getters.selectedEntity.name,
-          description: getters.selectedEntity.description,
-        };
+    axios.post(`api/role.sync/${roleId}`, capabilities);
+    axios.post(`api/role.sync/${roleId}`, components);
 
-        return axios
-          .put(`api/role/${roleId}`, meta)
-          .then((response) => {
-            if (response.status === 200) {
-              const index = state.allRoles.findIndex((r) => r.id === getters.selectedEntity.id);
+    const meta = {
+      name: getters.selectedEntity.name,
+      description: getters.selectedEntity.description,
+    };
 
-              axios.get(`api/role/${getters.selectedEntity.id}`).then((responseMeta) => {
-                store.set(`entitiesManagement/allRoles@${index}`, responseMeta.data.record);
-              });
+    axios.put(`api/role/${roleId}`, meta);
 
-              return true;
-            }
-          })
-          .catch(() => {
-            dispatch('snackbar/snackbarError', 'There was an error saving', { root: true });
-          });
-      }
-    });
+    // .then((response) => {
+    //   if (response.status === 200) {
+    //     const index = state.allRoles.findIndex((r) => r.id === getters.selectedEntity.id);
+
+    //     axios.get(`api/role/${getters.selectedEntity.id}`).then((responseMeta) => {
+    //       store.set(`entitiesManagement/allRoles@${index}`, responseMeta.data.record);
+    //     });
+
+    //     return true;
+    //   }
+    // })
+    // .catch(() => {
+    //   dispatch('snackbar/snackbarError', 'There was an error saving', { root: true });
+    // });
+
+    // });
+    // },
   },
 
   //* Moves to the previous entity in the array (navigation arrows).

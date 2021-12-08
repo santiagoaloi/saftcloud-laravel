@@ -16,7 +16,17 @@
           <v-btn rounded to="/signup" height="36" class="mr-3" dark x-large plain>
             <v-icon left> mdi-account-plus </v-icon>Sign up
           </v-btn>
-          <v-btn min-width="100px" to="/Components" height="36" class="mr-3" rounded dark color="primary" x-large>
+          <v-btn
+            :loading="user ? loadingProfile : null"
+            min-width="100px"
+            height="36"
+            class="mr-3"
+            rounded
+            dark
+            color="primary"
+            x-large
+            @click="login()"
+          >
             <v-avatar class="ml-n4 mr-3" size="28" left>
               <v-img :src="user ? user.avatar || 'storage/defaults/avatar.png' : 'storage/defaults/avatar.png'">
                 <template #placeholder>
@@ -62,6 +72,7 @@
         imageLoaded: false,
         responsiveMenu: false,
         store,
+        loadingProfile: false,
       };
     },
 
@@ -71,6 +82,14 @@
     },
 
     methods: {
+      login() {
+        if (this.user) {
+          this.loadingProfile = true;
+          this.$router.push('Entities');
+        } else {
+          this.$router.push('Login');
+        }
+      },
       setTheme() {
         this.$vuetify.theme.dark = !this.$vuetify.theme.dark;
         this.isDark = !this.isDark;

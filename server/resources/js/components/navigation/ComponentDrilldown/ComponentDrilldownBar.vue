@@ -1,7 +1,7 @@
 <template>
   <div class="pt-3">
     <v-app-bar color="transparent" flat dense>
-      <v-tooltip transition="false" color="black" bottom>
+      <!-- <v-tooltip transition="false" color="black" bottom>
         <template #activator="{ on }">
           <v-btn
             :disabled="previousComponentDisabled"
@@ -24,7 +24,7 @@
           </v-btn>
         </template>
         <span>Next component</span>
-      </v-tooltip>
+      </v-tooltip> -->
 
       <v-spacer />
     </v-app-bar>

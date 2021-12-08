@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <fragment>
     <v-item-group
       v-model="entityCardGroup"
       class="gallery-card-container pa-4"
@@ -58,13 +58,12 @@
         </template>
       </base-grid-card>
     </v-item-group>
-  </div>
+  </fragment>
 </template>
 
 <script>
   import { sync, call, get } from 'vuex-pathify';
   import capitalize from 'lodash/capitalize';
-  import axios from 'axios';
 
   export default {
     name: 'EntitiesGridView',

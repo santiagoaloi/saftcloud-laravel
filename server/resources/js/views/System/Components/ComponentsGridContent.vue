@@ -1,32 +1,30 @@
 <template>
   <div>
-    <v-sheet v-for="(group, index) in allComponentsFilteredUniqueGroups" :key="index" color="transparent">
-      <div :log="log(group)"></div>
+    <div v-for="(group, index) in allComponentsFilteredUniqueGroups" :key="group">
       <v-card-title class="ml-n1 mb-2" :class="{ 'my-5': index !== 0 }">
-        <h3>{{ getGroupName(group) }}</h3>
+        <h3><v-icon class="mr-3"> mdi-vector-arrange-above </v-icon>{{ getGroupName(group) }}</h3>
       </v-card-title>
 
       <div class="gallery-card-container">
-        <base-grid-card
-          v-for="(component, i) in allComponentsFiltered.filter((c) => c.component_group_id === group)"
+        <v-lazy
+          v-for="(component, i) in filtered(group)"
           :key="i"
-          icon-only
-          :item="component"
-          :index="i"
-          :status-icons="icons"
-          :icon="component.config_settings.icon.name"
-          :icon-color="component.config_settings.icon.color"
-          :title="component.config.general_config.title"
-          :methods="mapMethods"
-          @click.native.prevent="setSelectedComponent(i)"
+          :options="{
+            threshold: 0.5,
+          }"
+          min-height="200"
+          transition="fade-transition"
+          class="w-full"
         >
-          <template #footer>
-            <components-grid-group-chips :component="component" />
-            <base-unsaved-changes-icon :unsaved="hasUnsavedChanges(component)" />
-          </template>
-        </base-grid-card>
+          <base-grid-card v-bind="{ ...settings(component) }" @click.native="setSelectedComponent(filteredIndex(component.id))">
+            <template #footer>
+              <components-grid-group-chips :component="component" />
+              <base-unsaved-changes-icon :unsaved="hasUnsavedChanges(component)" />
+            </template>
+          </base-grid-card>
+        </v-lazy>
       </div>
-    </v-sheet>
+    </div>
   </div>
 </template>
 
@@ -67,9 +65,7 @@
 
     computed: {
       ...sync('theme', ['isDark']),
-      ...sync('componentManagement', ['componentCardGroup']),
       ...get('componentManagement', [
-        'allComponentsFiltered',
         'hasUnsavedChanges',
         'isModularIcon',
         'isModularColor',
@@ -78,7 +74,11 @@
         'isActiveColor',
         'isActiveIcon',
         'allComponentsFilteredUniqueGroups',
+        'allComponentsFiltered',
+        'allComponents',
+
         'allGroups',
+        'selectedComponent',
       ]),
 
       mapMethods() {
@@ -101,13 +101,37 @@
     methods: {
       ...call('componentManagement/*'),
 
-      getGroupName(group) {
-        const g = this.allGroups.find((g) => g.id === group);
-        return g.name;
+      settings(component) {
+        return {
+          'icon-only': true,
+          'item': component,
+          'index': component.id,
+          'status-icons': this.icons,
+          'icon': component.config_settings.icon.name,
+          'icon-color': component.config_settings.icon.color,
+          'title': component.config.general_config.title,
+          'methods': this.mapMethods,
+          'color': this.selectedColor(component),
+        };
       },
 
-      log(g) {
-        console.log(g);
+      selectedColor(component) {
+        if (this.selectedComponent.id === component.id && this.isDark) {
+          return 'gridCardDark';
+        }
+        return null;
+      },
+
+      filtered(group) {
+        return this.allComponentsFiltered.filter((c) => c.component_group_id === group);
+      },
+
+      filteredIndex(id) {
+        return this.allComponentsFiltered.map((component) => component.id).indexOf(id);
+      },
+
+      getGroupName(group) {
+        return this.allGroups.find((g) => g.id === group).name;
       },
     },
   };

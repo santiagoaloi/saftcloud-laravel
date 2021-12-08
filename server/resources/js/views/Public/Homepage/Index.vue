@@ -12,12 +12,16 @@
               <v-card flat color="transparent" width="600">
                 <h1 class="text-shadow">Upgrade your business to the next-generation Point of Sales in the cloud.</h1>
 
-                <h3 class="text-shadow white--text mt-10" style="font-weight: 100">
+                <h3 class="text-shadow white--text mt-2" style="font-weight: 100">
                   Saftcloud ™ is a cloud-based retail software platform that enables retailers speed up sales, manage inventories,
-                  reward customer loyalty, and garner insights into their businesses in real-time. The platform makes it easy to
-                  add new outlets and registers as your business grows. Designed for multi-outlet retailers, Saftcloud ™ ensures
-                  that your business operates as one cohesive operation.
+                  reward customer loyalty and garner insights into their businesses in real-time. The platform makes it easy to
+                  add new outlets and registers as your business grows.
                 </h3>
+
+                <h3 class="text-shadow indigo--text text--lighten-4 mt-4">
+                  Designed for multi-outlet retailers, Saftcloud ™ ensures that your business operates as one cohesive operation.
+                </h3>
+
                 <div class="mt-8">
                   <v-btn class="hoverElevationSoft" to="/Signup" dark x-large color="primary"> Try it for free </v-btn>
                   <v-btn dark x-large class="my-1 mx-sm-1 hoverElevationSoft"> Contact Sales </v-btn>
