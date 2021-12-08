@@ -57,7 +57,7 @@ const actions = {
         }
         return false;
       })
-      .catch(() => true);
+      .catch(() => false);
   },
 
   async buildRoutes({ state }) {

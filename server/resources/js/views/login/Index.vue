@@ -205,11 +205,11 @@
                   this.shake = false;
                 }, 500);
               } else {
-                alert('llegue al paso del route');
-                this.$router.push('/Entities');
+                this.$router.push('/Components');
               }
             });
           } else {
+            this.loading = false;
             this.shake = true;
             setTimeout(() => {
               this.shake = false;
