@@ -205,6 +205,7 @@
                   this.shake = false;
                 }, 500);
               } else {
+                alert('llegue al paso del route');
                 this.$router.push('/Entities');
               }
             });
