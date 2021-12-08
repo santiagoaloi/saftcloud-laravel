@@ -61,7 +61,7 @@ const actions = {
             return false;
           }
         }
-        return false;
+        alert('no active branch');
       })
       .catch(() => true);
   },
