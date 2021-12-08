@@ -49,7 +49,7 @@ const actions = {
             return true;
           }
 
-          if (data.user.user_setting !== null || !data.user.user_setting.default_branch) {
+          if (data.user.user_setting === null || !data.user.user_setting.default_branch) {
             store.set('snackbar/data@value', true);
             store.set(
               'snackbar/data@text',
