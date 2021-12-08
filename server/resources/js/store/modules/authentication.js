@@ -50,6 +50,7 @@ const actions = {
           }
 
           if (!data.user.user_setting.default_branch) {
+            alert('no active branch');
             store.set('snackbar/data@value', true);
             store.set(
               'snackbar/data@text',
