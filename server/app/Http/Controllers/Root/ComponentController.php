@@ -160,6 +160,15 @@ class ComponentController extends Controller {
     }
 
     public function getModules(){
+        $query = Component::select('id', 'config->general_config->title as title', 'deleted_at')
+        ->where([['status->modular', true]])->get();
+
+        return response([
+            'modules' => $query
+        ], 200);
+    }
+
+    public function getActiveModules(){
         $query = Component::select('id', 'config->general_config->title as title')
         ->where([['deleted_at', NULL], ['status->modular', true], ['status->active', true]])->get();
 
@@ -379,4 +388,5 @@ class ComponentController extends Controller {
         }
         $var->$class()->sync($arr);
     }
+
 }

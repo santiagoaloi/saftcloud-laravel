@@ -15,8 +15,7 @@ class LookUpListSeeder extends Seeder {
         DB::table('look_up_lists')->insert([
             ["id"=> 1, "name"=> "entity_types"],
             ["id"=> 2, "name"=> "concepts"],
-            ["id"=> 3, "name"=> "expense_types"],
-            ["id"=> 4, "name"=> "days"],
+            ["id"=> 3, "name"=> "expense_types"]
         ]);
     }
 }

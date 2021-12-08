@@ -1,6 +1,5 @@
 <?php
 use Illuminate\Support\Facades\DB;
-use App\Models\Root\Component;
 
 function parseComponent($component){
     $component_group_id = $component->component_group_id;

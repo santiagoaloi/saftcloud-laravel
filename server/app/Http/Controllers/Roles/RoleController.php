@@ -164,4 +164,15 @@ class RoleController extends Controller {
         return $privilege;
     }
 
+    public function getRoleModules(Role $role){
+        $result = [];
+        $modules = $role->component;
+        foreach($modules as $module){
+            $result[] = ['id'=>$module->id, 'name'=>$module->name];
+        };
+
+        return response([
+            'modules' => $result
+        ], 200);
+    }
 }

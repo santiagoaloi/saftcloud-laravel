@@ -76,6 +76,7 @@ Route::post('/makeAccount', [MakeAccountController::class, 'accountCreation']);
 Route::get('/listIcons', [IconController::class, 'listIcons']);
 
 Route::get('/getModules', [ComponentController::class, 'getModules']);
+Route::get('/getActiveModules', [ComponentController::class, 'getActiveModules']);
 
 // Protected routes
 Route::group(['middleware' => ['auth:sanctum']], function () {
@@ -133,7 +134,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::resource('/componentGroup', ComponentGroupController::class);
     Route::get('/getAllGroupNames', [ComponentGroupController::class, 'showAllGroupNames']);
-    Route::get('/getNavigationStructure', [ComponentGroupController::class, 'showAllWithChild']);
+    Route::get('/getNavigationStructure', [ComponentGroupController::class, 'getNavigationStructure']);
 
     Route::resource('/mysqlResource', MysqlController::class);
     Route::get('/getAllTables', [MysqlController::class, 'showAll']);

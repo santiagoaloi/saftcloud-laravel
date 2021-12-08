@@ -53,14 +53,24 @@ class ComponentGroupController extends Controller {
         ], 200);
     }
 
-    public function showAllWithChild() {
-        $parents = DB::table('component_groups')->select('id', 'name', 'icon', 'component_group_id')->where('component_group_id', NULL)->where('deleted_at', '=', NULL)->get();
-        $childs = DB::table('component_groups')->select('id', 'name', 'icon', 'component_group_id')->where('component_group_id', '!=' , NULL)->where('deleted_at', '=', NULL)->get();
-        $query = DB::select("SELECT name, JSON_EXTRACT(config, '$.general_config.title') as title, JSON_EXTRACT(config_settings, '$.icon.name') as icon, JSON_EXTRACT(config, '$.general_config.isVisibleInSidebar') as isVisibleInSidebar, component_group_id FROM components where deleted_at is NULL HAVING isVisibleInSidebar = true");
+    public function getNavigationStructure() {
+        $parents = DB::table('component_groups')
+            ->select('id', 'name', 'icon', 'component_group_id')
+            ->where('component_group_id', NULL)->where('deleted_at', '=', NULL)
+            ->get();
+        $childs = DB::table('component_groups')
+            ->select('id', 'name', 'icon', 'component_group_id')
+            ->where('component_group_id', '!=' , NULL)->where('deleted_at', '=', NULL)
+            ->get();
+        $modules = DB::select("SELECT name, JSON_EXTRACT(config, '$.general_config.title') as title, JSON_EXTRACT(config_settings, '$.icon.name') as icon, JSON_EXTRACT(config, '$.general_config.isVisibleInSidebar') as isVisibleInSidebar, component_group_id 
+            FROM components 
+            where deleted_at is NULL HAVING isVisibleInSidebar = true"
+        );
+
         $array = [];
 
-            if(!empty($query)){
-                foreach($query as $tes => $val){
+            if(!empty($modules)){
+                foreach($modules as $tes => $val){
                     $icon = str_replace('"', "", $val->icon);
                     $url = '/'.$val->name;
                     $title = str_replace('"', "", $val->title);
@@ -72,14 +82,14 @@ class ComponentGroupController extends Controller {
             }
 
             foreach($parents as $parent){
-                if(!empty($query)){
+                if(!empty($modules)){
                     foreach($components as $component){
                         if($parent->id == $component['component_group_id']){
                             $parent->items[] = $component;
                         }
                     }
                 }
-                if(isset($childs) && !empty($query)){
+                if(isset($childs) && !empty($modules)){
                     foreach($childs as $child){
                         if($parent->id === $child->component_group_id){
                             if(isset($components)){

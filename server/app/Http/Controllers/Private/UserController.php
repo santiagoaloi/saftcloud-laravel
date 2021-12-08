@@ -204,34 +204,4 @@ class UserController extends Controller {
         $user->$class()->sync($arr);
     }
 
-    public function getRolCapabilities($user){
-        $roles = [];
-        $capabilities = [];
-
-        foreach ($user->role as $value) {
-            if($value){
-                $roles[] = $value->name;
-                foreach ($value->capability as $capability){
-                    $capabilities[] = $capability->name;
-                }
-            }
-        };
-        return $this->getCapabilities($user, $capabilities);
-    }
-
-    public function getCapabilities($user, $capabilities){
-        if ($capabilities){
-            foreach ($user->capability as $value) {
-                if($value){
-                    $capabilities[] = $value->name;
-                }
-            }
-            return $capabilities;
-        }
-        return [];
-    }
-
-    public function test(User $user){
-        return $user;
-    }
 }

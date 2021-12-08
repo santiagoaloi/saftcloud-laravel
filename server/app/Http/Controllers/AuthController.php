@@ -76,8 +76,8 @@ class AuthController extends Controller {
             $user->userSetting;
             $user->entity;
             $user->branch[0]->entity;
-            $UserController = New UserController;
-            $user->privileges = $UserController->getRolCapabilities($user);
+            // $UserController = New UserController;
+            $user->privileges = getRolCapabilities($user);
             $user->origin = clone$user;
 
             // $user['test'] = collect($user->role)->pluck("component");
@@ -91,7 +91,7 @@ class AuthController extends Controller {
                 $modules = $role->component;
                 $arr = [];
                 foreach($modules as $module){
-                    $arr[] = [$module->name];
+                    $arr[] = $module->name;
                 };
                 $user['modules'] = $arr;
             };
