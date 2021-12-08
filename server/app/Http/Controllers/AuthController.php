@@ -99,7 +99,7 @@ class AuthController extends Controller {
             return response([
                 'user' => $user,
                 'token' => $token,
-                'status' => true    
+                'status' => true
             ], 200);
         }
 
