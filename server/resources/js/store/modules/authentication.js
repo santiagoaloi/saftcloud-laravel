@@ -31,7 +31,7 @@ const actions = {
   },
 
   // Sends login form payload to backend.
-  async login({ commit, state, dispatch }, data) {
+  login({ commit, state, dispatch }, data) {
     return axios
       .post('api/login', data)
       .then((response) => {
@@ -55,6 +55,7 @@ const actions = {
 
           return true;
         }
+        return false;
       })
       .catch(() => false);
   },
