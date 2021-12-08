@@ -205,7 +205,7 @@
                   this.shake = false;
                 }, 500);
               } else {
-                this.$router.push('/Components');
+                this.$router.push('/Entities');
               }
             });
           } else {
