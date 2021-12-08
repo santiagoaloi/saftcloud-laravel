@@ -42,7 +42,7 @@ const actions = {
           delete data.status;
 
           // Set the default branch workspace
-          if (!state.activeBranch && data.user.user_setting.default_branch) {
+          if (!state.activeBranch || !data.user.user_setting.default_branch) {
             store.set('authentication/activeBranch', data.user.user_setting.default_branch);
           } else {
             store.set('snackbar/data@value', true);
