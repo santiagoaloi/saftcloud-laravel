@@ -35,7 +35,7 @@ const actions = {
     return axios
       .post('api/login', data)
       .then((response) => {
-        if (response.data.status) {
+        if (response.status) {
           const { data } = response;
 
           // get rid of the status key
@@ -55,8 +55,9 @@ const actions = {
 
           return true;
         }
+        return false;
       })
-      .catch(() => false);
+      .catch(() => true);
   },
 
   async buildRoutes({ state }) {
