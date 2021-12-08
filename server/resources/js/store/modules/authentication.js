@@ -42,26 +42,23 @@ const actions = {
           delete data.status;
 
           // Set the default branch workspace
-          if (!state.activeBranch || data.user.user_setting.default_branch) {
+          if (!state.activeBranch && data.user.user_setting.default_branch) {
+            commit('session', data);
+            axiosDefaults.headers.common.Authorization = `Bearer ${response.data.token}`;
             store.set('authentication/activeBranch', data.user.user_setting.default_branch);
-          } else {
+            return true;
+          }
+
+          if (!data.user.user_setting.default_branch) {
             store.set('snackbar/data@value', true);
             store.set(
               'snackbar/data@text',
-              'You dont have a default branch assigned, please contact your administrator before you can login.',
+              'This account doesnt have an active branch configured, please contact your administrator before you can login.',
             );
             store.set('snackbar/data@icon', 'mdi-alert-octagon');
             store.set('snackbar/data@color', 'pink darken-1');
+            return false;
           }
-
-          // Creates an "origin" of the login response data...
-          // data.user.origin = cloneDeep(data);
-          commit('session', data);
-          axiosDefaults.headers.common.Authorization = `Bearer ${response.data.token}`;
-
-          // dispatch('buildRoutes');
-
-          return true;
         }
         return false;
       })
