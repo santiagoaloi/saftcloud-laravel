@@ -210,6 +210,7 @@
               }
             });
           } else {
+            this.loading = false;
             this.shake = true;
             setTimeout(() => {
               this.shake = false;
