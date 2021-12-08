@@ -42,15 +42,14 @@ const actions = {
           delete data.status;
 
           // Set the default branch workspace
-          if (!state.activeBranch && data.user.user_setting.default_branch) {
+          if (!state.activeBranch && data.user.user_setting !== null) {
             commit('session', data);
             axiosDefaults.headers.common.Authorization = `Bearer ${response.data.token}`;
             store.set('authentication/activeBranch', data.user.user_setting.default_branch);
             return true;
           }
 
-          if (!data.user.user_setting.default_branch) {
-            alert('no active branch');
+          if (data.user.user_setting !== null || !data.user.user_setting.default_branch) {
             store.set('snackbar/data@value', true);
             store.set(
               'snackbar/data@text',
@@ -61,7 +60,6 @@ const actions = {
             return false;
           }
         }
-        alert('no active branch');
       })
       .catch(() => true);
   },

@@ -194,7 +194,6 @@
       ...call('authentication/*'),
 
       validatelogin() {
-        console.log('test');
         this.$refs.loginForm.validate().then((validated) => {
           if (validated) {
             this.loading = true;
@@ -210,7 +209,6 @@
               }
             });
           } else {
-            this.loading = false;
             this.shake = true;
             setTimeout(() => {
               this.shake = false;
