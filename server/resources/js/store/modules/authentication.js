@@ -42,8 +42,16 @@ const actions = {
           delete data.status;
 
           // Set the default branch workspace
-          if (!state.activeBranch) {
+          if (!state.activeBranch || !data.user.user_setting.default_branch) {
             store.set('authentication/activeBranch', data.user.user_setting.default_branch);
+          } else {
+            store.set('snackbar/data@value', true);
+            store.set(
+              'snackbar/data@text',
+              'You dont have a default branch assigned, please contact your administrator before you can login.',
+            );
+            store.set('snackbar/data@icon', 'mdi-alert-octagon');
+            store.set('snackbar/data@color', 'pink darken-1');
           }
 
           // Creates an "origin" of the login response data...
