@@ -200,6 +200,7 @@
             this.loading = true;
             this.login(this.auth).then((authenticated) => {
               if (!authenticated) {
+                alert('llegue al paso del route 2');
                 this.loading = false;
                 this.shake = true;
                 setTimeout(() => {
