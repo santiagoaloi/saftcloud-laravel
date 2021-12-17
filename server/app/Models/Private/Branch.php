@@ -38,7 +38,7 @@ class Branch extends Model {
         return $this->morphMany('App\Models\Private\Social', 'socialable');
     }
 
-    public function component(){
-        return $this->belongsToMany('App\Models\Root\Component');
+    public function module(){
+        return $this->belongsToMany('App\Models\Root\Module');
     }
 }

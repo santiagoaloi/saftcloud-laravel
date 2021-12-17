@@ -4,16 +4,16 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateComponentGroupsTable extends Migration {
+class CreateModuleGroupsTable extends Migration {
     /**
      * Run the migrations.
      *
      * @return void
      */
     public function up() {
-        Schema::create('component_groups', function (Blueprint $table) {
+        Schema::create('module_groups', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('component_group_id')->nullable()->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
+            $table->foreignId('module_group_id')->nullable()->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
             $table->string('name')->unique();
             $table->string('icon')->nullable();
             $table->smallInteger('ordering')->nullable();
@@ -28,6 +28,6 @@ class CreateComponentGroupsTable extends Migration {
      * @return void
      */
     public function down() {
-        Schema::dropIfExists('component_groups');
+        Schema::dropIfExists('module_groups');
     }
 }

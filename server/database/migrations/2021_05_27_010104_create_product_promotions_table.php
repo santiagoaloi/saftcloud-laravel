@@ -15,6 +15,8 @@ class CreateProductPromotionsTable extends Migration {
             $table->id();
             $table->foreignId('branch_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
             $table->string('name');
+            $table->date('start');
+            $table->date('end');
             $table->softDeletes();
             $table->timestamps();
         });

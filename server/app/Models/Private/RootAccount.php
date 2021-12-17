@@ -27,7 +27,7 @@ class RootAccount extends Model {
         return $this->hasOne('App\Models\GeneralConfig\DocumentType');
     }
 
-    public function component(){
-        return $this->belongsToMany('App\Models\Root\Component');
+    public function module(){
+        return $this->belongsToMany('App\Models\Root\Module');
     }
 }

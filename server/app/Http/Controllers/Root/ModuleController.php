@@ -5,19 +5,19 @@ namespace App\Http\Controllers\Root;
 use Illuminate\Http\Request;
 
 Use Exception;
-use App\Models\Root\Component;
+use App\Models\Root\Module;
 use Illuminate\Support\Facades\DB;
 
 use App\Http\Controllers\Controller;
-use App\Models\Root\ComponentDefault;
+use App\Models\Root\ModuleDefault;
 use Illuminate\Database\QueryException;
 
-class ComponentController extends Controller {
+class ModuleController extends Controller {
 
-    public function componentConstructor($id) {
-        $query = Component::find($id);
+    public function moduleConstructor($id) {
+        $query = Module::find($id);
 
-        $result = parseComponent($query);
+        $result = parseModule($query);
         $config = constructConfig($query->config);
         $records = DB::SELECT($config['general_config']['sql_query']);
 
@@ -47,19 +47,19 @@ class ComponentController extends Controller {
             }
         };
 
-        $component['columns']            = $config['columns'];
-        $component['configSettings']     = $result['config_settings'];
-        $component['formFields']         = $formFields;
-        $component['recordItem']         = $recordItem;
-        $component['records']            = $newRecords;
+        $module['columns']            = $config['columns'];
+        $module['configSettings']     = $result['config_settings'];
+        $module['formFields']         = $formFields;
+        $module['recordItem']         = $recordItem;
+        $module['records']            = $newRecords;
 
         return response([
-            'component' => $component
+            'module' => $module
         ], 200);
     }
 
     public function store(Request $request) {
-        $this->authorize(ability: 'store', arguments: [Component::class, 'Component.store']);
+        $this->authorize(ability: 'store', arguments: [Module::class, 'Module.store']);
         $json_data['table'] = $request['table'];
 
         $sql_query = "SELECT {$request['table']}.* FROM {$request['table']}";
@@ -90,7 +90,7 @@ class ComponentController extends Controller {
         ];
 
         $data = [
-            'component_group_id'    => $request['component_group_id'],
+            'module_group_id'    => $request['module_group_id'],
             'name'                  => ucfirst(strtolower($request['name'])),
             'config'                => json_encode($config),
             'config_settings'       => json_encode($configSettings),
@@ -98,7 +98,7 @@ class ComponentController extends Controller {
         ];
 
         try{
-            Component::create($data);
+            Module::create($data);
         }
         catch(\Illuminate\Database\QueryException $e){
             $errorCode = $e->errorInfo[1];
@@ -109,58 +109,58 @@ class ComponentController extends Controller {
                 ], 404);
             }
         }
-        $this->makeNewComponentFile($request['name']);
+        $this->makeNewModuleFile($request['name']);
 
         return $this->showAll();
     }
 
     public function show($id) {
-        $this->authorize(ability: 'show', arguments: [Component::class, 'Component.show']);
-        $query = Component::find($id);
-        $result = parseComponent($query);
+        $this->authorize(ability: 'show', arguments: [Module::class, 'Module.show']);
+        $query = Module::find($id);
+        $result = parseModule($query);
 
         return response([
-            'component' => $result
+            'module' => $result
         ], 200);
     }
 
     public function showAll() {
-        $this->authorize(ability: 'showAll', arguments: [Component::class, 'Component.showAll']);
-        $components = Component::all();
-        $arrayComponent = [];
+        $this->authorize(ability: 'showAll', arguments: [Module::class, 'Module.showAll']);
+        $modules = Module::all();
+        $arrayModule = [];
 
-        foreach($components as $component){
-            $arrayComponent[] = parseComponent($component);
+        foreach($modules as $module){
+            $arrayModule[] = parseModule($module);
         };
 
         return response([
-            'components' => $arrayComponent
+            'modules' => $arrayModule
         ], 200);
     }
 
-    public function getComponentNames(){
-        $components = Component::all();
-        $arrayComponent = [];
+    public function getModuleNames(){
+        $modules = Module::all();
+        $arrayModule = [];
 
-        foreach($components as $component){
-            $general_config = json_decode($component->config, true);
-            $config_settings = json_decode($component->config_settings, true);
+        foreach($modules as $module){
+            $general_config = json_decode($module->config, true);
+            $config_settings = json_decode($module->config_settings, true);
             $title = $general_config['general_config']['title'];
-            $arrayComponent[] = [
-                'id'    => $component->id,
-                'name'  => $component->name,
+            $arrayModule[] = [
+                'id'    => $module->id,
+                'name'  => $module->name,
                 'title' => $title,
                 'configSettings' => $config_settings
             ];
         };
 
         return response([
-            'components' => $arrayComponent
+            'modules' => $arrayModule
         ], 200);
     }
 
     public function getModules(){
-        $query = Component::select('id', 'config->general_config->title as title', 'deleted_at')
+        $query = Module::select('id', 'config->general_config->title as title', 'deleted_at')
         ->where([['status->modular', true]])->get();
 
         return response([
@@ -169,7 +169,7 @@ class ComponentController extends Controller {
     }
 
     public function getActiveModules(){
-        $query = Component::select('id', 'config->general_config->title as title')
+        $query = Module::select('id', 'config->general_config->title as title')
         ->where([['deleted_at', NULL], ['status->modular', true], ['status->active', true]])->get();
 
         return response([
@@ -179,23 +179,23 @@ class ComponentController extends Controller {
 
     //  Para mostrar los elementos eliminados
     public function showTrashed() {
-        $this->authorize(ability: 'showTrashed', arguments: [Component::class, 'Component.showTrashed']);
+        $this->authorize(ability: 'showTrashed', arguments: [Module::class, 'Module.showTrashed']);
         return response([
-            'components' => Component::onlyTrashed()->get()
+            'modules' => Module::onlyTrashed()->get()
         ], 200);
     }
 
     //  Para mostrar un elemento eliminado
     public function recoveryTrashed($id) {
-        $this->authorize(ability: 'recoveryTrashed', arguments: [Component::class, 'Component.recoveryTrashed']);
+        $this->authorize(ability: 'recoveryTrashed', arguments: [Module::class, 'Module.recoveryTrashed']);
         return response([
-            'component' => Component::onlyTrashed()->find($id)->recovery()
+            'module' => Module::onlyTrashed()->find($id)->recovery()
         ], 200);
     }
 
     public function update(Request $request, $id) {
-        $this->authorize(ability: 'update', arguments: [Component::class, 'Component.update']);
-        $query = Component::find($id);
+        $this->authorize(ability: 'update', arguments: [Module::class, 'Module.update']);
+        $query = Module::find($id);
 
         $general_config = json_decode($query->config, true);
         $sql_original = $general_config['general_config']['sql_query'];
@@ -247,24 +247,24 @@ class ComponentController extends Controller {
     }
 
     public function updateAll($request) {
-        $this->authorize(ability: 'updateAll', arguments: [Component::class, 'Component.updateAll']);
+        $this->authorize(ability: 'updateAll', arguments: [Module::class, 'Module.updateAll']);
         foreach($request as $item){
-            $component = Component::find($item['id']);
-            $component->fill($item)->save();
+            $module = Module::find($item['id']);
+            $module->fill($item)->save();
         };
 
         return $this->showAll();
     }
 
     public function destroy($id) {
-        $this->authorize(ability: 'destroy', arguments: [Component::class, 'Component.destroy']);
-        $query = Component::find($id);
+        $this->authorize(ability: 'destroy', arguments: [Module::class, 'Module.destroy']);
+        $query = Module::find($id);
         $pathDeleted = resource_path('js/views/Deleted');
         if(!file_exists($pathDeleted)){
             makeNewDirectory($pathDeleted);
         }
 
-        // delete component folder
+        // delete module folder
         $vue_folder = resource_path("js/views/Protected/{$query->name}");
 
         $deleted_folder = resource_path("js/views/Deleted/{$query->name}");
@@ -280,8 +280,8 @@ class ComponentController extends Controller {
     }
 
     public function forceDestroy($id){
-        $this->authorize(ability: 'forceDestroy', arguments: [Component::class, 'Component.forceDestroy']);
-        $query = Component::withTrashed()->find($id);
+        $this->authorize(ability: 'forceDestroy', arguments: [Module::class, 'Module.forceDestroy']);
+        $query = Module::withTrashed()->find($id);
         $pathDeleted = resource_path("js/views/Deleted/{$query->name}");
         if(file_exists($pathDeleted)){
             deleteDirectory($pathDeleted);
@@ -300,20 +300,20 @@ class ComponentController extends Controller {
         ], 200);
     }
 
-    function makeNewComponentFile($request){
+    function makeNewModuleFile($request){
         $name = ucfirst(strtolower($request));
         $data = ['name' => $name];
 
         $vue_folder = resource_path("js/views/Protected/{$name}");
 
         makeNewDirectory($vue_folder);
-        $tmp_vue = file_get_contents(resource_path("js/templates/componentBoilerplate.vue"));
+        $tmp_vue = file_get_contents(resource_path("js/templates/moduleBoilerplate.vue"));
         $build_vue = blend($tmp_vue, $data);
         file_put_contents( $vue_folder . "/{$data['name']}.vue" , $build_vue);
     }
 
     function buildGeneralConfig(){
-        $query = json_decode(ComponentDefault::get('config_structure')->last());
+        $query = json_decode(ModuleDefault::get('config_structure')->last());
         $config_structure = json_decode($query->config_structure);
         return $config_structure->general_config;
     }
@@ -333,7 +333,7 @@ class ComponentController extends Controller {
     }
 
     public function formFieldStructure($field) {
-        $model = json_decode(ComponentDefault::pluck('config_structure')->last());
+        $model = json_decode(ModuleDefault::pluck('config_structure')->last());
 
         $model->form_fields->field = $field;
         $model->form_fields->label = $field;
@@ -342,7 +342,7 @@ class ComponentController extends Controller {
     }
 
     public function columnStructure($field) {
-        $model = json_decode(ComponentDefault::pluck('config_structure')->last());
+        $model = json_decode(ModuleDefault::pluck('config_structure')->last());
 
         $model->columns->value = $field;
         $model->columns->text = $field;
@@ -351,8 +351,8 @@ class ComponentController extends Controller {
     }
 
     // AGREGA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
-    public function attachComponent(Component $var, Request $request){
-        $this->authorize(ability: 'attach', arguments: [Component::class, 'Component.attach']);
+    public function attachModule(Module $var, Request $request){
+        $this->authorize(ability: 'attach', arguments: [Module::class, 'Module.attach']);
         $items = $request['items'];
         $class = $request['name'];
         $arr = [];
@@ -364,8 +364,8 @@ class ComponentController extends Controller {
     }
 
     // ELIMINA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
-    public function detachComponent(Component $var, Request $request){
-        $this->authorize(ability: 'attach', arguments: [Component::class, 'Component.attach']);
+    public function detachModule(Module $var, Request $request){
+        $this->authorize(ability: 'attach', arguments: [Module::class, 'Module.attach']);
         $items = $request['items'];
         $class = $request['name'];
         $arr = [];
@@ -377,8 +377,8 @@ class ComponentController extends Controller {
     }
 
     // SINCRONIZA TODOS LOS ITEMS ENVIADOS EN REQUEST
-    public function syncComponent(Component $var, Request $request){
-        $this->authorize(ability: 'attach', arguments: [Component::class, 'Component.attach']);
+    public function syncModule(Module $var, Request $request){
+        $this->authorize(ability: 'attach', arguments: [Module::class, 'Module.attach']);
         $items = $request['items'];
         $class = $request['name'];
         $arr = [];

@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Private;
 
 use App\Http\Controllers\Controller;
-use App\Models\Root\Component;
+use App\Models\Root\Module;
 use Illuminate\Http\Request;
 
 use App\Http\Controllers\Root\MysqlController;
-use App\Http\Controllers\Root\ComponentController;
+use App\Http\Controllers\Root\ModuleController;
 
 class ConstructController extends Controller {
     /**
@@ -17,16 +17,16 @@ class ConstructController extends Controller {
      * @return \Illuminate\Http\Response
     */
     public function index(Request $request) {
-        $query = Component::find($request);
-        $component = $query[0];
-        $ComponentController = new ComponentController;
-        $config = $ComponentController->constructConfig($component->config);
-        $configSettings = $ComponentController->constructConfig($component->config_settings);
+        $query = Module::find($request);
+        $module = $query[0];
+        $moduleController = new ModuleController;
+        $config = $moduleController->constructConfig($module->config);
+        $configSettings = $moduleController->constructConfig($module->config_settings);
 
         $formFields = $this->constructTableFields($config);
         $headers = $this->constructTableHeaders($config);
         $model = $this->constructModel($config);
-        $pageHeader = $component->title;
+        $pageHeader = $module->title;
         $table = $config['sql_table'];
 
         return response([

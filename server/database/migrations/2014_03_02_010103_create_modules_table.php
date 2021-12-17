@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateComponentsTable extends Migration {
+class CreateModulesTable extends Migration {
     /**
      * Run the migrations.
      *
@@ -12,10 +12,10 @@ class CreateComponentsTable extends Migration {
      */
     public function up() {
         //Original Structure
-        if (!Schema::hasTable('components')) {
-            Schema::create('components', function (Blueprint $table) {
+        if (!Schema::hasTable('modules')) {
+            Schema::create('modules', function (Blueprint $table) {
                 $table->id();
-                $table->foreignId('component_group_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
+                $table->foreignId('module_group_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
                 $table->string('name')->unique();
                 $table->longText('config');
                 $table->longText('config_settings');
@@ -26,8 +26,8 @@ class CreateComponentsTable extends Migration {
         };
 
         //Added columns 
-        if (!Schema::hasColumn('components', 'config')){
-                Schema::table('components', function (Blueprint $table) {
+        if (!Schema::hasColumn('modules', 'config')){
+                Schema::table('modules', function (Blueprint $table) {
                 $table->longText('config');
             });
         };
@@ -39,9 +39,9 @@ class CreateComponentsTable extends Migration {
      * @return void
      */
     public function down() {
-        Schema::table('components', function (Blueprint $table) {
+        Schema::table('modules', function (Blueprint $table) {
             $table->dropSoftDeletes();
-            // Schema::dropIfExists('components');
+            // Schema::dropIfExists('modules');
         });
     }
 }

@@ -4,16 +4,16 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateComponentRootAccountTable extends Migration {
+class CreateModuleRootAccountTable extends Migration {
     /**
      * Run the migrations.
      *
      * @return void
      */
     public function up() {
-        Schema::create('component_root_account', function (Blueprint $table) {
+        Schema::create('module_root_account', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('component_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
+            $table->foreignId('module_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
             $table->foreignId('root_account_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
             $table->timestamps();
         });
@@ -25,6 +25,6 @@ class CreateComponentRootAccountTable extends Migration {
      * @return void
      */
     public function down() {
-        Schema::dropIfExists('component_root_account');
+        Schema::dropIfExists('module_root_account');
     }
 }

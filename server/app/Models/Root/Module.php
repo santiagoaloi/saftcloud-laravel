@@ -5,13 +5,13 @@ namespace App\Models\Root;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Component extends Model {
+class Module extends Model {
     use SoftDeletes;
 
-    protected $fillable = ['component_group_id', 'name', 'config', 'config_settings', 'status'];
+    protected $fillable = ['module_group_id', 'name', 'config', 'config_settings', 'status'];
 
-    public function componentGroup(){
-        return $this->belongsTo('App\Models\Pos\ComponentGroup');
+    public function moduleGroup(){
+        return $this->belongsTo('App\Models\Pos\ModuleGroup');
     }
 
     public function rootAccount(){

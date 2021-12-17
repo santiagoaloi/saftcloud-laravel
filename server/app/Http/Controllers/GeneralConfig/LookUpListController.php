@@ -84,7 +84,7 @@ class LookUpListController extends Controller {
     public function destroy($id) {
         $exist = DB::table('look_up_lists')->whereExists(function ($query) use ($id) {
             $query->select(DB::raw(1))
-                ->from('components')
+                ->from('modules')
                 ->whereRaw("look_up_list_values.look_up_list_id = $id")
                 ->whereRaw("look_up_list_values.look_up_list_id = look_up_lists.id");
         })->get();
@@ -96,7 +96,7 @@ class LookUpListController extends Controller {
             return $this->showAll();
         } else {
             return response([
-                'message' => 'Hay un componente vinculado a este grupo',
+                'message' => 'Hay un modulee vinculado a este grupo',
                 'status'=> false
             ], 404);
         }

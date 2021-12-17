@@ -17,8 +17,8 @@ Use Exception;
 use App\Models\GeneralConfig\LookUpList;
 use App\Http\Controllers\Roles\RoleController;
 use App\Http\Controllers\Private\UserController;
-use App\Http\Controllers\Root\ComponentController;
-use App\Http\Controllers\Root\ComponentDefaultController;
+use App\Http\Controllers\Root\ModuleController;
+use App\Http\Controllers\Root\ModuleDefaultController;
 use App\Helpers\AccountVerification;
 
 class TestFunctionController extends Controller {
@@ -68,8 +68,8 @@ class TestFunctionController extends Controller {
         ));
 
         return $tata;
-        $query = New ComponentController;
-        return $query->getComponentNames();
+        $query = New ModuleController;
+        return $query->getModuleNames();
     }
 
     public function test3(User $user){
@@ -149,7 +149,7 @@ class TestFunctionController extends Controller {
     }
 
     function probarFormFieldStructure(){
-        $test = new ComponentDefaultController;
+        $test = new ModuleDefaultController;
         $pepe =  json_decode($test->getLast(), true);
         return $pepe['form_fields'];
     }
