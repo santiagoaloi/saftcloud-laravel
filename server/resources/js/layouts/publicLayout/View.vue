@@ -37,7 +37,7 @@
 
       loginBackgroundDark() {
         return {
-          'background-image': `linear-gradient(rgba(60, 60, 60, 0.6),rgba(0, 0, 0, 0.9)), url(storage/backgrounds/back2.png)`,
+          'background-image': `linear-gradient(rgba(60, 60, 60, 0.6),rgba(0, 0, 0, 0.9)), url(storage/backgrounds/bb1.png)`,
           'background-repeat': 'no-repeat',
           'background-size': 'cover',
           'background-attachment': 'fixed',
@@ -46,3 +46,5 @@
     },
   };
 </script>
+
+<

@@ -16,11 +16,6 @@
 
     computed: {
       ...sync('theme', ['isDark']),
-      ...sync('componentManagement', ['componentCardGroup']),
-    },
-
-    mounted() {
-      this.componentCardGroup = 0;
     },
   };
 </script>

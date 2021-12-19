@@ -46,9 +46,9 @@ use App\Http\Controllers\Roles\CapabilityController;
 use App\Http\Controllers\Roles\RoleController;
 
 // ROOT CONTROLLERS
-use App\Http\Controllers\Root\ModuleController;
-use App\Http\Controllers\Root\ModuleDefaultController;
-use App\Http\Controllers\Root\ModuleGroupController;
+use App\Http\Controllers\Root\ComponentController;
+use App\Http\Controllers\Root\ComponentDefaultController;
+use App\Http\Controllers\Root\ComponentGroupController;
 use App\Http\Controllers\Root\MysqlController;
 
 //Testing
@@ -75,8 +75,8 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::post('/makeAccount', [MakeAccountController::class, 'accountCreation']);
 Route::get('/listIcons', [IconController::class, 'listIcons']);
 
-Route::get('/getModules', [ModuleController::class, 'getModules']);
-Route::get('/getActiveModules', [ModuleController::class, 'getActiveModules']);
+Route::get('/getModules', [ComponentController::class, 'getModules']);
+Route::get('/getActiveModules', [ComponentController::class, 'getActiveModules']);
 
 // Protected routes
 Route::group(['middleware' => ['auth:sanctum']], function () {
@@ -126,15 +126,15 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/getBranchModules/{branch}', [BranchController::class, 'getBranchModules']);
 
     // ROOT CONTROLLERS
-    Route::get('/getModuleNames', [ModuleController::class, 'getModuleNames']);
-    Route::get('/moduleConstructor/{id}', [ModuleController::class, 'moduleConstructor']);
-    Route::resource('/moduleDefault', ModuleDefaultController::class);
-    Route::get('/moduleDefaultLast', [ModuleDefaultController::class, 'getLast']);
-    Route::get('/moduleDefaultLastJson', [ModuleDefaultController::class, 'getLastJson']);
+    Route::get('/getComponentNames', [ComponentController::class, 'getComponentNames']);
+    Route::get('/componentConstructor/{id}', [ComponentController::class, 'componentConstructor']);
+    Route::resource('/componentDefault', ComponentDefaultController::class);
+    Route::get('/componentDefaultLast', [ComponentDefaultController::class, 'getLast']);
+    Route::get('/componentDefaultLastJson', [ComponentDefaultController::class, 'getLastJson']);
 
-    Route::resource('/moduleGroup', ModuleGroupController::class);
-    Route::get('/getAllGroupNames', [ModuleGroupController::class, 'showAllGroupNames']);
-    Route::get('/getNavigationStructure', [ModuleGroupController::class, 'getNavigationStructure']);
+    Route::resource('/componentGroup', ComponentGroupController::class);
+    Route::get('/getAllGroupNames', [ComponentGroupController::class, 'showAllGroupNames']);
+    Route::get('/getNavigationStructure', [ComponentGroupController::class, 'getNavigationStructure']);
 
     Route::resource('/mysqlResource', MysqlController::class);
     Route::get('/getAllTables', [MysqlController::class, 'showAll']);
@@ -148,7 +148,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
 //Testing
 Route::group(['middleware' => ['auth:sanctum', 'accountVerification']], function () {
-    Route::resource('/module', ModuleController::class);
+    Route::resource('/component', ComponentController::class);
 });
 
 Route::group(['middleware' => ['auth:sanctum']], function () {

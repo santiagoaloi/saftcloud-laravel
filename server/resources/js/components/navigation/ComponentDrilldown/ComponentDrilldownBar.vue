@@ -32,18 +32,14 @@
 </template>
 
 <script>
-  import { sync, call, get } from 'vuex-pathify';
+  import { sync } from 'vuex-pathify';
 
   export default {
     name: 'ComponentDrilldownBar',
     computed: {
       ...sync('theme', ['isDark']),
-      ...sync('componentManagement', ['componentCardGroup']),
-      ...get('componentManagement', ['previousComponentDisabled', 'nextComponentDisabled']),
     },
 
-    methods: {
-      ...call('componentManagement', ['previousComponent', 'nextComponent']),
-    },
+    methods: {},
   };
 </script>

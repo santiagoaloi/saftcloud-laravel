@@ -65,7 +65,7 @@
                     <v-text-field
                       ref="username"
                       v-model.trim="auth.email"
-                      background-color="rgba(56, 54, 54, 0.2)"
+                      background-color="rgba(130, 130, 130, 0.1)"
                       :color="isDark ? '#208ad6' : 'grey'"
                       rounded
                       flat
@@ -104,7 +104,7 @@
                         :disabled="loading"
                         spellcheck="false"
                         :color="isDark ? '#208ad6' : 'grey'"
-                        background-color="rgba(56, 54, 54, 0.2)"
+                        background-color="rgba(130, 130, 130, 0.1)"
                         :error="errors.length > 0"
                         rounded
                         @click:append="password_visible = !password_visible"

@@ -24,14 +24,13 @@ const actions = {
   resetState({ dispatch }) {
     store.set('authentication/activeBranch', null);
     store.set('authentication/session', getDefaultState());
-
     dispatch('eventsManagement/initialState', { root: true });
     dispatch('componentsManagement/initialState', { root: true });
     dispatch('entitiesManagement/initialState', { root: true });
   },
 
   // Sends login form payload to backend.
-  login({ commit, state, dispatch }, data) {
+  login({ commit, state }, data) {
     return axios
       .post('api/login', data)
       .then((response) => {
@@ -53,15 +52,18 @@ const actions = {
             store.set('snackbar/data@value', true);
             store.set(
               'snackbar/data@text',
-              'This account doesnt have an active branch configured, please contact your administrator before you can login.',
+              `This account doesnt have an <b> active branch </b> configured, please contact your administrator before you can access your account.`,
             );
             store.set('snackbar/data@icon', 'mdi-alert-octagon');
             store.set('snackbar/data@color', 'pink darken-1');
+            store.set('snackbar/data@permanent', true);
+
             return false;
           }
         }
+        return false;
       })
-      .catch(() => true);
+      .catch(() => false);
   },
 
   async buildRoutes({ state }) {
