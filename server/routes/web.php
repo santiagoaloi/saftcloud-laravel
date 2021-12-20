@@ -6,7 +6,7 @@ use App\Http\Controllers\Private\UserController;
 use App\Http\Controllers\Public\CountryController;
 use App\Http\Controllers\TestFunctionController;
 
-use App\Http\Controllers\Root\ComponentController;
+use App\Http\Controllers\Root\ModuleController;
 
 /*
 |--------------------------------------------------------------------------

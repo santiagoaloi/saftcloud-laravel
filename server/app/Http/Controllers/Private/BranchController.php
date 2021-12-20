@@ -153,7 +153,7 @@ class BranchController extends Controller {
 
     public function getBranchModules(Branch $branch){
         $result = [];
-        $modules = $branch->component;
+        $modules = $branch->module;
         foreach($modules as $module){
             $result[] = ['id'=>$module->id, 'name'=>$module->name];
         };

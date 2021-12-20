@@ -32,9 +32,9 @@ use App\Models\Private\Country;
 use App\Models\Public\State;
 use App\Models\Roles\Capability;
 use App\Models\Roles\Role;
-use App\Models\Root\Component;
-use App\Models\Root\ComponentDefault;
-use App\Models\Root\ComponentGroup;
+use App\Models\Root\Module;
+use App\Models\Root\ModuleDefault;
+use App\Models\Root\ModuleGroup;
 use App\Models\Taxes\IvaCondition;
 use App\Models\Taxes\IvaTax;
 use App\Models\Taxes\Tax;
@@ -78,9 +78,9 @@ class AuthServiceProvider extends ServiceProvider {
 
         Role::class => privilegePolicy::class,
 
-        Component::class => privilegePolicy::class,
-        ComponentDefault::class => privilegePolicy::class,
-        ComponentGroup::class => privilegePolicy::class,
+        Module::class => privilegePolicy::class,
+        ModuleDefault::class => privilegePolicy::class,
+        ModuleGroup::class => privilegePolicy::class,
         IvaCondition::class => privilegePolicy::class,
         IvaTax::class => privilegePolicy::class,
         Tax::class => privilegePolicy::class,

@@ -18,7 +18,7 @@ class Role extends Model {
       return $this->belongsToMany('App\Models\Roles\Capability');
    }
 
-   public function component(){
-      return $this->belongsToMany('App\Models\Root\Component');
+   public function module(){
+      return $this->belongsToMany('App\Models\Root\Module');
    }
 }
