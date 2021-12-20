@@ -14,8 +14,7 @@ class CreateEntitiesTable extends Migration {
         Schema::create('entities', function (Blueprint $table) {
             $table->id();
             $table->foreignId('root_account_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
-            $table->unsignedBigInteger('entity_type_id');
-            $table->foreign('entity_type_id')->references('id')->on('look_up_list_values')->onDelete('RESTRICT')->onUpdate('CASCADE');
+            $table->foreignId('entity_type_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
             $table->foreignId('entity_capacity_id')->nullable()->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
             $table->string('first_name');
             $table->string('last_name');

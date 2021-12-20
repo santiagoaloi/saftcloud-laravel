@@ -35,7 +35,7 @@
     "files": [
       "app/Helpers/Helper.php",
       "app/Helpers/FileManager.php",
-      "app/Helpers/ComponentManager.php",
+      "app/Helpers/ModuleManager.php",
       "app/Helpers/AccountVerification.php",
       "app/Helpers/RoleHelper.php",
       "app/Helpers/SidebarHelper.php"

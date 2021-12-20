@@ -27,11 +27,10 @@ class DatabaseSeeder extends Seeder {
         $this->call(TaxSeeder::class);
         $this->call(MeasurementUnitSystemSeeder::class);
         $this->call(MeasurementUnitSeeder::class);
-        $this->call(LookUpListSeeder::class);
-        $this->call(LookUpListValueSeeder::class);
 
         $this->call(RootAccountSeeder::class);
         $this->call(EntityCapacitiesSeeder::class);
+        $this->call(EntityTypeSeeder::class);
         $this->call(EntitySeeder::class);
         $this->call(RoleSeeder::class);
         $this->call(CapabilitySeeder::class);

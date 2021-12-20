@@ -13,7 +13,7 @@ function parseModule($module){
 
     $origin = [
         'id'                => $module->id,
-        'module_group_id'=> $module_group_id,
+        'module_group_id'   => $module_group_id,
         'name'              => $name,
         'config'            => $config,
         'config_settings'   => $configSettings,
@@ -27,7 +27,7 @@ function parseModule($module){
 
     $result = [
         'id'                => $module->id,
-        'module_group_id'=> $module_group_id,
+        'module_group_id'   => $module_group_id,
         'name'              => $name,
         'config'            => $config,
         'config_settings'   => $configSettings,

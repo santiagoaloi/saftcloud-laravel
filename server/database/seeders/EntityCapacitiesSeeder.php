@@ -13,13 +13,13 @@ class EntityCapacitiesSeeder extends Seeder {
      */
     public function run() {
         DB::table('entity_capacities')->insert([
-            ["id"=>1, "name"=>"Root company" , "description"=> "", "task"=>""],
-            ["id"=>2, "name"=>"Root entity" , "description"=> "", "task"=>""],
-            ["id"=>3, "name"=>"Company" , "description"=> "", "task"=>""],
-            ["id"=>4, "name"=>"Owner" , "description"=> "", "task"=>""],
-            ["id"=>5, "name"=>"Employed" , "description"=> "", "task"=>""],
-            ["id"=>6, "name"=>"Customer" , "description"=> "", "task"=>""],
-            ["id"=>7, "name"=>"Supplier" , "description"=> "", "task"=>""],
+            ["id"=>1, "name"=>"Root Empresa" , "description"=> "", "task"=>""],
+            ["id"=>2, "name"=>"Root Entidad" , "description"=> "", "task"=>""],
+            ["id"=>3, "name"=>"Empresa" , "description"=> "", "task"=>""],
+            ["id"=>4, "name"=>"Dueño" , "description"=> "", "task"=>""],
+            ["id"=>5, "name"=>"Empleado" , "description"=> "", "task"=>""],
+            ["id"=>6, "name"=>"Cliente" , "description"=> "", "task"=>""],
+            ["id"=>7, "name"=>"Proveedor" , "description"=> "", "task"=>""],
         ]);
     }
 }

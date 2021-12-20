@@ -4,16 +4,15 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateLookUpListsTable extends Migration {
+class CreateSaleInvoicesTable extends Migration {
     /**
      * Run the migrations.
      *
      * @return void
      */
     public function up() {
-        Schema::create('look_up_lists', function (Blueprint $table) {
+        Schema::create('sale_invoices', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
             $table->softDeletes();
             $table->timestamps();
         });
@@ -25,6 +24,6 @@ class CreateLookUpListsTable extends Migration {
      * @return void
      */
     public function down() {
-        Schema::dropIfExists('look_up_lists');
+        Schema::dropIfExists('sale_invoices');
     }
 }
