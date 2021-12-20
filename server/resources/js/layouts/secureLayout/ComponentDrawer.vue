@@ -1,9 +1,9 @@
 <template v-if="$route.name.startsWith('Components')">
   <v-navigation-drawer value="true" mobile-breakpoint="0" clipped width="350" hide-overlay right app>
     <!-- Drawer fixed top -->
-    <!-- <template #prepend>
+    <template #prepend>
       <component-drilldown-bar />
-    </template> -->
+    </template>
 
     <template #default>
       <!-- Drawer content -->

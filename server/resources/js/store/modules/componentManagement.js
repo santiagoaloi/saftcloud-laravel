@@ -81,13 +81,7 @@ const getters = {
     return state.allGroups.find((g) => g.id === parentGroupId).name;
   },
 
-  // selectedComponent: (_, getters) => (group) => {
-  //   return getters.allComponentsFiltered.filter((c) => c.component_group_id === group);
-
-  // },
-
-  //* Loads all the configuration of the selected component.
-  selectedComponent: (state, getters) => getters.allComponentsFiltered[state.selectedComponentIndex],
+  allComponentsFilteredIndexOrder: (state, getters) => getters.allComponentsFiltered.map((c) => c.id),
 
   //* Loads all the field settings of the selected field in component form field tab.
   selectedComponentFormField: (state, getters) => {
@@ -98,11 +92,11 @@ const getters = {
   },
 
   //* Disables the right panel navigation arrows if the first component in the array is selected.
-  previousComponentDisabled: (state, getters) => !state.componentCardGroup || !getters.hasSelectedComponent,
+  previousComponentDisabled: (state, getters) => !state.selectedComponentIndex || !getters.hasSelectedComponent,
 
   //* Disables the right panel navigation arrows if the last component in the array is selected.
   nextComponentDisabled: (state, getters) =>
-    state.componentCardGroup === getters.allComponentsFiltered.length - 1 || !getters.hasSelectedComponent,
+    state.selectedComponentIndex === getters.allComponentsFiltered.length - 1 || !getters.hasSelectedComponent,
 
   //* Returns form fields matching the search string typed.
   filteredFormFields: (state, getters) => {
@@ -129,24 +123,6 @@ const getters = {
     ...new Set(getters.allComponentsFiltered.map((item) => item.component_group_id)),
   ],
 
-  //* Returns components that belongs to a group, status or matching search string.
-  allComponentsFiltered: (state, getters, rootState) => {
-    if (!getters.hasSelectedSomeGroups) return {};
-    return state.allComponents.filter((component) => {
-      const status = getters.activeComponentTabName;
-      const search = rootState.application.search.toLowerCase();
-      const title = component.config.general_config.title.toLowerCase();
-      return (
-        (!search || title.includes(search)) &&
-        (status === 'all' ||
-          (status === 'inactive' && !component.status.active) ||
-          (status === 'navigation' && component.config.general_config.isVisibleInSidebar) ||
-          component.status[status]) &&
-        state.selectedComponentGroups.some((group) => group.id === component.component_group_id)
-      );
-    });
-  },
-
   //* Returns true if there are no components fetched from the backend.
   isComponentsEmpty: (state) => isEmpty(state.allComponents),
 
@@ -164,10 +140,39 @@ const getters = {
 
   //* Returns true if the component has unsaved changes.
   hasUnsavedChanges: (_, getters) => (component) => {
-    if (getters.hasSelectedSomeGroups) {
+    if (getters.hasSelectedSomeGroups && getters.hasSelectedComponent) {
       const { origin, ...current } = component;
       return !isEqual(origin, current);
     }
+  },
+  //* Loads all the configuration of the selected component.
+  selectedComponent: (state, getters) => getters.allComponentsFiltered[state.selectedComponentIndex],
+
+  //* Returns components that belongs to a group, status or matching search string.
+  allComponentsFiltered: (state, getters, rootState) => {
+    console.log('allComponentsFiltered triggered');
+    if (!getters.hasSelectedSomeGroups) return {};
+    state.componentCardGroup = null;
+    state.selectedComponentIndex = null;
+
+    return state.allComponents.filter((component) => {
+      const { active } = component.status;
+      const groupId = component.component_group_id;
+      const sideBar = component.config.general_config.isVisibleInSidebar;
+
+      const status = getters.activeComponentTabName;
+      const search = rootState.application.search.toLowerCase();
+      const title = component.config.general_config.title.toLowerCase();
+
+      return (
+        (!search || title.includes(search)) &&
+        (status === 'all' ||
+          (status === 'inactive' && !active) ||
+          (status === 'navigation' && sideBar) ||
+          component.status[status]) &&
+        state.selectedComponentGroups.some((group) => group.id === groupId)
+      );
+    });
   },
 
   //* Returns true if the current groups selected do not contain any components associated to them.
@@ -300,10 +305,8 @@ const actions = {
     store.set('componentManagement/loading', true);
     axios.get('api/component.showAll').then((response) => {
       if (response.status === 200) {
-        if (!isEqual(state.allComponents, response.data.components) || !state.allComponents.length) {
-          store.set('componentManagement/allComponents', response.data.components);
-          store.set('componentManagement/loading', false);
-        }
+        store.set('componentManagement/allComponents', response.data.components);
+        store.set('componentManagement/loading', false);
       }
     });
   },
@@ -547,15 +550,17 @@ const actions = {
   previousComponent({ state }) {
     if (state.componentCardGroup > 0) {
       store.set('componentManagement/componentCardGroup', state.componentCardGroup - 1);
-      store.set('componentManagement/selectedComponentIndex', state.selectedComponentIndex - 1);
     }
   },
 
   //* Moves to the next component in the array (navigation arrows).
   nextComponent({ state, getters }) {
-    if (state.componentCardGroup < getters.allComponentsFiltered.length - 1) {
+    if (state.selectedComponentIndex < getters.allComponentsFiltered.length - 1) {
+      // const indexOrder = getters.allComponentsFilteredIndexOrder.findIndex((c) => c === getters.selectedComponent.id);
+      // const gridCard = getters.allComponentsFilteredIndexOrder[indexOrder + 1];
+      // console.log(gridCard);
+      // const indexFilteredComponents = getters.allComponentsFiltered.findIndex((c) => c.id === gridCard);
       store.set('componentManagement/componentCardGroup', state.componentCardGroup + 1);
-      store.set('componentManagement/selectedComponentIndex', state.selectedComponentIndex + 1);
     }
   },
 

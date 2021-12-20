@@ -153,7 +153,7 @@ class RootAccountController extends Controller {
 
     public function getRootAccountModules(RootAccount $rootAccount){
         $result = [];
-        $modules = $rootAccount->module;
+        $modules = $rootAccount->component;
         foreach($modules as $module){
             $result[] = ['id'=>$module->id, 'name'=>$module->name];
         };

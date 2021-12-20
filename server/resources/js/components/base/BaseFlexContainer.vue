@@ -1,7 +1,7 @@
 <template>
   <div class="flex-container" :style="`top: ${top}px;width: ${width}px`">
     <div :style="`width: ${width}px`" class="flex-wrapper">
-      <div v-show="$slots.top" class="content mx-0" style="background: rgba(34, 37, 48, 0.9)">
+      <div v-show="$slots.top" class="mx-0" style="background: rgba(34, 37, 48, 0.9)">
         <slot name="top"> </slot>
       </div>
 
@@ -23,7 +23,7 @@
     props: {
       width: {
         type: [String],
-        default: () => '',
+        default: () => '100%',
       },
       top: {
         type: [String, Number],
@@ -41,6 +41,7 @@
     display: flex;
     flex-direction: column;
     width: 100%;
+    z-index: 1;
   }
 
   .flex-wrapper {
@@ -52,8 +53,7 @@
   }
 
   .content {
-    margin-left: 10px;
-    margin-right: 10px;
+    display: flex;
   }
 
   .flex-scrollable-content {

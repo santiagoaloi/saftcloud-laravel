@@ -73,8 +73,8 @@ class MakeAccountController extends Controller {
             $this->attachRole($user);
 
             $selectedViews = $postdata['selectedViews'];
-            $this->attachModuleToAccount($account, $selectedViews);
-            $this->attachModuleToBranch($branch, $selectedViews);
+            $this->attachComponentToAccount($account, $selectedViews);
+            $this->attachComponentToBranch($branch, $selectedViews);
         }
 
         catch(QueryException $e){
@@ -103,12 +103,12 @@ class MakeAccountController extends Controller {
     }
 
     // AGREGA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
-    public function attachModuleToAccount(RootAccount $account, $module){
-        $account->module()->attach($module);
+    public function attachComponentToAccount(RootAccount $account, $component){
+        $account->component()->attach($component);
     }
 
     // AGREGA TODOS LOS ITEMS QUE ENVIAMOS EN LA VARIABLE request
-    public function attachModuleToBranch(Branch $branch, $module){
-        $branch->module()->attach($module);
+    public function attachComponentToBranch(Branch $branch, $component){
+        $branch->component()->attach($component);
     }
 }

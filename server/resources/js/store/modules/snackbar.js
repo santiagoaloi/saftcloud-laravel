@@ -8,6 +8,7 @@ const state = {
     text: '',
     icon: '',
     value: false,
+    permanent: false,
   },
 };
 

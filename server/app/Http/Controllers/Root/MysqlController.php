@@ -91,9 +91,9 @@ class MysqlController extends Controller {
         })->get();
 
         
-        $tables = DB::select("select module_groups.* from module_groups 
+        $tables = DB::select("select component_groups.* from component_groups 
         where exists(
-            select modules.* from modules where modules.module_group_id = module_groups. id AND modules.module_group_id = 1)");
+            select components.* from components where components.component_group_id = component_groups. id AND components.component_group_id = 1)");
 
     }
 

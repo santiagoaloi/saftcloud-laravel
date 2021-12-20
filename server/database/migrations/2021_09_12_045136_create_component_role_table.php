@@ -4,18 +4,17 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateProductPromotionsTable extends Migration {
+class CreateComponentRoleTable extends Migration {
     /**
      * Run the migrations.
      *
      * @return void
      */
     public function up() {
-        Schema::create('product_promotions', function (Blueprint $table) {
+        Schema::create('component_role', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('branch_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
-            $table->string('name');
-            $table->softDeletes();
+            $table->foreignId('component_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
+            $table->foreignId('role_id')->constrained()->onDelete('RESTRICT')->onUpdate('CASCADE');
             $table->timestamps();
         });
     }
@@ -26,6 +25,6 @@ class CreateProductPromotionsTable extends Migration {
      * @return void
      */
     public function down() {
-        Schema::dropIfExists('product_promotions');
+        Schema::dropIfExists('component_role');
     }
 }

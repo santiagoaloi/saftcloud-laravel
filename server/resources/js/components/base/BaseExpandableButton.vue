@@ -1,7 +1,7 @@
 <template>
   <div :style="`z-index: ${zIndex};width: ${width}`">
     <v-overlay v-if="value" :z-index="0" :opacity="0.9" color="#20202b" @click="internalValue = false" />
-    <v-sheet style="z-index: 16" :width="width">
+    <v-sheet>
       <v-list color="#222530e6">
         <v-list-item :ripple="false" @click="internalValue = !internalValue">
           <v-list-item-avatar>
@@ -9,8 +9,10 @@
           </v-list-item-avatar>
 
           <v-list-item-content>
-            <h5 class="indigo--text text--lighten-2">{{ title }}</h5>
-            <v-list-item-subtitle>{{ subtitle }}</v-list-item-subtitle>
+            <div style="max-width: 110px">
+              <v-list-item-title class="indigo--text text--lighten-2">{{ title }}</v-list-item-title>
+              <v-list-item-subtitle>{{ subtitle }}</v-list-item-subtitle>
+            </div>
           </v-list-item-content>
 
           <v-list-item-icon v-if="!hideIcon">
@@ -62,7 +64,7 @@
 
       zIndex: {
         type: [Number],
-        default: () => 1,
+        default: () => 99,
       },
       hideIcon: {
         type: [Boolean],

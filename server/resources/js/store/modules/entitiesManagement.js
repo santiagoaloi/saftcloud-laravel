@@ -90,7 +90,6 @@ const getters = {
     if (state.selectedEntityType === 'Users' && getters.hasSelectedEntity && !getters.isUsersEmpty) {
       // Search field string
       const search = state.searchPrivileges.toString().toLowerCase();
-
       const privileges = getters.selectedEntity.role.flatMap((role) =>
         role.capability.flatMap((privilege) => ({ name: privilege.name, role: privilege.pivot.role_id })),
       );

@@ -1,15 +1,27 @@
 <template>
-  <div class="box">
-    <base-expandable-button
-      v-model="selectedComponentGroupsMenuTrigger"
-      title="Component Groups"
-      subtitle="subtitle"
-      icon="mdi-responsive"
-      width="350"
-      :z-index="zIndex"
-      :nudge-top="56"
+  <div>
+    <v-tabs v-model="currentItem" class="left" optional background-color="#222530e6" grow show-arrows color="white" hide-slider>
+      <v-tab v-for="item in items" :key="(item, i)" active-class="gridCardDark" :ripple="false" @click="select(i)">
+        <div class="mx-6 mt-1">
+          <v-icon class="mt-n1" size="19" left> {{ item.icon }} </v-icon>
+          <span>{{ item.name }}</span>
+        </div>
+      </v-tab>
+    </v-tabs>
+
+    <base-dialog
+      v-model="dialog"
+      close-only
+      no-gutters
+      width="60vw"
+      title="Selected groups"
+      icon="mdi-home"
+      @close="
+        dialog = false;
+        currentItem = '';
+      "
     >
-      <template #listTop>
+      <template #top>
         <v-sheet>
           <v-card-actions class="px-1">
             <v-list-item class="px-1">
@@ -32,53 +44,34 @@
         </v-sheet>
       </template>
 
-      <v-sheet>
-        <v-list>
-          <v-list-item-group v-model="selectedComponentGroupsMenu" active-class="selected" multiple>
-            <template v-for="(item, index) in allGroups">
-              <v-list-item :key="item.title" :ripple="false" @click.stop="selectGroup({ item })">
-                <template #default="{ active }">
-                  <v-list-item-icon>
-                    <v-icon :color="active ? 'indigo lighten-2' : 'grey'">
-                      {{ active ? 'mdi-check-circle' : 'mdi-checkbox-blank-circle-outline' }}</v-icon
-                    >
-                  </v-list-item-icon>
+      <v-list>
+        <v-list-item-group v-model="selectedComponentGroupsMenu" active-class="selected" multiple>
+          <template v-for="(item, index) in allGroups">
+            <v-list-item :key="item.title" :ripple="false" @click.stop="selectGroup({ item })">
+              <template #default="{ active }">
+                <v-list-item-icon>
+                  <v-icon :color="active ? 'indigo lighten-2' : 'grey'">
+                    {{ active ? 'mdi-check-circle' : 'mdi-checkbox-blank-circle-outline' }}</v-icon
+                  >
+                </v-list-item-icon>
 
-                  <v-list-item-content>
-                    <v-list-item-title v-text="item.name"></v-list-item-title>
-                  </v-list-item-content>
+                <v-list-item-content>
+                  <v-list-item-title v-text="item.name"></v-list-item-title>
+                </v-list-item-content>
 
-                  <v-list-item-action>
-                    <v-avatar class="white--text" size="30" color="#282c3b">
-                      <h6>{{ countComponentsInGroup(item.id) }}</h6>
-                    </v-avatar>
-                  </v-list-item-action>
-                </template>
-              </v-list-item>
+                <v-list-item-action>
+                  <v-avatar class="white--text" size="30" color="#282c3b">
+                    <h6>{{ countComponentsInGroup(item.id) }}</h6>
+                  </v-avatar>
+                </v-list-item-action>
+              </template>
+            </v-list-item>
 
-              <v-divider v-if="index < allGroups.length - 1" :key="index"></v-divider>
-            </template>
-          </v-list-item-group>
-        </v-list>
-      </v-sheet>
-    </base-expandable-button>
-
-    <base-expandable-button title="Fetch Components" subtitle="Last fetched just now" icon="mdi-responsive" />
-
-    <v-btn plain class="mx-2" @click="dialogEditor = true">
-      <v-icon :left="$vuetify.breakpoint.lgAndUp" small> mdi-code-json </v-icon>{{ configStructureTitle }}
-    </v-btn>
-
-    <base-expandable-button
-      v-model="dialogComponent"
-      hide-icon
-      title="Create New Component"
-      subtitle="There are 15 components"
-      icon="mdi-responsive"
-    >
-    </base-expandable-button>
-
-    <dialog-config-editor v-if="dialogEditor" />
+            <v-divider v-if="index < allGroups.length - 1" :key="index"></v-divider>
+          </template>
+        </v-list-item-group>
+      </v-list>
+    </base-dialog>
   </div>
 </template>
 
@@ -92,6 +85,31 @@
       DialogConfigEditor: () => import(/* webpackChunkName: 'components-dialog-config-editor' */ './DialogConfigEditor'),
     },
     mixins: [componentGroups],
+
+    data() {
+      return {
+        dialog: false,
+        currentItem: '',
+        items: [
+          {
+            name: 'Selected Groups',
+            icon: 'mdi-vector-arrange-above',
+          },
+          {
+            name: 'Select Groups',
+            icon: 'mdi-home',
+          },
+          {
+            name: 'Select Groups',
+            icon: 'mdi-home',
+          },
+          {
+            name: 'Select Groups',
+            icon: 'mdi-home',
+          },
+        ],
+      };
+    },
     computed: {
       ...sync('theme', ['isDark']),
       ...sync('componentManagement', ['dialogComponent', 'dialogEditor']),
@@ -114,12 +132,28 @@
       },
     },
 
+    watch: {
+      currentItem(newValue) {
+        if (newValue === 0) {
+          this.dialog = true;
+        }
+      },
+    },
+
     created() {
       this.getGroups();
     },
 
     methods: {
       ...call('componentManagement', ['selectGroup']),
+
+      select(item) {
+        if (this.currentItem) {
+          this.currentItem = '';
+        } else {
+          this.currentItem = item;
+        }
+      },
 
       // selectGroup(group) {
       //   const groupFound = this.selectedComponentGroups.find((g) => g.id === group.id);
@@ -129,6 +163,15 @@
       //     this.selectedComponentGroups = [...this.selectedComponentGroups, group];
       //   }
       // },
+
+      addItem(item) {
+        const removed = this.items.splice(0, 1);
+        this.items.push(...this.more.splice(this.more.indexOf(item), 1));
+        this.more.push(...removed);
+        this.$nextTick(() => {
+          this.currentItem = `tab-${item}`;
+        });
+      },
 
       dialogComponentTrigger() {
         this.dialogComponent = true;

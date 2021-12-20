@@ -50,9 +50,9 @@ class DatabaseSeeder extends Seeder {
         $this->call(PaymentStatusSeeder::class);
 
         $this->call(BranchUserSeeder::class);
-        $this->call(ModuleGroupSeeder::class);
-        $this->call(ModuleDefaultSeeder::class);
-        // $this->call(ModuleSeeder::class);
+        $this->call(ComponentGroupSeeder::class);
+        $this->call(ComponentDefaultSeeder::class);
+        // $this->call(ComponentSeeder::class);
 
         
     }

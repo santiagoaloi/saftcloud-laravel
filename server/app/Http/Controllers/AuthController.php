@@ -25,7 +25,7 @@ class AuthController extends Controller {
 
         if(Auth::attempt($credentials, $remember)){
             $user = User::where('email', $credentials['email'])->first();
-            $token = $user->createToken($credentials['email'], ['module.show'])->plainTextToken;
+            $token = $user->createToken($credentials['email'], ['component.show'])->plainTextToken;
 
             $response = [
                 'user' => $user,
@@ -71,7 +71,7 @@ class AuthController extends Controller {
 
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])){
             $user = User::where('email', $credentials['email'])->first();
-            $token = $user->createToken($user['email'], ['module.show'])->plainTextToken;
+            $token = $user->createToken($user['email'], ['component.show'])->plainTextToken;
 
             $user->userSetting;
             $user->entity;
@@ -80,15 +80,15 @@ class AuthController extends Controller {
             $user->privileges = getRolCapabilities($user);
             $user->origin = clone$user;
 
-            // $user['test'] = collect($user->role)->pluck("module");
+            // $user['test'] = collect($user->role)->pluck("component");
 
             // foreach($user->role as $role){
-            //     $user['modules'] = $role->module;
+            //     $user['modules'] = $role->component;
             // }
 
             $roles = $user->role;
             foreach($roles as $role){
-                $modules = $role->module;
+                $modules = $role->component;
                 $arr = [];
                 foreach($modules as $module){
                     $arr[] = $module->name;

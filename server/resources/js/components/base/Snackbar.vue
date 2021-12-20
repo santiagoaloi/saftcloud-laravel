@@ -1,14 +1,14 @@
 <template>
   <v-snackbar
     v-model="snackbar.data.value"
-    :timeout="6000"
+    :timeout="snackbar.data.permanent ? 0 : 6000"
     :color="snackbar.data.color"
     transition="slide-y-reverse-transition"
     multi-line
   >
     <div class="d-flex">
       <v-icon class="mr-4"> {{ snackbar.data.icon }}</v-icon>
-      {{ snackbar.data.text }}
+      <div v-html="snackbar.data.text" />
     </div>
     <template #action="{ attrs }">
       <v-btn dark text fab x-small v-bind="attrs" @click="snackbar.data.value = false">

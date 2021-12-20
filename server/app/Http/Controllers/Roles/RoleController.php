@@ -166,7 +166,7 @@ class RoleController extends Controller {
 
     public function getRoleModules(Role $role){
         $result = [];
-        $modules = $role->module;
+        $modules = $role->component;
         foreach($modules as $module){
             $result[] = ['id'=>$module->id, 'name'=>$module->name];
         };
