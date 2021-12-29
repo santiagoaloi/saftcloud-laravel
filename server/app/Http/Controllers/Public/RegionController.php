@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
 class RegionController extends Controller {
 
     public function ip_info($ip = NULL, $purpose = "location", $deep_detect = TRUE) {

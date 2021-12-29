@@ -90,7 +90,7 @@ class ModuleController extends Controller {
         ];
 
         $data = [
-            'module_group_id'    => $request['module_group_id'],
+            'module_group_id'       => $request['module_group_id'],
             'name'                  => ucfirst(strtolower($request['name'])),
             'config'                => json_encode($config),
             'config_settings'       => json_encode($configSettings),

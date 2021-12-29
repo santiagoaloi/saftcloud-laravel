@@ -1,7 +1,7 @@
 <?php
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\RegionController;
+use App\Http\Controllers\Public\RegionController;
 
 // GENERAL CONTROLLERS
 use App\Http\Controllers\GeneralConfig\DocumentTypeController;

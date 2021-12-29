@@ -37,7 +37,8 @@
       "app/Helpers/FileManager.php",
       "app/Helpers/ModuleManager.php",
       "app/Helpers/AccountVerification.php",
-      "app/Helpers/RoleHelper.php"
+      "app/Helpers/RoleHelper.php",
+      "app/Helpers/SidebarHelper.php"
     ]
   },
   "autoload-dev": {

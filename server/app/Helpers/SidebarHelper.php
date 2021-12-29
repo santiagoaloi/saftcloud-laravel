@@ -9,7 +9,7 @@ function modulesBuilder($roles){
                 $result[] = [
                     'id'                =>$module['id'],
                     'name'              =>$module['name'],
-                    'module_group_id'=>$module['module_group_id'],
+                    'module_group_id'   =>$module['module_group_id'],
                     'title'             =>json_decode($module['config'])->general_config->title,
                     'icon'              =>json_decode($module['config_settings'])->icon->name,
                     'link'              =>'/'.$module['name'],
