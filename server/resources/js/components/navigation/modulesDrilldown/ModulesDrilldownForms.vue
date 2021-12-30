@@ -1,6 +1,6 @@
 <template>
   <div>
-    <ValidationObserver ref="ModulesDrilldownFormValidation" slim>
+    <ValidationObserver ref="modulesDrilldownFormValidation" slim>
       <v-container>
         <baseFieldLabel required label="Modules label" />
         <validation-provider v-slot="{ errors, invalid }" immediate mode="aggressive" name="Modules label" rules="required">
