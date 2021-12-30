@@ -29,12 +29,12 @@ const actions = {
 
   // Loads all the neccesary data to hydrate the active view.
   loadView({ dispatch }, id) {
-    axios.get(`api/componentConstructor/${id}`).then((response) => {
+    axios.get(`api/moduleConstructor/${id}`).then((response) => {
       if (response.status === 200) {
-        store.set('activeView/records', response.data.component.records);
-        store.set('activeView/recordItem', response.data.component.recordItem);
-        store.set('activeView/columns', response.data.component.columns);
-        store.set('activeView/formFields', response.data.component.formFields);
+        store.set('activeView/records', response.data.modules.records);
+        store.set('activeView/recordItem', response.data.modules.recordItem);
+        store.set('activeView/columns', response.data.modules.columns);
+        store.set('activeView/formFields', response.data.modules.formFields);
         dispatch('pushAllColumnNames');
         store.set('activeView/loading', false);
       }

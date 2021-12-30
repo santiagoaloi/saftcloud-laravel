@@ -12,14 +12,14 @@ import pathify from '@/plugins/vuex-pathify';
 import * as modules from './modules';
 
 // Blacklist module keys
-const componentManagementFiltered = (module) => {
-  const blackList = ['selectedComponentIndex'];
+const modulesManagementFiltered = (module) => {
+  const blackList = ['selectedModuleIndex', 'allModules'];
   return omit(module, blackList);
 };
 
 // Whitelist module keys
-// const componentManagementFiltered = (module) => {
-//   const whitelist = ['componentEditSheet'];
+// const modulesManagementFiltered = (module) => {
+//   const whitelist = ['modulesEditSheet'];
 //   return pick(module, whitelist);
 // };
 
@@ -40,8 +40,8 @@ const vuexLocal = new VuexPersist({
       session: state.authentication.session,
       activeBranch: state.authentication.activeBranch,
     },
-    componentManagement: {
-      ...componentManagementFiltered(state.componentManagement),
+    modulesManagement: {
+      ...modulesManagementFiltered(state.modulesManagement),
     },
 
     entitiesManagement: {

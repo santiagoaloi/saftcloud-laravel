@@ -30,7 +30,7 @@
           >
             <v-list-item-action>
               <v-avatar class="white--text" tile size="30" color="primary">
-                <h6>{{ countComponentsInGroup(item) }}</h6>
+                <h6>{{ countModulesInGroup(item) }}</h6>
               </v-avatar>
             </v-list-item-action>
             <v-list-item-content>
@@ -45,12 +45,12 @@
 
 <script>
   import { sync, call } from 'vuex-pathify';
-  import componentGroups from '@/mixins/componentGroups';
-  import componentActions from '@/mixins/componentActions';
+  import modulesGroups from '@/mixins/modulesGroups';
+  import modulesActions from '@/mixins/modulesActions';
 
   export default {
     name: 'EntitiesGroups',
-    mixins: [componentGroups, componentActions],
+    mixins: [modulesGroups, modulesActions],
 
     computed: {
       ...sync('entitiesManagement', ['selectedEntityType']),

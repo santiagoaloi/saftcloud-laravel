@@ -1,20 +1,15 @@
 <template>
   <v-app>
-    <v-fade-transition leave-active-class="leaveTransition" mode="out-in" :duration="520">
+    <v-fade-transition appear hide-on-leave mode="out-in" :duration="100">
       <component :is="layout" />
     </v-fade-transition>
   </v-app>
 </template>
 
 <script>
-  import Vue from 'vue';
   import { call } from 'vuex-pathify';
   import config from './configs';
   import auth from '@/util/auth';
-
-  Vue.component('SecureLayout', () => import(/* webpackChunkName: 'secure-layout' */ '@/layouts/secureLayout/Index.vue'));
-  Vue.component('PublicLayout', () => import(/* webpackChunkName: 'public-layout' */ '@/layouts/publicLayout/Index.vue'));
-  Vue.component('NotFoundLayout', () => import(/* webpackChunkName: 'not-found-layout' */ '@/layouts/notFoundLayout/Index.vue'));
 
   export default {
     name: 'MainApp',

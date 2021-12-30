@@ -1,13 +1,15 @@
 <template>
-  <fragment>
+  <div class="select-none h-full">
     <secure-bar />
     <secure-drawer />
     <secure-view />
-    <secure-comp-drawer />
+
+    <secure-modules-drawer v-if="$route.name.startsWith('Modules')" />
     <secure-ent-drawer v-if="$route.name.startsWith('Entities')" />
+
     <snackbar />
     <!-- <session-timeout /> -->
-  </fragment>
+  </div>
 </template>
 
 <script>
@@ -18,14 +20,9 @@
       //   import(/* webpackChunkName: 'secure-session-timeout' */ './SessionTimeout/SessionTimeout'),
       SecureBar: () => import(/* webpackChunkName: 'secure-bundle' */ './AppBar'),
       SecureDrawer: () => import(/* webpackChunkName: 'secure-bundle' */ './Drawer'),
-      SecureCompDrawer: () => import(/* webpackChunkName: 'secure-component-drawer' */ './ComponentDrawer'),
+      SecureModulesDrawer: () => import(/* webpackChunkName: 'secure-modules-drawer' */ './ModulesDrawer'),
       SecureEntDrawer: () => import(/* webpackChunkName: 'secure-entities-drawer' */ './EntitiesDrawer'),
       SecureView: () => import(/* webpackChunkName: 'secure-bundle' */ './View'),
-      Snackbar: () =>
-        import(
-          /* webpackChunkName: 'secure-snackbar' */
-          '@/components/Base/Snackbar'
-        ),
     },
   };
 </script>

@@ -13,7 +13,7 @@
       </v-avatar>
     </v-hover>
 
-    <ValidationObserver ref="componentsEditBasic" slim>
+    <ValidationObserver ref="ModulesEditBasic" slim>
       <v-row>
         <v-col sm="4">
           <div class="mt-2">

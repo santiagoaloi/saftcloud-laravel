@@ -139,7 +139,6 @@
 </template>
 
 <script>
-  import axios from 'axios';
   import { call, sync } from 'vuex-pathify';
   import capitalize from 'lodash/capitalize';
 
@@ -148,7 +147,6 @@
 
     data() {
       return {
-        imageLoadingFailed: false,
         notificationCount: 0,
 
         languages: [
@@ -186,7 +184,7 @@
 
           {
             icon: 'mdi-puzzle-outline',
-            href: '/Components',
+            href: '/Modules',
             title: 'Modules',
             roles: ['Root'],
           },
@@ -222,12 +220,6 @@
       setTheme() {
         this.$vuetify.theme.dark = !this.$vuetify.theme.dark;
         this.isDark = !this.isDark;
-      },
-
-      fetchNotificationCount() {
-        axios.get('site/fetchNotificationCount').then((response) => {
-          this.notificationCount = response.data.total;
-        });
       },
     },
   };

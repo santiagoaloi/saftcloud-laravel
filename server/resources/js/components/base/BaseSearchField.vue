@@ -19,8 +19,14 @@
     @keyup.enter="triggerSearch()"
   >
     <template #append>
-      <v-btn x-small fab text @click.stop="triggerSearch()"> <v-icon> mdi-magnify </v-icon> </v-btn>
-      <v-btn class="mr-n4" x-small fab text @click.stop="clearSearch()"> <v-icon> mdi-close </v-icon> </v-btn>
+      <div class="align-center">
+        <v-fade-transition hide-on-leave>
+          <v-btn v-if="searchInput && expand" rounded color="indigo" x-small @click.stop="triggerSearch()">
+            Hit enter to search <v-icon class="ml-2" small>mdi-keyboard-return</v-icon></v-btn
+          >
+        </v-fade-transition>
+        <v-btn class="mr-n4" x-small fab text @click.stop="clearSearch()"> <v-icon> mdi-close </v-icon> </v-btn>
+      </div>
     </template>
   </v-text-field>
 </template>

@@ -109,9 +109,9 @@
       ...call('entitiesManagement/*'),
       ...call('snackbar/*'),
 
-      validateBeforeSave(selectedComponent) {
+      validateBeforeSave(selectedModule) {
         if (!this.hasValidationErrors) {
-          this.saveComponent(selectedComponent);
+          this.saveModule(selectedModule);
         } else {
           this.snackbarError('There are input validation errors');
         }

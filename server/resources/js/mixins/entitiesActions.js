@@ -8,9 +8,7 @@ export default {
     removeUserWarning(id, name) {
       this.$swal({
         title: `<span style="color:${this.isDark ? 'lightgrey' : ''} "> Delete user </span>`,
-        html: `<span style="color:${
-          this.isDark ? 'lightgrey' : ''
-        } "> Are you sure you want to delete ${name}?</span>`,
+        html: `<span style="color:${this.isDark ? 'lightgrey' : ''} "> Are you sure you want to delete ${name}?</span>`,
         color: 'white',
         showCancelButton: true,
         confirmButtonText: 'Delete',
@@ -29,9 +27,7 @@ export default {
     removeRoleWarning(id, name) {
       this.$swal({
         title: `<span style="color:${this.isDark ? 'lightgrey' : ''} "> Delete user </span>`,
-        html: `<span style="color:${
-          this.isDark ? 'lightgrey' : ''
-        } "> Are you sure you want to delete ${name}?</span>`,
+        html: `<span style="color:${this.isDark ? 'lightgrey' : ''} "> Are you sure you want to delete ${name}?</span>`,
         color: 'white',
         showCancelButton: true,
         confirmButtonText: 'Delete',

@@ -1,6 +1,6 @@
 <template>
   <v-main style="min-height: 100vh">
-    <v-fade-transition leave-active-class="leaveTransition" mode="out-in" :duration="520">
+    <v-fade-transition appear :duration="520">
       <router-view />
     </v-fade-transition>
   </v-main>
@@ -14,8 +14,8 @@
 
     computed: {
       ...sync('theme', ['isDark']),
-      ...sync('componentManagement', ['selectedComponentGroupsMenuTrigger']),
-      ...sync('drawers', ['secureComponentDrawerBranch']),
+      ...sync('modulesManagement', ['selectedModuleGroupsMenuTrigger']),
+      ...sync('drawers', ['secureModulesDrawerBranch']),
     },
   };
 </script>

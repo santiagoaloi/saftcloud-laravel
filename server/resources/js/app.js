@@ -10,6 +10,11 @@ import vuetify from '@/vuetify';
 
 Vue.config.devtools = true;
 
+// Layouts
+Vue.component('SecureLayout', () => import(/* webpackChunkName: 'secure-layout' */ '@/layouts/secureLayout/Index.vue'));
+Vue.component('PublicLayout', () => import(/* webpackChunkName: 'public-layout' */ '@/layouts/publicLayout/Index.vue'));
+Vue.component('NotFoundLayout', () => import(/* webpackChunkName: 'not-found-layout' */ '@/layouts/notFoundLayout/Index.vue'));
+
 // Application
 import App from './App.vue';
 

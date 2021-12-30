@@ -24,12 +24,12 @@
               >
                 <v-icon x-small> mdi-folder-outline</v-icon>
                 <div class="col-12 text-truncate">
-                  <template v-if="mapComponentGroup(selectedComponent).component_group_id">
-                    {{ mapGroupParent(selectedComponent) }} <v-icon small>mdi-menu-right</v-icon>
+                  <template v-if="mapComponentGroup(selectedModule).component_group_id">
+                    {{ mapGroupParent(selectedModule) }} <v-icon small>mdi-menu-right</v-icon>
                   </template>
-                  {{ mapComponentGroup(selectedComponent).name }}
+                  {{ mapComponentGroup(selectedModule).name }}
                   <v-icon small>mdi-menu-right</v-icon>
-                  {{ selectedComponent.config.general_config.title }}
+                  {{ selectedModule.config.general_config.title }}
                 </div>
               </v-chip>
 

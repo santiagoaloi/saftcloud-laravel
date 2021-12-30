@@ -38,20 +38,27 @@
     },
     computed: {
       ...sync('theme', ['isDark']),
-      ...sync('componentManagement', ['dbTablesAndColumns']),
+      ...sync('modulesManagement', ['dbTablesAndColumns']),
 
       editorStyle() {
-        if (this.mode === 'sql') return 'text/x-mariadb';
-        if (this.mode === 'json') return 'json-editor';
-        if (this.mode === 'markdown') return 'mrkd-editor';
+        const options = {
+          sql: 'text/x-mariadb',
+          json: 'json-editor',
+          markdown: 'mrkt-editor',
+        };
+        return options[this.mode] || null;
       },
 
       codeStyle() {
-        if (this.mode === 'sql') return 'text/x-mariadb';
-        if (this.mode === 'json') return 'application/json';
-        if (this.mode === 'markdown') return 'text/x-markdown';
+        const options = {
+          sql: 'text/x-mariadb',
+          json: 'application/json',
+          markdown: 'text/x-markdown',
+        };
+        return options[this.mode] || null;
       },
     },
+
     watch: {
       value(value) {
         const editorValue = this.editor.getValue();

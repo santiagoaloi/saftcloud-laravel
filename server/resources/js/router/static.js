@@ -1,15 +1,15 @@
 export default [
   {
-    path: '/Components',
-    name: 'Components',
-    meta: { layout: 'secure-layout', title: 'Manage components', search: 'components...', rootOnly: true },
-    component: () => import(/* webpackChunkName: 'components' */ '@/views/System/Components/Components.vue'),
+    path: '/Modules',
+    name: 'Modules',
+    meta: { layout: 'secure-layout', title: 'Manage modules', search: 'Modules...', rootOnly: true },
+    component: () => import(/* webpackChunkName: 'modules' */ '@/views/System/Modules/Modules.vue'),
   },
 
   {
     path: '/Entities',
     name: 'Entities',
-    meta: { layout: 'secure-layout', title: 'Manage users and roles', search: 'entities...', rootOnly: false },
+    meta: { layout: 'secure-layout', title: 'Manage users and roles', search: 'Entities...', rootOnly: false },
     component: () => import(/* webpackChunkName: 'entities' */ '@/views/System/Entities/Entities.vue'),
     children: [
       {

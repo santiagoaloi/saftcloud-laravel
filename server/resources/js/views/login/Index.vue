@@ -36,8 +36,7 @@
             Your session has expired <strong> due to inactivity.</strong>
           </v-alert>
 
-          <v-card class="modal pa-5" elevation="10" :class="{ shake: shake }">
-            <v-card></v-card>
+          <v-card class="frostedGlass pa-5 rounded-xl" elevation="12 " :class="{ shake: shake }">
             <v-card-title class="py-10">
               <h1>Welcome back!</h1>
             </v-card-title>
@@ -45,6 +44,7 @@
             <v-card-subtitle class="mb-n10">
               <span v-if="$vuetify.breakpoint.mdAndUp">Need an account?</span>
               <v-btn
+                rounded
                 dark
                 style="margin-top: -2.9px"
                 small
@@ -222,7 +222,7 @@
 
 <style scoped>
   @supports (-webkit-backdrop-filter: none) or (backdrop-filter: none) {
-    .modal {
+    .frostedGlass {
       -webkit-backdrop-filter: blur(10px);
       backdrop-filter: blur(10px);
       background-color: rgba(56, 54, 54, 0.2);
@@ -230,7 +230,7 @@
   }
 
   @supports not ((-webkit-backdrop-filter: none) or (backdrop-filter: none)) {
-    .modal {
+    .frostedGlass {
       background-color: rgba(56, 54, 54, 0.2);
     }
   }

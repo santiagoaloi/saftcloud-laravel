@@ -1,7 +1,7 @@
 import { make } from 'vuex-pathify';
 
 const state = {
-  dialogComponentLoader: false,
+  dialogModulesLoader: false,
   logoutLoader: false,
 };
 

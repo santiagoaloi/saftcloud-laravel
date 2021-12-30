@@ -16,7 +16,7 @@
             <div class="overline white--text">v5.0.2</div>
             <div class="mx-auto mx-1 d-flex flex-column justify-space-between align-center px-2">
               <v-badge offset-x="35" offset-y="16" bordered :color="badgeColor()" :content="badgeText()" bottom>
-                <v-avatar size="120">
+                <v-avatar size="160">
                   <v-img :src="user.avatar || 'storage/defaults/avatar.png'"></v-img>
                 </v-avatar>
               </v-badge>
@@ -31,7 +31,7 @@
             </div>
             <div class="text-center">
               <v-menu
-                v-model="secureComponentDrawerBranch"
+                v-model="secureModulesDrawerBranch"
                 nudge-right="20"
                 nudge-top="45"
                 transition="fade-transition"
@@ -45,7 +45,7 @@
                     {{ activeBranchName }}
 
                     <v-icon size="25" color="teal accent-2" right>
-                      {{ !secureComponentDrawerBranch ? 'mdi-chevron-down' : 'mdi-chevron-right' }}</v-icon
+                      {{ !secureModulesDrawerBranch ? 'mdi-chevron-down' : 'mdi-chevron-right' }}</v-icon
                     >
                   </v-btn>
                 </template>
@@ -115,9 +115,9 @@
   import { sync, call } from 'vuex-pathify';
   import capitalize from 'lodash/capitalize';
 
-  Vue.component('MainMenu', () => import(/* webpackChunkName: 'components-drawer-menu' */ '@/components/Navigation/MainMenu'));
+  Vue.component('MainMenu', () => import(/* webpackChunkName: 'modules-drawer-menu' */ '@/components/navigation/MainMenu'));
 
-  // @vue/component
+  // @vue/Modules
   export default {
     name: 'SecureDrawer',
 
@@ -162,8 +162,8 @@
 
     computed: {
       ...sync('theme', ['overlay']),
-      ...sync('drawers', ['secureDefaultDrawer', 'secureComponentDrawerBranch']),
-      ...sync('componentManagement', ['navigationStructure']),
+      ...sync('drawers', ['secureDefaultDrawer', 'secureModulesDrawerBranch']),
+      ...sync('modulesManagement', ['navigationStructure']),
       ...sync('authentication', ['session', 'activeBranch']),
       user: sync('authentication@session.user'),
 
@@ -182,7 +182,7 @@
     },
 
     methods: {
-      ...call('componentManagement/*'),
+      ...call('modulesManagement/*'),
 
       badgeText() {
         if (this.$root.isRoot) {

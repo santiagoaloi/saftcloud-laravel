@@ -8,7 +8,7 @@
   import { sync } from 'vuex-pathify';
 
   export default {
-    name: 'ComponentsEditSheetDrawer',
+    name: 'ModulesEditSheetDrawer',
     components: {
       EditSheetMenu: () => import('./EditBottomSheetMenu'),
     },

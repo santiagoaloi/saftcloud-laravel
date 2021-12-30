@@ -331,10 +331,10 @@ const actions = {
   async saveRole({ state, dispatch, getters }) {
     const roleId = getters.selectedEntity.id;
     const capabilities = { name: 'capability', items: getters.selectedEntity.capability };
-    const components = { name: 'component', items: getters.selectedEntity.modules };
+    const modules = { name: 'component', items: getters.selectedEntity.modules };
 
     axios.post(`api/role.sync/${roleId}`, capabilities);
-    axios.post(`api/role.sync/${roleId}`, components);
+    axios.post(`api/role.sync/${roleId}`, modules);
 
     const meta = {
       name: getters.selectedEntity.name,

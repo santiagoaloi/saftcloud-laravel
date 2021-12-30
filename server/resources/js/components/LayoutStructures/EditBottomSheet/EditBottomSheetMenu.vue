@@ -5,7 +5,7 @@
         <div v-if="item.header" :key="i" class="pa-1 mt-2 overline">
           {{ item.header }}
         </div>
-        <v-list-item v-else :key="i" :disabled="i === selectedMennuItem + 1" @click="switchActiveSheet(item.componentPath)">
+        <v-list-item v-else :key="i" :disabled="i === selectedMennuItem + 1" @click="switchActiveSheet(item.route)">
           <v-list-item-icon>
             <v-icon small :class="{ 'grey--text': item.disabled }">
               {{ item.icon || 'mdi-circle-medium' }}
@@ -23,7 +23,7 @@
 
 <script>
   export default {
-    name: 'ComponentsEditSheetMenu',
+    name: 'ModulesEditSheetMenu',
     props: {
       menu: {
         type: [Array],
@@ -37,7 +37,7 @@
       };
     },
     mounted() {
-      this.switchActiveSheet(this.menu[1].componentPath);
+      this.switchActiveSheet(this.menu[1].route);
     },
 
     methods: {

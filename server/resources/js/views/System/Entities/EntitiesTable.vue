@@ -19,14 +19,10 @@
             size="35"
             rounded
             :color="item.config_settings.icon.color"
-            @click="setComponentTableIcon(item), (dialogIcons = true)"
+            @click="setModulesTableIcon(item), (dialogIcons = true)"
           >
             <v-expand-transition>
-              <div
-                v-if="hover"
-                class="d-flex black v-card--reveal white--text"
-                style="height: 100%"
-              >
+              <div v-if="hover" class="d-flex black v-card--reveal white--text" style="height: 100%">
                 <v-icon size="20" dark> mdi-pencil </v-icon>
               </div>
             </v-expand-transition>
@@ -47,10 +43,10 @@
 
       <template #[`item.group`]="{ item }">
         <v-icon style="margin-top: -2px" class="mr-1" small> mdi-folder-outline </v-icon>
-        <template v-if="mapComponentGroup(item).component_group_id">
+        <template v-if="mapModulesGroup(item).module_group_id">
           {{ mapGroupParent(item) }} <v-icon small> mdi-menu-right </v-icon>
         </template>
-        {{ mapComponentGroup(item).name }}
+        {{ mapModulesGroup(item).name }}
       </template>
 
       <template #[`item.config.general_config.title`]="{ item }">
@@ -76,14 +72,7 @@
 
         <v-tooltip transition="false" color="black" bottom>
           <template #activator="{ on }">
-            <v-btn
-              color="white"
-              small
-              icon
-              :ripple="false"
-              v-on="on"
-              @click.stop="setStarred(item)"
-            >
+            <v-btn color="white" small icon :ripple="false" v-on="on" @click.stop="setStarred(item)">
               <v-icon :color="isStarredColor(item)">
                 {{ isStarredIcon(item) }}
               </v-icon>
@@ -94,14 +83,7 @@
 
         <v-tooltip transition="false" color="black" bottom>
           <template #activator="{ on }">
-            <v-btn
-              color="white"
-              small
-              icon
-              :ripple="false"
-              v-on="on"
-              @click.stop="setModular(item)"
-            >
+            <v-btn color="white" small icon :ripple="false" v-on="on" @click.stop="setModular(item)">
               <v-icon :color="isModularColor(item)">
                 {{ isModularIcon(item) }}
               </v-icon>
@@ -122,17 +104,17 @@
         </v-tooltip>
       </template>
     </v-data-table>
-    <base-dialog-icons v-if="dialogIcons" v-model="dialogIcons" :icon="componentIcon" />
+    <base-dialog-icons v-if="dialogIcons" v-model="dialogIcons" :icon="ModulesIcon" />
   </div>
 </template>
 
 <script>
   import { sync, call, get } from 'vuex-pathify';
-  import componentActions from '@/mixins/componentActions';
+  import modulesActions from '@/mixins/modulesActions';
 
   export default {
     name: 'EntitiesTableView',
-    mixins: [componentActions],
+    mixins: [modulesActions],
     data() {
       return {
         headers: [
@@ -144,7 +126,7 @@
             width: 0,
           },
           {
-            text: 'Component',
+            text: 'Modules',
             align: 'start',
             sortable: true,
             value: 'config.general_config.title',
@@ -173,7 +155,7 @@
           },
         ],
         dialogIcons: false,
-        componentIcon: '',
+        ModulesIcon: '',
       };
     },
 
@@ -195,8 +177,8 @@
     methods: {
       ...call('entitiesManagement/*'),
 
-      setComponentTableIcon(item) {
-        this.componentIcon = item.config_settings.icon;
+      setModulesTableIcon(item) {
+        this.ModulesIcon = item.config_settings.icon;
       },
 
       rowClicked(row) {
@@ -207,7 +189,7 @@
       },
 
       toggleSelection(id, row) {
-        this.selectedComponentTableRow = [row];
+        this.selectedModuleTableRow = [row];
       },
 
       calculateHeight() {

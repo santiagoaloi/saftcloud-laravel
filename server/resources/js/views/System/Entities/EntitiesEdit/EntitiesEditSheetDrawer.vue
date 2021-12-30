@@ -15,7 +15,7 @@
   import { sync, get } from 'vuex-pathify';
 
   export default {
-    name: 'ComponentsEditSheetDrawer',
+    name: 'modulesEditSheetDrawer',
     components: {
       EntitiesEditSheetMenu: () => import('./EntitiesEditSheetMenu'),
     },

@@ -20,18 +20,22 @@
   import { sync, get } from 'vuex-pathify';
 
   Vue.component('EntitiesDrilldown', () =>
-    import(/* webpackChunkName: 'entities-navigation-drilldown' */ '@/components/Navigation/EntitiesDrilldown'),
+    import(/* webpackChunkName: 'entities-navigation-drilldown' */ '@/components/navigation/entitiesDrilldown/EntitiesDrilldown'),
   );
   Vue.component('EntitiesDrilldownBar', () =>
-    import(/* webpackChunkName: 'entities-navigation-drilldown-bar' */ '@/components/Navigation/EntitiesDrilldownBar'),
+    import(
+      /* webpackChunkName: 'entities-navigation-drilldown-bar' */ '@/components/navigation/entitiesDrilldown/EntitiesDrilldownBar'
+    ),
   );
 
   Vue.component('EntitiesDrilldownFooter', () =>
-    import(/* webpackChunkName: 'entities-navigation-drilldown-footer' */ '@/components/Navigation/EntitiesDrilldownFooter'),
+    import(
+      /* webpackChunkName: 'entities-navigation-drilldown-footer' */ '@/components/navigation/entitiesDrilldown/EntitiesDrilldownFooter'
+    ),
   );
 
   export default {
-    name: 'EntitiesComponentDrawer',
+    name: 'EntitiesDrawer',
     computed: {
       ...sync('theme', ['isDark']),
       ...get('entitiesManagement', ['selectedEntity']),

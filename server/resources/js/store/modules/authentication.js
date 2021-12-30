@@ -3,7 +3,7 @@ import axios from 'axios';
 import { make } from 'vuex-pathify';
 import { isEmpty } from 'lodash';
 import { store } from '@/store';
-import router, { resetRouter } from '@/router';
+import router from '@/router';
 
 const axiosDefaults = require('axios/lib/defaults');
 
@@ -24,8 +24,9 @@ const actions = {
   resetState({ dispatch }) {
     store.set('authentication/activeBranch', null);
     store.set('authentication/session', getDefaultState());
+
     dispatch('eventsManagement/initialState', { root: true });
-    dispatch('componentsManagement/initialState', { root: true });
+    dispatch('modulesManagement/initialState', { root: true });
     dispatch('entitiesManagement/initialState', { root: true });
   },
 
@@ -67,34 +68,31 @@ const actions = {
   },
 
   async buildRoutes({ state }) {
-    // * Clear routes and routes matcher.
-    resetRouter();
-
-    return axios.get('api/getComponentNames/').then((response) => {
-      if (response) {
-        const { components } = response.data;
-
-        // * add new routes
-        for (const component of components) {
-          router.addRoute({
-            path: `/${component.name}`,
-            name: `${component.name}`,
-            meta: {
-              layout: 'secure-layout',
-              title: component.title,
-              id: component.id,
-              icon: component.configSettings.icon || null,
-              appBarSlot: `Slot${component.name}`,
-            },
-            component: () => import(`@/views/Protected/${component.name}/${component.name}.vue`),
-          });
-
-          if (components[components.length - 1] === component) {
-            return true;
-          }
-        }
-      }
-    });
+    // // * Clear routes and routes matcher.
+    // resetRouter();
+    // return axios.get('api/getModuleNames/').then((response) => {
+    //   if (response) {
+    //     const { Modules } = response.data;
+    //     // * add new routes
+    //     for (const Modules of Modules) {
+    //       router.addRoute({
+    //         path: `/${Modules.name}`,
+    //         name: `${Modules.name}`,
+    //         meta: {
+    //           layout: 'secure-layout',
+    //           title: Modules.title,
+    //           id: Modules.id,
+    //           icon: Modules.configSettings.icon || null,
+    //           appBarSlot: `Slot${Modules.name}`,
+    //         },
+    //         component: () => import(`@/views/Protected/${Modules.name}/${Modules.name}.vue`),
+    //       });
+    //       if (Modules[Modules.length - 1] === Modules) {
+    //         return true;
+    //       }
+    //     }
+    //   }
+    // });
   },
 
   // Logs out the user.

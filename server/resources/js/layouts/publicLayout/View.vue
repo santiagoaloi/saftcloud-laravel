@@ -1,6 +1,17 @@
 <template>
-  <v-main :style="themeBackground">
-    <v-fade-transition hide-on-leave mode="out-in" :duration="100">
+  <v-main>
+    <v-fade-transition appear :duration="3000">
+      <video
+        v-if="$route.meta.layout === 'public-layout'"
+        src="storage/videos/space3.mp4"
+        style="opacity: 0.1"
+        autoPlay
+        loop
+        muted
+        type="video/mp4"
+      />
+    </v-fade-transition>
+    <v-fade-transition appear hide-on-leave mode="out-in" :duration="100">
       <router-view />
     </v-fade-transition>
   </v-main>
@@ -13,38 +24,15 @@
     name: 'PublicView',
     computed: {
       ...sync('theme', ['isDark']),
-
-      themeBackground() {
-        if (this.$route.name === 'Login' && this.isDark) {
-          return this.loginBackgroundDark;
-        }
-
-        if (this.$route.name === 'Login' && !this.isDark) {
-          return this.loginBackgroundLight;
-        }
-
-        return null;
-      },
-
-      loginBackgroundLight() {
-        return {
-          'background-image': `linear-gradient(rgba(0, 0, 0, 0.3),rgba(0, 0, 0, 0.8)), url(storage/backgrounds/back3.png)`,
-          'background-repeat': 'no-repeat',
-          'background-size': 'cover',
-          'background-attachment': 'fixed',
-        };
-      },
-
-      loginBackgroundDark() {
-        return {
-          'background-image': `linear-gradient(rgba(60, 60, 60, 0.6),rgba(0, 0, 0, 0.9)), url(storage/backgrounds/bb1.png)`,
-          'background-repeat': 'no-repeat',
-          'background-size': 'cover',
-          'background-attachment': 'fixed',
-        };
-      },
     },
   };
 </script>
 
-<
+<style>
+  video {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+  }
+</style>

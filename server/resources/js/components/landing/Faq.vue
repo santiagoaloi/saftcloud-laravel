@@ -21,7 +21,7 @@
 <script>
   /*
 |---------------------------------------------------------------------
-| Help Page Component
+| Help Page Modules
 |---------------------------------------------------------------------
 |
 | Template to show frequently asked questions to your users
@@ -49,8 +49,7 @@
             title: 'General Resources',
             items: [
               {
-                title:
-                  'Can I use a purchased item in a freelance project or contract work for a client?',
+                title: 'Can I use a purchased item in a freelance project or contract work for a client?',
                 content:
                   'Yes. However, if the client intends to charge End Users in any way from the End Product you create, you will need to purchase an Extended License. If you create the End Product for a client, your rights to purchased Items are transferred from you to your client.',
               },
@@ -71,18 +70,15 @@
               },
               {
                 title: 'What is Personal Use?',
-                content:
-                  'A Personal Use License can only be used for 1 End Product that does not charge users in any way.',
+                content: 'A Personal Use License can only be used for 1 End Product that does not charge users in any way.',
               },
               {
                 title: 'What is Commerical Use?',
-                content:
-                  'A Commercial Use License can only be used for 1 End Product that charges or will charge users.',
+                content: 'A Commercial Use License can only be used for 1 End Product that charges or will charge users.',
               },
               {
                 title: 'What is Unlimited Use?',
-                content:
-                  'An Extended Use License can be used for any number of Personal and Commercial projects.',
+                content: 'An Extended Use License can be used for any number of Personal and Commercial projects.',
               },
             ],
           },

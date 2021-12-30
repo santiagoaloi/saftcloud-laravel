@@ -1,8 +1,8 @@
 <template>
   <div class="box">
     <base-expandable-button
-      v-model="selectedComponentGroupsMenuTrigger"
-      title="Component Groups"
+      v-model="selectedModuleGroupsMenuTrigger"
+      title="Modules Groups"
       subtitle="subtitle"
       icon="mdi-responsive"
       width="350"
@@ -34,7 +34,7 @@
 
       <v-sheet>
         <v-list>
-          <v-list-item-group v-model="selectedComponentGroupsMenu" active-class="selected" multiple>
+          <v-list-item-group v-model="selectedModuleGroupsMenu" active-class="selected" multiple>
             <template v-for="(item, index) in allGroups">
               <v-list-item :key="item.title" :ripple="false" @click.stop="selectGroup(item)">
                 <template #default="{ active }">
@@ -50,7 +50,7 @@
 
                   <v-list-item-action>
                     <v-avatar class="white--text" size="30" color="#282c3b">
-                      <h6>{{ countComponentsInGroup(item.id) }}</h6>
+                      <h6>{{ countModulesInGroup(item.id) }}</h6>
                     </v-avatar>
                   </v-list-item-action>
                 </template>
@@ -63,13 +63,13 @@
       </v-sheet>
     </base-expandable-button>
 
-    <base-expandable-button title="Fetch Components" subtitle="Last fetched just now" icon="mdi-responsive">
+    <base-expandable-button title="Fetch Modules" subtitle="Last fetched just now" icon="mdi-responsive">
     </base-expandable-button>
 
     <base-expandable-button
-      v-model="dialogComponent"
-      title="Create New Component"
-      subtitle="There are 15 components"
+      v-model="dialogModules"
+      title="Create New Modules"
+      subtitle="There are 15 Modules"
       icon="mdi-responsive"
     >
     </base-expandable-button>
@@ -78,23 +78,23 @@
 
 <script>
   import { sync } from 'vuex-pathify';
-  import componentGroups from '@/mixins/componentGroups';
+  import modulesGroups from '@/mixins/modulesGroups';
 
   export default {
-    name: 'ComponentsToolbar',
-    mixins: [componentGroups],
+    name: 'ModulesToolbar',
+    mixins: [modulesGroups],
 
     computed: {
       ...sync('theme', ['isDark']),
-      ...sync('componentManagement', ['dialogComponent', 'dialogEditor']),
-      ...sync('loaders', ['dialogComponentLoader']),
+      ...sync('modulesManagement', ['dialogModules', 'dialogEditor']),
+      ...sync('loaders', ['dialogModulesLoader']),
 
       configStructureTitle() {
         return this.$vuetify.breakpoint.lgAndUp ? 'Config Structure' : '';
       },
 
-      createComponentTitle() {
-        return this.$vuetify.breakpoint.lgAndUp ? 'Create component' : '';
+      createmodulesTitle() {
+        return this.$vuetify.breakpoint.lgAndUp ? 'Create Modules' : '';
       },
 
       createGroupTitle() {
@@ -102,7 +102,7 @@
       },
 
       zIndex() {
-        return this.selectedComponentGroupsMenuTrigger ? 8 : 3;
+        return this.selectedModuleGroupsMenuTrigger ? 8 : 3;
       },
     },
 
@@ -111,25 +111,25 @@
     },
 
     methods: {
-      dialogComponentTrigger() {
-        this.dialogComponent = true;
-        this.dialogComponentLoader = true;
+      dialogModulesTrigger() {
+        this.dialogModules = true;
+        this.dialogModulesLoader = true;
       },
 
       onClickOutside() {
-        this.selectedComponentGroupsMenuTrigger = false;
+        this.selectedModuleGroupsMenuTrigger = false;
       },
 
       activateMenu() {
-        this.selectedComponentGroupsMenuTrigger = !this.selectedComponentGroupsMenuTrigger;
+        this.selectedModuleGroupsMenuTrigger = !this.selectedModuleGroupsMenuTrigger;
       },
 
       selectGroup(group) {
-        const groupFound = this.selectedComponentGroups.find((g) => g.id === group.id);
+        const groupFound = this.selectedModuleGroups.find((g) => g.id === group.id);
         if (groupFound) {
-          this.selectedComponentGroups = this.selectedComponentGroups.filter((g) => g.id !== group.id);
+          this.selectedModuleGroups = this.selectedModuleGroups.filter((g) => g.id !== group.id);
         } else {
-          this.selectedComponentGroups = [...this.selectedComponentGroups, group];
+          this.selectedModuleGroups = [...this.selectedModuleGroups, group];
         }
       },
     },

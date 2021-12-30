@@ -5,11 +5,15 @@ use Illuminate\Support\Facades\Auth;
 
 class AccountVerification {
 
+    // static function checkRootRole(){
+    //     if(in_array('Root', getRoles(Auth::user()->role)['roles'])){
+    //         return true;
+    //     }
+    //     return false;
+    // }
+
     static function checkRootRole(){
-        if(in_array('Root', getRoles(Auth::user()->role)['roles'])){
-            return true;
-        }
-        return false;
+       return  in_array('Root', getRoles(Auth::user()->role)['roles']) || false;
     }
 
 }

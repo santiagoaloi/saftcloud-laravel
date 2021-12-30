@@ -15,7 +15,7 @@ $theme-dark-colors: (
 );
 
 $material-dark: (
-  'app-bar': rgba(34, 37, 48, 0.7),
+  'app-bar': rgba(34, 37, 48, 0.9),
   'background': rgba(34, 37, 48, 1),
   'bottom-navigation': map-get($theme-dark-colors, '1'),
   'surface': map-get($theme-dark-colors, '4'),

@@ -2,11 +2,11 @@
   <v-item v-slot="{ toggle, active }">
     <v-hover v-slot="{ hover: hoverCard }" open-delay="500">
       <v-sheet
+        ref="gridSheet"
         class="d-flex flex-column justify-space-between pa-4 hoverElevationSoft cursor-pointer rounded-lg"
         height="300"
         width="100%"
         color="#292c3b"
-        @click="!active ? toggle() : null"
       >
         <v-card-actions class="px-0">
           <v-avatar size="90" :color="iconColor">
@@ -123,7 +123,16 @@
       ...sync('theme', ['isDark']),
     },
 
+    mounted() {
+      console.log(this.$refs.gridItem);
+      console.log(this.$refs.gridSheet);
+    },
+
     methods: {
+      test() {
+        console.log('test');
+      },
+
       // Executes a function with its argumentss
       trigger(fn, args) {
         return this.methods[fn](args);

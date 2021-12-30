@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar flat src="storage/appbar/prism2.jpg">
+  <v-app-bar>
     <v-icon dark class="mr-4"> {{ icon }} </v-icon>
 
     <h4 v-if="title" class="ml-2 white--text">Editing {{ title }}</h4>
@@ -8,8 +8,8 @@
     <v-spacer />
 
     <v-fade-transition>
-      <div v-if="hasUnsavedChanges(selectedComponent)">
-        <v-btn large rounded :color="isDark ? 'grey darken-2' : 'white'" class="mx-2" @click="rollbackChanges(selectedComponent)">
+      <div v-if="hasUnsavedChanges(selectedModule)">
+        <v-btn large rounded :color="isDark ? 'grey darken-2' : 'white'" class="mx-2" @click="rollbackChanges(selectedModule)">
           <span> Rollback changes</span>
         </v-btn>
       </div>
@@ -17,7 +17,7 @@
 
     <v-tooltip transition="false" color="black" bottom>
       <template #activator="{ on }">
-        <v-btn color="green lighten-2" class="mr-2" x-small text fab v-on="on" @click="validateBeforeSave(selectedComponent)">
+        <v-btn color="green lighten-2" class="mr-2" x-small text fab v-on="on" @click="validateBeforeSave(selectedModule)">
           <v-icon> mdi-check </v-icon>
         </v-btn>
       </template>
@@ -28,38 +28,11 @@
 
     <v-tooltip transition="false" color="black" bottom>
       <template #activator="{ on }">
-        <v-btn :to="`/${selectedComponent.name}`" fab class="mx-2" color="white" text x-small v-on="on">
+        <v-btn :to="`/${selectedModule.name}`" fab class="mx-2" color="white" text x-small v-on="on">
           <v-icon> mdi-link </v-icon>
         </v-btn>
       </template>
       <span>Open</span>
-    </v-tooltip>
-
-    <v-tooltip transition="false" color="black" bottom>
-      <template #activator="{ on }">
-        <v-btn
-          dark
-          :disabled="previousComponentDisabled"
-          class="mr-2"
-          fab
-          text
-          x-small
-          v-on="on"
-          @click="validateBeforePrevious()"
-        >
-          <v-icon>mdi-chevron-left</v-icon>
-        </v-btn>
-      </template>
-      <span>Previous component</span>
-    </v-tooltip>
-
-    <v-tooltip transition="false" color="black" bottom>
-      <template #activator="{ on }">
-        <v-btn dark :disabled="nextComponentDisabled" fab text x-small v-on="on" @click="validateBeforeNext()">
-          <v-icon>mdi-chevron-right</v-icon>
-        </v-btn>
-      </template>
-      <span>Next component</span>
     </v-tooltip>
 
     <v-tooltip transition="false" color="black" bottom>
@@ -78,7 +51,7 @@
   import { store } from '@/store';
 
   export default {
-    name: 'ComponentsEditAppbar',
+    name: 'ModulesEditAppbar',
 
     props: {
       title: {
@@ -93,39 +66,17 @@
 
     computed: {
       ...sync('theme', ['isDark']),
-      ...sync('componentManagement', ['componentEditSheet', 'componentEditDrawerActiveMenu']),
-      ...get('componentManagement', [
-        'previousComponentDisabled',
-        'nextComponentDisabled',
-        'selectedComponent',
-        'hasUnsavedChanges',
-        'hasValidationErrors',
-      ]),
+      ...sync('modulesManagement', ['ModulesEditSheet', 'componentEditDrawerActiveMenu']),
+      ...get('modulesManagement', ['selectedModule', 'hasUnsavedChanges', 'hasValidationErrors']),
     },
 
     methods: {
-      ...call('componentManagement/*'),
+      ...call('modulesManagement/*'),
       ...call('snackbar/*'),
 
-      validateBeforeSave(selectedComponent) {
+      validateBeforeSave(selectedModule) {
         if (!this.hasValidationErrors) {
-          this.saveComponent(selectedComponent);
-        } else {
-          this.snackbarError('There are input validation errors');
-        }
-      },
-
-      validateBeforePrevious() {
-        if (!this.hasValidationErrors) {
-          this.previousComponent();
-        } else {
-          this.snackbarError('There are input validation errors');
-        }
-      },
-
-      validateBeforeNext() {
-        if (!this.hasValidationErrors) {
-          this.nextComponent();
+          this.saveComponent(selectedModule);
         } else {
           this.snackbarError('There are input validation errors');
         }
@@ -133,8 +84,8 @@
 
       validateBeforeHide() {
         if (!this.hasValidationErrors) {
-          this.componentEditSheet = false;
-          this.$router.push('/Components');
+          this.ModulesEditSheet = false;
+          this.$router.push('/Modules');
         } else {
           store.set('snackbar/value', true);
           this.snackbarError('There are input validation errors');

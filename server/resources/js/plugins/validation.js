@@ -1,11 +1,5 @@
 import Vue from 'vue';
-import {
-  ValidationObserver,
-  ValidationProvider,
-  extend,
-  localize,
-  setInteractionMode,
-} from 'vee-validate';
+import { ValidationObserver, ValidationProvider, extend, localize, setInteractionMode } from 'vee-validate';
 import en from 'vee-validate/dist/locale/en.json';
 import * as rules from 'vee-validate/dist/rules';
 
@@ -37,6 +31,6 @@ for (const rule in rules) {
 
 localize('en', en);
 
-// Install components globally
+// Install Modules globally
 Vue.component('ValidationObserver', ValidationObserver);
 Vue.component('ValidationProvider', ValidationProvider);
