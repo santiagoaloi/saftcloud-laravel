@@ -343,6 +343,10 @@ class ModuleController extends Controller {
 
     public function columnStructure($field) {
         $model = json_decode(ModuleDefault::pluck('config_structure')->last());
+        return $model;
+        if($model){
+            return "hola";
+        }
 
         $model->columns->value = $field;
         $model->columns->text = $field;
